@@ -1,0 +1,199 @@
+﻿
+<style>
+    td {
+        border: 1px solid #ddd;
+        padding: 0px !important;
+    }
+
+    span {
+        padding-right: 5px !important;
+    }
+
+    tr:last-child > td {
+        border-bottom: none;
+    }
+
+    .full button span {
+        background-color: limegreen;
+        border-radius: 32px;
+        color: black;
+    }
+
+    .partially button span {
+        background-color: orange;
+        border-radius: 32px;
+        color: black;
+    }
+
+    .text-info {
+        color: #000000;
+    }
+
+    .list-group-item {
+        width: auto;
+        height: auto;
+    }
+
+    tbody {
+    height: 100px;       /* Just for the demo          */
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    overflow-x: hidden;  /* Hide the horizontal scroll */
+}
+
+</style>
+<form name="financialPlanningForm" id="financialPlanningForm" ng-controller="FinancialPlanningCtrl"  ng-submit="GetPlanningTypes();GetFinancialPlanning();" novalidate style="margin-top:15px;width:1000px;">
+    <sessionproperties id="sessionpropertie"></sessionproperties>
+     <div class="product-details bhoechie-tab-content" style="min-width:730px;margin-left:10px;">
+        <div class="row">
+            <div class="col-sm-12 ">
+                <div class="col-sm-3" data-ng-init="getFilialList()">
+                    <div class="product-detail-cell product-detail-lable">
+                        Մ/Ճ
+                    </div>
+                    <loading-control scopevariable="filialList"></loading-control>
+                    <select ng-disabled="changeFilial == '0'" ng-show="filialList" data-ng-model="filialCode" class="form-control" data-ng-options="k as v for (k,v) in filialList" id="FilialCode" name="FilialCode" required>
+                        <option selected="selected" value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                    </select>
+                    <ng-messages ng-if="financialPlanningForm.$submitted || financialPlanningForm.FilialCode.$dirty"
+                                     for="financialPlanningForm.FilialCode.$error">
+                            <ng-message when="required" class="errors">
+                                Մասնաճյուղը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                </div>
+                <div class="col-sm-3" data-ng-init="getUserID()">
+                    <div class="product-detail-cell product-detail-lable">
+                        Աշխատակցի համար
+                    </div>
+                    <div class="input-group">
+                        <input ng-disabled="changeSetNumber == '0'" type="text" style="width:111px" class="form-control" id="setnumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="setnumber" ng-model="setNumber">
+                        <div class="input-group-btn" style="display:inline-block;">
+                            <button ng-disabled="changeSetNumber == '0'" type="button" title="ՊԿ-ի որոնում" class="btn btn-primary searchButton" ng-click="searchCashiers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Պլանի տարբերակ
+                    </div>
+                    <div data-ng-init="GetFinancialPlanningTypes()">
+                        <loading-control scopevariable="financialPlanningTypes"></loading-control>
+                        <select ng-if="financialPlanningTypes" data-ng-model="document.financialPlanningType" name="financialPlanningType" id="financialPlanningType" class="form-control"
+                                data-ng-options="v as k for (k, v) in financialPlanningTypes"></select>
+                    </div>
+                </div>
+                <br />
+                <div class="col-sm-3">
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <br />
+            <div class="col-sm-12">
+                <div class="col-sm-12">
+                    <p style="width:42%" class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="year" is-open="opened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" name="planningYear" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                    <ng-messages ng-if="financialPlanningForm.$submitted || financialPlanningForm.planningYear.$dirty"
+                                     for="financialPlanningForm.planningYear.$error">
+                            <ng-message when="required" class="errors">
+                                Տարին նշված չէ
+                            </ng-message>
+                        </ng-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="bhoechie-tab-container" style="height:80%;width:100%;max-width:100%; " >
+        <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+            <div class="list-group">
+                <div class="list-group-item text-center " style="width:160px;" ng-class="$index==0 ? 'active' : ''" ng-repeat="target in financialPlanning.Targets" ng-click="changeTab($event)">
+                    {{tabDescription(target)}}
+                </div>
+            </div>
+        </div>
+
+        <div class="bhoechie-tab " style="width: calc(100% - 180px); display: inline-block; height:100%;">
+            <div class="bhoechie-tab-content " ng-class="$index==0 ? 'active' : ''" ng-repeat="target in financialPlanning.Targets" style="padding-left:50px;"> 
+                <div class="product-container-header" style="height:auto;">
+                    <table style="border-bottom:3px gray double;">
+                        <tr class="top">
+                            <td style="text-align:center;" class="col-sm-4">Պլանային ցուցանիշներ(հազար ՀՀ դրամ)</td>
+                            <td style="text-align:center;" >Փաստացի</td>
+                            <td style="text-align:center" colspan="4">Պլանային մեծություն</td>
+                        </tr>
+                        <tr style="background-color:white;">
+                            <td class="col-sm-2"></td>
+                            <td ng-repeat="planningIndicator in target.PlanningIndicators" style="text-align:center">
+                                <span>{{planningIndicator.Date | mydate | date: 'MM/dd/yyyy'}}</span>
+                            </td>
+
+                            
+                        </tr>
+                    </table>
+                   
+                </div>
+                <div class="product-content-table" style="min-height:100px;overflow-y:scroll;width:102%;">
+                    <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;margin-bottom:35px!important;border-bottom:1px solid gray;">
+                        <tbody ng-if="planningType.Visible" ng-repeat="planningType in target.planningTypes">
+                            <tr>
+                                <td class="col-sm-2" style="vertical-align:middle">
+                                    <span style="text-align:left;font-size:10pt;font-weight: bold;">{{planningType.Description}}</span>
+                                </td>
+                                <td class="col-sm-8">
+                                    <table>
+                                        <tr ng-repeat="measure in planningType.Measures" style="background-color:lightblue">
+                                            <td style="text-align:left;font-size:10pt;font-weight: bold">
+                                                <span>{{measure.Description}}</span>
+                                            </td>
+                                            <td ng-repeat="value in measure.values track by $index" style="text-align:right">
+                                                <span>{{value | number:0}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr ng-if="subType.Visible" ng-repeat="subType in planningType.SubTypes">
+                                <td style="text-align:right;vertical-align:middle">
+                                    <span>{{subType.Description}}</span>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr ng-repeat="subMeasure in subType.Measures">
+                                            <td class="col-sm-2" style="text-align:right" rowspan="{{ subType.Measures.length==1 ? 2 : 1 }}">
+                                                <span>{{subMeasure.Description}}</span>
+                                            </td>
+                                            <td ng-repeat="value in subMeasure.values track by $index" style="text-align:right" rowspan="{{ subType.Measures.length==1 ? 2 : 1 }}">
+                                                <span>{{value | number:0}}</span>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="subType.Measures.length==1"></tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+     </div>
+        <br />
+</form>
+<script type="text/javascript">
+    $("#detailsId").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>

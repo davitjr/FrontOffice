@@ -1,0 +1,73 @@
+﻿<style type="text/css">
+    *[tabindex]:focus {
+        outline: 3px green solid !important;
+    }
+</style>
+
+<form style=" overflow-y: hidden;  overflow-x: hidden;  width:500px" data-ng-init="GetLoanInfo()"  ng-controller="LeasingCustomerClassificationCtrl" id="addGroundsForNotClassifyingCustomerLoanForm">
+   
+    <div class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li tabindex="5" ng-click="AddGroundsForNotClassifyingCustomerLoan()" ng-keypress="keyPressAddGroundsForNotClassifyingCustomerLoan($event)" style="padding-right:0">
+                <span><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ավելացնել</span>
+            </li>
+            <li tabindex="6" ng-controller="PopUpCtrl" ng-click="CloseBPDialog('addGroundsForNotClassifyingCustomerLoanForm')"  ng-keypress="keyPressCloseBPDialogAddGroundsForNotClassifyingCustomerLoan($event)" style="padding-right:0">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+    </div>
+
+
+    <div>
+        <div class="row" style="padding-bottom:20px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Լիզինգ </div>
+            </div>
+            <div class="col-sm-8">
+                <div>
+                    <select tabindex="1" ng-model="appId" data-ng-options="k as v for (k,v) in loanInfo" name="" id="" style="width:300px ">
+                        <option value="" style="margin-left:25px"></option>
+                    </select>
+                   
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style=" padding-bottom:15px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Զեկուցագրի համար </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <input tabindex="2" type="text" style="width:280px" id="group" ng-model="docNumber">
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style=" padding-bottom:15px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Զեկուցագրի ա/թ </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <input tabindex="3" type="date" ng-model="reportDate" name="Date" style="height:30px;  width:auto" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style=" padding-bottom:15px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Լրացուցիչ նկարագրություն </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <textarea tabindex="4"  rows="3" ng-model="addInfo" cols="40"></textarea>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+

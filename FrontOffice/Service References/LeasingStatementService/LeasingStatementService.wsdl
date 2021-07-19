@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="LeasingStatementService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ILeasingStatementService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://webc021:85/LeasingStatementService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://webc021:85/LeasingStatementService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://webc021:85/LeasingStatementService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/LeasingStatementManagement" />
+      <xsd:import schemaLocation="http://webc021:85/LeasingStatementService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://webc021:85/LeasingStatementService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ILeasingStatementService_GetLeasingStatementSessions_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingStatementSessions" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetLeasingStatementSessions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingStatementSessionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_CreateLeasingStatementSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateLeasingStatementSession" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_CreateLeasingStatementSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateLeasingStatementSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_DeleteLeasingStatementSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteLeasingStatementSession" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_DeleteLeasingStatementSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteLeasingStatementSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_SetCurrentUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetCurrentUser" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_SetCurrentUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetCurrentUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetStatementSessionQualityTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStatementSessionQualityTypes" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetStatementSessionQualityTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStatementSessionQualityTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetLeasingSessionDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingSessionDetails" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetLeasingSessionDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingSessionDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetSatementHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSatementHistory" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetSatementHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSatementHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_StartLeasingStatementSessionSubscription_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartLeasingStatementSessionSubscription" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_StartLeasingStatementSessionSubscription_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartLeasingStatementSessionSubscriptionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_ChangeLeasingStatementSessionStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeLeasingStatementSessionStatus" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_ChangeLeasingStatementSessionStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeLeasingStatementSessionStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_DeleteLeasingStatementSessionSchedule_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteLeasingStatementSessionSchedule" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_DeleteLeasingStatementSessionSchedule_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteLeasingStatementSessionScheduleResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetOneLeasingAdvertisements_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOneLeasingAdvertisements" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetOneLeasingAdvertisements_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOneLeasingAdvertisementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetAllLeasingsAdvertisements_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllLeasingsAdvertisements" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetAllLeasingsAdvertisements_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllLeasingsAdvertisementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetAdvertisementFiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdvertisementFiles" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetAdvertisementFiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdvertisementFilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetAdvertisementFileByID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdvertisementFileByID" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetAdvertisementFileByID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdvertisementFileByIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_UpdateAdvertisementWithNewFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAdvertisementWithNewFile" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_UpdateAdvertisementWithNewFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAdvertisementWithNewFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_InsertAdvertisement_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertAdvertisement" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_InsertAdvertisement_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertAdvertisementResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_DeactivateAdvertisement_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateAdvertisement" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_DeactivateAdvertisement_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateAdvertisementResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetStatements_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStatements" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetStatements_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStatementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetStatementPath_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStatementPath" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_GetStatementPath_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStatementPathResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_RunLeasingStatementSessionSubscription_InputMessage">
+    <wsdl:part name="parameters" element="tns:RunLeasingStatementSessionSubscription" />
+  </wsdl:message>
+  <wsdl:message name="ILeasingStatementService_RunLeasingStatementSessionSubscription_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RunLeasingStatementSessionSubscriptionResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ILeasingStatementService">
+    <wsdl:operation name="GetLeasingStatementSessions">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/GetLeasingStatementSessions" message="tns:ILeasingStatementService_GetLeasingStatementSessions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/GetLeasingStatementSessionsResponse" message="tns:ILeasingStatementService_GetLeasingStatementSessions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateLeasingStatementSession">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/CreateLeasingStatementSession" message="tns:ILeasingStatementService_CreateLeasingStatementSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/CreateLeasingStatementSessionResponse" message="tns:ILeasingStatementService_CreateLeasingStatementSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteLeasingStatementSession">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/DeleteLeasingStatementSession" message="tns:ILeasingStatementService_DeleteLeasingStatementSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/DeleteLeasingStatementSessionResponse" message="tns:ILeasingStatementService_DeleteLeasingStatementSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCurrentUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/SetCurrentUser" message="tns:ILeasingStatementService_SetCurrentUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/SetCurrentUserResponse" message="tns:ILeasingStatementService_SetCurrentUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatementSessionQualityTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/GetStatementSessionQualityTypes" message="tns:ILeasingStatementService_GetStatementSessionQualityTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/GetStatementSessionQualityTypesResponse" message="tns:ILeasingStatementService_GetStatementSessionQualityTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingSessionDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/GetLeasingSessionDetails" message="tns:ILeasingStatementService_GetLeasingSessionDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/GetLeasingSessionDetailsResponse" message="tns:ILeasingStatementService_GetLeasingSessionDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSatementHistory">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/GetSatementHistory" message="tns:ILeasingStatementService_GetSatementHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/GetSatementHistoryResponse" message="tns:ILeasingStatementService_GetSatementHistory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StartLeasingStatementSessionSubscription">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/StartLeasingStatementSessionSubscription" message="tns:ILeasingStatementService_StartLeasingStatementSessionSubscription_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/StartLeasingStatementSessionSubscriptionResponse" message="tns:ILeasingStatementService_StartLeasingStatementSessionSubscription_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeLeasingStatementSessionStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/ChangeLeasingStatementSessionStatus" message="tns:ILeasingStatementService_ChangeLeasingStatementSessionStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/ChangeLeasingStatementSessionStatusResponse" message="tns:ILeasingStatementService_ChangeLeasingStatementSessionStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteLeasingStatementSessionSchedule">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/DeleteLeasingStatementSessionSchedule" message="tns:ILeasingStatementService_DeleteLeasingStatementSessionSchedule_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/DeleteLeasingStatementSessionScheduleResponse" message="tns:ILeasingStatementService_DeleteLeasingStatementSessionSchedule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOneLeasingAdvertisements">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/GetOneLeasingAdvertisements" message="tns:ILeasingStatementService_GetOneLeasingAdvertisements_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/GetOneLeasingAdvertisementsResponse" message="tns:ILeasingStatementService_GetOneLeasingAdvertisements_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllLeasingsAdvertisements">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/GetAllLeasingsAdvertisements" message="tns:ILeasingStatementService_GetAllLeasingsAdvertisements_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/GetAllLeasingsAdvertisementsResponse" message="tns:ILeasingStatementService_GetAllLeasingsAdvertisements_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAdvertisementFiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/GetAdvertisementFiles" message="tns:ILeasingStatementService_GetAdvertisementFiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/GetAdvertisementFilesResponse" message="tns:ILeasingStatementService_GetAdvertisementFiles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAdvertisementFileByID">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/GetAdvertisementFileByID" message="tns:ILeasingStatementService_GetAdvertisementFileByID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/GetAdvertisementFileByIDResponse" message="tns:ILeasingStatementService_GetAdvertisementFileByID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAdvertisementWithNewFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/UpdateAdvertisementWithNewFile" message="tns:ILeasingStatementService_UpdateAdvertisementWithNewFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/UpdateAdvertisementWithNewFileResponse" message="tns:ILeasingStatementService_UpdateAdvertisementWithNewFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertAdvertisement">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/InsertAdvertisement" message="tns:ILeasingStatementService_InsertAdvertisement_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/InsertAdvertisementResponse" message="tns:ILeasingStatementService_InsertAdvertisement_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateAdvertisement">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/DeactivateAdvertisement" message="tns:ILeasingStatementService_DeactivateAdvertisement_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/DeactivateAdvertisementResponse" message="tns:ILeasingStatementService_DeactivateAdvertisement_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatements">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/GetStatements" message="tns:ILeasingStatementService_GetStatements_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/GetStatementsResponse" message="tns:ILeasingStatementService_GetStatements_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatementPath">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/GetStatementPath" message="tns:ILeasingStatementService_GetStatementPath_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/GetStatementPathResponse" message="tns:ILeasingStatementService_GetStatementPath_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RunLeasingStatementSessionSubscription">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILeasingStatementService/RunLeasingStatementSessionSubscription" message="tns:ILeasingStatementService_RunLeasingStatementSessionSubscription_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILeasingStatementService/RunLeasingStatementSessionSubscriptionResponse" message="tns:ILeasingStatementService_RunLeasingStatementSessionSubscription_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ILeasingStatementService" type="tns:ILeasingStatementService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ILeasingStatementService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="GetLeasingStatementSessions">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/GetLeasingStatementSessions" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateLeasingStatementSession">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/CreateLeasingStatementSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteLeasingStatementSession">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/DeleteLeasingStatementSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCurrentUser">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/SetCurrentUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatementSessionQualityTypes">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/GetStatementSessionQualityTypes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingSessionDetails">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/GetLeasingSessionDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSatementHistory">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/GetSatementHistory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartLeasingStatementSessionSubscription">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/StartLeasingStatementSessionSubscription" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeLeasingStatementSessionStatus">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/ChangeLeasingStatementSessionStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteLeasingStatementSessionSchedule">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/DeleteLeasingStatementSessionSchedule" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOneLeasingAdvertisements">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/GetOneLeasingAdvertisements" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllLeasingsAdvertisements">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/GetAllLeasingsAdvertisements" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAdvertisementFiles">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/GetAdvertisementFiles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAdvertisementFileByID">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/GetAdvertisementFileByID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAdvertisementWithNewFile">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/UpdateAdvertisementWithNewFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertAdvertisement">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/InsertAdvertisement" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateAdvertisement">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/DeactivateAdvertisement" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatements">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/GetStatements" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatementPath">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/GetStatementPath" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunLeasingStatementSessionSubscription">
+      <soap12:operation soapAction="http://tempuri.org/ILeasingStatementService/RunLeasingStatementSessionSubscription" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LeasingStatementService">
+    <wsdl:port name="NetTcpBinding_ILeasingStatementService" binding="tns:NetTcpBinding_ILeasingStatementService">
+      <soap12:address location="net.tcp://web1021.acbaca.local:8080/LeasingStatementService.svc/LeasingStatementService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://web1021.acbaca.local:8080/LeasingStatementService.svc/LeasingStatementService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>acbaaccess_test@acbaca.local</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

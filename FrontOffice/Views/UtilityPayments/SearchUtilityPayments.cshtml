@@ -1,0 +1,316 @@
+﻿<style>
+    .form-group-search {
+        margin-bottom: 5px;
+    }
+
+    .nonUnicodeText {
+        font-family: 'Arial Armenian';
+        font-size: 15px;
+    }
+</style>
+
+
+<div ng-if="periodic" class="popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+    <style>
+        .modal-content {
+            width: 820px;
+            min-height: 550px;
+            max-height: 650px;
+            overflow: auto;
+            overflow-x: hidden;
+        }
+    </style>
+    <div>
+        Կոմունալի որոնում
+    </div>
+    <img src="/Content/images/close_pop.png" ng-click="closesearchCommunalModal()" style="margin-top:-10px;">
+</div>
+<form ng-controller="UtilityPaymentSearchCtrl" name="utilitySearchForm" role="form" class="form-horizontal container" data-ng-init="getUtilityTypeDescription();getUtilitySearchDescription();" novalidate style="float:left;">
+
+    <div ng-if="utilityType==16" ng-init="getCommunalsByCustomerCommunalCards()"></div>
+    <div class="col-md-9">
+
+        <br />
+        <div class="my_class" style="margin-left:15px;margin-bottom:5px" ng-if="utilityTypeDescription">
+            {{utilityTypeDescription}}<span ng-if="utilityType!=12 && utilityType!=13"> ծառայության դիմաց վճարում</span>
+        </div>
+
+        <div class="col-sm-11 product-details bhoechie-tab-content">
+            <div class="form-group col-sm-12" ng-if="periodic">
+                <br />
+                <label class="tab_title col-sm-3">Կոմունալի տեսակը</label>
+                <div class="col-sm-7" data-ng-init="getPeriodicUtilityTypes()">
+                    <select class="form-control" ng-model="utilityType" required name="utilitytype" ng-change="getUtilityTypeDescription(utilityType);getUtilitySearchBranches();"
+                            data-ng-options=" k as v for (k,v) in utilitytypes">
+                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք կոմունալի տեսակը...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12" ng-show="utilityType == 3 || utilityType == 4 || utilityType == 5 || utilityType == 6 ">
+                <div class="col-sm-8 ">
+                    <div class="radio" style="color:#245775">
+                        <label class="col-sm-6"><input type="radio" onclick="sessionStorage.removeItem('utilityPayment')" name="optradio" ng-model="abonentType" ng-change="searchCommunal={};utilityType == 4?getCommunalDate(utilityType,abonentType):'';utilityPayments=null" value="1" checked="checked">Ֆիզիկական անձ</label>
+                        <label class="col-sm-6"><input type="radio" onclick="sessionStorage.removeItem('utilityPayment')" name="optradio" ng-model="abonentType" ng-change="searchCommunal={};utilityType == 4?getCommunalDate(utilityType,abonentType):'';utilityPayments=null" value="2">Իրավաբանական անձ</label>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="form-group col-sm-4" ng-show="utilityType == 3 || utilityType == 4 || utilityType == 5 || utilityType == 6">
+                    <div data-ng-init="getUtilitySearchBranches()">
+                        <select class="form-control" ng-model="searchCommunal.Branch" name="searchBranch" id="searchBranch"
+                                data-ng-options=" k as v for (k,v) in utilityBranches">
+                            <option value="" style="margin-left:25px">Ընտրեք մասնաճյուղը</option>
+                        </select>
+                    </div>
+                </div>*@
+
+
+
+            <div class="col-sm-3" ng-show="utilityType == 3 || utilityType == 4 || utilityType == 5 || utilityType == 6 || utilityType == 9 || utilityType == 14">
+                <div class="product-detail-cell product-detail-lable">
+                    Մասնաճյուղ
+                </div>
+                <div data-ng-init="utilityType == 14?getWaterCoDetails():getUtilitySearchBranches()">
+
+
+                    <select ng-show="utilityType == 14" ng-model="COWaterdetail " name="searchBranch" id="searchBranch" class="form-control"  ng-change="searchCommunal.Branch=COWaterdetail.Code;searchCommunal.FilialCode=COWaterdetail.FilialCode;getWaterCoDebtDates(searchCommunal.Branch);getWaterCoBranches(searchCommunal.FilialCode);getWaterCoCitys(searchCommunal.Branch)"
+                            data-ng-options="details.Number +'. '+details.Code+'. '+details.CustomerNumber+'. '+details.FilialCode +' '+details.Description+' ' for details in COWaterdetails">
+                        <option value="" style="margin-left:25px">Ընտրեք մասնաճյուղը</option>
+                    </select>
+
+
+                    <select ng-show="utilityType != 14" ng-model="searchCommunal.Branch" name="searchBranch" id="searchBranch" class="form-control"
+                            data-ng-options="k as v for (k,v) in utilityBranches">
+                        <option value="" style="margin-left:25px">Ընտրեք մասնաճյուղը</option>
+                    </select>
+                    <br />
+                </div>
+            </div>
+            <div class="col-sm-3" ng-show="utilityType == 3 || utilityType == 4 || utilityType == 5 || utilityType == 6 || utilityType==11 || utilityType == 9 || (utilityType==14 && isreestr!='true') || utilityType == 17">
+                <div class="product-detail-cell product-detail-lable">
+                    {{utilityType == 14?'Ջրօգտ.կոդ':'Պայմ. համար'}}
+                </div>
+                <div>
+                    <input type="text" class="form-control" id="setnumber" name="setnumber" ng-required="utilityType==11 || utilityType == 17" ng-model="searchCommunal.AbonentNumber" maxlength="{{utilityType == 17 ? 8 : '' }}" pattern="{{utilityType == 17 ? '^(00|11|13)[0-9]{6}$' : ''}}">
+                </div>
+                <ng-messages ng-if="utilitySearchForm.$submitted || utilitySearchForm.setnumber.$dirty" for="utilitySearchForm.setnumber.$error">
+                    <ng-message when="pattern" class="errors">
+                        Պայմանագրի համարը պետք է սկսվի 00 կամ 11 կամ 13 նիշերով և պարունակի 8 նիշ:
+                    </ng-message>
+                    <ng-message when="required" class="errors">
+                        Մուտքագրեք պայմ. համարը
+                    </ng-message>
+                </ng-messages>
+            </div>
+
+
+            <div class="col-sm-3" ng-if="utilityType==14 && isreestr!='true'">
+                <div class="product-detail-cell product-detail-lable">
+                    Պարտքերի ցուցակ առ
+                </div>
+                <div>
+                    <select ng-model="$parent.DebtListDate" name="searchBranch" id="searchBranch" class="form-control"
+                            data-ng-options="date | mydate | date: 'dd/MM/yyyy' for date in COWaterdates">
+                        <option value="" style="margin-left:25px">Ընտրեք...</option>
+                    </select>
+
+                </div>
+            </div>
+
+
+            <div class="col-sm-3" ng-show="utilityType!=11 && utilityType!=14 && utilityType!=16 && utilityType!=17">
+                <div class="product-detail-cell product-detail-lable">
+                    Հեռախոս
+                </div>
+                <div>
+                    <input type="text"   data-ng-model="searchCommunal.PhoneNumber" ng-change="firstSymbol(searchCommunal.PhoneNumber);" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46"  maxlength="8" name="PhoneNumber" id="PhoneNumber" class="form-control" ng-required="utilityType==7 ||utilityType==8 || utilityType==10 || utilityType==13" />
+
+                </div>
+                <ng-messages ng-if="utilitySearchForm.$submitted || utilitySearchForm.PhoneNumber.$dirty"
+                             for="utilitySearchForm.PhoneNumber.$error">
+                    <ng-message when="required" class="errors">
+                        Մուտքագրեք հեռախոսահամարը
+                    </ng-message>
+                </ng-messages>
+            </div>
+
+            <div class="col-sm-12" ng-show="utilityType == 3 || utilityType == 4 || utilityType == 5 || utilityType == 6 || utilityType == 9 || utilityType == 14" style="padding:0">
+                <div ng-show="abonentType==1 && utilityType!=14" class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ազգանուն
+                    </div>
+                    <div>
+                        <input type="text" data-ng-model="searchCommunal.LastName" class="form-control" />
+                    </div>
+                </div>
+                <div ng-class="{'col-sm-3':abonentType==1,'col-sm-4':abonentType==2}" style="padding-right:9px" ng-show="isreestr!='true'">
+                    <div ng-show="abonentType==1" class="product-detail-cell product-detail-lable">
+                        {{utilityType == 14?'ԱԱՀ':'Անուն'}}
+
+                    </div>
+                    <div ng-show="abonentType==2" class="product-detail-cell product-detail-lable">
+                        Անվանում
+                    </div>
+                    <div>
+                        <input type="text" data-ng-model="searchCommunal.Name" class="form-control" />
+                    </div>
+                </div>
+                <div ng-show="utilityType==14" class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        ՋՕԸ մասնաճյուղ
+                    </div>
+                    <div>
+                        <select ng-model="searchCommunal.CoWaterBranch" name="searchBranch" id="searchBranch" class="form-control"
+                                data-ng-options="k as v for (k,v) in COWaterBranches">
+                            <option value="" style="margin-left:25px">Ընտրեք մասնաճյուղը</option>
+                        </select>
+                    </div>
+                </div>
+                <div ng-show="utilityType==14 && isreestr!='true'" class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Համայնք
+                    </div>
+                    <div>
+                        <select ng-model="searchCommunal.City" name="searchBranch" id="searchBranch" class="form-control"
+                                data-ng-options="k as v for (k,v) in COWaterCitys">
+                            <option value="" style="margin-left:25px">Ընտրեք մասնաճյուղը</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7" ng-show="utilityType == 3 || utilityType == 4 || utilityType == 5 || utilityType == 6 || utilityType == 9" style="padding:0">
+                <div ng-class="{'col-sm-5':abonentType==1,'col-sm-7':abonentType==2}">
+                    <div ng-show="abonentType==1" class="product-detail-cell product-detail-lable">
+                        Փողոց
+                    </div>
+                    <div ng-show="abonentType==2" class="product-detail-cell product-detail-lable">
+                        Հասցե
+                    </div>
+                    <div>
+                        <input type="text" data-ng-model="searchCommunal.Street" class="form-control" />
+                    </div>
+                </div>
+
+                <div ng-show="abonentType==1" class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Շենք
+                    </div>
+                    <div>
+                        <input type="text" data-ng-model="searchCommunal.House" class="form-control" />
+                    </div>
+                </div>
+                <div ng-show="abonentType==1" class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Տուն
+                    </div>
+                    <div>
+                        <input type="text" data-ng-model="searchCommunal.Home" class="form-control" />
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-sm-2" style="padding-top:23px" ng-if="isreestr!='true'">
+                <button ng-if="utilityType!=12 && utilityType!=13 && utilityType!=16" ng-click="utilitySearchForm.$setSubmitted(); utilitySearchForm.$valid && findUtilityPayments()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                <button ng-if="utilityType==12" ng-click="utilitySearchForm.$setSubmitted(); utilitySearchForm.$valid && getCommunalsByPhoneNumber()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                <button ng-if="utilityType==13" ng-click="utilitySearchForm.$setSubmitted(); utilitySearchForm.$valid && getPhonePayments()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+            </div>
+            <div class="col-sm-2" style="padding-top:23px" ng-if="isreestr=='true'">
+
+                <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabelButton" data-toggle="dropdown" ng-controller="PopUpCtrl" ng-click="validateReestrButtonClick(); params={ordertype:118,onlyAMD:true,checkForDebitAccount:1,onlyCash1:true, utilityType: utilityType,nonauthorizedcustomer:SessionProperties.IsNonCustomerService.toString(),abonentFilialCode:COWaterdetail.FilialCode,branch:searchCommunal.CoWaterBranch};reestrButtonValid && openWindow('/UtilityPayment/UtilityPaymentOrder','Կոմունալ վճարման հայտ','utilitypaymentorder')">
+                    Ռեեստրով փոխանցում
+                </button>
+            </div>
+            <div class="form-group" style="margin-left:0" ng-if="utilityType==5 || (utilityType==4 && abonentType!=1) || utilityType==6 || utilityType==9" ng-init="getCommunalDate(utilityType,abonentType)">
+                <div class="col-sm-8 my_class" ng-show="cmnldate">
+                    <span ng-if="utilityType==9" class="glyphicon glyphicon-info-sign" aria-hidden="true"><span>Ներկայացված են &laquo;{{cmnldate.key}}&raquo; ամսվա տվյալները</span></span>
+                    <span ng-if="utilityType!=9" class="glyphicon glyphicon-info-sign" aria-hidden="true">
+                        <span>
+                            Տվյալները ներկայացված են առ &laquo;{{cmnldate.value}}&raquo;<br />
+                            Տվյալները ընդունվել են  &laquo;{{cmnldate.key}}&raquo;
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="margin-left:0">
+                <div class="col-sm-8 ">
+                    <p style="white-space: pre;color:#670505;">{{utilitySearchDescription}}</p>
+                    <errors style="font-size:13px;"></errors>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="product-container" id="search_table" style="margin-left:0;width:91.666%" ng-class="!periodic ? 'col-md-12' : 'col-md-7'">
+            <div class="header-title">
+                Աբոնենտ
+                <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+            </div>
+            <div class="product-collapsable-section">
+                <div class="product-container-header" style="height:22px;">
+                    <div class="col-sm-3">Աբոնենտ</div>
+                    <div class="col-sm-5">Նկարագրություն</div>
+                    <div ng-show="utilityType!=14" class="col-sm-4">Պարտք</div>
+                </div>
+                <div class="product-content-table-full_height custom-scroll" id="statementContent" style="min-height:30px;">
+                    <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                        <tbody>
+                            <tr ng-repeat="utilityPayment in utilityPayments" ng-if="utilityPayments.length!=0 && utilityPayments" ng-dblclick="setDetails($parent.selectedBranch,$parent.Description,$parent.selectedId,$parent.searchedAbonentType,$parent.ComunalType,$parent.abonentDescription,$parent.PrepaidSign);selectDetails()" ng-click="setClickedRow($index,utilityType)" ng-class="{'selected':$index == selectedRow}">
+                                <td class="col-sm-1" style="padding:0;width:43px;">
+                                    <img ng-if="utilityPayment.ComunalType==3" style="margin-top:5px" class="media-object" src="~/Content/Images/hec_ic.png" height="40" width="40">
+                                    <img ng-if="utilityPayment.ComunalType==4" style="margin-top:5px" class="media-object" src="~/Content/Images/ic_gazprom.png" height="40" width="40">
+                                    <img ng-if="utilityPayment.ComunalType==5" style="margin-top:5px" class="media-object" src="~/Content/Images/armWater_ic.png" height="40" width="40">
+                                    <img ng-if="utilityPayment.ComunalType==6" style="margin-top:5px" class="media-object" src="~/Content/Images/Veolia.png" height="40" width="40">
+                                    <img ng-if="utilityPayment.ComunalType==7 || utilityPayment.ComunalType==17" style="margin-top:5px" class="media-object" src="~/Content/Images/beeline_ic.png" height="40" width="40">
+                                    <img ng-if="utilityPayment.ComunalType==8" style="margin-top:5px" class="media-object" src="~/Content/Images/vivacell-mts_ic.png" height="40" width="40">
+                                    <img ng-if="utilityPayment.ComunalType==10" style="margin-top:5px" class="media-object" src="~/Content/Images/ucom_ic.png" height="40" width="40">
+                                    <img ng-if="utilityPayment.ComunalType==11" style="margin-top:5px" class="media-object" src="~/Content/Images/ucom_ic.png" height="40" width="40">
+                                    <img ng-if="utilityPayment.ComunalType==14" style="margin-top:5px" class="media-object" src="~/Content/Images/COWater.png" height="40" width="40">
+                                </td>
+                                <td colspan="3">
+                                    <div class="row-no-margin">
+
+                                        <div class="col-sm-3" style="padding:0">
+                                            {{ ::utilityPayment.AbonentNumber }}
+                                        </div>
+                                        <div class="col-sm-5" style="text-align:center;padding:0">
+                                            {{ ::utilityPayment.Description }}
+                                        </div>
+                                        <div class="col-sm-4" style="text-align:center;padding:0">
+                                            {{ ::utilityPayment.Debt|number:2 }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td ng-show="!periodic" class="col-sm-1 click_toggle" context="contextUtility" id="contextMenu"><div id="contextMenu"></div> </td>
+                            </tr>
+                            <tr ng-if="utilityPayments.length==0">
+                                <td colspan="3">
+                                    <div class="row-no-margin">
+                                        Տվյալներ առկա չեն
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <ul id="contextUtility" class="dropdown-menu" ng-show="!periodic">
+            <li ng-if="$root.SessionProperties.SourceType == 2 && !periodic">
+                <a href="" ng-class="{'my_disable':disabelButton==true}" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={ordertype:60,onlyAMD:true,checkForDebitAccount:1,onlyCash1:true,selectedId: selectedId, selectedBranch: selectedBranch, utilityType: ComunalType, selectedAbonentType: abonentType,nonauthorizedcustomer:SessionProperties.IsNonCustomerService.toString(),PrepaidSign:PrepaidSign,abonentFilialCode: selectedAbonentFilialCode,debtListDate:(ComunalType==3)?cmnldate.key:DebtListDate,selectedDebt:selectedDebt};openWindow('/UtilityPayment/UtilityPaymentOrder','Կոմունալ վճարման հայտ','utilitypaymentorder')">Վճարել կանխիկ</a>
+            </li>
+            <li ng-if="!periodic && $root.SessionProperties.IsNonCustomerService!=true"><a ng-class="{'my_disable':disabelButton==true}" href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={ordertype:15,checkForDebitAccount:0,selectedId: selectedId, selectedBranch: selectedBranch, utilityType: ComunalType, selectedAbonentType: abonentType,PrepaidSign:PrepaidSign,abonentFilialCode: selectedAbonentFilialCode,debtListDate:(ComunalType==3)?cmnldate.key:DebtListDate,selectedDebt:selectedDebt};openWindow('/UtilityPayment/UtilityPaymentOrder','Կոմունալ վճարման հայտ','utilitypaymentorder')":>Վճարել անկանխիկ</a></li>
+            <li ng-if="!periodic"><a href="" ng-class="{'my_disable':disabelButton==true}" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="openWindow('/UtilityPayment/UtilityPaymentDetails','Մանրամասներ','utilitydetails')">Մանրամասներ</a></li>
+            <li ng-if="!periodic && $root.SessionProperties.IsNonCustomerService!=true && utilityType!=16" ng-click="saveCustomerCommunalCard()"><a href="" ng-class="{'my_disable':disabelButton==true}" style="color: black;text-decoration:none!important ;">Ավելացնել կոմունալի քարտին</a></li>
+
+            <li ng-if="!periodic && $root.SessionProperties.IsNonCustomerService!=true && utilityType==16" ng-click="changeCustomerCommunalCardQuality(selectedCommunalCardId)"><a href="" ng-class="{'my_disable':disabelButton==true}" style="color: black;text-decoration:none!important ;">Հեռացնել կոմունալի քարտից</a></li>
+            <li ng-if="!periodic && (ComunalType == 3 || ComunalType == 4 || ComunalType == 6 ||  ComunalType == 9 || ComunalType == 14) "><a href="" ng-class="{'my_disable':disabelButton==true}" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={abonentNumber:selectedId,comunalType:ComunalType,abonentTypeParam:abonentType,debtListDate:(ComunalType==3)?cmnldate.key:DebtListDate,branch:selectedBranch};openWindow('/UtilityPayment/PaidInThisMonth','Տվյալ ամսում վճարված գումար','paidinthismonth')">Տվյալ ամսում վճարված գումար</a></li>
+            <li ng-if="!periodic && (ComunalType == 3) "><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-class="{'my_disable':disabelButton==true}" ng-click="params={abonentNumber:selectedId,branch:selectedBranch};openWindow('/UtilityPayment/ENAPayments','Կատարված վճարումներ','paidinthismonth')">Կատարված վճարումներ</a></li>
+        </ul>
+    </div>
+
+</form>

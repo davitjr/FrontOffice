@@ -1,0 +1,110 @@
+﻿<form name="StatementForm" ng-app="app" ng-controller="CardCtrl" id="cardStatement" ng-init="getcardStatement(card)" ng-submit="StatementForm.$valid && getcardStatement(card)" novalidate>
+
+    <div class="row">
+
+        <div class="col-xs-4">
+            <span class=" product-detail-lable">Սկիզբ</span>
+            <input type="date" ng-model="dateFrom" name="DateFrom" class="form-control my_class"
+                   required>
+            <ng-messages ng-if="StatementForm.$submitted || StatementForm.DateFrom.$dirty"
+                         for="StatementForm.DateFrom.$error">
+                <ng-message when="required" class="errors">
+                    Նշեք ա/թ
+                </ng-message>
+            </ng-messages>
+        </div>
+        <div class="col-xs-4">
+            <span class=" product-detail-lable">Վերջ</span>
+            <input type="date" ng-model="dateTo" name="DateTo" class="form-control my_class" required>
+            <ng-messages ng-if="StatementForm.$submitted || StatementForm.DateTo.$dirty"
+                         for="StatementForm.DateTo.$error">
+                <ng-message when="required" class="errors">
+                    Նշեք ա/թ
+                </ng-message>
+            </ng-messages>
+        </div>
+        <br />
+
+        <div class="col-md-1">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-list"></span> Քաղվածք <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="" ng-click="dateFrom<=dateTo && getcardStatement(card)">Դիտել</a></li>
+                    <li><a href="" ng-click="dateFrom<=dateTo && printCardStatement(card,1,'pdf')">Տպել PDF(հայերեն)</a></li>
+                    <li><a href="" ng-click="dateFrom<=dateTo && printCardStatement(card,2,'pdf')">Տպել PDF(անգլերեն)</a></li>
+                    <li><a href="" ng-click="dateFrom<=dateTo && printCardStatement(card,1,'xls')">Տպել Excel(հայերեն)</a></li>
+                    <li><a href="" ng-click="dateFrom<=dateTo && printCardStatement(card,2,'xls')">Տպել Excel(անգլերեն)</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div ng-if="dateFrom>dateTo" class="col-md-9  errors">Քաղվածքի ժամկետի սկիզբը պետք է փոքր լինի վերջից</div>
+
+
+
+        <div ng-if="cardStatement.InitialBalance!=null" class="col-md-12 ">
+            <br />
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Սկզբնական մնացորդ</div>
+                <div class="product-detail-cell product-detail-value">{{cardStatement.InitialBalanceToString}} {{card.Currency}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Ընդամենը ելքեր</div>
+                <div class="product-detail-cell product-detail-value">{{cardStatement.TotalDebitAmountToString}} {{card.Currency}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Ընդամենը մուտքեր</div>
+                <div class="product-detail-cell product-detail-value">{{cardStatement.TotalCreditAmountToString}} {{card.Currency}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Վերջնական մնացորդ</div>
+                <div class="product-detail-cell product-detail-value">{{cardStatement.FinalBalanceToString}} {{card.Currency}}</div>
+            </div>
+        </div>
+
+        <div class="product-container" style="width:96%">
+            <div class="header-title">
+                Քաղվածք
+                <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+            </div>
+            <div class="product-collapsable-section">
+                <div class="product-container-header" style="height:44px;">
+                    <div class="col-sm-2" style="text-align:center">Գործարքի ա/թ</div>
+                    <div class="col-sm-2" style="text-align:center">Գործարքի գումար</div>
+                    <div class="col-sm-2" style="text-align:center">Ելք</div>
+                    <div class="col-sm-2" style="text-align:center">Մուտք</div>
+                    <div class="col-sm-2" style="text-align:center">Միջնորդա վճար</div>
+                    <div class="col-sm-2" style="text-align:center">Ձևակերպման ա/թ</div>
+                </div>
+                <div class="product-content-table-full_height custom-scroll" id="statementContent" style="min-height:100px;">
+                    <div ng-if="accountStatement.Transactions==undefined">
+                        <loading></loading>
+                    </div>
+                    <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                        <tbody>
+                            <tr ng-repeat="transaction in cardStatement.Transactions">
+                                <td colspan="6">
+                                    <div class="row">
+                                        <div class="col-sm-2">{{::transaction.OperationDate | mydate | date: 'dd/MM/yyyy' }}</div>
+                                        <div class="col-sm-2" style="text-align:-webkit-right;padding:0px;"><span>{{::transaction.OperationAmountToString}} {{::transaction.OperationCurrency}}</span></div>
+                                        <div class="col-sm-2" style="text-align: -webkit-right;color:red"><span>{{::transaction.DebitCredit===1?transaction.AmountToString:' '}}</span></div>
+                                        <div class="col-sm-2" style="text-align: -webkit-right;color:green"><span>{{::transaction.DebitCredit===2?transaction.AmountToString:' '}}</span></div>
+                                        <div class="col-sm-2" style="text-align:-webkit-right;"><span>{{::transaction.CommissionFeeToString }}</span></div>
+                                        <div class="col-sm-2"><span>{{::transaction.TransactionDate | mydate | date: 'dd/MM/yyyy' }}</span>
+                                        <br /><span style="font-size: 10px;">{{::transaction.DateOfVale | mydatetime }}</span>
+                                        </div>
+                                    </div>
+                                    <div colspan="6" style="font-family:'Arian AMU';margin-top:10px;">{{::transaction.Description}}</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</form>

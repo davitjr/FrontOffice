@@ -1,0 +1,311 @@
+﻿<style type="text/css">
+    .product-container {
+        width: 750px;
+    }
+</style>
+<sessionproperties></sessionproperties>
+<form name="ReceivedBankMailTransfersForm" ng-app="app" ng-controller="ReceivedBankMailTransfersCtrl" id="ReceivedBankMailTransfers" data-ng-init="getTransfers() " ng-submit="ReceivedBankMailTransfersForm.$valid && getTransfers()">
+    <div class="product-details bhoechie-tab-content" style="min-width:730px;margin-left:10px;max-width:750px">
+        <div class="row" style="padding-bottom: 10px;">
+            <div class="col-sm-12 ">
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Սկիզբ
+                    </div>
+                    <input type="date" ng-model="filter.DateFrom" name="DateFrom" class="form-control"
+                           required>
+                    <ng-messages ng-if="ReceivedBankMailTransfersForm.$submitted || ReceivedBankMailTransfersForm.DateFrom.$dirty"
+                                 for="ReceivedBankMailTransfersForm.DateFrom.$error">
+                        <ng-message when="required" class="errors">
+                            Նշեք ա/թ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Վերջ
+                    </div>
+                    <input type="date" ng-model="filter.DateTo" name="DateTo" class="form-control"
+                           required>
+                    <ng-messages ng-if="ReceivedBankMailTransfersForm.$submitted || ReceivedBankMailTransfersForm.DateTo.$dirty"
+                                 for="ReceivedBankMailTransfersForm.DateTo.$error">
+                        <ng-message when="required" class="errors">
+                            Նշեք ա/թ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+      
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Կարգավիճակ
+                    </div>
+                    <div >
+
+
+                        <select data-ng-model="filter.Status" class="form-control">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                            <option value="1" style="margin-left:25px">Ձևակերպված</option>
+                            <option value="2" style="margin-left:25px">Չձևակերպված</option>
+                        </select>
+
+                    </div>
+                </div>
+                <br />
+                <div class="col-sm-2  ">
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                </div>
+
+            </div>
+        </div>
+
+ 
+
+
+        <div class="row" style="padding-bottom: 10px;">
+            <div class="col-sm-12  ">
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Մասնաճյուղ
+                    </div>
+                    <div data-ng-init="getFilialList()">
+                        <loading-control scopevariable="filialList"></loading-control>
+                        <select ng-show="filialList"  data-ng-model="filter.Filial" name="Filial" id="Filial" ng-disabled="Filial!=22000" class="form-control">
+                            <option ng-repeat="k in ::filialList" value="{{k.id}}">{{k.name}}</option>
+                        </select>
+
+                    </div>
+                </div>
+                 <div class="col-sm-4  ">
+                    <div class="product-detail-cell product-detail-lable"  style="padding-left:85px">
+                        Գումար
+                    </div>
+                    <div >
+                        <div class="col-sm-6  " style=" padding-left: 0px;    padding-right: 5px;">
+                            <input type="text" data-ng-model="filter.Amount" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' fcsa-number />
+                        </div>
+                        <div class="col-sm-6  " style=" padding-left: 5px;    padding-right: 0px;">
+                             <input type="text" data-ng-model="filter.MaxAmount" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' fcsa-number />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Արժույթ
+                    </div>
+                    <div data-ng-init="getCurrencies()">
+                        <loading-control scopevariable="currencies"></loading-control>
+                        <select ng-show="currencies" data-ng-model="filter.Currency" class="form-control" data-ng-options="k as v for (k,v) in currencies" id="Currency" name="Currency">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-4 ">
+                    <div class="product-detail-cell product-detail-lable" >
+                        Ֆայլի անվանում
+                    </div>
+                             <input type="text" data-ng-model="filter.Ident" class="form-control"   />
+                </div>
+ 
+                
+            </div>
+        </div>
+        <div class="row" style="padding-bottom: 10px;">
+            <div class="col-sm-12  ">
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Բանկ
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="filter.DebetBank">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ուղարկողի հաշիվ
+                    </div>
+                    <div>
+                        <input type="text" class="form-control" id="DebetAccount" name="DebetAccount" ng-model="filter.DebetAccount">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ստացողի հաշիվ
+                    </div>
+                    <div>
+                        <input type="text" class="form-control" id="CreditAccount" name="CreditAccount" ng-model="filter.CreditAccount">
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="product-detail-cell product-detail-lable">
+                        Նկարագրություն
+                    </div>
+                    <div>
+                        <input type="text" class="form-control" id="Description" name="Description" ng-model="filter.Description">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12  ">
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Համընկնում
+                    </div>
+                    <div>
+
+                        <select data-ng-model="filter.Verified" class="form-control">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                            <option value="1" style="margin-left:25px">Համընկնում չկա</option>
+                            <option value="2" style="margin-left:25px">Համընկնում</option>
+                            <option value="3" style="margin-left:25px">Ստուգված</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        AML Հաստատում
+                    </div>
+                    <div>
+
+                        <select data-ng-model="filter.AMLCheck" class="form-control">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                            <option value="0" style="margin-left:25px">Առանց AML հաստատման</option>
+                            <option value="1" style="margin-left:25px">AML չհաստատված</option>
+                            <option value="2" style="margin-left:25px">AML հաստատված</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Պարզված
+                    </div>
+                    <div>
+
+                        <select data-ng-model="filter.UnknownTransfer" class="form-control">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                            <option value="0" style="margin-left:25px">Պարզված</option>
+                            <option value="1" style="margin-left:25px">Չպարզված</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Նկ. ստուգում
+                    </div>
+                    <div>
+
+                        <select data-ng-model="filter.DescrOK" class="form-control">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                            <option value="???" style="margin-left:25px">???</option>
+                            <option value="OK" style="margin-left:25px">OK</option>
+                        </select>
+
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                       Ստուգված
+                    </div>
+                    <div>
+
+                        <select data-ng-model="filter.IsChecked" class="form-control">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                            <option value="0" style="margin-left:25px">Չստուգված</option>
+                            <option value="1" style="margin-left:25px">Ստուգված</option>
+                            <option value="2" style="margin-left:25px">ԴԱՀԿ</option>
+                        </select>
+
+                    </div>
+                </div>
+         
+
+            </div>
+        </div>
+    </div>
+
+
+    <loading></loading>
+
+    <div ng-if="showCount" style="color: red; font-size: 16px; padding-left: 15px;">Ուշադրություն ցուցադրված են {{transfersCount}} փոխանցումներից {{transfersShow}}-ը</div>
+
+    <div class="product-container" style="min-width:730px;margin-left:10px;">
+
+        <div>
+
+            <div class="row" style="padding:10px">
+                <div class="col-sm-2 " style="text-align: left; font-size: 16px; font-weight:600">Փոխանցումներ  </div>
+                <div class="col-sm-3 " style="text-align: right; font-size: 16px; padding-right:0">ընդամենը գումար՝ </div>
+                <div class="col-sm-2" style="text-align: left; font-size: 16px; font-weight: 600;"> {{TotalAmount  | number :2}}</div>
+                <div class="col-sm-5" style="text-align: right; font-size: 16px">  քանակ՝ <span style=" font-weight: 600"> {{transfersShow}}</span></div>
+
+
+            </div>
+
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="col-sm-5">Փոխանցում </div>
+                <div class="col-sm-2" style="text-align: left">Գումար</div>
+                <div class="col-sm-5" style="text-align:left; padding-left:70px">Տվյալներ</div>
+            </div>
+            <div class="product-content-table custom-scroll" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="transfer in transfers" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" style="max-height:200px">
+                            <td class="col-sm-5">
+                                <div>
+                                    Ա/թ`  {{ ::transfer.DateGetString }}
+                                    <br />
+                                    <span>Ուղարկող` {{::transfer.DescrDebetCB}}</span>
+                                    <br />
+                                    <span>Ստացող` {{::transfer.DescrDebet}}</span>
+                                    <br />
+                                    <span>Նկարագրություն` {{::transfer.DescrPoxancym}}</span>
+                                </div>
+                            </td>
+                            <td class="col-sm-3">
+                                <div>
+                                    <span> {{::transfer.Amount | number :2}} {{::transfer.Valuta}}</span>
+                                </div>
+                            </td>
+                            <td class="col-sm-3">
+                                <span style="font-style:italic ">{{::transfer.UserCodeString}}  </span>
+                                <span style="font-style:italic "> <br /> {{transfer.TransOK==1?'Ձևակերպված': 'Չձևակերպված'}}  </span>
+                                <span style="font-style:italic "> <br /> {{::transfer.FileForBranch}}  </span>
+                                <span style="font-style:italic " ng-if="transfer.VerifiedString!=''"> <br /> {{::transfer.VerifiedString}} </span>
+
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="contextOrders" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div ng-if="transfers.length==0" style="color:red;font-size:16px;text-align:center;">Նշված պայմաններով փոխանցումներ հայտնաբերված չեն</div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+    <ul id="contextOrders" class="dropdown-menu">
+        <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-controller="ReceivedBankMailTransfersCtrl" class="my_button" ng-click="showModalOrder()">Դիտարկում</a></li>
+      </ul>
+
+</form>

@@ -1,0 +1,75 @@
+﻿@{
+    Layout = null;
+}
+
+
+<form style="width:620px" ng-controller="ArcaCardsTransactionOrderCtrl" ng-init="GetArcaCardsTransactionOrder(selectedOrderId)">
+    <loading-control scopevariable="order.Id"></loading-control>
+
+    <div id="arcaCardsTransactionOrder_menu"  ng-if="$root.SessionProperties.IsCalledFromHB != true" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0">
+        <ul id="menu" class="dialog-menu">
+
+            <li class="root-menu-item-5 " ng-if="order.Quality!=undefined && order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && order.Quality !=50" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetTransitPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+            </li>
+
+        </ul>
+    </div>
+    <div class="product-details bhoechie-tab-content" style="min-width:620px;padding-left:10px">
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.CardNumber}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="$root.SessionProperties.IsCalledFromHB != true">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{order.OperationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մասնաճյուղի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.FilialCode}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործողություն</div>
+            <div class="product-detail-cell product-detail-value">{{order.ActionTypeDescription}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պատճառ</div>
+            <div class="product-detail-cell product-detail-value">{{order.ActionReasonDescription}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="order.Comment">
+            <div class="product-detail-cell product-detail-lable">Մեկնաբանություն</div>
+            <div class="product-detail-cell product-detail-value">{{order.Comment}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{order.QualityDescription}}</div>
+        </div>
+
+        <hr />
+        <div ng-if="order.Quality==31">
+            <div class="product-detail-cell product-detail-lable" style="clear:both;color:#6F6A6A;font-weight:bold; width:157px">Մերժման պատճառ`</div>
+            <div class="product-detail-cell product-detail-value redStyle">{{ order.RejectReasonDescription }}</div>
+        </div>
+    </div>
+    <br />
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px" ng-if="$root.SessionProperties.IsCalledFromHB != true">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+</form>

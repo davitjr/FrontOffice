@@ -1,0 +1,173 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    #freezeDetailsTable {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: 900px;
+    }
+
+
+        #freezeDetailsTable td, th {
+            border: 1px solid #cecece;
+            width: 100px;
+            font-size: 12px;
+        }
+
+        #freezeDetailsTable top th {
+            font-size: 12px;
+        }
+
+    #tbl table .top td {
+        font-size: 12px;
+    }
+</style>
+
+<div id="AmountAvailabilitySetting" name="AmountAvailabilitySetting" ng-controller="DAHKCtrl" ng-init="getDahkDetails()">
+    <div class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click=" makeAvailable(availableAmount);" ng-if="accountNumberChoosed">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Կատարել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('amountavailabilitysetting')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+
+    <div class="row">        
+            <label class="tab_title col-sm-2" for="AccountNumber">Հաշիվներ</label>
+            <div class="col-sm-4 row">
+                    <select data-ng-model="accountNumber" name="accountNumber" id="accountNumber" style="margin-left: 5px;"
+                            class="form-control" data-ng-options="k as v for (k,v) in accountNumbers" ng-change="accountNumberChanged(accountNumber)">
+                        <option value="" hidden="hidden" style="margin-left:25px;margin-top:8px">Ընտրեք...</option>
+                    </select>
+             </div>   
+       
+            <label class="tab_title col-sm-2" for="account" style="margin-left: 50px;padding-right: 0px;">Հաշվեհամար</label>
+            <div class="col-sm-2" style="padding-left: 0px;">                   
+                    <input data-ng-model="accountNumberFromUser" name="account" id="account" type="text" style="width:200px;margin-left:0px; text-align:right"
+                            class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46" ng-blur="searchAccountForMakingAvailable(accountNumberFromUser)">
+                   
+            </div>           
+       
+    </div>
+
+    <div class="row">
+      
+            <label class="tab_title col-sm-2" for="inquestCodeFiltered" style="margin-left: 15px;margin-top: 5px;padding-right: 0px;">Վարույթի կոդ</label>
+            <div class="col-sm-4 row">
+                    <select style=" width: 277px;margin-top: 5px;" data-ng-model="inquestCodeFiltered" name="inquestCodeFiltered" id="inquestCodeFiltered" class="form-control"
+                            data-ng-options="dd.InquestCode for dd in currentDahkInquests" ng-change="filter()" >
+                        <option value="" style="margin-left:25px;">Ընտրեք...</option>
+                    </select>
+              
+            </div> 
+      
+
+        
+            <label class="tab_title col-sm-2" for="Amount" style="margin-top: 5px;padding-left: 0px;padding-right: 0px;margin-left: 50px;width: 124px;">Գումար</label>
+            <div class="col-sm-2">               
+                    <input type="text" style="margin-top: 5px;width:110px;margin-left:0px;text-align:right" class="form-control" id="Amount" name="Amount" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46" data-ng-model="availableAmount" required>
+                          
+            </div>
+
+    </div>
+
+        <div class="product-container" style="width:auto;min-width:670px">
+
+            <div class="header-title">
+                Գործող վարույթների մասով առկա սառեցումներ
+                <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+            </div>
+
+            <div class="product-collapsable-section ">
+                <div id="freezeDetailsTable" class="product-content-table " style="min-height:100px;padding:0px;margin:5px;">
+                    <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                        <thead class="product-container-header">
+                            <tr>
+                                <td style="text-align:center;width:16px;"></td>
+                                <td style="text-align:center;width:90px;">Հաղորդագրության ա/թ</td>
+                                <td style="text-align:center;width:104px;">Հաղորդագրության համար</td>
+                                <td style="text-align:center;width:80px;">Վարույթի կոդ</td>
+                                <td style="text-align:center;width:80px;">Արգելանքի գումար</td>
+                                <td style="text-align:center;width:60px;">Արժույթ</td>
+                                <td style="text-align:center;width:70px;">Սառեցված գումար</td>
+                                <td style="text-align:center;width:110px;">Սառեցման հաշիվ</td>
+                                <td style="text-align:center;width:80px;">Սառեցման ա/թ</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="freezeDetail in accountFreezeDetails" class="">
+                                <td style="width:10px"><input type="checkbox" ng-checked="check" class="ng-pristine ng-valid ng-empty ng-touched" ng-model="freezeDetail.Checked" ng-change="ifCheckedFreezedAmount(freezeDetail.Checked,freezeDetail.FreezedAmount,freezeDetail.BlockedAmountCurrency)"></td>
+                                <td style="text-align:right">{{::freezeDetail.RequestDate | mydate | date: 'dd/MM/yyyy'}}</td>
+                                <td style="text-align:right">{{::freezeDetail.MessageID}}</td>
+                                <td style="text-align:right">{{::freezeDetail.InquestID}}</td>
+                                <td style="text-align:right">{{::freezeDetail.BlockedAmount | number:2}}</td>
+                                <td style="text-align:center">{{::freezeDetail.BlockedAmountCurrency}}</td>
+                                <td style="text-align:center">{{::freezeDetail.FreezedAmount | number:2}}</td>
+                                <td style="text-align:center">{{::freezeDetail.FreezedAccount}}</td>
+                                <td style="text-align:center">{{::freezeDetail.FreezeDate  | mydate | date: 'dd/MM/yyyy'}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <br />
+                    <div ng-if="accountNumberChoosed" data-ng-repeat="item in dahkProductAccountsDetails">
+                       
+                        <div class="col-sm-4">
+                            <span class="tab_title " style="font-style:italic">
+                                {{item[0]}}    {{item[1]}}
+                            </span>
+                            <div >
+
+                                <div class="col-sm-12">
+                                    <br />
+                                    <div class="product-detail-row">
+                                        <div class="product-detail-cell product-detail-lable">Սկզբնական մնացորդ</div>
+                                        <div class="product-detail-cell product-detail-value">{{item[2]}} </div>
+                                    </div>
+                                    <div class="product-detail-row">
+                                        <div class="product-detail-cell product-detail-lable">Ընդամենը ելքեր</div>
+                                        <div class="product-detail-cell product-detail-value">{{item[3]}} </div>
+                                    </div>
+
+                                    <div class="product-detail-row">
+                                        <div class="product-detail-cell product-detail-lable">Ընդամենը մուտքեր</div>
+                                        <div class="product-detail-cell product-detail-value">{{item[4]}} </div>
+                                    </div>
+                                    <div class="product-detail-row">
+                                        <div class="product-detail-cell product-detail-lable">Վերջնական մնացորդ</div>
+                                        <div class="product-detail-cell product-detail-value">{{item[5]}} </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("#freezeDetailsTable").mCustomScrollbar({
+            theme: "rounded-dark",
+            scrollButtons: {
+                scrollAmount: 200,
+                enable: true
+            },
+            mouseWheel: {
+                scrollAmount: 200
+            }
+        });
+    </script>
+
+

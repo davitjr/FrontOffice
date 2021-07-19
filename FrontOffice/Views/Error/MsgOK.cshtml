@@ -1,0 +1,28 @@
+﻿
+<div style="max-width:500px;">
+    <span class="my_text1" style="text-align:center;font-size:17px">{{text}}</span>
+
+    <div  class="col-sm-12" ng-if="showError==true" style="text-align:left;padding-top:20px;">
+        <errors></errors>
+    </div>
+    <div ng-if="ResultCode==1 && warningsForCasher.length>0" class="row panel panel-warning">
+        <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span> Ուշադրություն</div>
+        <div class="panel-body">
+            <div ng-repeat="war in warningsForCasher">
+                {{::war.Description}}
+            </div>
+        </div>
+    </div>
+    <div ng-if="ResultCode==7" >
+
+            <div ng-repeat="inf in infos">
+                <span class="my_text1" style="text-align:center;font-size:17px"><span class="glyphicon glyphicon-info-sign"></span> {{inf.Description}}</span>
+            </div>
+
+    </div>
+    <br />
+    <div>
+        <div class="col-sm-5"></div>
+        <button ng-controller="PopUpCtrl" ng-click="msgOkDialog()" class=" btn btn-sm btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;OK</button>
+    </div>
+</div>

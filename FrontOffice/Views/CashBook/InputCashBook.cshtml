@@ -1,0 +1,114 @@
+﻿<div id="inputCashBookLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form id="inputCashBook" ng-controller="CashBookCtrl" style="width:750px;overflow-x:hidden" name="InputCashBook" role="form" class="form-horizontal" data-ng-init="initCashBook();getCorSetNumber()" labels-required>
+    <div id="inputCashBook_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-3 " ng-if="RowType==1 || RowType==3" ng-click="InputCashBook.$setSubmitted();InputCashBook.$valid && getPersonalPaymentOrderDetails(false,true)">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Հանձնարարական</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="InputCashBook.$setSubmitted();InputCashBook.$valid && SaveAndApprove();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('inputCashBook')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+    </div>
+    <div ng-init="generateNewOrderNumber()">
+        <div style="max-width:600px;margin-left:5px">
+            <errors></errors>
+        </div>
+        <div class="form-group col-sm-12" style="padding-left:20px">
+            <section class="panel panel-success">
+                <div class="panel-body">
+                    <div class="form-group col-sm-12">
+                        <label class="tab_title col-sm-1 text-right" style="padding-left:0px;margin-left:3px;">Ա/թ</label>
+                            <div class="col-sm-3">
+                                <div class="row">
+                                    <div class="input-group col-sm-12">
+                                        <input disabled="disabled" type="text" class="form-control tab_title" style="margin-left: 55px;width: 130px;padding: 5px;" value="{{RegistrationDate | date: 'dd/MM/yyyy HH:mm'}}">
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+
+                        <label class="tab_title col-sm-1 text-right" style="padding-left: 3px;margin-right:30px">ՊԿ</label>
+                        <div class="col-sm-2">
+                            <div class="row">
+                                <div class="input-group col-sm-12">
+                                    <input disabled="disabled" type="text" class="form-control tab_title" style="text-align: left;margin-left:28px;width:130px" data-ng-model="RegisteredUserID">
+                                </div>
+                            </div>
+                        </div>
+                        <usersetnumber disabled="!(SessionProperties.AdvancedOptions.isHeadCashBook=='1')" ngchange="setOperationType()" setnumber="CorrespondentSetNumber" formname="InputCashBook" labelname="Թղթակից ՊԿ"></usersetnumber>                   
+                    </div>
+                    <div class="form-group col-sm-12" data-ng-init="getOperationTypes(true);getRowTypes(true)">
+                        <label class="tab_title col-sm-2 text-right" style="padding-left:0px;text-align:left;margin-left:3px;">Մուտք/Ելք</label>
+                        <div class="col-sm-2">
+                            <div class="row">
+                                <div class="input-group col-sm-12">
+                                    <loading-control scopevariable="OperationTypes"></loading-control>
+                                    <select style="width:130px;" ng-disabled="(CorrespondentSetNumber!='0' || SessionProperties.AdvancedOptions.isHeadCashBook!='1' || RowType==1 || RowType==3) && (RowType!=undefined || RowType!=0 || SessionProperties.AdvancedOptions.isHeadCashBook!='1' || CorrespondentSetNumber!='0' )" ng-show="OperationTypes" data-ng-model="OperationType" name="OperationType" id="OperationType" class="form-control"
+                                            data-ng-options="OperationType.Key as OperationType.Value for OperationType in OperationTypes" ng-init="OperationType = 1"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="tab_title col-sm-1 text-right" style="margin-left:25px">Տեսակ</span>
+                        <div class="col-sm-4" style="margin-left:50px">
+                            <loading-control scopevariable="rowTypes"></loading-control>
+                            <select ng-disabled="linkedCashBook != undefined" ng-show="rowTypes" ng-init="RowType = (linkedCashBook != undefined) ? linkedCashBook.RowType : RowType" data-ng-model="RowType" ng-change="UpdateOperationType()" name="rowType" id="rowType" class="form-control"
+                                    data-ng-options="k as v for (k,v) in rowTypes">
+                                <option value="" hidden>Ընտրեք...</option>
+                            </select>
+                        </div>
+                        @*<span ng-if="linkedCashBook" class="tab_title col-sm-2 text-right" style="margin-left:-28px;">Դրամապահոց</span>
+                        <div ng-if="linkedCashBook" class="col-sm-1 ">
+                            <input ng-disabled="linkedCashBook != undefined" type="checkbox" class="form-control checkbox-inline" style="width:18px" id="bankVault" name="bankVault" data-ng-model="BankVault" ng-true-value="true" ng-false-value="false">
+                        </div>*@
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="form-group col-sm-12" style="padding-left:20px">
+            <section class="panel panel-success">
+                <header class="panel-heading">
+                    <span class="panel-title" style="font-size:14px;">Գումար</span>
+                </header>
+                <div class="panel-body" style="padding-left:30px">
+                    <div class="form-group col-sm-6" ng-repeat="amount in amounts" ng-init="tabIndex = 0" style="margin-bottom: 20px !important">
+                        <div class="row">
+                            <div class="input-group col-sm-9">
+                                <input name="amount_{{$index}}" ng-disabled="linkedCashBook != undefined || ((RowType == 1 || RowType == 3) && selectedCurrency != undefined && selectedCurrency != amount.currency)" ng-blur="checkSelected()" tabindex="{{($index % 2) == 0 ? 1 : 2 }}" type="text" data-ng-model="amount.amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' class="form-control tab_title" fcsa-number>
+                                <span class="input-group-addon">{{amount.currency}}</span>
+                            </div>
+                        </div>
+                        
+
+                        <div class="row ">
+                            <ng-messages ng-if="InputCashBook.$submitted || InputCashBook['amount_' + $index].$dirty"
+                                         for="InputCashBook['amount_' + $index].$error">
+                                <ng-message when="fcsaNumber" class="errors">
+                                    Գումարը սխալ է լրացված
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+            <br />
+            <div class="form-group col-sm-12">
+                <label class="tab_title col-sm-2 text-right" style="padding-left: 9px;">Լրացուցիչ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="input-group col-sm-12">
+                            <input ng-disabled="linkedCashBook != undefined" type="text" class="form-control tab_title" style="text-align: left;min-width:459px;" data-ng-model="description" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

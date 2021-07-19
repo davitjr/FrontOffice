@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b3d5297f-85ad-4690-b58d-65dc49363801" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://wcf01-test:85/CardStatementService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CardStatementService.xsd" MetadataType="Schema" ID="09541cc9-b471-41da-b4b8-5ad2238d0dbf" SourceId="1" SourceUrl="http://wcf01-test:85/CardStatementService.svc?xsd=xsd4" />
+    <MetadataFile FileName="CardStatementService.disco" MetadataType="Disco" ID="9714c2c6-c0a8-4900-be7a-1fa30bcd93a6" SourceId="1" SourceUrl="http://wcf01-test:85/CardStatementService.svc?disco" />
+    <MetadataFile FileName="CardStatementService1.xsd" MetadataType="Schema" ID="fc23a5ed-e89e-4dd0-8580-a504fce38796" SourceId="1" SourceUrl="http://wcf01-test:85/CardStatementService.svc?xsd=xsd0" />
+    <MetadataFile FileName="CardStatementService2.xsd" MetadataType="Schema" ID="c0d05262-fb2e-4fee-802a-5d4b0f1c2beb" SourceId="1" SourceUrl="http://wcf01-test:85/CardStatementService.svc?xsd=xsd1" />
+    <MetadataFile FileName="CardStatementService.wsdl" MetadataType="Wsdl" ID="f864e358-dbbb-4f0d-9ddf-af4fea9dd56c" SourceId="1" SourceUrl="http://wcf01-test:85/CardStatementService.svc?wsdl" />
+    <MetadataFile FileName="CardStatementService3.xsd" MetadataType="Schema" ID="737c178e-d1d7-4723-9424-fbd556435909" SourceId="1" SourceUrl="http://wcf01-test:85/CardStatementService.svc?xsd=xsd3" />
+    <MetadataFile FileName="CardStatementService4.xsd" MetadataType="Schema" ID="696c444f-de4c-4146-bc4b-d487cda9d718" SourceId="1" SourceUrl="http://wcf01-test:85/CardStatementService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

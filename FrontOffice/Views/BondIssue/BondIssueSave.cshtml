@@ -1,0 +1,588 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #BondIssueSaveForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+
+
+<div id="bondIssueSaveLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="BondIssueCtrl" name="BondIssueSaveForm" id="BondIssueSaveForm" data-ng-init="getBondIssuerTypes();initBondIssue(); " role="form" style="min-width:600px;min-height:570px;" novalidate class="form-horizontal" labels-required-always>
+
+    <div id="BondIssueSave_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="BondIssueSaveForm.$setSubmitted();BondIssueSaveForm.$valid  && saveBondIssue();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newbondissue')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div class="col-sm-7" style="padding:0;padding-left:5px;">
+
+        <div class="col-sm-12" style="max-width:650px">
+
+            <div style="max-width:630px">
+                <errors></errors>
+            </div>
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-6 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12 ">
+                        <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="bondIssueNew.RegistrationDate" required>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-6 " for="IssuerType">Թողարկողի տեսակ</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12">
+                        <loading-control scopevariable="issuerTypes"></loading-control>
+                        <select ng-disabled="bondIssueNew.Quality != 1" ng-model="bondIssueNew.IssuerType" name="IssuerType" id="IssuerType" ng-change="issuerTypeChange()" class="form-control" style="text-align: left;"
+                                data-ng-options="k as v for (k,v) in issuerTypes" required>
+                            <option value="" hidden>Ընտրեք տեսակը ...</option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="panel panel-success" style="margin-bottom: 10px;">
+                <div class="panel-heading">Տվյալ թողարկման պարտատոմսերի տեղեկատվություն</div>
+                <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+                    <div class="form-group">
+                        <label class="tab_title col-sm-6 " for="ISIN">ԱՄՏԾ (ISIN)</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="bondIssueNew.Quality != 1" class="form-control tab_title unstyled" style="text-align: left;" id="ISIN" name="ISIN" ng-model="bondIssueNew.ISIN" required />
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.ISIN.$dirty"
+                                             for="BondIssueSaveForm.ISIN.$error">
+                                    <ng-message when="required" class="errors">
+                                        ԱՄՏԾ-ն մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-group" ng-if="bondIssueNew.IssuerType != undefined && bondIssueNew.IssuerType != 3">
+                        <label class="tab_title col-sm-6 " for="PeriodType">Ժամկետի տեսակ<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12" data-ng-init="getBondIssuePeriodTypes()">
+                                    <loading-control scopevariable="periodTypes"></loading-control>
+                                    <select ng-disabled="bondIssueNew.Quality != 1" ng-model="bondIssueNew.PeriodType" name="PeriodType" id="PeriodType" class="form-control" style="text-align: left;"
+                                            data-ng-options="k as v for (k,v) in periodTypes" required ng-disabled="bondIssueNew.IssuerType == 3">
+                                        <option value="" hidden>Ընտրեք տեսակը ...</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.Currency.$dirty"
+                                             for="BondIssueSaveForm.PeriodType.$error">
+                                    <ng-message when="required" class="errors">
+                                        Ժամկետի տեսակը մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" ng-if="bondIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="ReplacementDate">Տեղաբաշխման սկիզբ<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input type="date" ng-disabled="bondIssueNew.Quality != 1" class="form-control" style="text-align: left;" ng-change="calculateRepaymentDate()" id="ReplacementDate" name="ReplacementDate" ng-model="bondIssueNew.ReplacementDate" required />
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.ReplacementDate.$dirty"
+                                             for="BondIssueSaveForm.ReplacementDate.$error">
+                                    <ng-message when="required" class="errors">
+                                        Տեղաբաշխման սկիզբը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="date" class="errors">
+                                        Տեղաբաշխման սկիզբը սխալ է նշված
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="bondIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="ReplacementEndDate">Տեղաբաշխման ավարտ<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input type="date" class="form-control" style="text-align: left;" id="ReplacementEndDate" name="ReplacementEndDate" ng-model="bondIssueNew.ReplacementEndDate" required />
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.ReplacementEndDate.$dirty"
+                                             for="BondIssueSaveForm.ReplacementEndDate.$error">
+                                    <ng-message when="required" class="errors">
+                                        Տեղաբաշխման ավարտը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="date" class="errors">
+                                        Տեղաբաշխման ավարտը սխալ է նշված
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="bondIssueNew.IssuerType != undefined && bondIssueNew.IssuerType != 3">
+                        <label class="tab_title col-sm-6 " for="IssueDate">Թողարկման ամսաթիվ<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input type="date" ng-disabled="bondIssueNew.Quality != 1" class="form-control" style="text-align: left;" id="IssueDate" name="IssueDate" ng-model="bondIssueNew.IssueDate" required />
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.IssueDate.$dirty"
+                                             for="BondIssueSaveForm.IssueDate.$error">
+                                    <ng-message when="required" class="errors">
+                                        Թողարկման ամսաթիվը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="date" class="errors">
+                                        Թողարկման ամսաթիվը սխալ է նշված
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+             
+
+
+                    <div class="form-group" ng-if="bondIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="BankAccount">Պարտատոմսերի ձեռքբերման Բանկի հաշվեհամար<span class='redStyle'> <b>(3531P)</b>  *</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input class="form-control tab_title unstyled" ng-disabled="bondIssueNew.Quality != 1" onkeypress='return event.charCode >= 48 && event.charCode <= 57' style="text-align: left;"
+                                           id="BankAccount" name="BankAccount" ng-model="bondIssueNew.BankAccount.AccountNumber" maxlength="17" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.BankAccount.$dirty"
+                                             for="BondIssueSaveForm.BankAccount.$error">
+                                    <ng-message when="required" class="errors">
+                                        Պարտատոմսերի ձեռքբերման Բանկի հաշվեհամարը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Պարտատոմսերի ձեռքբերման Բանկի հաշվեհամարը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="tab_title col-sm-6 " for="Currency">Արժույթ</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12" data-ng-init="getCurrencies()">
+                                    <loading-control scopevariable="currencies"></loading-control>
+                                    <select ng-disabled="bondIssueNew.Quality != 1" ng-model="bondIssueNew.Currency" name="Currency" id="Currency" class="form-control" style="text-align: left;"
+                                            data-ng-options="k as v for (k,v) in currencies" required>
+                                        <option value="" hidden>Ընտրեք արժույթը ...</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.Currency.$dirty"
+                                             for="BondIssueSaveForm.Currency.$error">
+                                    <ng-message when="required" class="errors">
+                                        Արժույթը մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="tab_title col-sm-6 " for="TotalVolume">Թողարկման ընդհանուր ծավալ<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="bondIssueNew.Quality != 1" fcsa-number class="form-control tab_title unstyled" ng-change="calculateTotalCount()" style="text-align: left;" 
+                                           id="TotalVolume" name="TotalVolume" ng-model="bondIssueNew.TotalVolume" onkeypress='return event.charCode >= 48 && event.charCode <= 57'  required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.TotalVolume.$dirty"
+                                             for="BondIssueSaveForm.TotalVolume.$error">
+                                    <ng-message when="required" class="errors">
+                                        Թողարկման ընդհանուր ծավալը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsa-number" class="errors">
+                                        Թողարկման ընդհանուր ծավալը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="bondIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="NominalPrice">Մեկ պարտատոմսի անվանական արժեք<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="bondIssueNew.Quality != 1" class="form-control tab_title unstyled" fcsa-number ng-change="calculateTotalCount()" style="text-align: left;"
+                                           id="NominalPrice" name="NominalPrice" ng-model="bondIssueNew.NominalPrice" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                           required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.NominalPrice.$dirty"
+                                             for="BondIssueSaveForm.NominalPrice.$error">
+                                    <ng-message when="required" class="errors">
+                                        Մեկ պարտատոմսի անվանական արժեքը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsa-number" class="errors">
+                                        Մեկ պարտատոմսի անվանական արժեքը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="bondIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="EditionCirculation">Շրջանառության ժամկետ (ամիսների քանակ)<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="bondIssueNew.Quality != 1" class="form-control tab_title unstyled" style="text-align: left;" ng-change="calculateRepaymentDate()" id="EditionCirculation" name="EditionCirculation" ng-model="bondIssueNew.EditionCirculation" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.EditionCirculation.$dirty"
+                                             for="BondIssueSaveForm.EditionCirculation.$error">
+                                    <ng-message when="required" class="errors">
+                                        Շրջանառության ժամկետը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Շրջանառության ժամկետը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="tab_title col-sm-6 " for="RepaymentDate">Մարման օր</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input type="date" class="form-control" ng-disabled="bondIssueNew.IssuerType == 3 || bondIssueNew.Quality != 1" style="text-align: left;" id="RepaymentDate" name="RepaymentDate" ng-model="bondIssueNew.RepaymentDate" required />
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.RepaymentDate.$dirty"
+                                             for="BondIssueSaveForm.RepaymentDate.$error">
+                                    <ng-message when="required" class="errors">
+                                        Մարման օրը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="date" class="errors">
+                                        Մարման օրը սխալ է նշված
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" ng-if="bondIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="TotalCount">Քանակ<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input class="form-control tab_title unstyled" disabled="disabled" onkeypress='return event.charCode >= 48 && event.charCode <= 57' style="text-align: left;"
+                                           id="TotalCount" name="TotalCount" ng-model="bondIssueNew.TotalCount" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.TotalCount.$dirty"
+                                             for="BondIssueSaveForm.TotalCount.$error">
+                                    <ng-message when="required" class="errors">
+                                        Քանակը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Քանակը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" ng-if="bondIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="PurchaseDeadlineDate">Պարտատոմսի ձեռք բերման համար կատարվող վճարման վերջնաժամկետ<span class='redStyle'>*</span> </label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="bondIssueNew.Quality != 1" class="form-control tab_title unstyled" type="time" style="text-align: left;" id="PurchaseDeadlineDate" name="PurchaseDeadlineDate"
+                                           ng-model="bondIssueNew.PurchaseDeadlineDate" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.PurchaseDeadlineDate.$dirty"
+                                             for="BondIssueSaveForm.PurchaseDeadlineDate.$error">
+                                    <ng-message when="required" class="errors">
+                                        Վճարման վերջնաժամկետը մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="panel panel-success" style="margin-bottom: 10px;">
+                <div class="panel-heading">Արժեկտրոնների տեղեկատվություն</div>
+                <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+                    <div class="form-group">
+                        <label class="tab_title col-sm-6 " for="InterestRate">
+                            Տարեկան արժեկտրոնային դրույք
+                            <span class='redStyle' ng-if="bondIssueNew.IssuerType == 3">*</span>
+                        </label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="input-group col-sm-10">
+                                    <input ng-disabled="bondIssueNew.Quality != 1" class="form-control tab_title" style="text-align: left;" id="InterestRate" name="InterestRate" 
+                                           ng-model="bondIssueNew.InterestRate" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46'   ng-required="bondIssueNew.IssuerType == 3" />
+
+                                    <span class="input-group-addon" id="basic-addon2" style="width: 0;">%</span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.InterestRate.$dirty"
+                                             for="BondIssueSaveForm.InterestRate.$error">
+                                    <ng-message when="required" class="errors">
+                                        Տարեկան արժեկտրոնային դրույքը մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="bondIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="CouponPaymentPeriodicity">Արժեկտրոնների վճարման պարբերականություն մեկ տարվա ընթացքում<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-11">
+                                    <input ng-disabled="bondIssueNew.Quality != 1" class="form-control tab_title" style="text-align: left;" onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="CouponPaymentPeriodicity" name="CouponPaymentPeriodicity" ng-model="bondIssueNew.CouponPaymentPeriodicity" required />
+
+
+
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.CouponPaymentPeriodicity.$dirty"
+                                             for="BondIssueSaveForm.CouponPaymentPeriodicity.$error">
+                                    <ng-message when="required" class="errors">
+                                        Արժեկտրոնների վճարման պարբերականությունը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Արժեկտրոնների վճարման պարբերականությունը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="bondIssueNew.IssuerType != undefined && bondIssueNew.IssuerType != 3">
+                        <label class="tab_title col-sm-6 " for="CouponPaymentCount">Արժեկտրոնների վճարման քանակ<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-11">
+                                    <input ng-disabled="bondIssueNew.Quality != 1" class="form-control tab_title" style="text-align: left;" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                           id="CouponPaymentCount" name="CouponPaymentCount" ng-model="bondIssueNew.CouponPaymentCount" required />
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.CouponPaymentCount.$dirty"
+                                             for="BondIssueSaveForm.CouponPaymentCount.$error">
+                                    <ng-message when="required" class="errors">
+                                        Արժեկտրոնների վճարման քանակը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Արժեկտրոնների վճարման քանակը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="bondIssueNew.IssuerType == 3 && bondIssueNew.CouponPaymentPeriodicity && bondIssueNew.RepaymentDate && bondIssueNew.ReplacementDate">
+                        <label class="tab_title col-sm-6 " for="CouponRepaymentSchedule">Արժեկտրոնների հաշվարկման օրեր</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="input-group col-sm-10">
+                                    <span ng-if="bondIssueNew.CouponPaymentPeriodicity && bondIssueNew.EditionCirculation  && bondIssueNew.RepaymentDate && bondIssueNew.ReplacementDate" style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl"
+                                          ng-click="params={bondIssue:bondIssueNew, forNew: 1};openWindow('/BondIssue/BondIssueSchedule','Արժեկտրոնների հաշվարկման օրերի գրաֆիկ','bondissueschedule');"
+                                          class="glyphicon glyphicon-info-sign" data-original-title="Tooltip on right" />
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-success" style="margin-bottom: 10px; " ng-if="bondIssueNew.IssuerType == 3">
+                <div class="panel-heading">Մեկ ներդրողի նկատմամբ կիրառվող ձեռք բերվող պարտատոմսերի ծավալի սահմանափակումներ</div>
+                <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+                    <div class="form-group">
+                        <label class="tab_title col-sm-6 " for="MinSaleQuantity">Նվազագույն ձեռք բերման քանակ <span class='redStyle'>*</span></label>
+
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="bondIssueNew.Quality != 1" class="form-control tab_title unstyled" onkeypress='return event.charCode >= 48 && event.charCode <= 57' style="text-align: left;"
+                                           id="MinSaleQuantity" name="MinSaleQuantity" ng-model="bondIssueNew.MinSaleQuantity" required />
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.MinSaleQuantity.$dirty"
+                                             for="BondIssueSaveForm.MinSaleQuantity.$error">
+                                    <ng-message when="required" class="errors">
+                                        Նվազագույն ձեռք բերման քանակը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Նվազագույն ձեռք բերման քանակը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="tab_title col-sm-6 " for="MaxSaleQuantity">Առավելագույն ձեռք բերման քանակ <span class='redStyle'>*</span></label>
+
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="bondIssueNew.Quality != 1" class="form-control tab_title unstyled" onkeypress='return event.charCode >= 48 && event.charCode <= 57' style="text-align: left;"
+                                           id="MaxSaleQuantity" name="MaxSaleQuantity" ng-model="bondIssueNew.MaxSaleQuantity" required />
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondIssueSaveForm.$submitted || BondIssueSaveForm.MaxSaleQuantity.$dirty"
+                                             for="BondIssueSaveForm.MaxSaleQuantity.$error">
+                                    <ng-message when="required" class="errors">
+                                        Առավելագույն ձեռք բերման քանակը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Առավելագույն ձեռք բերման քանակը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+

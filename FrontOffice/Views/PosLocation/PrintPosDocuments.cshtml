@@ -1,0 +1,105 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    #collectionsDetails {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: 900px;
+    }
+
+
+    #collectionsTable td, th {
+        border: 1px solid #cecece;
+        width: 100px;
+        font-size: 12px;
+    }
+
+    #collectionsTable top th {
+        font-size: 12px;
+    }
+
+    #tbl table .top td {
+        font-size: 12px;
+    }
+
+    .redBackground {
+        background-color: rosybrown;
+    }
+
+    .greenStyle {
+        color: green;
+    }
+</style>
+<div id="cardRegistrationLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="PosLocationCtrl" name="PosContractsForm" id="PosContractsForm" role="form" style="min-width:650px;" novalidate class="form-horizontal" labels-required>
+    <div id="cardregistration_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="PosContractsForm.$setSubmitted();PosContractsForm.$valid  && PrintContracts();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Տպել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+    <div class=" form-group">
+        <label class="tab_title col-sm-4" for="contractDate">Պայմանագրերի ա/թ</label>
+        <div class="col-sm-6 row">
+            <div class="multiple_columns col-sm-8 ">
+                <input disabled="disabled" type="date" class="form-control tab_title unstyled" id="contractDate" name="contractDate" ng-model="contractDate" required>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="tab_title col-sm-4" for="contractType">Պայմանագրի տեսակ</label>
+        <div class="col-sm-6">
+            <div class="row">
+                <select ng-model="contractType" ng-change="changeContractType()" name="contractType" id="contractType" class="form-control">
+                    <option value="" style="margin-left:25px" selected>Ընտրեք</option>
+                    <option ng-repeat="(key, value)  in contractTypes" ng-value="{{key}}">{{value}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-show="showContract">
+        <label class="tab_title col-sm-4" for="contractNumber">Պայմանագրի համար</label>
+        <div class="col-sm-6">
+            <div class="row">
+                <input type="text" name="contractNumber" id="contractNumber" ng-model="contractNumber" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-show="showAgreement">
+        <label class="tab_title col-sm-4" for="contractNumber">Համաձայնագրի համար</label>
+        <div class="col-sm-6">
+            <div class="row">
+                <input type="text" name="agreementNumber" id="agreementNumber" ng-model="agreementNumber" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="tab_title col-sm-4" for="actType">Ակտի տեսակ</label>
+        <div class="col-sm-6">
+            <div class="row">
+                <select ng-model="actType" ng-change="changeActType()" name="actType" id="actType" class="form-control"> 
+                    <option value="" style="margin-left:25px" selected>Ընտրեք</option>
+                    <option ng-repeat="(key, value)  in actTypes" ng-value="{{key}}">{{value}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-show="showAct">
+        <label class="tab_title col-sm-4" for="contractNumber">Ակտի համար</label>
+        <div class="col-sm-6">
+            <div class="row">
+                <input type="text" name="actNumber" id="actNumber" ng-model="actNumber" class="form-control" />
+            </div>
+        </div>
+    </div>
+</form>

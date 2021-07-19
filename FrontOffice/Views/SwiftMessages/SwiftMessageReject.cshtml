@@ -1,0 +1,52 @@
+﻿
+
+@*<style type="text/css">
+    #SwiftMessageRejectForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #SwiftMessageRejectForm {
+        margin-right: 15px;
+    }
+</style>*@
+
+
+
+<form style="width:550px" class="form-horizontal col-sm-12" ng-controller="SwiftMessagesCtrl" name="SwiftMessageRejectForm"  novalidate>
+    <div class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+             <li class="root-menu-item-4 " ng-click="reject();" style="padding-right:0">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Մերժել</span>
+            </li>
+        
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div class="col-sm-12" style="padding:0;padding-left:5px;margin-bottom: 10px">
+
+        <div class="form-group col-sm-6 " style="padding-left: 15px; ">
+            <div class="product-detail-cell product-detail-lable">
+                Մերժման պատճառ  
+            </div>
+
+        </div>
+     
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" ng-model="SwiftMessageRejectOrder.Description" ng-enter="" name="Description" class="tab_title form-control" style="text-align:left"  />
+                    </div>
+
+                </div>
+            
+      
+         
+ 
+ 
+ 
+    </div>
+
+</form>
+ 
+

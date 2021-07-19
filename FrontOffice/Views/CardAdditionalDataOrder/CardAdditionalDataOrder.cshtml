@@ -1,0 +1,97 @@
+﻿
+@{
+    Layout = null;
+}
+
+<style type="text/css">
+    #CardAdditionalDataOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    .form-group input, .form-group select {
+        height: 34px;
+    }
+
+    .tab_title {
+        border-left-width: 15px;
+        padding-left: 30px;
+        width: 195px;
+    }
+
+    #cardadditionaldataorder {
+        top: 256px !important;
+        left: 750px !important;
+        z-index: 1049 !important;
+        padding-bottom: 15px;
+        overflow-x: hidden !important;
+    }
+</style>
+<div id="CardAdditionalDataOdrerLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="CardAdditionalDataOrderCtrl" name="CardAdditionalDataOrderForm" id="CardAdditionalDataOrderForm" role="form" class="form-horizontal" novalidate>
+    <div id="CardAdditionalDataOrder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="CardAdditionalDataOrderForm.$setSubmitted();CardAdditionalDataOrderForm.$valid ? saveCardAdditionalDataOrder() : showValidationMessage();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('cardadditionaldataorder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+    <div class="col-sm-12" data-ng-init="setAdditionalValues()">
+        <div class="form-group">
+            <div class="row">
+                <label class="tab_title col-sm-5" for="AdditionID">Լրացուցիչ տվյալների տեսակ</label>
+                <div class="col-sm-6" ng-if="CardAdditionalDataOrder.SubType == 1">
+                    <loading-control scopevariable="additionaldatatypes"></loading-control>
+                    <select data-ng-init="GetCardAdditionalDataTypes()" ng-show="additionaldatatypes" data-ng-model="CardAdditionalDataOrder.CardAdditionalData.AdditionID"
+                            name="AdditionID" id="AdditionID" class="form-control card_shadow_field card_selectbox" required>
+                        <option ng-repeat="option in additionaldatatypes" value="{{option.additionID}}">{{option.additionDescription}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-6" ng-if="CardAdditionalDataOrder.SubType == 2 || CardAdditionalDataOrder.SubType == 3">
+                    <select disabled name="AdditionID" id="AdditionID" class="form-control card_shadow_field card_selectbox">
+                        <option selected="selected" value="{{CardAdditionalDataOrder.CardAdditionalData.AdditionID}}">{{CardAdditionalDataOrder.CardAdditionalData.AdditionDescription}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="CardAdditionalDataOrderForm.$submitted || CardAdditionalDataOrderForm.AdditionID.$dirty"
+                             for="CardAdditionalDataOrderForm.AdditionID.$error">
+                    <ng-message when="required" class="errors">
+                        Լրացուցիչ տվյալի տեսակը ընտրված չէ
+                    </ng-message>
+                </ng-messages>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="tab_title col-sm-5" for="AdditionValue">Լրացուցիչ տվյալների արժեք</label>
+                <div class="col-sm-6">
+                    <input name="AdditionValue" id="AdditionValue" type="text" data-ng-model="CardAdditionalDataOrder.CardAdditionalData.AdditionValue"
+                           class="form-control card_shadow_field" required ng-pattern="/\d\d\/\d\d\/\d\d/">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="CardAdditionalDataOrderForm.$submitted || CardAdditionalDataOrderForm.AdditionValue.$dirty"
+                             for="CardAdditionalDataOrderForm.AdditionValue.$error">
+                    <ng-message when="required" class="errors">
+                        Լրացուցիչ տվյալը մուտքագրված չէ
+                    </ng-message>
+                    <ng-message when="pattern" class="errors">
+                        Սխալ ամսաթիվ: dd/mm/yy
+                    </ng-message>
+                </ng-messages>
+            </div>
+        </div>
+    </div>
+</form>

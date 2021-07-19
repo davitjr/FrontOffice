@@ -1,0 +1,88 @@
+﻿@{
+    Layout = null;
+}
+<div id="Loader" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div style="max-width:630px">
+    <errors></errors>
+</div>
+<div ng-controller="ProblemLoanTaxesCtrl" data-ng-init="getProblemLoanTaxDetails(ProductId)">
+    <div class="product-details bhoechie-tab-content" style="position:relative;top:0;left:0;min-width: 710px;margin-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մասնաճյուղ</div>
+            <div class="product-detail-cell product-detail-value">{{ProblemLoanTaxDetails.FilialCodeName}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաճախորդ</div>
+            <div class="product-detail-cell product-detail-value">{{ProblemLoanTaxDetails.CustomerNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաճախորդի անվանում</div>
+            <div class="product-detail-cell product-detail-value">{{ProblemLoanTaxDetails.FullName}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վարկային հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{ProblemLoanTaxDetails.LoanFullNumber}}</div>
+        </div>
+        @*<div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Վարկի ունիկալ համար</div>
+                <div class="product-detail-cell product-detail-value">{{ProblemLoanTaxDetails.AppId}}</div>
+            </div>*@
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վարկի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{ProblemLoanTaxDetails.LoanTypeDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պետ. տուրքի մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{ProblemLoanTaxDetails.TaxRegistrationDateToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պետ. տուրքի մութքագրման ժամ</div>
+            <div class="product-detail-cell product-detail-value">{{ProblemLoanTaxDetails.TaxRegistrationTimeToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{ProblemLoanTaxDetails.TaxAmountString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման ա/թ</div>
+            <div class="product-detail-cell product-detail-value" ng-if="ProblemLoanTaxDetails.RegistrationSetNumber != 0">{{ProblemLoanTaxDetails.TransferRegistrationDateToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման համար</div>
+            <div class="product-detail-cell product-detail-value" ng-if="ProblemLoanTaxDetails.TransferUnicNumber != 0">{{ProblemLoanTaxDetails.TransferUnicNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value" ng-if="ProblemLoanTaxDetails.RegistrationSetNumber != 0">{{ProblemLoanTaxDetails.RegistrationSetNumber}} &nbsp; <span ng-if="ProblemLoanTaxDetails.RegistrationSetNumber!=0" style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:ProblemLoanTaxDetails.RegistrationSetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պետ. տուրքի փոխանցման հաստատման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value" ng-if="ProblemLoanTaxDetails.RegistrationSetNumber != 0">{{ProblemLoanTaxDetails.ConfirmationDateToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պետ. տուրքի փոխանցումը հաստատողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value" ng-if="ProblemLoanTaxDetails.ConfirmationSetNumber != 0">{{ProblemLoanTaxDetails.ConfirmationSetNumber}} &nbsp; <span ng-if="ProblemLoanTaxDetails.ConfirmationSetNumber!=0" style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:ProblemLoanTaxDetails.ConfirmationSetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պետ. տուրքի կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">{{ProblemLoanTaxDetails.TaxQualityDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Դատարանի որոշման առկայություն</div>
+            <div class="product-detail-cell product-detail-value" ng-if="ProblemLoanTaxDetails.TaxCourtDecision != -1">Այո</div>
+            <div class="product-detail-cell product-detail-value" ng-if="ProblemLoanTaxDetails.TaxCourtDecision == -1">Ոչ</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Համաձայն դատարանի որոշման ում կողմից է մարվում պետ. տուրքը</div>
+            <div class="product-detail-cell product-detail-value" ng-if="ProblemLoanTaxDetails.TaxCourtDecision != -1"><span ng-if="ProblemLoanTaxDetails.TaxCourtDecision == 0">Բավարարել հօգուտ հաճախորդի</span><span ng-if="ProblemLoanTaxDetails.TaxCourtDecision == 1">Բավարարել հօգուտ Բանկի</span></div>
+        </div>
+        @*<div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Պետ. տուրքի վարկի ունիկալ համար</div>
+                <div class="product-detail-cell product-detail-value">{{ProblemLoanTaxDetails.ClaimNumber}}</div>
+            </div>*@
+    </div>
+</div>
+
+

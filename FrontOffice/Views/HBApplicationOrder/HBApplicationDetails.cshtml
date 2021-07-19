@@ -1,0 +1,341 @@
+﻿<style type="text/css">
+    .tree-node {
+        border: 1px solid #dae2ea;
+        background: #f8faff;
+        color: #7c9eb2;
+    }
+</style>
+@{
+    Layout = null;
+}
+<link href="~/Content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+
+<div ng-controller="HBApplicationOrderCtrl" data-ng-init="setApprovementSchema();getUserFilialCode();isCustomerConnectedToOurBank();getCustomerFilialCode();$root.SessionProperties.CustomerType==6 && getEntryDataPermissionServiceFee()" id="hbApplicationdetails">
+    <div id="hpApplicationLoad" class="overlay hidden">
+        <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+    </div>
+    <div id="hbApplicationdetails_menu" class="menu-bar dialog-menu light-green details-menu" style="width:83%;">
+        <ul id="menu" class="dialog-menu">
+            <li ng-if="isHBApplicationUpdated==true" ng-controller="PopUpCtrl" ng-click="saveHBApplicationOrder()">
+                <span><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել փոփոխությունները</span>
+            </li> 
+            <li ng-if="$root.SessionProperties.CustomerType!=6 && (hbApplication.Quality==3 || hbApplication.Quality==5)" ng-click="printOnlineRequestLegal()">
+                <span><img id="h-menu-icon-4" class="applicationButton h-menu-icon">Տրամադրման դիմում</span>
+            </li>
+            <li ng-if="$root.SessionProperties.CustomerType==6 && (hbApplication.Quality==3 || hbApplication.Quality==5)" ng-click="printOnlineDeactivateTokenRequestPhysical()">
+                <span><img id="h-menu-icon-4" class="applicationButton h-menu-icon">Դադարեցման դիմում</span>
+            </li>
+            <li ng-if="$root.SessionProperties.CustomerType!=6 && (hbApplication.Quality==3 || hbApplication.Quality==5)" ng-click="printOnlineDeactivateRequestLegal()">
+                <span><img id="h-menu-icon-4" class="applicationButton h-menu-icon">Դադարեցման դիմում</span>
+            </li>
+            <li ng-if="$root.SessionProperties.CustomerType==6 && (hbApplication.Quality==3 || hbApplication.Quality==5)" ng-click="printOnlineContractPhysical(hbApplication.ContractNumber,hbApplication.ContractDate)">
+                <span><img id="h-menu-icon-4" class="applicationButton h-menu-icon">Պայմանագիր</span>
+            </li>
+            <li ng-if="$root.SessionProperties.CustomerType!=6 && (hbApplication.Quality==3 || hbApplication.Quality==5)" ng-click="printOnlineContractLegal()">
+                <span><img id="h-menu-icon-4" class="applicationButton h-menu-icon">Պայմանագիր</span>
+            </li>
+            <li ng-if="$root.SessionProperties.CustomerType==6 && (hbApplication.Quality==3 || hbApplication.Quality==5)" ng-click="printOnlineAgreementPhysical()">
+                <span><img id="h-menu-icon-4" class="applicationButton h-menu-icon">Համաձայնագիր</span>
+            </li>
+            <li ng-if="$root.SessionProperties.CustomerType!=6 && (hbApplication.Quality==3 || hbApplication.Quality==5)" ng-click="printOnlineAgreementLegal()">
+                <span><img id="h-menu-icon-4" class="applicationButton h-menu-icon">Համաձայնագիր</span>
+            </li>
+        </ul>
+    </div>
+    <div style="max-width:530px;padding:10px">
+        <errors></errors>
+    </div>
+    <div class="product-details bhoechie-tab-content" style="min-width:83%;margin-left:10px;" ng-show="hbApplication">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">ՀԲ համար</div>
+            <div class="product-detail-cell product-detail-value">{{hbApplication.ID}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="hbApplication.ContractNumber">
+            <div class="product-detail-cell product-detail-lable">Պայմանագրի համար</div>
+            <div class="product-detail-cell product-detail-value">{{hbApplication.ContractNumber}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="hbApplication.ContractDateString">
+            <div class="product-detail-cell product-detail-lable">Պայմանագրի ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{hbApplication.ContractDateString}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="$root.SessionProperties.CustomerType!=6">
+            <div class="product-detail-cell product-detail-lable">Անվանում</div>
+            <div class="product-detail-cell product-detail-value">{{hbApplication.Description}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="hbApplication.PermissionType ==2 ">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">
+                {{hbApplication.QualityDescription}} (Սահմանափակ հասանելիությամբ)
+            </div>
+        </div>
+
+        <div class="product-detail-row" ng-if="hbApplication.PermissionType ==1 ">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">
+                {{hbApplication.QualityDescription}}
+            </div>
+        </div>
+
+        <div ng-if="$root.SessionProperties.CustomerType!=6" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պաշտոն</div>
+            <div class="product-detail-cell product-detail-value">{{hbApplication.Position}}</div>
+        </div>
+
+        <div ng-if="$root.SessionProperties.CustomerType!=6" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ղեկավար</div>
+            <div class="product-detail-cell product-detail-value">{{hbApplication.Manager}}</div>
+        </div>
+
+        <div ng-if="$root.SessionProperties.CustomerType!=6" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գլխավոր հաշվապահ</div>
+            <div class="product-detail-cell product-detail-value">{{hbApplication.ChiefAcc}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="hbApplication.ApplicationDateString">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{hbApplication.ApplicationDateString}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="hbApplication.SetID">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրող</div>
+            <div class="product-detail-cell product-detail-value">{{hbApplication.SetID}}  <span ng-show="hbApplication.SetName"></span>({{hbApplication.SetName}})  </div>
+        </div>
+    </div>
+
+
+
+
+    <div id="hbApplicationDetailsContainer" class="bhoechie-tab-container" style="min-width:83%;margin-left:10px;height:450px">
+        <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+            <div class="list-group">
+                <div class="list-group-item text-center active"><span> ՀԲ օգտագործողներ </span></div>
+                <div ng-show="$root.SessionProperties.CustomerType!=6" class="list-group-item text-center"><span>Հաստատման խմբեր</span></div>
+            </div>
+        </div>
+
+        <div class="bhoechie-tab" style="display: inline-block;width: 654px;" ng-controller="HBUserCtrl" ng-init="getHBUsers();getHBDeactivatedUsers()">
+            <div class="bhoechie-tab-content active">
+                <div class="product-container" style="width: 100%;">
+
+
+                    <div id="hbUserDetails" class="product-collapsable-section">
+
+                        <div class="product-container-header">
+
+                            <span style="background-color: #CFDAD0;height:30px">
+                                <select data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ կարգավիճակի" ng-model="filter" style="max-width:160px;height:30px" class="form-control" ng-change="QualityFilter()">
+                                    <option value="1" selected>Ակտիվ</option>
+                                    <option value="2">Դադարեցված</option>
+                                </select>
+                            </span>
+                            <span title="Նոր Օգտագործող" ng-if="$root.SessionProperties.SourceType == 2 && (hbApplication.Quality==5 || hbApplication.Quality==1 || hbApplication.Quality==3 ) " ng-controller="PopUpCtrl" ng-click="params={hbAppId:hbApplication.ID, schema:schema,hbCustomerNumber:hbApplication.CustomerNumber}; openWindow('/HBUser/PersonalHBUserOrder','Նոր Օգտագործող','newhbuser',callbackGetUser)">
+                                <i class="add-new-product tipB"></i>
+                            </span>
+
+                        </div>
+                        <div class="tree-node tree-node-content" ng-if="users.length==0" ui-tree-node>
+                            <div colspan="3" style="text-align:center">Առկա չեն  տվյալներ</div>
+                        </div>
+                        <div ui-tree data-empty-placeholder-enabled="false">
+                            <ol ui-tree-nodes="" ng-model="hbusers">
+                                <li ng-if="hbusers" style="margin-bottom:10px;border:2px solid #A6A6B1" ng-repeat="user in hbusers track by $index" data-collapsed="true" ui-tree-node ng-click="setClickedUser($index)">
+                                    <div class="tree-node tree-node-content">
+                                        <table>
+                                            <thead style="background-color:#e4e4e4;color:#6d6d6d">
+                                                <tr>
+                                                    <th class="col-sm-3">Հաճախորդի համար</th>
+                                                    <th class="col-sm-2">Օգտագործող</th>
+                                                    <th class="col-sm-3">Ա․Ա․Հ․</th>
+                                                    <th class="col-sm-1"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="col-sm-2" ng-click="setUser(user)">
+                                                        <a style="cursor:pointer;text-decoration:none" data-nodrag ng-click="toggle()" callrestservice(this)>
+                                                            <span class="glyphicon" ng-class="{'glyphicon-plus': collapsed,'glyphicon-minus': !collapsed}"></span>
+                                                        </a>{{user.CustomerNumber}}
+                                                    </td>
+                                                    <td class="col-sm-3">{{user.UserName}}</td>
+                                                    <td class="col-sm-3">{{user.UserFullName}}</td>
+                                                    <td ng-if="hbApplication.Quality==5 || hbApplication.Quality==1 || hbApplication.Quality==3 " class="col-sm-1 click_toggle" context="contextUsers" id="contextMenu"><div id="contextMenu"></div> </td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <ol style="padding:15px" ui-tree-nodes="" ng-class="{hidden: collapsed}" ng-if="user.tokens" ng-model="user.tokens">
+                                        <li style="box-shadow: 0 0 3px 4px #d6d3d3;display:table-row-group;">
+                                            <table>
+                                                <tr>
+                                                    <td class="col-sm-12">
+                                                        <div class="product-details">
+                                                            <div class="product-detail-row">
+                                                                <div class="product-detail-cell product-detail-lable col-6">Հաստատում</div>
+                                                                <div class="product-detail-cell product-detail-value col-6 text-right"><span ng-show="!user.IdentificationPerOrder">Սկզբնական նույնականացման հիման վրա</span> <span ng-show="user.IdentificationPerOrder">Յուրաքանչյուր գործարքի հաստատմամբ</span></div>
+                                                            </div>
+                                                            <div class="product-detail-row">
+                                                                <div class="product-detail-cell product-detail-lable col-6">Հասանելիության սահմանափակում</div>
+                                                                <div class="product-detail-cell product-detail-value col-6 text-right"><span ng-show="user.LimitedAccess">Այո</span> <span ng-show="!user.LimitedAccess">Ոչ</span></div>
+                                                            </div>
+                                                            <div class="product-detail-row">
+                                                                <div class="product-detail-cell product-detail-lable col-6">Կարգավիճակ</div>
+                                                                <div class="product-detail-cell product-detail-value col-6 text-right"><span ng-show="!user.IsBlocked && !user.IsLocked">Ակտիվ</span><span ng-show="user.IsBlocked">Դադարեցված</span><span ng-show="!user.IsBlocked && user.IsLocked">Ակտիվ (Բլոկավորված)</span></div>
+                                                            </div>
+                                                            @*<div class="product-detail-row">
+                                                                <div class="product-detail-cell product-detail-lable col-6">Առաջարկել գաղտնաբառի փոփոխություն</div>
+                                                                <div class="product-detail-cell product-detail-value col-6 text-right"><span ng-show="user.PassChangeReq">Այո</span> <span ng-show="!user.PassChangeReq">Ոչ</span></div>
+                                                            </div>*@                                                            
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li style="margin-top:10px">
+                                            <table>
+                                                <tr style="background-color: #CFDAD0;height:30px">
+                                                    <td class="col-sm-10">
+                                                        <script>
+                                                            $("[data-toggle=tooltip]").tooltip({
+                                                                placement: $(this).data("placement") || 'bottom'
+                                                            });
+                                                        </script>
+                                                        Տոկեններ
+                                                    </td>
+                                                    <td class="col-sm-2">
+                                                        <span ng-if="$root.SessionProperties.SourceType == 2  && !user.IsBlocked && (hbApplication.Quality==5 || hbApplication.Quality==1  || hbApplication.Quality==3 )" ng-controller="PopUpCtrl" ng-click="params={selectedUser:user,hbusers:hbusers,usedHBTokenNumbers:usedHBTokenNumbers,hbApplication:hbApplication};openWindow('/HBToken/PersonalHBTokenOrder','Նոր տոկեն','newhbtoken',callbackGetToken)">
+                                                            <i class="add-new-product tipB" title="Նոր տոկեն"></i>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+
+                                        <li ng-repeat="token in user.tokens track by $index" data-collapsed="true" ui-tree-node ng-click="setClickedToken(token,$index)">
+                                            <div class="tree-node tree-node-content" style="background-color: #EDF7E4">
+                                                <table>
+                                                    <thead style="background-color:#e4e4e4;color:#6d6d6d">
+                                                        <tr>
+                                                            <th class="col-sm-3">Տոկենի համար</th>
+                                                            <th class="col-sm-2">Օրական սահմանաչափ</th>
+                                                            <th class="col-sm-2">Գործարքի սահմանաչափ</th>
+                                                            <th class="col-sm-2">Կարգավիճակ</th>
+                                                            <th class="col-sm-1"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr style="background: #f8faff; color: #7c9eb2;">
+                                                            <td class="col-sm-3">
+                                                                {{token.TokenNumber}} &nbsp;({{token.TokenTypeDescription}})
+                                                            </td>
+                                                            <td class="col-sm-2">{{token.DayLimit | number:2}}  </td>
+                                                            <td class="col-sm-2">{{token.TransLimit | number:2}}</td>
+                                                            <td class="col-sm-2">
+                                                                <span ng-show="token.Quality==1">Գործող</span>
+                                                                <span ng-if="token.Quality==2">Դադարեցված </span>
+                                                                <span ng-if="token.Quality==3">Չհաստատված </span>
+                                                                <span ng-if="token.Quality==4">Չակտիվացված </span>
+                                                                <span ng-if="token.Quality==5">Բլոկավորված </span>
+                                                                <span ng-show="token.IsBlocked && token.Quality!=2">(Ժամ․ապաակտիվացված)</span>
+                                                            </td>
+                                                            <td ng-if="hbApplication.Quality==5 || hbApplication.Quality==1  || hbApplication.Quality==3" class="col-sm-1 click_toggle" context="contextTokens" id="contextMenu"><div id="contextMenu"></div> </td>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </div>
+
+
+                        <ul id="contextUsers" class="dropdown-menu">
+                            <li ng-if="!selectedUser.IsBlocked"><a style="color: black;text-decoration:none!important ;cursor:pointer" ng-controller="PopUpCtrl" ng-click="params={editUser:selectedUser,hbAppId:hbApplication.ID, schema:schema,hbCustomerNumber:hbApplication.CustomerNumber};openWindow('/HBUser/PersonalHBUserOrder','Օգտագործողի խմբագրում','edithbuser',callbackGetEditUser)">Խմբագրել</a></li>
+                            <li ng-if="(selectedUser.newInserted==undefined || selectedUser.newInserted==false) && selectedUser.IsBlocked"> <a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="activateUser()">Վերականգնել</a></li>
+                            <li ng-if="(selectedUser.newInserted==undefined || selectedUser.newInserted==false) && selectedUser.IsLocked"> <a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="params={selectedUser:selectedUser, orderType:135};unBlockUserConfirmation(params)">Ապաբլոկավորել</a></li> 
+                            <li ng-if="(hbApplication.FilialCode==userFilialCode || canAccessToOtherBranchesHB == '1' ) &&(selectedUser.newInserted==undefined || selectedUser.newInserted==false) && !selectedUser.IsBlocked "><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="params={selectedUser:selectedUser, orderType:151};deActivateUserConfirmation(params)"><b>Դադարեցնել</b></a></li>
+                            <li ng-if="selectedUser.newInserted==true"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="deleteUser()">Հեռացնել</a></li>
+                            <li><a style="color: black;text-decoration:none!important ;cursor:pointer" ng-controller="PopUpCtrl" ng-click="params={editUser:selectedUser};openWindow('/HBUser/HBUserLog','Օգտագործողի պատմություն','hbuserlog')">Պատմություն</a></li>
+                            <li ng-if="selectedToken.Quality!=2"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="params={selectedUser:selectedUser, orderType:182};resetPasswordManuallyConfirmation(params)"><b>Գաղտնաբառի զրոյացում</b></a></li>
+                        </ul>
+
+                        <ul id="contextTokens" class="dropdown-menu ">
+                            <li ng-if="selectedToken.Quality!=2 && selectedToken.Quality!=5"><a style="color: black;text-decoration:none!important; cursor:pointer" ui-sref="hbapplicationdetails()" ng-controller="PopUpCtrl" ng-click="params={editToken:selectedToken,selectedUser:selectedUser, hbusers:hbusers,usedHBTokenNumbers:usedHBTokenNumbers};openWindow('/HBToken/PersonalHBTokenOrder','Տոկենի խմբագրում','edithbtoken',callbackGetEditToken)">Խմբագրել</a></li>
+                            <li ng-if="(selectedToken.newInserted==undefined || selectedToken.newInserted==false) && !selectedToken.IsBlocked && selectedToken.Quality!=2"> <a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="tempraryDeActivate()">Ժամանակավոր ապաակտիվացնել</a></li>
+                            <li ng-if="(selectedToken.newInserted==undefined || selectedToken.newInserted==false) && selectedToken.IsBlocked && selectedToken.Quality!=2"> <a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="backTempraryDeActivate()">Ժամանակավոր ապաակտիվացումից հետ վերականգնել</a></li>
+                            <li ng-if="selectedToken.newInserted==true"><a style="color: black;text-decoration:none!important ;cursor:pointer" ng-click="deleteToken()">Հեռացնել</a></li>
+
+                            <li ng-if="(hbApplication.FilialCode==userFilialCode || canAccessToOtherBranchesHB == '1' ) &&(selectedToken.newInserted==undefined || selectedToken.newInserted==false) && selectedToken.Quality==1 || selectedToken.Quality==5"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="params={selectedToken:selectedToken, orderType:138};deActivateTokenConfirmation(params)"><b>Դադարեցնել</b></a></li>
+                            <li ng-if="selectedToken.Quality==5"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="params={selectedToken:selectedToken, orderType:135};unBlockTokenConfirmation(params)"><b>Ապաբլոկավորել</b></a></li>
+                            <li ng-if="selectedToken.Quality==4"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="params={selectedToken:selectedToken, orderType:137};activateTokenConfirmation(params)"><b>Ակտիվացնել</b></a></li>
+                            <li ng-if="(hbApplication.FilialCode==userFilialCode || canAccessToOtherBranchesHB == '1' ) && (selectedToken.Quality==1 || selectedToken.Quality==5) && (selectedToken.TokenType==2 || selectedToken.TokenType==3)"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-controller="PopUpCtrl" ng-click="params={selectedToken:selectedToken,orderType:158};openWindow('/HBServletRequestOrder/PersonalHBServletOrder','PIN կոդի ցուցադրում','hbShowPinCode')"><b>Ցուցադրել PIN կոդը</b></a></li>
+                            <li ng-if="selectedToken.Quality==1 && (selectedToken.TokenType==2 || selectedToken.TokenType==3)"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-controller="PopUpCtrl" ng-click="params={selectedToken:selectedToken};openWindow('/HBToken/HBRegistrationCodeResendOrder','Տոկենի գրանցման կոդի վերաուղարկում','hbRegistrationCodeResend')"><b>Վերաուղարկել գրանցման կոդը</b></a></li>
+
+
+                            <li ng-if="(selectedToken.Quality==1 || selectedToken.Quality==4 || selectedToken.Quality==5 ) && $root.SessionProperties.CustomerType!=6"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="printOnlineLostTokenRequestLegal(selectedToken.TokenNumber)">Տպել կորցրած տոկենի դիմումը</a></li>
+                            <li ng-if="(selectedToken.Quality==1 || selectedToken.Quality==4 || selectedToken.Quality==5 ) && $root.SessionProperties.CustomerType!=6"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="printOnlineDamagedTokenRequestLegal(selectedToken.TokenNumber)">Տպել վնասված տոկենի դիմումը</a></li>
+                            <li ng-if="(selectedToken.Quality==1 || selectedToken.Quality==4 || selectedToken.Quality==5 || selectedToken.Quality==2) && $root.SessionProperties.CustomerType!=6"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="printOnlinePartialDeactivateRequestLegal(selectedToken.TokenNumber)">Տպել դադարեցման(մասնակի) դիմումը</a></li>
+                            <li ng-if="(selectedToken.Quality==1 || selectedToken.Quality==4 || selectedToken.Quality==5 ) && $root.SessionProperties.CustomerType!=6"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="printOnlineAddTokenRequestLegal(selectedToken.TokenNumber)">Տպել հավելյալ տոկենի դիմում</a></li>
+                            <li ng-if="(selectedToken.Quality==1 || selectedToken.Quality==4 || selectedToken.Quality==5 ) && $root.SessionProperties.CustomerType!=6"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="printOnlineChangeRightsRequestLegal(selectedToken.TokenNumber)">Տպել իրավունքների փոփոխման դիմում</a></li>
+                            <li ng-if="(selectedToken.Quality==1 || selectedToken.Quality==4 || selectedToken.Quality==5 ) && $root.SessionProperties.CustomerType!=6"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="printOnlineChangeTokenRequestLegal(selectedToken.TokenNumber)">Տպել տոկենի փոփոխման դիմում</a></li>
+                            <li ng-if="(selectedToken.Quality==1 || selectedToken.Quality==4 || selectedToken.Quality==5 || selectedToken.Quality==2) && $root.SessionProperties.CustomerType==6"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="printOnlinePartialDeactivateRequestPhysical(selectedToken.TokenNumber)">Տպել դադարեցման(մասնակի) դիմումը</a></li>
+                            <li ng-if="(selectedToken.Quality==1 || selectedToken.Quality==4 || selectedToken.Quality==5 ) && $root.SessionProperties.CustomerType==6"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="printOnlineAddTokenRequestPhysical(selectedToken.TokenNumber)">Տպել հավելյալ տոկենի դիմումը</a></li>
+                            <li ng-if="(selectedToken.Quality==1 || selectedToken.Quality==4 || selectedToken.Quality==5 ) && $root.SessionProperties.CustomerType==6"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="printOnlineLostTokenRequestPhysical(selectedToken.TokenNumber)">Տպել կորցրած տոկենի դիմումը</a></li>
+                            <li ng-if="(selectedToken.Quality==1 || selectedToken.Quality==4 || selectedToken.Quality==5 ) && $root.SessionProperties.CustomerType==6"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="printOnlineDamagedTokenRequestPhysical(selectedToken.TokenNumber)">Տպել վնասված տոկենի դիմումը</a></li>
+                            <li ng-if="(selectedToken.Quality==1 || selectedToken.Quality==4 || selectedToken.Quality==5 ) && $root.SessionProperties.CustomerType==6"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="printOnlineChangeRightsRequestPhysical(selectedToken.TokenNumber)">Տպել իրավունքների փոփոխման դիմումը</a></li>
+                            <li ng-if="(selectedToken.Quality==1 || selectedToken.Quality==4 || selectedToken.Quality==5 ) && $root.SessionProperties.CustomerType==6"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-click="printOnlineChangeTokenRequestPhysical(selectedToken.TokenNumber)">Տպել տոկենի փոփոխման դիմումը</a></li>
+
+
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <div ng-show="$root.SessionProperties.CustomerType!=6" class="bhoechie-tab-content" style="width: 100%">
+                <xbusergroups ng-if="$parent.schema && hbusers" hbusers="hbusers" hbapplicationquality="hbApplication.Quality" hide-blank="true"> </xbusergroups>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+
+    $("#hbApplicationdetails div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('#hbApplicationdetails div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#hbApplicationdetails div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#hbApplicationdetails div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+
+    $("#hbApplicationDetailsContainer").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 300,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 300
+        }
+    });
+
+</script>
+
+
+
+
+
+
+
+
+

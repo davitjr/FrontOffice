@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = null;
+}
+<div class=" col-md-11">
+    <br /><br />
+    <div>
+        <form role="form" class="form-horizontal" ng-controller="CardCtrl" ng-init="getCreditLineGrafik()" style="width:700px;height:620px">
+            <div class="col-sm-8 my_class">
+                <div class="col-sm-4">Քարտի համար</div><div class="col-sm-6">{{::card.CardNumber}}</div>
+                <div class="col-sm-4">Քարտի տեսակ</div><div class="col-sm-6">{{::card.CardType}}</div>
+                <div class="col-sm-4">Հաշվեհամար</div><div class="col-sm-6">{{::card.CardAccount.AccountNumber}}</div>
+                <div class="col-sm-4">Մնացորդ</div><div class="col-sm-6">{{::card.BalanceString}} {{::card.Currency}}</div>
+            </div>
+            <table border="1" width="100">
+                <tr class="top">
+                    <td colspan="2" style="text-align:center">Մարման ժամանակահատված</td>
+                    <td colspan="3" style="text-align:center">Գումար</td>
+                </tr>
+                <tr class="top">
+                    <td style="text-align:center">Սկիզբ</td>
+                    <td style="text-align:center">Վերջ</td>
+                    <td style="text-align:center">Մարման ենթակա</td>
+                    <td style="text-align:center">Մարված</td>
+                    <td style="text-align:center">Պլանային մարման</td>
+                </tr>
+                <tr ng-repeat="rep in ::cardcreditlinerepayment">
+                    <td style="text-align:center" class="col-sm-2">{{::rep.StartDateToString}}</td>
+                    <td style="text-align:center" class="col-sm-1">{{::rep.EndDateToString}}</td>
+                    <td style="text-align:right">{{::rep.AmountToString}}&nbsp;&nbsp;&nbsp;</td>
+                    <td style="text-align:right"> {{::rep.MaturedAmountToString}}&nbsp;&nbsp;&nbsp;</td>
+                    <td style="text-align:right">{{::rep.PlannedAmountToString}}&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+            </table>
+        </form>
+</div>
+    
+</div>
+
+
+
+
+
+
+

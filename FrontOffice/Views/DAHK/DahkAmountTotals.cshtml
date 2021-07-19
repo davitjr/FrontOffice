@@ -1,0 +1,78 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    #amountsDetails {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width:700px;
+    }
+
+
+    #amountsTable td, th {
+        border: 1px solid #cecece;
+        width: 100px;
+        font-size: 12px;
+    }
+
+    #amountsTable top th {
+        font-size: 12px;
+    }
+
+    #tbl table .top td {
+        font-size: 12px;
+    }
+
+</style>
+
+<div id="amountsDetails" ng-controller="DAHKCtrl" >
+    <div class="product-container" style="width:auto;min-width:670px">
+
+        <div class="header-title">
+            Արգելանք ընդամենը
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+
+        <div class="product-collapsable-section ">
+            <div id="amountsTable" class="product-content-table " style="min-height:100px;padding:0px;margin:5px;">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <thead class="product-container-header">
+                        <tr>
+                            <td style="text-align:center;width:120px;">Գումար</td>
+                            <td style="text-align:center;width:80px;">Արժույթ</td>
+                            <td style="text-align:center;width:80px;">Սառեցման տեսակ</td>
+                            <td style="text-align:center;width:80px;">Արգելանքի տեսակ</td>
+                            <td style="text-align:center;width:120px;background-color:forestgreen;color:white;">Արգելադրված գումար</td>
+                            <td style="text-align:center;width:120px;background-color:red;color:white;">Չարգելադրված գումար</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="amountTotal in dahkAmountTotals " class="">
+                            <td style="text-align:right">{{::amountTotal.Amount  | number:2}}</td>
+                            <td style="text-align:center">{{::amountTotal.Currency}}</td>
+                            <td style="text-align:center">{{::amountTotal.FreezeTypeDescription}}</td>
+                            <td style="text-align:center">{{::amountTotal.BlockageTypeDescription}}</td>
+                            <td style="text-align:right;color:forestgreen;">{{::amountTotal.BlockedAmount  | number:2}}</td>
+                            <td style="text-align:right;color:red;">{{::amountTotal.UnBlockedAmount  | number:2}}</td>
+                        </tr>
+                        <tr ng-if="dahkAmountTotals.length==0">
+                            <td colspan="6" style="text-align:center">Տվյալներ առկա չեն</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#amountsTable").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>

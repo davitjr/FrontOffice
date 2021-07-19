@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    h4 {
+        color: #247d46;
+    }
+</style>
+
+<form ng-controller="UtilityPaymentSearchCtrl" data-ng-init = "getComunalAmountPaidThisMonth(abonentNumber,comunalType,abonentTypeParam,debtListDate,branch)">
+    <div class="product-details bhoechie-tab-content" style="padding:30px;padding-top:10px;min-width:550px">
+        <div ng-if="comunalType ==4">
+            <div class="row form-group">
+                <div style="font-size:medium">Տվյալ ամսում բանկում վճարված գումար</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-7">Գազի դիմաց </div>
+                <div>{{PaidInThisMonth|number:2}}</div>
+            </div>
+            <div class="row form-group" ng-if="abonentTypeParam == 1">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-7">Տեխ․ սպասարկման դիմաց </div><div>{{PaidInThisMonthService|number:2}}</div>
+            </div>
+        </div>
+        <div ng-if="comunalType !=4">
+            <div class="col-sm-8">Տվյալ ամսում բանկում վճարված գումար</div><div>{{PaidInThisMonth|number:2}}</div>
+        </div>
+    </div>
+</form>

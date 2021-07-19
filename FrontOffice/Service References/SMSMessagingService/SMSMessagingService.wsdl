@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SMSMessagingService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ISMSMessagingService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/SMSMessagingService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/SMSMessagingService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/SMSMessagingService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/SMSMessagingService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISMSMessagingService_SetCurrentUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetCurrentUser" />
+  </wsdl:message>
+  <wsdl:message name="ISMSMessagingService_SetCurrentUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetCurrentUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMSMessagingService_SetClientIp_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetClientIp" />
+  </wsdl:message>
+  <wsdl:message name="ISMSMessagingService_SetClientIp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetClientIpResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMSMessagingService_SaveMessagingSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveMessagingSession" />
+  </wsdl:message>
+  <wsdl:message name="ISMSMessagingService_SaveMessagingSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveMessagingSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMSMessagingService_GetSMSMessagingSessions_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSMSMessagingSessions" />
+  </wsdl:message>
+  <wsdl:message name="ISMSMessagingService_GetSMSMessagingSessions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSMSMessagingSessionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMSMessagingService_ChangeSMSMessagingSessionStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeSMSMessagingSessionStatus" />
+  </wsdl:message>
+  <wsdl:message name="ISMSMessagingService_ChangeSMSMessagingSessionStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeSMSMessagingSessionStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMSMessagingService_DeleteMessagingSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteMessagingSession" />
+  </wsdl:message>
+  <wsdl:message name="ISMSMessagingService_DeleteMessagingSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteMessagingSessionResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ISMSMessagingService">
+    <wsdl:operation name="SetCurrentUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMSMessagingService/SetCurrentUser" message="tns:ISMSMessagingService_SetCurrentUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMSMessagingService/SetCurrentUserResponse" message="tns:ISMSMessagingService_SetCurrentUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetClientIp">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMSMessagingService/SetClientIp" message="tns:ISMSMessagingService_SetClientIp_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMSMessagingService/SetClientIpResponse" message="tns:ISMSMessagingService_SetClientIp_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveMessagingSession">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMSMessagingService/SaveMessagingSession" message="tns:ISMSMessagingService_SaveMessagingSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMSMessagingService/SaveMessagingSessionResponse" message="tns:ISMSMessagingService_SaveMessagingSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSMSMessagingSessions">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMSMessagingService/GetSMSMessagingSessions" message="tns:ISMSMessagingService_GetSMSMessagingSessions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMSMessagingService/GetSMSMessagingSessionsResponse" message="tns:ISMSMessagingService_GetSMSMessagingSessions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeSMSMessagingSessionStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMSMessagingService/ChangeSMSMessagingSessionStatus" message="tns:ISMSMessagingService_ChangeSMSMessagingSessionStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMSMessagingService/ChangeSMSMessagingSessionStatusResponse" message="tns:ISMSMessagingService_ChangeSMSMessagingSessionStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMessagingSession">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMSMessagingService/DeleteMessagingSession" message="tns:ISMSMessagingService_DeleteMessagingSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMSMessagingService/DeleteMessagingSessionResponse" message="tns:ISMSMessagingService_DeleteMessagingSession_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ISMSMessagingService" type="tns:ISMSMessagingService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ISMSMessagingService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="SetCurrentUser">
+      <soap12:operation soapAction="http://tempuri.org/ISMSMessagingService/SetCurrentUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetClientIp">
+      <soap12:operation soapAction="http://tempuri.org/ISMSMessagingService/SetClientIp" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveMessagingSession">
+      <soap12:operation soapAction="http://tempuri.org/ISMSMessagingService/SaveMessagingSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSMSMessagingSessions">
+      <soap12:operation soapAction="http://tempuri.org/ISMSMessagingService/GetSMSMessagingSessions" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeSMSMessagingSessionStatus">
+      <soap12:operation soapAction="http://tempuri.org/ISMSMessagingService/ChangeSMSMessagingSessionStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMessagingSession">
+      <soap12:operation soapAction="http://tempuri.org/ISMSMessagingService/DeleteMessagingSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SMSMessagingService">
+    <wsdl:port name="NetTcpBinding_ISMSMessagingService" binding="tns:NetTcpBinding_ISMSMessagingService">
+      <soap12:address location="net.tcp://ws0004706.acbaca.local/ACBAOperationService/SMSMessagingService.svc/SMSMessagingService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://ws0004706.acbaca.local/ACBAOperationService/SMSMessagingService.svc/SMSMessagingService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>Davit.Jraghatspanyan@acbaca.local</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

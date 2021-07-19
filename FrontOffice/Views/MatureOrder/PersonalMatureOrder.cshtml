@@ -1,0 +1,330 @@
+﻿<div id="matureLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<form ng-controller="MatureOrderCtrl" name="MatureOrderForm" id="matureOrderForm" style="min-width:850px;" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+    <div id="newMature_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li ng-if="order.Type!=8 && !ClaimRepayment && order.IsProblematic!='true'" class="root-menu-item-3 " ng-click="MatureOrderForm.$setSubmitted();MatureOrderForm.$valid && getMatureApplication();">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon applicationButton">Մարման դիմում</span>
+            </li>
+
+            <li class="root-menu-item-4 " ng-if="$root.SessionProperties.SourceType == 2 && order.IsProblematic=='true' && ClaimRepayment!=true">
+                <span id="h-menu-item-4" onclick="return false;">
+                    <img id="h-menu-icon-4" class="cashInButton h-menu-icon">Մուտք Վ/կոդի հաշվին
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-3.1" class="" ng-controller="PopUpCtrl" ng-click="params={matureOrder:order,checkAmount:1,claimRepayment:ClaimRepayment};openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder')">
+                        <span>Կանխիկ մուտք</span>
+                    </li>
+                    <li id="v-menuItem-3.2" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:1,checkForReciverAccount:1,forTransitTransfers:true,orderType:80,matureOrder:order};openWindowWithTemplate('currencyexchangeorder','Տարանցիկ հաշվին մուտք փոխարկումով','exchangeorder')">
+                        <span>Կանխիկ մուտք (փոխարկում)</span>
+                    </li>
+                    <li id="v-menuItem-3.1" class="" ng-controller="PopUpCtrl" ng-click="params={matureOrder:order,checkAmount:1,nonCashPayment:true};openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder')">
+                        <span>Անկանխիկ մուտք</span>
+                    </li>
+                    <li id="v-menuItem-3.2" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:1,forTransitTransfers:true,orderType:185,matureOrder:order};openWindowWithTemplate('currencyexchangeorder','Տարանցիկ հաշվին մուտք փոխարկումով','exchangeorder')">
+                        <span>Անկանխիկ մուտք (փոխարկում)</span>
+                    </li>
+                    <li id="v-menuItem-3.1" class="" ng-controller="PopUpCtrl" ng-click="params={matureOrder:order,checkAmount:1,nonCashPayment:true,forTranferFromTransit:true};openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder')">
+                        <span>Տարանցիկ հաշվից</span>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="root-menu-item-4 " ng-if="$root.SessionProperties.SourceType == 2 && order.IsProblematic=='true' && ClaimRepayment==true">
+                <span id="h-menu-item-4" onclick="return false;">
+                    <img id="h-menu-icon-4" class="cashInButton h-menu-icon">Մուտք հաշվին
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-3.1" class="" ng-controller="PopUpCtrl" ng-click="params={matureOrder:order,checkAmount:1,claimRepayment:ClaimRepayment};openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder')">
+                        <span>Կանխիկ մուտք</span>
+                    </li>
+                    <li id="v-menuItem-3.1" class="" ng-controller="PopUpCtrl" ng-click="params={matureOrder:order,checkAmount:1,nonCashPayment:true,claimRepayment:ClaimRepayment};openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder')">
+                        <span>Անկանխիկ մուտք</span>
+                    </li>
+                </ul>
+            </li>
+
+            <li ng-if="$root.SessionProperties.SourceType == 2 && order.Type!=78 && order.IsProblematic=='false'" class="root-menu-item-4 " ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:51,matureOrder:order,checkAmount:1};openWindowWithTemplate('paymentorder','Մուտք հաշվին','paymentorder',callbackLoanCalculatedRest)">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="cashInButton h-menu-icon">Կանխիկ մուտք</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="MatureOrderForm.$setSubmitted();order.OnlySaveAndApprove = false;MatureOrderForm.$valid && SaveMatureOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li ng-if="$root.SessionProperties.AdvancedOptions['withCashRegister']=='1'&& $root.SessionProperties.AdvancedOptions['canSendToCashier']=='1'" class="root-menu-item-4 " ng-click="MatureOrderForm.$setSubmitted();order.OnlySaveAndApprove = true;MatureOrderForm.$valid && SaveMatureOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ուղարկել դրամարկղ</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newMature')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div>
+        <div class="col-sm-12">
+            <div style="max-width:520px;min-width:520px;">
+                <errors></errors>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5 control-label " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6 row">
+                    <input type="date" disabled="disabled" class="tab_title form-control" id="RegistrationDate" name="RegistrationDate" data-ng-model="order.OperationDate" style="text-align:left" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 control-label" for="matureType">Մարման եղանակ </label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select data-ng-model="order.IsProblematic" ng-change="isProblematicChange();order.IsProblematic=='true'?getOperationSystemAccount():'';" name="IsProblematic" id="IsProblematic" class="form-control" required>
+                            <option value="" hidden>Ընտրեք տեսակը...</option>
+                            <option selected value="false">Նորմալ</option>
+                            <option value="true" ng-if="$root.SessionProperties.SourceType == 2 && ClaimRepayment!=true">Վարկային կոդով</option>
+                            <option value="true" ng-if="$root.SessionProperties.SourceType == 2 && ClaimRepayment">Խնդրահարույց</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="MatureOrderForm.$submitted || MatureOrderForm.IsProblematic.$dirty"
+                                     for="MatureOrderForm.IsProblematic.$error">
+                            <ng-message when="required" class="errors">
+                                Մարման եղանակն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div ng-if="order.Type==5" labels-required>
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label" for="matureType">Մարման տեսակ </label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <select data-ng-model="order.MatureType" name="MatureType" id="MatureType" class="form-control" required
+                                    data-ng-options="k as v for (k,v) in matureTypes" ng-change="getLoanMatureCapitalPenalty();calculateloanFullRepayment()">
+                                <option value="" hidden>Ընտրեք տեսակը...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="MatureOrderForm.$submitted || MatureOrderForm.MatureType.$dirty"
+                                         for="MatureOrderForm.MatureType.$error">
+                                <ng-message when="required" class="errors">
+                                    Վարկի մարման տեսակն ընտրված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-if="$root.SessionProperties.SourceType == 2 ">
+                <label class="tab_title col-sm-5" for="RepaymentSourceType"> Մարման աղբյուր <span class="redStyle">*</span></label>
+                <div class="col-sm-6" data-ng-init="getTypeOfLoanRepaymentSource()">
+                    <div class="row">
+                        <loading-control scopevariable="repaymentSourceTypes"></loading-control>
+                        <select ng-model="order.RepaymentSourceType" ng-show="repaymentSourceTypes" name="RepaymentSourceType" id="RepaymentSourceType" class="form-control" required
+                                data-ng-options="k as v for (k,v) in repaymentSourceTypes">
+
+                            <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք տեսակը...</option>
+
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="MatureOrderForm.$submitted || MatureOrderForm.RepaymentSourceType.$dirty"
+                                     for="MatureOrderForm.RepaymentSourceType.$error">
+                            <ng-message when="required" class="errors">
+                                Մարման աղբյուրը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+            <paymentaccount ng-if="order.IsProblematic!='true'"
+                            data-ng-init="getAccountsForCurrency()"
+                            accounts="debitAccounts"
+                            accountnumber="orderAccountNumber"
+                            accountselectname="Account"
+                            ngblur="accountChange(); getLoanMatureCapitalPenalty();"
+                            account="order.Account"
+                            labels-required
+                            check="0"
+                            nameforaccount="'Ելքագրվող(դեբետ) հաշիվ'"
+                            nameforcurrency="''"
+                            isrequire="order.PercentAccount.AccountNumber==undefined"
+                            showoptionsfirstitem="true">
+            </paymentaccount>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="MatureOrderForm.$submitted || MatureOrderForm.Account.$dirty"
+                             for="MatureOrderForm.Account.$error">
+                    <ng-message when="required" class="errors">
+                        Ընտրեք հաշվեհամարը
+                    </ng-message>
+                </ng-messages>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5 control-label " for="feeAmount">  Գումար</label>
+                <div class="col-sm-6">
+
+                    <div class="row input-group">
+                        <input type="text" id="Amount" name="Amount" data-ng-model="order.Amount" ng-blur="amountChanged();getLoanMatureCapitalPenalty();" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' ng-disabled="(order.Account==undefined && order.IsProblematic!='true') || disableAmount==true" class="tab_title form-control" ng-required="(order.Account!=undefined && order.IsProblematic=='false') || (order.PercentAmount==undefined && order.IsProblematic=='true')" fcsa-number>
+                        <span class="input-group-addon" id="basic-addon2" style="width: 0;">{{Product.Currency!=undefind?Product.Currency:'&nbsp;&nbsp;&nbsp;'}} </span>
+
+                    </div>
+
+
+                    <div class="row">
+
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="MatureOrderForm.$submitted || MatureOrderForm.Amount.$dirty"
+                                     for="MatureOrderForm.Amount.$error">
+                            <ng-message when="required" class="errors">
+                                Մուտքագրեք գումարը
+                            </ng-message>
+                            <ng-message when="fcsaNumber" class="errors">
+                                Սխալ գումար
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="order.IsProblematic!='true'">
+                <label class="tab_title col-sm-5 control-label" for="feeAmount">Հաշվի մնացորդ</label>
+                <div class="col-sm-6">
+                    <div class="row input-group">
+                        <input type="text" id="PercentAmount" disabled name="PercentAmount" class="tab_title form-control" data-ng-model="order.Account.Balance" fcsa-number>
+                        <span class="input-group-addon" id="basic-addon2" style="width:0;">{{order.Account!=undefind?order.Account.Currency:'&nbsp;&nbsp;&nbsp;'}} </span>
+
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group" ng-show="order.IsProblematic=='true'">
+                <label class="tab_title col-sm-5 control-label" for="feeAmount">Տարանցիկ հաշվի մնացորդ</label>
+                <div class="col-sm-6">
+                    <div class="row input-group">
+                        <input type="text" id="PercentAmount" disabled name="TransitAccountBallance" class="tab_title form-control" data-ng-model="TransitAccountAvailableBalance" fcsa-number>
+                        <span class="input-group-addon" id="basic-addon2" style="width:0">{{order.ProductCurrency!=undefind?order.ProductCurrency:'&nbsp;&nbsp;&nbsp;'}} </span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group" ng-show="order.Type!=8 && order.IsProblematic!='true'">
+                <label class="tab_title col-sm-5 control-label">Թողնվող մնացորդ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="input-group">
+                            <input type="text" id="loanCalculatedRest" style="width: 100%" ng-disabled="order.MatureType==4 || disableAmount==true" name="loanCalculatedRest" ng-blur="loanCalculatedRestChanged();" class="tab_title form-control " ng-model="loanCalculatedRest" fcsa-number>
+                            <div class="input-group-btn " style="display:block;" ng-if="order.MatureType!=4 && ClaimRepayment!=true">
+                                <button type="button" class="btn btn-default searchButton " ng-click="getLoanCalculatedRest();" title="Հաշվարկել թողնվող մնացորդը"><span class="glyphicon glyphicon-refresh greenStyle"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <paymentaccount ng-if="Product.Currency!='AMD' && order.IsProblematic!='true'"
+                            data-ng-init="getPercentAccounts()"
+                            accounts="percentAccounts"
+                            accountnumber=""
+                            accountselectname=" PercentAccount"
+                            ngblur="accountChange();getLoanMatureCapitalPenalty();"
+                            account="order.PercentAccount"
+                            labels-required
+                            check="0"
+                            nameforaccount="'Ելքագրվող(դեբետ) AMD հաշիվ'"
+                            nameforcurrency="''"
+                            isrequire="order.Account.AccountNumber==undefined"
+                            showoptionsfirstitem="true">
+            </paymentaccount>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="MatureOrderForm.$submitted || MatureOrderForm.PercentAccount.$dirty"
+                             for="MatureOrderForm.PercentAccount.$error">
+                    <ng-message when="required" class="errors">
+                        Ընտրեք հաշվեհամարը
+                    </ng-message>
+                </ng-messages>
+            </div>
+            <div ng-if="Product.Currency!='AMD'" labels-required>
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label" for="feeAmount">Տոկոսագումար</label>
+                    <div class="col-sm-6">
+                        <div class="row input-group">
+                            <input type="text" id="PercentAmount" name="PercentAmount" data-ng-model="order.PercentAmount" ng-blur="getLoanMatureCapitalPenalty();  order.PercentAmountInAMD=order.PercentAmount!=undefined?(order.PercentAmount*kurs).toFixed(1):undefined" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' ng-disabled="order.PercentAccount==undefined && order.IsProblematic!='true'" class="tab_title form-control" ng-required="(order.PercentAccount!=undefined && order.IsProblematic=='false') || (order.Amount==undefined && order.IsProblematic=='true')" fcsa-number>
+                            <span class="input-group-addon" id="basic-addon2" style="width: 0;">{{Product.Currency!=undefind?Product.Currency:'&nbsp;&nbsp;&nbsp;'}} </span>
+
+                            <div class="input-group-btn" style="width:auto">
+
+                                <button ng-if="order.IsProblematic=='true'" title="Մուտք տարանցիկ հաշվին" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li ng-controller="PopUpCtrl" ng-click="params={matureOrder:order,checkAmount:2};openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder')"><a style="cursor:pointer">Կանխիկ</a></li>
+                                    <li ng-controller="PopUpCtrl" ng-click="params={matureOrder:order,checkAmount:2,nonCashPayment:true};openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder')"><a style="cursor:pointer">Անկանխիկ</a></li>
+                                    <li ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:1,forTransitTransfers:true,orderType:185,matureOrder:order,isAMDAccount:true};openWindowWithTemplate('currencyexchangeorder','Տարանցիկ հաշվին մուտք փոխարկումով','exchangeorder')"><a style="cursor:pointer">Անկանխիկ (փոխարկում)</a></li>
+                                </ul>
+                                <button ng-if="order.Type!=78 && order.IsProblematic=='false'" type="button" class="btn btn-primary" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:51,matureOrder:order,checkAmount:2};openWindowWithTemplate('paymentorder','Մուտք հաշվին','paymentorder')" title="Կանխիկ մուտք դրամային հաշվին"><span class="glyphicon glyphicon-plus"></span></button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <ng-messages ng-if="MatureOrderForm.$submitted || MatureOrderForm.PercentAmount.$dirty"
+                                         for="MatureOrderForm.PercentAmount.$error">
+                                <ng-message when="required" class="errors">
+                                    Մուտքագրեք գումարը
+                                </ng-message>
+                                <ng-message when="fcsaNumber" class="errors">
+                                    Սխալ գումար
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                        <div class="row input-group" style="margin-top:5px;">
+                            <input type="text" id="PercentAmountInAMD" name="PercentAmountInAMD" data-ng-model="order.PercentAmountInAMD" ng-blur="getLoanMatureCapitalPenalty();  order.PercentAmount=order.PercentAmountInAMD!=undefined?(order.PercentAmountInAMD/kurs).toFixed(2):undefined" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' ng-disabled="order.PercentAccount==undefined && order.IsProblematic!='true'" class="tab_title form-control" ng-required="(order.PercentAccount!=undefined && order.IsProblematic=='false') || (order.Amount==undefined && order.IsProblematic=='true')" fcsa-number>
+                            <span class="input-group-addon" id="basic-addon2" style="width: 0;">AMD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div ng-if="order.MatureType==4 && order.SubsidiaInterestRate =null" ng-init="getThreeMonthLoanRate()">*@
+        <div ng-if="order.MatureType==4" ng-init="getThreeMonthLoanRate()">
+            <div ng-if="rate>0" style="padding:0" class="col-sm-10 panel panel-warning">
+                <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span> Ուշադրություն</div>
+                <div class="panel-body">
+                    <div>
+                        3 ամսից շուտ մարման դեպքում առաջացող տուգանք՝ <span style="color:red"> &nbsp;{{rate|number:2}} {{Product.Currency}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div ng-if="order.MatureType > 0" ng-init="getLoanMatureCapitalPenalty();">
+                <div ng-if="capitalPenalty > 0" class="col-sm-10 panel panel-warning">
+                    <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span> Ուշադրություն</div>
+                    <div class="panel-body">
+                        <div>
+                            Շուտ մարման համար տուգանքի գումար՝ <span style="color:red"> &nbsp;{{capitalPenalty|number:2}} {{Product.Currency}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br /><br /><br />
+        </div>
+    </div>
+</form>

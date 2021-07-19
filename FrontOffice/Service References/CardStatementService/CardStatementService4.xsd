@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/CardStatementManagement" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/CardStatementManagement" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://wcf01-test:85/CardStatementService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://wcf01-test:85/CardStatementService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ArrayOfCardStatementSession">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CardStatementSession" nillable="true" type="tns:CardStatementSession" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCardStatementSession" nillable="true" type="tns:ArrayOfCardStatementSession" />
+  <xs:complexType name="CardStatementSession">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Quality" type="xs:short" />
+      <xs:element minOccurs="0" name="RegistrationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Schedule" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SessionNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="StatementEndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StatementStartDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="statementType" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CardStatementSession" nillable="true" type="tns:CardStatementSession" />
+  <xs:complexType name="ActionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Errors" nillable="true" type="tns:ArrayOfActionError" />
+      <xs:element minOccurs="0" name="Id" type="xs:long" />
+      <xs:element minOccurs="0" name="ResultCode" type="tns:ResultCode" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ActionResult" nillable="true" type="tns:ActionResult" />
+  <xs:complexType name="ArrayOfActionError">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ActionError" nillable="true" type="tns:ActionError" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfActionError" nillable="true" type="tns:ArrayOfActionError" />
+  <xs:complexType name="ActionError">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" type="xs:short" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Params" nillable="true" type="q1:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ActionError" nillable="true" type="tns:ActionError" />
+  <xs:simpleType name="ResultCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Normal">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Failed">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NotAutorized">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ValidationError">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SavedNotConfirmed">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Warning">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NoneAutoConfirm">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ResultCode" nillable="true" type="tns:ResultCode" />
+  <xs:complexType name="CardStatementSessionDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreatedStatementCount" type="xs:int" />
+      <xs:element minOccurs="0" name="CreatedStatementCountEXCEL" type="xs:int" />
+      <xs:element minOccurs="0" name="CreatedStatementCountPDF" type="xs:int" />
+      <xs:element minOccurs="0" name="Quality" type="xs:unsignedShort" />
+      <xs:element minOccurs="0" name="RejectedStatementCount" type="xs:int" />
+      <xs:element minOccurs="0" name="SentStatementCount" type="xs:int" />
+      <xs:element minOccurs="0" name="SubscriptionRunningDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TotalStatementCount" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CardStatementSessionDetails" nillable="true" type="tns:CardStatementSessionDetails" />
+  <xs:complexType name="ArrayOfStatementSessionHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StatementSessionHistory" nillable="true" type="tns:StatementSessionHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStatementSessionHistory" nillable="true" type="tns:ArrayOfStatementSessionHistory" />
+  <xs:complexType name="StatementSessionHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ChangeDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ChangeDateString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ChangeUserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Quality" type="xs:int" />
+      <xs:element minOccurs="0" name="userID" type="xs:unsignedInt" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StatementSessionHistory" nillable="true" type="tns:StatementSessionHistory" />
+  <xs:complexType name="AdvertisementConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CardSystem" type="xs:int" />
+      <xs:element minOccurs="0" name="CardSystemDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CardType" type="xs:int" />
+      <xs:element minOccurs="0" name="CardTypeDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OneCardAdvertisements" nillable="true" type="tns:ArrayOfAdvertisement" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AdvertisementConfiguration" nillable="true" type="tns:AdvertisementConfiguration" />
+  <xs:complexType name="ArrayOfAdvertisement">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Advertisement" nillable="true" type="tns:Advertisement" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAdvertisement" nillable="true" type="tns:ArrayOfAdvertisement" />
+  <xs:complexType name="Advertisement">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Activity" type="xs:int" />
+      <xs:element minOccurs="0" name="AllCardsAdvertisements" nillable="true" type="tns:ArrayOfAdvertisementConfiguration" />
+      <xs:element minOccurs="0" name="CurrentFile" nillable="true" type="tns:AdvertisementFile" />
+      <xs:element minOccurs="0" name="Files" nillable="true" type="tns:ArrayOfAdvertisementFile" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Position" type="xs:int" />
+      <xs:element minOccurs="0" name="RegistrationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SetNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="URL" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Advertisement" nillable="true" type="tns:Advertisement" />
+  <xs:complexType name="ArrayOfAdvertisementConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AdvertisementConfiguration" nillable="true" type="tns:AdvertisementConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAdvertisementConfiguration" nillable="true" type="tns:ArrayOfAdvertisementConfiguration" />
+  <xs:complexType name="AdvertisementFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Content" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegistrationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SetNumber" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AdvertisementFile" nillable="true" type="tns:AdvertisementFile" />
+  <xs:complexType name="ArrayOfAdvertisementFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AdvertisementFile" nillable="true" type="tns:AdvertisementFile" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAdvertisementFile" nillable="true" type="tns:ArrayOfAdvertisementFile" />
+</xs:schema>

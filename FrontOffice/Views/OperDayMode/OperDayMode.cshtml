@@ -1,0 +1,88 @@
+﻿
+<div id="loadMain" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div style="margin-left:15px;margin-top:5px" ng-controller="OperDayModeCtrl" id="OperDayMode" data-ng-init="getOperDayModeHistory(filter)" class="container">
+
+    <form>
+        <div class="col-sm-12">
+            <div data-ng-init="getCurrentOperDay24_7_Mode()">
+                <label>24/7 ռեժիմի տեսակ` </label>
+                <b>{{mode24_7}}</b>
+            </div>
+        </div>
+        <div class="col-sm-12" style="padding:0;margin-bottom:5px">
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Սկիզբ</label>
+                <div>
+                    <input type="date" ng-model="filter.StartDate" style="width: 155px;" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Վերջ</label>
+                <div>
+                    <input type="date" ng-model="filter.EndDate" style="width:155px" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">ՊԿ</label>
+                <div>
+                    <input type="text" ng-model="filter.SetNumber" style="width: 155px" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-sm-2" style="display:inline-block">
+                <label for="operDayMode" class="tab_title">Կարգավորման տեսակ</label>
+                <loading-control scopevariable="operDayModes"></loading-control>
+                <div data-ng-init="getTypeOf24_7Modes()">
+                    <select ng-show="operDayModes" data-ng-model="filter.Option" class="form-control"
+                            data-ng-options="k as v for (k,v) in operDayModes" style="width: 155px">
+                        <option value="" style="margin-left:25px">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-2" style="display:inline-block;margin-top: 26px;">
+                <button type="button" class="btn-sm btn-primary" ng-click="getOperDayModeHistory(filter)"><span class="glyphicon glyphicon-search"></span> Որոնել</button>
+            </div>
+        </div>
+        <b>{{operDayModeDate}}</b>
+    </form>
+    <div class="product-container" style="width: 750px;padding:0;margin-bottom:5px;margin-left: inherit">
+        <div class="header-title">
+            24/7 Ռեժիմի պատմություն
+            <div class="product-collapse tipB fa fa-chevron-down " data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+
+        <div class="product-collapsable-section">
+            <div class="product-container-header" style="height:30px">
+                <div ng-controller="PopUpCtrl" ng-click="openWindow('/OperDayMode/OperDayModeSave','24/7 ռեժիմ','newOperDayMode')">
+                    <i class="add-new-product tipB" data-original-title="Նոր կարգավորում"></i>
+                </div>
+            </div>
+            <div class="product-content-table custom-scroll" id="operDayOptionsList" style="width:750px;min-height:545px;margin-left:0px;margin-top: 0px;border-top-width: 0px;border-right-width: 0px;border-left-width: 0px;">
+                <div ng-if="mode24_7History==undefined">
+                    <loading></loading>
+                </div>
+
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="mode24_7History.length!=0" ng-repeat="mode24_7 in mode24_7History">
+                            <td class="col-sm-5">
+                                <span class="tab_text">24/7 ռեժիմի տեսակ`  </span> {{mode24_7.ModeTypeText}}
+                                <br />
+                                <span class="tab_text">ՊԿ` </span> {{mode24_7.SetNumber}}&nbsp; <span ng-if="mode24_7.SetNumber!=0" style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:mode24_7.SetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>
+                                <br />
+                                <span class="tab_text">Փոփոխման ամսաթիվ` </span> {{mode24_7.ChangeDateString}}
+                            </td>
+                        </tr>
+                        <tr ng-if="mode24_7History.length==0">
+                            <td colspan="3" style="text-align:center">Կարգավորումներ առկա չեն</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

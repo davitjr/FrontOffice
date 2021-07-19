@@ -1,0 +1,31 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    .ui-grid-cell-contents {
+        text-align: left;
+        padding: 5px;
+        text-overflow: clip;
+        word-wrap: break-word;
+        white-space: normal !important;
+    }
+
+    .ui-grid-row, .ui-grid-cell {
+        height: auto !important;
+    }
+
+        .ui-grid-row div[role=row] {
+            display: flex;
+            align-content: stretch;
+        }
+    #officeNumbers{
+        width:720px;
+    }
+</style>
+
+<div id="RelatedOfficeNumberChangeHistoryLoad" class="overlay hidden">
+    <img class="non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div ng-controller="CardDataChangeOrderCtrl" ng-init="GetRelatedOfficeNumberChangeHistory()" style="min-width:720px;" id="RelatedOfficeNumberChangeHistory" novalidate class="form-horizontal">
+    <div id="officeNumbers" ui-grid="officeNumbers" ui-grid-selection class="uiGrid"></div>
+</div>

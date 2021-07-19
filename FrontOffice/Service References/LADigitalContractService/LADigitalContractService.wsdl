@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="LADigitalContractService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="ILADigitalContractService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://webc021:9819/LADigitalContractService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://webc021:9819/LADigitalContractService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://webc021:9819/LADigitalContractService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/LoanApplicationManagement" />
+      <xsd:import schemaLocation="http://webc021:9819/LADigitalContractService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://webc021:9819/LADigitalContractService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ILADigitalContractService_SendLoanContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendLoanContract" />
+  </wsdl:message>
+  <wsdl:message name="ILADigitalContractService_SendLoanContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendLoanContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILADigitalContractService_GetLoanDigitalContractStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoanDigitalContractStatus" />
+  </wsdl:message>
+  <wsdl:message name="ILADigitalContractService_GetLoanDigitalContractStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoanDigitalContractStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILADigitalContractService_InitRequestFactory_InputMessage">
+    <wsdl:part name="parameters" element="tns:InitRequestFactory" />
+  </wsdl:message>
+  <wsdl:message name="ILADigitalContractService_InitRequestFactory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InitRequestFactoryResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ILADigitalContractService">
+    <wsdl:operation name="SendLoanContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILADigitalContractService/SendLoanContract" message="tns:ILADigitalContractService_SendLoanContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILADigitalContractService/SendLoanContractResponse" message="tns:ILADigitalContractService_SendLoanContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLoanDigitalContractStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILADigitalContractService/GetLoanDigitalContractStatus" message="tns:ILADigitalContractService_GetLoanDigitalContractStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILADigitalContractService/GetLoanDigitalContractStatusResponse" message="tns:ILADigitalContractService_GetLoanDigitalContractStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InitRequestFactory">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILADigitalContractService/InitRequestFactory" message="tns:ILADigitalContractService_InitRequestFactory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILADigitalContractService/InitRequestFactoryResponse" message="tns:ILADigitalContractService_InitRequestFactory_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ILADigitalContractService" type="tns:ILADigitalContractService">
+    <wsp:PolicyReference URI="#ILADigitalContractService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="SendLoanContract">
+      <soap12:operation soapAction="http://tempuri.org/ILADigitalContractService/SendLoanContract" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLoanDigitalContractStatus">
+      <soap12:operation soapAction="http://tempuri.org/ILADigitalContractService/GetLoanDigitalContractStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InitRequestFactory">
+      <soap12:operation soapAction="http://tempuri.org/ILADigitalContractService/InitRequestFactory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LADigitalContractService">
+    <wsdl:port name="ILADigitalContractService" binding="tns:ILADigitalContractService">
+      <soap12:address location="net.tcp://web1021.acbaca.local:9019/LADigitalContractService.svc/LADigitalContractService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://web1021.acbaca.local:9019/LADigitalContractService.svc/LADigitalContractService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>acbaaccess_test@acbaca.local</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

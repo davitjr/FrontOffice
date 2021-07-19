@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="87074b3e-85c9-4d03-a511-7774981a5b81" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://webc021:9819/LADigitalContractService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="LADigitalContractService.wsdl" MetadataType="Wsdl" ID="706de974-1b41-41b0-beae-190ca562664e" SourceId="1" SourceUrl="http://webc021:9819/LADigitalContractService.svc?wsdl" />
+    <MetadataFile FileName="LADigitalContractService.xsd" MetadataType="Schema" ID="3c9757fa-2991-4034-be5f-8db5014aa507" SourceId="1" SourceUrl="http://webc021:9819/LADigitalContractService.svc?xsd=xsd3" />
+    <MetadataFile FileName="LADigitalContractService1.xsd" MetadataType="Schema" ID="b2530591-e540-449e-a4f9-3d7a4c253a8a" SourceId="1" SourceUrl="http://webc021:9819/LADigitalContractService.svc?xsd=xsd2" />
+    <MetadataFile FileName="LADigitalContractService2.xsd" MetadataType="Schema" ID="36d301e3-ceed-4d4d-96e3-8ed4bd74e0c0" SourceId="1" SourceUrl="http://webc021:9819/LADigitalContractService.svc?xsd=xsd1" />
+    <MetadataFile FileName="LADigitalContractService3.xsd" MetadataType="Schema" ID="15f2a0da-e083-4789-8154-e653b89a3573" SourceId="1" SourceUrl="http://webc021:9819/LADigitalContractService.svc?xsd=xsd0" />
+    <MetadataFile FileName="LADigitalContractService4.xsd" MetadataType="Schema" ID="5c5d6758-b687-4b93-ba1c-b8a8e471a676" SourceId="1" SourceUrl="http://webc021:9819/LADigitalContractService.svc?xsd=xsd4" />
+    <MetadataFile FileName="LADigitalContractService.disco" MetadataType="Disco" ID="e038a3d4-88dd-4cab-95dd-8b6f27c977f2" SourceId="1" SourceUrl="http://webc021:9819/LADigitalContractService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,383 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #AccountApplication div div.scroller {
+        display: block;
+    }
+</style>
+
+
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+
+<div ng-controller="CreditLineCtrl" id="creditlinedetails" data-ng-init="getCreditLine(productid);getLoanRepaymentDelayDetails(productid);" style="max-width: 800px; background-color: #ffffff;margin-left:5px;">
+
+    <div id="creditLines_menu" class="menu-bar dialog-menu light-green details-menu" style="margin-top:0px;margin-left:0px;">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-7 " ng-class="{'my_disable':disabelButton==true}" ng-if="$root.SessionProperties.SourceType == 2 && creditline.Quality!=40 && (creditline.Type!=9 || (creditline.Type==9 && canmature == true ) ) && creditline.Quality!=10 " ng-controller="PopUpCtrl" ng-click="openWindow('/MatureOrder/PersonalMatureOrder','Վարկային գծի մարում','newMature')">
+                <span id="h-menu-item-7"><img id="h-menu-icon-7" class="cashInButton h-menu-icon">Մարում</span>
+            </li>
+
+            <li class="root-menu-item-4 " ng-if="creditline.Quality!=40 && creditline.Type!=9 && creditline.Quality!=10 && (creditline.Type!=9 || (creditline.Type==9 && canmature == true ))">
+                <span id="h-menu-item-4" onclick="return false;">
+                    <img id="h-menu-icon-4" class="h-menu-icon applicationButton">Գրաֆիկ
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-3.1" class="" ng-controller="PopUpCtrl" ng-click="openWindow('/CreditLine/CreditLineGrafik','Վարկային գծի գրաֆիկ','creditLinegrafik')" data-permission-selector="">
+                        <span>Դիտել</span>
+                    </li>
+                    <li id="v-menuItem-3.2" class="last" ng-click="getCreditLineGrafikApplication()" data-permission-selector="">
+                        <span>Տպել</span>
+                    </li>
+                    <li ng-if="creditline.Type == 50" id="v-menuItem-3.1" ng-controller="PopUpCtrl" ng-click="openWindow('/CreditLine/DecreaseLoanGrafik','Սահմանաչափի նվազեցումներ','decreaseLoanGrafik')" data-permission-selector="">
+                        <span>Սահմանաչափի նվազեցումներ</span>
+                    </li>
+                </ul>
+            </li>
+
+
+
+            <li class="root-menu-item-5 " ng-if="($root.SessionProperties.SourceType == 2 || $root.SessionProperties.SourceType == 6) && creditline.Quality!=40 && creditline.Type!=9 && creditline.Quality!=10 && (creditline.Type!=9 || (creditline.Type==9 && canmature == true )) ">
+                <span id="h-menu-item-5" onclick="return false;">
+                    <img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Դադարեցում
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-5.1" class="" ng-click="saveCreditLineTerminationOrder(productid)" data-permission-selector="">
+                        <span>Դադարեցնել</span>
+                    </li>
+                    <li id="v-menuItem-5.2" class="last" ng-if="creditline.Type !=25 && creditline.Type !=18" ng-click="getCreditLineTerminationApplication()" data-permission-selector="">
+                        <span>Տպել դիմումը</span>
+                    </li>
+                </ul>
+            </li>
+            <li class="root-menu-item-9" ng-if="creditline.Type != 9 && creditline.Quality == 10" ng-click="sendLoanDigitalContract(productid)">
+                <span id="h-menu-item-9"><img id="h-menu-icon" class="sendContract h-menu-icon">Ուղարկել փաստաթղթեր</span>
+            </li>
+            <li class="root-menu-item-3 " ng-class="{'my_disable':disabelButton==true}" ng-if="(($root.SessionProperties.SourceType == 2 || $root.SessionProperties.SourceType == 6 ) && creditline.Quality==10) && (creditline.Type!=9 || (creditline.Type==9 && canmature == true )) " ng-controller="PopUpCtrl" ng-click="params={product:creditline,cardNumber:cardnumber,cardtype:cardtype,orderType:74};openWindow('/LoanProductActivationOrder/PersonalLoanProductActivationOrder','Վարկային գծի ակտիվացում','newLoanProductActivation')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="reopenAccountButton h-menu-icon">Ակտիվացնել</span>
+            </li>
+            <li class="root-menu-item-3 " ng-class="{'my_disable':disabelButton==true}" ng-if="(creditline.Type!=9 || (creditline.Type==9 && canmature == true )) && creditline.Quality==10 && ($root.SessionProperties.SourceType == 6 || creditline.Type==54)" ng-controller="LoanApplicationCtrl" ng-click="saveLoanApplicationQualityChangeOrder(163,creditline.ProductId)">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="cancelButton h-menu-icon">Հեռացնել</span>
+            </li>
+            <li class="h-menu-last-rendered" data-permission-selector="" id="cssmenu" ng-if="(creditline.Type!=9 || (creditline.Type==9 && canmature == true ))">
+                <span id="menu-last-item"></span>
+                <ul>
+                    <li class="root-menu-item-5 " ng-if="creditline.Type!=9 && creditline.Quality!=10" ng-controller="PopUpCtrl" ng-click="params={productId:creditline.ProductId};openWindow('/Overdue/OverdueDetails','Ժ/անց պատմություն')" data-permission-selector=""><span id="h-menu-item-5">Ժ/անց պատմություն</span></li>
+                    <li class="root-menu-item-6 " ng-if="creditline.Type!=9 && creditline.Quality!=10" ng-controller="PopUpCtrl" ng-click="params={productId:creditline.ProductId};openWindow('/Loan/LoanProductProlongations','Վարկային գծերի երկարացման դիմումներ')" data-permission-selector=""><span id="h-menu-item-6">Երկարաձգման դիմումներ</span></li>
+                    <li class="root-menu-item-6 " ng-controller="CreditLineProlongationOrderCtrl" ng-click="saveCreditLineProlongationOrder(productid)"><span id="h-menu-item-6">Վարկային գծի երկարաձգում</span></li>
+
+                    <li class="root-menu-item-3" ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-if="creditline.Quality<=11 && creditline.Quality!=10 && creditline.Quality!=40 && isOnlineAcc==true" ng-click="params={productId:creditline.ProductId,actionType:2,includingSurcharge:1,productType:creditline.ProductType};openWindow('/ClassifiedLoanActionOrder/PersonalClassifiedLoanActionOrder','Վարկային գծի դուրսգրում','newClassifiedLoanActionOrder')">
+                        <span id="h-menu-item-3"> Դուրս գրել</span>
+                    </li>
+                    <li class="root-menu-item-3 " ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-if="creditline.Quality==11 && isOnlineAcc==true" ng-click="params={productId:creditline.ProductId,actionType:1,includingSurcharge:1,productType:creditline.ProductType};openWindow('/ClassifiedLoanActionOrder/PersonalClassifiedLoanActionOrder','Վարկային գծի հետբերում','newClassifiedLoanActionOrder')">
+                        <span id="h-menu-item-3"> Հետ բերել </span>
+                    </li>
+                    <li class="root-menu-item-3 " ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-if="creditline.Quality==11 && isOnlineAcc==true" ng-click="params={productId:creditline.ProductId,actionType:3,includingSurcharge:1,productType:creditline.ProductType};openWindow('/ClassifiedLoanActionOrder/PersonalClassifiedLoanActionOrder','Արտաբալանսից հանում','newClassifiedLoanActionOrder')">
+                        <span id="h-menu-item-3"> Հանել արտաբալանսից </span>
+                    </li>
+                    <li id="v-menuItem-3.2" ng-if="$root.SessionProperties.IsChiefAcc == true && ((creditline.Quality==0 || creditline.Quality==1) || ( creditline.Quality==11 && creditline.OverdueLoanDate == null ) )" ng-controller="PopUpCtrl" ng-click="params={productid:creditline.ProductId,currentCreditline:creditline,isCreditLine:true};openWindow('/LoanDelayOrder/LoanDelayOrder','Վարկային գծի հետաձգում','loanDelayOrder')">
+                        <span>Վարկային գծի հետաձգում</span>
+                    </li>
+                </ul>
+            </li>
+
+            <li ng-if="($root.SessionProperties.AdvancedOptions['isOnlineAccChief']=='1' || $root.SessionProperties.AdvancedOptions['isOnlineAcc']=='1'  ) &&   creditline.Type==18 || creditline.Type==46 || creditline.Type==9 || creditline.Type==36 || creditline.Type==25 " class="root-menu-item-3 " ng-controller="PopUpCtrl" ng-click="params={productId:creditline.ProductId,loanType:creditline.Type==9 ? 9: ((creditline.Type==36 || creditline.Type==25) ? 25:18)};openWindow('/CreditCommitmentForgivenessOrder/Index','Ներում','newMature')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon" src="~/Content/Images/help.png" style="height: 30px;width:36px;margin-top: 6px;" />Ներումներ</span>
+            </li>
+
+        </ul>
+        <ul id="menu" class="dialog-menu light-green" ng-if="(creditline.Type==30 || creditline.Type==54 || creditline.Type==50 || creditline.Type==51  )&& (creditline.Type!=9 || (creditline.Type==9 && canmature == true )) ">
+            <li ng-controller="LoanProductActivationOrderCtrl" class="root-menu-item-4 ">
+                <span id="h-menu-item-4" onclick="return false;">
+                    <img id="h-menu-icon-4" class="h-menu-icon cashInButton">Փաստաթղթեր
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-4.2" ng-click="getDepositCardCreditLineContract(creditline.ProductId,cardtype);">
+                        <span id="h-menu-item-3">Պայմանագիր</span>
+                    </li>
+                    <li id="v-menuItem-4.4" ng-if="creditline.Type!=54" ng-click="getDepositLoanProvisionDetails(creditline.ProductId,creditline.FillialCode);">
+                        <span id="h-menu-item-5">Գրավ</span>
+                    </li>
+                    <li id="v-menuItem-4.6" ng-click="getCreditLineTerms(creditline.ProductId);">
+                        <span id="h-menu-item-7">Էական պայմաններ</span>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <br />
+    <creditlinedebt ng-if="creditline.Type==25 || creditline.Type==18 || creditline.Type==46" creditline="creditline"></creditlinedebt>
+    <div style="min-width:800px;margin-left:10px;">
+
+        <div class="product-detail-row" ng-if="creditline.Type==25 || creditline.Type==18 || creditline.Type==46">
+            <div class="product-detail-cell product-detail-lable">Կոդ`</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{creditline.CreditCode}}<span style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" ng-click="params={creditCode:creditline.CreditCode,loanCurrency:creditline.ConnectAccount.Currency};openWindow('/Loan/CreditCodeAccountDetails','Հաշվեհամարներ','creditCodeAccountDetails');" class="glyphicon glyphicon-info-sign" /></div>
+        </div>
+        <loandigitalcontractdetails ng-if="creditline.ProductId && creditline.Type != 9" source="2" productid="creditline.ProductId"></loandigitalcontractdetails>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.ProductTypeDescription}}</div>
+        </div>
+        <div class="product-detail-row" ng-show="loanRepaymentDelayDetails.Id">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Վարկային գիծը հետաձգված է մինչև (ներառյալ)</div>
+            <div class="product-detail-cell product-detail-value" style="color:red;font-weight: bold;">{{loanRepaymentDelayDetails.DelayDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value" ng-style="{ color: creditline.Quality==5 ||  creditline.Quality==11 || creditline.Quality==12 || creditline.Quality==2 ? 'red' : '' }">{{creditline.QualityDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մասնաճյուղ</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.FillialCode}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պայմանագրի համար</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.ContractNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պայմանագրային գումար</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.StartCapitalString}} {{creditline.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Օգտագործված մաս</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{(creditline.Quality == 11 || creditline.Quality == 12? creditline.OutCapital: creditline.CurrentCapital)|ABS|number:2}} {{creditline.Currency}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="creditline.Quality!=0 && creditline.Quality!=1 && creditline.Quality!=40 && creditline.Quality!=10">
+            <div class="product-detail-cell product-detail-lable">Ժամկետանց մաս</div>
+            <div class="product-detail-cell product-detail-value" style="color:red">{{creditline.OverdueCapital |number:2}} {{creditline.Currency}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="creditline.OutCapital !=0 ">
+            <div class="product-detail-cell product-detail-lable">Դուրսգրված մաս</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.OutCapital | number:2}} {{creditline.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.StartDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.EndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="creditline.Type!=9">
+            <div class="product-detail-cell product-detail-lable">Ավարտ</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.DateOfCreditLineStopping| mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable" ng-if="creditline.Type !=25 && creditline.Type !=18">Քարտային հաշիվ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="creditline.Type ==25 || creditline.Type ==18">Ընթացիկ հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.ConnectAccount.AccountNumber}} {{creditline.ConnectAccount.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable" ng-if="creditline.Type!=9">Վարկային հաշիվ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="creditline.Type==9">Գերածախսի հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.LoanAccount.AccountNumber}} {{creditline.LoanAccount.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տոկոսադրույք</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.InterestRate*100|number:2}}%</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փաստացի տոկոսադրույք(ծախսերով)</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.InterestRateFull*100|number:2}}%</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="creditline.InterestRateEffectiveWithOnlyBankProfit != undefined && creditline.InterestRateEffectiveWithOnlyBankProfit != 0 ">
+            <div class="product-detail-cell product-detail-lable"> Փաստացի %-դրույք (միայն բանկի ծախսերով)</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.InterestRateEffectiveWithOnlyBankProfit*100|number:2}}%</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փաստացի(առանց ծախսերի)</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.InterestRateEffective*100|number:2}}%</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տարեկան տոկոսադրույք չօգտ․մասի դիմաց</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.InterestRateNused*100|number:2}}%</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կուտակված (չվճարված) տոկոսագումար</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{creditline.CurrentRateValueString}} {{creditline.Currency}}</div>
+        </div>
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կուտակված (վճարված) տոկոսագումար</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.MaturedCurrentRateValue | number:2}} {{creditline.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կուտակված (չվճարված + վճարված) տոկոսագումար</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{(creditline.MaturedCurrentRateValue + creditline.CurrentRateValue ) | number:2}} {{creditline.Currency}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="creditline.Quality!=0 && creditline.Quality!=1 && creditline.Quality!=40 && creditline.Quality!=10">
+            <div class="product-detail-cell product-detail-lable">Որից ժամկետանց</div>
+            <div class="product-detail-cell product-detail-value" style="color:red;">{{creditline.InpaiedRestOfRate|number:2}} {{creditline.Currency}}</div>
+        </div>
+
+
+
+        <div class="product-detail-row" ng-if="creditline.Quality!=0 && creditline.Quality!=1 && creditline.Quality!=40 && creditline.Quality!=10">
+            <div class="product-detail-cell product-detail-lable redStyle">Կուտակված (չվճարված) տուգանային տոկոս</div>
+            <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;">{{creditline.PenaltyRate|number:2}} {{creditline.Currency}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="creditline.Quality!=0 && creditline.Quality!=1 && creditline.Quality!=40 && creditline.Quality!=10">
+            <div class="product-detail-cell product-detail-lable redStyle">Որից՝</div>
+            <div class="product-detail-cell product-detail-value redStyle">&nbsp;</div>
+        </div>
+        <div class="product-detail-row" ng-if="loan.Quality!=0 && loan.Quality!=1 && creditline.Quality!=10">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված) տուժանք</div>
+            <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;">{{creditline.PenaltyAdd|ABS|number:2}} {{creditline.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="loan.Quality!=0 && loan.Quality!=1 && creditline.Quality!=10">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (վճարված) տուժանք</div>
+            <div class="product-detail-cell product-detail-value redStyle">{{creditline.MaturedPenaltyRate |number:2}} {{creditline.Currency}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="loan.Quality!=0 && loan.Quality!=1 && creditline.Quality!=10">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված + վճարված) տուժանք</div>
+            <div class="product-detail-cell product-detail-value redStyle">{{(creditline.MaturedPenaltyRate+creditline.PenaltyRate) |number:2}} {{creditline.Currency}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="creditline.Type==25 || creditline.Type==18 || creditline.Type==46">
+            <div class="product-detail-cell product-detail-lable">Կուտակված (չվճարված) չօգտագործված գումարի դիմաց տոկոսագումար</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{creditline.CurrentRateValueUnused | number:2}} {{creditline.Currency}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="creditline.Type==25 || creditline.Type==18 || creditline.Type==46">
+            <div class="product-detail-cell product-detail-lable">Կուտակված (վճարված) չօգտագործված գումարի դիմաց տոկոսագումար</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.MaturedCurrentRateValueUnused | number:2}} {{creditline.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="creditline.Type==25 || creditline.Type==18 || creditline.Type==46">
+            <div class="product-detail-cell product-detail-lable">Կուտակված (չվճարված + վճարված) չօգտագործված գումարի դիմաց տոկոսագումար</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{(creditline.CurrentRateValueUnused + creditline.MaturedCurrentRateValueUnused ) | number:2}} {{creditline.Currency}}</div>
+        </div>
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տուժանքի օրական տոկոս</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.DailyPenaltyInterestRate*100}}%</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տոկոսագումարի հաշվարկի օր</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.DayOfRateCalculation | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջին վճարման օր</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.LastDateOfRateRepair | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="creditline.OverdueLoanDate!=null">
+            <div class="product-detail-cell product-detail-lable">Ժամկետանցի օր</div>
+            <div class="product-detail-cell product-detail-value" style="color:red;">{{creditline.OverdueLoanDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="creditline.OverdueLoanDate!=null">
+            <div class="product-detail-cell product-detail-lable">Ժամկետանց օրեր</div>
+            <div class="product-detail-cell product-detail-value" style="color:red;">{{creditline.DayOfRateCalculation | datediff : creditline.OverdueLoanDate}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="(creditline.JudgmentRate+creditline.MaturedJudgmentPenaltyRate)>0">
+            <div class="product-detail-cell product-detail-lable">Պետ. տուրքի փոխանցումից հետո տուժանք</div>
+            <div class="product-detail-cell product-detail-value">&nbsp;</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="(creditline.JudgmentRate+creditline.MaturedJudgmentPenaltyRate)>0">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված) տուժանք</div>
+            <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;">{{creditline.JudgmentRate | number:2}} {{loan.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="(creditline.JudgmentRate+creditline.MaturedJudgmentPenaltyRate)>0">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (վճարված) տուժանք</div>
+            <div class="product-detail-cell product-detail-value redStyle">{{creditline.MaturedJudgmentPenaltyRate | number:2}} {{loan.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="(creditline.JudgmentRate+creditline.MaturedJudgmentPenaltyRate)>0">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված + վճարված) տուժանք</div>
+            <div class="product-detail-cell product-detail-value redStyle">{{(creditline.JudgmentRate+creditline.MaturedJudgmentPenaltyRate) | number:2}} {{loan.ConnectAccount.Currency}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="(creditline.JudgmentRate+creditline.MaturedJudgmentPenaltyRate)>0">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Տուժանքի հաշվարկի սկիզբ</div>
+            <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;">{{creditline.JudgmentStartDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="(creditline.JudgmentRate+creditline.MaturedJudgmentPenaltyRate)>0">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Տուժանքի հաշվարկի վերջ</div>
+            <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;">{{creditline.JudgmentEndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="creditline.Quality==40">
+            <div class="product-detail-cell product-detail-lable">Փակման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{creditline.DayOfRateCalculation | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="creditline.DateOfStoppingCalculation!=null">
+            <div class="product-detail-cell product-detail-lable">Տոկոսի հաշվարկի դադարեցման օր</div>
+            <div class="product-detail-cell product-detail-value" style="color:red;">{{creditline.DateOfStoppingCalculation | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="creditline.DateOfStoppingPenaltyCalculation!=null">
+            <div class="product-detail-cell product-detail-lable">Տուժանքի հաշվարկի դադարեցման օր</div>
+            <div class="product-detail-cell product-detail-value" style="color:red;">{{creditline.DateOfStoppingPenaltyCalculation | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div id="AccountApplication" class="col-sm-12 panel-group">
+                <div>
+                    <div class="scroller scroller-left"><i class="glyphicon glyphicon-chevron-left" onclick="leftclick('#AccountApplication')"></i></div>
+                    <div class="scroller scroller-right"><i class="glyphicon glyphicon-chevron-right" onclick="rightclick('#AccountApplication')"></i></div>
+                    <div class="wrapper">
+                        <ul class="nav nav-tabs list">
+                            <li ng-if="creditline && creditline.Quality!=40" class="in active" style="text-align:center;"><a data-toggle="tab" class="my_class my_title1" style="font-size:12px;" data-target="#Debts">Պարտք</a></li>
+                            <li ng-if="creditline && creditline.Quality!=40 && creditline.Type!=9" style="text-align:center;"><a data-toggle="tab" class="my_class my_title1" style="font-size:12px;" data-target="#Provision">Գրավ</a></li>
+                            <li ng-if="creditline && creditline.Quality!=40 && creditline.Type!=9" style="text-align:center;"><a data-toggle="tab" class="my_class my_title1" style="font-size:12px;" data-target="#LoanMainContract">Գլխ. պայմանագիր</a></li>
+                            <li ng-if="creditline && creditline.Quality!=40 && creditline.Type!=9" style="text-align:center;"><a data-toggle="tab" class="my_class my_title1" style="font-size:12px;" data-target="#productotherfees">Միջ/վճար և այլ մուծ.</a></li>
+                            <li ng-if="creditline && creditline.Quality!=40" style="text-align:center;"><a data-toggle="tab" class="my_class my_title1" style="font-size:12px;" data-target="#Judgment">Դատական գործընթաց</a></li>
+                            <li ng-if="creditline && creditline.Quality!=40 && creditline.Type!=9" style="text-align:center;"><a data-toggle="tab" class="my_class my_title1" style="font-size:12px;" data-target="#loanstatement">Քաղվածք</a></li>
+                            <li ng-if="creditline && creditline.Quality!=40 && creditline.Type!=9" style="text-align:center;"><a data-toggle="tab" class="my_class my_title1" style="font-size:12px;" data-target="#loanmonitoringconclusion">Մոնիթորինգի եզրակացություն</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div id="loanstatement" class="tab-pane fade ">
+                        <div class="panel-group" id="accordion">
+                            <loanstatement accountnumber="creditline.LoanAccount.AccountNumber" ng-if="creditline.Type!=9"></loanstatement>
+                        </div>
+                        <p class="text-left"></p>
+                    </div>
+                    <div class="tab-pane fade col-sm-11 in active" id="Debts">
+                        <loandebts loan="creditline"></loandebts>
+                    </div>
+                    <div class="tab-pane fade col-sm-11" id="productotherfees">
+                        <productotherfees productid="productid"></productotherfees>
+                    </div>
+                    <div class="tab-pane fade col-sm-11" id="Provision">
+                        <provisions productid="productid"></provisions>
+                    </div>
+                    <div class="tab-pane fade col-sm-11" id="LoanMainContract">
+                        <loanmaincontract type="2"></loanmaincontract>
+                    </div>
+                    <div class="tab-pane fade col-sm-11" id="Judgment">
+                        <loanjudgment loan="creditline"></loanjudgment>
+                    </div>
+                    <div class="tab-pane fade col-sm-12" id="loanmonitoringconclusion">
+                        <loanmonitoring ng-if="creditline" loan="creditline"></loanmonitoring>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

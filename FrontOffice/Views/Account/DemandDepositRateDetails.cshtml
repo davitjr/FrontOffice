@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = null;
+}
+<style>
+    #tbl table, #tbl th, #tbl td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    #tbl table {
+        border-collapse: collapse;
+    }
+
+        #tbl table .top td {
+            font-size: 12px;
+        }
+
+        #tbl table tr {
+            height: 7px;
+        }
+
+    #tbl .form-horizontal {
+        margin-top: -22px;
+    }
+</style>
+<form style="max-width:700px" 
+      role="form" class="form-horizontal" novalidate>
+    <div id="credentialTermination_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 " ng-controller="PopUpCtrl" ng-click="params={demandDepositAccount: account,currentTariffGroup:demandDepositRates.TariffGroup};openWindow('/Account/DemandDepositRateTariffDetails','Ցպահանջ ավանդի տոկոսադրույքի սակագներ','demandDepositRateTariffDetails')" >
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon applicationButton">Սակագներ</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+
+        <div class="col-sm-12" id="tbl">
+            <div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Հաշվեհամար</div>
+                    <div class="product-detail-cell product-detail-value">{{currentdemandDepositRate.PercentCreditAccount}} {{currentdemandDepositRate.DemandDepositAccount.Currency}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Սակագին</div>
+                    <div class="product-detail-cell product-detail-value">{{currentdemandDepositRate.TariffGroupDescription}}</div>
+                </div>
+                <div class="product-detail-row" ng-if="currentdemandDepositRate.TariffGroup!=1">
+                    <div class="product-detail-cell product-detail-lable">Հրամանի համար</div>
+                    <div class="product-detail-cell product-detail-value">{{currentdemandDepositRate.DocumentNumber}}</div>
+                </div>
+                <div class="product-detail-row" ng-if="currentdemandDepositRate.TariffGroup!=1">
+                    <div class="product-detail-cell product-detail-lable">Հրամանի ա/թ</div>
+                    <div class="product-detail-cell product-detail-value">{{currentdemandDepositRate.DocumentDate | mydate | date: 'dd/MM/yyyy'}}</div>
+                </div>
+            </div>
+
+
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tr class="product-container-header">
+                    <td style="text-align:center" class="col-sm-3">Գումար</td>
+                    <td style="text-align:center" class="col-sm-2">Տոկոսադրույք</td>
+                </tr>
+                <tr ng-repeat="demandDepositRateTariffDetails in currentdemandDepositRate.DemandDepositRateTariffDetails">
+                    <td class="col-sm-3">{{::demandDepositRateTariffDetails.AmountFrom | number:2}} {{demandDepositRateTariffDetails.AmountTo!=-1?('-ից '+(demandDepositRateTariffDetails.AmountTo | number:2)+' (ներառյալ)'):'-ից ավել'}}</td>
+                    <td class="col-sm-2" style="text-align:center">{{ ::demandDepositRateTariffDetails.InterestRate*100 | number:2}}%&nbsp;&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+        <p>&nbsp;</p>
+    </div>
+
+
+</form>

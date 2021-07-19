@@ -1,0 +1,78 @@
+﻿@{
+    Layout = null;
+}
+
+
+<style>
+    #tbl_fico table, #tbl_fico th, #tbl_fico td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    #tbl_fico table {
+        border-collapse: collapse;
+    }
+
+        #tbl_fico table .top td {
+            font-size: 12px;
+        }
+
+        #tbl_fico table #tbl_fico tr {
+            height: 7px;
+        }
+
+    #tbl_fico .form-horizontal {
+        margin-top: -22px;
+    }
+
+    .greenStyle {
+        color: green;
+    }
+</style>
+
+<div class="col-md-11">
+    <br />
+    <div>
+        <form id="tbl_fico" role="form" class="form-horizontal" style="width:700px;" ng-controller="LoanApplicationCtrl">
+
+            <div class="menu-bar" ng-show="false"></div>
+
+            <table border="1" width="100" ng-show="false">
+                <tbody>
+                    <tr >
+                     </tr>
+                </tbody>
+                <tr>
+                </tr>
+            </table>
+            <table border="1" width="100" class="table-hover">
+                <tbody>
+                    <tr class="product-container-header">
+                        <td style="text-align:center">Հաճախորդի համար</td>
+                        <td style="text-align:center">Գնահատական</td>
+                        <td style="text-align:center">Միջ. գնահատական</td>
+                        <td style="text-align:center">Հարցման ա/թ</td>
+                    </tr>
+                </tbody>
+                <tr ng-repeat="ficoScoreResult in ::ficoScoreResults" style="cursor:pointer" ng-click="setSelectetFicoScore(ficoScoreResult)">
+                    <td style="text-align:center">{{::ficoScoreResult.CustomerNumber}}</td>
+                    <td style="text-align:center"> {{::ficoScoreResult.FicoScore}}&nbsp;&nbsp;&nbsp;</td>
+                    <td style="text-align:center"> {{::ficoScoreResult.MidFicoScore}}&nbsp;&nbsp;&nbsp;</td>
+                    <td style="text-align:center"> {{::ficoScoreResult.RequestDate | mydate | date: 'dd/MM/yyyy'}}&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+            </table><br />
+
+
+            <table border="1" width="100" ng-init="selectedReasons=ficoScoreResults[0].Reasons">
+                <tr class="product-container-header">
+                    <td style="text-align:left" colspan="3">Ազդող հիմնական գործոններ</td>
+                </tr>
+                <tr ng-repeat="selectedReason in ::selectedReasons">
+                    <td style="text-align:left" colspan="3">{{::selectedReason}}</td>
+                    
+                </tr>
+            </table><br />
+        </form>
+    </div>
+
+</div>

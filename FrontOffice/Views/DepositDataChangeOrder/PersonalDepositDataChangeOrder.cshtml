@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+}
+
+<div id="depositDataChangeOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="DepositDataChangeOrderCtrl" style="min-width:650px;" id="DepositDataChangeOrderForm" name="DepositDataChangeOrderForm" role="form" novalidate class="form-horizontal" prevent-enter-submit>
+
+    <div id="cardDataChangeOrder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="DepositDataChangeOrderForm.$setSubmitted();DepositDataChangeOrderForm.$valid && saveDepositDataChangeOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('depositDataChangeOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-12">
+            <div style="max-width:520px;min-width:520px;">
+                <errors></errors>
+            </div>
+            <div class="form-group" ng-init="getDepositDataChangeFieldTypeDescription(fieldType)">
+                <label class="tab_title col-sm-5 control-label " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6 row">
+                    <input type="date" disabled="disabled" class="tab_title form-control" id="RegistrationDate" name="RegistrationDate" data-ng-model="order.OperationDate" style="text-align:left" required>
+                </div>
+            </div>
+
+            <paymentaccount ng-if="depositDataChangeFieldTypeDescription && fieldType==1"
+                            ng-init="GetAccountsForNewDeposit()"
+                            accounts="debitAccounts"
+                            accountselectname="ConnectAccount"
+                            account="order.Deposit.ConnectAccount"
+                            check="0"
+                            nameforaccount="depositDataChangeFieldTypeDescription"
+                            nameforcurrency="''"
+                            showloading="false"
+                            >
+            </paymentaccount>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="DepositDataChangeOrderForm.$submitted || DepositDataChangeOrderForm.ConnectAccount.$dirty"
+                             for="DepositDataChangeOrderForm.ConnectAccount.$error">
+                    <ng-message when="required" class="errors">
+                        Ընտրեք հաշվեհամարը
+                    </ng-message>
+                </ng-messages>
+            </div>
+
+
+            <paymentaccount ng-if="depositDataChangeFieldTypeDescription && fieldType==2"
+                            ng-init="getAccountsForPercentAccount()"
+                            accounts="percentAccounts"
+                            accountselectname="ConnectAccountForPercent"
+                            account="order.Deposit.ConnectAccountForPercent"
+                            check="0"
+                            nameforaccount="depositDataChangeFieldTypeDescription"
+                            nameforcurrency="''"
+                            showloading="false">
+            </paymentaccount>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="DepositDataChangeOrderForm.$submitted || DepositDataChangeOrderForm.ConnectAccountForPercent.$dirty"
+                             for="DepositDataChangeOrderForm.ConnectAccountForPercent.$error">
+                    <ng-message when="required" class="errors">
+                        Ընտրեք հաշվեհամարը
+                    </ng-message>
+                </ng-messages>
+            </div>
+
+            <usersetnumber ng-if="fieldType==3" setnumber="order.Deposit.InvolvingSetNumber" formname="DepositDataChangeOrderForm" labelname="Ներգրավող ՊԿ"></usersetnumber>
+            <usersetnumber ng-if="fieldType==4" setnumber="order.Deposit.ServicingSetNumber" formname="DepositDataChangeOrderForm" labelname="Սպասարկող ՊԿ"></usersetnumber>
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+</form>
+
+
+
+
+
+
+
+
+
+
+

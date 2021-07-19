@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="00174740-76d2-41ae-898b-e6bbcc785c0f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="net.tcp://ws0004624.acbaca.local/ExternalBankingService/XBManagementService.svc/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="6383924c-459f-47cb-88d8-9d9461b437d9" SourceId="1" SourceUrl="net.tcp://ws0004624.acbaca.local/ExternalBankingService/XBManagementService.svc/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="2f40f15d-e51b-46f4-ade3-f45e71f60d6d" SourceId="1" SourceUrl="net.tcp://ws0004624.acbaca.local/ExternalBankingService/XBManagementService.svc/mex" />
+    <MetadataFile FileName="ExternalBanking.XBManagement.xsd" MetadataType="Schema" ID="4cd19c5a-d91c-4fc4-bab0-521437f8604c" SourceId="1" SourceUrl="net.tcp://ws0004624.acbaca.local/ExternalBankingService/XBManagementService.svc/mex" />
+    <MetadataFile FileName="ACBALibrary.xsd" MetadataType="Schema" ID="8b31fbc1-7af7-42f9-83cf-ae8844debcd5" SourceId="1" SourceUrl="net.tcp://ws0004624.acbaca.local/ExternalBankingService/XBManagementService.svc/mex" />
+    <MetadataFile FileName="ExternalBanking.xsd" MetadataType="Schema" ID="a3cb16c8-06a2-434c-b84e-64df506d4fa3" SourceId="1" SourceUrl="net.tcp://ws0004624.acbaca.local/ExternalBankingService/XBManagementService.svc/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="91fa4abe-a8cf-4e25-848d-01bb610776ef" SourceId="1" SourceUrl="net.tcp://ws0004624.acbaca.local/ExternalBankingService/XBManagementService.svc/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="7bca41c7-38e8-4b6a-972c-9bdb8e2bbb93" SourceId="1" SourceUrl="net.tcp://ws0004624.acbaca.local/ExternalBankingService/XBManagementService.svc/mex" />
+    <MetadataFile FileName="ExternalBankingSecurityLibrary.TokenOperations.xsd" MetadataType="Schema" ID="baea168f-5f4a-47ae-94f6-220b522f0d79" SourceId="1" SourceUrl="net.tcp://ws0004624.acbaca.local/ExternalBankingService/XBManagementService.svc/mex" />
+    <MetadataFile FileName="AcbaOnlineSecurityService.Helpers.xsd" MetadataType="Schema" ID="7533c964-5aeb-4b10-90a0-fa1cfa0c249e" SourceId="1" SourceUrl="net.tcp://ws0004624.acbaca.local/ExternalBankingService/XBManagementService.svc/mex" />
+    <MetadataFile FileName="ExternalBankingService.xsd" MetadataType="Schema" ID="ce6400f6-83aa-4f40-aace-4c9a93d5453e" SourceId="1" SourceUrl="net.tcp://ws0004624.acbaca.local/ExternalBankingService/XBManagementService.svc/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

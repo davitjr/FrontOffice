@@ -1,0 +1,1062 @@
+﻿<style type="text/css">
+    #internationalPaymentOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #internationalPaymentOrderForm {
+        margin-right: 15px;
+    }
+
+    .for_international_transfer {
+        margin-left: 194px;
+        width: 233px;
+        margin-top: -22px !important;
+    }
+
+    .for_international_transfer_other_option {
+        display: block;
+        margin-top: 95px !important;
+        margin-left: 194px !important;
+    }
+</style>
+
+
+
+<form ng-open="{{checkForDebitAccountInternationalPayment!=0?order.Type = 64 : order.Type =3;order.SubType=1}}" name="internationalPaymentOrderForm" role="form" prevent-enter-submit class="form-horizontal col-sm-12" style="width: 850px; padding: 0" ng-init="getCustomer();order.DetailsOfCharges='OUR' " novalidate labels-required>
+
+
+    <div id="interLoad" class="overlay hidden">
+        <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+    </div>
+
+    <div id="internationalpaymentorder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="internationalPaymentOrderForm.$setSubmitted();internationalPaymentOrderForm.$valid ? printInternationalPaymentOrder(1) : showValidationMessage();" style="padding-right:0">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="printButton h-menu-icon">Հանձնարարական</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="internationalPaymentOrderForm.$setSubmitted();order.OnlySaveAndApprove = false;internationalPaymentOrderForm.$valid ? saveInternationalPayment() : showValidationMessage();" style="padding-right:0">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li ng-if="$root.SessionProperties.AdvancedOptions['withCashRegister']=='1'&& $root.SessionProperties.AdvancedOptions['canSendToCashier']=='1'" class="root-menu-item-4 " ng-click="internationalPaymentOrderForm.$setSubmitted();order.OnlySaveAndApprove = true;internationalPaymentOrderForm.$valid ? saveInternationalPayment() : showValidationMessage();" style="padding-right:0">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ուղարկել դրամարկղ</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('internationalpaymentorder')" style="padding-right:0">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+            <li class="root-menu-item-5 ">
+                <span id="h-menu-item-5" onclick="return false;">
+                    <img id="h-menu-icon-5" class="h-menu-icon applicationButton">
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-5.1" ng-if="order.Type == 64" ng-controller="PopUpCtrl" ng-click="params={paymentOrder:order};openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder');" data-permission-selector="">
+                        <span>Կանխիկ մուտք</span>
+                    </li>
+                    <li id="v-menuItem-5.1" ng-if="order.Type == 3" ng-controller="PopUpCtrl" ng-click="params={AccountNumber: order.DebitAccount.AccountNumber,checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:51};openWindowWithTemplate('paymentorder','Մուտք հաշվին','paymentorder')" data-permission-selector="">
+                        <span>Կանխիկ մուտք</span>
+                    </li>
+                    <li id="v-menuItem-5.1" ng-if="order.Type == 64" ng-controller="PopUpCtrl" ng-click="params={paymentOrder:order, forFee:1};checkTransferFeeForTransitPaymentOrder() && openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder');" data-permission-selector="">
+                        <span>Միջնորդավճար</span>
+                    </li>
+                    <li id="v-menuItem-5.1" ng-if="swiftMessage == undefined" ng-click="searchInternationalTransfers()" data-permission-selector="">
+                        <span>Շաբլոն</span>
+                    </li>
+                    <li id="v-menuItem-5.1" ng-click="openTransferAdditionalDetailsModal()" data-permission-selector="">
+                        <span>Լրաց. տվյալներ</span>
+                    </li>
+                </ul>
+            </li>
+
+
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+
+        <div class="col-sm-7" style="padding:0;padding-left:5px;">
+            <div class="col-sm-12" style="margin-left:0;padding-left:0;">
+                <div style="max-width:530px">
+                    <errors></errors>
+                </div>
+            </div>
+            <div class="form-group ">
+                <div class="col-sm-12" style="max-width:530px">
+                    <div class="row-no-margin">
+
+                        <section class=" panel panel-info">
+                            <header class="panel-heading">
+                                <span class="panel-title" style=" font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                            </header>
+                            <div class="panel-body">
+                                <span ng-if="order.Currency!='RUR'">Բոլոր դաշտերը անհրաժեշտ է մուտքագրել UNICODE-ով</span>
+                                <span ng-if="order.Currency=='RUR'">Վճարման հանձնարարականը լրացրեք ռուսերեն լեզվով և UNICODE-ով</span>
+                            </div>
+                        </section>
+                        <section ng-show="customerDocumentWarnings.length>0" class=" panel panel-warning">
+                            <header class="panel-heading">
+                                <span class="panel-title" style=" font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                            </header>
+                            <div class="panel-body">
+                                <div ng-repeat="war in customerDocumentWarnings">
+                                    {{$index+1}}.{{::war}}
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+            <div class="panel panel-success" style=" margin-bottom: 10px;">
+                <div class="panel-heading">Վճարման հանձնարարական</div>
+                <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+
+                    <div class="form-group col-sm-3  " style="margin:0;padding-right: 0px;padding-left: 0px;">
+                        <div class="row" style="margin:0; ">
+                            <label class="tab_title col-sm-6" style="padding-left: 0px;"> Համար</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" style="text-align:center;padding-right: 0px;padding-left: 0px; " readonly="readonly" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title" id="number" name="number" ng-init="generateNewOrderNumber();" data-ng-model="order.OrderNumber" required>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group  col-sm-6" style="margin:0; padding:0">
+                        <div class="row" style="margin:0;padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="RegistrationDate">Ամսաթիվ</label>
+                            <div class="col-sm-7">
+                                <div class="row">
+                                    <input type="date" readonly="readonly" ng-model="order.OperationDate" class="tab_title form-control" style="text-align:left; padding:0" name="RegistrationDate" required />
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-3  " style="margin:0;padding-right: 0px;padding-left: 0px;">
+                        <div class="row" style="margin:0; ">
+                            <label class="tab_title col-sm-6" style="padding-left: 0px;"> Տեսակ</label>
+                            <div class="col-sm-6" data-ng-init="GetMTList()">
+                                <div class="row">
+                                    <select data-ng-model="order.MT" name="MT" id="MT" class="form-control" style=" padding-left: 0px;" disabled="disabled" required>
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                        <option ng-repeat="k in MTList">{{k.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.MT.$dirty"
+                                                 for="internationalPaymentOrderForm.MT.$error">
+                                        <ng-message when="required" class="errors">
+                                            Փոխանցման տեսակը ընտրված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            @*<div class="panel panel-success" style=" margin-bottom: 10px;">
+                    <div class="panel-heading"> Դեբետագրվող հաշիվ</div>
+                    <div class="panel-body" style="padding-bottom: 10px; padding-top: 5px;">
+                        <div class="form-group " style="padding-right: 10px;margin-bottom:0">
+                            <label class="tab_title col-sm-5" style="text-align:left" for="debitAccount"> Դեբետագրվող հաշիվ</label>
+                            <div class="col-sm-7" data-ng-init="getDebitAccounts(3,1)">
+                                <div class="row">
+                                    <loading-control scopevariable="debitAccounts"></loading-control>
+                                    <select ng-change="order.DebitAccount.Currency!='AMD' &&  order.Currency==undefined && (order.Currency=order.DebitAccount.Currency);setConvertationRates();" ng-show="debitAccounts" data-ng-model="order.DebitAccount" class="form-control" name="debitAccount"
+                                            data-ng-options="getAccountDescription(a) group by a.AccountTypeDescription for a in debitAccounts" required>
+                                        <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.debitAccount.$dirty"
+                                                 for="internationalPaymentOrderForm.debitAccount.$error">
+                                        <ng-message when="required" class="errors">
+                                            Ելքագրվող (դեբետ) հաշիվ դաշտն ընտրված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+
+
+            <div class="panel panel-success " style=" margin-bottom: 10px;">
+                <div class="panel-heading"> <span ng-if="checkForDebitAccountInternationalPayment==0"> Դեբետագրվող հաշիվ </span><span ng-if="checkForDebitAccountInternationalPayment==1"> Դեբետագրվող արժույթ </span></div>
+                <div class="panel-body" style="padding-bottom: 0; padding-top: 5px; padding-right:25px">
+
+                    <paymentaccount data-ng-init="getDebitAccounts(1,2)"
+                                    accountselectname="debitAccount"
+                                    accountnumber="DebitAccountNumber"
+                                    accounts="debitAccounts"
+                                    account="order.DebitAccount"
+                                    disable="swiftMessage != undefined"
+                                    ngblur="getFee()"
+                                    check="checkForDebitAccountInternationalPayment"
+                                    nameforaccount="'Դեբետագրվող հաշիվ'"
+                                    nameforcurrency="'Դեբետագրվող արժույթ'">
+                    </paymentaccount>
+                    <div class="col-sm-6"></div>
+                    <div class="row ">
+                        <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.debitAccount.$dirty"
+                                     for="internationalPaymentOrderForm.debitAccount.$error">
+                            <ng-message when="required" class="errors">
+                                <span ng-if="checkForDebitAccountInternationalPayment==0">Հաշիվը ընտրված չէ</span>
+                                <span ng-if="checkForDebitAccountInternationalPayment==1">Արժույթը ընտրված չէ</span>
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-success" style=" margin-bottom: 10px;">
+                <div class="panel-heading">Գումար </div>
+                <div class="panel-body" style="padding-bottom: 0px; padding-top: 5px;padding-right: 15px;">
+                    <div class="form-group " style="margin-left :0; margin-right :0">
+
+                        <label class="tab_title col-sm-5" for="amount">Գումար</label>
+                        <div class="col-sm-3">
+                            <div class="row">
+                                <input ng-disabled="swiftMessage != undefined" type="text" ng-model="order.Amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' name="amount" required class="tab_title form-control" ng-blur="setUrgentSign();getFee();getCardFee();calculateConvertationAmount();" fcsa-number />
+                            </div>
+                            <div class="row ">
+                                <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.amount.$dirty || isAddDataFormOpening"
+                                             for="internationalPaymentOrderForm.amount.$error">
+                                    <ng-message when="required" class="errors">
+                                        Գումարը լրացված չէ
+                                    </ng-message>
+
+                                    <ng-message when="min" class="errors">
+                                        Գումարը պետք է լինի դրական
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" data-ng-init="GetCurrencies()">
+                            <div class="row">
+                                <select data-ng-model="order.Currency" name="CurrencyMy" id="Currency" class="form-control" style="margin-left: 5px; padding-right: 0px; padding-left: 5px;" ng-change="setUrgentSign();setConvertationRates();getFee(); " ng-disabled="checkForDebitAccountInternationalPayment==1 || swiftMessage != undefined" required
+                                        data-ng-options="k as v for (k,v) in currencies">
+                                    <option value="" hidden="hidden">Ընտրեք...</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.CurrencyMy.$dirty"
+                                             for="internationalPaymentOrderForm.CurrencyMy.$error">
+                                    <ng-message when="required" class="errors">
+                                        Արժույթը ընտրված չէ
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-12">
+                        <reasonforouttransfer reasonid="order.ReasonId"
+                                              reasoniddescription="order.ReasonIdDescription"
+                                              formname="internationalPaymentOrderForm"
+                                              ng-if="order.Type==3 && (order.DebitAccount.AccountType == 11 || order.DebitAccount.AccountType == 111) ">
+                        </reasonforouttransfer>
+
+                    </div>
+
+
+                    <div class="form-group" ng-if="order.Currency !=undefined && order.DebitAccount.Currency!=undefined && order.Currency !=order.DebitAccount.Currency " style="margin-left :0; margin-right :0">
+                        <label class="tab_title col-sm-5" for="Rate">Փոխարժեք</label>
+                        <div class="col-sm-3">
+                            <div class="row">
+
+                                <input type="number" ng-model="order.Rate" name="Rate" ng-pattern="/^\d+(\.\d{1,7})?$/" ng-blur="rateChanged(); calculateConvertationAmount(); " ng-enter="" class="form-control tab_title" />
+                            </div>
+                            <div class="row">
+                                <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.Rate.$dirty"
+                                             for="internationalPaymentOrderForm.Rate.$error">
+                                    <div ng-message="pattern" class="errors">Ստորակետից հետո պետք է լինի ամենաշատը 7 նիշ:</div>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="padding-right: 10px;" ng-if="order.Currency !=undefined && order.DebitAccount.Currency!=undefined && order.Currency !=order.DebitAccount.Currency  && order.Amount!=null  && order.Amount>0 && order.AmountConvertation !=null">
+                        <label class="tab_title col-sm-5" for="amountInAccCurrency">Գումարը հաշվի արժույթով</label>
+                        <div class="col-sm-6 row">
+                            <div class="col-sm-7" style="text-align: right; padding-right: 0; padding-left:0">
+                                <label class="tab_title" style="text-align:right">{{ order.AmountConvertation}} </label>
+                            </div>
+                            <div class="col-sm-3" style="text-align:left;">
+                                <label class="tab_title">{{ order.DebitAccount.Currency}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="panel panel-success" style=" margin-bottom: 10px;">
+                <div class="panel-heading">Ուղարկող </div>
+                <div class="panel-body" style="padding-bottom: 5px; padding-top: 5px;padding-right: 15px;">
+                    <div ng-if=" customer.CustomerType!=6" labels-required>
+                        <div class="form-group " style="padding-right: 10px;">
+
+                            <label class="tab_title col-sm-5" for="Sender"> Անվանում </label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <textarea rows="2" ng-model="order.Sender" ng-readonly="order.Currency!='RUR'" name="SenderName" id="SenderName" ng-enter="" required class="tab_title form-control" style="text-align:left" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.SenderName.$dirty"
+                                                 for="internationalPaymentOrderForm.SenderName.$error">
+                                        <ng-message when="required" class="errors">
+                                            <span ng-if="customer.CustomerType == 6">Ուղարկողի անուն ազգանունը</span><span ng-if="customer.CustomerType != 6">Ուղարկողի անվանումը</span>  լրացված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if=" customer.CustomerType==6" labels-required>
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="Sender">Անուն ազգանուն </label>
+
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <textarea rows="2" ng-model="order.Sender" ng-readonly="order.Currency!='RUR'" name="SenderName" id="SenderName" ng-enter="" required class="tab_title form-control" style="text-align:left" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="internationalPaymentOrderForm.$submitted && (order.Sender ==undefined || order.Sender =='' || order.Sender ==' ') ">
+                                        <span ng-if="customer.CustomerType == 6">Ուղարկողի անուն ազգանունը</span><span ng-if="customer.CustomerType != 6">Ուղարկողի անվանումը</span>  լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="padding-right: 10px;">
+                        <label class="tab_title col-sm-5" for="SenderAddress">Գրանցման հասցե </label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <textarea rows="2" ng-model="order.SenderAddress" name="SenderAddress" id="SenderAddress" ng-enter="" required class="tab_title form-control" style="text-align:left" />
+                            </div>
+                            <div class="row">
+                                <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.SenderAddkress.$dirty"
+                                             for="internationalPaymentOrderForm.SenderAddress.$error">
+                                    <ng-message when="required" class="errors">
+                                        Գրանցման հասցեն լրացված չէ
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="order.Currency!='RUR' && order.Currency!=undefined" labels-required>
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="SenderTown">Գրանցման քաղաք</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.SenderTown" name="SenderTown" id="SenderTown" ng-enter="" required class="tab_title form-control" style="text-align:left" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.SenderTown.$dirty"
+                                                 for="internationalPaymentOrderForm.SenderTown.$error">
+                                        <ng-message when="required" class="errors">
+                                            Գրանցման քաղաքը լրացված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div style="padding-right: 10px; margin-bottom: 0px;" ng-if="order.Currency!='RUR' && order.Currency!=undefined">
+                        <countrylist labeldescription="'Գրանցման երկիր'" country="order.SenderCountry" showriskquality="0" formname="internationalPaymentOrderForm"></countrylist>
+                        <div class="row">
+                            <div class="col-sm-5"></div>
+                            <ng-messages class="errors" ng-if="internationalPaymentOrderForm.$submitted && order.SenderCountry==undefined">
+                                Գրանցման երկիրն ընտրված չէ
+                            </ng-messages>
+
+                        </div>
+                    </div>
+
+
+                    <div ng-if=" customer.CustomerType==6" labels-required>
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="SenderPassport">Անձնագիր</label>
+
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.SenderPassport" readonly name="SenderPassport" ng-enter="" required class="tab_title form-control" style="text-align:left" />
+                                </div>
+
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.SenderPassport.$dirty"
+                                                 for="internationalPaymentOrderForm.SenderPassport.$error">
+                                        <ng-message when="required" class="errors">
+                                            Անձնագիր դաշտը լրացված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-if=" customer.CustomerType==6" labels-required>
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="SenderDateOfBirth">Ծննդյան ամսաթիվ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="date" ng-model="order.SenderDateOfBirth" readonly ng-enter="" id="SenderDateOfBirth" name="SenderDateOfBirth" class="tab_title form-control" style="text-align:left" required />
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.SenderDateOfBirth.$dirty"
+                                                 for="internationalPaymentOrderForm.SenderDateOfBirth.$error">
+                                        <ng-message when="required" class="errors">
+                                            Ծննդյան ամսաթիվ դաշտը լրացված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="padding-right: 10px;">
+                        <label class="tab_title col-sm-5" for="SenderEmail">Էլեկտրոնային հասցե</label>
+
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <input type="text" ng-model="order.SenderEmail" readonly ng-enter="" name="SenderEmail" class="tab_title form-control" style="text-align:left" />
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if=" customer.CustomerType!=6" labels-required>
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="SenderCodeOfTax">ՀՎՀՀ</label>
+
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.SenderCodeOfTax" ng-enter="" name="SenderCodeOfTax" readonly required class="tab_title form-control" style="text-align:left" />
+                                </div>
+
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.SenderCodeOfTax.$dirty"
+                                                 for="internationalPaymentOrderForm.SenderCodeOfTax.$error">
+                                        <ng-message when="required" class="errors">
+                                            ՀՎՀՀ դաշտը լրացված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="padding-right: 10px;">
+                        <label class="tab_title col-sm-5" for="SenderPhone">Հեռախոսահամար</label>
+
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <input type="text" ng-model="order.SenderPhone" name="SenderPhone" required class="tab_title form-control" style="text-align:left" />
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.SenderPhone.$dirty"
+                                             for="internationalPaymentOrderForm.SenderPhone.$error">
+                                    <ng-message when="required" class="errors">
+                                        Հեռախոսահամար դաշտը լրացված չէ
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="padding-right: 10px; margin-bottom:0">
+                        <label class="tab_title col-sm-5" for="SenderOtherBankAccount">Այլ բանկերում հաշվեհամարներ</label>
+
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <input ng-enter="" type="text" ng-model="order.SenderOtherBankAccount" name="SenderOtherBankAccount" class="tab_title form-control" style="text-align:left" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="panel panel-success" ng-if="order.Currency!='RUR'" style=" margin-bottom: 10px;">
+                <div class="panel-heading">Ստացող բանկ </div>
+                <div class="panel-body" style="padding-bottom: 5px; padding-top: 5px;padding-right: 15px;">
+
+                    <div class="form-group " style="padding-right: 10px;" ng-if="order.Currency!='RUR'">
+                        <label class="tab_title col-sm-5" for="ReceiverBankSwift">SWIFT կոդ</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="input-group col-sm-10">
+                                    <input ng-disabled="swiftMessage != undefined" type="text" ng-model="order.ReceiverBankSwift" name="ReceiverBankSwift" ng-blur="ReceiverBankSwiftChange()" ng-change="order.FedwireRoutingCode=''" ng-enter="" class="tab_title form-control" style="text-align:left" />
+                                    <div class="input-group-btn" style="display:block;">
+                                        <button ng-disabled="swiftMessage != undefined" type="button" class="btn btn-default searchButton" ng-click="order.SwiftCodeType=2;searchSwiftCodes()" title="SWIFT կոդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="padding-right: 10px;" ng-if="order.Currency!='RUR'">
+                        <label class="tab_title col-sm-5" for="FedwireRoutingCode">Fedwire Routing կոդ <span class="tipB glyphicon glyphicon-info-sign" ng-init="tooltipClass();" data-original-title="Բանկի 9 նիշանոց թվային կոդ, լրացվում է միայն ԱՄՆ դոլարով դեպի ԱՄՆ փոխանցման դեպքում" style="color:#5EB4FF"></span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <input type="text" ng-model="order.FedwireRoutingCode" name="FedwireRoutingCode" ng-enter="" ng-change="" class="tab_title form-control" style="text-align:left" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-if="order.Currency!='RUR'" labels-required>
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="ReceiverBank">Բանկի տվյալներ</label>
+
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <textarea rows="2" ng-model="order.ReceiverBank" ng-enter="" name="ReceiverBank" ng-required="swiftMessage == undefined" class="tab_title form-control" style="text-align:left" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.ReceiverBank.$dirty"
+                                                 for="internationalPaymentOrderForm.ReceiverBank.$error">
+                                        <ng-message when="required" class="errors">
+                                            Ստացող բանկի տվյալներ դաշտը լրացված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group " style="padding-right: 10px; margin-bottom: 0" ng-if="order.Currency!='RUR'">
+                        <label class="tab_title col-sm-5" for="ReceiverBankAddInf">Բանկի լրացուցիչ տվյալներ</label>
+
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <textarea rows="2" ng-enter="" ng-model=" order.ReceiverBankAddInf" maxlength="210" name="ReceiverBankAddInf" class="tab_title form-control" style="text-align:left" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-success" ng-if="order.Currency!='RUR'" style=" margin-bottom: 10px;">
+                <div class="panel-heading">Միջնորդ բանկ </div>
+                <div class="panel-body" style="padding-bottom: 5px; padding-top: 5px;padding-right: 15px;">
+                    <div class="form-group " style="padding-right: 10px;" ng-if="order.Currency!='RUR'">
+                        <label class="tab_title col-sm-5" for="IntermediaryBankSwift">SWIFT կոդ</label>
+
+                        <div class="col-sm-6">
+                            <div class="row">
+
+                                <div class="input-group col-sm-10">
+                                    <input type="text" ng-model="order.IntermediaryBankSwift" ng-disabled="swiftMessage != undefined" ng-enter="" maxlength="11" name="IntermediaryBankSwift" class="tab_title form-control" ng-blur="intermediaryBankSwiftChange()" style="text-align:left" />
+                                    <div class="input-group-btn" style="display:block;">
+                                        <button type="button" class="btn btn-default searchButton" ng-click="order.SwiftCodeType=1;searchSwiftCodes()" title="SWIFT կոդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="padding-right: 10px; margin-bottom: 0" ng-if="order.Currency!='RUR'">
+                        <label class="tab_title col-sm-5" for="IntermediaryBank">Բանկի տվյալներ</label>
+
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <textarea rows="2" ng-enter="" ng-model="order.IntermediaryBank" name="IntermediaryBank" class="tab_title form-control" style="text-align:left" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="order.Currency=='RUR'" labels-required>
+                <div class="panel panel-success" style=" margin-bottom: 10px;">
+                    <div class="panel-heading">Ստացող բանկ </div>
+                    <div class="panel-body" style="padding-bottom: 5px; padding-top: 5px;padding-right: 15px;">
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BIK"> ԲԻԿ (9 նիշ)</label>
+
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" maxlength="9" ng-enter="" ng-minlength="9" ng-model="order.BIK" name="BIK" required class="tab_title form-control" style="text-align:left" />
+                                </div>
+                                <div class="row">
+                                    <div ng-if="internationalPaymentOrderForm.$submitted && (internationalPaymentOrderForm.BIK.$error.minlength || internationalPaymentOrderForm.BIK.$error.required)" class="errors">
+                                        ԲԻԿ դաշտը պետք է լինի 9 նիշ:
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="CorrAccount"> Թղթակցային հաշիվ (20 նիշ)</label>
+
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" maxlength="20" ng-enter="" ng-minlength="20" ng-model="order.CorrAccount" name="CorrAccount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 ' required class="tab_title form-control" style="text-align:left" />
+                                </div>
+                                <div class="row">
+                                    <div ng-if="internationalPaymentOrderForm.$submitted && (internationalPaymentOrderForm.CorrAccount.$error.minlength || internationalPaymentOrderForm.CorrAccount.$error.required)" class="errors">
+                                        Թղթակցային հաշիվ դաշտը պետք է լինի 20 նիշ:
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="ReceiverBank">Ստացող բանկի տվյալներ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <textarea rows="2" ng-model="order.ReceiverBank" ng-enter="" maxlength="140" name="ReceiverBank" required class="tab_title form-control" style="text-align:left" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.ReceiverBank.$dirty"
+                                                 for="internationalPaymentOrderForm.ReceiverBank.$error">
+                                        <ng-message when="required" class="errors">
+                                            Ստացող բանկի տվյալներ դաշտը լրացված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px; margin-bottom: 0">
+                            <label class="tab_title col-sm-5" for="KPP"> ԿՊՊ (9 նիշ)</label>
+
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" maxlength="9" ng-minlength="9" ng-enter="" ng-model="order.KPP" name="KPP" onkeypress='return event.charCode >= 48 && event.charCode <= 57 ' class="tab_title form-control" style="text-align:left" />
+                                </div>
+                                <div class="row">
+                                    <div ng-if="internationalPaymentOrderForm.$submitted && internationalPaymentOrderForm.KPP!='' && internationalPaymentOrderForm.KPP.$error.minlength" class="errors">
+                                        ԿՊՊ դաշտը պետք է լինի 9 նիշ:
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-success" style=" margin-bottom: 10px;">
+                <div class="panel-heading">Ստացողի տվյալներ </div>
+                <div class="panel-body" style="padding-bottom: 5px; padding-top: 5px;padding-right: 15px;">
+
+                    <div class="form-group " style="padding-right: 10px;" ng-if="order.Currency!='RUR' && swiftMessage!=undefined">
+                        <label class="tab_title col-sm-5" for="ReceiverSwift">SWIFT կոդ</label>
+                        <div class="col-sm-6" data-ng-init="ReceiverSwiftChange()">
+                            <div class="row">
+                                <div class="input-group col-sm-10">
+                                    <input type="text" ng-model="order.ReceiverSwift" name="ReceiverSwift" ng-disabled="swiftMessage != undefined" ng-blur="ReceiverSwiftChange()" ng-enter="" class="tab_title form-control" style="text-align:left" />
+                                    <div class="input-group-btn" style="display:block;">
+                                        <button type="button" class="btn btn-default searchButton" ng-click="order.SwiftCodeType=2;searchSwiftCodes()" title="SWIFT կոդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="padding-right: 10px;">
+                        <label class="tab_title col-sm-5" for="ReceiverAccount"> Հաշվի համար</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <input type="text" ng-model="order.ReceiverAccount.AccountNumber" ng-enter="" maxlength="34" ng-disabled="swiftMessage != undefined" name="ReceiverAccount" required class="tab_title form-control" style="text-align:left" />
+                            </div>
+                            <div class="row">
+                                <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.ReceiverAccount.$dirty"
+                                             for="internationalPaymentOrderForm.ReceiverAccount.$error">
+                                    <ng-message when="required" class="errors">
+                                        Ստացողի հաշվի համար դաշտը լրացված չէ
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="padding-right: 10px;">
+                        <label class="tab_title col-sm-5" for="Receiver">Անվանում</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <textarea rows="2" ng-model="order.Receiver" name="Receiver" ng-enter="" ng-disabled="swiftMessage != undefined" ng-maxlength="140-order.ReceiverAddInf.length" required class="tab_title form-control" style="text-align:left" />
+                            </div>
+                            <div class="row">
+                                <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.Receiver.$dirty"
+                                             for="internationalPaymentOrderForm.Receiver.$error">
+                                    <ng-message when="required" class="errors">
+                                        Ստացողի անվանում դաշտը լրացված չէ
+                                    </ng-message>
+                                </ng-messages>
+                                <div ng-if="internationalPaymentOrderForm.Receiver.$error.maxlength" class="errors">
+                                    Ստացողի տվյալները առավելագույնը 140 նիշ է:
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="order.Currency!='RUR'" labels-required>
+                        <div class="form-group " style="padding-right: 10px; margin-bottom: 0">
+                            <label class="tab_title col-sm-5" for="ReceiverAddInf">Լրացուցիչ տվյալներ (հասցե կամ ծննդյան ամսաթիվ, կամ անձնագրի/ միջ.ID տվյալներ)</label>
+
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <textarea rows="2" ng-model="order.ReceiverAddInf" ng-enter="" required ng-maxlength="140-order.Receiver.length" name="ReceiverAddInf" class="tab_title form-control" style="text-align:left" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.ReceiverAddInf.$dirty"
+                                                 for="internationalPaymentOrderForm.ReceiverAddInf.$error">
+                                        <ng-message when="required" class="errors">
+                                            Լրացուցիչ տվյալներ  դաշտը լրացված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                    <div ng-if="internationalPaymentOrderForm.ReceiverAddInf.$error.maxlength" class="errors">
+                                        Ստացողի տվյալները առավելագույնը 140 նիշ է:
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="padding-right: 10px; margin-bottom: 0" ng-if="order.Currency=='RUR'">
+
+                        <label class="tab_title col-sm-5" for="ReceiverAddInf">Լրացուցիչ տվյալներ </label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <textarea rows="2" ng-model="order.ReceiverAddInf" ng-enter="" ng-maxlength="140-order.Receiver.length" name="ReceiverAddInf" class="tab_title form-control" style="text-align:left" />
+                            </div>
+                            <div class="row">
+                                <div ng-if="internationalPaymentOrderForm.ReceiverAddInf.$error.maxlength" class="errors">
+                                    Ստացողի տվյալները առավելագույնը 140 նիշ է:
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="order.Currency=='RUR'" labels-required>
+                        <div class="form-group" style="padding-right: 10px; margin-top: 10px" ng-if="order.Currency=='RUR'">
+                            <label class="tab_title col-sm-5" for="ReceiverType">Տեսակ</label>
+                            <div class="col-sm-6" data-ng-init="GetReceiverType()">
+                                <div class="row">
+                                    <select data-ng-model="order.ReceiverType" name="ReceiverType" id="ReceiverType" class="form-control" required>
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք ստացողի տեսակը...</option>
+                                        <option ng-repeat="k in receiverTypes" value="{{k.id}}">{{k.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.ReceiverType.$dirty"
+                                                 for="internationalPaymentOrderForm.ReceiverType.$error">
+                                        <ng-message when="required" class="errors">
+                                            Ստացողի տեսակը ընտրված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="padding-right: 10px; margin-bottom: 0" ng-if="order.Currency=='RUR'">
+                        <label class="tab_title col-sm-5" for="INN">ԻՆՆ (10 կամ 12 նիշ)</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <input type="text" maxlength="{{order.ReceiverType==2 ? 10 : 12}}" ng-minlength="{{order.ReceiverType==2 ? 10 :order.INN=='' ? 0 : 12}}" ng-enter="" ng-model="order.INN" name="INN" ng-required="order.ReceiverType==2" class="tab_title form-control" style="text-align:left" />
+                            </div>
+                            <div class="row">
+                                <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.INN.$dirty"
+                                             for="internationalPaymentOrderForm.INN.$error">
+                                    <ng-message when="required" class="errors">
+                                        Ստացողի ԻՆՆ դաշտը լրացված չէ
+                                    </ng-message>
+                                    <ng-message when="minlength" class="errors">
+                                        ԻՆՆ դաշտը պետք է լինի {{order.ReceiverType==2 ? 10 : 12}} նիշ:
+                                    </ng-message>
+                                    <ng-message when="maxlength" class="errors">
+                                        ԻՆՆ դաշտը պետք է լինի {{order.ReceiverType==2 ? 10 : 12}} նիշ:
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div ng-if="order.Currency!='RUR' && order.MT==103  && order.ReceiverBankSwift.slice(4, 6) ==  'AE'">
+                <div class="panel panel-success" style=" margin-bottom: 10px;">
+                    <div class="panel-heading"> Փոխանցման նպատակը    </div>
+                    <div class="panel-body" style="padding-bottom: 5px; padding-top: 5px;padding-right: 15px;">
+                        <div class="form-group " style="padding-right: 10px;margin-bottom:0">
+                            <label class="tab_title col-sm-5" for="purposeCode">Փոխանցման նպատակը</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <select ng-model="order.SwiftPurposeCode" class="form-control" ng-init="GetSwiftPurposeCode()" data-ng-options="k as v for (k,v) in purposeCode">
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div ng-if="order.SwiftPurposeCode==999" class="form-group " style="padding-right: 10px; padding-top :10px">
+                            <label class="tab_title col-sm-5">Փոխանցման նպատակի կոդ</label>
+
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" maxlength="3" name="purposeCode" ng-model="order.PurposeCodeOther" class="tab_title form-control" style="text-align:left" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="order.Currency!='RUR'" labels-required>
+                <div class="panel panel-success" style=" margin-bottom: 10px;">
+                    <div class="panel-heading"> Վճարման մանրամասներ</div>
+                    <div class="panel-body" style="padding-bottom: 5px; padding-top: 5px;padding-right: 15px;">
+                        <div class="form-group " style="padding-right: 10px;margin-bottom:0">
+                            <label class="tab_title col-sm-5" for="DescriptionForPayment">Վճարման մանրամասներ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <textarea rows="2" ng-model="order.DescriptionForPayment" name="DescriptionForPayment" ng-enter="" onkeypress="return isArmenianUnicode(event.keyCode)" ng-disabled="swiftMessage != undefined" required maxlength="135" class="tab_title form-control" style="text-align:left" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.DescriptionForPayment.$dirty"
+                                                 for="internationalPaymentOrderForm.DescriptionForPayment.$error">
+                                        <ng-message when="required" class="errors">
+                                            Վճարման մանրամասներ դաշտը լրացված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="order.Currency=='RUR'" labels-required>
+                <div class="panel panel-success" style=" margin-bottom: 10px;">
+                    <div class="panel-heading"> Վճարման մանրամասներ</div>
+                    <div class="panel-body" style="padding-bottom: 0; padding-top: 5px;padding-right: 15px;">
+                        <div ng-if="order.Currency=='RUR'">
+                            <div class="form-group ">
+                                <div class=" col-sm-5" data-ng-init="GetDescriptionForPaymentRUR1()">
+
+                                    <select data-ng-model="order.DescriptionForPaymentRUR1" ng-enter="" name="DescriptionForPaymentRUR1" id="DescriptionForPaymentRUR1" ng-change="order.DescriptionForPaymentRUR2=''; order.DescriptionForPaymentRUR4=''; order.DescriptionForPaymentRUR5=''; order.DescriptionForPaymentRUR6=''; (order.DescriptionForPaymentRUR1!='Материальная помощь' && order.DescriptionForPaymentRUR1!=undefined && order.DescriptionForPaymentRUR1!='Другое') ? order.DescriptionForPaymentRUR3='согласно договору' : order.DescriptionForPaymentRUR3=''" class="form-control" required>
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                        <option ng-repeat="k in DescriptionForPaymentRUR1">{{k.name}}</option>
+                                    </select>
+                                    <div class="row">
+                                        <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.DescriptionForPaymentRUR1.$dirty"
+                                                     for="internationalPaymentOrderForm.DescriptionForPaymentRUR1.$error">
+                                            <ng-message when="required" class="errors">
+                                                Վճարման մանրամասները լրացված չէ
+                                            </ng-message>
+                                        </ng-messages>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" ng-model="order.DescriptionForPaymentRUR2" ng-enter="" name="DescriptionForPaymentRUR2" class="tab_title form-control" style="text-align:left" />
+                                </div>
+                            </div>
+
+                            <div class="form-group " ng-if="order.DescriptionForPaymentRUR1!='Материальная помощь' && order.DescriptionForPaymentRUR1!=undefined && order.DescriptionForPaymentRUR1!='Другое'">
+                                <div class="col-sm-5">
+                                    <input type="text" ng-model="order.DescriptionForPaymentRUR3" ng-enter="" name="DescriptionForPaymentRUR3" ng-init="order.DescriptionForPaymentRUR3='согласно договору'" ng-readonly="true" class="tab_title form-control" style="text-align:left" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" ng-model="order.DescriptionForPaymentRUR4" ng-enter="" name="DescriptionForPaymentRUR4" class="tab_title form-control" style="text-align:left " />
+                                </div>
+                            </div>
+                            <div class="form-group " ng-if="order.DescriptionForPaymentRUR1!='Материальная помощь' && order.DescriptionForPaymentRUR1!=undefined  && order.DescriptionForPaymentRUR1!='Другое'">
+                                <div class="col-sm-5" data-ng-init="GetDescriptionForPaymentRUR5()">
+
+                                    <select data-ng-model="order.DescriptionForPaymentRUR5" name="DescriptionForPaymentRUR5" id="DescriptionForPaymentRUR5" class="form-control">
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                        <option ng-repeat="k in DescriptionForPaymentRUR5">{{k.name}}</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-sm-5" ng-if="order.DescriptionForPaymentRUR1!='Материальная помощь'  && order.DescriptionForPaymentRUR1!='Другое' && order.DescriptionForPaymentRUR5=='с НДС'" style="padding-right:0">
+                                    <input type="number" ng-model="order.DescriptionForPaymentRUR6" ng-enter="" name="DescriptionForPaymentRUR6" class="tab_title form-control" style="text-align:left" />
+                                </div>
+                                <div class="col-sm-2" ng-if="order.DescriptionForPaymentRUR1!='Материальная помощь'   && order.DescriptionForPaymentRUR1!='Другое' && order.DescriptionForPaymentRUR5=='с НДС'">
+                                    <label class="tab_title">RUB</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-success" style=" margin-bottom: 10px;">
+                <div class="panel-heading">Գործարքի նկարագրություն</div>
+                <div style="padding-right: 25px; padding-top: 5px;">
+                    <orderdescription ordertype="order.Type" operations="operations"
+                                      description="description" labeldescription="'Նկարագրություն'" formname="internationalPaymentOrderForm"></orderdescription>
+                </div>
+            </div>
+            <div class="panel panel-success" style=" margin-bottom: 10px;" ng-init="isUrgentTime();">
+                <div class="panel-heading">Ծախսեր</div>
+                <div class="panel-body" style="padding-bottom: 0; padding-top: 5px;padding-right: 15px;">
+                    <div style="padding-right: 10px; margin-bottom: 0px;">
+                        <countrylist labeldescription="'Ուղարկվող երկիր'" disabled1="isdisable" country="order.Country" showriskquality="1" formname="internationalPaymentOrderForm"></countrylist>
+                        <div class="row">
+                            <div class="col-sm-6"></div>
+                            <ng-messages class="errors" ng-if="internationalPaymentOrderForm.$submitted && order.Country==undefined">
+                                Երկիրն ընտրված չէ
+                            </ng-messages>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="padding-right: 10px;">
+                        <label class="tab_title col-sm-5" for="DetailsOfCharges">Փոխանցման եղանակ</label>
+                        <div class="col-sm-6" data-ng-init="GetDetailsOfCharges()">
+                            <div class="row">
+                                <select ng-disabled="swiftMessage != undefined" data-ng-model="order.DetailsOfCharges" name="DetailsOfCharges" id="DetailsOfCharges" ng-change="getFee()" class="form-control" required>
+                                    <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք փոխանցման եղանակը...</option>
+                                    <option ng-repeat="k in detailsOfCharges">{{k.name}}</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.DetailsOfCharges.$dirty"
+                                             for="internationalPaymentOrderForm.DetailsOfCharges.$error">
+                                    <ng-message when="required" class="errors">
+                                        Փոխանցման եղանակ դաշտը ընտրված չէ
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="padding-right: 10px;" ng-if="isUrgentTime == 'True'">
+                        <label class="tab_title col-sm-5" for="UrgentSign"> Շտապ փոխանցում</label>
+
+                        <div class="col-sm-1 row">
+                            <input type="checkbox" ng-change="getFee()" ng-disabled="order.Amount!=null && !((( order.Currency=='USD' || order.Currency=='EUR'  ) && order.Amount<500000) || ( order.Currency=='RUR' && order.Amount<10000000) )" ng-model="order.UrgentSign" style="width:18px" name="UrgentSign" />
+                        </div>
+                    </div>
+                    <div class="form-group " style="padding-right: 10px;" ng-if="isUrgentTime == 'True'">
+                        <label class="tab_title col-sm-12" style="font-style:italic; color:red;"> Միջազգային փոխանցումը կարող է ընդունվել Շտապ պայմանով Ժամը 15:00-ից մինչև 15:30-ը</label>
+
+                    </div>
+
+
+                    @*<div class="form-group" style="padding-right: 10px; margin-bottom: 0">
+                            <label class="tab_title col-sm-5" for="FeeAccount">Միջնորդավճարի հաշիվ</label>
+
+                            <div class="col-sm-7" data-ng-init="getFeeAccounts(3,1)">
+                                <loading-control scopevariable="feeAccounts"></loading-control>
+                                <div class="row">
+                                    <select name="FeeAccount" ng-show="feeAccounts" data-ng-model="order.FeeAccount" class="form-control"
+                                            data-ng-options="a.AccountNumber + ' ' + a.Currency + ' '+a.BalanceString+' ' + a.AccountTypeDescription group by a.AccountTypeDescription for a in feeAccounts" required>
+                                        <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.feeAccounts.$dirty"
+                                                 for="internationalPaymentOrderForm.FeeAccount.$error">
+                                        <ng-message when="required" class="errors">
+                                            Միջնորդավճարի հաշիվ դաշտն ընտրված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+
+                            </div>
+                        </div>*@
+
+                    <div style="margin-right: 10px;">
+                        <div ng-open="{{order.Type==64?checkForFeeAccount=1:checkForFeeAccount=0}};"></div>
+                        <paymentaccount data-ng-init="getFeeAccounts(1,2)"
+                                        accountselectname="feeAccount"
+                                        accounts="feeAccounts"
+                                        account="order.FeeAccount"
+                                        onlyamd="true"
+                                        check="checkForFeeAccount"
+                                        nameforaccount="'Միջնորդավճարի հաշիվ'"
+                                        nameforcurrency="'Միջնորդավճարի արժույթ'"
+                                        tooltipdescription="{{checkForFeeAccount!=0?'Տարանցիկ հաշիվ փոխանցումների գծով':null}}">
+                        </paymentaccount>
+                        <div class="col-sm-6"></div>
+                        <div class="row">
+                            <ng-messages class="errors" ng-if="internationalPaymentOrderForm.$submitted && order.FeeAccount==undefined && checkForDebitAccountInternationalPayment==0">
+                                Հաշիվը ընտրված չէ
+                            </ng-messages>
+                            <ng-messages class="errors" ng-if="internationalPaymentOrderForm.$submitted && order.FeeAccount==undefined && checkForDebitAccountInternationalPayment==1">
+                                Արժույթն ընտրված չէ
+                            </ng-messages>
+                        </div>
+                    </div>
+
+                    <div class="sub_inner">
+                        <div class="col-sm-8" style="text-align: left; padding: 0; " ng-if="order.DebitAccount.AccountType == 11 ">
+                            <h5>
+                                Միջնորդավճար`
+                            </h5>
+                        </div>
+                        <div class="col-sm-3" style="text-align: left; padding: 0; " ng-if="order.DebitAccount.AccountType== undefined || order.DebitAccount.AccountType != 11 ">
+                            <h5>
+                                Միջնորդավճար`
+                            </h5>
+                        </div>
+                        <div class="col-sm-3" style="text-align: right  ; padding: 0">
+                            <h5>
+                                {{order.TransferFee != null ? (order.TransferFee  | number:2)  : (0 | number:2)}}
+                            </h5>
+                        </div>
+                        <div class="col-sm-1" style="text-align: right  ; padding: 0">
+                            <h5>
+                                AMD
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="sub_inner" ng-if="order.DebitAccount.AccountType == 11 ">
+                        <div class="col-sm-8" style="text-align: left; padding: 0; ">
+                            <h5 style="margin-top:0">
+                                Քարտային ելքագրման միջնորդավճար`
+                            </h5>
+                        </div>
+                        <div class="col-sm-3" style="text-align: right; padding: 0; ">
+                            <h5 style="margin-top:0">
+                                {{order.CardFee != null ? (order.CardFee  | number:2)  : (0 | number:2) }}
+                            </h5>
+                        </div>
+                        <div class="col-sm-1" style="text-align: right; padding: 0; ">
+                            <h5 style="margin-top:0">
+                                {{order.DebitAccount.Currency}}
+                            </h5>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-sm-5  ">
+            @*<div style="position:fixed ">*@
+            <customerdebts showonlystrictdebts="true"></customerdebts>
+            <noncashopperson ng-if="customer.CustomerType == 6 && checkForDebitAccountInternationalPayment==0" formname="internationalPaymentOrderForm" opperson="order.OPPerson" accountnumber="order.DebitAccount.AccountNumber"></noncashopperson>
+            @*<cashopperson formname="internationalPaymentOrderForm" armbudget="true" ng-if="checkForDebitAccountInternationalPayment==1" opperson="order.OPPerson"></cashopperson>*@
+            <paymentattachment arraybuffer="orderAttachment.attachmentArrayBuffer" attachment="orderAttachment.attachmentFile"></paymentattachment>
+
+            @*</div>*@
+        </div>
+    </div>
+</form>
+
+

@@ -1,0 +1,95 @@
+﻿@{
+	Layout = null;
+}
+
+<link href="~/Content/newTheme/css/style.css" rel="stylesheet" />
+
+<div id="operDayOptionsSaveLoad" class="overlay hidden">
+	<img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="OperDayOptionsCtrl" name="OperDayOptionsSaveForm" id="OperDayOptionsSaveForm"  ng-init="initOperDayChecing();" role="form" style="min-width:600px;min-height:570px;" novalidate class="form-horizontal" labels-required-always>
+
+	<div id="BondIssueSave_menu" class="menu-bar dialog-menu light-green">
+		<ul id="menu" class="dialog-menu">
+			<li class="root-menu-item-4 " ng-click="OperDayOptionsSaveForm.$setSubmitted();OperDayOptionsSaveForm.$valid  && saveOperDayOptions();">
+				<span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+			</li>
+			<li class="root-menu-item-5 " onclick="CloseBPDialog('newOperDayOptions')">
+				<span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+			</li>
+		</ul>
+		<div id="right-menu" style="display:none;">
+		</div>
+	</div>
+
+	<div class="col-sm-7" style="padding:0;padding-left:5px;">
+
+		<div class="col-sm-12" style="max-width:650px">
+
+			<div style="max-width:630px">
+				<errors></errors>
+			</div>
+
+
+			<div class="panel panel-success" style="margin-bottom: 10px;">
+				<div class="panel-heading" style="text-align:center">Կարգավորումներ</div>
+				<div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+					<div class="form-group">
+						<label class="tab_title col-sm-8 ">
+							Գործառնական օրը չի համապատասխանում ընթացիկ գործառնական օրվան
+						</label>
+
+
+						<label class="switch">
+							<input type="checkbox" ng-true-value="true" ng-false-value="false" data-ng-model="operDayOptionsObject[0].IsEnabled">
+
+							<span class="slider round"></span>
+
+						</label>
+					</div>
+
+					<hr style="height:2px; background-color:#dff0d8;" />
+		<div class="form-group">
+			<label class="tab_title col-sm-8 ">
+				Փակման հերթականությունը չի համապատասխանում սահմանված հերթականությանը
+			</label>
+			<label class="switch">
+				<input  type="checkbox" ng-true-value="true" ng-false-value="false" data-ng-model="operDayOptionsObject[1].IsEnabled">
+				<span class="slider round"></span>
+			</label>
+			<div class="form-group">
+			</div>
+		</div>
+		<hr style="height:2px; background-color:#dff0d8;" />
+
+		<div class="form-group">
+			<label class="tab_title col-sm-8 ">
+				Գոյություն ունեն վարկերի մարումներ, որոնք նշված օրը ընտրելու դեպքում կդառնան ժամկետանց
+			</label>
+			<label class="switch">
+				<input  type="checkbox" ng-true-value="true" ng-false-value="false" data-ng-model="operDayOptionsObject[2].IsEnabled">
+				<span class="slider round"></span>
+			</label>
+			<div class="form-group">
+			</div>
+		</div>
+		<hr style="height:2px; background-color:#dff0d8;" />
+
+
+		<div class="form-group">
+			<label class="tab_title col-sm-8 ">
+				Նշված գործառնական օրը հանդիասանում է շաբաթ, կիրակի կամ այլ ոչ աշխատանքային օր
+			</label>
+			<label class="switch">
+				<input  type="checkbox" ng-true-value="true" ng-false-value="false" data-ng-model="operDayOptionsObject[3].IsEnabled">
+				<span class="slider round"></span>
+			</label>
+			<div class="form-group">
+			</div>
+		</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

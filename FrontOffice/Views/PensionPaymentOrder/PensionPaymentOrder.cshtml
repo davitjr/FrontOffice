@@ -1,0 +1,69 @@
+﻿
+<div id="pensionPaymentOrder" ng-controller="PensionPaymentOrderCtrl" data-ng-init="getAllPensionPayment();"  >
+    <div class="product-container" ng-if="pensionPaymentOrders.length!=0">
+        <div class="header-title" id="pensionPaymentOrder">
+            <span style="color:black;cursor:pointer">Չվճարված կենսաթոշակի/նպաստի գումար</span>
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+            </div>
+            <div class="product-content-table custom-scroll" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <div ng-if="pensionPaymentOrders==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" id="pensionPaymentContent" style::="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="pensionPayment in pensionPaymentOrders" ng-if="pensionPaymentOrders.length!=0" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,pensionPayment); getElementPosition($index);" style="max-height:200px;cursor:pointer;">
+                            <td id="pensionPaymentRow_{{::$index}}">
+                                <span>Ունիկալ համար՝  {{ ::pensionPayment.PensionPaymentId }} <span class="tab_title" style="color:brown;font-size:12px"></span> </span>
+                                <br />
+                                <span>Ամսաթիվ՝  {{ ::pensionPayment.DateGetString }} <span class="tab_title" style="color:brown;font-size:12px"></span> </span>
+                                <br />{{::pensionPayment.FileTypeDescription}} - {{ ::pensionPayment.Year }}թ․ {{ ::pensionPayment.MonthString }}
+                            </td>
+                            <td style="text-align:right;">
+                                {{ ::pensionPayment.AmountString }} AMD
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="contextPensionPayments" id="contextMenu">
+                                <div id="contextMenu"></div>
+                            </td>
+                        </tr>
+                        <tr ng-if="pensionPaymentOrders.length==0 ">
+                            <td colspan="3" style="text-align:center;">
+                                Առկա չեն գործող կենսաթոշակի/նպաստի գումար
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <ul id="contextPensionPayments" class="dropdown-menu">
+                <li><a style="color: black;text-decoration:none!important ;" ng-controller="AccountCtrl" ng-click="savePensionPaymentOrder()">Փոխանցել</a></li>
+                @*<li><a style="color: black;text-decoration:none!important ;" ui-sref="depositaryAccountDetails({ProductId: depoAccount.ID })">Մանրամասն դիտարկում</a></li>*@
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $("#pensionPaymentContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<style>
+    #pensionPayment span:hover {
+        text-decoration: underline;
+    }
+
+    #pensionPayment span {
+        text-decoration: none;
+    }
+</style>

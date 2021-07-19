@@ -1,0 +1,75 @@
+﻿<script type="text/javascript">
+    $("#transitAccountsContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div ng-controller="TransitAccountsForDebitTransactionsCtrl">
+    <div class="product-container" id="transitaAccounts" data-ng-init="getTransitAccountsForDebitTransactions();" ng-show="transitAccounts.length!=0 && transitAccounts.length!=undefined">
+        <div class="header-title">
+            <a href="/#transitAccounts" style="color:black;">
+                Տարանցիկ հաշիվներ
+            </a>
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div>
+                    <select ng-show="currencies" ng-init="getCurrencies()" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ արժույթի" data-ng-model="currency" style="max-width:80px;height:30px" name="Currency" id="Currency" class="form-control"
+                            data-ng-options="k as v for (k,v) in currencies">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="product-content-table custom-scroll" id="transitAccountsContent">
+                <div ng-if="accounts==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="account in transitAccounts | filter: { Currency: currency!=undefined?currency:'' }" ng-if="transitAccounts.length!=0" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,account);" style="max-height:200px;cursor:pointer;" ng-dblclick="selectedAccountIsAccessible  && openTransitAccountDetails();">
+                            <td id="accountRow_{{$index}}">
+                                <span>  {{ ::account.AccountNumber }} <span ng-if="account.AccountType==115" class="tab_title" style="color:brown;font-size:12px">( {{::account.ProductNumber}})</span> </span>
+                                <br /><span class="tab_title" style="color:brown;font-size:11px">{{::account.AccountTypeDescription}}</span>
+                            </td>
+                            <td style="text-align:right;">
+                                {{ ::account.BalanceString }} {{ ::account.Currency }}
+                            </td>
+                            <td class="col-sm-1 click_toggle" ng-if="account.isAccessible" context="contextTransitAccounts" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                        <tr ng-if="transitAccounts.length==0 ">
+                            <td colspan="3" style="text-align:center;">
+                                Առկա չեն տարանցիկ հաշիվներ
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <ul id="contextTransitAccounts" class="dropdown-menu">
+                <li style="cursor:pointer" ng-if="selectedAccountIsAccessible"><a style="color: black;text-decoration:none!important ;" ng-click="openTransitAccountDetails()">Մանրամասն դիտարկում</a></li>
+                                                                                                                                                                                                                                                                                         
+            </ul>
+        </div>
+    </div>
+    @*<accountflowdetails ng-if="$root.SessionProperties.IsChiefAcc && hideBlank!='true' && selectedAccountNumber != null"></accountflowdetails>*@
+</div>
+
+
+<script>
+    $("[data-toggle=tooltip]").tooltip({
+        placement: $(this).data("placement") || 'bottom'
+    });
+</script>
+
+
+
+

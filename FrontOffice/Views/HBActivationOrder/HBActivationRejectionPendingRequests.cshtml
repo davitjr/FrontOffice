@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "HBActivationRejectionPendingRequests";
+}
+
+<div class="col-md-12" ng-controller="CustomerCtrl" id="HBRequests" style="min-width:500px;" ng-init="getHBRequests()">
+    <div class="product-container" style="min-width:500px;margin-bottom: 10px;">
+        <div class="header-title">
+            <span>ՀԲ ծառայության ակտիվացումից հրաժարում</span>             
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+
+            <div class="product-container-header" ng-if="requests.length > 0">
+                <div class="product-container-header">
+                    <div class="btn-group" style="margin-left:5px">
+                        <button type="button" class="btn btn-primary" ng-controller="PopUpCtrl" ng-click="setCurrentRequests(); openWindow('/HBActivationOrder/HBActivationRejectionOrder','ՀԲ ծառայության ակտիվացումից հրաժարում','newHBActivationRejectionOrder')" style="height:30px">Հրաժարվել ակտիվացումից &nbsp;<span class="glyphicon glyphicon-floppy-saved" aria-hidden="true" style="top:-4px !important"></span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-content-table custom-scroll" ng-class="{'product-content-table-full_height' : hideBlank!='true' }" style="min-height:100px">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;padding-left:10px">
+                    <tbody>
+                        <tr ng-repeat="request in requests">
+                            <td style="padding-left:10px"> 
+                                <span ng-if="request.RequestType!=1 && request.RequestType!=2">{{::request.RequestTypeDescription}} </span>
+                                <span ng-if="request.HBToken.TokenNumber!=undefined"><br />Տոկեն N` {{::request.HBToken.TokenNumber}} {{::request.HBToken.TokenTypeDescription}}</span>
+                                <br />
+                                <span ng-if="request.ServiceFee>0"> {{::request.ServiceFee | number:2}} AMD</span>
+                            </td>
+                            </tr>
+                        <tr ng-if="requests.length == 0" collumnspan="2" style="text-align:center">
+                            <td>Մշակման ենթակա հարցումներ գտնված չեն</td>
+                        </tr>
+                    </tbody>
+                </table>                 
+            </div>
+        </div>
+    </div>
+</div>
+

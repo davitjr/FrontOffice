@@ -1,0 +1,483 @@
+﻿<div>
+    <style type="text/css">
+        #remittanceDetails .modal-content {
+            width: 900px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+
+
+
+        .resultRow {
+            font-size: 10pt;
+            color: black;
+            font-weight: normal;
+        }
+
+        .resultRowAddInf {
+            font-size: 9pt;
+        }
+
+        .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .tableHeader {
+            font-size: 9pt;
+            height: 25px;
+        }
+
+        #remittanceDetails .product-container-header > th {
+            font-weight: inherit;
+        }
+
+        #remittanceDetails .div-table-content {
+            margin-top: -7px;
+            border-color: #CFDAD0 !important;
+        }
+
+
+        #remittanceDetails .popup_wrapper_top {
+            margin-top: -10px !important;
+        }
+    </style>
+   
+    <div id="remittanceDetails">
+        <div class="col-sm-12 popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+            <div style="margin-top:-10px">Արագ դրամական համակարգերով փոխանցման մանրամասներ</div>
+            <img src="/Content/images/close_pop.png " ng-click="closeRemittanceWholeDetailsModal()" style="margin-top:-10px;" alt="">
+        </div>
+    
+        <div class=" col-sm-12 div-table-content " style="min-height:200px;overflow:scroll; max-height: 500px;  margin-bottom:0px; margin-top:0px; ">
+            <div class="product-details bhoechie-tab-content" style="min-width:300px;padding-left:10px" ng-if="remittancedetails != undefined && remittancedetails.URN != ''">
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Դրամական փոխանցման օպերատոր</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.MTOAgentName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Հսկիչ համար</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.URN}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.StatusCodeName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Գործողության տեսակ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SendPayoutDivName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկող գործակալի երկիր</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SendingAgentCountryName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկող գործակալի տեսակ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SendAgentTypeName}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկող գործակալի անվանում</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SendAgentName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկող գործակալի սեփականության բանալի</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.OwnerKey}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացող գործակալի տեսակ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneAgentTypeName}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացող գործակալի անվանում</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneAgentName}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Փոխանցման ստացման տեսակ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.DeliveryTypeName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Փոխանցման նպատակակետային երկիր</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.DestinationCountryName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Հաշվեհամար</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.AccountNo}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Գումար</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.PrincipalAmount}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Արժույթ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.CurrencyName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Գումար AMD</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.AMDConvertAmount}}</div>
+                </div>
+
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">ԿԲ փոխարժեք</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SettlementExchangeRate}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Միջնորդավճար</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.RemittanceFee}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Միջնորդավճար AMD</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.AMDFee}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկող գործակալի միջնորդավճար</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SendingFee}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացող գործակալի միջնորդավճար վճարման ժամանակ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryFee}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Նպատակ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.PurposeRemittanceName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի ազգանուն անգլերենով</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderLastName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի անուն անգլերենով</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderFirstName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի հայրանուն անգլերենով</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderMiddleName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի ազգանուն հայերենով</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.NATSenderLastName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի անուն հայերենով</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.NATSenderFirstName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի հայրանուն հայերենով</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.NATSenderMiddleName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի երկիր</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderCountryName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի մարզ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderStateName}}</div>
+                </div>
+
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի քաղաք</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderCityName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի հասցե</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderAddressName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի ռեզիդենտություն</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderResidencyName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի փոստային կոդ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderZipCode}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի զբաղվածություն</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderOccupationName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի փաստաթղթի տեսակ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderDocumentTypeName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի փաստաթղթի տրման ամսաթիվ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderIssueDate}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի փաստաթուղթը ուժի մեջ է մինչև</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderExpirationDate}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի փաստաթուղթը թողարկող երկիր</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderIssueCountryName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի փաստաթուղթը թողարկող քաղաք</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderIssueCityName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի փաստաթղթի համար</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderIssueIDNo}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի ծննդյան ամսաթիվ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderBirthDate}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի ծննդավայր</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderBirthPlaceName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի սեռ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderSexName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի էլեկտրոնային հասցե</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderEMailName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի հեռախոսահամար</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderPhoneNo}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ուղարկողի բջջային հեռախոսահամար</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.SenderMobileNo}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստուգիչ հարց</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.ControlQuestionName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստուգիչ հարցի պատասխան</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.ControlAnswerName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի ազգանուն անգլերենով</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryLastName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի անուն անգլերենով</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryFirstName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի հայրանուն անգլերենով</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryMiddleName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի ազգանուն հայերենով</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.NATBeneficiaryLastName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի անուն հայերենով</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.NATBeneficiaryFirstName}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի հայրանուն հայերենով</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.NATBeneficiaryMiddleName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի ռեզիդենտություն</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryResidencyName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի երկիր</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryCountryName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի մարզ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryStateName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի քաղաք</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryCityName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի հասցե</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryAddressName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի փոստային կոդ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryZipCode}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի զբաղվածություն</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryOccupationName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի քաղաքացիության երկիր</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryCitizenshipName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի տեսակ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryDocymentTypeName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի տրման ամսաթիվ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryIssueDate}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթուղթը ուժի մեջ է մինչև</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryExpirationDate}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի թողարկման երկիր</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryIssueCountryName}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի թողարկման մարզ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryIssueStateName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի թողարկման քաղաք</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryIssueCityName}}</div>
+                </div>
+
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի համար</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryIssueIDNo}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի սերիա</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryIssueIDSeries}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի թողարկող</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryIssuer}}</div>
+                </div>
+
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի ծննդյան ամսաթիվ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryBirthDate}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի ծննդավայր</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryBirthPlaceName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի սեռ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiarySexName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի էլեկտրոնային հասցե</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryEMailName}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի հեռախոսահամար</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryPhoneNo}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի բջջային հեռախոսահամար</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryMobileNo}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի բնակարան</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryAddressAppartment}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի տուն</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryAddressHouse}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Նպատակակետի նշում</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.DestinationText}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ստացողի ֆիսկալ կոդ</div>
+                    <div class="product-detail-cell product-detail-value">{{remittancedetails.BeneficiaryFiscalCode}}</div>
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+             ng-model="currentPage"
+             items-per-page="numPerPage"
+             total-items="totalRows"
+             max-size="maxSize"
+             boundary-links="true"
+             previous-text="‹"
+             next-text="›"
+             first-text="«"
+             last-text="»">
+        </div>
+    </div>
+</div>

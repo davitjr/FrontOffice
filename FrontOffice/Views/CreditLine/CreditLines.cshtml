@@ -1,0 +1,68 @@
+﻿<script type="text/javascript">
+    $("#creditLinesContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div class="product-container" ng-controller="CreditLineCtrl" id="AllCreditLines" data-ng-init="getCreditLines()" ng-show="(hideBlank!='true' && creditlines.length==0) || (creditlines.length!=0 && creditlines.length!=undefined)">
+    <div class="header-title">
+        <a ui-sref="creditlines" style="color:black;">Ընթացիկ հաշվի վարկային գծեր</a> 
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="product-container-header">
+            <div class="include-closed-products">
+                <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-creditLines" data-ng-model="filter" ng-true-value="2" ng-false-value="1" ng-change="QualityFilter()">
+                <label for="include-closed-creditLines" name="include-closed-creditLines-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+            </div>
+            
+        </div>
+        <div class="product-content-table custom-scroll" id="creditLinesContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+            <div ng-if="creditlines==undefined">
+                <loading></loading>
+            </div>
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody >
+                    <tr ng-repeat="creditline in creditlines" ng-if="filter==1 && creditlines.length!=0 " ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" ng-dblclick="selectedCreditLineIsAccessible && openCreditLineDetails();" style="cursor: pointer;">
+                        <td class="col-md-4">
+                            {{ ::creditline.TypeDescription}} <br />
+                            <span ng-if="creditline.CreditCode!=''" style="color:brown;">Կոդ`{{ ::creditline.CreditCode}}<br /></span>
+                            Պայմ. գումար`{{ ::creditline.StartCapitalString}} {{ ::creditline.Currency }}<br />
+                            <br /><span style="font-weight:bold;" ng-class="{ 'redBold': creditline.Quality==5 ||  creditline.Quality==11 || creditline.Quality==12 || creditline.Quality==2,'blueBold':creditline.Quality==10  }">{{ ::creditline.QualityDescription }}</span>
+                            Վերջ՝ {{ ::creditline.EndDate| mydate | date: 'dd/MM/yyyy'}}
+                        </td>
+                        <td class="col-sm-2" style="text-align:right;">
+                            {{(creditline.Quality == 11 || creditline.Quality == 12? creditline.OutCapital: creditline.CurrentCapital)|ABS|number:2}} {{ ::creditline.Currency}}
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="contextCreditLines" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+                    <tr ng-if="filter==1 && creditlines.length==0 ">
+                        <td colspan="3" style="text-align:center;">
+                            Առկա չեն գործող վարկային գծեր
+                        </td>
+                    </tr>
+                    <tr ng-if="filter!=1"><td style="color:red; border-width:3px" colspan="3">Մարված վարկային գծեր </td></tr>
+                    <tr ng-repeat="creditline in closingCreditLines" ng-if="closingCreditLines.length!=0 " ng-class="{'selected':$index == selectedRowClose}" ng-click="setClickedRowClose($index)" ng-dblclick="selectedCreditLineIsAccessible && openCreditLineDetails();" style="cursor: pointer;">
+                        <td class="col-md-4">
+                            {{ ::creditline.TypeDescription}}
+                        </td>
+                        <td class="col-sm-2" style="text-align:right;">
+                            {{ ::creditline.StartCapitalString}} {{ ::creditline.Currency}}
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="contextCreditLines" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul id="contextCreditLines" class="dropdown-menu">
+                <li ng-if="selectedCreditLineIsAccessible"><a style="color: black;text-decoration:none!important ;" ui-sref="creditLineDetails({ productId : selectedProductId,closedCreditLine:ClosedCreditLine })">Մանրամասն դիտարկում</a></li>
+                <li><a ng-if="selectedCreditLineIsAccessible && $root.SessionProperties.SourceType == 2 && (ClosedCreditLine.Quality!=40 && losedCreditLine.Quality!=10)" href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="openWindow('/MatureOrder/PersonalMatureOrder','Վարկային գծի մարում','newMature',callbackgetCreditLines)">Վարկային գծի մարում</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

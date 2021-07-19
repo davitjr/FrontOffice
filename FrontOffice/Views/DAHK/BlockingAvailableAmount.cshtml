@@ -1,0 +1,158 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    #currentInquestDetailsTable {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: 900px;
+    }
+
+
+        #currentInquestDetailsTable td, th {
+            border: 1px solid #cecece;
+            width: 100px;
+            font-size: 12px;
+        }
+
+        #currentInquestDetailsTable top th {
+            font-size: 12px;
+        }
+
+    #tbl table .top td {
+        font-size: 12px;
+    }
+</style>
+
+<div id="BlockingAvailableAmount" ng-controller="DAHKCtrl" ng-init="getDahkDetails()">
+    <div class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="blockingAmountFromAvailableAccount(accountNumber,blockingAmount);">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Կատարել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('blockingavailableamount')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+
+
+    <div class="row">      
+            <label class="tab_title col-sm-2" for="account" style="width: 120px;">Հաշվեհամար</label>
+            <div class="col-sm-6">               
+                    <input data-ng-model="accountNumberFromUser" name="account" id="account" type="text" style="width:252px;margin-left:0px; text-align:right"
+                           class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46" ng-blur="searchAccount(accountNumberFromUser)">
+              
+            </div>       
+    </div>
+
+    <div class="row">        
+            <label class="tab_title col-sm-2" for="AccountNumbers" style="margin-top: 5px;margin-left: 17px;width: 117px;">Հաշիվներ</label>
+            <div class="col-sm-4">               
+                    <select data-ng-model="accountNumber" name="accountNumbers" id="accountNumbers" style="margin-top: 5px;width: 253px;"
+                            class="form-control" data-ng-options="k as v for (k,v) in allaccounts" ng-change="choosedAccount(accountNumber)">
+                        <option value="" hidden="hidden" style="margin-left:25px;margin-top:5px">Ընտրեք...</option>
+                    </select>         
+            </div>        
+    </div>
+
+    <div class="row ">
+        <label class="tab_title col-sm-2" for="Amount" style="margin-top: 5px;margin-left: 17px;width: 110px;">Գումար</label>
+        <div class="col-sm-4">
+            <input type="text" style="width: 140px;margin-left:0px; text-align:right; margin-bottom:5px; margin-left: 7px;margin-top: 5px;" class="form-control" id="Amount" name="Amount" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46" data-ng-model="blockingAmount" required>
+        </div>
+    </div>
+
+    <div class="product-container" style="width:auto;min-width:670px">
+
+        <div class="header-title">
+            Տվյալ հաճախորդի գծով չբավարարված վարույթներ
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+
+        <div class="product-collapsable-section ">
+            <div id="currentInquestDetailsTable" class="product-content-table " style="min-height:100px;padding:0px;margin:5px;height: 240px;">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <thead class="product-container-header">
+                        <tr>
+                            <td style="text-align:center;width:16px;"></td>
+                            <td style="text-align:center;width:90px;">Հաղորդագրության ա/թ</td>
+                            <td style="text-align:center;width:104px;">Հաղորդագրության համար</td>
+                            <td style="text-align:center;width:80px;">Վարույթի կոդ</td>
+                            <td style="text-align:center;width:80px;">Արգելանքի գումար</td>
+                            <td style="text-align:center;width:60px;">Արժույթ</td>
+                            <td style="text-align:center;width:80px;">Սառեցված գումար</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="attachDetails in currentInquestDetails" class="">
+                            <td style="width:10px"><input type="checkbox" ng-checked="check" class="ng-pristine ng-valid ng-empty ng-touched" ng-model="attachDetails.Checked" ng-change="ifCheckedInquest(attachDetails.Checked, attachDetails.AttachCurrency)"></td>
+                            <td style="text-align:right">{{::attachDetails.RequestDate | mydate | date: 'dd/MM/yyyy'}}</td>
+                            <td style="text-align:right">{{::attachDetails.MessageID}}</td>
+                            <td style="text-align:right">{{::attachDetails.InquestID}}</td>
+                            <td style="text-align:right">{{::attachDetails.BlockedAmount | number:2}}</td>
+                            <td style="text-align:center">{{::attachDetails.AttachCurrency}}</td>
+                            <td style="text-align:right">{{::attachDetails.FreezedAmount | number:2}}</td>
+                        </tr>
+                        <tr ng-if="accountFreezeDetails.length==0">
+                            <td colspan="6" style="text-align:center">Տվյալներ առկա չեն</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+            </div>
+        </div>
+
+        <div ng-if="accountNumberChoosed" data-ng-repeat="item in dahkProductAccountsDetails">
+
+            <div class="col-sm-4">
+                <span class="tab_title " style="font-style:italic">
+                    {{item[0]}}    {{item[1]}}
+                </span>
+                <div>
+
+                    <div class="col-sm-12">
+                        <br />
+                        <div class="product-detail-row">
+                            <div class="product-detail-cell product-detail-lable">Սկզբնական մնացորդ</div>
+                            <div class="product-detail-cell product-detail-value">{{item[2]}} </div>
+                        </div>
+                        <div class="product-detail-row">
+                            <div class="product-detail-cell product-detail-lable">Ընդամենը ելքեր</div>
+                            <div class="product-detail-cell product-detail-value">{{item[3]}} </div>
+                        </div>
+                        <div class="product-detail-row">
+                            <div class="product-detail-cell product-detail-lable">Ընդամենը մուտքեր</div>
+                            <div class="product-detail-cell product-detail-value">{{item[4]}} </div>
+                        </div>
+                        <div class="product-detail-row">
+                            <div class="product-detail-cell product-detail-lable">Վերջնական մնացորդ</div>
+                            <div class="product-detail-cell product-detail-value">{{item[5]}} </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<script type="text/javascript">
+    $("#currentInquestDetailsTable").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+
+

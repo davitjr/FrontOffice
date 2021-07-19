@@ -1,0 +1,219 @@
+﻿
+<style>
+
+    #loanEquipmentsResult table, #loanEquipmentsResult tr, #loanEquipmentsResult td {
+        padding-left: 0px !important;
+        font-size: 11px !important;
+        height: auto;
+    }
+
+    #loanEquipmentsResult table, #loanEquipmentsResult th, #loanEquipmentsResult td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    #loanEquipmentsResult table {
+        border-collapse: collapse;
+    }
+
+    #equipmentHeaders td {
+        font-size: 13px !important;
+    }
+</style>
+<form name="loanEquipmentsForm" id="ProblemLoanTax" ng-init="getProblemLoanTaxesList(filter)" ng-controller="ProblemLoanTaxesCtrl" novalidate style="margin-top:15px;width:100px;">
+    <errors></errors>
+    <div class="product-details bhoechie-tab-content" style="min-width:1400px;margin-left:10px;">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Մասնաճյուղ
+                    </div>
+                    <div data-ng-init="getFilialList()">
+                        <loading-control scopevariable="FilialList"></loading-control>
+                        <select ng-show="FilialList" ng-model="filter.FilialCode" class="form-control"
+                                data-ng-options="k as v for (k,v) in FilialList" id="FilialCode" name="FilialCode">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Հաճախորդի համար
+                    </div>
+                    <div class="input-group">
+                        <input type="text" ng-model="filter.CustomerNumber" style="width:162px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" class="form-control">
+                        <div class="input-group-btn" style="display:inline-block;">
+                            <button type="button" title="Հաճախորդի-ի որոնում" ng-disabled="filter.CustomerNumber" class="btn btn-primary searchButton" ng-click="searchCustomers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Վարկային հաշիվ
+                    </div>
+                    <div class="input-group">
+                        <input type="text" ng-model="filter.LoanFullNumber" style="width:200px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-sm-4  ">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="product-detail-cell product-detail-lable">
+                                Մուտքագրման ա/թ
+                            </div>
+                            <div class="col-sm-5" style="padding-left:0px;width:47%;">
+                                <input type="date" ng-model="filter.TaxRegistrationStartDate" class="form-control">
+                            </div>
+                            <div class="col-sm-1" style="width:5px; padding:0px;">_</div>
+                            <div class="col-sm-6" style="padding-right:0px;width:48%;">
+                                <input type="date" ng-model="filter.TaxRegistrationEndDate" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span class="error" ng-show="filter.TaxRegistrationStartDate.$error.date">
+                    Not a valid date!
+                </span>
+                <span class="error" ng-show="filter.TaxRegistrationEndDate.$error.date">
+                    Not a valid date!
+                </span>
+
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Գումար
+                    </div>
+                    <div class="input-group">
+                        <input type="text" ng-model="filter.TaxAmount" style="width:200px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Կարգավիճակ
+                    </div>
+                    <div data-ng-init="getProblemLoanTaxQualityTypes()">
+                        <loading-control scopevariable="ProblemLoanTaxQualityTypes"></loading-control>
+                        <select ng-show="ProblemLoanTaxQualityTypes" ng-model="filter.TaxQuality" class="form-control"
+                                data-ng-options="k as v for (k,v) in ProblemLoanTaxQualityTypes" id="ProblemLoanTaxQualityTypes" name="ProblemLoanTaxQualityTypes">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Դատարանի որոշում
+                    </div>
+                    <div data-ng-init="getProblemLoanTaxCourtDecisionTypes()">
+                        <loading-control scopevariable="ProblemLoanTaxCourtDecisionTypes"></loading-control>
+                        <select ng-show="ProblemLoanTaxCourtDecisionTypes" ng-model="filter.TaxCourtDecision" class="form-control"
+                                data-ng-options="k as v for (k,v) in ProblemLoanTaxCourtDecisionTypes" id="ProblemLoanTaxCourtDecisionTypes" name="ProblemLoanTaxCourtDecisionTypes">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Փոխանցված/չփոխանցված
+                    </div>
+                    <div data-ng-init="getFilialList()">
+                        <loading-control scopevariable="isTransferRegistratoinDateExists"></loading-control>
+                        <select ng-show="isTransferRegistratoinDateExists" ng-model="filter.IsTransferRegistratoinDateExists" class="form-control"
+                                data-ng-options="k as v for (k,v) in isTransferRegistratoinDateExists" id="FilialCode" name="FilialCode">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <button type="button" ng-click="getProblemLoanTaxesList()" class="btn btn-primary" style="width:188px;margin-top:22px"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br />
+    <div class="product-container col-sm-12" style=" min-width:1400px;margin-left:10px;margin-top:-5px;padding:0px">
+        <div ng-if="ShowRows != 0" style="color: red; font-size: 16px; padding-left: 15px;" class="ng-binding ng-scope">
+            Ընդամենը՝ {{problemLoanTaxesLenght}} պետ. տուրք
+        </div>
+        <div class="header-title">
+            Խնդրահարույց վարկերի պետ. տուրքեր
+        </div>
+        <div id="equipmentHeaders" class="product-container-header" style="height:60px;min-width:1400px;">
+            <table>
+                <tr>
+                    <td align="center" class="col-sm-1" style="width:1%;"><b style="font-size:16px;">№</b></td>
+                    <td align="center" class="col-sm-1" style="width:3.9%;padding-left: 5px !important;">Հաճախորդի N</td>
+                    <td align="center" class="col-sm-1" style="width:7.2%">Հաճախորդի անվանում</td>
+                    <td align="center" class="col-sm-1" style="width:1.9%; white-space:nowrap;padding-left: 10px !important;">Մ/Ճ</td>
+                    <td align="center" class="col-sm-1" style="width:5%">մուտքագրման ա/թ</td> @*Պետ. տուրքի*@
+                    <td align="center" class="col-sm-1" style="width:5%;padding-left: 3px !important">Դատարանի որոշման առկայություն</td>
+                    <td align="center" class="col-sm-1" style="width:4%;padding-left: 3px !important;">կարգավիճակ</td>
+                    @*Պետ. տուրքի*@
+                    <td align="center" class="col-sm-1" style="width:5%;padding-left: 3px !important;">Սկզբնական գումար</td>
+                    @*Բանկ փոխանցված*@
+                    <td align="center" class="col-sm-1" style="width:1.3%;">&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="loanEquipmentsContent" class="product-content-table custom-scroll" style="height:450px;">
+            <table id="loanEquipmentsResult" class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tr ng-repeat="problemLoanTaxes in ProblemLoanTaxesList " ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" ng-style="setColor($index)" style="max-height:200px;height:30px;">
+                    <td class="col-sm-1" align="center" style="width:1%"><span style="padding-left:2px;">{{problemLoanTaxes.Row}}</span></td>
+                    <td class="col-sm-1" align="center" style="width:3.9%"><span style="padding-left:2px;">{{problemLoanTaxes.CustomerNumber}}</span></td>
+                    <td class="col-sm-1" align="center" style="width:7.2%"><span style="padding-left:2px;word-wrap:break-word;">{{problemLoanTaxes.FullName}}</span></td>
+                    <td class="col-sm-1" align="center" style="width:1.9%"><span style="padding-left:5px;">{{problemLoanTaxes.FilialCode}}</span></td>
+                    <td class="col-sm-1" align="center" style="width:5%"><span style="padding-left:5px;">{{problemLoanTaxes.TaxRegistrationDateToString}}</span></td>
+                    <td class="col-sm-1" align="center" style="width:5%"><span style="padding-left:5px;" ng-if="problemLoanTaxes.TaxCourtDecision != -1">Այո</span><span style="padding-left:5px;" ng-if="problemLoanTaxes.TaxCourtDecision == -1">Ոչ</span></td>
+                    <td class="col-sm-1" align="center" style="width:4%"><span style="padding-left:5px;">{{problemLoanTaxes.TaxQualityDescription}}</span></td>
+                    <td class="col-sm-1" align="center" style="width:5%"><span style="padding-left:5px;">{{problemLoanTaxes.TaxAmountString}}</span></td>
+                    <td style="width:1.3%;" class="col-sm-1 click_toggle" id="contextMenu" context="context"><div id="contextMenu"></div> </td>
+                </tr>
+            </table>
+            <div ng-if="ProblemLoanTaxesList.length==0" style="color:red;font-size:16px;text-align:center;">Տվյալները բացակայում են</div>
+        </div>
+        <div ng-if="ProblemLoanTaxesList.length>0">
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tr>
+                    <td class="col-sm-1" style="width:1%;">&nbsp;</td>
+                    <td class="col-sm-1" align="center" style="width:3.9%;font-size: 11px !important; vertical-align: bottom;"><strong>Ընդամենը</strong></td>
+                    <td class="col-sm-1" style="width:7.2%;">&nbsp;</td>
+                    <td class="col-sm-1" style="width:1.9%;">&nbsp;</td>
+                    <td class="col-sm-1" style="width:5%;">&nbsp;</td>
+                    <td class="col-sm-1" style="width:5%;">&nbsp;</td>
+                    <td class="col-sm-1" style="width:4%;">&nbsp;</td>
+                    <td class="col-sm-1" align="center" style="width:5%;font-size: 11px !important;height: auto;padding-left:0px; padding-right:5px;vertical-align: bottom;"><span><strong>{{TaxSum | currency:""}}</strong></span></td>
+                    <td class="col-sm-1" style="width:1.3%;">&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+        <div ng-if="ShowRows != 0" uib-pagination style="margin-left:10px;margin-top:5px;"
+             ng-model="filter.Row"
+             items-per-page="numPerPage"
+             total-items="totalRows"
+             max-size="maxSize"
+             boundary-links="true"
+             previous-text="‹"
+             next-text="›"
+             first-text="«"
+             last-text="»"
+             ng-click="getProblemLoanTaxesListPagination(filter)">
+        </div>
+    </div>
+    <ul id="context" class="dropdown-menu">
+        <li>
+            <a style="color: #4a8a2b;text-decoration:none!important;" class="my_button" ng-controller="PopUpCtrl"
+               ng-click="params={ProductId:currentProblemLoanTaxes.ClaimNumber};openWindow('/ProblemLoanTaxes/ProblemLoanTaxesDetails','Մանրամասն դիտարկում ','oneProblemLoanTaxesDetails')">Մանրամասն դիտարկում</a>
+        </li>
+    </ul>
+
+</form>

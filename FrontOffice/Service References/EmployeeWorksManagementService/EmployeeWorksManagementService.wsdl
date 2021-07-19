@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="EmployeeWorksManagementService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IEmployeeWorksManagementService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EmployeeWorksManagement" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IEmployeeWorksManagementService_SaveEmployeeWork_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveEmployeeWork" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_SaveEmployeeWork_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveEmployeeWorkResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_SetClientIp_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetClientIp" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_SetClientIp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetClientIpResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_SetCurrentUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetCurrentUser" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_SetCurrentUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetCurrentUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_GetTypeOfEmployeeWorks_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTypeOfEmployeeWorks" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_GetTypeOfEmployeeWorks_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTypeOfEmployeeWorksResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_GetTypeOfEmployeeWorkImportances_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTypeOfEmployeeWorkImportances" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_GetTypeOfEmployeeWorkImportances_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTypeOfEmployeeWorkImportancesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_GetTypeOfEmployeeWorkQualities_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTypeOfEmployeeWorkQualities" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_GetTypeOfEmployeeWorkQualities_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTypeOfEmployeeWorkQualitiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_GetTypeOfEmployeeWorkDescriptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTypeOfEmployeeWorkDescriptions" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_GetTypeOfEmployeeWorkDescriptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTypeOfEmployeeWorkDescriptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_SearchEmployeesWorks_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchEmployeesWorks" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_SearchEmployeesWorks_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchEmployeesWorksResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_GetEmployeeWork_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmployeeWork" />
+  </wsdl:message>
+  <wsdl:message name="IEmployeeWorksManagementService_GetEmployeeWork_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmployeeWorkResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IEmployeeWorksManagementService">
+    <wsdl:operation name="SaveEmployeeWork">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/SaveEmployeeWork" message="tns:IEmployeeWorksManagementService_SaveEmployeeWork_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/SaveEmployeeWorkResponse" message="tns:IEmployeeWorksManagementService_SaveEmployeeWork_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetClientIp">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/SetClientIp" message="tns:IEmployeeWorksManagementService_SetClientIp_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/SetClientIpResponse" message="tns:IEmployeeWorksManagementService_SetClientIp_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCurrentUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/SetCurrentUser" message="tns:IEmployeeWorksManagementService_SetCurrentUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/SetCurrentUserResponse" message="tns:IEmployeeWorksManagementService_SetCurrentUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTypeOfEmployeeWorks">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/GetTypeOfEmployeeWorks" message="tns:IEmployeeWorksManagementService_GetTypeOfEmployeeWorks_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/GetTypeOfEmployeeWorksResponse" message="tns:IEmployeeWorksManagementService_GetTypeOfEmployeeWorks_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTypeOfEmployeeWorkImportances">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/GetTypeOfEmployeeWorkImportances" message="tns:IEmployeeWorksManagementService_GetTypeOfEmployeeWorkImportances_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/GetTypeOfEmployeeWorkImportancesResponse" message="tns:IEmployeeWorksManagementService_GetTypeOfEmployeeWorkImportances_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTypeOfEmployeeWorkQualities">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/GetTypeOfEmployeeWorkQualities" message="tns:IEmployeeWorksManagementService_GetTypeOfEmployeeWorkQualities_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/GetTypeOfEmployeeWorkQualitiesResponse" message="tns:IEmployeeWorksManagementService_GetTypeOfEmployeeWorkQualities_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTypeOfEmployeeWorkDescriptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/GetTypeOfEmployeeWorkDescriptions" message="tns:IEmployeeWorksManagementService_GetTypeOfEmployeeWorkDescriptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/GetTypeOfEmployeeWorkDescriptionsResponse" message="tns:IEmployeeWorksManagementService_GetTypeOfEmployeeWorkDescriptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchEmployeesWorks">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/SearchEmployeesWorks" message="tns:IEmployeeWorksManagementService_SearchEmployeesWorks_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/SearchEmployeesWorksResponse" message="tns:IEmployeeWorksManagementService_SearchEmployeesWorks_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeWork">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/GetEmployeeWork" message="tns:IEmployeeWorksManagementService_GetEmployeeWork_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEmployeeWorksManagementService/GetEmployeeWorkResponse" message="tns:IEmployeeWorksManagementService_GetEmployeeWork_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IEmployeeWorksManagementService" type="tns:IEmployeeWorksManagementService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IEmployeeWorksManagementService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="SaveEmployeeWork">
+      <soap12:operation soapAction="http://tempuri.org/IEmployeeWorksManagementService/SaveEmployeeWork" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetClientIp">
+      <soap12:operation soapAction="http://tempuri.org/IEmployeeWorksManagementService/SetClientIp" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCurrentUser">
+      <soap12:operation soapAction="http://tempuri.org/IEmployeeWorksManagementService/SetCurrentUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTypeOfEmployeeWorks">
+      <soap12:operation soapAction="http://tempuri.org/IEmployeeWorksManagementService/GetTypeOfEmployeeWorks" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTypeOfEmployeeWorkImportances">
+      <soap12:operation soapAction="http://tempuri.org/IEmployeeWorksManagementService/GetTypeOfEmployeeWorkImportances" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTypeOfEmployeeWorkQualities">
+      <soap12:operation soapAction="http://tempuri.org/IEmployeeWorksManagementService/GetTypeOfEmployeeWorkQualities" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTypeOfEmployeeWorkDescriptions">
+      <soap12:operation soapAction="http://tempuri.org/IEmployeeWorksManagementService/GetTypeOfEmployeeWorkDescriptions" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchEmployeesWorks">
+      <soap12:operation soapAction="http://tempuri.org/IEmployeeWorksManagementService/SearchEmployeesWorks" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeWork">
+      <soap12:operation soapAction="http://tempuri.org/IEmployeeWorksManagementService/GetEmployeeWork" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EmployeeWorksManagementService">
+    <wsdl:port name="NetTcpBinding_IEmployeeWorksManagementService" binding="tns:NetTcpBinding_IEmployeeWorksManagementService">
+      <soap12:address location="net.tcp://ws0004624.acbaca.local/ACBAOperationService/EmployeeWorksManagementService.svc/EmployeeWorksManagementService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://ws0004624.acbaca.local/ACBAOperationService/EmployeeWorksManagementService.svc/EmployeeWorksManagementService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>Diana.Martirosyan@acbaca.local</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

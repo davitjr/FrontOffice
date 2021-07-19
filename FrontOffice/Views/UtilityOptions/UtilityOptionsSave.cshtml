@@ -1,0 +1,72 @@
+﻿@{
+    Layout = null;
+}
+
+<link href="~/Content/newTheme/css/style.css" rel="stylesheet" />
+
+<div id="operDayOptionsSaveLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="UtilityOptionsCtrl" name="UtilityOptionsSaveForm" id="UtilityOptionsSaveForm" ng-init="getUtiltyForChange();" role="form" style="min-width:600px;min-height:570px;" novalidate class="form-horizontal" labels-required-always>
+
+    <div id="BondIssueSave_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-class="{'my_disable':isChange != true}" ng-click="UtilityOptionsSaveForm.$setSubmitted();UtilityOptionsSaveForm.$valid  && saveUtilityOptions();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-6">
+                <span id="h-menu-item-6" onclick="return false;">
+                    <img id="h-menu-icon-6" class="submitButton h-menu-icon">Կառավարել բոլորը
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-6.1" ng-click="saveAllUtilityConfigurationsAndHistory(utilityForChangeList,1)">
+                        <span>Միացնել բոլորը</span>
+                    </li>
+                    <li id="v-menuItem-6.1" ng-click="saveAllUtilityConfigurationsAndHistory(utilityForChangeList,0)">
+                        <span>Անջատել բոլորը</span>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newUtilityOptions')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div class="col-sm-7" style="padding:0;padding-left:5px;">
+
+        <div class="col-sm-12" style="max-width:650px">
+
+            <div style="max-width:630px">
+                <errors></errors>
+            </div>
+
+            <div class="panel panel-success" style="margin-bottom: 10px;">
+                <div class="panel-heading" style="text-align:center">Կարգավորումներ</div>
+
+                <table class="table table-condensed " style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="utilityForChangeList.length!=0" ng-repeat="utilityForChange in utilityForChangeList">
+                            <td class="col-sm-5">
+
+                                <div class="form-group">
+                                    <label class="tab_title col-sm-8 " style="font-size:x-large">
+                                        {{utilityForChange.Description}}
+                                    </label>
+                                    <label class="switch">
+                                        <input type="checkbox" ng-model="utilityForChange.IsEnabled" ng-change="$parent.$parent.isChange=true">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

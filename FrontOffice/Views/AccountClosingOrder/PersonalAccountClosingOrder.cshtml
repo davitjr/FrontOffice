@@ -1,0 +1,133 @@
+﻿
+<style type="text/css">
+    #accountClosingOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+<div id="accountCloseLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" alt="" />
+</div>
+<form ng-controller="AccountClosingOrderCtrl" prevent-enter-submit name="AccountClosingOrderForm" id="accountClosingOrderForm" role="form" ng-submit="AccountClosingOrderForm.$valid && saveAccountClosingOrder()" novalidate class="form-horizontal" labels-required style="min-width:650px">
+    <div id="closeaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-3" ng-click="AccountClosingOrderForm.$setSubmitted();getAccountClosingApplication();">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon applicationButton">Փակման դիմում</span>
+            </li>
+            <li class="root-menu-item-4" ng-click="AccountClosingOrderForm.$setSubmitted();order.OnlySaveAndApprove = false;AccountClosingOrderForm.$valid && saveAccountClosingOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li ng-if="$root.SessionProperties.AdvancedOptions['withCashRegister']=='1'&& $root.SessionProperties.AdvancedOptions['canSendToCashier']=='1'" class="root-menu-item-5 " ng-click="AccountClosingOrderForm.$setSubmitted();order.OnlySaveAndApprove = true;AccountClosingOrderForm.$valid && saveAccountClosingOrder();">
+                <span id="h-menu-item-5"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ուղարկել դրամարկղ</span>
+            </li>
+            <li class="root-menu-item-5" onclick="CloseBPDialog('closeaccount')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <h6><span style="color:#5EB4FF" class="glyphicon glyphicon-info-sign"></span> Բոլոր դաշտերը անհրաժեշտ է մուտքագրել UNICODE-ով</h6>
+
+    <div class="col-sm-10">
+        <div style="max-width:480px">
+            <errors></errors>
+        </div>
+        <div class="form-group">
+            <label class="tab_title col-sm-6" for="RegistrationDate">Մուտքագրման ա/թ</label>
+            <div class="col-sm-6 row">
+                <div class="col-sm-8 multiple_columns">
+
+                    <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate">
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="account!=undefined">
+            <label class="tab_title col-sm-6">Փակման ենթակա հաշիվ</label>
+            <div class="col-sm-6 ">
+                <div class="row">
+                    <input type="text" disabled="disabled" data-ng-model="account.AccountNumber" class="form-control tab_title" style="text-align: left;">
+                </div>
+            </div>
+        </div>
+        <div style="clear:both" class="form-group">
+            <label class="tab_title col-sm-6">Պատճառ</label>
+            <div class="col-sm-6" data-ng-init="getAccountClosingReasonsTypes()">
+                <div class="row">
+                    <loading-control scopevariable="closingReasonsTypes"></loading-control>
+                    <select ng-show="closingReasonsTypes" name="ClosingReasonType" id="ClosingReasonType" ng-model="order.ClosingReasonType" class="form-control" required
+                            data-ng-options="k as v for (k,v) in closingReasonsTypes">
+                        <option selected="selected" hidden="hidden" value="">Ընտրեք...</option>
+                    </select>
+                    <ng-messages ng-if="AccountClosingOrderForm.$submitted || AccountClosingOrderForm.ClosingReasonType.$dirty"
+                                 for="AccountClosingOrderForm.ClosingReasonType.$error">
+                        <br />
+                        <ng-message when="required" class="errors">
+                            Պատճառն ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="tab_title col-sm-6" for="ClosingReasonDescription">Փակման պատճառի նկարագրություն</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <textarea rows="2" data-ng-model="order.ClosingReasonDescription" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" id="ClosingReasonDescription" name="ClosingReasonDescription" required class="tab_title form-control" style="text-align:left"></textarea>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="AccountClosingOrderForm.$submitted || AccountClosingOrderForm.ClosingReasonDescription.$dirty"
+                                 for="AccountClosingOrderForm.ClosingReasonDescription.$error">
+                        <ng-message when="required" class="errors">
+                            Փակման պատճառը մուտքագրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="account==undefined">
+            <div class="product-container" style="margin-bottom:20px;width:400px;margin-left:126px">
+                <div class="header-title">
+                    Փակման ենթակա հաշիվներ
+                </div>
+                <div class="product-collapsable-section">
+                    <div class="product-container-header" style="height:40px;">
+                        <div class="col-sm-5">Հաշվեհամար</div>
+                        <div class="col-sm-7" style="text-align:right">Մնացորդ</div>
+
+                    </div>
+                    <div class="product-content-table-full_height custom-scroll" id="statementContent" style="min-height:100px;overflow-y:visible">
+                        <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                            <tbody>
+                                <tr ng-repeat="account in closingAccounts">
+                                    <td colspan="3">
+                                        <div class="row">
+                                            <div class="col-sm-5">{{ ::account.AccountNumber }}</div>
+                                            <div class="col-sm-7" style="text-align:right;">{{ ::account.BalanceString }} &nbsp; {{ ::account.Currency  }}</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,65 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    .radio-inline {
+        margin-top: -22px;
+        font-size: 14px;
+    }
+
+    .ui-widget-content {
+        color: #6d6d6d;
+    }
+
+    .form-control {
+        color: #6d6d6d;
+    }
+</style>
+<div id="xbUserGroupRemoveLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<form ng-controller="XBUserGroupCtrl" style="min-width:650px;" id="XBUserGroupRemoveForm" name="XBUserGroupRemoveForm" role="form" ng-submit="XBUserGroupRemoveForm.$valid && removeXBUserGroup()" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+
+    <div id="newxbusergroupremove_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="XBUserGroupRemoveForm.$setSubmitted();XBUserGroupRemoveForm.$valid && removeXBUserGroup();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Հեռացնել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newxbusergroupremove')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div style="max-width:800px">
+            <errors></errors>
+        </div>
+        <div style="max-width:700px;margin-left:50px">
+            <a style="color:red">
+                {{alert}}
+            </a>
+        </div>
+
+        <div class="col-sm-10">
+            <div class="form-group">
+                <label class="tab_title col-sm-6 " for="GroupName">Խմբի անվանում</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input disabled="disabled" type="text" class="form-control" id="GroupName" name="GroupName" ng-model="group.GroupName" required>
+                    </div>                  
+
+                </div>
+            </div>
+        </div>
+
+        <br />
+    </div>
+
+
+
+</form>
+
+

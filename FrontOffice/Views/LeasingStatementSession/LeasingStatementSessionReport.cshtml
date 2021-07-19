@@ -1,0 +1,37 @@
+﻿
+<form id="LeasingStatementSessionReport" ng-controller="LeasingStatementSessionCtrl" name="LeasingStatementSessionReportForm" class="form-horizontal">
+    <div id="Leasingstatementsessionreport_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="printLeasingSessionStatements(SessionNumber,statementStartDate,statementEndDate)">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Տպել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('Leasingstatementsessionreport')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+    </div>
+    <div style="padding:10px;min-width:600px">
+        <div id="LeasingStatementSessionReportLoad" class="overlay hidden">
+            <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-6">Քաղվածքի կարգավիճակ</label>
+            <select class="col-sm-6 form-control " data-ng-model="statementCreationStatus">
+                <option value="0" selected="selected">Բոլորը</option>
+                <option value="1">Ստեղծված</option>
+                <option value="2">Չստեղծված</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-6">Ուղարկման կարգավիճակ</label>
+            <select data-ng-model="statementSendStatus" class="col-sm-6 form-control ">
+                <option value="0" selected="selected">Բոլորը</option>
+                <option value="1">Ուղարկված</option>
+                <option value="2">Չուղարկված</option>
+            </select>
+        </div>
+    </div>
+</form>
+

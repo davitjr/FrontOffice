@@ -1,0 +1,255 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        Գործարք կատարող անձ<span class='redStyle'>*</span>
+        <span>
+            <span style="cursor:pointer;" ng-click="copyOPPersonDetails()"><img class="copyButton" title="Պատճենել"></span>
+            <span ng-show="opperson.CustomerNumber.toString().length!=12" style="cursor:pointer;margin-left:10px" ng-click="pasteOPPersonDetails()"><img class="pasteButton" title="Մուտքագրել"></span>
+        </span>
+    </div>
+    <div>
+
+    </div>
+    <div class="panel-body" id="cashOpPerson">
+        <div>
+            <select data-ng-model="noncashopperson" ng-if="$root.SessionProperties.CustomerType!=6 && (ordertype == 51 || ordertype == 95)" class="form-control " name="Persons" id="Persons" style="max-width:100%;"
+                    data-ng-options="a.CustomerNumber+' '+a.PersonName+' '+a.PersonLastName+' '+a.PersonDocument  for a in persons" ng-change="getCustomer(noncashopperson.CustomerNumber)">
+                <option value="" hidden>Ընտրեք գործարք կատարողին...</option>
+            </select>
+        </div>
+        <br />
+        <div class="form-group " ng-if="!nonauthorizedcustomer">
+            <label class="tab_title col-sm-3" for="amount">Հաճախորդ</label>
+            <div class="col-sm-9">
+                <div class="row-no-margin input-group">
+                    <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title" id="number" ng-minlength="0 || 12" maxlength="12" ng-change="changeCustomerNumber()" ng-enter="opperson.CustomerNumber.length == 12 && getCustomer(opperson.CustomerNumber)" name="number" data-ng-model="opperson.CustomerNumber">
+                    <div class="input-group-btn" style="width:auto">
+                        <button type="button" ng-disabled="opperson.CustomerNumber.length!=12" class="btn btn-primary" ng-click="getCustomer(opperson.CustomerNumber)" title="Լրացնել տվյալները"><span class="glyphicon glyphicon-plus"></span></button>
+                        <button type="button" class="btn btn-primary searchButton" ng-click="searchCustomers()" title="Հաճախորդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+
+                    </div>
+                </div>
+                <ng-messages ng-if="formname.$submitted || formname.number.$dirty"
+                             for="formname.number.$error">
+                    <ng-message when="minlength" class="errors">
+                        Մուտքագրեք ամբողջ համարը(12 նիշ)
+                    </ng-message>
+                </ng-messages>
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <label class="tab_title col-sm-3" for="amount"> Անուն</label>
+            <div class="col-sm-9">
+                <div class="row-no-margin">
+                    <input ng-disabled="opperson.CustomerNumber.toString().length==12" type="text" class="form-control tab_title" id="Name" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" name="Name" ng-change="opperson.CustomerNumber=''" style="text-align:left" data-ng-model="opperson.PersonName" required>
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.Name.$dirty"
+                                 for="formname.Name.$error">
+                        <ng-message when="required" class="errors">
+                            Անունը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <label class="tab_title col-sm-3" for="amount"> Ազգանուն</label>
+            <div class="col-sm-9">
+                <div class="row-no-margin">
+                    <input ng-disabled="opperson.CustomerNumber.toString().length==12" type="text" class="form-control tab_title" id="LastName" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" name="LastName" ng-change="opperson.CustomerNumber=''" style="text-align:left" data-ng-model="opperson.PersonLastName" required>
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.LastName.$dirty"
+                                 for="formname.LastName.$error">
+                        <ng-message when="required" class="errors">
+                            Ազգանունը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="form-group " ng-show="convertation">
+            <label class="tab_title col-sm-3">
+                Առանց անձնագրի
+            </label>
+            <div class="col-sm-9">
+                <div class="row-no-margin">
+                    <select ng-disabled="opperson.CustomerNumber.toString().length==12" data-ng-model="hasPassport" class="form-control">
+                        <option value="false">Այո</option>
+                        <option value="true">Ոչ</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="!utility" class="form-group ">
+            <label class="tab_title col-sm-3" for="amount"> Անձնագիր</label>
+            <div class="col-sm-9">
+                <div class="row-no-margin">
+                    <input ng-disabled="opperson.CustomerNumber.toString().length==12" type="text" class="form-control tab_title" ng-required="convertation && hasPassport==1" id="Passport" name="Passport" ng-change="opperson.CustomerNumber=''" style="text-align:left" data-ng-model="opperson.PersonDocument">
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.Passport.$dirty"
+                                 for="formname.Passport.$error">
+                        <ng-message when="required" class="errors">
+                            Անձնագիրը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div ng-if="!utility" class="form-group ">
+            <label class="tab_title col-sm-3" for="amount"> ՀԾՀ</label>
+            <div class="col-sm-9">
+                <div class="row-no-margin">
+                    <input ng-disabled="opperson.CustomerNumber.toString().length==12" type="text" class="form-control tab_title" id="SocialNumber" name="SocialNumber" ng-change="opperson.CustomerNumber=''" style="text-align:left" data-ng-model="opperson.PersonSocialNumber">
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="!utility && (nonauthorizedcustomer || opperson.PersonNoSocialNumber!='' && opperson.PersonNoSocialNumber!=undefined)" class="form-group ">
+            <label class="tab_title col-sm-3" for="amount"> ՀԾՀ-ից հրաժարվելու տեղեկանք</label>
+            <div class="col-sm-9">
+                <div class="row-no-margin">
+                    <input type="text" class="form-control tab_title" id="NoSocialNumber" name="NoSocialNumber" ng-change="opperson.CustomerNumber=''" style="text-align:left" data-ng-model="opperson.PersonNoSocialNumber">
+                </div>
+                <div class="row-no-margin">
+                    <div class="errors" ng-if="formname.$submitted && opperson.PersonNoSocialNumber!=undefined && opperson.PersonNoSocialNumber!='' && opperson.PersonSocialNumber!=undefined && opperson.PersonSocialNumber!='' ">
+                        ՀԾՀ-ն նույպես լրացված է
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="convertation || armbudget" class="form-group ">
+            <label class="tab_title col-sm-3" for="amount"> Հասցե</label>
+            <div class="col-sm-9">
+                <div class="row-no-margin">
+                    <textarea ng-disabled="opperson.CustomerNumber.toString().length==12" class="form-control tab_title" id="Address" name="Address" ng-change="opperson.CustomerNumber=''" style="text-align:left" data-ng-model="opperson.PersonAddress" ng-required="armbudget"></textarea>
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.Address.$dirty"
+                                 for="formname.Address.$error">
+                        <ng-message when="required" class="errors">
+                            Հասցեն լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+        </div>
+
+        <div ng-if="convertation || armbudget" class="form-group ">
+            <label class="tab_title col-sm-3" for="amount"> Հեռախոս</label>
+            <div class="col-sm-9">
+                <div class="row-no-margin">
+                    <input ng-disabled="opperson.CustomerNumber.toString().length==12" type="text" class="form-control tab_title" id="Phone" name="Phone" ng-change="opperson.CustomerNumber=''" style="text-align:left" data-ng-model="opperson.PersonPhone" ng-required="armbudget">
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.Phone.$dirty"
+                                 for="formname.Phone.$error">
+                        <ng-message when="required" class="errors">
+                            Հեռախոսը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+        </div>
+
+        <div ng-if="armbudget" class="form-group ">
+            <label class="tab_title col-sm-3" for="amount"> Էլ. հասցե</label>
+            <div class="col-sm-9">
+                <div class="row-no-margin">
+                    <input ng-disabled="opperson.CustomerNumber.toString().length==12" type="text" class="form-control tab_title" id="Email" name="Email" ng-change="opperson.CustomerNumber=''" style="text-align:left" data-ng-model="opperson.PersonEmail">
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="convertation" class="form-group ">
+            <label class="tab_title col-sm-3" for="amount"> Ծննդյան ա/թ</label>
+            <div class="col-sm-9">
+                <div class="row-no-margin">
+                    <input ng-disabled="opperson.CustomerNumber.toString().length==12" type="date" class="form-control tab_title" id="Birth" name="Birth" ng-change="opperson.CustomerNumber=''" style="text-align:left" data-ng-model="opperson.PersonBirth">
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.Birth.$dirty"
+                                 for="formname.Birth.$error">
+                        <ng-message when="required" class="errors">
+                            Ծննդյան ա/թ լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+        </div>
+
+        <div ng-if="convertation" class="form-group">
+            <label class="tab_title col-sm-3 " for="rezidence">Ռեզիդենտություն</label>
+            <div class="col-sm-9 ">
+                <div class="row-no-margin">
+                    <select ng-disabled="opperson.CustomerNumber.toString().length==12" convert-to-number data-ng-model="opperson.PersonResidence" name="Residence" id="Residence" class="form-control" required>
+                        <option value="" hidden>Ընտրեք</option>
+                        <option value="1">Ռեզիդենտ</option>
+                        <option value="2">Ոչ ռեզիդենտ</option>
+                    </select>
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.Residence.$dirty"
+                                 for="formname.Residence.$error">
+                        <ng-message when="required" class="errors">
+                            Ռեզիդենտությունը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group " ng-if="armbudget">
+            <label class="tab_title col-sm-3 " for="rezidence">Կարգավիճակ</label>
+            <div class="col-sm-9 ">
+                <div class="row-no-margin">
+                    <select data-ng-model="opperson.PersonResidence" name="Residence" id="Residence" class=" form-control" required>
+                        <option value="" hidden>Ընտրեք</option>
+                        <option value="1">Ֆիզիկական-ռեզիդենտ</option>
+                        <option value="2">Ֆիզիկական-ոչ ռեզիդենտ</option>
+                    </select>
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.Residence.$dirty"
+                                 for="formname.Residence.$error">
+                        <ng-message when="required" class="errors">
+                            Կարգավիճակն ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="warnings.length>0" class="panel panel-warning">
+            <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span> Ուշադրություն</div>
+            <div class="panel-body">
+                <div ng-repeat="war in warnings">
+                    {{$index+1}}.{{::war}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

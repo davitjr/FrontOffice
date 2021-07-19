@@ -1,0 +1,227 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #CreditCommitmentSaveFilterForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    .form-control2 {
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #ccc;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+    .tab_title_input {
+        font-family: 'webly_semibold';
+        font-size: 14px;
+        color: #6d6d6d;
+        text-align: right;
+        padding-top: 7px;
+        margin-bottom: 0;
+        text-align: right;
+        width: 25%
+    }
+
+    .form-control2 {
+        border-radius: 0px !important;
+    }
+</style>
+
+<div id="CreditCommitmentForgivenessLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<form ng-controller="CreditCommitmentForgivenessOrderCtrl" ng-init="getForgivableLoanCommitment(productId,loanType)" name="CreditCommitmentSaveFilterForm" id="CreditCommitmentSaveFilterForm" style="min-width:952px;" role="form" novalidate class="form-horizontal" labels-required>
+    <div id="newMature_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+
+            <li class="root-menu-item-4 " ng-click="CreditCommitmentSaveFilterForm.$setSubmitted(); CreditCommitmentSaveFilterForm.$valid &&  saveForgivableLoanCommitment();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newMature')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+
+        <div class="col-sm-12">
+            <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+                <div style="max-width:630px">
+                    <errors></errors>
+                </div>
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label" for="RebateType">Ներման տեսակներ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <select ng-model="SaveFilter.RebateType" ng-change="ClearInputData(); getTaxForForgiveness((creditCommitmentForgivenessList.LoanQuality==11 || creditCommitmentForgivenessList.LoanQuality==12)?SaveFilter.OutCapital :SaveFilter.CurrentCapital,SaveFilter.RebateType)" name="RebateType" id="RebateType" class="form-control" style="text-align:left; width:48%" required>
+                                <option value="" hidden>Ընտրեք տեսակը...</option>
+                                <option value="12">Վճռի կամ վճարման կարգադրության</option>
+                                <option value="13">Զեկուցագիր</option>
+                                <option value="14" ng-if="SaveFilter.NumberOfDeath != undefined">Մահվան վկայական</option>
+                                <option value="15">Զեղծարարություն</option>
+                                <option value="21">Ռազմական դրության ժամանակ զոհված, հաշմանդամ դարձած, անհայտ կորած</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="CreditCommitmentSaveFilterForm.$submitted || CreditCommitmentSaveFilterForm.RebateType.$dirty"
+                                         for="CreditCommitmentSaveFilterForm.RebateType.$error">
+                                <ng-message when="required" class="errors">
+                                    Ներման տեսակը ընտրված չէ
+                                </ng-message>
+
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="SaveFilter.RebateType=='12' || SaveFilter.RebateType=='13' || SaveFilter.RebateType=='15' || SaveFilter.RebateType=='21'">
+                    <label class="tab_title col-sm-5 control-label " for="RegistrationDate">Հիմքի ամսաթիվ/համար</label>
+                    <div class="col-sm-6 row">
+                        <input type="date" class="tab_title form-control" id="DateOfFoundation" name="DateOfFoundation" ng-model="SaveFilter.DateOfFoundation" style="text-align:left; width:35%">
+                        <input type="text" class="tab_title form-control" id="NumberOfFoundation" name="NumberOfFoundation" data-ng-model="SaveFilter.NumberOfFoundation" style="text-align:left; margin-left:50px; width:35%" required />
+                        <div class="row">
+                            <ng-messages ng-if="CreditCommitmentSaveFilterForm.$submitted || CreditCommitmentSaveFilterForm.DateOfFoundation.$dirty || SaveFilter.DateOfFoundation == undefined "
+                                         for="CreditCommitmentSaveFilterForm.DateOfFoundation.$error">
+                                <ng-message when="required" class="errors">
+                                    Հիմքի ամսաթիվը լրացրած չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="CreditCommitmentSaveFilterForm.$submitted || CreditCommitmentSaveFilterForm.NumberOfFoundation.$dirty"
+                                         for="CreditCommitmentSaveFilterForm.NumberOfFoundation.$error">
+                                <ng-message when="required" class="errors">
+                                    Հիմքի համարը լրացրած չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="SaveFilter.RebateType=='14'">
+                    <label class="tab_title col-sm-5 control-label " for="RegistrationDate">Մահվան ամսաթիվ/դոկ. համար</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" class="tab_title form-control" id="RegistrationDate" name="RegistrationDate" data-ng-model="SaveFilter.DateOfDeath" style="text-align:left; width:35%">
+                        <input type="text" class="tab_title form-control" id="NumberOfDeath" name="NumberOfDeath" data-ng-model="SaveFilter.NumberOfDeath" style="text-align:left; margin-left:50px; width:35%" />
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="true">
+                    <label class="tab_title col-sm-5 control-label " for="RegistrationDate"></label>
+                    <div class="col-sm-6 row">
+                        <label class="tab_title col-sm-5 control-label" style="text-align:center; width:25%">Սկզբնական</label>
+                        <label class="tab_title col-sm-5 control-label" style="text-align:center; margin-left:50px; width:25%">Ներում</label>
+                        <label class="tab_title col-sm-5 control-label" style="text-align:center; width:25%; margin-left:50px;">Մնացորդ</label>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="!creditCommitmentForgivenessList.IsCreditLine">
+                    <label class="tab_title col-sm-5 control-label " for="CurrentFee">Սպասարկման վճար`</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" ng-disabled="true" class="tab_title_input form-control" id="CurrentFee" name="CurrentFee" data-ng-model="creditCommitmentForgivenessList.CurrentFeeToString" required />
+                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' style="margin-left:50px;" class="tab_title_input form-control" id="CurrentFee"  name="CurrentFee" ng-blur="resetFields(SaveFilter.CurrentFee,1)" ng-change="updateTotal(creditCommitmentForgivenessList.CurrentFee,SaveFilter.CurrentFee,1);" data-ng-model="SaveFilter.CurrentFee" required />
+                        <label class="tab_title_input form-control2" id="CurrentFee" name="CurrentFee" style="margin-left:50px;">{{Total1 | number:NumberFormat}}</label>
+
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="creditCommitmentForgivenessList.LoanType == 18">
+                    <label class="tab_title col-sm-5 control-label " for="CurrentRateValueNused">Չօգտագործված մասի դիմաց կուտակված տոկոս`</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" ng-disabled="true" class="tab_title_input form-control" id="CurrentRateValueNused" name="CurrentRateValueNused" data-ng-model="creditCommitmentForgivenessList.CurrentRateValueNusedToString" style="text-align:right; width:25%" required>
+                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' class="tab_title_input form-control" id="CurrentRateValueNused" name="CurrentRateValueNused " ng-blur="resetFields(SaveFilter.CurrentRateValueNused,7)" ng-change="updateTotal(creditCommitmentForgivenessList.CurrentRateValueNused,SaveFilter.CurrentRateValueNused,7);"  data-ng-model="SaveFilter.CurrentRateValueNused" style="margin-left:50px;" required />
+                        <label class="tab_title_input form-control2" id="CurrentRateValueNused" name="CurrentRateValueNused" style="margin-left:50px;">{{Total7 | number:NumberFormat}}</label>
+
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="true">
+                    <label class="tab_title col-sm-5 control-label " style="margin-top: -10px;" for="JudgmentPenaltyRate">Պետական տուրքի փոխանցումից<br />  հետո կուտակված տուժանք`</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" ng-disabled="true" class="tab_title_input form-control" id="JudgmentPenaltyRate" name="JudgmentPenaltyRate" data-ng-model="creditCommitmentForgivenessList.JudgmentPenaltyRateToString" required>
+                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' class="tab_title_input form-control" id="JudgmentPenaltyRate" name="JudgmentPenaltyRate" ng-blur="resetFields(SaveFilter.JudgmentPenaltyRate,2)" ng-change="updateTotal(creditCommitmentForgivenessList.JudgmentPenaltyRate,SaveFilter.JudgmentPenaltyRate,2);"  data-ng-model="SaveFilter.JudgmentPenaltyRate" style="margin-left:50px;" required>
+                        <label class="tab_title_input form-control2" id="JudgmentPenaltyRate" name="JudgmentPenaltyRate" style="margin-left:50px;">{{Total2 | number:NumberFormat}}</label>
+
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="true">
+                    <label class="tab_title col-sm-5 control-label ">Տուժանք`</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" ng-disabled="true" class="tab_title_input form-control" id="PenaltyRate" name="PenaltyRate" data-ng-model="creditCommitmentForgivenessList.PenaltyRateToString" style=" width:25%" required>
+                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' class="tab_title_input form-control" id="PenaltyRate" name="PenaltyRate" ng-blur="resetFields(SaveFilter.PenaltyRate,3)" ng-change="updateTotal(creditCommitmentForgivenessList.PenaltyRate,SaveFilter.PenaltyRate,3);" data-ng-model="SaveFilter.PenaltyRate" style="margin-left:50px;" required>
+                        <label class="tab_title_input form-control2" style="margin-left:50px;">{{Total3 | number:NumberFormat}}</label>
+
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="true">
+                    <label class="tab_title col-sm-5 control-label ">Տոկոս`</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" ng-disabled="true" class="tab_title_input form-control" id="CurrentRateValue" name="CurrentRateValue" data-ng-model="creditCommitmentForgivenessList.CurrentRateValueToString" style=" width:25%" required>
+                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' class="tab_title_input form-control" id="CurrentRateValue" name="CurrentRateValue" ng-blur="resetFields(SaveFilter.CurrentRateValue,4)" ng-change="updateTotal(creditCommitmentForgivenessList.CurrentRateValue,SaveFilter.CurrentRateValue,4);"  data-ng-model="SaveFilter.CurrentRateValue" style="margin-left:50px;" required>
+                        <label class="tab_title_input form-control2" style="margin-left:50px;">{{Total4 | number:NumberFormat}}</label>
+
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="creditCommitmentForgivenessList.LoanQuality != 12 && creditCommitmentForgivenessList.LoanQuality != 11">
+                    <label class="tab_title col-sm-5 control-label " for="CurrentCapital">Վարկի մայր գումար`</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" ng-disabled="true" class="tab_title_input form-control" id="CurrentCapital" name="CurrentCapital" data-ng-model="creditCommitmentForgivenessList.CurrentCapitalToString" style=" width:25%" required>
+                        <input type="text" class="tab_title_input form-control" id="CurrentCapital" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' name="CurrentCapital" ng-blur="resetFields(SaveFilter.CurrentCapital,5);getTaxForForgiveness(SaveFilter.CurrentCapital,SaveFilter.RebateType)" ng-change="updateTotal(creditCommitmentForgivenessList.CurrentCapital,SaveFilter.CurrentCapital,5)"  data-ng-model="SaveFilter.CurrentCapital" style="margin-left:50px;" required>
+                        <label class="tab_title_input form-control2" id="CurrentCapital" name="CurrentCapital" style="margin-left:50px;">{{Total5 | number:NumberFormat}}</label>
+
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="creditCommitmentForgivenessList.LoanQuality == 12 || creditCommitmentForgivenessList.LoanQuality == 11">
+                    <label class="tab_title col-sm-5 control-label " for="OutCapital">Վարկի մայր գումար`</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" ng-disabled="true" class="tab_title_input form-control" id="OutCapital" name="OutCapital" data-ng-model="creditCommitmentForgivenessList.OutCapitalToString" style=" width:25%" required>
+                        <input type="text" class="tab_title_input form-control" id="OutCapital" name="OutCapital" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' ng-blur="resetFields(SaveFilter.OutCapital,6);getTaxForForgiveness(SaveFilter.OutCapital,SaveFilter.RebateType)" ng-change="updateTotal(creditCommitmentForgivenessList.OutCapital,SaveFilter.OutCapital,6)"  data-ng-model="SaveFilter.OutCapital" style="margin-left:50px;" required>
+                        <label class="tab_title_input form-control2" id="OutCapital" name="OutCapital" style="margin-left:50px;">{{Total6 | number:NumberFormat}}</label>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label" for="RegistrationDate">Ընհանուր `</label>
+                    <div class="col-sm-6 row">
+                        <label class="tab_title_input form-control2" id="RegistrationDate" name="RegistrationDate" style="text-align:right; width:25%;text-align: right;">{{TotalForAll1 | number:NumberFormat}}</label>
+                        <label class="tab_title_input form-control2" id="RegistrationDate" name="RegistrationDate" style="text-align:right; margin-left:50px; width:25%;text-align: right;">{{TotalForAll2 | number:NumberFormat}}</label>
+                        <label class="tab_title_input form-control2" id="RegistrationDate" name="RegistrationDate" style="text-align:right; width:25%; margin-left:50px;height: 34px;">{{TotalForAll3 | number:NumberFormat}}</label>
+                    </div>
+                </div>
+                <br />
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label ">Հարկ `</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" ng-disabled="true" class="tab_title_input form-control" id="RegistrationDate" name="RegistrationDate" data-ng-model="taxForForgiveness" style="width:25%">
+                    </div>
+                </div>
+                <br /><br /><br />
+            </div>
+        </div>
+    </div>
+</form>
+

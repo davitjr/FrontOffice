@@ -1,0 +1,82 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #accountUnfreezeOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+<div id="accountUnfreezeeLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form name="AccountUnfreezeOrderForm" id="accountUnfreezeOrderForm" role="form" style="min-width:600px" ng-submit="AccountUnfreezeOrderForm.$setSubmitted;AccountUnfreezeOrderForm.$valid && saveAccountUnfreezeOrder()" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+    <div id="accountunfreezeorder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-3 " ng-click="AccountUnfreezeOrderForm.$setSubmitted();AccountUnfreezeOrderForm.$valid && saveAccountUnfreezeOrder();">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon submitButton">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-4 " onclick="CloseBPDialog('accountunfreezeorder')">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="cancelButton h-menu-icon">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <h6><span style="color:#5EB4FF" class="glyphicon glyphicon-info-sign"></span> Բոլոր դաշտերը անհրաժեշտ է մուտքագրել UNICODE-ով</h6>
+
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+
+
+    <div class="col-sm-10">
+
+        <div style="clear:both" class="form-group">
+            <label class="tab_title col-sm-6">Պատճառ</label>
+            <div class="col-sm-6 row" data-ng-init="@*setRemoveTypes('Unfreeze');*@getAccountFreezeReasonsTypes('Unfreeze')">
+                <loading-control scopevariable="freezeReasonsTypes"></loading-control>
+                <select ng-show="freezeReasonsTypes" name="UnfreezeType" id="UnfreezeType" ng-model="order.UnfreezeReason" class="form-control" required
+                        data-ng-options="k as v for (k,v) in freezeReasonsTypes">
+                    <option selected="selected" hidden="hidden" value="">Ընտրեք...</option>
+                </select>
+                <ng-messages ng-if="AccountUnfreezeOrderForm.$submitted || AccountUnfreezeOrderForm.UnfreezeType.$dirty"
+                             for="AccountUnfreezeOrderForm.UnfreezeType.$error">
+                    <br />
+                    <ng-message when="required" class="errors">
+                        Պատճառն ընտրված չէ
+                    </ng-message>
+                </ng-messages>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="tab_title col-sm-6" for="UnfreezeReasonDescription">Նկարագրություն</label>
+            <div class="col-sm-5">
+                <div class="row">
+                    <textarea rows="2" data-ng-model="order.UnfreezeReasonAddInf" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" id="UnfreezeReasonDescription" name="UnfreezeReasonDescription" class="tab_title form-control" style="text-align:left" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

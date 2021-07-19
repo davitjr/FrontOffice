@@ -1,0 +1,63 @@
+﻿<style type="text/css">
+    .product-container {
+        width: 750px;
+    }
+
+        .redStyle {
+        color:red;
+    }
+</style>
+<form ng-controller="TransferCallContractDetailsCtrl" id="TransferCallContractDetails" data-ng-init="getTransferCallContracts()">
+    <div class="product-container" style="min-width:530px;margin-left:10px;">
+
+        <div class="header-title">
+            Հեռախոսազանգով փոխանցման համաձայնագրերի հաշվառում
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="include-closed-products">
+                    <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-loans" data-ng-model="check" ng-true-value="2" ng-false-value="1" >
+                    <label for="include-closed-loans" name="include-closed-loans-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+                </div>
+                <div ng-if="$root.SessionProperties.SourceType == 2">
+                    <i class="add-new-product " data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Հեռախոսազանգով փոխանցման համաձայնագրի մուտքագրում" ng-controller="PopUpCtrl" ng-click="params={orderType:96};openWindow('TransferCallContractOrder/TransferCallContractOrder','Հեռախոսազանգով փոխանցման համաձայնագրի մուտքագրում','newTransferCallContractOrder')"></i>
+                </div>
+            </div>
+            <div class="product-content-table custom-scroll" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="transferCallContract in transferCallContracts | filter: { ClosingDate: check=='1'?null:'!null'}" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,transferCallContract)" style="max-height:200px">
+                            <td class="col-sm-6">
+                                <div>
+                                    <span>Հերթական համար` {{::transferCallContract.ContractId}}</span><br />
+                                    <span>Համաձ. համար` {{::transferCallContract.ContractNumber}}</span><br />
+                                    <span>Կնքման ա/թ` {{::transferCallContract.ContractDate | mydate | date: 'dd/MM/yyyy'}}</span><br />
+                                    <span>Գաղտնաբառ` {{::transferCallContract.ContractPassword}}</span><br />
+                                </div>
+                            </td>
+                            <td class="col-sm-6">
+                                <span>Հաշիվ` {{::transferCallContract.Account.AccountNumber}} {{::transferCallContract.Account.Currency}}</span><br />
+                                <span ng-if="transferCallContract.Account.AccountType==11">Քարտի համար՝{{::transferCallContract.Account.ProductNumber}}<br /></span>
+                                <span>Ներգրավող ՊԿ` {{::transferCallContract.InvolvingSetNumber}}</span><br />
+                                <span>Կարգավիճակ` <span ng-class="{'redStyle':transferCallContract.Quality=='40'}">{{::transferCallContract.QualityDescription}}</span></span><br />
+                                <span ng-if="transferCallContract.Quality==40">Փակման ա/թ՝ {{::transferCallContract.ClosingDate | mydate | date: 'dd/MM/yyyy'}}</span>
+
+                            </td>
+                            <td ng-if="transferCallContract.Quality==0" class="col-sm-1 click_toggle" context="contextHistory" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div ng-if="transferCallContracts.length==0" style="color:red;font-size:16px;text-align:center;">Տվյալներ առկա չեն</div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <ul id="contextHistory" class="dropdown-menu">
+        <li ng-if="transferCallContract.Quality==0 && $root.SessionProperties.SourceType == 2" ng-controller="PopUpCtrl" ng-click="params={orderType:97,transferCallContract:transferCallContract};openWindow('TransferCallContractOrder/TransferCallContractTerminationOrder','Համաձայնագրի դադարեցման դիմումի մուտքագրում','newTransferCallContractTerminationOrder')"><a style="color: #4a8a2b;text-decoration:none!important;cursor:pointer">Դադարեցնել</a></li>
+        <li ng-if="transferCallContract.Quality==0 && $root.SessionProperties.SourceType == 2 && transferCallContract.Account.Currency=='RUR' && transferCallContract.Account.AccountType==10" ng-controller="TransferCallContractOrderCtrl" ng-click="transferCallContractPrint(transferCallContract)"><a style="color: #4a8a2b;text-decoration:none!important;cursor:pointer">Տպել</a></li>
+    </ul>
+
+</form>

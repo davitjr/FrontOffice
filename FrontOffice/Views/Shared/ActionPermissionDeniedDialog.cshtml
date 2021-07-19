@@ -1,0 +1,36 @@
+﻿
+<style>
+    .modal-backdrop {
+        background-color: rgb(90, 85, 85);
+    }
+
+    .modal-content {
+        width: 300px;
+    }
+
+    .modal-backdrop.in {
+        opacity: 0.5;
+    }
+</style>
+<form ng-controller="LoginCtrl">
+    <div class="popup_wrapper_top">
+        <div>
+            ՈՒշադրություն
+        </div>
+    </div>
+    <br><div class="popup_wrapper_inner modal-body">
+        <div style="text-align:center">
+            <div class="row">
+                <p class="warningClass">
+                    <img src="../../Content/Images/warning.png" alt="" /> Գործողությունը հասանելի չէ:
+                </p>
+            </div>
+            <br />
+            <input type='button' value='OK' class="my_save_button" style="width:100px;" ng-click="closePermissionDeniedDialog()" />
+        </div>
+
+
+    </div>
+
+
+</form>

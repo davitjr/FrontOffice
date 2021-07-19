@@ -1,0 +1,80 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    .radio-inline {
+        margin-top: -22px;
+        font-size: 14px;
+    }
+
+    .ui-widget-content {
+        color: #6d6d6d;
+    }
+
+    .form-control {
+        color: #6d6d6d;
+    }
+
+    #CredentialOrderForm {
+        margin-right: 15px;
+    }
+
+    .selected li {
+        background-color: red;
+    }
+
+    .scroll-div {
+        height: 210px;
+        overflow: auto;
+        border: solid;
+    }
+
+    .panel-body {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    thead tr {
+        height: 50px;
+    }
+</style>
+
+<link href="~/Content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+
+<div id="credentialLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="CredentialOrderCtrl" style="min-width:700px" ng-init="getAssigneeIdentificationOrder(selectedOrderId)" id="AssigneeIdentificationOrderDetailsForm" name="AssigneeIdentificationOrderDetailsForm" role="form" novalidate class="form-horizontal" labels-required>
+    <div style="max-width:550px">
+        <errors></errors>
+    </div>
+   
+    <div class="col-sm-6">
+        <div class="form-group">
+            <div class="col-sm-5 my_label " style="clear:both">Մուտքագրման ա/թ</div><div class="col-sm-5 my_text1 ">{{order.RegistrationDateString}}</div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-5 my_label " style="clear:both">Լիազորագրի սկիզբ</div><div class="col-sm-5 my_text1 ">{{order.Credential.StartDateToString}}</div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-5 my_label " style="clear:both">Լիազորագրի վերջ</div><div class="col-sm-5 my_text1 ">{{order.Credential.EndDateToString}}</div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-5 my_label " style="clear:both">Լիազորված անձի հաճախորդի համար</div><div class="col-sm-5 my_text1 ">{{order.Credential.AssigneeList[0].CustomerNumber}}</div>
+        </div>
+    </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+

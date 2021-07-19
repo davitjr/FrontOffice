@@ -1,0 +1,47 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    .myRow {
+       /* margin-left: -7px;
+        margin-bottom: 5px;
+        margin-top: 0px;
+        margin-right: -7px;*/
+        margin: 0 -7px 5px
+    }
+</style>
+<div id="loanInterestRateConcessionLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div ng-model="productId">
+    <form ng-controller="LoanInterestRateConcessionCtrl" id="LoanInterestRateConcessionForm" name="LoanInterestRateConcessionForm" role="form">
+
+        <div id="LoanInterestRateConcession_menu" class="menu-bar dialog-menu light-green" style="margin-bottom: 5px;">
+            <ul id="menu" class="dialog-menu">
+                <li class="root-menu-item-4 " ng-click="LoanInterestRateConcessionForm.$setSubmitted();LoanInterestRateConcessionForm.$valid && saveLoanInterestRateConcession();">
+                    <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+                </li>
+                <li class="root-menu-item-5 " onclick="CloseBPDialog('LoanInterestRateConcession')">
+                    <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+                </li>
+            </ul>
+            <div id="right-menu" style="display:none;">
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="row myRow">
+                <label class="tab_title col-sm-6 control-label " for="ConcessionDate">Զիջման ա/թ</label>
+                <div class="col-sm-6">
+                    <input type="date" disabled="disabled" class="tab_title form-control" id="ConcessionDate" name="ConcessionDate" data-ng-model="order.ConcessionDate" style="text-align:left">
+                </div>
+            </div>
+            <div class="row myRow">
+                <label class="tab_title col-sm-6 control-label " for="NumberOfMonths">Ամիսների քանակ</label>
+                <div class="col-sm-6">
+                    <input type="text" disabled="disabled" class="tab_title form-control" id="NumberOfMonths" name="NumberOfMonths" data-ng-model="order.NumberOfMonths" style="text-align:left">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

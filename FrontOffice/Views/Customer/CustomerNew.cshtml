@@ -1,0 +1,242 @@
+﻿<div ng-controller="CustomerCtrl" id="customerNew" data-ng-init="getCustomer(customernumber)" >
+    <div ng-if="showfulldata == true" id="customerData" class="customer-data-sidebar custom-scroll sidebar-item" style="padding:10px 0 0 0; overflow:hidden">
+        <div class="customer-main-info" style="padding-left:8px;">
+            <div class="customer-informative-notifications">
+                <div id="customerUpdate" ng-if="customer.UpdateExpired==1" class="customerInfo customer-data-notification">
+                    <i class="fa fa-exclamation-triangle" style="margin-right: 5px; font-size: 30px;"></i>
+                    <div class="customer-data-notification-text">Տվյալները չեն թարմացվել սահմանված ժամկետում</div>
+                </div>
+                <div id="customerHasKYC" ng-if="customer.HasKYC==false" class="customerInfo customer-data-notification">
+                    <i class="fa fa-exclamation-triangle" style="margin-right: 5px; font-size: 30px;"></i>
+                    <div class="customer-data-notification-text">ՀԱՃԱԽՈՐԴԻ KYC փաստաթուղթը կցված չէ</div>
+                </div>
+                <div id="customerHasKYC" ng-if="customer.HasArrests== true" class="customerInfo customer-data-notification">
+                    <i class="fa fa-exclamation-triangle" style="margin-right: 5px; font-size: 30px;"></i>
+                    <div class="customer-data-notification-text">Հաճախորդը ունի ԱՐԳԵԼՔՆԵՐ</div>
+                </div>
+                <div ng-if="customer.IsBirthdayToday==1" class="customerInfo customer-data-notification">
+                    <div class="customer-birthday-icon"></div>
+                    <div class="customer-data-notification-text" style="height: 30px; vertical-align: top; line-height: 30px;">Այսoր հաճախորդի ծննդյան օրն է</div>
+                </div>
+                <div id="customerIsSoldier" ng-if="customer.IsSoldier==true"  class="customerInfo customer-data-notification">
+                    <i class="fa fa-exclamation-triangle" style="margin-right: 5px; font-size: 30px;"></i>
+                    <div class="customer-data-notification-text">Հաճախորդը զորակոչված է</div>
+                </div>
+                <div>
+
+                    <div style="display: inline-block;">
+                        <div ng-if="customer.RiskQuality != null" class="customer-high-risk"></div>
+                        <div class="customer-image" ng-mouseover="showImageDetails=true" ng-init="getCustomerPhoto()"
+                             ng-mouseleave="showImageDetails=false" style="background-image: url({{ customerPhoto}});background-size:cover">
+                            <div class="btn-group" ng-show="showImageDetails" style="margin-bottom: -160px;" flow-init="{singleFile:true}"
+                                 flow-files-submitted="$flow.upload()"
+                                 flow-files-added="convertfile($files, $event, $flow)"
+                                 flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+                                 flow-file-success="$file.msg = $message"
+                                 flow-name="obj.flow">
+                                <span ng-if="hasPicture!=true" class="btn btn-xs btn-primary" flow-btn=""><span class="glyphicon glyphicon-upload"></span><input type="file" style="visibility: hidden; position: absolute;"></span>
+                                <span ng-if="hasPicture==true" class="btn  btn-primary btn-xs" flow-btn=""><span class="glyphicon glyphicon-retweet"></span><input type="file" style="visibility: hidden; position: absolute;"></span>
+                                <button ng-if="hasPicture==true" type="button" ng-click="deleteCustomerPhoto(photo.Id)" class="btn  btn-primary btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                                <button ng-if="hasPicture==true" type="button" ng-click="getCustomerOnePhoto(photo.Id)" class="btn  btn-primary btn-xs"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></button>
+                            </div>
+                            <div class="btn-group" ng-show="!showImageDetails" style="margin-bottom: -160px;">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: inline-block; vertical-align: top;width: calc(100% - 110px);">
+                        <div ng-show="customer.CustomerType==6" style="font-weight:900;font-size: 14px; vertical-align: top; margin-bottom: 5px;">{{ ::customer.FirstName }}  {{ ::customer.LastName}}  {{ ::customer.MiddleName}}</div>
+                        <div ng-show="customer.CustomerType!=6" style="font-weight:900;font-size: 14px; vertical-align: top; margin-bottom: 5px;">{{ ::customer.OrganisationName}}</div>
+                        <div class="customerInfo" style="margin-bottom: 5px;">Համար` {{ ::customer.CustomerNumber}}</div>
+                        <div class="customerInfo tipB" data-original-title="{{ ::customer.FilialCode}}" style="margin-bottom: 5px;">{{ ::customer.FilialName}}</div>
+                        <div ng-show="customer.IsGPMMember==true" class="customerInfo" style="margin-bottom: 5px;color:darkgreen;font-weight:bold;">ԳՓՄ անդամ</div>
+                        <div ng-show="$root.SessionProperties.AdvancedOptions['isCallCenter']==1" class="customerInfo tipB" data-original-title="Բանկային գաղտնաբառ" style="margin-bottom: 5px;">Գաղտնաբառ՝ {{ customer.SecurityCode != "" ? customer.SecurityCode : "Առկա չէ" }}</div>
+                        <div class="customerInfo tipB" data-original-title="Հաճախորդի տվյալների թարմացման ա/թ" style="margin-bottom: 5px;">Թարմացման ա/թ՝ {{ customer.LastDate | mydate | date: 'dd/MM/yyyy'}}</div>
+                        <div ng-show="customer.VipType" class="customer-status-lable">{{ ::customer.VipType}}</div>
+                        <div ng-if="customer.VipTypeId == 1" class="customer-status-icon-vip"></div>
+                        <div ng-if="customer.VipTypeId == 7" class="customer-status-icon-classic"></div>
+                        <div ng-if="customer.VipTypeId == 8" class="customer-status-icon-avangard"></div>
+                        <div ng-if="customer.VipTypeId == 9" class="customer-status-icon-premium"></div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="customer.CustomerType==6" class="customer-personal-info">
+                <div class="customerInfo customerInfoHeader">ԱՆՁՆԱԿԱՆ ՏՎՅԱԼՆԵՐ
+                    <span ng-controller="LoginCtrl" ng-click="exitToCustomerData()" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="color: #337AB7; cursor:pointer;"></span>
+                </div>
+                <div class="customerInfo">Ծննդյան ա/թ` {{ ::customer.BirthDate }}({{::customer.Age}})</div>
+                <div ng-if="customer.DocumentNumber!=null" class="customerInfo">Փաստաթուղթ` {{ ::customer.DocumentNumber }},{{::customer.DocumentGivenBy}},{{::customer.DocumentGivenDate}}</div>
+                <div ng-if="customer.DocumentNumber!=null && customer.PassportNumber!=null && customer.DocumentNumber!=customer.PassportNumber" class="customerInfo">Անձնագիր` {{::customer.PassportNumber }},{{::customer.PassportGivenBy}},{{::customer.PassportGivenDate}}</div>
+                <div ng-if="customer.SocCardNumber!=null && customer.SocCardNumber!=''" class="customerInfo">ՀԾՀ` {{::customer.SocCardNumber}}</div>
+                <div ng-if="customer.NoSocCardNumber!=null && customer.NoSocCardNumber!=''" class="customerInfo">ՀԾՀ-ից հրաժարվելու տեղեկանք` {{::customer.NoSocCardNumber}}</div>
+                <div ng-if="customer.TaxCode!=null" class="customerInfo">ՀՎՀՀ` {{ ::customer.TaxCode}}</div>
+                <div class="customerInfo">{{ customer.Gender == 1 ? "Արական" : "Իգական" }}</div>
+                <div class="customerInfo">{{ ::customer.MaritalStatusDescription}}</div>
+            </div>
+            <div ng-show="customer.CustomerType!=6" class="customer-personal-info">
+                <div class="customerInfo customerInfoHeader">ԱՆՁՆԱԿԱՆ ՏՎՅԱԼՆԵՐ
+                    <span ng-controller="LoginCtrl" ng-click="exitToCustomerData()" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="color: #337AB7; cursor:pointer;"></span>
+                </div>
+                <div ng-show="customer.OrganisationDirector!=null" class="customerInfo tipB" data-original-title="{{ ::customer.OrganisationDirector.Key}}">Տնօրեն` {{ ::customer.OrganisationDirector.Value}}</div>
+                <div ng-if="customer.TaxCode!=null" class="customerInfo">ՀՎՀՀ` {{ ::customer.TaxCode}}</div>
+            </div>
+
+            <div class="customer-contacts">
+                <div style="visibility: hidden;display:none;">{{ contactsCount = customer.AddressList.length + customer.PhoneList.length + customer.EmailList.length}}</div>
+                <div class="customerInfoHeader">
+                    <div class="customerInfo inlineBlock">ԿՈՆՏԱԿՏՆԵՐ</div>
+                    <div ng-if="contactsCount > 100 " class="contactListCollaps inlineBlock fa  fa-chevron-circle-down" onclick="ShowContacts()" style="cursor:pointer;"></div>
+                </div>
+                <div style="display:table">
+
+
+                    <div ng-repeat="(key, value) in ::customer.AddressList track by $index" class="customerInfo table-row">
+
+                        <i ng-if="value.Key==1 " class="fa fa-home table-cell tipB" style="margin-right:5px" data-original-title="Բնակության հասցե"></i>
+                        <i ng-if="value.Key==2 " class="fa fa-pencil table-cell tipB" style="margin-right:5px" data-original-title="Գրանցման հասցե"></i>
+                        <i ng-if="value.Key==3 " class="fa fa-briefcase table-cell tipB" style="margin-right:5px" data-original-title="Գործունեության հասցե"></i>
+                        <div class="table-cell">{{ ::value.Value}}</div>
+
+                    </div>
+                    <div ng-repeat="phone in ::customer.PhoneList track by $index" class="customerInfo table-row">
+                        <i ng-if="phone.phoneType.key==1" class="fa fa-mobile table-cell tipB" style="margin-right:5px" data-original-title="Բջջային հեռախոսահամր"></i>
+                        <i ng-if="phone.phoneType.key!=1" class="fa fa-phone table-cell tipB" style="margin-right:5px" data-original-title="Քաղաքային հեռախոսահամր"></i>
+                        <div class="table-cell">
+                            <a href="tel:{{ ::phone.phone.countryCode}}{{ ::phone.phone.areaCode}}{{ ::phone.phone.phoneNumber}}">{{ ::phone.phone.countryCode}} {{ ::phone.phone.areaCode}} {{ ::phone.phone.phoneNumber}}</a>
+                        </div>
+                    </div>
+                    <div ng-repeat="email in ::customer.EmailList track by $index" class="customerInfo table-row">
+                        <i class="fa fa-envelope-o table-cell tipB" style="margin-right:5px" data-original-title="Էլեկտրոնային հասցե"></i>
+                        <div class="table-cell"><a href="mailto:{{email}}">{{ ::email}}</a></div>
+                    </div>
+
+
+
+                    <div class="contactList row-group display-none" style="background-color: white;">
+
+                    </div>
+                </div>
+            </div>
+           <div ng-if="customer.CustomerType==6" class="customer-personal-info">
+                <div class="customerInfo customerInfoHeader">
+                    ԱՇԽԱՏԱՎԱՅՐ <span ng-if="customer.Employment==undefined" style="font-weight:500">- առկա չէ</span>
+                    
+                </div>
+               <div ng-if="customer.Employment">
+                   <div class="customerInfo">
+                       {{ ::customer.Employment.OrganisationNameUnicode }}
+                       <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={organisationCustomerNumber:customer.Employment.OrganisationCustomerNumber}; openWindow('/CardTariffContract/CardTariffContracts','Համագործակցության (աշխատավարձային) ծրագրեր','cardtariffcontractsdetails')" class="glyphicon glyphicon-info-sign"></span>
+                   </div>
+                   <div class="customerInfo">{{::customer.Employment.PositionStaff}}</div>
+                   <div class="customerInfo">{{::customer.Employment.WorkExperience}}</div>
+
+               </div>
+            </div>
+            <div class="customer-documents">
+                <div class="customerInfo customerInfoHeader">ՓԱՍՏԱԹՂԹԵՐ</div>
+                <div style="height:30px;">
+                    <div ng-show="customer.HasDefaultAttachment != true" class="tipB customerInfo signature-not-exists-button" data-original-title="Ստորագրության նմուշը բացակայում է">
+                    </div>
+                    <div ng-show="customer.HasDefaultAttachment == true" ng-controller="PopUpCtrl" 
+                         class="tipB customerInfo signature-button" data-original-title="Ստորագրության նմուշ" 
+                         ng-click="customer.HasDefaultAttachment == true &&  !slides && getAttachmentDocumentList(customer.CustomerNumber);params = { slides: slides, customerNumber: customer.CustomerNumber };openWindow('/ImageSlider/ImageSlider','Ստորագրության նմուշ','imageslider')">
+                    </div>
+                    <div class="signature-checkbox" style="margin-left:5px; display: inline-block;vertical-align: middle; margin-bottom: 13px;">
+                        <input type="checkbox" class="css-square-checkbox lrg" id="has-signature" data-ng-model="customer.HasDefaultAttachment" disabled />
+                        <label for="has-signature" name="has-signature-checkbox_lbl" class="css-label lrg custom-square-checkbox">Առկա է</label>
+                    </div>
+                </div>
+                <div style="height:30px;">
+                    <div class="tipB customerInfo kyc-button" style="cursor:pointer" data-original-title="KYC հարցաթերթիկ" 
+                         ng-controller="PopUpCtrl"
+                         ng-click="customer.HasKYC == true &&  !slidesKYC && getAttachmentDocumentList(customer.CustomerNumber,undefined,undefined,true);params = { slides: slidesKYC, customerNumber: customer.CustomerNumber };openWindow('/ImageSlider/ImageSlider','KYC հարցաթերթիկ','imageslider')">
+                    </div>
+                    <div class="signature-checkbox" style="margin-left:5px; display: inline-block;vertical-align: middle; margin-bottom: 13px;">
+                        <input type="checkbox" class="css-square-checkbox lrg" id="has-signature" disabled data-ng-model="customer.HasKYC" />
+                        <label for="has-signature" name="has-signature-checkbox_lbl" class="css-label lrg custom-square-checkbox" style="cursor: default;">Առկա է</label>
+                    </div>
+                </div>
+            </div>
+            <div class="linked-persons">
+                <div class="customerInfo customerInfoHeader">ՓՈԽԿԱՊԱԿՑՎԱԾ ԱՆՁԻՆՔ</div>
+                <div style="height:30px;">
+                    <div ng-show="customer.HasLinkedPersons == false" class="tipB customerInfo linked-person-not-exists-button" data-original-title="Փոխկապակցված անձինք բացակայում են">
+                    </div>
+                    <div ng-show="customer.HasLinkedPersons == true" ng-controller="CustomerCtrl" class="tipB customerInfo linked-person-exists-button" data-original-title="Փոխկապակցված անձինք" ng-click="customer.HasLinkedPersons == true && getAuthorizedCustomerLinkedPersons();">
+                    </div>
+                    <div class="linkedpersons-checkbox" style="margin-left:5px; display: inline-block;vertical-align: middle; margin-bottom: 13px;">
+
+                        <input type="checkbox" class="css-square-checkbox lrg" id="has-linkedpersons" data-ng-model="customer.HasLinkedPersons" disabled />
+                        <label for="has-linkedpersons" name="has-linkedpersons-checkbox_lbl" class="css-label lrg custom-square-checkbox">Առկա է</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bank-services" style="padding-left:8px;">
+            <div class="customerInfo customerInfoHeader">ԲԱՆԿԱՅԻՆ ԾԱՌԱՅՈՒԹՅՈՒՆՆԵՐ</div>
+            <div ng-init="hasACBAOnline();" style="display:inline-block; margin-left:5px;">
+                <div class="customerInfo acbaOnlineIcon tipB" data-original-title="Ինտերնետ բանկինգ"></div>
+                <div class="acba-online-checkbox" style="margin-left:5px; display: inline-block;vertical-align: middle; margin-bottom: 5px;">
+                    <input type="checkbox" class="css-square-checkbox lrg" id="has-online-banking" data-ng-model="HasHB" disabled ng-true-value="2" ng-false-value="1" />
+                    <label for="has-online-banking" name="has-online-banking-checkbox_lbl" class="css-label lrg custom-square-checkbox">Առկա է</label>
+                </div>
+            </div>
+            <div ng-if="$root.SessionProperties.CustomerType && $root.SessionProperties.CustomerType==6 " ng-init="hasPhoneBanking()" style="display:inline-block; margin-left:15px;">
+                <div class="customerInfo phoneBankingIcon tipB" data-original-title="Հեռախոսային բանկինգ"></div>
+                <div class="phone-banking-checkbox" style="margin-left:5px; display: inline-block;vertical-align: middle; margin-bottom: 5px;">
+                    <input type="checkbox" class="css-square-checkbox lrg" id="has-phone-banking" data-toggle="tooltip" data-ng-model="HasPB" disabled ng-true-value="2" ng-false-value="1" />
+                    <label for="has-phone-banking" name="has-online-banking-checkbox_lbl" class="css-label lrg custom-square-checkbox">Առկա է</label>
+                </div>
+            </div>
+            <div ng-if="$root.SessionProperties.CustomerType && $root.SessionProperties.CustomerType!=6 " ng-init="$root.SessionProperties.CustomerType!=6 && hasCardTariffContract();" style="display:inline-block; margin-left:15px;">
+                <a href="/#cardtariffcontracts">
+                    <div class="customerInfo cardTariffIcon tipB" data-original-title="Աշխատավարձային ծրագիր"></div>
+                </a>
+               
+                <div class="phone-banking-checkbox" style="margin-left:5px; display: inline-block;vertical-align: middle; margin-bottom: 5px;">
+                    <input type="checkbox" class="css-square-checkbox lrg" id="has-card-tariff" data-toggle="tooltip" data-ng-model="hasCardTariffContract" disabled ng-true-value="true" ng-false-value="false" />
+                    <label for="has-card-tarriff" name="has-card-tariff-checkbox_lbl" class="css-label lrg custom-square-checkbox">Առկա է</label>
+                </div>
+            </div>
+            <div ng-if="$root.SessionProperties.CustomerType && $root.SessionProperties.CustomerType!=6 " ng-init="hasPosTerminal();" style="display:inline-block; margin-left:5px;">
+               <a href="/#customerposlocations">
+                   <div class="customerInfo posIcon tipB" data-original-title="Վճարային քարտերի սպասարկում"></div>
+               </a>
+                <div class="phone-banking-checkbox" style="margin-left:5px; display: inline-block;vertical-align: middle; margin-bottom: 5px;">
+                    <input type="checkbox" class="css-square-checkbox lrg" id="has-pos-terminal" data-toggle="tooltip" data-ng-model="hasPosTerminal" disabled ng-true-value="true" ng-false-value="false" />
+                    <label for="has-card-tarriff" name="has-pos-terminal-checkbox_lbl" class="css-label lrg custom-square-checkbox">Առկա է</label>
+                </div>
+            </div>
+            <div>
+                <div class="customerInfo" >Խորհրդատու` <span style="color:blue;">{{ ::customer.ServingEmployee.servingEmployee.firstName}}  {{ ::customer.ServingEmployee.servingEmployee.lastName}} ({{ ::customer.ServingEmployee.servingEmployee.setNumber}})</span> 
+                    <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:customer.ServingEmployee.servingEmployee.setNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script type="text/javascript">
+            //------------- Bootstrap tooltips -------------//
+            $("[data-toggle=tooltip]").tooltip({ container: 'body' });
+            $(".tip").tooltip({ placement: 'top', container: 'body' });
+            $(".tipR").tooltip({ placement: 'right', container: 'body' });
+            $(".tipB").tooltip({ placement: 'bottom', container: 'body' });
+            $(".tipL").tooltip({ placement: 'left', container: 'body' });
+            //------------- Bootstrap popovers -------------//
+            $("[data-toggle=popover]").popover();
+        </script>
+    </div>
+    <div  ng-if="showfulldata == false">
+        <div class="row additionalInfoLabel" ng-show="customer.CustomerType==6">
+            Հաճախորդ` <b>{{customer.FirstName  + ' ' + customer.LastName + ' ' + customer.MiddleName}}</b>
+        </div>
+        <div ng-if="customer.BirthDate!=null" class="row additionalInfoLabel">Ծննդյան ա/թ` <b>{{customer.BirthDate}}</b></div>
+        <div class="row additionalInfoLabel" ng-show="customer.CustomerType!=6" ng-bind="customer.OrganisationName">
+            Հաճախորդ` <b>{{customer.OrganisationName}}</b>
+        </div>
+        <div class="row additionalInfoLabel">Համար` <b>{{customer.CustomerNumber}}</b></div>
+    </div>
+
+</div>

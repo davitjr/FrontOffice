@@ -1,0 +1,48 @@
+﻿<style>
+.modal-backdrop {
+        background-color: rgb(90, 85, 85);
+    }
+.modal-content
+    {
+        width: 0px;
+    }
+.modal-backdrop.in {
+    opacity: 0.5;
+    }
+</style>
+<div ng-controller="LoginCtrl" data-ng-init="getCustomerAuthorizationData()">
+    <form ng-if="questions!=null">
+        <style>
+            .modal-content
+    {
+        width: 600px;
+    }
+        </style>
+        <loading-control scopevariable="questions"></loading-control>
+        <div class="col-sm-12 popup_wrapper_top" style="height:40px">
+            <div style="margin-top:-5px">Ուշադրություն</div>
+        </div>
+        <div ng-show="questions">
+            <div ng-if="questions.length==0">
+                <br /><br /><br /><br />
+                <div class="my_label" style="text-align:center">Հաճախորդը չունի հեռախոսային բանկինգի պայմանագիր</div><br />
+            </div>
+            <div ng-if="questions.length>0" ng-repeat="question in questions" ng-init="scope.i=0">
+                <div class=col-sm-12>
+                    <br />
+                    <div class="col-sm-2 my_label">Հարց {{$index+1}}</div><br />
+                    <div style="margin-left:45px">
+                        <div style="font-weight:600;color: #6d6d6d;" class="col-sm-10">{{::question.m_Item1}}</div>
+                        <div class="col-sm-2 my_label"></div><div style="font-weight:600;color:#247d46;" class="col-sm-8">{{::question.m_Item2}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popup_buttons">
+            <button ng-if="questions.length>0" ng-click="logIn()" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Մուտք</button>
+            <button class="btn btn-sm btn-danger" ng-click="cancelPhoneBankingLogin()"><span class="glyphicon glyphicon-log-out"></span>&nbsp;{{buttonName}}</button>
+        </div>
+        
+
+    </form>
+</div>

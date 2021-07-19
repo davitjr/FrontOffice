@@ -1,0 +1,199 @@
+﻿<div>
+    <style type="text/css">
+        .modal-content {
+            width: 900px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+
+
+
+        .resultRow {
+            font-size: 10pt;
+            color: black;
+            font-weight: normal;
+        }
+
+        .resultRowAddInf {
+            font-size: 9pt;
+        }
+
+        .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .tableHeader {
+            font-size: 9pt;
+            height: 25px;
+        }
+
+        #serachRecTransfer .product-container-header > th {
+            font-weight: inherit;
+
+        }
+
+        #serachRecTransfer .div-table-content {
+            margin-top: -7px;
+            border-color: #CFDAD0 !important;
+        }
+
+
+        #serachRecTransfer .popup_wrapper_top {
+            margin-top: -10px !important;
+        }
+    </style>
+    <div id="serachRecTransfer"  >
+        <div class="col-sm-12 popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+            <div style="margin-top:-10px">Ստացված փոխանցումների որոնում</div>
+            <img src="/Content/images/close_pop.png " ng-click="closeReceivedTransfersModal()" style="margin-top:-10px;" alt="">
+        </div>
+
+
+        <div class="col-sm-12" style="padding:0;margin-bottom:15px">
+
+            <div class="col-sm-3" style="display:inline-block">
+                <label class="tab_title">Ամսաթիվ</label>
+                <div>
+                    <input type="date" ng-model="searchParams.DateOfransfer" name="DateTransfer" class="form-control  " />
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Գումար</label>
+                <div>
+                    <input type="text" ng-model="searchParams.TotalAmount" name="TotalAmount" class="form-control  " />
+                </div>
+            </div>
+ 
+            <div class="col-sm-2" style="display:inline-block"  >
+                <label class="tab_title">Արժույթ</label>
+                <div class="form-group-search"   data-ng-init="getTransferSystemCurrency()">
+               
+                      <select data-ng-model="searchParams.Currency" name="Currency" id="Currency" class="form-control">
+                            <option data-ng-repeat="k in ::curencyList" value="{{k.id}}">{{k.name}}</option>
+                        </select>
+                </div>
+            </div>
+
+            <div  class="col-sm-3" style="display:inline-block; ">
+                <label class="tab_title">Փոխանցման կոդ</label>
+                <div>
+                    <input type="text" ng-model="searchParams.Code" name="Code" class="form-control  " />
+                </div>
+                
+            </div>
+ 
+                 <div  class="col-sm-2" >
+                       <label class="tab_title"></label>
+                      <div style="margin-top:5px">
+                                <button type="button" class="btn btn-primary" ng-click="btnFindClick();" title="Որոնել"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                     </div>
+                 </div> 
+           
+        </div>
+ 
+        <div class=" col-sm-12 div-table-content " style="max-height:400px; min-height:200px;overflow:scroll ;  margin-bottom:0px; margin-top:0px; ">
+            <table class="table table-condensed table-hover" style="margin-bottom:0; table-layout:initial!important">
+ 
+                <thead >
+                  
+                    <tr  class="product-container-header" style="position:static">
+                        <th  style="text-align:center;">Փոխանցման ամսաթիվ</th>
+                        <th  style="text-align:center;">Փոխանցող</th>
+                        <th  style="text-align:center;">Ստացող</th>
+                        <th  style="text-align:center;">Ստացողի անձնագիր</th>
+                        <th  style="text-align:center;">Գումար</th>
+                        <th  style="text-align:center;">Արժույթ</th>
+                        <th  style="text-align:center;">Կոդ</th>
+                        <th  style="text-align:center;">Երկիր</th>
+                        <th  style="text-align:center;">Միջն.</th>
+                        <th  style="text-align:center;">ԱԿԲԱ միջ.</th>
+                        <th  style="text-align:center;">Ուղարկողի հասցե</th>
+                        <th  style="text-align:center;">Ուղարկողի հեռախոս</th>
+                        <th  style="text-align:center;">Ստացողի հասցե</th>
+                        <th  style="text-align:center;">Ստացողի հեռախոս</th>
+                        <th  style="text-align:center;">Ֆայլ</th>
+
+                    </tr>
+                       </thead>
+             
+
+ 
+                <tbody>
+                        <tr ng-if="ReceivedTransfersList.length!=0" data-ng-repeat="transfer in filteredReceivedTransfers" style="font-size:8pt; cursor:pointer;" ng-class="{'selected':$index == selectedRow} " ng-click="setClickedRow($index)" ng-dblclick="selectReceivedTransfer()">
+                    
+                            <td style="padding:5px!important">
+                                {{ ::transfer.DateTransfer | mydate | date: 'dd/MM/yyyy' }}
+                            </td>
+                                <td style="padding:5px!important">
+                                    {{ ::transfer.SenderName.substring(0,17) }}
+                                </td>
+                                <td style="padding:5px!important">
+                                    {{ ::transfer.ReceiverName.substring(0,17) }}
+                                </td>
+                                <td style="padding:5px!important">
+                                    {{ ::transfer.ReceiverPassport.substring(0,17) }}
+                                </td>
+                                <td style="padding:5px!important">
+                                    {{ ::transfer.TotalAmount | number:2 }}
+                                </td>
+                                <td style="padding:5px!important">
+                                    {{ ::transfer.Currency}}
+                                </td>
+                                <td style="padding:5px!important">
+                                    {{ ::transfer.Code}}
+                                </td>
+                                <td style="padding:5px!important">
+                                    {{ ::transfer.Country}}
+                                </td>
+                                <td style="padding:5px!important">
+                                    {{ ::transfer.ChargeW | number:0}}
+                                </td>
+                                 <td style="padding:5px!important">
+                                     {{ ::transfer.AcbaFee | number:2 }}
+                                 </td>
+                                 <td style="padding:5px!important">
+                                     {{ ::transfer.SenderAddress.substring(0,17) }}
+                                 </td>
+                                 <td style="padding:5px!important">
+                                     {{ ::transfer.SenderPhone.substring(0,17) }}
+                                 </td>
+                                 <td style="padding:5px!important">
+                                     {{ ::transfer.ReceiverAddress.substring(0,17) }}
+                                 </td>
+                                 <td style="padding:5px!important">
+                                     {{ ::transfer.ReceiverPhone.substring(0,17) }}
+                                 </td>
+                                 <td style="padding:5px!important">
+                                     {{ ::transfer.FileName.substring(0,17) }}
+                                 </td>
+                                
+              
+                        </tr>
+                        <tr ng-if="ReceivedTransfersList.length==0">
+                            <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                        </tr>
+                     </tbody>
+ 
+             
+            </table>
+ 
+        </div>
+        <div style="margin-left:12px;">
+            Ընդամենը` {{totalRows}}
+        </div>
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                    ng-model="currentPage"
+                    items-per-page="numPerPage"
+                    total-items="totalRows"
+                    max-size="maxSize"
+                    boundary-links="true"
+                    previous-text="‹"
+                    next-text="›"
+                    first-text="«"
+                    last-text="»">
+        </div>
+    </div>
+</div>

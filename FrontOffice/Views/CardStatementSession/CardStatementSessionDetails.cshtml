@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+}
+<form id="CardStatementSessionDetails" ng-controller="CardStatementSessionCtrl" ng-init="getCardSessionDetails(SessionNumber)" style="overflow-x:hidden" name="CardStatementSessionDetailsForm" role="form" class="form-horizontal">
+    <div id="cardStatementSessionDetailsLoad" class="overlay hidden">
+        <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+    </div>
+    <span ng-click="getCardSessionDetails(SessionNumber)" class="glyphicon glyphicon-refresh" data-placement="bottom" data-toggle="tooltip" style="cursor: pointer; margin-left: 15px;margin-top:5px" aria-hidden="true" data-original-title="Թարմացնել"> <a>Թարմացնել</a></span>
+    <span ng-if="cardStatementSessionDetails.Quality==2 || cardStatementSessionDetails.Quality==3" ng-click="changeStatementSessionStatus(SessionNumber)" data-placement="bottom" data-toggle="tooltip" style="cursor: pointer; margin-left: 15px;margin-top:5px" aria-hidden="true" data-original-title="Ստուգել կարգավիճակը"> <a>Ստուգել կարգավիճակը</a></span>
+    <div class="product-details bhoechie-tab-content" style="min-width:600px;padding-left:10px;">
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սեսիայի կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value" style="font-size:medium">{{statementSessionQualityTypes[cardStatementSessionDetails.Quality]}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քաղվածքների ընդհանուր քանակ</div>
+            <div class="product-detail-cell product-detail-value" style="font-size:medium">{{cardStatementSessionDetails.TotalStatementCount}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստեղծված քաղվածքների ընդհանուր քանակ</div>
+            <div class="product-detail-cell product-detail-value" style="font-size:medium">{{cardStatementSessionDetails.CreatedStatementCount}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստեղծված PDF քաղվածքներ</div>
+            <div class="product-detail-cell product-detail-value" style="font-size:medium">{{cardStatementSessionDetails.CreatedStatementCountPDF}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստեղծված EXCEL քաղվածքներ</div>
+            <div class="product-detail-cell product-detail-value" style="font-size:medium">{{cardStatementSessionDetails.CreatedStatementCountEXCEL}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ուղարկված քաղվածքներ</div>
+            <div class="product-detail-cell product-detail-value" style="font-size:medium">{{cardStatementSessionDetails.SentStatementCount}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մերժված քաղվածքներ</div>
+            <div class="product-detail-cell product-detail-value" style="font-size:medium">{{cardStatementSessionDetails.RejectedStatementCount}}</div>
+        </div>
+
+
+        @*<div class="col-sm-7"></div>
+        <div>
+            <button type="button" class="btn btn-sm btn-primary" ng-controller="PopUpCtrl" ng-click="params={SessionNumber:SessionNumber};openWindow('/CardStatementSession/CardStatementSessionHistory','Սեսիայի պատմություն',cardstatementsessionhistory)">Սեսիայի պատմություն</button>
+        </div>*@
+    </div>
+</form>

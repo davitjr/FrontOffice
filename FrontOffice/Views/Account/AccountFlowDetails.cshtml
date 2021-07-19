@@ -1,0 +1,78 @@
+﻿
+@{
+    Layout = null;
+}
+
+<style>
+    #accountflowdetails .product-content-table-full_height {
+        min-height: 150px !important;
+    }
+
+    #accountflowdetails .my_class {
+        font-size: 13px !important;
+    }
+</style>
+<div class="product-container" id="accountflowdetails" ng-show="hideBlank!='true' && accountFlowDetails!=undefined && accountFlowDetails!=''" style="margin:10px;">
+    <div class="header-title">
+
+        Հաշվի շարժ
+    </div>
+    <div class="product-collapsable-section">
+
+
+
+        <div class="product-content-table custom-scroll" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+
+            <table class="table table-condensed table-hover" style="margin-top:0px !important;background-color: #eef6e7!important;">
+                <tbody>
+                    <tr style="max-height:200px;cursor:pointer;">
+                        <td style="width: 0px;">
+                            <span class="my_class">Սկիզբ</span>
+                        </td>
+                        <td style="text-align:right">
+                            <span class="my_class"> {{ ::accountFlowDetails.InitiativeBallanceAMD | number:2}} AMD</span>
+                        </td>
+                        <td style="text-align:right">
+                            <span style="color:green" class="my_class"> {{ ::accountFlowDetails.InitiativeBallanceCurrency | number:2}} {{ ::accountCurrency}}</span>
+                        </td>
+
+                    </tr>
+                    <tr style="max-height:200px;cursor:pointer;">
+                        <td>
+                            <span class="my_class">Դեբետ</span>
+                        </td>
+                        <td style="text-align:right">
+                            <span class="my_class">{{ ::accountFlowDetails.DebitAmountAMD | number:2}} AMD</span>
+                        </td>
+                        <td style="text-align:right">
+                            <span style="color:green" class="my_class">{{ ::accountFlowDetails.DebitInCurrency | number:2}} {{ ::accountCurrency}}</span>
+                        </td>
+                    </tr>
+                    <tr style="max-height:200px;cursor:pointer;">
+                        <td>
+                            <span class="my_class">Կրեդիտ</span>
+                        </td>
+                        <td style="text-align:right">
+                            <span class="my_class">{{ ::accountFlowDetails.CreditAmountAMD | number:2}} AMD</span>
+                        </td>
+                        <td style="text-align:right">
+                            <span style="color:green" class="my_class">{{ ::accountFlowDetails.CreditInCurrency | number:2}} {{ ::accountCurrency}}</span>
+                        </td>
+                    </tr>
+                    <tr style="max-height:200px;cursor:pointer;">
+                        <td>
+                            <span class="my_class">Վերջ</span>
+                        </td>
+                        <td style="text-align:right">
+                            <span class="my_class">{{ ::accountFlowDetails.BallanceAMD | number:2}} AMD</span>
+                        </td>
+                        <td style="text-align:right">
+                            <span style="color:green" class="my_class">{{ ::accountFlowDetails.BallanceInCurrency | number:2}} {{ ::accountCurrency}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,96 @@
+﻿<style type="text/css">
+    .product-container {
+        width: 750px;
+    }
+</style>
+<div style="margin-left:15px;margin-top:5px" ng-controller="TransitAccountsForDebitTransactionsCtrl" id="TransitAccountsForDebitTransactions" class="container">
+    <form class="form  ">
+        <div class="col-sm-9" style="padding:0;margin-bottom:5px"></div>
+        <div class="col-sm-9" style="padding:0;display:inline-block"></div>
+        <div class="col-sm-12" style="padding:0;display:inline-block">
+            <div class="col-sm-2  ">
+                <div class="product-detail-cell product-detail-lable">&nbsp; </div>
+            </div>
+        </div>
+    </form>
+    <div class="product-container" ng-init="getAllTransitAccountsForDebitTransactions()">
+        <div class="header-title">
+            Ելքային գործարքների տարանցիկ հաշիվներ
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="include-closed-products">
+                    <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-accounts" data-ng-model="quality" ng-true-value="2" ng-false-value="1" ng-change="getAllTransitAccountsForDebitTransactions()">
+                    <label for="include-closed-accounts" name="include-closed-accounts-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+                </div>
+                <div ng-controller="PopUpCtrl" ng-click="openWindow('/TransitAccountsForDebitTransactions/NewTransitAccountsForDebitTransactions','Նոր ելքային գործարքների տարանցիկ հաշիվ','newTransitAccount')">
+                    <i class="add-new-product tipB" data-original-title="Ավելացնել նոր հաշիվ"></i>
+                </div>
+            </div>
+            <div class="product-content-table custom-scroll" id="transitAccounList">
+                <div ng-if="debitAccounts==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="transitAccount in transitAccounts" style="cursor: pointer;" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,transitAccount)">
+                            <td class="col-sm-7">
+                                <span class="tab_text">Հաշվեհամար` </span> <span style="font-weight: bold;">{{ ::transitAccount.TransitAccount.AccountNumber }}</span>
+                                <br />
+                                <span class="tab_text">Արժույթ` </span> <span style="font-weight: bold;">{{ ::transitAccount.TransitAccount.Currency }}</span>
+                                <br />
+                                <span class="tab_text">Նկարագրություն` </span> <span style="font-weight: bold;">{{ ::transitAccount.TransitAccount.AccountDescription }}</span>
+                                <br />
+                                <span class="tab_text">Պահանջել հաստատում` </span> <span style="font-weight: bold;">{{ transitAccount.RequiresApproval==true?'Այո':'Ոչ' }}</span>
+                                <br />
+                                <span class="tab_text" ng-if="transitAccount.SetNumber!=0">Մուտքագրող ՊԿ` </span> <span ng-if="transitAccount.SetNumber!=0" style="font-weight: bold;">{{ ::transitAccount.SetNumber}}</span>
+                                <span ng-if="transitAccount.SetNumber!=0" style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:transitAccount.SetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>
+                            </td>
+                            <td class="col-sm-4">
+                                <span class="tab_text">Բացման ա/թ` </span> <span style="font-weight: bold;">{{ ::transitAccount.OpenDate | mydate | date: 'dd/MM/yyyy' }}</span>
+                                <br />
+                                <span class="tab_text">Մ/Ճ` </span> 
+                                <span style="font-weight: bold;" ng-if="transitAccount.ForAllBranches!=true">{{ ::transitAccount.FilialCode }}</span>
+                                <span style="font-weight: bold;" ng-if="transitAccount.ForAllBranches==true">Բոլորը</span>
+                                <br />
+                                <span class="tab_text">Միջնորդավճարի %-ադրույք` </span> <span ng-model="account.FeeRate" style="font-weight: bold;">{{ ::transitAccount.FeeRate }} </span>
+                                <br />
+                                <span class="tab_text">Միջնորդավճարի նվազագույն գումար` </span> <span style="font-weight: bold;">{{ ::transitAccount.MinFeeAmount }}  AMD</span>
+                                <br />
+                                <span ng-if="transitAccount.ClosingDate!=null" class="tab_text" style="color:red">Փակման ա/թ` </span> <span ng-if="transitAccount.ClosingDate!=null" style="font-weight: bold;">{{ ::transitAccount.OpenDate | mydate | date: 'dd/MM/yyyy' }}</span>
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="contextAccount" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                        <tr ng-if="debitAccounts.length==0">
+                            <td colspan="3" style="text-align:center">Առկա չեն հաշիվներ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <ul id="contextAccount" class="dropdown-menu">
+            <li ng-if="selectdedTransitAccount.ClosingDate==null" ng-click="closeTransitAccountForDebitTransactions(selectdedTransitAccount)"><a href="" style="color: black;text-decoration:none!important ;">Դադարեցնել</a></li>
+            <li ng-if="selectdedTransitAccount.ClosingDate!=null" ng-click="reopenTransitAccountForDebitTransactions(selectdedTransitAccount)"><a href="" style="color: black;text-decoration:none!important ;">Վերագրանցել</a></li>
+            <li ng-if="selectdedTransitAccount.ClosingDate==null" ng-controller="PopUpCtrl" ng-click="params={transitAccount:selectdedTransitAccount,isEditAccount:true}; openWindow('/TransitAccountsForDebitTransactions/NewTransitAccountsForDebitTransactions','Ելքային գործարքների տարանցիկ հաշիվների խմբագրում','newTransitAccount')"><a href="" style="color: black;text-decoration:none!important ;">Խմբագրել</a></li>
+        </ul>
+        </div>
+</div>
+<script>
+    (function ($) {
+        $(window).on('load',function () {
+
+            $("#transitAccounList").mCustomScrollbar({
+                theme: "rounded-dark",
+                scrollButtons: {
+                    scrollAmount: 200,
+                    enable: true
+                },
+                mouseWheel: {
+                    scrollAmount: 200
+                }
+            });
+
+        });
+    })(jQuery);
+</script>

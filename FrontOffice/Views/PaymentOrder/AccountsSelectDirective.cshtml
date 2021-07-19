@@ -1,0 +1,69 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    .select2 > .select2-choice.ui-select-match {
+        /* Because of the inclusion of Bootstrap */
+        height: 29px;
+    }
+
+    .selectize-control > .selectize-dropdown {
+        top: 36px;
+    }
+
+    .ui-select-choices-row:hover {
+        background-color: #66afe9;
+        color: white;
+    }
+
+    .ui-select-choices-row {
+        margin-top: 0px;
+    }
+    .ui-select-choices {
+          border-color: #66afe9  !important;
+    }
+</style>
+
+<style>
+    .accountDetails {
+        position: relative; /*so children div can use 100% height and not go over */
+        height: 20px; /*make whatever you want */
+    }
+
+        .accountDetails .cell {
+            height: 20px;
+            display: inline-block;
+            margin-right: 30px; /* will make that spacing you wanted */
+        }
+</style>
+
+
+
+<ui-select ng-model="selectedAccount" theme="selectize" style="width:230px;border-radius:4px;" on-select="setAccount(selectedAccount);"  ng-if="check==0" ng-show="accounts" ng-required="required" >
+    <ui-select-match placeholder="Ընտրեք..."><span style="margin-left:0px">{{$select.selected.AccountNumber}}</span>  </ui-select-match>
+    <ui-select-choices group-by="'AccountTypeDescription'" repeat="ac in accounts " style="width:520px;">
+        <div class="accountDetails" style="cursor:pointer!important; ">
+            @*<div class="cell" style="margin-right:5px;position:relative;float:right;" ng-bind-html="ac.BalanceString "></div>*@
+
+                <div ng-show="isCard(ac)"  class="cell" style="width:270px" ng-bind-html="ac.AccountDescription">  </div>
+                <div ng-show="!isCard(ac)" class="cell" style="width:270px" ng-bind-html="ac.AccountNumber">  </div>
+                <div  class="cell" style="width:70px" ng-bind-html="ac.Currency">  </div>
+
+                <div class="cell" style="margin-right:5px;position:relative;float:right;" ng-bind-html="ac.BalanceString "></div>
+                <script> $.each($(".ui-select-search"), function (k, v) { $(v).prop('disabled', true) }) </script>
+            </div>
+    </ui-select-choices>
+</ui-select>
+
+
+
+
+
+
+
+
+
+
+
+
+

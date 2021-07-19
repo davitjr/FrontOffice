@@ -1,0 +1,94 @@
+﻿
+@{
+    Layout = null;
+}
+<div class="form-group" ng-show="formname.$name!='InputCashBook' && formname.$name!='CashierCashLimit'" ng-style="withoutlabel==true && {'margin-bottom':'0'}" >
+        <label ng-if="withoutlabel!=true" class="col-sm-5 tab_title">{{labelname}}<span class="redStyle" data-original-title="" title="">*</span></label>
+        <div class="col-sm-6 ">
+            <div class="row">
+                <div class="input-group">
+                    <input type="text" style="width:122px" ng-disabled="disabled==true" class="form-control" id="setnumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="setnumber" ng-model="setnumber" ng-blur="getCasherDescription()" required>
+                    <div class="input-group-btn" style="display:inline-block;">
+                        <button type="button" ng-disabled="disabled==true" title="ՊԿ-ի որոնում" class="btn btn-primary searchButton" ng-click="searchCashiers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div ng-messages="formname.setnumber.$dirty && formname.setnumber.$error" class="errors">
+                    <ng-messages ng-if="formname.$submitted || formname.setnumber.$dirty"
+                                 for="formname.setnumber.$error">
+                        <ng-message when="required" class="errors">
+                            Մուտքագրեք ՊԿ-ի տվյալները
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="row">{{CasherDescription}}</div>
+            </div>
+    </div>
+
+
+<div class="form-group" ng-if="formname.$name=='InputCashBook'">
+    <label class="col-sm-5 tab_title" style="padding-left: 65px;width:25%">{{labelname}}</label>
+    <div class="col-sm-2" style="width:25%">
+        <div class="row">
+            <div class="input-group">
+                <input ng-style="{ width: disabled==false ? '152px' : '192px' }" type="text"  ng-disabled="disabled==true || isBunker==true" class="form-control" id="cashBookSetnumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="setnumber" ng-model="$parent.setnumber" ng-blur="getCasherDescription()" required>
+                <div ng-if="disabled==false" class="input-group-btn" style="">
+                    <button id="searchBtn" type="button" ng-disabled="isBunker==true " title="ՊԿ-ի որոնում" class="btn btn-primary searchButton" ng-click="searchCashiers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3" style="width:19%" ng-if="disabled==false">
+        <span class="tab_title col-sm-2 text-right" style="margin-left:-5px">Դրամապահոց</span>
+        <div class="col-sm-1 ">
+            <input id="bunkerChk" ng-change="setBunker();callChangeFunction();" ng-disabled="linkedCashBook != undefined" type="checkbox" class="form-control checkbox-inline" style="width:18px;margin-left: 80px;height: 19px;margin-top:8px;"   ng-model="$parent.$parent.isBunker">
+        </div>
+    </div>
+    <div class="row" style="float:right;margin-right:140px">
+        <div ng-messages="formname.setnumber.$dirty && formname.setnumber.$error" class="errors">
+            <ng-messages ng-if="formname.$submitted || formname.setnumber.$dirty"
+                         for="formname.setnumber.$error">
+                <ng-message when="required" class="errors">
+                    Մուտքագրեք ՊԿ-ի տվյալները
+                </ng-message>
+            </ng-messages>
+        </div>
+    </div>
+    <br /><br />
+    <div style="float:right;margin-right:155px;">{{CasherDescription}}</div>
+</div>
+
+
+
+<div class="form-group" ng-if="formname.$name=='CashierCashLimit'">
+    @*<div ng-if="disabled" ng-init="getCasherDescription()"></div>*@
+    <label class="col-sm-5 tab_title" style="padding-left: 65px;width:25%">{{labelname}}</label>
+    <div class="col-sm-2" style="width:25%;margin-left:-73px">
+        <div class="row">
+            <div class="input-group">
+                <input ng-style="{ width: disabled==false ? '152px' : '192px'}" type="text" ng-disabled="disabled==true || isBunker==true" class="form-control" id="cashBookSetnumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="setnumber" ng-model="$parent.setnumber" ng-init="RegisteredUserID" ng-blur="getCasherDescription();callBlurFunction()" maxlength="5" required>
+                <div  class="input-group-btn" style="">
+                    <button ng-if="$root.SessionProperties.IsChiefAcc == true || $root.SessionProperties.AdvancedOptions.isHeadCashBook == '1'|| $root.SessionProperties.AdvancedOptions.isOnlineAcc == '1' || $root.SessionProperties.CanChangeCashBookSetNumber != '1'" id="searchBtn" type="button" ng-disabled="isBunker==true || disabled" ng-show="!disabled" title="ՊԿ-ի որոնում" class="btn btn-primary searchButton" ng-click="searchCashiers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                </div>
+            </div>
+        </div>
+        <div class="row" >{{CasherDescription}}</div>
+        <div class="row">
+            <div ng-messages="formname.setnumber.$dirty && formname.setnumber.$error" class="errors">
+                <ng-messages ng-if="formname.$submitted || formname.setnumber.$dirty"
+                             for="formname.setnumber.$error">
+                    <ng-message when="required" class="errors">
+                        Մուտքագրեք ՊԿ-ի տվյալները
+                    </ng-message>
+                </ng-messages>
+
+            </div>
+
+        </div>
+    </div>
+
+    
+  
+</div>

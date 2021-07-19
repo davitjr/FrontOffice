@@ -1,0 +1,70 @@
+﻿
+@{
+    Layout = null;
+}
+    <style type="text/css">
+        .tree-node {
+            border: 1px solid #dae2ea;
+            background: #f8faff;
+            color: #7c9eb2;
+        }
+        #factor.selected{
+            font-weight:bold;
+        }
+    </style>
+
+
+<form class="panel panel-default"  ng-controller="LoanMonitoringConclusionCtrl" style="background-color:#eeeeee;max-width:500px">
+    <loading-control scopevariable="treeFactors"></loading-control>
+    <div class="panel-body" ng-show="treeFactors" >
+        <div id="factor_menu" class="menu-bar dialog-menu light-green">
+            <ul id="menu" class="dialog-menu">
+                <li class="root-menu-item-1 " ng-click="saveMonitoringFactors()">
+                    <span id="h-menu-item-1"><img id="h-menu-icon-1" class="submitButton h-menu-icon">Պահպանել</span>
+                </li>
+                <li class="root-menu-item-2 " onclick="CloseBPDialog('monitoringFactors')">
+                    <span id="h-menu-item-2"><img id="h-menu-icon-2" class="h-menu-icon cancelButton">Հրաժարվել</span>
+                </li>
+            </ul>
+            <div id="right-menu" style="display:none;">
+            </div>
+        </div>
+        <div ui-tree ng-init="getLoanMonitoringFactorsForTree()">
+            <ol ui-tree-nodes="" ng-model="treeFactors">
+                <li style="margin-bottom:3px;border:2px solid #A6A6B1" ng-repeat="item in treeFactors" ui-tree-node>
+                    <div class="tree-node tree-node-content">
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <a style="cursor:pointer" ng-if="treeFactors && item.Factors.length > 0" data-nodrag ng-click="toggle()">
+                                        <span class="glyphicon" ng-class="{'glyphicon-plus': collapsed,'glyphicon-minus': !collapsed}"></span>{{::item.GroupDescription}}
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <ol ui-tree-nodes="" ng-class="{hidden: collapsed}" ng-model="item.Factors">
+                        <li ng-repeat="subItem in item.Factors" ui-tree-node>
+
+                            <div class="tree-node tree-node-content ">
+
+                                <table>
+                                    <tr>                                        
+                                        
+                                        <td id="factor" ng-class="{'selected':this.$modelValue.Selected}" style="cursor:pointer;" ng-click="selectFactor(this.$modelValue)">{{::subItem.Value}}</td>
+                                    </tr>
+                                </table>
+
+                            </div>
+
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+    </div>
+</form>
+
+

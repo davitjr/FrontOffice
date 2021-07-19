@@ -1,0 +1,77 @@
+﻿@{
+    Layout = null;
+}
+
+<form style="width:500px" ng-controller="FondOrderCtrl" data-ng-init="getFondOrder(selectedOrderId)">
+    <loading-control style="margin-left:20em" scopevariable="orderDetails"></loading-control>
+    <div ng-show="orderDetails" class="product-details bhoechie-tab-content" style="min-width:500px;padding-left:10px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.OperationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="orderDetails.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{orderDetails.QualityDescription}}</div>
+            <div ng-if="orderDetails.Quality==31" class="product-detail-cell product-detail-value redStyle">{{orderDetails.QualityDescription}}</div>
+            <div ng-if="orderDetails.Quality!=31 && orderDetails.Quality!=30" class="product-detail-cell product-detail-value">{{orderDetails.QualityDescription}}</div>
+        </div>
+        <br/>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ֆոնդ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Fond.ID}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ֆոնդի անվանում</div>
+            <div class="product-detail-cell product-detail-value">{{::orderDetails.Fond.Description}}</div>
+        </div>
+
+        @*<div class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable">Գործող ֆոնդ</div>
+        <div class="product-detail-cell product-detail-value">{{orderDetails.Fond.IsActive==true?'Այո':'Ոչ'}}</div>
+    </div>
+
+    <div class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable">Սուբսիդավորում</div>
+        <div class="product-detail-cell product-detail-value">{{orderDetails.Fond.IsSubsidia==true?'Այո':'Ոչ'}}</div>
+    </div>*@
+    </div>
+
+    <table class="table table-condensed table-hover" style=" width:100%;">
+        <thead>
+            <tr class="product-container-header">
+                <td class="text-center col-md-6" style="padding-right:0px; text-align:left;">Արժույթ</td>
+                <td class="text-center col-md-6" style="padding-right:0px; text-align:left;">Տոկոսադրույք</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="providingDetail in orderDetails.Fond.ProvidingDetails" ng-if="orderDetails.Fond.ProvidingDetails!=0 " ng-class="{'selected':$index == selectedRow}" style="cursor: pointer;" ng-click="setClickedRow($index);" >
+                <td class="col-md-6">
+                    {{::providingDetail.Currency}}
+                </td>
+                <td class="col-md-6">
+                    {{::providingDetail.InterestRate*100}} <span> %</span>
+                </td>
+            </tr>
+            <tr ng-if="orderDetails.Fond.ProvidingDetails.length==0 ">
+                <td colspan="2" style="text-align:center;">
+                    Առկա չեն ֆոնդի տրամադրման պայմանները
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+</form>

@@ -1,0 +1,32 @@
+﻿@{
+    Layout = null;
+}
+<div class="product-container" style="width:90%">
+    <div class="header-title">
+        Պայմանագրեր
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="product-container-header" style="height:44px;">
+            <div style="text-align:center" class="col-sm-4" >Պայմանագրի համար</div>
+            <div style="text-align:center" class="col-sm-4" >Գումար</div>
+            <div style="text-align:center" class="col-sm-2" >Սկիզբ</div>
+            <div style="text-align:center" class="col-sm-2" >Վերջ</div>
+        </div>
+        <div class="product-content-table-full_height custom-scroll" id="loanMainContractContent" style="min-height:100px;float:left;">
+            <div ng-if="loanmaincontracts==undefined">
+                <loading></loading>
+            </div>
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody>
+                    <tr ng-repeat="loanmaincontract in loanmaincontracts">
+                        <td class="col-sm-4">{{::loanmaincontract.GeneralNumber}}</td>
+                        <td class="col-sm-4" style="text-align:right;"> {{::loanmaincontract.Amount | number:2}} {{::loanmaincontract.Currency}}&nbsp;&nbsp;</td>
+                        <td class="col-sm-2">{{::loanmaincontract.StartDate | mydate | date: 'dd/MM/yyyy'}}</td>
+                        <td class="col-sm-2">{{::loanmaincontract.EndDate | mydate | date: 'dd/MM/yyyy'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

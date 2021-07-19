@@ -1,0 +1,151 @@
+﻿<style>
+        .list-group-item span {
+            display: inline-block !important;
+            vertical-align: middle !important;
+            line-height: normal !important;
+        }
+    </style>
+<form name="TokensDistributionForm" ng-controller="TokensDistributionCtrl" id="TokensDistributionForm" novalidate>
+    <div id="tokensDistributionDetails" style="width:1500px">
+        <div class="bhoechie-tab-container" style="height:700px;" id="tokensDistributionContainer">
+            <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+                <div class="list-group">
+                    <div class="list-group-item text-center active"><span>Տոկենների Բաշխում</span></div>
+                    @*<div class="list-group-item text-center"><span>Հաշվետվություն- ներ</span></div>*@
+                </div>
+            </div>
+
+            <div class="bhoechie-tab" style="width: calc(100% -140px); display: inline-block; ">
+                <div class="bhoechie-tab-content active">
+                    <h4 style="text-align:center">Տոկենների բաշխում ըստ կենտրոնի և մասնաճյուղի</h4>
+                    <div class="row" style="padding-top: 50px;">
+                        <div class="col-sm-12 ">
+                            <div class="col-sm-6  ">
+                                <div style="color: Gray; font-size: medium; font-style: italic">
+                                    Կենտրոն
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6  ">
+                                <div data-ng-init="getFilialList()">
+                                    <span style="color: Gray; font-size: medium; font-style: italic">Մասնաճյուղ</span>
+                                    <select ng-change="getUnusedTokensForFilial(false);" ; style="width:175px;" data-ng-model="filialCode" name="filialCode" id="filialCode"
+                                            data-ng-options="k as v for (k,v) in filialList" required>
+                                        <option value="">Ընտրեք...</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 50px;">
+                        <div class="col-sm-12 ">
+
+                            <div class="col-sm-6">
+                                Ընտրել միջակայք
+                                <button type="button" class="btn btn-default" style="height:27px;margin-left:32px;" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="{{checkCenterTokensTitle}}" ng-click="checkAllCentrlTokens()">
+                                    <span ng-class="isCheckcenterTokens==true?'glyphicon glyphicon-unchecked':'glyphicon glyphicon-check'" style="top:-4px !important;color:#399739!important"></span>
+                                </button>
+                                <button ng-if="SessionProperties.AdvancedOptions.canDistributeTokens == '1'" type="button" class="btn btn-default" style="height:27px;margin-left:-5px;" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Տեղափոխել մասնաճյուղ" ng-click="moveUnusedTokens(true)"><span class="glyphicon glyphicon-arrow-right" style="top:-4px !important;color:#399739!important"></span></button>
+                                <button type="button" class="btn btn-default" style="height:27px;margin-left:-5px;" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Որոնել" ng-click="getUnusedTokensForCenter()"><span class="glyphicon glyphicon-search" style="top:-4px !important;color:#399739!important"></span></button>
+
+                            </div>
+                            <div class="col-sm-6  ">
+                                Ընտրել միջակայք
+                                <button type="button" class="btn btn-default" style="height:27px;margin-left:32px;" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="{{checkFilialTokensTitle}}" ng-click="checkAllFilialTokens()">
+                                    <span ng-class="isCheckfilialTokens==true?'glyphicon glyphicon-unchecked':'glyphicon glyphicon-check'" style="top:-4px !important;color:#399739!important"></span>
+                                </button>
+                                <button ng-if="SessionProperties.AdvancedOptions.canDistributeTokens == '1'" type="button" class="btn btn-default" style="height:27px;margin-left:-5px;" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Տեղափոխել կենտրոն" ng-click="moveUnusedTokens(false)"><span class="glyphicon glyphicon-arrow-left" style="top:-4px !important;color:#399739!important"></span></button>
+                                <button type="button" class="btn btn-default" style="height:27px;margin-left:-5px;" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Որոնել" ng-click="getUnusedTokensForFilial(true)"><span class="glyphicon glyphicon-search" style="top:-4px !important;color:#399739!important"></span></button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 10px;">
+                        <div class="col-sm-12 ">
+                            <div class="col-sm-6  ">
+                                <div>
+                                    <input ng-model="centerFrom" style="width:130px" type="text" />
+                                    -
+                                    <input ng-model="centerTo" style="width:130px" type="text" />
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6  ">
+                                <div>
+                                    <input ng-model="filialFrom" style="width:130px" type="text" />
+                                    -
+                                    <input ng-model="filialTo" style="width:130px" type="text" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 15px;">
+                        <div class="col-sm-12 ">
+                            <div class="col-sm-6">
+
+                                <div data-ng-init="getUnusedTokensForCenter()">
+                                    <loading-control scopevariable="centerTokens"></loading-control>
+                                    <select multiple data-ng-model="selectedCenterTokens" class="form-control" name="centerTokens" style="overflow-y:scroll;cursor:default;height:350px"
+                                            data-ng-options="item as item for item  in centerTokens" required></select>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div data-ng-init="getUnusedTokensForFilial()">
+                                    <select multiple data-ng-model="selectedFilialTokens"
+                                            data-ng-options="item as item for item in filialTokens"
+                                            class="form-control" name="filialTokens" style="overflow-y:scroll;cursor:default;height:350px" required></select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 5px;">
+                        <div class="col-sm-12 ">
+                            <div class="col-sm-6">Քանակ՝ {{centerTokens.length}}</div>
+                            <div class="col-sm-6  ">Քանակ՝{{filialTokens.length}}</div>
+                        </div>
+                    </div>
+
+                </div>
+                @*<div class="bhoechie-tab-content">
+                    Հաշվետվություններ
+                </div>*@
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+
+<script type="text/javascript">
+        $("#tokensDistributionDetails div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+            e.preventDefault();
+            $(this).siblings('#tokensDistributionDetails div.active').removeClass("active");
+            $(this).addClass("active");
+            var index = $(this).index();
+            $("#tokensDistributionDetails div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+            $("#tokensDistributionDetails div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+        });
+  </script>
+
+<script>
+        $("[data-toggle=tooltip]").tooltip({
+            placement: $(this).data("placement") || 'bottom'
+        });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+

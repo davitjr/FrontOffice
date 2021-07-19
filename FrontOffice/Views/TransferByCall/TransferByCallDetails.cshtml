@@ -1,0 +1,96 @@
+﻿<form style="width:500px" ng-controller="TransferCallsCtrl" data-ng-init="getTransferDetails($parent.selectedTransfer)">
+    <loading-control style="margin-left:20em" scopevariable="transferDetails"></loading-control>
+    <div ng-show="transferDetails" class="product-details bhoechie-tab-content" style="padding-left:10px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable"><img ng-src="~/Content/Images/TransferLogo/{{transferDetails.TransferSystem}}.png" height="30" width="100" align="left" style="margin-right:3px" /></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.Id}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.TransferQualityDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրանցման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.CallTimeString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրանցողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">{{registrationSetDescription}} ({{transferDetails.RegistrationSetNumber}})</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաճախորդ</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.CustomerNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.AccountNumber}} {{transferDetails.AccountCurrency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաշվետեր</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.AccountDescription}}</div>
+        </div>
+        <div ng-if="transferDetails.CardNumber!=''" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտ</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.CardNumber}}</div>
+        </div>
+        <div ng-if="transferDetails.ContactPhone!=''" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հեռախոսահամար</div>
+            <div class="product-detail-cell product-detail-value" style="color:red;">{{transferDetails.ContactPhone}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Համակարգ</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.TransferSystemDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հսկիչ համար</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.Code}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.AmountString}} {{transferDetails.Currency}}</div>
+        </div>
+        <div ng-if="transferDetails.CustomerAmount!=transferDetails.Amount && transferDetails.CustomerAmount!=0" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաճախորդի հաղորդած գումար</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.CustomerAmountString}} {{transferDetails.Currency}}</div>
+        </div>
+        <div ng-if="transferDetails.RateBuy!=0" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Առքի փոխարժեք</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.RateBuyString}}</div>
+        </div>
+        <div ng-if="transferDetails.RateSell!=0" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վաճառքի փոխարժեք</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.RateSellString}}</div>
+        </div>
+        <div  ng-if="transferDetails.AccountCurrency!=transferDetails.Currency" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցվող գումար</div>
+            <div class="product-detail-cell product-detail-value">{{clientTransferAmount}} {{transferDetails.AccountCurrency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաստատման/Մերժման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.ConfirmationDateString}}</div>
+        </div>
+        <div ng-if="transferDetails.ConfirmationSetNumber!=0" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաստատողի/Մերժողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">{{confirmationSetDescription}} ({{transferDetails.ConfirmationSetNumber}})</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Երկրորդ հաստատման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.ConfirmationDateString2}}</div>
+        </div>
+        <div ng-if="transferDetails.ConfirmationSetNumber2!=0" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Երկրորդ հաստատողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">{{confirmationSet2Description}} ({{transferDetails.ConfirmationSetNumber2}})</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Նստեցման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{transferDetails.TransferConfirmationDateString}}</div>
+        </div>
+        <div ng-if="transferDetails.RegectDescription!=''" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մերժման պատճառ</div>
+            <div class="product-detail-cell product-detail-value"><span class="redStyle">{{transferDetails.RegectDescription}}</span></div>
+        </div>
+    </div>
+</form>

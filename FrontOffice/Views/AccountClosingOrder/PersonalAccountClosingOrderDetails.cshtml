@@ -1,0 +1,57 @@
+﻿<form style="width:500px" ng-controller="AccountClosingOrderCtrl" ng-init="getAccountClosingOrder(selectedOrderId)">
+    <loading-control style="margin-left:20em" scopevariable="order"></loading-control>
+    <div ng-show="order" class="menu-bar dialog-menu light-green " style="margin-left:-3px;margin-top:0px">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 " ng-if="order.Quality && order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && order.Quality !=50" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetAccountClosingOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+            </li>
+            <li class="root-menu-item-5 " ng-if="order.Quality==30" ng-click="getAccountClosingApplication(true);">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Փակման դիմում</span>
+            </li>
+        </ul>
+    </div>
+    
+    <div ng-show="order" class="product-details bhoechie-tab-content" style="padding-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{order.OperationDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պատճառ</div>
+            <div class="product-detail-cell product-detail-value">{{order.ClosingReasonTypeDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման պատճառի նկարագրություն</div>
+            <div class="product-detail-cell product-detail-value">{{order.ClosingReasonDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաշվեհամարներ</div>
+            <div class="product-detail-cell product-detail-value">
+                <div ng-repeat="ac in order.ClosingAccounts"> {{::ac.AccountNumber}} {{::ac.Currency}}  </div>
+            </div>   
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">
+                <span ng-if="order.Quality==30" class="greenStyle">{{ order.QualityDescription }}</span>
+                <span ng-if="order.Quality==31" class="redStyle">{{ order.QualityDescription }}</span>
+                <span ng-if="order.Quality!=31 && order.Quality!=30">{{ order.QualityDescription }}</span>
+            </div>
+        </div>
+        <div ng-if="order.Quality==31" ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մերժման պատճառ` </div>
+            <div class="product-detail-cell product-detail-value"><span class="redStyle">{{ rejectHistory.ReasonDescription }}</span></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable" >Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="col-sm-12 my_text1 line_height" style="padding-left:0px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+        </div>
+    </div>
+</form>

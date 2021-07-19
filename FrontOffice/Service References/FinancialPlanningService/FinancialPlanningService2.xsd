@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/PlannedTargets" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/PlannedTargets" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/ACBAOperationService/FinancialPlanningService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost/ACBAOperationService/FinancialPlanningService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="Customer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActualQuantity" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="PlanningIndicatorID" type="xs:int" />
+      <xs:element minOccurs="0" name="TargetQuantity" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Type" type="xs:unsignedByte" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Customer" nillable="true" type="tns:Customer" />
+  <xs:complexType name="Loan">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActualPortfolio" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="PlanningIndicatorID" type="xs:int" />
+      <xs:element minOccurs="0" name="TargetPortfolio" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="Type" type="xs:unsignedByte" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Loan" nillable="true" type="tns:Loan" />
+  <xs:complexType name="Deposit">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActualPortfolio" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="PlanningIndicatorID" type="xs:int" />
+      <xs:element minOccurs="0" name="TargetPortfolio" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="Type" type="xs:unsignedByte" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Deposit" nillable="true" type="tns:Deposit" />
+  <xs:complexType name="Card">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActualQuantity" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="PlanningIndicatorID" type="xs:int" />
+      <xs:element minOccurs="0" name="TargetQuantity" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Type" type="xs:unsignedByte" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Card" nillable="true" type="tns:Card" />
+  <xs:complexType name="Other">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActualQuantity" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="PlanningIndicatorID" type="xs:int" />
+      <xs:element minOccurs="0" name="TargetPercent" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="TargetQuantity" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Type" type="xs:unsignedByte" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Other" nillable="true" type="tns:Other" />
+  <xs:complexType name="Document">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DocumentData" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="FinancialPlanningType" type="xs:unsignedByte" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="RegisteredUserID" type="xs:int" />
+      <xs:element minOccurs="0" name="RegistrationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Targets" nillable="true" type="tns:ArrayOfTarget" />
+      <xs:element minOccurs="0" name="Year" type="xs:short" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Document" nillable="true" type="tns:Document" />
+  <xs:complexType name="ArrayOfTarget">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Target" nillable="true" type="tns:Target" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTarget" nillable="true" type="tns:ArrayOfTarget" />
+  <xs:complexType name="Target">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentID" type="xs:int" />
+      <xs:element minOccurs="0" name="FilialCode" type="xs:int" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="PlanningIndicators" nillable="true" type="tns:ArrayOfPlanningIndicator" />
+      <xs:element minOccurs="0" name="TargetID" type="xs:int" />
+      <xs:element minOccurs="0" name="TargetType" type="xs:unsignedByte" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Target" nillable="true" type="tns:Target" />
+  <xs:complexType name="ArrayOfPlanningIndicator">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PlanningIndicator" nillable="true" type="tns:PlanningIndicator" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPlanningIndicator" nillable="true" type="tns:ArrayOfPlanningIndicator" />
+  <xs:complexType name="PlanningIndicator">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="PlanningIndicatorGroups" nillable="true" type="tns:ArrayOfPlanningIndicatorGroup" />
+      <xs:element minOccurs="0" name="Type" type="xs:unsignedByte" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlanningIndicator" nillable="true" type="tns:PlanningIndicator" />
+  <xs:complexType name="ArrayOfPlanningIndicatorGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PlanningIndicatorGroup" nillable="true" type="tns:PlanningIndicatorGroup" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPlanningIndicatorGroup" nillable="true" type="tns:ArrayOfPlanningIndicatorGroup" />
+  <xs:complexType name="PlanningIndicatorGroup">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PlanningIndicatorDetails" nillable="true" type="q1:ArrayOfanyType" />
+      <xs:element minOccurs="0" name="Type" type="xs:unsignedByte" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlanningIndicatorGroup" nillable="true" type="tns:PlanningIndicatorGroup" />
+  <xs:complexType name="ActionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ResultCode" type="tns:ResultCode" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ActionResult" nillable="true" type="tns:ActionResult" />
+  <xs:simpleType name="ResultCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Normal">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Failed">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ResultCode" nillable="true" type="tns:ResultCode" />
+  <xs:complexType name="ArrayOfPlanningTypeInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PlanningTypeInfo" nillable="true" type="tns:PlanningTypeInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPlanningTypeInfo" nillable="true" type="tns:ArrayOfPlanningTypeInfo" />
+  <xs:complexType name="PlanningTypeInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Measures" nillable="true" type="tns:ArrayOfMeasure" />
+      <xs:element minOccurs="0" name="Parent" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="SubTypes" nillable="true" type="tns:ArrayOfPlanningSubTypeInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlanningTypeInfo" nillable="true" type="tns:PlanningTypeInfo" />
+  <xs:complexType name="ArrayOfMeasure">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Measure" nillable="true" type="tns:Measure" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMeasure" nillable="true" type="tns:ArrayOfMeasure" />
+  <xs:complexType name="Measure">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Measure" nillable="true" type="tns:Measure" />
+  <xs:complexType name="ArrayOfPlanningSubTypeInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PlanningSubTypeInfo" nillable="true" type="tns:PlanningSubTypeInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPlanningSubTypeInfo" nillable="true" type="tns:ArrayOfPlanningSubTypeInfo" />
+  <xs:complexType name="PlanningSubTypeInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Measures" nillable="true" type="tns:ArrayOfMeasure" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlanningSubTypeInfo" nillable="true" type="tns:PlanningSubTypeInfo" />
+</xs:schema>

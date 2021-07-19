@@ -1,0 +1,39 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class=" col-md-12">
+
+    <form  ng-controller="PeriodicTransferCtrl" ng-init="getPeriodicTerminationOrder(selectedOrderId)">
+        <loading-control style="margin-left:20em" scopevariable="order"></loading-control>
+        <br><div ng-show="order" class="popup_wrapper_inner">
+            <div class="row">
+                <div class="col-md-11 my_class">
+                    <div class="col-sm-5 my_label">Հայտի համար</div><div class="col-sm-7 my_text1">{{order.Id}}</div>
+                    <div class="col-sm-5 my_label">Մուտքագրման ա/թ</div><div class="col-sm-7 my_text1">{{order.RegistrationDateString}}</div>
+                    <div class="col-sm-5 my_label" ng-if="$root.SessionProperties.IsCalledFromHB != true">Գործառնական օր</div><div class="col-sm-7 my_text1">{{order.RegistrationDateString}}</div>
+                    <div class="col-sm-5 my_label">Պարբերականի համար</div><div class="col-sm-7 my_text1">{{order.ProductId}}</div>
+                    <div class="col-sm-5 my_label line_height" style="clear:both">Տեսակ</div><div class="col-sm-7 my_text1 line_height"> {{periodic.TypeDescription}}</div>
+                    <div class="col-sm-5 my_label line_height" style="clear:both">Դեբետ</div><div class="col-sm-7 my_text1 line_height"> {{periodic.PeriodicTransferAccountNumber}}</div>
+                    <div class="col-sm-5 my_label line_height" style="clear:both">Սկիզբ</div><div class="col-sm-7 my_text1 line_height"> {{periodic.StartDateString}}</div>
+                    <div ng-if="periodic.DurationType==2" class="col-sm-5 my_label line_height" style="clear:both">Վերջ</div><div ng-if="periodic.DurationType==2" class="col-sm-7 my_text1 line_height"> {{periodic.EndDateString}}</div>
+                    <div ng-if="periodic.DurationType==1" class="col-sm-5 my_label line_height" style="clear:both">Վերջ</div><div ng-if="periodic.DurationType==1" class="col-sm-7 my_text1 line_height"> {{periodic.DurationTypeDescription}}</div>
+                    <div class="col-sm-5 my_label line_height" style="clear:both">Գումար</div><div class="col-sm-7 my_text1 line_height" ng-if="periodic.ChargeType!=0">{{periodic.ChargeTypeDescription}} <span ng-if="periodic.Type==4">({{periodic.AmountSubTypeByPurposeDescription}})</span> </div>
+                    <div class="col-sm-7 my_text1 line_height" ng-if="periodic.ChargeType==0">{{periodic.AmountString}} {{periodic.Currency}} <span ng-if="periodic.Type==4">({{periodic.AmountSubTypeByPurposeDescription}})</span></div>
+                    <div class="col-sm-5 my_label">Կարգավիճակ</div><div class="col-sm-7 my_text1">
+                        <span ng-if="order.Quality==30" class="greenStyle">{{ order.QualityDescription }}</span>
+                        <span ng-if="order.Quality==31" class="redStyle">{{ order.QualityDescription }}</span>
+                        <span ng-if="order.Quality!=31 && order.Quality!=30">{{ order.QualityDescription }}</span>
+                    </div>
+                    <div ng-if="order.Quality==31" ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="col-sm-12 my_text1">Մերժման պատճառ` <span class="redStyle">{{ rejectHistory.ReasonDescription }}</span></div>
+                    <div class="col-sm-12 my_text1" ng-if="$root.SessionProperties.IsCalledFromHB != true">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+                    <p class="text-left"></p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button ng-if="order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && order.Quality !=50 && $root.SessionProperties.IsCalledFromHB != true" type="button" class="btn btn-sm btn-primary" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetPeriodicTerminationOrder)"> <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;Հրաժարման հայտ</button>
+        </div>
+    </form>
+</div>

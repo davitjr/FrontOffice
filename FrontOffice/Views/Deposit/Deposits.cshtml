@@ -1,0 +1,105 @@
+﻿<script type="text/javascript">
+    $("#depositsContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div ng-controller="DepositCtrl">
+    <div class="product-container" id="AllDeposits" data-ng-init="getDeposits()" ng-show="(hideBlank!='true' && deposits.length==0) || (deposits.length!=0 && deposits.length!=undefined)">
+        <div class="header-title">
+            <a ui-sref="deposits" style="color:black;">Ավանդներ</a>
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="include-closed-products">
+                    <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-deposits" data-ng-model="filter" ng-true-value="2" ng-false-value="1" ng-change="QualityFilter();accountFlowDetails = undefined">
+                    <label for="include-closed-deposits" name="include-closed-deposits-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+                </div>
+
+                <div>
+                    &nbsp;&nbsp;&nbsp;
+                    <select ng-show="currencies" ng-init="getCurrencies()" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ արժույթի" data-ng-model="currency" style="max-width:80px;height:30px;" name="Currency" id="Currency" class="form-control"
+                            data-ng-options="k as v for (k,v) in ::currencies">
+                        <option value=""></option>
+                    </select>
+
+                    &nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn btn-default" style="height:30px"  title="Ավանդների ցանկ" ng-click="getListOfCustomerDeposits()" ng-controller="PrintDocumentsCtrl" ><span class="glyphicon glyphicon-print" style="top:-4px !important"></span></button>
+
+                    <script>
+                        $("[data-toggle=tooltip]").tooltip({
+                            placement: $(this).data("placement") || 'bottom'
+                        });
+                    </script>
+                    <i class="add-new-product tipB" ng-controller="PopUpCtrl" ng-click="openWindow('/DepositOrder/PersonalDepositOrder','Ավանդի հայտի մուտքագրում','newdeposit',callbackgetDeposits)" data-original-title="Նոր ավանդ"></i>
+                </div>
+            </div>
+            <div>
+
+            </div>
+            <div class="product-content-table custom-scroll" id="depositsContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <div ng-if="deposits==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="filter==1 && deposits.length!=0" ng-repeat="deposit in deposits | filter: { Currency: currency!=undefined?currency:'' }" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,deposit);selectedDepositIsAccessible  && hideBlank!='true' &&  getElementPosition($index);" ng-dblclick="selectedDepositIsAccessible && openDepositDetails();" style="cursor: pointer;">
+                            <td class="col-sm-3" id="depositRow_{{$index}}">
+                                {{ ::deposit.DepositTypeDescription }}
+                                <span ng-if="deposit.JointType != 0"><br />{{ ::deposit.DepositAccount.AccountDescription }}</span>
+                                <br /><span class="tab_text">Համար` </span> {{ ::deposit.DepositNumber }}
+                                <br /> <span class="tab_text">Սկիզբ` </span> <span class="tab_title">{{ ::deposit.StartDateToString }}</span>
+                                <br /> <span class="tab_text">Վերջ` </span> <span class="tab_title">{{ ::deposit.EndDateToString }}</span>
+                                <br /> <span class="tab_text">Տոկոսադրույք` </span> <span class="tab_title">{{ ::deposit.InterestRate*100 | number:2}}%</span>
+                                <br /><span class="tab_title" style="color:brown;font-size:12px">{{ ::deposit.JointTypeDescription}}</span>
+                            </td>
+                            <td class="col-sm-2" style="text-align:right;">
+                                {{ ::deposit.BalanceString }} {{ ::deposit.Currency }}
+                                <span ng-if="deposit.DepositAccount.UnUsedAmount>0" style="font-size:11px"><br />Սառեցված է՝     </span>
+                                <span ng-if="deposit.DepositAccount.UnUsedAmount>0" style="color:red"><br />{{ ::deposit.DepositAccount.UnUsedAmountString}} {{ ::deposit.Currency}}</span>
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="contextDeposits" id="contextMenu" ng-if="deposit.AllowAmountAddition==true ||  deposit.isAccessible==true || ($root.SessionProperties.UserId==deposit.KeeperOpen)"><div id="contextMenu"></div> </td>
+                            <td class="col-sm-1 click_toggle" ng-if="deposit.AllowAmountAddition!=true &&  deposit.isAccessible!=true && $root.SessionProperties.UserId!=deposit.KeeperOpen"></td>
+                        </tr>
+                        <tr ng-if="filter==1 && deposits.length==0">
+                            <td colspan="3" style="text-align:center">Առկա չեն գործող ավանդներ</td>
+                        </tr>
+                        <tr ng-if="filter!=1"><td style="color:red; border-width:3px" colspan="3">Փակված ավանդներ </td></tr>
+                        <tr ng-if="closingDeposits.length!=0" ng-repeat="deposit in closingDeposits | filter: { Currency: currency!=undefined?currency:'' }" ng-class="{'selected':$index == selectedRowClose}" ng-click="setClickedRowClose($index,deposit);selectedDepositIsAccessible  && hideBlank!='true' &&  getElementPosition($index);" ng-dblclick="selectedDepositIsAccessible && openDepositDetails();" style="cursor: pointer;">
+                            <td class="col-sm-3" id="depositRow_{{$index}}">
+                                {{ ::deposit.DepositTypeDescription }}
+                                <span ng-if="deposit.DepositAccount.JointType != 0"><br />{{ ::deposit.DepositAccount.AccountDescription }}</span>
+                                <br /><span class="tab_text">Համար` </span> {{ ::deposit.DepositNumber }}
+                                <br /> <span class="tab_text">Սկիզբ` </span> <span class="tab_title">{{ ::deposit.StartDateToString }}</span>
+                                <br /> <span class="tab_text">Վերջ` </span> <span class="tab_title">{{ ::deposit.EndDateToString }}</span>
+                                <br /> <span class="tab_text">Փակման ա/թ` </span> <span class="tab_title">{{:: deposit.ClosingDate|mydate|date: 'dd/MM/yyyy' }}</span>
+                                <br /> <span class="tab_text">Տոկոսադրույք` </span> <span class="tab_title">{{ ::deposit.InterestRate*100| number:2}}%</span>
+                                <br /><span class="tab_title" style="color:brown;font-size:12px">{{ ::deposit.JointTypeDescription}}</span>
+                            </td>
+                            <td class="col-sm-2" style="text-align:right;">
+                                {{ ::deposit.BalanceString}} {{ ::deposit.Currency }}
+                            </td>
+                            <td class="col-sm-1 click_toggle" ng-if="deposit.isAccessible" context="contextDeposits" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul id="contextDeposits" class="dropdown-menu">
+                    <li ng-if="$root.SessionProperties.SourceType == 2 && selectedRow!=null && selectedDepositAllowAmountAddition == true "><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={AccountNumber: selectedDepositAccount,checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:51};openWindowWithTemplate('paymentorder','Կանխիկ մուտք հաշվին','paymentorder')">Կանխիկ մուտք</a></li>
+                    <li ng-if="$root.SessionProperties.SourceType == 2 && selectedRow!=null && selectedDepositAllowAmountAddition == true "><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={AccountNumber: selectedDepositAccount,checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:95};openWindowWithTemplate('paymentorder','Կանխիկ մուտք հաշվին ռեեստրով','paymentorder')">Կանխիկ մուտք ռեեստրով</a></li>
+                    <li ng-if="selectedRow!=null && selectedDepositAllowAmountAddition == true "><a href="" style="color: black;text-decoration:none!important ;" ng-class="{'my_disable':disabelButton==true}"  ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:2,forInputCheckbox:true};openWindowWithTemplate('currencyexchangeorder','Փոխարկում','exchangeorder')">Փոխարկում</a></li>
+                    <li ng-if="selectedRow!=null && selectedDepositAllowAmountAddition == true "><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('paymentorder','Փոխանցում սեփական հաշիվների միջև','paymentorder',callbackgetDeposits)">Փոխանցում հաշիվների միջև</a></li>
+                    <li ng-if="selectedDepositIsAccessible"><a style="color: black;text-decoration:none!important ;" ui-sref="depositdetails({ productId : selectedProductId,deposit:selectedClosedDeposit })">Մանրամասն դիտարկում</a></li>
+                    <li ng-if="selectedDepositIsAccessible || ($root.SessionProperties.UserId==selectedDepositKeeperOpen)" style="cursor:pointer"><a style="color: black;text-decoration:none!important ;" ng-click="getDepositContract(selectedDepositDepositNumber)">Ավանդի պայմանագիր</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <accountflowdetails ng-if="selectedDepositIsAccessible && hideBlank!='true'" ></accountflowdetails>
+</div>

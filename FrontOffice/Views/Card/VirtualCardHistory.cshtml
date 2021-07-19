@@ -1,0 +1,62 @@
+﻿@{
+	Layout = null;
+}
+<div ng-controller="VirtualCardCtrl" ng-init="getVirtualCardHistory(virtualcardid)">
+	<div class="product-container" >
+		<div class="header-title">
+			Պատմություն
+		</div>
+		<div class="product-collapsable-section">
+			
+			<div class="product-content-table-full_height custom-scroll" id="provisionsContent" style="min-height:100px;">
+				<div ng-if="virtualCards==undefined">
+					<loading></loading>
+				</div>
+				<table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+					<tbody>
+						<tr ng-repeat="his in ::history" ng-class="{'selected':$index == selectedRow}"  style="max-height:200px">
+							<td class="text-left col-sm-11">
+								<div style="margin-left: 5pt;">
+
+									<div>
+										<span class="my_label" style="font-size:13px"> Գործողություն` </span>{{::his.ActionDescription}} <span ng-if="his.Action=='REQUESTED'">({{his.NewStatusDescription}})</span>
+									</div>
+									<div>
+										<span class="my_label" style="font-size:13px">Ա/թ`  </span>{{ ::his.ChangeDate }}
+									</div>
+									<div ng-if="his.User!=null">
+										<span class="my_label" style="font-size:13px">Կատարողի ՊԿ` </span>{{::his.User}}
+									</div>
+									<div ng-if="his.ResponseStatus!=''">
+										<span ng-if="his.ResponseErrorReason!=''" class="my_label" style="font-size:13px">Պատասխան՝ <span class="redStyle">{{his.ResponseErrorReason}}</span></span>
+										<span ng-if="his.ResponseErrorReason==''" class="my_label" style="font-size:13px">Պատասխան`  <span class="greenStyle">Կատարված է </span></span>
+									</div>
+									<div ng-if="his.ResponseDate!=''">
+										<span class="my_label" style="font-size:13px">Փոփոխման ա/թ` </span>{{::his.ResponseDate}}
+									</div>
+									<div ng-if="his.ChangeReason!=''">
+										<span class="my_label" style="font-size:13px">Փոփոխման պատճառ` </span>{{::his.ChangeReason}}
+									</div>
+									<div ng-if="his.ChangeReason!=''">
+										<span class="my_label" style="font-size:13px">Նշումներ` </span>{{::his.ChangeReasonAdd}}
+									</div>
+
+								</div>
+							</td>
+							<td class="text-left col-sm-1">
+								<div ng-if="his.AllowReSend==true">
+									<span ng-click="reSendUpdateVirtualCard(his.UpdateRequestId)" title="Վերաուղարկել" class="glyphicon glyphicon-share" style="left: 10pt; color: #337AB7"></span>
+								</div>
+							</td>
+						</tr>
+						<tr ng-if="history.length==0 || history == null ">
+							<td colspan="3" style="text-align:center;">
+								Տվյալները բացակայում են
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,15 @@
+﻿
+@{
+    Layout = null;
+}
+
+    <div ng-if="error.length>0" ng-controller="ErrorCtrl" class="panel panel-danger" style="max-width:500px">
+        <div class="panel-heading"><span class="glyphicon glyphicon-exclamation-sign"></span> Սխալներ</div>
+        <div class="panel-body">
+            <font color="#A94442">
+                <span style="color:#A94442;display:block" data-ng-repeat="err in error" ng-click=" setfocustotextbox(err.code)">
+                    {{$index+1}}.{{::err.Description}}
+                </span>
+            </font>
+        </div>
+    </div>

@@ -1,0 +1,128 @@
+﻿
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    #accountFreezeOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+<div id="accountFreezeeLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form name="AccountFreezeOrderForm" id="accountFreezeOrderForm" style="min-width:650px" role="form" ng-submit="AccountUnfreezeOrderForm.$setSubmitted;AccountFreezeOrderForm.$valid && saveAccountFreezeOrder();" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+    <div id="accountfreezeorder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-3 " ng-click="AccountFreezeOrderForm.$setSubmitted();AccountFreezeOrderForm.$valid && saveAccountFreezeOrder();">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon submitButton">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-4 " onclick="CloseBPDialog('accountfreezeorder')">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="cancelButton h-menu-icon">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <h6>
+        <span style=" color:#5eb4ff" class="glyphicon glyphicon-info-sign">
+        </span> Բոլոր դաշտերը անհրաժեշտ է մուտքագրել UNICODE-ով
+    </h6>
+
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+    
+
+    <div class="col-sm-10">
+
+        <div class="form-group">
+        <label class="tab_title col-sm-6" for="RegistrationDate">Մուտքագրման ա/թ</label>
+        <div class="col-sm-6 row">
+            <div class="col-sm-10 multiple_columns">
+
+                <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate">
+            </div>
+        </div>
+    </div>
+    <div style="clear:both" class="form-group">
+        <label class="tab_title col-sm-6">Պատճառ</label>
+        <div class="col-sm-6 row" data-ng-init="@*setRemoveTypes('Freeze');*@getAccountFreezeReasonsTypes('Freeze')">
+            <loading-control scopevariable="freezeReasonsTypes"></loading-control>
+            <select ng-show="freezeReasonsTypes" name="FreezeType" id="FreezeType" ng-model="order.FreezeReason" class="form-control" required
+                    data-ng-options="k as v for (k,v) in freezeReasonsTypes">
+                <option selected="selected" hidden="hidden" value="">Ընտրեք...</option>
+            </select>
+            <ng-messages ng-if="AccountFreezeOrderForm.$submitted || AccountFreezeOrderForm.FreezeType.$dirty"
+                         for="AccountFreezeOrderForm.FreezeType.$error">
+                <br />
+                <ng-message when="required" class="errors">
+                    Պատճառն ընտրված չէ
+                </ng-message>
+            </ng-messages>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="tab_title col-sm-6" for="FreezeReasonDescription">Նկարագրություն</label>
+        <div class="col-sm-5">
+            <div class="row">
+                <textarea rows="2" data-ng-model="order.FreezeReasonAddInf" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" id="FreezeReasonDescription" name="FreezeReasonDescription" class="tab_title form-control" style="text-align:left" />
+            </div>
+        </div>
+    </div>
+
+        <div class="form-group" ng-if="accounttype != 13">
+            <label class="tab_title col-sm-6" for="FreezeDate">Հաշվի սառեցման ա/թ</label>
+            <div class="col-sm-6 row">
+                <div class="input-group" style="display:inline-flex">
+                    <span class="input-group-addon" style="display: inline-block;padding-right: 20px;padding-top: 10px;" title="" data-placement="left">
+                        <input type="checkbox" name="ForDate" ng-model="AccountFreezeOrderForm.ForDate" style="margin-right:10px" ng-change="setAccountFreezeDate()" />
+                    </span>
+                    <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="FreezeDate" name="FreezeDate" ng-model="order.FreezeDate">
+                </div>
+            </div>
+        </div>
+    <div class="form-group">
+        <label class="tab_title col-sm-6" for="amount">Սառեցված գումար</label>
+        <div class="col-sm-6 row">
+            <div class="col-sm-10 multiple_columns">
+                <input type="text" ng-model="order.FreezeAmount" name="FreezeAmount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' class="form-control tab_title" ng-blur="setAmountFreezeDate()" fcsa-number />
+                @*ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/ step="0.01"*@
+                @*<span class="help-block redStyle" ng-show="!AccountFreezeOrderForm.FreezeAmount.$valid">
+                        Դրական թիվ, ցենտերի առավելագույն նիշերի քանակը`2
+                    </span>*@
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="tab_title col-sm-6" for="AmountFreezeDate">Գումարի սառեցման ա/թ</label>
+        <div class="col-sm-6 row">
+            <div class="col-sm-10 multiple_columns">
+                <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="AmountFreezeDate" name="AmountFreezeDate" ng-model="order.AmountFreezeDate" step="0">
+            </div>
+        </div>
+    </div>
+    </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

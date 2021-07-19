@@ -1,0 +1,115 @@
+﻿
+<div id="loadMain" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div style="margin-left:15px;margin-top:5px" ng-controller="UtilityOptionsCtrl" id="UtilityOptions" data-ng-init="getUtilityOptions(filter)" class="container">
+    <form class="form">
+        <div class="col-sm-12" style="padding:0;margin-bottom:5px">
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Սկիզբ</label>
+                <div>
+                    <input type="date" ng-model="filter.StartDate" style="width: 155px;" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Վերջ</label>
+                <div>
+                    <input type="date" ng-model="filter.EndDate" style="width:155px" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Կոմունալի տեսակ</label>
+                <loading-control scopevariable="typeOfCommunals"></loading-control>
+                <div data-ng-init="getTypeOfCommunals()">
+                    <select ng-show="typeOfCommunals" data-ng-model="filter.CommunalOptions" class="form-control"
+                            data-ng-options="k as v for (k,v) in typeOfCommunals" style="width: 155px">
+                        <option value="" style="margin-left:25px">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-2" style="width: 281px;">
+                <div class="product-detail-cell product-detail-lable">ՊԿ</div>
+                <div>
+                    <usersetnumber withoutlabel="true" setnumber="filter.NumberOfSet" labelname=""></usersetnumber>
+                </div>
+            </div>
+
+
+            <div class="col-sm-2" style="display:inline-block;margin-top: 23px;margin-left: -102px;">
+                <button type="button" class="btn-sm btn-primary" ng-click="getUtilityOptions(filter)"><span class="glyphicon glyphicon-search"></span> Որոնել</button>
+            </div>
+        </div>
+
+
+
+    </form>
+
+    <div class="product-container" style="width: 750px;padding:0;margin-bottom:5px;margin-left: inherit">
+        <div class="header-title">
+            Կոմունալների կարգավորումների պատմություն
+            <div class="product-collapse tipB fa fa-chevron-down " data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+
+        <div class="product-collapsable-section">
+            <div class="product-container-header" style="height:30px">
+                <div ng-controller="PopUpCtrl" ng-click="openWindow('/UtilityOptions/UtilityOptionsSave','Նոր կոմունալի կարգավորում','newUtilityOptions')">
+                    <i class="add-new-product tipB" data-original-title="Նոր կոմունալի կարգավորում"></i>
+                </div>
+            </div>
+            <div class="product-content-table custom-scroll" id="utiltyOptionsList" style="width:750px;min-height:545px;margin-left:0px;margin-top: 0px;border-top-width: 0px;border-right-width: 0px;border-left-width: 0px;">
+                <div ng-if="utiltyOptionsList==undefined">
+                    <loading></loading>
+                </div>
+
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="utiltyOptionsList.length!=0" ng-repeat="utiltyOption in utiltyOptionsList" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+                            <td class="col-sm-5">
+                                <span class="tab_text">ՊԿ` </span> {{utiltyOption.NumberOfSet}}&nbsp;<span ng-if="utiltyOption.NumberOfSet!=0" style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:utiltyOption.NumberOfSet}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>
+                                <br />
+                                <span class="tab_text">Գրանցման օր`</span>  {{utiltyOption.RegistrationDate| mydate | date: 'dd/MM/yyyy'}}
+                            </td>
+
+                            <td class="col-sm-4">
+                                <span class="tab_text">Միացված` </span>  {{utiltyOption.IsEnabled == true ? 'Այո':'Ոչ' }}
+                                <br />
+
+                            </td>
+                            <td class="col-sm-4">
+                                <span class="tab_text">Կոմունալի տեսակ` </span>  {{utiltyOption.Description}}
+                                <br />
+                            </td>
+                        </tr>
+                        <tr ng-if="utiltyOptionsList.length==0">
+                            <td colspan="3" style="text-align:center"> Կոմունալների կարգավորումներ առկա չեն</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+	(function ($) {
+		$(window).on('load', function () {
+
+			$("#utiltyOptionsList").mCustomScrollbar({
+				theme: "rounded-dark",
+				scrollButtons: {
+					scrollAmount: 200,
+					enable: true
+				},
+				mouseWheel: {
+					scrollAmount: 200
+				}
+			});
+
+		});
+	})(jQuery);
+</script>
+
+

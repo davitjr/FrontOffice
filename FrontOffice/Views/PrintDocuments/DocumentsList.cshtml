@@ -1,0 +1,27 @@
+﻿@{
+    Layout = null;
+}
+
+<div ng-controller="PrintDocumentsCtrl" data-ng-init="getCurrentAccount(selectedAccount)">
+    <br />
+
+    <div class="table_title">
+        Փաստաթղթերի ցանկ
+    </div>
+    <br />
+    <div class="row">
+        <a style="cursor:pointer" ng-click="getCustomerSignature()">1. ՍՏՈՐԱԳՐՈՒԹՅԱՆ ՆՄՈՒՇԻ ՔԱՐՏ</a>
+    </div>
+    <div class="row">
+        <a style="cursor:pointer" ng-click="getCustomerKYC()">2. KYC հարցաթեթիկ</a>
+    </div>
+    <div class="row">
+        <a style="cursor:pointer" ng-click="getCustomerAllProducts(1)">3. Հաճախորդի պրոդուկտներ (գործող)</a>
+    </div>
+    <div class="row">
+        <a style="cursor:pointer" ng-click="getCustomerAllProducts(0)">4. Հաճախորդի պրոդուկտներ (մարված)</a>
+    </div>
+    <div class="row">
+        <a style="cursor:pointer" ng-click="getCustomerDocuments()">5. Հաճախորդի փաստաթղթեր</a>
+    </div>
+</div>

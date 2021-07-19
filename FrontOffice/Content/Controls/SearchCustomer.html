@@ -1,0 +1,257 @@
+﻿
+
+<div>
+
+
+
+    <style>
+        .modal-content {
+            width: 760px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+
+        .nonUnicodeText {
+            font-family: 'Arial Armenian';
+            font-size: 15px;
+        }
+
+        .resultRow {
+            font-size: 10pt;
+            color: black;
+            font-weight: normal;
+        }
+
+        .resultRowAddInf {
+            font-size: 9pt;
+        }
+
+        .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .tableHeader {
+            font-size: 9pt;
+            height: 25px;
+        }
+
+        #serachCustomer .product-container-header > th {
+            font-weight: inherit;
+        }
+
+        #serachCustomer .div-table-content {
+            margin-top: -7px;
+            border-color: #CFDAD0 !important;
+        }
+
+
+        #serachCustomer .popup_wrapper_top {
+            margin-top: -10px !important;
+        }
+
+        #imageslider {
+            z-index:11000
+        }
+
+         #customerdetails {
+            z-index:11000
+        }
+
+    </style>
+
+
+
+
+
+    <div id="serachCustomer" ng-init="setDisplayingFeatureForLeasing()">
+        <div class="col-sm-12 popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+            <div style="margin-top:-10px">Հաճախորդի որոնում</div>
+            <img src="/Content/images/close_pop.png " ng-click="closeSearchCustomersModal()" style="margin-top:-10px;" alt="">
+        </div>
+        <div class="row">
+            <div class="col-md-6 ">
+                <div class="col-md-4 form-group-search">
+                    Համար
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <input type="text" maxlength="12" ng-model="oneSearchedCustomer.customerNumber" name="customerNumber" class="form-control tab_title" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' />
+                </div>
+                <div class="col-md-5 form-group-search" ng-show="leasingSearchNumber">
+                    Լիզինգի համար
+                </div>
+                <div class="col-md-7 form-group-search" ng-show="leasingSearchNumber" style="right: 8.5%;">
+                    <input type="text" maxlength="12" ng-model="leasingCustomerNumber" name="leasingCustomerNumber" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' /><br />
+                </div>
+                <div class="col-md-4 form-group-search">
+                    Ազգանուն
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <input type="text" ng-model="oneSearchedCustomer.lastName" name="lastName" class="form-control  nonUnicodeText" />
+                </div>
+                <div class="col-md-4 form-group-search">
+                    Անուն
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <input type="text" ng-model="oneSearchedCustomer.firstName" name="firstName" class="form-control  nonUnicodeText" />
+                </div>
+                <div class="col-md-4 form-group-search">
+                    Հայրանուն
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <input type="text" ng-model="oneSearchedCustomer.MiddleName" name="MiddleName" class="form-control  nonUnicodeText" />
+                </div>
+                <div class="col-md-4 form-group-search">
+                    Անվանում
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <input type="text" ng-model="oneSearchedCustomer.organisationName" name="organisationName" class="form-control nonUnicodeText" />
+                </div>
+                <div class="col-md-4 form-group-search">
+                    Էլ. հասցե
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <input type="text" ng-model="oneSearchedCustomer.emailAddress" name="emailAddress" class="form-control " />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-5 form-group-search">
+                    Մասնաճյուղ
+                </div>
+                <div class="col-md-7 form-group-search" data-ng-init="getFilialList()">
+                    <select data-ng-model="oneSearchedCustomer.filialCode" name="filialCode" id="filialCode" class="form-control"
+                            data-ng-options="k as v for (k,v) in filialList" required>
+                        <option value="">Ընտրեք մասնաճյուղը...</option>
+                    </select>
+                </div>
+                <div class="col-md-5 form-group-search">
+                    Անձնագիր
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <input type="text" ng-model="oneSearchedCustomer.passportNumber" name="passportNumber" class="form-control nonUnicodeText" />
+                </div>
+                <div class="col-md-5 form-group-search">
+                    ՀԾՀ
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <input type="text" ng-model="oneSearchedCustomer.socCardNumber" name="socCardNumber" class="form-control nonUnicodeText" />
+                </div>
+                <div class="col-md-5 form-group-search">
+                    Հարկային կոդ
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <input type="text" ng-model="oneSearchedCustomer.taxCode" name="taxCode" class="form-control nonUnicodeText" />
+                </div>
+                <div class="col-md-5 form-group-search">
+                    Ծննդյան ա/թ
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <input type="date" ng-model="oneSearchedCustomer.birthDate" name="birthDate" class="form-control " />
+                </div>
+                <div class="col-md-5 form-group-search">
+                    Հեռախոս
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <input type="text" ng-model="oneSearchedCustomer.phoneNumber" name="phoneNumber" class="form-control " />
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="col-md-6 rowWithFullWidth">
+                <div class="checkbox">
+                    <label for="MatchCase">
+                        <input type="checkbox" ng-model="oneSearchedCustomer.MatchCase" name="MatchCase" />
+                        Հաշվի չառնել մեծատառ-փոքրատառերը
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6 rowWithFullWidth">
+                <div class="checkbox">
+                    <label for="DoubleCustomers">
+                        <input type="checkbox" ng-model="oneSearchedCustomer.DoubleCustomers" name="DoubleCustomers" />
+                        Ներառել կրկնակի հաճախորդներին
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div style="margin:5px">
+            <button type="button" class="btn btn-primary" ng-click="searchCash=false;btnFindClick();" title="Որոնել հաճախորդին"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+        </div>
+        <div style="overflow:auto; margin:5px; margin-bottom:0px; margin-top:0px; ">
+            <table class="table table-condensed" style="margin-bottom:0;">
+                <thead>
+                    <tr class="product-container-header" style="font-size:9pt;">
+                        <th class="col-sm-1" style="text-align:center;">Մ/ճ</th>
+                        <th class="col-sm-2" style="text-align:center;">Համար</th>
+                        <th class="col-sm-2" style="text-align:center;">Ծննդյան ա/թ</th>
+                        <th class="col-sm-7" style="text-align:center;">Անուն Ազգանուն Հայրանուն/ Անվանում</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="div-table-content " style="max-height:200px; min-height:200px;border: gray 1px solid; ">
+                <table class="table table-condensed table-hover" style="background-color:white">
+                    <tbody>
+                        <tr ng-if="customersList.length!=0" ng-repeat="customer in customersList" style="font-size:9pt; cursor:pointer;" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" ng-dblclick="selectCustomer()">
+                            <td class="col-sm-12">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-1 nonUnicodeText">
+                                        {{ ::customer.filialCode }}
+                                    </div>
+                                    <div class="col-sm-2 nonUnicodeText">
+                                        {{ ::customer.customerNumber }}
+                                    </div>
+                                    <div class="col-sm-2 nonUnicodeText">
+                                        {{ ::customer.birthDate | mydate | date: 'dd/MM/yyyy' }}
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <span style="font-weight:600">{{ ::customer.firstName }} {{ ::customer.lastName }} {{ ::customer.MiddleName }} {{ ::customer.organisationName }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 nonUnicodeText">
+                                    {{ ::customer.passportNumber }}, {{ ::customer.address }}
+                                </div>
+                                <div class="col-sm-12 nonUnicodeText">
+                                    <script type="text/javascript">
+                                        $('[data-toggle="tooltip"]').tooltip({
+                                            placement: 'left'
+                                    });
+                                    </script>
+                                    <span style="font-weight:500;color:green">{{ ::customer.qualityDescription }}</span> 
+                                    <button type="button" style="float:right" ng-click="getAttachmentDocumentList(customer.customerNumber);">
+                                        <span class="fa fa-print" data-toggle="tooltip" data-original-title="Կցված փաստաթղթեր"></span>
+                                    </button>
+                                    <button type="button" style="float:right" ng-click="params={customerNumber:customer.customerNumber}; openWindow('/Customer/CustomerDetails','Հաճախորդի տվյալներ','customerdetails',params)">
+                                        <span class="fa fa-info-circle" data-toggle="tooltip" data-original-title="Հաճախորդի տվյալներ"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="customersList.length==0">
+                            <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="margin-left:12px;">
+            Ընդամենը` {{totalRows}}
+        </div>
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                    ng-model="currentPage"
+                    items-per-page="numPerPage"
+                    total-items="totalRows"
+                    max-size="maxSize"
+                    boundary-links="true"
+                    previous-text="‹"
+                    next-text="›"
+                    first-text="«"
+                    last-text="»">
+        </div>
+
+    </div>
+
+</div>
+
+

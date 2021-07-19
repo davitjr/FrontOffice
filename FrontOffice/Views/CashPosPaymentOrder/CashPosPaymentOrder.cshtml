@@ -1,0 +1,238 @@
+﻿@{
+    Layout = null;
+}
+
+<style type="text/css">
+    #CashPosPaymentOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+
+<div id="cashPosLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form data-ng-init="setOrderType();GetCashPosOperationFeeTypes();getCurrentOperDay()" ng-controller="CashPosPaymentOrderCtrl" name="CashPosPaymentOrderForm" id="CashPosPaymentOrderForm" role="form" class="form-horizontal" novalidate prevent-enter-submit labels-required>
+    <div id="cashpospaymentorder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-3 " ng-click="CashPosPaymentOrderForm.$setSubmitted();CashPosPaymentOrderForm.$valid ? getCashPosPaymentOrderDetails() : showValidationMessage();">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Միջնորդավճարի հանձնարարական</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="CashPosPaymentOrderForm.$setSubmitted();order.OnlySaveAndApprove = false;CashPosPaymentOrderForm.$valid ? saveCashPosPaymentOrder() : showValidationMessage();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li ng-if="$root.SessionProperties.AdvancedOptions['withCashRegister']=='1'&& $root.SessionProperties.AdvancedOptions['canSendToCashier']=='1'" class="root-menu-item-4 " ng-click="CashPosPaymentOrderForm.$setSubmitted();order.OnlySaveAndApprove = true;CashPosPaymentOrderForm.$valid ? saveCashPosPaymentOrder() : showValidationMessage();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ուղարկել դրամարկղ</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('cashpospaymentorder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-7">
+            <div style="max-width:560px">
+                <errors></errors>
+            </div>
+            <div class="form-group " style=" padding-left:10px">
+                <div class="col-sm-12" style="max-width:530px">
+                    <div class="row-no-margin">
+                        <section class=" panel panel-info">
+                            <header class="panel-heading">
+                                <span class="panel-title" style="font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                            </header>
+                            <div class="panel-body">
+                                <span>Բոլոր դաշտերը անհրաժեշտ է մուտքագրել UNICODE-ով</span>
+                            </div>
+                        </section>
+                        <section ng-if="customerDocumentWarnings.length>0" class=" panel panel-warning">
+                            <header class="panel-heading">
+                                <span class="panel-title" style=" font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                            </header>
+                            <div class="panel-body">
+                                <div ng-repeat="war in customerDocumentWarnings">
+                                    {{$index+1}}.{{::war}}
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group" style="margin-left: 0;" ng-if="$root.SessionProperties.HasFilialATSAccount==true">
+                <input type="checkbox" class="checkbox-inline" id="forATSAccount" ng-model="$parent.ForATSAccount" ng-true-value="true" ng-false-value="false" ng-click="getATSSystemAccounts()">
+                <label class="tab_title" style="font-size:11px" ng-click="$parent.ForATSAccount==true?$parent.ForATSAccount=false:$parent.ForATSAccount=true;getATSSystemAccounts()">
+                    <span>Կատարել փոխանցում ԱԳՍ հաշվով</span>
+                </label>
+            </div>
+            <div class="form-group ">
+                <label class="tab_title col-sm-5 control-label"> Համար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-8 multiple_columns">
+                            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title" id="orderNumber" name="orderNumber" data-ng-model="order.OrderNumber" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="CashPosPaymentOrderForm.$submitted || paymentOrderForm.number.$dirty"
+                                     for="CashPosPaymentOrderForm.orderNumber.$error">
+                            <ng-message when="required" class="errors">
+                                Համար դաշտը լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6 row ">
+                    <div class="row multiple_columns col-sm-11">
+                        <input type="date" disabled="disabled" class="form-control tab_title unstyled" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" style="text-align:left" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <label class="tab_title col-sm-5" for="currency">  Արժույթ</label>
+                <div class="col-sm-6" data-ng-init="getCashPosCurrencies()">
+                    <div class="row">
+                        <loading-control scopevariable="currencies"></loading-control>
+                        <select ng-show="currencies" data-ng-model="order.Currency" name="Currency" id="Currency" ng-change="getFee();getATSSystemAccounts()" class="form-control"
+                                data-ng-options="k as v for (k,v) in currencies" required>
+                            <option value="" hidden>Ընտրեք արժույթը...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="CashPosPaymentOrderForm.$submitted || CashPosPaymentOrderForm.Currency.$dirty"
+                                     for="CashPosPaymentOrderForm.Currency.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք արժույթը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="showForATSCreditAccount">
+                <paymentaccount accountselectname="creditAccountForATS"
+                                accounts="creditAccounts"
+                                account="order.CreditAccount"
+                                check="0"
+                                nameforaccount="'Կրեդիտագրվող հաշիվ'"
+                                nameforcurrency="''"
+                                showforats="showForATSCreditAccount">
+                </paymentaccount>
+                <div class="row">
+                    <div class="col-sm-5"></div>
+                    <ng-messages ng-if="CashPosPaymentOrderForm.$submitted || CashPosPaymentOrderForm.creditAccountForATS.$dirty"
+                                 for="CashPosPaymentOrderForm.creditAccountForATS.$error">
+                        <ng-message when="required" class="errors">
+                            <span>Հաշիվը ընտրված չէ</span>
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+
+
+            <div class="form-group ">
+                <label class="tab_title col-sm-5" for="amount"> Գումար</label>
+                <div class="col-sm-6">
+
+                    <div class="row">
+                        <div class="input-group col-sm-10">
+                            <input type="text" ng-model="order.Amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' name="amount" ng-blur="getFee()" required class="form-control tab_title" fcsa-number />
+                            <span class="input-group-addon" id="basic-addon2" style="width: 0;"> {{order.Currency!=undefind?order.Currency:'&nbsp;&nbsp;&nbsp;'}} </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="CashPosPaymentOrderForm.$submitted || CashPosPaymentOrderForm.amount.$dirty"
+                                     for="CashPosPaymentOrderForm.amount.$error">
+                            <ng-message when="required" class="errors">
+                                Գումար դաշտը լրացված չէ
+                            </ng-message>
+                            <ng-message when="fcsaNumber" class="errors">
+                                Գումարը սխալ է լրացված
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <orderdescription operations="operations" ordertype="order.Type" description="description" labeldescription="'Նկարագրություն'"
+                              withaddition="true" additional="additional" formname="CashPosPaymentOrderForm"></orderdescription>
+            <div class="form-group ">
+                <label class="tab_title col-sm-5" for="cardNumber"> Քարտի համար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="input-group" @*style="left:-15px;width:219px" *@>
+                            <input type="text" ng-model="order.CardNumber" class="form-control" id="cardNumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="cardNumber" ng-change="isOurCard()" ng-model-options="{updateOn: 'blur'}" data-update-model-on-enter-key-pressed required checklength style="width:225px;">
+                            <div class="input-group-btn" style="display:block;" ng-if="!$root.SessionProperties.IsNonCustomerService">
+                                <button type="button" class="btn btn-default searchButton" ng-click="searchCards()" title="Քարտի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="CashPosPaymentOrderForm.$submitted || CashPosPaymentOrderForm.cardNumber.$dirty"
+                                         for="CashPosPaymentOrderForm.cardNumber.$error">
+                                <ng-message when="required" class="errors">
+                                    Քարտի համար դաշտը լրացված չէ
+                                </ng-message>
+                                <ng-message when="checklength" class="errors">
+                                    Քարտի համարը պետք է լինի 15,16 կամ 19 նիշանոց
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="tab_title col-sm-5" for="authorizationCode">Հավաստագրման կոդ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" maxlength="6" class="form-control tab_title" id="authorizationCode" name="authorizationCode" ng-model="order.AuthorizationCode" required>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="CashPosPaymentOrderForm.$submitted || CashPosPaymentOrderForm.authorizationCode.$dirty"
+                                     for="CashPosPaymentOrderForm.authorizationCode.$error">
+                            <ng-message when="required" class="errors">
+                                Հավաստագրման կոդ դաշտը լրացված չէ
+                            </ng-message>
+
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 control-label" for="description">Միջնորդավճարի տեսակ</label>
+                <div class="col-sm-6 ">
+                    <div class="row">
+                        <select id="feeTypeSelection" data-ng-model="feeType" name="FeeType" ng-change="getFee()" class="form-control">
+                            <option value="0" style="margin-left:25px">{{feeTypes[0]}}</option>
+                            <option value="6" style="margin-left:25px">{{feeTypes[6]}}</option>
+                        </select>
+                    </div>
+                    <ng-messages ng-if="paymentOrderForm.$submitted || paymentOrderForm.FeeType.$dirty"
+                                 for="paymentOrderForm.FeeType.$error">
+                        <ng-message when="required" class="errors">
+                            Միջնորդավճարի տեսակը ընտրված չէ
+                        </ng-message>
+
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner">
+
+                Միջնորդավճար` {{order.TransferFee != null ? (order.TransferFee  | number:2):(0|number:2)  }} AMD
+
+            </div>
+            <br />
+
+        </div>
+        <div class="col-sm-5">
+            <cashopperson ng-if="nonauthorizedcustomer" formname="CashPosPaymentOrderForm" opperson="order.OPPerson" nonauthorizedcustomer="true"></cashopperson>
+            <cashopperson ng-if="!nonauthorizedcustomer" formname="CashPosPaymentOrderForm" opperson="order.OPPerson"></cashopperson>
+
+        </div>
+    </div>
+
+
+</form>

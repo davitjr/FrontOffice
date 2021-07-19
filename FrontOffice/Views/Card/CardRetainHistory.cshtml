@@ -1,0 +1,40 @@
+﻿<form name="CardRetainHistoryForm" ng-controller="CardCtrl" ng-init="getCardRetainHistory(cardnumber)">
+
+    <div class="product-container" style="width:97%">
+
+        <div class="header-title">
+            Առգրավման պատմություն
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header" style="height:44px;">
+                <div style="text-align:center" class="col-sm-1"><span style="margin-left: -10px;">Տերմինալ</span></div>
+                <div style="text-align:center" class="col-sm-3"><span style="margin-left: 7px;">Բանկոմատի անվանում</span></div>
+                <div style="text-align:center;left:4%" class="col-sm-1">ATM մ/ճ</div>
+                <div style="text-align:center;left:4%" class="col-sm-2">Ա/թ</div>
+                <div style="text-align:center;left:2%" class="col-sm-1">Ժամ</div>
+                <div style="text-align:center;left: 4%;" class="col-sm-1">Գումար</div>
+                <div style="text-align:center;left: 4%;" class="col-sm-3">CAPT_STATUS</div>
+            </div>
+            <div class="product-content-table-full_height custom-scroll" style="min-height:100px;float:left;">
+                <div ng-if="cardRetainHistoryList == undefined || cardRetainHistoryList == null">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="history in ::cardRetainHistoryList">
+                            <td class="col-sm-1">{{::history.TerminalId }}</td>
+                            <td class="col-sm-4" style="text-align:center;">{{::history.ATMDescription }}</td>
+                            <td class="col-sm-1" style="text-align:right;">{{::history.FillialCode}}</td>
+                            <td class="col-sm-2" style="text-align:right;">{{::history.HistoryDate }}</td>
+                            <td class="col-sm-1" style="text-align:right;">{{::history.HistoryTime}}</td>
+                            <td class="col-sm-2" style="text-align:center;">{{::history.Amount| number:2}}<td>
+                            <td class="col-sm-2" style="text-align:left;">{{::history.CaptStatus}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+
+

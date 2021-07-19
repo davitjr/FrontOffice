@@ -1,0 +1,348 @@
+﻿@{
+    Layout = null;
+}
+
+<div ng-controller="AccountCtrl as parentCtr" id="accountDetails" data-ng-init="getCurrentAccount(selectedAccount);getAccountAdditionalDetails(selectedAccount);getCustomerType();getAccountSource(selectedAccount);">
+
+    <div id="accountdetails_menu" class="menu-bar dialog-menu light-green details-menu">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-if="account.ClosingDateString == 'null' && account.AccountType != 61 && account.AccountType != 57">
+                <span id="h-menu-item-4" onclick="return false;">
+                    <img id="h-menu-icon-4" class="h-menu-icon cashInButton">Գործառնություններ
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    @*283 Սահմանափակ հասանելիությամ հաշվիներ*@
+                    <li ng-if="$root.SessionProperties.SourceType == 2 && account.TypeOfAccount != 224 && account.TypeOfAccount != 279 && account.TypeOfAccount != 282 && account.AccountType != 118 " id="v-menuItem-3.2" ng-controller="PopUpCtrl" ng-click="params={AccountNumber: account.AccountNumber,checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:51};openWindowWithTemplate('paymentorder','Կանխիկ մուտք հաշվին','paymentorder',callbackgetCurrentAccount)" data-permission-selector="">
+                        <span>Կանխիկ մուտք</span>
+                    </li>
+                    <li ng-if="$root.SessionProperties.SourceType == 2 && account.TypeOfAccount != 224 && account.TypeOfAccount != 279 && account.TypeOfAccount != 282 && account.AccountType != 118" id="v-menuItem-3.2" ng-controller="PopUpCtrl" ng-click="params={AccountNumber: selectedAccountNumber,checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:95};openWindowWithTemplate('paymentorder','Կանխիկ մուտք հաշվին ռեեստրով','paymentorder')" data-permission-selector="">
+                        <span>Կանխիկ մուտք ռեեստրով</span>
+                    </li>
+                    <li id="v-menuItem-3.3" class="last " ng-if="$root.SessionProperties.SourceType == 2  && account.TypeOfAccount != 282  && TypeOfAccount != 283 " data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={DebitAccountNumber: account.AccountNumber,checkForDebitAccount:0,checkForReciverAccount:1,checkForFeeAccount:0,orderType:52};openWindowWithTemplate('paymentorder','Կանխիկ ելք հաշվից','paymentorder',callbackgetCurrentAccount)">
+                        <span>Կանխիկ ելք</span>
+                    </li>
+                    <li id="v-menuItem-3.7" class="last " ng-if="account.TypeOfAccount != 224 && account.TypeOfAccount != 279 && account.TypeOfAccount != 282   && TypeOfAccount != 283 " data-permission-selector="" ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:2,forInputCheckbox:true};openWindowWithTemplate('currencyexchangeorder','Փոխարկում','exchangeorder')">
+                        <span>Փոխարկում</span>
+                    </li>
+                    <li id="v-menuItem-3.1" ng-if=" (TypeOfAccount != 283 && $root.SessionProperties.SourceType == 1)  && account.TypeOfAccount != 282 " class="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('paymentorder','Փոխանցում սեփական հաշիվների միջև','paymentorder',callbackgetCurrentAccount)" data-permission-selector="">
+                        <span>Փոխանցում հաշիվների միջև</span>
+                    </li>
+                    <li id="v-menuItem-3.6" class="last " ng-if="account.TypeOfAccount != 224 && account.TypeOfAccount != 279  && account.TypeOfAccount != 282 && TypeOfAccount != 283" data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={DebitAccountNumber: account.AccountNumber,forBankTransfers:true,checkForDebitAccount:0,checkForReciverAccount:0,orderType:1};openWindowWithTemplate('paymentorder','Փոխանցում Բանկի այլ հաշվեհամարին','paymentorder')">
+                        <span>Փոխանցում Բանկի այլ հաշվեհամարին</span>
+                    </li>
+                    <li id="v-menuItem-3.4" class="last " ng-if="account.TypeOfAccount != 224 && account.TypeOfAccount != 279  && account.TypeOfAccount != 282 && TypeOfAccount != 283 " data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={DebitAccountNumber: account.AccountNumber,checkForDebitAccountTransferArmPayment:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('transferarmpaymentorder','Փոխանցում ՀՀ տարածքում','transferarmpaymentorder')">
+                        <span>Փոխանցում ՀՀ տարածքում</span>
+                    </li>
+                    <li id="v-menuItem-3.5" class="last " ng-if="account.Currency=='AMD'&& account.TypeOfAccount != 224 && account.TypeOfAccount != 279 && account.TypeOfAccount != 282 " data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={DebitAccountNumber: account.AccountNumber,checkForDebitAccountBudgetPayment:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('budgetorder','Փոխանցում բյուջե','budgetpaymentorder')">
+                        <span>Փոխանցում Բյուջե</span>
+                    </li>
+                    <li id="v-menuItem-3.8" class="last " ng-if="account.TypeOfAccount != 224 && account.TypeOfAccount != 279 && account.TypeOfAccount != 282  && TypeOfAccount != 283 " data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountInternationalPayment:0,checkForFeeAccount:0,DebitAccountNumber:  account.AccountNumber};openWindowWithTemplate('internationalorder','Միջազգային փոխանցում','internationalpaymentorder')">
+                        <span>Միջազգային փոխանցում</span>
+                    </li>
+                </ul>
+            </li>
+            <li class="root-menu-item-2 " ng-class="{'my_disable':disabelButton==true}" ng-if="account.ClosingDateString == 'null' && $root.SessionProperties.SourceType == 2 && account.TypeOfAccount != 224 && account.TypeOfAccount != 279" ng-controller="PopUpCtrl" ng-click="openWindow('/AccountClosingOrder/PersonalAccountClosingOrder','Ընթացիկ հաշվի փակման հայտի մուտքագրում','closeaccount',callbackgetCurrentAccount)">
+                <span id="h-menu-item-2">
+                    <img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">Փակել հաշիվը
+                </span>
+            </li>
+            <li class="root-menu-item-2 " ng-class="{'my_disable':disabelButton==true}" ng-if="account.ClosingDateString == 'null' && $root.SessionProperties.SourceType == 2 && accountOpendate ==  currentOperDay" ng-click="saveAccountRemovingOrder(account.AccountNumber)">
+                <span id="h-menu-item-2">
+                    <i id="h-menu-icon-2" class="glyphicon glyphicon-trash" style="font-size: 23px; margin-top: 2%;"></i>Հեռացնել հաշիվը
+                </span>
+            </li>
+            <li class="root-menu-item-3 " ng-class="{'my_disable':disabelButton==true}" ng-if="account.ClosingDateString!='null' && account.AccountType != 57 && account.TypeOfAccount != 224 && account.TypeOfAccount != 279" ng-controller="PopUpCtrl" ng-click="openWindow('/AccountOrder/PersonalAccountReOpenOrder','Ընթացիկ հաշվի վերաբացման հայտի մուտքագրում','reopenaccount',callbackgetCurrentAccountAfterReopenAccount)">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="reopenAccountButton h-menu-icon">Վերաբացել հաշիվը</span>
+            </li>
+            <li class="root-menu-item-5 " ng-if="account.ClosingDateString == 'null' && account.TypeOfAccount != 224 && account.TypeOfAccount != 279">
+                <span id="h-menu-item-5" onclick="return false;">
+                    <img id="h-menu-icon-5" class="h-menu-icon printButton">Փաստաթղթեր
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-5.1" ng-if="account.ClosingDateString == 'null'" ng-click="getAccountOpenContract(account.AccountNumber)" data-permission-selector="">
+                        <span>Հաշվի պայմանագիր</span>
+                    </li>
+                    <li id="v-menuItem-5.2" ng-if="account.ClosingDateString == 'null'" ng-click="printDetailsForTransfer(account.AccountNumber,account.Currency)" data-permission-selector="">
+                        <span>Փոխանցման ռեկվիզիտներ</span>
+                    </li>
+                    <li id="v-menuItem-5.3" ng-if="account.ClosingDateString == 'null' && hasStatementDeliveryType == true " ng-click="printStatementDeliveryApplication(account.AccountNumber)" data-permission-selector="">
+                        <span>Քաղվածքի ստացման դիմում</span>
+                    </li>
+                    <li id="v-menuItem-5.4" class="last " ng-if="account.ClosingDateString == 'null' && $root.SessionProperties.CustomerType!=6" ng-click="printAccountOpenApplication(selectedAccount)" data-permission-selector="">
+                        <span>Հաշվի բացման դիմում</span>
+                    </li>
+                    <li id="v-menuItem-5.5" class="last " ng-if="account.ClosingDateString == 'null' && $root.SessionProperties.CustomerType==6" ng-click="getCurrentAccountServiceFee(account.AccountNumber)" data-permission-selector="">
+                        <span>Սպասարկման սակագներ</span>
+                    </li>
+                    <li id="v-menuItem-5.6" class="last " ng-if="account.ClosingDateString == 'null'" ng-click="getCustomerDocuments()" data-permission-selector="">
+                        <span>Հաճախորդի փաստաթղթեր</span>
+                    </li>
+                    <li id="v-menuItem-5.7" class="last " ng-if="account.ClosingDateString == 'null' && $root.SessionProperties.CustomerType != '6'" ng-click="getCustomerSignature()" data-permission-selector="">
+                        <span>Ստորագրության նմուշ</span>
+                    </li>
+                    <li id="v-menuItem-5.4" class="last " ng-click="printAllContract(account)" data-permission-selector="">
+                        <span>Տպել բոլորը</span>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="root-menu-item-6 " ng-if="account.JointType==1 || account.JointType==2" ng-controller="PopUpCtrl" ng-click="params={accountNumber: account.AccountNumber};openWindow('/Account/JointAccountCustomersDetails', 'Հաշվի մասնաբաժիններ', 'JointAccountCustomersDetails');">
+                <span id="h-menu-item-6"><img id="h-menu-icon-6" class="sharedAccountsButton h-menu-icon">Մասնաբաժիններ</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div class="product-details bhoechie-tab-content" style="min-width:800px;margin-left:10px;">
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաշվեհամար</div>
+            <div class="product-detail-cell product-detail-value">
+                {{account.AccountNumber}}
+            </div>
+        </div>
+        <div class="product-detail-row" ng-if="account.TypeOfAccount != 224 && account.TypeOfAccount != 279">
+            <div class="product-detail-cell product-detail-lable">Տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{(account.Status==10)?'նախընտրական հիմնադրամ':account.AccountTypeDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մնացորդ</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{account.BalanceString}} {{account.Currency}}<span style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" ng-click="params={accountNumber:account.AccountNumber,accountCurrency:account.Currency};openWindowWithTemplate('accountflowdetails','Հաշվի շարժ','accountflowdetails');" class="glyphicon glyphicon-info-sign" /></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Բացման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{account.OpenDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մասնաճյուղ</div>
+            <div class="product-detail-cell product-detail-value">{{account.FilialCode}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="account.AccountType == 116" data-ng-init="getBankruptcyManager(selectedAccount)">
+            <div class="product-detail-cell product-detail-lable">Սնանկության գործով կառավարիչ</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{bankruptcyManagerCustNumber}}<span style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" ng-click="params={customerNumber:bankruptcyManagerCustNumber}; openWindow('/Customer/CustomerDetails','Հաճախորդի տվյալներ','customerdetails')" class="glyphicon glyphicon-info-sign" /></div>
+        </div>
+
+        <div ng-if="account.Status == 1" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable redStyle">Ժամանակավոր</div>
+            <div class="product-detail-cell product-detail-value"></div>
+        </div>
+        <div ng-if="account.ClosingDateString == 'null' && $root.SessionProperties.CustomerType != '6'" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաշվի կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">
+                <div ng-hide="isEditStatus">
+                    <div>
+                        <span ng-if="account.Status == 0">Նորմալ</span>
+                        <span ng-if="account.Status == 1">Ժամանակավոր</span>
+                        <span ng-show="account.Status == 1" ng-click="isEditStatus = !isEditStatus" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+                    </div>
+                </div>
+                <div ng-if="isEditStatus">
+                    <div class="input-group">
+                        <div ng-controller="AccountDataChangeOrderCtrl as childCtrl" data-ng-init="order.AdditionType = 101">
+                            <div class="input-group" ng-init="order.AdditionValue = $parent.$parent.account.Status">
+                                <select data-ng-model="order.AdditionValue" class="form-control " name="AdditionValue" id="AdditionValue" style="font-size:13px;padding:0;"
+                                        required>
+                                    <option value="0">Նորմալ</option>
+                                    <option value="1">Ժամանակավոր</option>
+                                </select>
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-default" style="color:green" title="Հաստատել" ng-click="order.AdditionValue != $parent.$parent.account.Status ? saveAccountDataChangeOrder() : $parent.$parent.isEditStatus = !isEditStatus"><span class="glyphicon glyphicon-ok"></span></button>
+                                    <button type="button" class="btn btn-default" style="color:red" title="Հրաժարվել" ng-click="$parent.$parent.isEditStatus = !isEditStatus"><span class="glyphicon glyphicon-remove"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="account.ClosingDateString!='null'" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{account.ClosingDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div ng-if="account.FreezeDate!=null" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաշիվը սառեցված է</div>
+            <div class="product-detail-cell product-detail-value">{{account.FreezeDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div ng-if="account.UnUsedAmountDate!=null" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սառեցման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{account.UnUsedAmountDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div ng-if="account.UnUsedAmount>0" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սառեցված գումար</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{account.UnUsedAmountString}} {{account.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Նկարագրություն</div>
+            <div class="product-detail-cell product-detail-value">{{account.AccountDescription}}</div>
+        </div>
+        <div ng-if="SourceDescription" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Բացվել է</div>
+            <div class="product-detail-cell product-detail-value">{{SourceDescription}}-ից</div>
+        </div>
+        <div class="product-detail-row" ng-init="getAccountOpeningDetail(selectedAccount)">
+            <div class="product-detail-cell product-detail-lable">Հաշիվը բացել է</div>
+            <div class="product-detail-cell product-detail-value">
+                {{accountOpeningDetail.UserDescription+ " "}}({{accountOpeningDetail.ActionSetNumber}})<span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:accountOpeningDetail.ActionSetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>
+
+            </div>
+        </div>
+
+        <div class="product-detail-row" ng-init="getAccountOpeningClosingDetails(selectedAccount)">
+            <div ng-if="accountOpeningClosingDetails.length > 1" class="product-detail-cell product-detail-lable">
+                Հաշվի փակման/վերաբացման պատմություն
+                <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={accountOpeningClosingDetails:accountOpeningClosingDetails}; openWindow('/Account/AccountActionDetails','Հաշվի փակման/վերաբացման պատմություն','accountActionDetails')" class="glyphicon glyphicon-list-alt"></span>
+            </div>
+        </div>
+
+
+        <div ng-if="account.ClosingDateString == 'null'" ng-init="hasAccountPensionApplication(selectedAccount)" class="product-detail-row">
+            <div ng-if="PensionApplicationSign == true" class="product-detail-cell product-detail-lable" style="color:brown;">Առկա է կենսաթոշակի դիմում համաձայնագիր</div>
+            <div class="product-detail-cell product-detail-value"></div>
+        </div>
+
+        <div ng-if="account.AccountNumber" ng-init="getDemandDepositRate(account)"></div>
+        <div class="product-detail-row" ng-if="account.AccountNumber">
+            <div class="product-detail-cell product-detail-lable">Սակագին</div>
+            <div class="product-detail-cell product-detail-value">
+                <div ng-if="demandDepositRate">
+                    {{demandDepositRate.TariffGroupDescription}}
+                    <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={currentdemandDepositRate:demandDepositRate};openWindow('/Account/DemandDepositRateDetails','Ցպահանջ ավանդի տոկոսադրույքի սակագներ','demandDepositRateDetails')" title="Տվյալներ" class="glyphicon glyphicon-info-sign"></span>
+                    <span title="Խմբագրել" ng-if="$parent.showDemandDepositRateButton" ng-controller="PopUpCtrl" ng-click="params={demandDepositAccount: account,currentTariffGroup:demandDepositRate.TariffGroup};openWindow('/DemandDepositRateChangeOrder/PersonalDemandDepositRateChangeOrder','Ցպահանջ ավանդի տոկոսադրույքի փոփոխման հայտ','demandDepositRateChangeOrder')" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+                </div>
+                <div ng-if="demandDepositRate==null || demandDepositRate==undefined || demandDepositRate=='' ">
+                    Կիրառելի չէ
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="bhoechie-tab-container" style="max-height:80%;" id="accountDetailsContainer">
+        <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+            <div class="list-group">
+                <div class="list-group-item text-center active">Քաղվածք</div>
+                <div class="list-group-item text-center">Նշումներ</div>
+                <div class="list-group-item text-center"><span>Կցված փաստաթղթեր</span></div>
+                <div class="list-group-item text-center">Սառեցումներ</div>
+            </div>
+        </div>
+
+
+        <div class="bhoechie-tab" style="width: calc(100% - 140px); display: inline-block;">
+            <div class="bhoechie-tab-content active">
+
+                <accountstatement accountnumber="selectedAccount" ng-if="account.TypeOfAccount != 224 && account.TypeOfAccount != 279"></accountstatement>
+
+            </div>
+            <div class="bhoechie-tab-content ">
+                <div ng-repeat="addition in additionalDetails" ng-show="additionalDetails.lenght != 0" class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">{{addition.AdditionTypeDescription}}</div>
+                    <div class="product-detail-cell product-detail-value">
+                        <div ng-if="additionalDetails == null || additionalDetails.lenght == 0">
+                            Տվյալներ գտնված չեն:
+                        </div>
+                        <div ng-if="addition.AdditionType != 5">
+                            <div ng-hide="isEdit">
+                                <div>
+                                    {{addition.AdditionValue}}
+                                    <span ng-show="$root.SessionProperties.SourceType == 2 && addition.AdditionType != 3 && addition.AdditionType != 4 && addition.AdditionType != 9 && addition.AdditionType != 10 && addition.AdditionType != 11 && addition.AdditionType != 12 && addition.AdditionType != 14 " ng-click="isEdit = !isEdit;" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+                                </div>
+                            </div>
+                            <div ng-show="isEdit">
+                                <div>
+                                    <div ng-controller="AccountDataChangeOrderCtrl as childCtrl" data-ng-init="editAdditionalData(addition.AdditionType,addition.AdditionValue,account)">
+                                        <div class="input-group">
+                                            <input data-ng-model="order.AdditionValue" name="AdditionValue" id="AdditionValue" class="form-control" required />
+                                            <div class="input-group-btn">
+                                                <button type="submit" class="btn btn-default" style="color:green" title="Հաստատել" ng-click="saveAccountDataChangeOrder()"><span class="glyphicon glyphicon-ok"></span></button>
+                                                <button type="submit" class="btn btn-default" style="color:red" ng-show="$parent.account.AccountType!=116" title="Հեռացնել" ng-click="saveAccountAdditionalDataRemovableOrder()"><span class="glyphicon glyphicon-floppy-remove"></span></button>
+                                                <button type="button" class="btn btn-default" style="color:red" title="Հրաժարվել" ng-click="$parent.isEdit = !isEdit"><span class="glyphicon glyphicon-remove"></span></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="addition.AdditionType == 5">
+                            <div ng-hide="isEdit">
+                                <div>
+                                    {{addition.AdditionValue}}
+                                    <span ng-show="$root.SessionProperties.SourceType == 2 && addition.AdditionType != 3 && addition.AdditionType != 4 && addition.AdditionType != 9 && addition.AdditionType != 10 && addition.AdditionType != 11 && addition.AdditionType != 12 && addition.AdditionType != 14" ng-click="isEdit = !isEdit;childCtrl.getAccountStatementDeliveryType(selectedAccount)" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+                                </div>
+                            </div>
+                            <div ng-show="isEdit">
+                                <div class="input-group">
+                                    <div ng-controller="AccountDataChangeOrderCtrl as childCtrl" data-ng-init="getStatementDeliveryTypes();getAccountStatementDeliveryType(selectedAccount);">
+                                        <div class="input-group">
+                                            <select ng-show="deliveryTypes" data-ng-model="order.AdditionValue" class="form-control " name="AdditionValue" id="AdditionValue" style="font-size:13px;padding:0;"
+                                                    data-ng-options="k as v for (k,v) in deliveryTypes" required></select>
+
+                                            <div class="input-group-btn">
+                                                <button type="submit" class="btn btn-default" style="color:green" title="Հաստատել" ng-click="saveAccountDataChangeOrder()"><span class="glyphicon glyphicon-ok"></span></button>
+                                                <button type="submit" class="btn btn-default" style="color:red" title="Հեռացնել" ng-click="saveAccountAdditionalDataRemovableOrder()"><span class="glyphicon glyphicon-floppy-remove"></span></button>
+                                                <button type="button" class="btn btn-default" style="color:red" title="Հրաժարվել" ng-click="$parent.isEdit = !isEdit"><span class="glyphicon glyphicon-remove"></span></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+
+                @*<div ng-show="$root.SessionProperties.SourceType == 2" class="row-no-margin">
+                        <a style="cursor: pointer; font-size: 13px;" ng-class="'in active'" ng-controller="PopUpCtrl" ng-click="params={Account:account}; addAdditionalData('','',account);">Մուտքագրել/խմբագրել լրացուցիչ տվյալները</a>
+                    </div>*@
+
+                <div ng-show="$root.SessionProperties.SourceType == 2" class="row-no-margin">
+                    <a style="cursor: pointer; font-size: 13px;" ng-class="'in active'" ng-controller="PopUpCtrl" ng-click="params={Account:account,AdditionType:undefined,AdditionValue:undefined};openWindowWithTemplate('accdatachangeorder','Հաշվի լրացուցիչ տվյալների փոփոխում','accountDataChangeOrder')">
+                        Մուտքագրել/խմբագրել լրացուցիչ տվյալները
+                    </a>
+                </div>
+            </div>
+            <div class="bhoechie-tab-content">
+                <attachmentdocument productid="selectedAccount"></attachmentdocument>
+            </div>
+            <div class="bhoechie-tab-content">
+                <freezehistory accountnumber="account.AccountNumber"></freezehistory>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+<script type="text/javascript">
+
+    $("#accountDetails div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('#accountDetails div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#accountDetails div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#accountDetails div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+
+    $("#accountDetailsContainer").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 300,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 300
+        }
+    });
+
+</script>

@@ -1,0 +1,88 @@
+﻿<div>
+
+    <style>
+        .modal-content {
+            width: 400px;
+            min-height:530px
+        }
+
+        .nonUnicodeText {
+            font-family: 'Arial Armenian';
+            font-size: 15px;
+        }
+
+        .tableHeader {
+            font-size: 9pt;
+            height: 25px;
+        }
+    </style>
+
+
+
+
+
+    <div id="curNominals" ng-init="getCurNominals(currency)" style="border-bottom:solid 1px gray;">
+        <div class="col-sm-12 popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+            <div style="margin-top:-10px">Հաշվիչ</div>
+            <img src="/Content/images/close_pop.png " ng-click="close()" style="margin-top:-10px;">
+        </div>
+    
+
+
+        <div style="margin-left: 10px; margin-right:15px;">
+            <table class="table table-condensed" style="margin-bottom:0;">
+                <thead>
+                    <tr class="product-container-header" style="font-size:9pt;">
+                        <th class="col-sm-4"style="text-align:center;" >Դրամանիշ</th>
+                        <th class="col-sm-3" style="text-align:left">Քանակ</th>
+                        <th class="col-sm-3" style="text-align:center;">Գումար</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="div-table-content " style="max-height:330px">
+                <table class="table table-condensed table-hover" style="background-color:white">
+                    <tbody>             
+                        <tr ng-if="curNominals.length!=0" ng-repeat="curNom in curNominals" style="font-size:9pt; cursor:pointer;" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+                            <td class="col-sm-12">
+                                <div class="col-sm-4 nonUnicodeText" style="text-align:right;padding-left:0px;">
+                                    {{::curNom.Key}} {{::curNom.Value}}
+                                </div>
+                                     <div class="col-sm-3 nonUnicodeText">
+                                        <input type="text"  ng-blur="updateTotalAmount()" ng-model="curNom.count"  style="width:70px" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' name="count_nom" id="count_nom" required class="form-control tab_title col-sm-5" />
+                                    </div>
+                                    <div  style="text-align:right; float:right;padding-left:0px;"  class="col-sm-3 nonUnicodeText">
+                                        <span > {{getCurNominalTotal(curNom.Key,curNom.count)|number:2}} </span>
+                                    </div>            
+                            </td>
+                        </tr>
+                        <tr ng-if="curNominals.length==0">
+                            <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="product-detail-row">
+        <div style="padding-left: 15px;padding-top: 20px;" class="product-detail-cell product-detail-lable">Հանրագումար՝</div>
+        <div class="product-detail-cell product-detail-value" style="font-weight:bold;text-align: right;">{{totalAmount |number:2}} </div>
+    </div>
+    <div style="margin-left: 15px;margin-top: 15px;">
+        <div class="col-sm-2 row">
+            <div style="">
+                <button type="button" class="btn btn-primary" ng-click="save();" style="padding:2px 4px;margin-top:2px">&nbsp;Հաստատել</button>
+            </div>
+        </div>
+
+        <div class="col-sm-2 row" style="margin-left:40px">
+            <div style="">
+                <button type="button" class="btn btn-default" ng-click="close();" style="padding:2px 4px;margin-top:2px">&nbsp;Հրաժարվել</button>
+            </div>
+        </div>
+
+    </div>
+   
+
+</div>
+
+

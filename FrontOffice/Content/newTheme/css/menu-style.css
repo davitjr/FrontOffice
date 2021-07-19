@@ -1,0 +1,638 @@
+﻿/*Հեղինակ՝ Տիգրան Սիմոնյան*/
+/*Ամսաթիվ՝ 20/02/2014թ.*/
+/*Նկարագրություն - սույն CSS ֆայլի պարունակությունը կարգավորում է PROCESS MANAGEMENT ծրագրի հիմնական մենյուի տեսքը և պահվածքը*/
+/*menu theme colors*/
+/*------------------------------------------*/
+.light-green
+{
+	background-color: rgba(176, 230, 202, 0.43)!important;
+}
+.dialog-menu-buttonset{
+    width: 100%;
+    height: 100%;
+}
+/*Ուղղահայաց մենյու---------------------*/
+#cssmenu, .cssmenu {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+#cssmenu ul, .cssmenu ul,
+#cssmenu li, .cssmenu li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#cssmenu ul, .cssmenu ul {
+  position: relative;
+  z-index: 597;
+  float: left;
+}
+#cssmenu ul li, .cssmenu ul li {
+  float: left;
+  min-height: 1px;
+  line-height: 1.5em;
+  vertical-align: middle;
+}
+#cssmenu ul li.hover,
+.cssmenu ul li:hover {
+  position: relative;
+  z-index: 599;
+  cursor: default;
+}
+#cssmenu ul ul, .cssmenu ul ul  {
+  visibility: hidden;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 598;
+}
+#cssmenu ul ul li, .cssmenu ul ul li {
+  float: none;
+}
+#cssmenu ul ul, 
+#cssmenu ul ul ul,
+.cssmenu ul ul, 
+.cssmenu ul ul ul  
+{
+  top: 3px;
+  left: 100%;
+}
+#cssmenu ul li:hover > ul,
+.cssmenu ul li:hover > ul {
+  visibility: visible;
+}
+#cssmenu ul li,
+.cssmenu ul li  {
+  float: none;
+}
+#cssmenu a span,
+.cssmenu a span {
+  display: block;
+}
+/* Custom CSS Styles */
+#cssmenu, .cssmenu {
+  font-family: Arial Unicode, Arian AMU,'Segoe UI', Arial, sans-serif !important;
+  font-size: 0.95em;
+}
+#cssmenu:after,
+#cssmenu ul:after,
+.cssmenu:after,
+.cssmenu ul:after  {
+  content: '';
+  display: block;
+  clear: both;
+}
+#cssmenu ul, .cssmenu ul {
+  background: #9EC6B1;
+  padding: 4px;
+  min-width:150px;
+  max-width:500px;
+}
+#cssmenu ul li, .cssmenu ul li {
+   position: relative;
+   padding-left: 0.2em !important;
+}
+
+#cssmenu ul ul, .cssmenu ul ul  {
+  min-width: 150px;
+  max-width:100%;
+}
+#cssmenu a, #cssmenu span, .cssmenu a, .cssmenu span{
+  padding: 0;
+}
+
+#cssmenu ul li>a, #cssmenu ul li>span, .cssmenu ul li>a, .cssmenu ul li>span {
+  padding-left: 22px;
+  margin-right: 15px;
+}
+
+li[id*="v-menuItem"] >a, li[id*="v-menuItem"] >span
+{
+  background-position: 2% 50%;
+  background-repeat:no-repeat;
+}
+#pop-up
+{
+  max-width: 500px !important;
+}
+#pop-up li a:after, #pop-up li span:after
+{
+	border-style:none !important;
+}
+#menu span
+{
+    cursor:pointer;    
+}
+
+/*Հորիզոնական հիմնական մենյու ------*/
+.menu-bar, #menu-bar
+{
+  background-color: rgb(0,75,139);
+  display:block;
+  position: relative;
+  left:0;
+  top:0;
+  padding: 0;
+  width:100%;
+  height: 40px;
+  -webkit-user-select: none;
+ -moz-user-select: none;  
+ -ms-user-select: none;
+ user-select: none;
+ margin-bottom:15px;
+}
+#menu
+{
+  margin:0;
+  max-width:calc(100% - 300px);
+  padding: 0 0 0 0;
+  list-style: none;  
+  height:100%;
+}
+.dialog-menu #menu
+{
+	width:calc(100% - 20px)!important;
+	max-width:calc(100% - 20px)!important;
+	float:left !important;
+}
+.dialog-menu #right-menu
+{
+	width: 80px !important;
+	float:left !important;
+}
+.dialog-menu :first-child {
+    padding-right: 5px !important;
+}
+#menu a, #menu span {
+	float: left;
+	height: 40px;
+	color: white;
+	line-height: 40px;
+	text-decoration:none;
+}
+.dialog-menu span
+{
+	color: black!important;
+}
+#menu a:focus {
+    outline: none;
+}
+#menu li
+{
+  padding-left: 10px;
+  padding-right: 10px;
+  height:100%;
+  max-width:100%;
+  text-align:center;
+  color: rgb(255,255,255);
+  font-family: Arial Unicode, Arian AMU, 'Segoe UI', Times Unicode, Microsoft Sans Serif, Courier New, Sylfaen, Arial, Times New Roman;
+  font-size: 0.95em;
+  line-height: 40px;
+  display: inline-block;
+  position: relative;
+}
+.dialog-menu li
+{
+   padding-left: 5px !important;
+}
+/*menu item hover*/
+#menu li:hover, li>a:hover, li>span:hover
+{
+  background-color: rgb(0,58,107);
+}
+/*menu item hover*/
+.dialog-menu li:hover, .dialog-menu li>a:hover, .dialog-menu li>span:hover
+{
+  background-color: #9EC6B1!important;
+}
+#menu ul>li:hover 
+{
+  background-color: rgb(212,212,212);
+}
+
+#menu li:hover > ul{
+	display: block;
+	background-color: white/*rgb(243,243,243)*/;
+	color: black;
+}
+
+/* Sub-menu */
+#menu ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    z-index: 1030;    
+	-moz-box-shadow: inset 0 0 5px #9c9c9c;
+	-webkit-box-shadow: inset 0 0 5px #9c9c9c;
+	box-shadow: 0 0 5px #9c9c9c;
+}
+#menu ul li{
+    float: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+	min-width:120px;
+}
+#menu ul a, #menu ul span {    
+	padding:10px;
+	text-align: left;
+    height: auto;
+    line-height: 1;
+	color: black;
+    display: block;
+    white-space: nowrap;
+    float: none;
+    text-transform: none;
+}
+*html #menu ul a, *html #menu ul span { /* IE6 */   
+	height: 10px;
+	width: 150px;
+}
+*:first-child+html #menu ul a, *:first-child+html #menu ul span{ /* IE7 */    
+	height: 10px;
+	width: 150px;
+}
+#menu ul a:hover, #menu ul span:hover{
+    background-color: rgb(212,212,212);
+}
+/*#menu ul li:first-child a:after{
+    content: '';
+    position: absolute;
+    left: 50px;
+    top: -8px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 8px solid rgb(243,243,243);
+}*/
+#menu ul li:first-child a:hover:after, #menu ul li:first-child span:hover:after{
+    border-bottom-color: rgb(212,212,212); 
+}
+/* Clear floated elements */
+#menu:after{
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+* html #menu{ zoom: 1; } /* IE6 */
+*:first-child+html #menu { zoom: 1; } /* IE7 */
+#right-menu
+{
+ margin:0;
+ margin-left:2px;
+ padding:0;
+ position: absolute;
+ top:0;
+ right:0;
+ white-space: nowrap;
+ height:40px;
+ max-width:30%;
+}
+#applicationAreas {
+    width:40px;
+    height: 40px;
+    padding-right: 3px;
+    float: left;
+    cursor: pointer;
+    background-image: url('../Images/Menu/application-areas.png');
+    background-repeat: no-repeat;
+}
+#user-profile, #settings-menu
+{
+    margin:0;
+	padding:0;
+    font-size: 0.95em;
+    white-space: nowrap;
+	float:left;
+	height:40px;
+}
+#user-profile:hover, #settings-menu:hover, #applicationAreas:hover
+{
+ background-color: rgb(0,58,107);
+}
+#userImage
+{
+  vertical-align: middle;
+  margin-right:10px;
+  margin-bottom: 5px;
+}
+#userName
+{
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 10px;
+  line-height:40px;
+  color: #ffffff;
+}
+#settingsImage
+{
+  margin:0;
+  padding:0;
+  vertical-align: top;
+  margin-top:10px;
+  margin-left:5px;
+  margin-right:5px;
+}
+#menu-last-item
+{
+  font-size: 2em;
+  background-image: url('../Images/Menu/last-item.png');
+  background-position:center;
+  background-repeat:no-repeat;
+  width:45px;
+}
+li.h-menu-last-rendered >ul>li>a, li.h-menu-last-rendered >ul>li>span
+{
+  padding-left: 5px !important;
+}
+
+.has-sub
+{
+  background-image: url(../Images/Menu/more-items.png);
+  background-position: 95% 50%;
+  background-repeat:no-repeat;
+}
+#arrow-down
+{
+  background-position:0 50%;
+  background-repeat:no-repeat;
+  margin-left: 10px;
+  margin-right:0px;
+  width: 10px;
+  height: 8px;
+}
+#h-menu-item-1{padding:0;margin-right:10px;}
+.home-icon
+{
+  width: 150px;
+  height: 40px;
+  background-image: url('../Images/Menu/pm-icon.png');
+  background-position:0 50%;
+  background-repeat:no-repeat;
+  padding-left: 0px;
+}
+#menu :first-child
+{
+ padding-right:0px;
+}
+#menu li:nth-child(2)
+{
+ padding-left:3px !important;
+}
+.h-menu-icon
+{
+  top:0;
+  margin:0;
+  padding:0;
+  vertical-align:top;
+  width: 40px;
+  height: 40px;
+  background-repeat:no-repeat;
+}
+.h-menu-send
+{
+    width: 49px;
+}
+.h-menu-edit
+{
+    width: 44px;
+}
+.h-menu-test
+{
+     width: 35px;
+}
+.h-menu-excel-icon {
+    width: 45px;
+}
+ .root-menu-items-hidden
+{
+    display:none !important;    
+}
+ .root-menu-items-visible
+{
+    display:inline-block !important;
+}
+.attach-file-icon
+{
+    margin-right:3px;
+}
+.sidebar-slider-icon
+{
+  background-size: 40px 80px;
+  background-image: url('../Images/Menu/slide.png');
+  background-position:0px;
+  background-repeat:no-repeat;
+}
+.h-menu-grant-access
+{
+     width: 44px;
+}
+.h-menu-phone-banking
+{
+	width: 45px;
+}
+.menu-close-button, .menu-minimize-button, .menu-maximize-button {
+    display: inline-block;
+    vertical-align: middle;
+    color: black;
+    cursor: pointer;
+    height: 40px;
+    width: 25px;
+    background-size: 20px 20px;
+    float: right;
+    position: inherit;
+    background-repeat: no-repeat;
+    background-image: url("../Images/close.png");
+    background-position: 2px;
+}
+.menu-minimize-button 
+{
+	background-image: url("../Images/minimize.png");
+}
+.menu-maximize-button 
+{
+	background-image: url("../Images/maximize.png");
+}
+.menu-minimize-button:hover, .menu-maximize-button:hover
+{
+    background-color: rgba(201, 203, 206, 0.38)!important;
+}
+.menu-close-button:hover
+{
+    background-color: #DB3434!important;
+    background-image: url("../Images/close-dialog-white.png");	
+}
+li:hover .h-menu-customer-debt
+{
+	 background-image: url("../Images/Menu/customer-debt-red.png")!important;
+}
+.end-service-session
+{
+	line-height: 40px;
+    background-image: url("../Images/Menu/power-off.png");
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+    padding-left: 35px;
+    width: auto;
+    float: right;
+}
+.end-service-session:hover{
+	background-image: url("../Images/Menu/power-off-red.png");
+	cursor:pointer;
+	background-color: #9EC6B1!important;
+}
+
+#ContentMenuBar #right-menu
+{
+	width: 100px !important;
+	max-width: 100px !important;
+}
+
+.submitButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/save.png');
+}
+
+.cancelButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/discard-document.png');
+}
+
+.printButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/printer.png');
+}
+
+.applicationButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/application-black.png');
+}
+
+.cashInButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/cash-deposit.png');
+}
+
+.infoButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/info-black.png');
+}
+
+.searchMenuButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/search-black.png');
+}
+
+.customerDebtsButtonInactive {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/customer-debt.gif');
+}
+
+.customerDebtsButtonActive {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/customer-debt-red.png');
+}
+
+.serviceActivationButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/service-activation.png');
+}
+
+.arrowButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/arrow-down.png');
+}
+
+.openAccountButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/open-account.png');
+}
+
+.reopenAccountButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/reopen-account.png');
+}
+
+.sharedAccountsButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/shared-account.png');
+}
+
+.closeAccountButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/close-account.png');
+}
+
+.balanceButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/balance.png');
+}
+
+.userButton {
+    background-image: url('../Images/Menu/user_icon.png');
+}
+
+.details-menu
+{
+    width: 800px; 
+    margin-left: 10px;
+    margin-top: 10px; 
+    margin-bottom:0px;
+}
+
+
+.copyButton {
+    content: url("../Images/CopyPasteButtons/copy.png");
+}
+
+.pasteButton {
+    content: url("../Images/CopyPasteButtons/paste.png");
+}
+
+.transferAdditionalDataBtn {
+     content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/application-black.png');
+}
+
+.calculatorButton {
+     content: url("../Images/caculator.png")
+}
+
+.editButton {
+     content: url("../Images/Menu/edit.png")
+}
+
+.startButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/customer-service.png');
+}
+
+.sendContract {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/send-contract.png');
+}
+.newItemButton {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/Menu/new-item.png');
+}
+
+.Close1Buttone {
+    content: url("../Images/Menu/invisible.png");
+    background-image: url('../Images/close.png');
+}
+#creditLines_menu {
+    margin-top: 0px;
+    margin-left: 0px;
+    display: flex !important;
+    width: auto !important;
+    height: auto !important;
+}

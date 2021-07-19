@@ -1,0 +1,80 @@
+﻿<style>
+    .redBold {
+        font-weight: bold;
+        color: red;
+    }
+
+    .blueBold {
+        font-weight: bold;
+        color: blue;
+    }
+</style>
+<script type="text/javascript">
+    $("#accreditivesContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div class="product-container" ng-controller="AccreditiveCtrl" data-ng-init="$root.SessionProperties.CustomerType != 6 && getAccreditives()" ng-show="(hideBlank!='true' && accreditives.length==0) || (accreditives.length!=0 && accreditives.length!=undefined)">
+    <div class="header-title">
+        <a ui-sref="accreditives" style="color:black;">Ակրեդիտիվներ</a> 
+        
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="product-container-header">
+            <div class="include-closed-products">
+                <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-accreditives" data-ng-model="filter" ng-true-value="2" ng-false-value="1" ng-change="QualityFilter()">
+                <label for="include-closed-accreditives" name="include-closed-accreditives-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+            </div>
+        </div>
+        <div class="product-content-table custom-scroll" id="accreditivesContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+            <div ng-if="accreditives==undefined">
+                <loading></loading>
+            </div>
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody>
+                    <tr ng-repeat="accreditive in accreditives" ng-if="filter==1 && accreditives.length!=0" ng-class="{'selected':$index==selectedRow}" ng-click="setClickedRow($index,accreditive)" ng-dblclick="selectedAccreditiveIsAccessible && openAccreditiveDetails();" style="cursor: pointer;">
+                        <td class="col-sm-3">
+                            <span style="font-weight:bold;" ng-class="{'blueBold':accreditive.Quality==10  }">{{ ::accreditive.QualityDescription }}</span>
+                            <span ng-if="accreditive.CreditCode!=''" style="color:brown;"><br />Կոդ` {{ ::accreditive.CreditCode}}</span>
+                            <br /> Վերջ`{{ ::accreditive.EndDate | mydate | date: 'dd/MM/yyyy'}}
+                        </td>
+                        <td class="col-sm-2" style="text-align:right;">{{ ::accreditive.StartCapitalString}} {{ ::accreditive.Currency }}</td>
+                        <td class="col-sm-1 click_toggle" context="contextAccreditives" id="contextMenu"><div id="contextMenu"></div> </td>
+
+                    </tr>
+                    <tr ng-if="filter==1 && accreditives.length==0 ">
+                        <td colspan="3" style="text-align:center;">
+                            Առկա չեն գործող ակրեդիտիվներ
+                        </td>
+                    </tr>
+                    <tr ng-if="filter!=1"><td style="color:red; border-width:3px" colspan="3">Փակված ակրեդիտիվներ </td></tr>
+                    <tr ng-repeat="accreditive in closingAccreditives" ng-if="closingAccreditives.length!=0" ng-class="{'selected':$index==selectedRowClose}" ng-click="setClickedRowClose($index)" ng-dblclick="selectedAccreditiveIsAccessible && openAccreditiveDetails();">
+                        <td class="col-sm-3">
+                            {{ ::accreditive.QualityDescription }}
+                            <br /> Վերջ`{{ ::accreditive.EndDate | mydate | date: 'dd/MM/yyyy'}}
+
+                        </td>
+                        <td class="col-sm-2" style="text-align:right;">{{ ::accreditive.StartCapitalString }} {{ ::accreditive.Currency }}</td>
+                        <td class="col-sm-1 click_toggle" context="contextAccreditives" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <ul id="contextAccreditives" class="dropdown-menu">
+                <li ng-if="selectedAccreditiveIsAccessible"><a style="color: black;text-decoration:none!important ;" ui-sref="accreditiveDetails({ productId : selectedProductId,closedAccreditive:selectedClosedAccreditive })">Մանրամասն դիտարկում</a></li>
+                @*<li ng-if="$root.SessionProperties.SourceType == 2 && selectedAccreditive.Quality==10"><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={product:selectedAccreditive,orderType:110};openWindow('/LoanProductActivationOrder/PersonalLoanProductActivationOrder','Ակրեդիտիվի ակտիվացում','newLoanProductActivation')">Ակրեդիտիվի ակտիվացում</a></li>*@   
+
+            </ul>
+        </div>
+
+    </div>
+
+</div>

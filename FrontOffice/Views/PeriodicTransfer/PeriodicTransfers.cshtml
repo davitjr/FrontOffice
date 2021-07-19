@@ -1,0 +1,118 @@
+﻿<script type="text/javascript">
+    $("#periodicsContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div class="product-container" ng-controller="PeriodicTransferCtrl" id="AllPeriodicTransfers" data-ng-init="GetPeriodicTransfers()" ng-show="(hideBlank!='true' && periodictransfers.length==0) || (periodictransfers.length!=0 && periodictransfers.length!=undefined)">
+    <div class="header-title">
+        <a ui-sref="periodicTransfers" style="color:black;">Պարբերական փոխանցումներ</a> 
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="product-container-header">
+            <div class="include-closed-products">
+                <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-periodics" data-ng-model="filter" ng-true-value="2" ng-false-value="1" ng-change="QualityFilter()">
+                <label for="include-closed-periodics" name="include-closed-periodics-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+            </div>
+            &nbsp;&nbsp;&nbsp;
+            <select ng-show="currencies" ng-init="getCurrencies()" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ արժույթի" data-ng-model="currency" style="max-width:80px;height:30px" name="Currency" id="Currency" class="form-control"
+                    data-ng-options="k as v for (k,v) in ::currencies">
+                <option value=""></option>
+            </select>
+            <script>
+                $("[data-toggle=tooltip]").tooltip({
+                    placement: $(this).data("placement") || 'bottom'
+                });
+            </script>
+
+            <div class=" btn-group" style="float:right;">
+                <i class="add-new-product tipB" data-original-title="Նոր պարբերական" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </i>
+                <ul class="dropdown-menu">
+                    <li><a href="" ng-controller="PopUpCtrl" ng-click="params={periodic:2,subtype:3,checkForDebitAccount:0,checkForReciverAccount:0};openWindow('/PeriodicOrder/ChoosePeriodicOrderType','Նոր պարբերական փոխանցում(Սեփական հաշիվների միջև)','newperiodic',callbackGetPeriodicTransfers)">Փոխանցում հաշիվների միջև</a></li>
+                    <li><a href="" ng-controller="PopUpCtrl" ng-click="params={periodic:2,subtype:1,forBankTransfers:true,checkForDebitAccount:0,checkForReciverAccount:0};openWindow('/PeriodicOrder/ChoosePeriodicOrderType','Նոր պարբերական փոխանցում(Բանկի ներսում)','newperiodic',callbackGetPeriodicTransfers)">Փոխանցում բանկի ներսում</a></li>
+                    <li><a href="" ng-if="$root.SessionProperties.SourceType == 2" ng-controller="PopUpCtrl" ng-click="params={periodic:1,checkForDebitAccountTransferArmPayment:0,checkForFeeAccount:0};openWindow('/PeriodicOrder/ChoosePeriodicOrderType','Նոր պարբերական փոխանցում(ՀՀ տարածքում)','newperiodic',callbackGetPeriodicTransfers)">Փոխանցում ՀՀ տարածքում</a></li>
+                    <li><a href="" ng-if="$root.SessionProperties.SourceType == 2" ng-controller="PopUpCtrl" ng-click="params={periodic:4,checkForDebitAccountBudgetPayment:0,checkForFeeAccount:0};openWindow('/PeriodicOrder/ChoosePeriodicOrderType','Նոր պարբերական փոխանցում(Բյուջե)','newperiodic',callbackGetPeriodicTransfers)">Բյուջե</a></li>
+                    <li><a href="" ng-controller="PopUpCtrl" ng-click="params={periodic:3};openWindow('/PeriodicOrder/ChoosePeriodicOrderType','Նոր պարբերական փոխանցում(Կոմունալ վճարում)','newperiodic',callbackGetPeriodicTransfers)">Կոմունալ վճարում</a></li>
+                    <li><a href="" ng-if="$root.SessionProperties.SourceType == 2" ng-controller="PopUpCtrl" ng-click="params={periodic:5};openWindow('/PeriodicOrder/ChoosePeriodicOrderType','Նոր պարբերական փոխանցում(SWIFT-ով ուղարկվող քաղվածք)','newperiodic')">SWIFT-ով ուղարկվող քաղվածք</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="product-content-table custom-scroll" id="periodicsContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+            <div ng-if="periodictransfers==undefined">
+                <loading></loading>
+            </div>
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody>
+                    <tr ng-if="filter==1 && periodictransfers.length!=0" ng-repeat="transfer in periodictransfers | filter: { Currency: currency!=undefined?currency:'' }" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,transfer)" ng-dblclick="openPeriodicTransferDetails();" style="cursor: pointer;">
+                        <td class="col-md-4">
+                            <img ng-if="transfer.Type==1 || transfer.Type==2 || transfer.Type==100" class="media-object" src="~/Content/Images/ic_transfer.png" style="margin-right:7px" align="left" height="35" width="35" />
+
+                            <img ng-if="transfer.Type==3" class="media-object" src="~/Content/Images/hec_ic.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==4" class="media-object" src="~/Content/Images/ic_gazprom.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==5" class="media-object" src="~/Content/Images/armWater_ic.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==6" class="media-object" src="~/Content/Images/ic_yerJur.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==7" class="media-object" src="~/Content/Images/beeline_ic.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==8" class="media-object" src="~/Content/Images/vivacell-mts_ic.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==10" class="media-object" src="~/Content/Images/orange.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==11" class="media-object" src="~/Content/Images/ucom_ic.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==12" class="media-object" src="~/Content/Images/telephone.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==17" class="media-object" src="~/Content/Images/beeline_ic.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <span class="tab_text">Համար`</span> {{ ::transfer.Number }}
+                            <br /><span ng-if="transfer.Type==1 || transfer.Type==2 || transfer.Type==100" class="tab_text"> {{transfer.Type!=100?'Ստացող`':'SWIFT կոդ`'}} </span><span ng-if="transfer.Type==100"> {{ ::transfer.ReceiverBankSwiftCode}}</span> <span ng-if="transfer.Type==1 || transfer.Type==2">{{ ::transfer.CreditAccount}}</span>
+                            <span ng-if="transfer.Type!=1 && transfer.Type!=2 && transfer.Type!=100" class="tab_text">Բաժանորդ`</span> <span ng-if="transfer.Type!=1 && transfer.Type!=2">{{ ::transfer.AbonentNumber}}</span>
+                            <br /><span ng-if="transfer.Amount!=0" class="tab_text">Գումար`</span><span ng-if="transfer.Amount!=0">{{ ::transfer.AmountString}} {{ ::transfer.Currency}}</span>
+                            <span ng-if="transfer.Type==100" class="tab_text">SWIFT քաղվածքի հաշիվ`</span><span ng-if="transfer.Type==100"> {{ ::transfer.PeriodicTransferAccountNumber}}</span>
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="contextPeriodics" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+                    <tr ng-if="filter==1 && periodictransfers.length==0">
+                        <td colspan="2" style="text-align:center;">
+                            Առկա չեն գործող պարբերական փոխանցումներ
+                        </td>
+                    </tr>
+                    <tr ng-if="filter!=1"><td style="color:red; border-width:3px" colspan="2">Փակված պարբերականներ </td></tr>
+                    <tr ng-if="closingPeriodicTransfers.length!=0" ng-repeat="transfer in closingPeriodicTransfers" ng-class="{'selected':$index == selectedRowClose}" ng-click="setClickedRowClose($index,transfer)" ng-dblclick="openPeriodicTransferDetails();" style="cursor: pointer;">
+                        <td class="col-md-4">
+                            <img ng-if="transfer.Type==1 || transfer.Type==2" class="media-object" src="~/Content/Images/ic_transfer.png" align="left" height="35" width="35" />
+
+                            <img ng-if="transfer.Type==3" class="media-object" src="~/Content/Images/hec_ic.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==4" class="media-object" src="~/Content/Images/ic_gazprom.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==5" class="media-object" src="~/Content/Images/armWater_ic.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==6" class="media-object" src="~/Content/Images/ic_yerJur.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==7" class="media-object" src="~/Content/Images/beeline_ic.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==8" class="media-object" src="~/Content/Images/vivacell-mts_ic.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==10" class="media-object" src="~/Content/Images/orange.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==11" class="media-object" src="~/Content/Images/ucom_ic.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==12" class="media-object" src="~/Content/Images/telephone.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <img ng-if="transfer.Type==17" class="media-object" src="~/Content/Images/beeline_ic.png" style="margin-right:7px" align="left" height="35" width="35" />
+                            <span class="tab_text">Համար`</span> {{ ::transfer.Number }}
+                            <br /><span ng-if="transfer.Type==1 || transfer.Type==2" class="tab_text">Ստացող`</span> <span ng-if="transfer.Type==1 || transfer.Type==2">{{ ::transfer.CreditAccount}}</span>
+                            <span ng-if="transfer.Type!=1 && transfer.Type!=2" class="tab_text">Բաժանորդ`</span> <span ng-if="transfer.Type!=1 && transfer.Type!=2">{{ ::transfer.AbonentNumber}}</span>
+                            <br /><span ng-if="transfer.Amount!=0" class="tab_text">Գումար`</span><span ng-if="transfer.Amount!=0">{{ ::transfer.AmountString}} {{ ::transfer.Currency}}</span>
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="contextPeriodics" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            
+        </div>
+        <ul id="contextPeriodics" class="dropdown-menu">
+            <li><a style="color: black;text-decoration:none!important ;" ui-sref="periodicdetails({ productId : selectedProductId,closedPeriodic:selectedPeriodic })">Մանրամասն դիտարկում</a></li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+

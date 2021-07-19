@@ -1,0 +1,434 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    .radio-inline {
+        margin-top: -22px;
+        font-size: 14px
+    }
+
+    .ui-widget-content {
+        color: #6d6d6d;
+    }
+
+    .form-control {
+        color: #6d6d6d;
+    }
+
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+</style>
+<div id="depositLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="DepositOrderCtrl" style="min-width:650px;" id="DepositOrderForm" name="DepositOrderForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+
+    <div id="newdeposit_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="DepositOrderForm.$setSubmitted();DepositOrderForm.$valid && saveDepositOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newdeposit')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+            <li class="root-menu-item-4 " ng-controller="PopUpCtrl" ng-click="params={AccountNumber: order.DebitAccount.AccountNumber,checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:51,depositAmount:order.Amount};openWindowWithTemplate('paymentorder','Մուտք հաշվին','paymentorder')">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="cashInButton h-menu-icon">Կանխիկ մուտք</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div style="max-width:700px">
+            <errors></errors>
+        </div>
+        <div style="max-width:700px;margin-left:50px">
+            <a style="color:red">
+                {{alert}}
+            </a>
+        </div>
+
+
+        <div class="col-sm-11">
+            <div class=" form-group">
+                <label class="tab_title col-sm-5 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input disabled="disabled" type="date" class="form-control tab_title" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" required>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="DepositType"> Պատկանելիություն</label>
+                <div class="col-sm-6" data-ng-init="getJointTypes()">
+                    <div class="row">
+                        <loading-control scopevariable="jointTypes"></loading-control>
+                        <select ng-model="order.AccountType" ng-show="jointTypes" ng-disabled="customertype!=6" name="AccountType" id="AccountType" ng-change="order.ThirdPersonCustomerNumbers = [];order.DepositType=undefined;getActiveDepositTypesForNewDepositOrder();order.Deposit.Currency=undefined;customerNumber='';getAccountsForPercentAccount();debitAccounts=0;order.IsActionDeposit=false;order.Deposit.Action=null;order.Deposit.EndDate=undefined;order.Deposit.InterestRate=undefined" class="form-control" required
+                                data-ng-options="k as v for (k,v) in jointTypes">
+
+                            <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք տեսակը...</option>
+
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DepositOrderForm.$submitted || DepositOrderForm.AccountType.$dirty"
+                                     for="DepositOrderForm.AccountType.$error">
+                            <ng-message when="required" class="errors">
+                                Պատկանելիության տեսակն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-if="order.AccountType==1 || order.AccountType==2">
+                <label class="col-sm-5 tab_title">Հաճախորդ</label>
+                <div class="col-sm-6 ">
+                    <div class="row">
+                        <div class="input-group">
+                            <input type="text" ng-model="customerNumber" style="width:122px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" class="form-control" id="customerNumber" name="customerNumber" required onkeypress="return event.keyCode != 13;" ng-model-options="{updateOn: 'blur'}" data-update-model-on-enter-key-pressed>
+                            <div class="input-group-btn" style="display:inline-block;">
+                                <button type="button" title="Ավելացնել հաճախորդին" class="btn btn-primary" ng-click="addCustomer(customerNumber)"><span class="glyphicon glyphicon-plus"></span></button>
+                                <button type="button" title="Հաճախորդի որոնոմ" class="btn btn-primary searchButton" ng-click="searchCustomers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="order.AccountType==1 || order.AccountType==2">
+                <div class="col-sm-6" ng-repeat="CustomerNumber in order.ThirdPersonCustomerNumbers" ng-if="order.ThirdPersonCustomerNumbers.length>0">
+                    <div class="row" style="margin-left:10px;">
+                        <button type="button" class="btn btn-danger btn-xs" ng-click="delete($index)"><span class="glyphicon glyphicon-remove"></span></button>
+                        <customerinfo customernumber="CustomerNumber.Key" showfulldata="false"> </customerinfo>
+                    </div>
+                </div>
+            </div>
+
+
+            <div ng-if="order.AccountType==0 && customertype==6" ng-init="getDepositActions()"></div>
+            <div class="form-group" ng-if="order.AccountType!=2 && order.AccountType!=1 && actions.length>0 && customertype==6">
+                <label class="tab_title col-sm-5" for="DepositCurrency">Ակցիա</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select data-ng-model="order.Deposit.Action" name="Action" id="Action"
+                                class="form-control"
+                                data-ng-options="action.ActionTypeDescription+' '+action.Currency+' '+(action.Percent!=0?((action.Percent*100).toFixed(2)):'') for action in actions" ng-change="setAction(order.Deposit.Action)">
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք ակցիան...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="DepositType"> Ավանդի տեսակ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select data-ng-model="order.DepositType" ng-disabled="order.IsActionDeposit" name="DepositType" id="DepositType" ng-change="GetCurrencies();GetDepositCondition()" class="form-control" required
+                                data-ng-options="k as v for (k,v) in depositypes">
+
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք ավանդի տեսակը...</option>
+
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DepositOrderForm.$submitted || DepositOrderForm.DepositType.$dirty"
+                                     for="DepositOrderForm.DepositType.$error">
+                            <ng-message when="required" class="errors">
+                                Ավանդի տեսակն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="DepositCurrency">Արժույթը</label>
+                <div class="col-sm-6" data-ng-init="GetCurrencies()">
+                    <div class="row">
+                        <select ng-disabled="order.DepositType==undefined || order.IsActionDeposit" data-ng-model="order.Deposit.Currency" name="DepositCurrency" id="DepositCurrency"
+                                ng-change="GetDepositCondition();GetAccountsForNewDeposit();getAccountsForPercentAccount();getClosedDepositAccountList()" class="form-control" required
+                                data-ng-options="k as v for (k,v) in currencies">
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք արժույթը...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DepositOrderForm.$submitted || DepositOrderForm.DepositCurrency.$dirty"
+                                     for="DepositOrderForm.DepositCurrency.$error">
+                            <ng-message when="required" class="errors">
+                                Արժույթը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="DepositStartDate">Ավանդի սկիզբ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="date" disabled="disabled" style="text-align:left" class="form-control tab_title" id="DepositStartDate" name="DepositStartDate" ng-model="order.Deposit.StartDate" required>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DepositOrderForm.$submitted || DepositOrderForm.DepositStartDate.$dirty"
+                                     for="DepositOrderForm.DepositStartDate.$error">
+                            <ng-message when="required" class="errors">
+                                Ավանդի սկիզբը նշված չէ
+                            </ng-message>
+                            <ng-message when="date" class="errors">
+                                Ավանդի սկիզբը սխալ է նշված
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="tab_title col-sm-5 " for="DepositEndDate">Ավանդի վերջ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="date" ng-disabled="order.DepositType==4 || order.AccountType==2 || order.IsActionDeposit" style="text-align:left" class="form-control tab_title" id="DepositEndDate" name="DepositEndDate" ng-model="order.Deposit.EndDate" ng-blur="GetDepositCondition();isSunDay()" required>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DepositOrderForm.$submitted || DepositOrderForm.DepositEndDate.$dirty"
+                                     for="DepositOrderForm.DepositEndDate.$error">
+                            <ng-message when="required" class="errors">
+                                Ավանդի վերջը նշված չէ
+                            </ng-message>
+                            <ng-message when="date" class="errors">
+                                Ավանդի վերջը սխալ է նշված
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+                <div class="col-sm-12" style="text-align: center;">
+                    <div ng-show="percent>0 && order.IsActionDeposit!=true"><small>{{minDate}}</small></div>
+                    <div ng-show="percent>0 && order.IsActionDeposit!=true"><small>&nbsp;{{maxDate}}</small></div>
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-if="order.DepositType==15">
+                <label class="tab_title col-sm-5" for="ReferenceType" data-ng-init="getBusinesDepositOptions()">Ավանդի օպցիաներ</label>
+
+
+                <div class="col-sm-7">
+                    <div class="row" ng-repeat="businesDepositOption  in businesDepositOptions | filter: { OptionGroup: 1}">
+
+                        <input type="checkbox" ng-disabled="businesDepositOption.disabled || $parent.selectedBusinesDepositOptionFunctionCall" class="checkbox-inline" id="fund" ng-model="businesDepositOption.checkedOption" ng-click="selectedBusinesDepositOption(businesDepositOption)" ng-true-value="true" ng-false-value="false">
+                        <label class="tab_title" style="font-size:11px">
+                            {{businesDepositOption.TypeDescription}} &nbsp; {{showbusinesDepositOptionRate==true?((businesDepositOption.Rate>0?'+':'')+((businesDepositOption.Rate*100) | number:2)+' %'):''}}
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group" ng-if="order.DepositType==15">
+                <label class="tab_title col-sm-5" for="interestPaymentMethod">Տոկոսագումարների վճարման եղանակ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select data-ng-options="businesDepositOption.TypeDescription+' '+(showbusinesDepositOptionRate==true?((businesDepositOption.Rate>0?'+':'')+((businesDepositOption.Rate*100) | number:2)+' %'):'')+' ' for businesDepositOption  in businesDepositOptions | filter: { OptionGroup: 2}"
+                                data-ng-model="interestPaymentMethod" name="interestPaymentMethod" id="interestPaymentMethod" class="form-control" required ng-change="selectedBusinesDepositOption(interestPaymentMethod,true)">
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք տեսակը...</option>
+
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DepositOrderForm.$submitted || DepositOrderForm.interestPaymentMethod.$dirty"
+                                     for="DepositOrderForm.interestPaymentMethod.$error">
+                            <ng-message when="required" class="errors">
+                                Տոկոսագումարների վճարման եղանակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group " ng-if="order.DepositType==15 && order.Deposit.DepositOption && depositInterestRate!=undefined">
+                <label class="tab_title col-sm-5 " for="amount">Նոմինալ տոկոսադրույք</label>
+                <div class="col-sm-6">
+                    <div class="row">
+
+                        <div class="input-group col-sm-10">
+                            <label class="tab_title" style="font-size:14px">
+                                {{depositInterestRate}}%
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group " ng-if="order.DepositType==15 && order.Deposit.DepositOption && depositOptionRate!=undefined">
+                <label class="tab_title col-sm-5 " for="amount">Ավանդի օպցիայի տոկոսադրույք</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="input-group col-sm-10">
+                            <label class="tab_title" style="font-size:14px">
+                                {{depositOptionRate}}%
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <label class="tab_title col-sm-5 " for="amount">Ավանդի տոկոսադրույք</label>
+                <div class="col-sm-6">
+                    <div class="row">
+
+                        <div class="input-group col-sm-10">
+                            <input type="text" ng-disabled="disableInterestRate" class="form-control" required fcsa-number onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' id="Interestrate" name="Deposit.Interestrate" ng-blur="order.InterestRateChanged=true;" ng-model="order.Deposit.InterestRate">
+                            <span class="input-group-addon" id="basic-addon2" style="width: 0;">%</span>
+                            <span ng-if="canChangeDepositRate=='1' && order.IsActionDeposit!=true" class="input-group-addon " id="basic-addon2" style="width: 0;" title="Փոփոխել տոկոսադրույքը" data-placement="bottom" ng-click="ChangeDisableInterestRateStatus()"> <span class="glyphicon glyphicon-pencil"></span> </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group ">
+                <label class="tab_title col-sm-5 " for="amount">Գումար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+
+                        <div class="input-group col-sm-10">
+                            <input type="text" class="tab_title form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' id="amount" name="amount" ng-blur="checkAmount();" ng-model="order.Amount" required fcsa-number>
+                            <span class="input-group-addon" id="basic-addon2" style="width: 0;"> {{order.Deposit.Currency!=undefind?order.Deposit.Currency:'&nbsp;&nbsp;&nbsp;'}} </span>
+                        </div>
+                        <div ng-show="percent>0"><small>{{amountText+" "+order.Deposit.Currency}}</small></div>
+
+                    </div>
+                    <div class="row">
+                        <div ng-messages="DepositOrderForm.amount.$dirty && DepositOrderForm.amount.$error" class="errors">
+                            <ng-messages ng-if="DepositOrderForm.$submitted || DepositOrderForm.amount.$dirty"
+                                         for="DepositOrderForm.amount.$error">
+                                <ng-message when="required" class="errors">
+                                    Գումար դաշտը լրացված չէ
+                                </ng-message>
+                                <ng-message when="fcsaNumber" class="errors">
+                                    Գումարը սխալ է լրացված
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <paymentaccount accounts="debitAccounts"
+                            accountselectname="debitAccount"
+                            account="order.DebitAccount"
+                            check="0"
+                            nameforaccount="'Մայր գումարի հաշվեհամար'"
+                            nameforcurrency=""
+                            showloading="false"
+                            formname="DepositOrderForm">
+            </paymentaccount>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="DepositOrderForm.$submitted || DepositOrderForm.debitAccount.$dirty"
+                             for="DepositOrderForm.debitAccount.$error">
+                    <ng-message when="required" class="errors">
+                        Հաշիվը ընտրված չէ
+                    </ng-message>
+                </ng-messages>
+            </div>
+
+
+            <paymentaccount accounts="percentAccounts"
+                            accountselectname="percentAccount"
+                            account="order.PercentAccount"
+                            check="0"
+                            nameforaccount="'Տոկոսագումարի հաշվեհամար'"
+                            nameforcurrency=""
+                            showloading="false"
+                            formname="DepositOrderForm">
+            </paymentaccount>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="DepositOrderForm.$submitted || DepositOrderForm.percentAccount.$dirty"
+                             for="DepositOrderForm.percentAccount.$error">
+                    <ng-message when="required" class="errors">
+                        Հաշիվը ընտրված չէ
+                    </ng-message>
+                </ng-messages>
+            </div>
+
+
+            <paymentaccount accounts="closedDepositAccounts"
+                            accountselectname="closedDepositAccount"
+                            account="order.DepositAccount"
+                            check="0"
+                            nameforaccount="'Ավանդային հաշվեհամար'"
+                            nameforcurrency=""
+                            showloading="false"
+                            isrequire="false"
+                            formname="DepositOrderForm">
+            </paymentaccount>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="RecontractPossibility">Ավտոմատ երկարաձգում</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select data-ng-model="order.RecontractPossibility" name="RecontractPossibility" id="RecontractPossibility" ng-disabled="order.DepositType==4 || order.AccountType==2" class="form-control" required>
+                            <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք տեսակը...</option>
+                            <option value="2">Այո</option>
+                            <option value="1">Ոչ</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DepositOrderForm.$submitted || DepositOrderForm.RecontractPossibility.$dirty"
+                                     for="DepositOrderForm.RecontractPossibility.$error">
+                            <ng-message when="required" class="errors">
+                                Ավտոմատ երկարաձգման տեսակն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="StatmentDeliveryType">Քաղվածքի ստացում</label>
+                <div class="col-sm-6">
+                    <div class="row" ng-init="GetDepositStatmentDeliveryTypes()">
+                        <select data-ng-model="order.Deposit.StatementDeliveryType" name="StatmentDeliveryType" id="StatmentDeliveryType" class="form-control" required
+                                data-ng-options="k as v for (k,v) in depositStatmentDeliveryTypes">
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք տեսակը...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DepositOrderForm.$submitted || DepositOrderForm.StatmentDeliveryType.$dirty"
+                                     for="DepositOrderForm.StatmentDeliveryType.$error">
+                            <ng-message when="required" class="errors">
+                                Քաղվածքի ստացման տեսակն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+            <usersetnumber setnumber="order.Deposit.InvolvingSetNumber" formname="DepositOrderForm" labelname="Ներգրավող ՊԿ"></usersetnumber>
+            <br />
+        </div>
+    </div>
+
+
+
+</form>
+
+
+
+
+
+
+
+
+
+
+

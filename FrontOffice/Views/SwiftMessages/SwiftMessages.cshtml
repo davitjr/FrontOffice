@@ -1,0 +1,295 @@
+﻿
+
+<style>
+
+    #swiftMessagesResult table, #swiftMessagesResult tr, #swiftMessagesResult td {
+        padding-left: 0px !important;
+        font-size: 10px !important;
+    }
+
+    #swiftMessagesResult table, #swiftMessagesResult th, #swiftMessagesResult td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    #swiftMessagesResult table {
+        border-collapse: collapse;
+    }
+
+
+</style>
+<form name="swiftMessagesForm" ng-if="$root.SessionProperties.OperationDate!=undefined" id="SwiftMessagesForm" ng-init="initSwiftMessagesSearchParams();initSwiftMessagesContentScroll()" ng-controller="SwiftMessagesCtrl" novalidate style="margin-top:15px">
+
+    <div class="product-details bhoechie-tab-content" style="min-width:1100px;margin-left:10px;">
+        <div class="row">
+            <div class="col-sm-12">
+
+
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ա/թ ֆիլտր
+                    </div>
+                    <div ng-init="dateFilterType='1'">
+                        
+                        <select  ng-model="dateFilterType" ng-change="dateFilterTypeChanged(dateFilterType)" name="DateFilterType" id="DateFilterType" class="form-control">
+                            <option selected="selected" value="1">ֆիքսված ա/թ</option>
+                            <option value="2">ա/թ միջակայք</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-3  " ng-if="dateFilterType=='1'">
+                    <div class="product-detail-cell product-detail-lable">
+                        Գրանցման ա/թ
+                    </div>
+                    <input type="date" ng-model="searchParams.RegistartionDate" name="RegistartionDate" id="RegistartionDate" class="form-control" required>
+
+                </div>
+
+                <div class="col-sm-3  " ng-if="dateFilterType=='1'">
+                    <div class="product-detail-cell product-detail-lable">
+                        Հաստատման ա/թ
+                    </div>
+                    <input type="date" ng-model="searchParams.ConfirmationDate" name="ConfirmationDate" id="ConfirmationDate" class="form-control">
+
+                </div>
+                <div class="col-sm-3  " ng-if="dateFilterType=='2'">
+                    <div class="product-detail-cell product-detail-lable">
+                        Սկիզբ
+                    </div>
+                    <input type="date" ng-model="searchParams.DateFrom" name="RegistartionDate" id="RegistartionDate" class="form-control" required>
+
+                </div>
+
+                <div class="col-sm-3  " ng-if="dateFilterType=='2'">
+                    <div class="product-detail-cell product-detail-lable">
+                        Վերջ
+                    </div>
+                    <input type="date" ng-model="searchParams.DateTo" name="ConfirmationDate" id="ConfirmationDate" class="form-control" required>
+
+                </div>
+
+
+                
+                
+                
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Մասնաճյուղ
+                    </div>
+                    <div data-ng-init="getFilialList()">
+                        <loading-control scopevariable="filialList"></loading-control>
+                        <select ng-show="filialList" ng-disabled="disableSearchParamFilialCode" ng-model="searchParams.FilialCode" class="form-control" 
+                                data-ng-options="k as v for (k,v) in filialList" id="FilialCode" name="FilialCode">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        MT տեսակ
+                    </div>
+                    <div data-ng-init="getSwiftMessagMtCodes()">
+                        <loading-control scopevariable="swiftMessagMtCodes"></loading-control>
+                        <select ng-show="swiftMessagMtCodes" ng-model="searchParams.MtCode" class="form-control"
+                                data-ng-options="k as k+' '+v for (k,v) in swiftMessagMtCodes" id="MtCode" name="MtCode">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Swift կոդ
+                    </div>
+                    <div>
+                        <input type="text" ng-model="searchParams.SwiftCode" name="SwiftCode" id="SwiftCode" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Հաճախորդի համար
+                    </div>
+                    <div class="input-group">
+                        <input type="text" ng-model="searchParams.CustomerNumber" style="width:122px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" class="form-control">
+                        <div class="input-group-btn" style="display:inline-block;">
+                            <button type="button" title="Հաճախորդի որոնոմ" class="btn btn-primary searchButton" ng-click="searchCustomers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Հաշվեհամար
+                    </div>
+                    <div class="input-group">
+                        <input type="text" ng-model="searchParams.Account['AccountNumber']" style="width:122px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control">
+                        <div class="input-group-btn" style="display:inline-block;">
+                            <button type="button" title="Հաշվի որոնոմ" class="btn btn-primary searchButton" ng-click="searchAccounts()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Տեսակ
+                    </div>
+                    <div data-ng-init="getSwiftMessageTypes()">
+                        <loading-control scopevariable="swiftMessageTypes"></loading-control>
+                        <select ng-show="swiftMessageTypes" ng-model="searchParams.InputOutput" name="InputOutput" id="InputOutput" class="form-control"
+                                data-ng-options="k as v for (k,v) in swiftMessageTypes">
+                            <option selected="selected" value="" hidden>Բոլորը</option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 ">
+                
+                
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Գործարքի համար
+                    </div>
+                    <div>
+                        <input type="text" ng-model="searchParams.TransactionNumber" name="TransactionNumber" id="TransactionNumber" class="form-control" />
+
+                    </div>
+                </div>
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Հղման համար
+                    </div>
+                    <div>
+                        <input type="text" ng-model="searchParams.ReferanceNumber" name="ReferanceNumber" id="ReferanceNumber" class="form-control" />
+
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Համակարգի տեսակ
+                    </div>
+                    <div data-ng-init="getSwiftMessageSystemTypes()">
+                        <loading-control scopevariable="swiftMessageSystemTypes"></loading-control>
+                        <select ng-show="swiftMessageSystemTypes" ng-model="searchParams.MessageType" name="MessageType" id="MessageType" class="form-control"
+                                data-ng-options="k as v for (k,v) in swiftMessageSystemTypes">
+                            <option selected="selected" value="" hidden>Բոլորը</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="row" style="padding-top: 10px;">
+            <div class="col-md-12 ">
+                
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Կցված/Չկցված
+                    </div>
+                    <div data-ng-init="getSwiftMessageAttachmentExistenceTypes()">
+                        <loading-control scopevariable="swiftMessageAttachmentExistenceTypes"></loading-control>
+                        <select ng-show="swiftMessageAttachmentExistenceTypes" ng-model="searchParams.MessageAttachment" name="MessageAttachment" id="MessageAttachment" class="form-control"
+                                data-ng-options="k as v for (k,v) in swiftMessageAttachmentExistenceTypes">
+                            <option selected="selected" value="">Բոլորը</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Հեռացված
+                    </div>
+                    <div>
+                        <input type="checkbox" ng-model="searchParams.Deleted" ng-true-value="true" ng-false-value="false" name="Deleted" id="Deleted" />
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button"  ng-click="getSearchedSwiftMessages()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br />
+    <div class="col-sm-6" style="padding:0px">
+        <div class="product-container col-sm-12" style="min-width:1100px;margin-left:10px;margin-top:-5px;padding:0px">
+            <div class="header-title">
+                SWIFT հաղորդագրություններ
+                <span ng-if="swiftMessages.length>0"><br />Քանակ՝ {{swiftMessages.length}}</span> 
+                <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+            </div>
+            <div class="product-collapsable-section">
+                <div class="product-container-header" style="height:50px">
+                        <table>
+                            <tr>
+                                <td class="col-sm-1">Համար</td>
+                                <td class="col-sm-1" style="width:5%">Մ/Ճ</td>
+                                <td class="col-sm-1" style="width:5%">MT</td>
+                                <td class="col-sm-1" style="width:5%">Գր. ա/թ</td>
+                                <td class="col-sm-1">Հաշիվ</td>
+                                <td class="col-sm-1">Հաճախորդ</td>
+                                <td class="col-sm-1">Swift կոդ</td>
+                                <td class="col-sm-1">Միջն․ հաշիվ</td>
+                                <td class="col-sm-1">Գործարքի համար</td>
+                                <td class="col-sm-1">Հղման համար</td>
+                                <td class="col-sm-1" style="width:5%">Հաստ. ա/թ</td>
+                                <td class="col-sm-1" style="width:5%">&nbsp;</td>
+                            </tr>
+                        </table>
+                </div>
+                <div id="swiftMessagesContent" class="product-content-table custom-scroll" style="height:220px">
+                    <table id="swiftMessagesResult" class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                        <tr ng-repeat="swiftMessage in swiftMessages" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow(swiftMessage)" style="max-height:200px">
+                            <td class="col-sm-1"><span style="padding-left:10px">{{::swiftMessage.ID}}</span></td>
+                            <td class="col-sm-1" style="width:5%"><span style="padding-left:10px">{{::swiftMessage.FilialCode}}</span></td>
+                            <td class="col-sm-1" style="width:5%"><span style="padding-left:10px">{{::swiftMessage.MtCode}}</span></td>
+                            <td class="col-sm-1" style="text-align:center;width:5%"><span style="padding-left:10px">{{::swiftMessage.RegistrationDate | mydate | date: 'dd/MM/yyyy'}}</span></td>
+                            <td class="col-sm-1"><span style="padding-left:10px">{{::swiftMessage.Account.AccountNumber}}</span></td>
+                            <td class="col-sm-1"><span style="padding-left:10px">{{::swiftMessage.CustomerNumber}}</span></td>
+                            <td class="col-sm-1"><span style="padding-left:10px">{{::swiftMessage.SWIFTCode}}</span></td>
+                            <td class="col-sm-1"><span style="padding-left:10px">{{::swiftMessage.FeeAccount.AccountNumber}}</span></td>
+                            <td class="col-sm-1"><span style="padding-left:10px">{{::swiftMessage.TransactionNumber}}</span></td>
+                            <td class="col-sm-1"><span style="padding-left:10px">{{::swiftMessage.ReferanceNumber}}</span></td>
+                            <td class="col-sm-1" style="text-align:center;width:5%">{{::swiftMessage.ConfirmationDate | mydate | date: 'dd/MM/yyyy'}}</td>
+                            <td class="col-sm-1 click_toggle" style="width:5%" id="contextMenu" context="context"><div id="contextMenu"></div> </td>
+                        </tr>
+                    </table>
+                    <div ng-if="swiftMessages.length==0" style="color:red;font-size:16px;text-align:center;">Տվյալները բացակայում են</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul id="context" class="dropdown-menu">
+        <li><a style="color: black;text-decoration:none!important ;" class="my_button" 
+               ng-controller="PopUpCtrl"  ng-click="params={messageUnicNumber:selectedSwiftMessageId}; openWindow('/SwiftMessages/SwiftMessageDetails','SWIFT հաղորդագրության մանրամասն դիտարկում','swiftMessageDetails')"
+               >Դիտարկել հաղորդագրությունը</a></li>
+
+        <li ng-if="canConfirm">
+            <a style="color: black;text-decoration:none!important ;" class="my_button" ng-click="confirm202SwiftMessage()">Հաստատել</a>
+        </li>
+        <li ng-if="canConfirmSwift">
+            <a style="color: black;text-decoration:none!important ;" class="my_button" ng-click="saveTransactionSwiftConfirmOrder()">Հաստատել</a>
+        </li>
+        <li ng-if="canConfirm">
+            <a style="color: black;text-decoration:none!important ;" class="my_button" ng-click="showReject()">Մերժել</a>
+        </li>
+    </ul>
+</form>

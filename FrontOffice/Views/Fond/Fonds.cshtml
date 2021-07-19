@@ -1,0 +1,84 @@
+﻿@*<style>
+        .redBold {
+            font-weight: bold;
+            color: red;
+        }
+
+        .blueBold {
+            font-weight: bold;
+            color: blue;
+        }
+    </style>*@
+@*<script type="text/javascript">
+        $("#depositCasesContent").mCustomScrollbar({
+            theme: "rounded-dark",
+            scrollButtons: {
+                scrollAmount: 200,
+                enable: true
+            },
+            mouseWheel: {
+                scrollAmount: 200
+            }
+        });
+    </script>*@
+<div class="product-container" ng-controller="FondCtrl" id="AllFonds" data-ng-init="getFonds();" ng-show="(fonds.length!=0 && fonds.length!=undefined)">
+    <div class="header-title">
+        <a ui-sref="fonds" style="color:black;">Ֆոնդեր</a>
+        @*<div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>*@
+    </div>
+
+    <div>
+        @*<span id="h-menu-item-3"><img id="h-menu-icon-5" class="h-menu-icon applicationButton"> Ֆոնդերի հաշիվների ցանկ</span>*@
+        <span class="glyphicon glyphicon-print" style="top:-4px !important" id="h-menu-item-3"><a href=""  ng-click="printFondAccountsList()"> Ֆոնդերի հաշիվների ցանկ</a></span>
+</div>
+
+    <div class="product-collapsable-section">
+        <div class="product-container-header">
+            <div class="include-closed-products">
+                <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-fonds" data-ng-model="filter" ng-true-value="2" ng-false-value="1" ng-change="QualityFilter()">
+                <label for="include-closed-fonds" name="include-closed-fonds-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել ոչ ակտիվ ֆոնդերը</label>
+            </div>
+            <div ng-controller="PopUpCtrl" ng-click="openWindow('/FondOrder/FondOrder','Նոր ֆոնդի մուտքագրում','newfondorder')" class="ng-scope">
+                <i class="add-new-product ng-scope" data-original-title="Ավելացնել նոր ֆոնդ"></i>
+            </div>
+
+        </div>
+    </div>
+    <div class="product-content-table custom-scroll" id="fondsContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+        <div ng-if="fonds==undefined">
+            <loading></loading>
+        </div>
+        <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+            <thead>
+
+            </thead>
+            <tbody>
+                <tr ng-repeat="fond in fonds" ng-if="fonds.length!=0 " ng-class="{'selected':$index == selectedRow}" style="cursor: pointer;" ng-click="setClickedRow($index);" ng-dblclick="params={fondID:currentFond.ID}; openWindow('/Fond/FondDetails','Մանրամասն դիտարկում ','fonddetails')">
+                    <td class="col-md-2">
+                        {{::fond.ID}}
+                    </td>
+                    <td class="col-md-8">
+                        {{::fond.Description}}
+                    </td>
+                    <td class="col-md-2 click_toggle" context="contextFonds" id="contextMenu"><div id="contextMenu"></div> </td>
+                </tr>
+                <tr ng-if="fonds.length==0 ">
+                    <td colspan="3" style="text-align:center;">
+                        Առկա չեն ֆոնդեր
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <ul id="contextFonds" class="dropdown-menu">
+        <li>
+            <a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl"
+               ng-click="params={fondID:currentFond.ID}; openWindow('/Fond/FondDetails','Մանրամասն դիտարկում ','fondDetails')">Դիտարկել</a>
+        </li>
+        <li>
+            <a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl"
+               ng-click="params={fondID:currentFond.ID}; openWindow('/FondOrder/FondChangeOrder','Տվյալների խմբագրում ','fondchange')">Խմբագրել</a>
+        </li>
+    </ul>
+</div>
+

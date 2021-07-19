@@ -1,0 +1,233 @@
+﻿
+
+    <style>
+        .modal-content {
+            min-width: 950px;
+            max-height: 740px;
+            width: 1050px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+
+        .nonUnicodeText {
+            font-family: serif, font-size: 13px;
+            padding: 0;
+        }
+
+        .resultRow {
+            font-size: 10pt;
+            color: black;
+            font-weight: normal;
+        }
+
+        .resultRowAddInf {
+            font-size: 9pt;
+        }
+
+        .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .tableHeader {
+            font-size: 9pt;
+            height: 25px;
+        }
+
+        #serachLeasingCustomer .product-container-header > th {
+            font-weight: inherit;
+        }
+
+        #serachLeasingCustomer .div-table-content {
+            margin-top: -7px;
+            border-color: #CFDAD0 !important;
+        }
+
+
+        #serachLeasingCustomer .popup_wrapper_top {
+            margin-top: -10px !important;
+        }
+
+        .leasingHeader {
+            color: black !important;
+            background-color: white !important;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 30px;
+            padding-left: 5px;
+            border-color: #D0CCCC !important;
+            border-width: 1px;
+            border-style: solid;
+            margin-bottom: -6px;
+        }
+
+
+        .errorLeasingHeader {
+            color: #A94442;
+            background-color: white !important;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 30px;
+            padding-left: 5px;
+            border-color: red;
+            border-width: 1px;
+            border-style: solid;
+            margin-bottom: -6px;
+        }
+
+        #LeasingDetailedInfoForm {
+            margin: 0 auto !important;
+            position: center !important;
+            z-index: 2000 !important;
+        }
+    </style>
+
+    <div id="LeasingDetailedInfo" class="overlay hidden">
+        <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+    </div>
+
+    <form id="LeasingDetailedInfoForm" name="LeasingDetailedInfoForm" role="form" class="form-horizontal" prevent-enter-submit labels-required ng-init="initDetailedInformation();initLeasingOperDay();" style=" width:1050px!important; " ng-controller="LeasingCtrl">
+
+        <div class="" style="padding-left:13px;padding-right:13px;margin-top:10px">
+            <section class="panel panel-success" style="border-color:white">
+                <div class="panel-body">
+                    <div style="margin-top:-5px;margin-left:-5px ">
+                        <div style="line-height: 20px;font-size: 15px;">
+                            <span> <b>Վճարման ենթակա դաշտեր</b></span>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="tab_title col-sm-2">Պայմ.համար</label>
+                            <label class=" col-sm-2" style="padding-top:7px;">{{::leasingContractNumber}}</label>
+                            <label class="tab_title col-sm-3" style="color:red;margin-top: -2.5%;margin-left: 40%;font-weight: bolder !important;line-height: 20px;font-size: 15px;">Հաշվարկված է առ {{leasingOperDay | mydate | date: 'dd/MM/yyyy'}}</label> 
+                        </div>
+                        <div class="form-group">
+                            <label class="tab_title col-sm-2">Վճարման ենթակա մայր գումար</label>
+                            <label class="col-sm-2" style="padding-top:7px;">{{::detailedInfoObj.CurrentPeriodCapital}}</label>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label class="tab_title col-sm-2">Վճարման ենթակա տոկոս</label>
+                            <label class=" col-sm-2" style="padding-top:7px;">{{::detailedInfoObj.CurrentPeriodRent}}</label>
+                        </div>
+                        @*<table class="table table-condensed" style="margin-bottom:0;border:none">
+                            <thead>
+                                <tr class="product-container-header" style="font-size:8pt;height:20px;">
+                                    <th class="col-sm-2" style="text-align:center;">Պայմ.համար</th>
+                                    <th class="col-sm-5" style="text-align:center;">Վճարման ենթակա մայր գումար</th>
+                                    <th class="col-sm-5" style="text-align:center;">Վճարման ենթակա տոկոս</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table table-condensed table-hover" style="background-color:white">
+                                <tr style="font-size:9pt; cursor:pointer;height:10px;">
+                                    <td class="col-sm-2 nonUnicodeText">
+                                        {{::leasingContractNumber}}
+                                    </td>
+                                    <td class="col-sm-5 nonUnicodeText">
+                                        {{::detailedInfoObj.CurrentPeriodCapital}}
+                                    </td>
+                                    <td class="col-sm-5 nonUnicodeText">
+                                        {{::detailedInfoObj.CurrentPeriodRent}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>*@
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <div class="" style="padding-left:13px;padding-right:13px">
+            <section class="panel panel-success" style="border-color:white">
+                <div class="panel-body">
+                    <div style="margin-top:-5px;margin-left:-5px ">
+                        <div style="line-height: 20px;font-size: 13px;  text-align:center;">
+                            <span> <b>Հաշիվներ </b></span>
+                        </div>
+
+                        <div class="div-table-content " style="max-height:120px; min-height:120px;border: gray 1px solid; margin-top:5px; overflow: hidden;">
+                            <table class="table table-condensed table-hover" style="background-color:white; max-height:120px; min-height:120px;">
+                                <thead>
+                                    <tr class="product-container-header" style="font-size:10pt;height:20px; display: table; table-layout: fixed;">
+                                        <th class="col-sm-1" style="text-align:center;">Հաշվեհամար </th>
+                                        <th class="col-sm-2" style="text-align:left;">Արժույթ</th>
+                                        <th class="col-sm-1" style="text-align:center;">Մնացորդ</th>
+                                        <th class="col-sm-2" style="text-align:center;">Սինթետիկ հաշիվ</th>
+                                        <th class="col-sm-2" style="text-align:center;">Նկարագրություն</th>
+                                    </tr>
+                                </thead>
+                                <tbody style=" overflow-y:scroll;overflow-x:hidden;display:block;max-height:80px !important; min-height:80px !important">
+                                    <tr ng-repeat="accounts in detailedInfoObj.AccountsDetails" style="font-size:9pt; cursor:pointer;height:20px; text-align: center; " ng-class="{'selected':$index == selectedLeasingLoanRow}" ng-click="setClickedLoan($index)" ng-dblclick="selectLeasingLoan()">
+                                        <td class=" nonUnicodeText col-sm-1">{{::accounts.Accounts}}</td>
+                                        <td class=" nonUnicodeText col-sm-2" style="text-align:center;"> {{::accounts.Currency }}</td>
+                                        <td class=" nonUnicodeText col-sm-1" style="text-align:left;">  {{::accounts.Balance | number: 2}}</td>
+                                        <td class=" nonUnicodeText col-sm-2" style="text-align:center;"> {{::accounts.TypeOfAccount }}</td>     
+                                        <td class=" nonUnicodeText col-sm-2" style="text-align:left;"> {{::accounts.Description }}</td>
+                                    </tr>
+                                    <tr ng-if="detailedInfoObj.AccountsDetails.length==0">
+                                        <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="" style="padding-left:13px;padding-right:13px">
+            <section class="panel panel-success" style="border-color:white">
+                <div class="panel-body">
+                    <div style="overflow:auto;margin-top:-5px;margin-left:-5px ">
+                        <div style="line-height: 20px;font-size: 13px;  text-align:center;">
+                            <span> <b>Այլ պարտավորություններ </b></span>
+                        </div>
+
+                        <div class="div-table-content " style="max-height:120px; min-height:120px;border: gray 1px solid; margin-top:5px; overflow: hidden;">
+                            <table class="table table-condensed table-hover" style="background-color:white; max-height:120px; min-height:120px;">
+                                <thead>
+                                    <tr class="product-container-header" style="font-size:10pt;height:20px; display: table; table-layout: fixed;">
+                                        <th class="col-sm-1" style="text-align:center;">Նկարագրություն</th>
+                                        <th class="col-sm-2" style="text-align:center;">Ստեղծման ամսաթիվ</th>
+                                        <th class="col-sm-1" style="text-align:center;">Վճարման ամսաթիվ</th>
+                                        <th class="col-sm-2" style="text-align:center;">Գումար</th>
+                                    </tr>
+                                </thead>
+                                <tbody style=" overflow-y:scroll;overflow-x:hidden;display:block;max-height:80px !important; min-height:80px !important;">
+                                    <tr ng-repeat="debts in detailedInfoObj.DebtsDetails" style="font-size:9pt; cursor:pointer;height:20px; text-align: center; " ng-class="{'selected':$index == selectedLeasingLoanRow}" ng-click="setClickedLoan($index)" ng-dblclick="selectLeasingLoan()">
+                                        <td class=" nonUnicodeText col-sm-1" style="font-family:'Arial Armenian' !important">{{::debts.Description}}</td>
+                                        <td class=" nonUnicodeText col-sm-2"> {{::debts.GeneratedDate | mydate | date: 'dd/MM/yyyy' }}</td>
+                                        <td class=" nonUnicodeText col-sm-1" style="text-align:left;">  {{::debts.PayDate  | mydate | date: 'dd/MM/yyyy' }}</td>
+                                        <td class=" nonUnicodeText col-sm-2" style="text-align:center;"> {{::debts.Amount | number:2 }}</td>
+                                    </tr>
+                                    <tr ng-if="detailedInfoObj.DebtsDetails.length==0">
+                                        <td colspan="4" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

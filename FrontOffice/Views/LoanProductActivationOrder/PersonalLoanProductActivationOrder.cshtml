@@ -1,0 +1,233 @@
+﻿
+<style>
+	.CardAndCurrencyAccountsStyles {
+		font-size: 13px;
+		font-family: 'webly_semilight';
+		font-weight: normal;
+		padding-left: 30px;
+	}
+</style>
+<div id="loanProductActivLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+
+
+<form ng-controller="LoanProductActivationOrderCtrl" style="width:600px;" ng-init="getServiceFee();getLoanTotalInsuranceAmount(product.ProductId)" name="LoanActivationOrderForm" id="loanActivationOrderForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+    <div id="newLoanProductActivation_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-if="product.LoanType==29 || product.Type==30 || product.Type==54">
+                <span id="h-menu-item-4" onclick="return false;">
+                    <img id="h-menu-icon-4" class="h-menu-icon cashInButton">Փաստաթղթեր
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li ng-if="order.Type==73" id="v-menuItem-4.1"  ng-click="getDepositConsumeLoanContract(product.ProductId);">
+                        <span id="h-menu-item-2" >Պայմանագիր</span>
+                    </li>
+                    <li ng-if="order.Type==74 || product.Type==54" id="v-menuItem-4.2"  ng-click="getDepositCardCreditLineContract(product.ProductId,cardtype);">
+                        <span id="h-menu-item-3" >Պայմանագիր</span>
+                    </li>
+                    <li ng-if="order.Type==73" id="v-menuItem-4.3"   ng-click="getDepositLoanGrafik(product.ProductId);">
+                        <span id="h-menu-item-4" >Գրաֆիկ</span>
+                    </li>
+                    <li  id="v-menuItem-4.4" ng-if="product.Type!=54" ng-click="getDepositLoanProvisionDetails(product.ProductId,product.FillialCode);">
+                        <span id="h-menu-item-5" >Գրավ</span>
+                    </li>
+                    <li ng-if="order.Type==73" id="v-menuItem-4.5"  ng-click="getLoanTerms(product.ProductId);">
+                        <span id="h-menu-item-6" >Էական պայմաններ</span>
+                    </li>
+                    <li ng-if="order.Type==74 && product.Type!=54" id="v-menuItem-4.6" ng-click="getCreditLineTerms(product.ProductId);">
+                        <span id="h-menu-item-7" >Էական պայմաններ</span>
+                    </li>
+                </ul>
+            </li>
+            <li class="root-menu-item-8 " ng-click="LoanActivationOrderForm.$setSubmitted();LoanActivationOrderForm.$valid && saveLoanProductActivationOrder()">
+                <span id="h-menu-item-8"><img id="h-menu-icon-8" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-9 " onclick="CloseBPDialog('newLoanProductActivation')">
+                <span id="h-menu-item-9"><img id="h-menu-icon-9" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+
+    </div>
+
+
+
+    <div class="col-sm-12">
+        <errors></errors>
+
+		<div ng-if="order.Type!=111">
+			<div ng-if="cardNumber" class="col-sm-5 my_label line_height" style="clear:both">Քարտի համար</div><div ng-if="cardNumber" class="col-sm-7 my_text1 line_height" style="margin-left:-15px">{{cardNumber}}</div>
+			<div class="col-sm-5 my_label line_height" style="clear:both">Տեսակ</div><div class="col-sm-7 my_text1 line_height" style="margin-left:-15px">{{product.ProductTypeDescription}}</div>
+			<div class="col-sm-5 my_label line_height" style="clear:both">Պայմ. գումար</div><div class="col-sm-7 my_text1 line_height" style="margin-left:-15px">{{product.StartCapitalString}} {{product.Currency}}</div>
+			<div ng-if="order.Type!=109 && order.Type!=110" class="col-sm-5 my_label line_height" style="clear:both">Վարկային հաշիվ</div><div style="margin-left:-15px" class="col-sm-7 my_text1 line_height" ng-if="order.Type!=109 && order.Type!=110">{{product.LoanAccount.AccountNumber}} {{product.LoanAccount.Currency}}</div>
+			<div class="col-sm-5 my_label line_height" style="clear:both">Տարանցիկ հաշիվ</div><div style="margin-left:-15px" class="col-sm-7 my_text1 line_height">{{product.ConnectAccount.AccountNumber}} {{product.ConnectAccount.Currency}}</div>
+
+
+
+			<paymentaccount	ng-if="order.Type == 152"
+							data-ng-init="GetFactoringCustomerCardAndCurrencyAccounts()"
+							accounts="CardAndCurrencyAccounts"
+							account="$parent.$parent.CardAndCurrencyAccount"
+							isrequire="true"
+							check="0"
+							nameforaccount="'Ֆակտորինգի հաճախորդի հաշվեհամարներ'"
+							accountselectname="CardAndCurrencyAccount"
+							formname="LoanActivationOrderForm">
+			</paymentaccount>
+			<div class="row">
+				<div class="col-sm-5"></div>
+				<ng-messages ng-if="LoanActivationOrderForm.$submitted || LoanActivationOrderForm.CardAndCurrencyAccount.$dirty"
+							 for="LoanActivationOrderForm.CardAndCurrencyAccount.$error">
+					<ng-message when="required" class="errors">
+						Ֆակտորինգային հաճախորդի հաշվեհամարը ընտրված չէ
+					</ng-message>
+				</ng-messages>
+			</div>
+
+
+			<div class="col-sm-5 my_label line_height" style="clear:both"><span ng-if="order.Type!=109 && order.Type!=110 ">Տոկոսադրույք</span> <span ng-if="order.Type==109 || order.Type==110">Կոմիսիոն վճարի տոկոսադրույք</span></div><div style="margin-left:-15px" class="col-sm-7 my_text1 line_height">{{ product.InterestRate*100|number:2}}%</div>
+		</div>
+        <div ng-if="order.Type==111">
+            <div class="col-sm-5 my_label line_height" style="clear:both">Տեսակ</div><div class="col-sm-7 my_text1 line_height" style="margin-left:-15px">{{product.TypeDescription}}</div>
+            <div class="col-sm-5 my_label line_height" style="clear:both">Պայմ. գումար</div><div class="col-sm-7 my_text1 line_height" style="margin-left:-15px">{{product.StartCapitalString }} {{product.Currency}}</div>
+            @*<div class="col-sm-5 my_label line_height" style="clear:both">Տոկոսադրույք</div><div style="margin-left:-15px" class="col-sm-7 my_text1 line_height">{{product.InterestRate * 100 }}%</div>*@
+        </div>
+
+
+        <div class="tab_title form-group" style="margin-left:20px;" ng-if="order.Type==109 || order.Type==110 || order.Type==111 ||order.Type==141">
+
+            <label class="tab_text" for="urgent">
+                <input type="checkbox" class="checkbox-inline tab_title" id="checkBox" name="checkBox" data-ng-model="order.FeeForTrasitAccount" ng-true-value="true" ng-false-value="false">
+                <span style="cursor:pointer" ng-click="order.FeeForTrasitAccount==true?order.FeeForTrasitAccount=false:order.FeeForTrasitAccount=true">Գանձել խնդրահարույց տարանցիկ հաշվից</span>
+            </label>
+        </div>
+		<div ng-if="order.Type!=111 || (order.Type==111 && product.Type==31)">
+			<paymentaccount ng-if="order.FeeForTrasitAccount!=true && order.Type!=152 && product.Type!=54 && product.Type!=51"  
+							data-ng-init="getFeeAccounts()"
+							accounts="feeAccounts"
+							accountselectname="FeeAccount"
+							account="order.FeeAccount"
+							check="0"
+							nameforaccount="'Միջնորդավճարի հաշիվ'"
+							nameforcurrency=""
+							showloading="false"
+							isrequire="order.FeeAmount>0"
+							formname="LoanActivationOrderForm">
+			</paymentaccount>
+			<div class="row">
+				<div class="col-sm-5"></div>
+				<ng-messages ng-if="LoanActivationOrderForm.$submitted || LoanActivationOrderForm.FeeAccount.$dirty"
+							 for="LoanActivationOrderForm.FeeAccount.$error">
+					<ng-message when="required" class="errors">
+						Ընտրեք միջնորդավճարի գանձման հաշիվը
+					</ng-message>
+				</ng-messages>
+			</div>
+			<paymentaccount	ng-if="order.Type == 152"
+							data-ng-init="GetFactoringCustomerFeeCardAndCurrencyAccounts()"
+							accounts="FeeCardAndCurrencyAccounts"
+							account="$parent.$parent.FeeCardAndCurrencyAccount"
+							isrequire="true"
+							check="0"
+							accountselectname="FeeCardAndCurrencyAccount"
+							nameforaccount="'Հաճախորդի միջնորդավճարի հաշվեհամարներ'"
+							formname="LoanActivationOrderForm">
+			</paymentaccount>
+			<div class="row">
+				<div class="col-sm-5"></div>
+				<ng-messages ng-if="LoanActivationOrderForm.$submitted || LoanActivationOrderForm.FeeCardAndCurrencyAccount.$dirty"
+							 for="LoanActivationOrderForm.FeeCardAndCurrencyAccount.$error">
+					<ng-message when="required" class="errors">
+						Հաճախորդի միջնորդավճարի հաշվեհամարը ընտրված չէ
+					</ng-message>
+				</ng-messages>
+			</div>
+			<div class="form-group">
+				<label class="tab_title col-sm-5 " for="CreditLine" style="margin-left: 15px;">
+					Միջնորդավճար
+				</label>
+				<div class="col-sm-6 row">
+					<div class="col-sm-10 multiple_columns" style="margin-left: -30px !important">
+						<input type="text" class="form-control " id="FeeAmount" disabled name="FeeAmount" data-ng-model="order.FeeAmount" fcsa-number>
+					</div>
+					<h5 class="col-sm-1" style="padding:0">AMD</h5>
+				</div>
+			</div>
+
+			<div class="form-group" ng-if="(product.Type==54 || product.Type==51) && product.Currency!='AMD'">
+				<label class="tab_title col-sm-5 " for="amountInCurrency" style="margin-left: 15px;">
+					Միջնորդավճար {{product.Currency}}
+				</label>
+				<div class="col-sm-6 row">
+					<div class="col-sm-10 multiple_columns" style="margin-left: -30px !important">
+						<input type="text" class="form-control " id="amountInCurrency" disabled name="amountInCurrency" data-ng-model="amountInCurrency" fcsa-number>
+					</div>
+					<h5 class="col-sm-1" style="padding:0">{{product.Currency}}</h5>
+				</div>
+			</div>
+			<p class="text-left"></p>
+		</div>
+        <div ng-if="(order.Type==74 && product.Type!=54 && product.Type!=51) || order.Type==109 || order.Type==110">
+
+
+            <paymentaccount ng-if="order.FeeForTrasitAccount!=true"
+                            data-ng-init="getFeeAccounts()"
+                            accounts="feeAccounts"
+                            accountselectname="FeeAccountWithTax"
+                            account="order.FeeAccountWithTax"
+                            check="0"
+                            nameforaccount="'Միջնորդավճարի հաշիվ(ԱԱՀ-ով)'"
+                            nameforcurrency=""
+                            showloading="false"
+                            isrequire="order.FeeAmountWithTax>0"
+                            formname="LoanActivationOrderForm">
+            </paymentaccount>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="LoanActivationOrderForm.$submitted || LoanActivationOrderForm.FeeAccountWithTax.$dirty"
+                             for="LoanActivationOrderForm.FeeAccountWithTax.$error">
+                    <ng-message when="required" class="errors">
+                        Ընտրեք միջնորդավճարի գանձման հաշիվը
+                    </ng-message>
+                </ng-messages>
+            </div>
+
+            
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="CreditLine">
+                    Միջնորդավճար ԱԱՀ-ով
+                </label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <input type="text" class="form-control " id="FeeAmountWithTax" disabled name="FeeAmountWithTax" data-ng-model="order.FeeAmountWithTax" fcsa-number>
+                    </div>
+                    <h5 class="col-sm-1" style="padding:0">AMD</h5>
+                </div>
+            </div>
+
+            
+            <p class="text-left"></p>
+        </div>
+        <div class="form-group" ng-if="order.TotalInsuranceAmount>0">
+            <label class="tab_title col-sm-5 " for="InsuranceAmount">
+                Ապահովագրության միջնորդավճար
+            </label>
+            <div class="col-sm-6 row">
+                <div class="col-sm-10 multiple_columns">
+                    <input type="text" class="form-control " id="InsuranceAmount" disabled name="InsuranceAmount" data-ng-model="order.TotalInsuranceAmount" fcsa-number>
+                </div>
+                <h5 class="col-sm-1" style="padding:0">AMD</h5>
+            </div>
+        </div>
+        <div ng-show="warnings.length>0" class="col-sm-11 row panel panel-warning">
+            <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span> Ուշադրություն</div>
+            <div class="panel-body">
+                <div ng-repeat="war in warnings">
+                    {{$index+1}}.{{::war}}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

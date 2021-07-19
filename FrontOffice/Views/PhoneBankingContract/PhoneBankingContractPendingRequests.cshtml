@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "CustomerPendingChanges";
+}
+
+<div class="col-md-12" ng-controller="PhoneBankingActivationOrderCtrl" id="HBRequests" style="min-width:500px;" ng-init="getPBRequest()">
+    <div class="product-container" style="min-width:500px;margin-bottom: 10px;">
+        <div> 
+            <div style="text-align:center">
+                <span class="header-title">Հեռախոսային բանկինգի ծառայության ակտիվացում<br /></span>
+            </div>
+            <div class="product-container-header" ng-if="hasPBRequests" style="text-align:left">
+
+                <div class="btn-group" style="margin-left:5px; text-align:left">
+                   <button type="button" class="btn btn-primary" ng-controller="PopUpCtrl" ng-click="setCurrentRequests() ; openWindow('/PhoneBankingContract/PhoneBankingContractActivationOrder','Հեռախոսային բանկինգի ծառայության ակտիվացում','newPBActivationOrder')" style="height:30px;">Ակտիվացնել &nbsp;<span class="glyphicon glyphicon-floppy-saved" aria-hidden="true" style="top:-4px !important"></span></button>
+                </div>
+            </div>
+
+            <div class="product-content-table custom-scroll" ng-class="{'product-content-table-full_height' : hideBlank!='true' }" style="min-height:100px; padding :10px; text-align:left">
+                 
+                <div>{{order.PBActivationRequest.RequestTypeDescription}} </div>
+
+                <span ng-if="order.PBActivationRequest.ServiceFee>0"> {{order.PBActivationRequest.ServiceFee | number:2}} AMD</span>
+                            
+                <div ng-if="!hasPBRequests" collumnspan="2" style="text-align:center">
+                    Մշակման ենթակա հարցումներ գտնված չեն 
+                </div>
+                         
+            </div>
+        </div>
+    </div>
+</div>
+

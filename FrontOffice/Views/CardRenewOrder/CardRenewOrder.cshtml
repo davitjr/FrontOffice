@@ -1,0 +1,272 @@
+﻿<style type="text/css">
+    #cardRenewOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #cardRenewOrderForm .panel-heading {
+        background-color: #f3cd9f !important;
+    }
+
+    #cardRenewOrderForm .scrollbar1 {
+        overflow: auto;
+    }
+</style>
+<div id="cardRenewOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="CardRenewOrderCtrl"
+      name="cardRenewOrderForm"
+      id="cardRenewOrderForm"
+      ng-init="getCard(productId)"
+      role="form"
+      style="width:600px;min-height:700px;" class="form-horizontal"
+      novalidate>
+    <div id="cardreplace_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="cardRenewOrderForm.$setSubmitted();cardRenewOrderForm.$valid && saveCardRenewOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('cardRenewOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+    <div class="scrollbar1">
+        <div class="col-sm-10">
+
+            <div class=" form-group">
+                <label class="tab_title col-sm-6 " for="RegDate">Վերաթողարկման ա/թ</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12 ">
+                        <input disabled="disabled" type="date" ng-model="operationDate" name="RegDate" placeholder="yyyy-MM-dd" required class="form-control card_shadow_field" />
+                        <ng-messages class="col-sm-11" ng-if="cardRenewOrderForm.$submitted || cardRenewOrderForm.RegDate.$dirty"
+                                     for="cardRenewOrderForm.RegDate.$error">
+                            <ng-message when="required" class="errors">
+                                Վերաթողարկման ամսաթիվը լրացված չէ
+                            </ng-message>
+                            <ng-message when="max" class="errors">
+                                Վերաթողարկման ա/թ չի կարող գերազանցել գործառնական օրվա ամսաթիվը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" form-group">
+                <label class="tab_title col-sm-6 " for="CardAccount">Քարտի համար</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12 ">
+                        <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="CardNumber" name="CardNumber" ng-model="card.CardNumber">
+                    </div>
+                </div>
+            </div>
+
+            <div class=" form-group">
+                <label class="tab_title col-sm-6 " for="CardType">Քարտի տեսակ և արժույթ</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12 ">
+                        <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="CardType" name="CardType" value="{{card.CardType+' '+card.Currency}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub_inner form-group" ng-if="cardRenewOrder.RenewWithCardNewType">
+                <label class="tab_title col-sm-6" for="CardSystem">Համակարգ</label>
+                <div class="col-sm-6 row" data-ng-init="getCardSystemTypes()">
+                    <div class="multiple_columns col-sm-12 ">
+                        <loading-control scopevariable="cardSystemTypes"></loading-control>
+                        <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="CardNumber" name="CardNumber" ng-model="cardSystemTypes">
+                    </div>
+                </div>
+            </div>
+
+            <div class=" form-group" ng-if="cardRenewOrder.RenewWithCardNewType">
+                <label class="tab_title col-sm-6 " for="CardType">Նոր քարտի տեսակ և արժույթ</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12 ">
+                        <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="CardType" name="CardType" value="{{'VISA BARERAR'+' '+card.Currency}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub_inner form-group" ng-if="cardRenewOrder.RenewWithCardNewType">
+                <label class="tab_title col-sm-6" for="CardPINCodeReceivingType">PIN-ի ստացման եղանակ</label>
+                <div class="col-sm-6 row" data-ng-init="GetCardPINCodeReceivingTypes()">
+                    <div class="multiple_columns col-sm-12 ">
+                        <loading-control scopevariable="CardPINCodeReceivingTypes"></loading-control>
+                        <select ng-show="CardPINCodeReceivingTypes" ng-change="changeCardReceivingType()"
+                                ng-required="cardRenewOrder.cardReportReceivingType==4"
+                                data-ng-model="cardRenewOrder.CardPINCodeReceivingType" class="form-control" name="CardPINCodeReceivingType"
+                                data-ng-options="k as v for (k,v) in CardPINCodeReceivingTypes" required>
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                        </select>
+                        <ng-messages class="col-sm-11" ng-if="cardRenewOrderForm.$submitted || cardRenewOrderForm.CardPINCodeReceivingType.$dirty"
+                                     for="cardRenewOrderForm.CardPINCodeReceivingType.$error">
+                            <ng-message when="required" class="errors">
+                                PIN-ի սատցման եղանակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub_inner form-group" ng-if="card.CreditLine!=null">
+                <label class="tab_title col-sm-6" for="WithCreditLineClosing">Վարկային գծի դադարեցում</label>
+                <div class="col-sm-6 row">
+                    <input type="checkbox" ng-model="cardRenewOrder.WithCreditLineClosing" style="width:18px" name="WithCreditLineClosing" id="WithCreditLineClosing" />
+                </div>
+            </div>
+
+            <div class=" form-group" ng-init="GetCardHolderData(productId, cardRenewOrder.CardHolderName)">
+                <label class="tab_title col-sm-6 " for="FirstNameEng">Անուն(անգլերեն)</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12 ">
+                        <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="name" name="name" ng-model="name">
+                    </div>
+                </div>
+            </div>
+
+            <div class=" form-group" ng-init="GetCardHolderData(productId, cardRenewOrder.CardHolderLastName)">
+                <label class="tab_title col-sm-6 " for="FirstNameEng">Ազգանուն(անգլերեն)</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12 ">
+                        <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="lastName" name="lastName" ng-model="lastName">
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="$root.SessionProperties.CustomerType && $root.SessionProperties.CustomerType!= 6" class=" form-group">
+                <label class="tab_title col-sm-6 " for="OrganisationNameEng">Հաստատության անվանում</label>
+                <div class="col-sm-6 row" data-ng-init="getOrganisationNameEng()">
+                    <textarea type="text" ng-model="cardRenewOrder.OrganisationNameEng" name="OrganisationNameEng" required class="form-control" style="text-align:left" ng-maxlength="30" ng-pattern="onlyBasicLatin"></textarea>
+                    <ng-messages class="col-sm-11" ng-if="cardRenewOrderForm.$submitted || cardRenewOrderForm.OrganisationNameEng.$dirty"
+                                 for="cardRenewOrderForm.OrganisationNameEng.$error">
+                        <ng-message when="required" class="errors">
+                            Հաստատության անվանումը լրացված չէ
+                        </ng-message>
+                        <ng-message when="maxlength" class="errors">
+                            Նիշերի քանակը գերազանցում է թույլատրելի 30 նիշը
+                        </ng-message>
+                        <ng-message when="pattern" class="errors">
+                            Անհրաժեշտ է մուտքագրել միայն անգլերեն սիմվոլներ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-6" for="RelatedOfficeNumber">Աշխ. ծրագիր</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12 ">
+                        <input type="text" ng-model="cardRenewOrder.RelatedOfficeNumber" name="RelatedOfficeNumber" uib-typeahead="relOffice.Value for relOffice in searchRelatedOfficeTypes($viewValue)"
+                               typeahead-min-length="2" class="tab_title form-control" typeahead-on-select="onSelect($item, $model, $label)" required>
+                        <ng-messages class="col-sm-11" ng-if="cardRenewOrderForm.$submitted || cardRenewOrderForm.RelatedOfficeNumber.$dirty"
+                                     for="cardRenewOrderForm.RelatedOfficeNumber.$error">
+                            <ng-message when="required" class="errors">
+                                Աշխ. ծրագիրը լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-6"></label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <textarea readonly ng-if="relOfficeDescription">{{relOfficeDescription}}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class="tab_title col-sm-6 " for="InvolvingSetNumber">Ներգրավողի ՊԿ</label>
+                <div class="col-sm-6 row" style="margin-left:-105px;">
+                    <usersetnumber setnumber="cardRenewOrder.InvolvingSetNumber" formname="cardRenewOrderForm"></usersetnumber>
+                </div>
+            </div>
+
+            <div class=" form-group">
+                <label class="tab_title col-sm-6 " for="ServingSetNumber">Սպասարկողի ՊԿ</label>
+                <div class="col-sm-6 row" style="margin-left:-105px;">
+                    <usersetnumber setnumber="cardRenewOrder.ServingSetNumber" formname="cardRenewOrderForm"></usersetnumber>
+                </div>
+            </div>
+
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-6" for="CardReceivingType">Քարտի ստացման եղանակ</label>
+                <div class="col-sm-6 row" data-ng-init="GetCardReceivingTypes()">
+                    <div class="multiple_columns col-sm-12">
+                        <loading-control scopevariable="CardReceivingTypes"></loading-control>
+                        <select ng-show="CardReceivingTypes"
+                                ng-disabled="$root.SessionProperties.AdvancedOptions['userRegion']!='0' || cardRenewOrder.CardPINCodeReceivingType==1 || cardRenewOrder.cardApplicationAcceptanceType==2"
+                                data-ng-model="cardRenewOrder.CardReceivingType"
+                                class="form-control"
+                                name="CardReceivingType"
+                                data-ng-options="k as v for (k,v) in CardReceivingTypes"
+                                ng-change="changeCardReceivingType()"
+                                required>
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                        </select>
+                        <ng-messages class="col-sm-11" ng-if="cardRenewOrderForm.$submitted || cardRenewOrderForm.CardReceivingType.$dirty"
+                                     for="cardRenewOrderForm.CardReceivingType.$error">
+                            <ng-message when="required" class="errors">
+                                Քարտի ստացման եղանակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-if="cardRenewOrder.CardReceivingType == 1">
+                <label class="tab_title col-sm-6" for="UrgentSign">Առաքման հասցե</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12 ">
+                        <textarea type="text"
+                                  data-ng-model="cardRenewOrder.DeliveryAddress"
+                                  class="tab_title form-control"
+                                  name="DeliveryAddress"
+                                  ng-keypress="onlyArmenianText($event)"
+                                  required>
+                        </textarea>
+                        <ng-messages class="col-sm-12" ng-if="cardRenewOrderForm.$submitted || cardRenewOrderForm.DeliveryAddress.$dirty"
+                                     style="padding: 0"
+                                     for="cardRenewOrderForm.DeliveryAddress.$error">
+                            <ng-message when="required" class="errors">
+                                Առաքման հասցեն նշված չէ
+                            </ng-message>
+                        </ng-messages>
+                        @*<small ng-if="onlyArmCharCode" class="multiple_columns col-sm-12 errors">Անհրաժեշտ է մուտքագրել միայն հայերեն տառեր</small>
+                            <small class="multiple_columns col-sm-12">օրինակ` ք. Երևան, Բայրոնի 2շ., բն. կամ տուն 5</small>*@
+                    </div>
+                </div>
+                <label class="tab_title col-sm-6" for="UrgentSign"></label>
+                <div class="col-sm-6 row">
+                    @*<small class="multiple_columns col-sm-12 errors" for="cardRenewOrderForm.DeliveryAddress.$error" ng-if="cardRenewOrderForm.$submitted || cardRenewOrderForm.DeliveryAddress.$dirty">Առաքման հասցեն նշված չէ</small>*@
+                    <small ng-if="onlyArmCharCode" class="multiple_columns col-sm-12 errors">Անհրաժեշտ է մուտքագրել միայն հայերեն տառեր</small>
+                    <small class="multiple_columns col-sm-12">օրինակ` ք. Երևան, Բայրոնի 2շ., բն. կամ տուն 5</small>
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class="tab_title col-sm-6 " for="CardSMSPhone">Հեռախոսահամար</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12 ">
+                        <input disabled="disabled"
+                               class="form-control tab_title unstyled"
+                               style="text-align: left;"
+                               id="CardSMSPhone"
+                               name="CardSMSPhone"
+                               ng-model="cardRenewOrder.CardSMSPhone">
+                    </div>
+                </div>
+            </div>
+            <div class="sub_inner form-group" ng-if="card.Type == 1 || card.Type == 11 || card.Type == 14 || card.Type == 16 ">
+                <label class="tab_title col-sm-6" for="RenewWithCardNewType">Վերաթողարկում այլ տեսակով</label>
+                <div class="col-sm-6 row">
+                    <input type="checkbox" ng-model="cardRenewOrder.RenewWithCardNewType" style="width:18px" name="RenewWithCardNewType" id="RenewWithCardNewType" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

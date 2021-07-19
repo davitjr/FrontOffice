@@ -1,0 +1,18 @@
+﻿@{
+    Layout = null;
+}
+
+
+<form style="width:520px" ng-controller="LoanCtrl" >
+    <div class="product-details bhoechie-tab-content" style="min-width:520px;padding-left:10px">
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable" ng-init="getProductAccountFromCreditCodeForCurrency(creditCode,18,224)">Հաշիվ `</div>
+            <div class="product-detail-cell product-detail-value">{{accountCurrency.AccountNumber}} <b>{{accountCurrency.AvailableBalance | number:2}} {{accountCurrency.Currency}}</b></div>
+        </div>
+        <div class="product-detail-row" ng-if="loanCurrency!='AMD'">
+            <div class="product-detail-cell product-detail-lable" ng-init="getProductAccountFromCreditCodeForAMD(creditCode,18,279)">Հաշիվ` </div>
+            <div class="product-detail-cell product-detail-value">{{accountAMD.AccountNumber}} <b>{{accountAMD.AvailableBalance | number:2}} {{accountAMD.Currency}}</b></div>
+        </div>
+    </div>
+</form>

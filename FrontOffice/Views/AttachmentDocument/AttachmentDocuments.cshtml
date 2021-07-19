@@ -1,0 +1,26 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div ng-if="productid" ng-controller="AttachmentDocumentCtrl" ng-init="getProductDocuments(productid)">
+            <div ng-if="oneAttachment.attachment.length!=0 && oneAttachment.attachment!=undefined " >
+                <div class="product-detail-lable" >Կցված փաստաթղթեր</div>
+                <br />
+                        <div ng-repeat="att in allattachments">
+                            <div class="product-detail-value" ng-repeat="oneatt in att.attachment">
+                                <a style="cursor:pointer" ng-click="getOneAttachment(oneatt.id,att.source,oneatt.FileExtension)">
+                                    <img ng-if="oneatt.FileExtension==2" align="left" ng-src="~/Content/Images/pdf.png" height="30" width="25" />
+                                    <img ng-if="oneatt.FileExtension==1" align="left" ng-src="~/Content/Images/jpg.png" height="30" width="25" />
+                                   
+                                    <img ng-if="oneatt.FileExtension==3" align="left" ng-src="~/Content/Images/png.png" height="30" width="25" />
+                                    {{$parent.$index+1}}.{{$index+1}} {{att.productDescription}}
+                                </a>
+                                <br />
+                            </div>
+                        </div>
+            </div>
+    <div ng-if="allattachments!=undefined && allattachments.length==0 ">
+        <span style="text-align:center;">Կցված փաստաթղթեր առկա չեն</span>
+    </div>
+</div>

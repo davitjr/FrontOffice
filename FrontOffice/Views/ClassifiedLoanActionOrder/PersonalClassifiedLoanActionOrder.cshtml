@@ -1,0 +1,37 @@
+﻿
+<div id="classifiedLoanActionLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<form ng-controller="ClassifiedLoanActionOrderCtrl" style="width:600px;" name="ClassifiedLoanActionOrder" id="classifiedLoanActionOrderForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+    
+    <div id="newClassifiedLoanAction_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+
+            <li class="root-menu-item-8 " ng-click="ClassifiedLoanActionOrder.$setSubmitted();ClassifiedLoanActionOrder.$valid && saveClassifiedLoanActionOrder()">
+                <span id="h-menu-item-8"><img id="h-menu-icon-8" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-9 " onclick="CloseBPDialog('newClassifiedLoanActionOrder')">
+                <span id="h-menu-item-9"><img id="h-menu-icon-9" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+    </div>
+        <div class="col-sm-12">
+            <errors></errors>
+        </div>
+         
+        <div class="col-sm-12" style="padding-left:10px">
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6 row ">
+                    <div class="row multiple_columns col-sm-8">
+                        <input type="date" disabled="disabled" class="form-control tab_title unstyled" id="RegistrationDate" name="RegistrationDate" ng-model="order.RegistrationDate" style="text-align:left;" required>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    
+</form>
+

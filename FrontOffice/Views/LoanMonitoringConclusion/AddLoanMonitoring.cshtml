@@ -1,0 +1,384 @@
+﻿
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+    #loanmonitoringform .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+    #loanmonitoringform {
+        width:900px;
+        max-height:100%;
+        
+    }
+    
+    #h-menu-icon-3.glyphicon{
+        font-size:30px;
+    }
+
+    
+</style>
+
+@*<form ng-show="false">
+    <div class="menu-bar dialog-menu light-green">
+    </div>
+    <div>
+    </div>
+</form>*@
+
+
+    <form ng-controller="LoanMonitoringConclusionCtrl" name="LoanMonitoringForm" role="form" id="loanmonitoringform" novalidate class="form-horizontal  custom-scroll" ng-init="getLoanMonitoringType();getUserDescription();hasPropertyProvision();isLawDivision()"  prevent-enter-submit labels-required>
+        
+        <div id="loanmonitoring_menu" class="menu-bar dialog-menu light-green">
+            <ul id="menu" class="dialog-menu">
+                <li class="root-menu-item-4 " ng-click="LoanMonitoringForm.$setSubmitted();LoanMonitoringForm.$valid && saveLoanMonitoring();">
+                    <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+                </li>
+                <li class="root-menu-item-5 " onclick="CloseBPDialog('newloanmonitoring')">
+                    <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+                </li>
+                <li class="root-menu-item-3 " ng-click="LoanMonitoringForm.$setSubmitted();LoanMonitoringForm.$valid && approveLoanMonitoring();">
+                    <span id="h-menu-item-3"><div id="h-menu-icon-3" class="glyphicon glyphicon-ok-circle h-menu-icon"></div>Հաստատել</span>
+                </li>
+            </ul>
+            <div id="right-menu" style="display:none;">
+            </div>
+        </div>
+   <div class="col-sm-11">
+    <div id="loanMonitoringLoad" class="overlay hidden">
+        <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+    </div>
+    <div ng-if="isUpdate" ng-init="getLoanMonitoringConclusion(monitoringId,true)"></div>
+    <div style="max-width:560px">
+        <errors></errors>
+    </div>
+
+    <div class="form-group">
+        <label class="tab_title col-sm-5" for="RegistrationDate">Մոնիթորինգի ա/թ</label>
+        <div class="col-sm-6 row">
+            <div class="col-sm-10 multiple_columns">
+                <input type="date" class="tab_title form-control" id="MonitoringDate" name="MonitoringDate" data-ng-model="monitoring.MonitoringDate" style="text-align:left" required>
+            </div>
+        </div>
+        <div class="row">
+            <ng-messages ng-if="LoanMonitoringForm.$submitted || LoanMonitoringForm.MonitoringDate.$dirty"
+                         for="LoanMonitoringForm.MonitoringDate.$error">
+                <ng-message when="required" class="errors">
+                    Մուտքագրեք մոնիթորինգի ամսաթիվը
+                </ng-message>
+            </ng-messages>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="tab_title col-sm-5 " for="SetNumber">
+            Մոնիթորինգ իրականացրած աշխատակից
+        </label>
+        <div class="col-sm-6 row">
+            <div class="col-sm-10 multiple_columns">
+                {{MonitoringSetNumberDescription}}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="tab_title col-sm-5 " for="Conclusion">Եզրակացություն</label>
+
+        <div class="col-sm-6" data-ng-init="getLoanMonitoringConclusions()">
+            <div class="row">
+                <select data-ng-model="monitoring.Conclusion" name="Conclusion" id="Conclusion" class="form-control"
+                        data-ng-options="k as v for (k,v) in conclusions" required>
+                    <option value="" hidden>Ընտրեք...</option>
+                </select>
+            </div>
+            <div class="row">
+                <ng-messages ng-if="LoanMonitoringForm.$submitted || LoanMonitoringForm.Conclusion.$dirty"
+                             for="LoanMonitoringForm.Conclusion.$error">
+                    <ng-message when="required" class="errors">
+                        Ընտրեք եզրակացությունը
+                    </ng-message>
+                </ng-messages>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="tab_title col-sm-5 " for="Factor">Հիմնական գործոններ</label>
+        <div class="col-sm-7 row">
+            <div class="col-sm-12 multiple_columns">
+                <textarea disabled="disabled" rows="3" style="max-width:95%" class="tab_title form-control unstyled" id="Factor" name="Factor" data-ng-model="monitoring.MonitoringFactorsDescription" style="text-align:left" ng-required="monitoring.Conclusion=='3' || monitoring.Conclusion=='4'"></textarea>
+                <div class="glyphicon glyphicon-pencil" ng-controller="PopUpCtrl" style="cursor:pointer;" title="Խմբագրել" ng-click="params={monitoringFactors:monitoring.MonitoringFactors};openWindow('/LoanMonitoringConclusion/LoanMonitoringFactors','Հիմնական գործոններ','monitoringFactors');"></div>
+            </div>
+            <div class="col-sm-10 row">
+                <ng-messages ng-if="LoanMonitoringForm.$submitted || LoanMonitoringForm.Factor.$dirty"
+                             for="LoanMonitoringForm.Factor.$error">
+                    <ng-message when="required" class="errors">
+                        Ընտրեք գործոնները
+                    </ng-message>
+                </ng-messages>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label class="tab_title col-sm-5 " for="Factor">Մեկնաբանություններ</label>
+        <div class="col-sm-7 row">
+            <div class="col-sm-12 multiple_columns">
+                <textarea class="tab_title form-control unstyled" rows="3" id="Comments" name="Comments" style="max-width:95%" data-ng-model="monitoring.Comments"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="tab_title col-sm-5 " for="Conclusion">Մոնիթորինգի տեսակ</label>
+
+        <div class="col-sm-6" data-ng-init="getMonitoringTypes()">
+            <div class="row">
+                <select disabled data-ng-model="monitoring.MonitoringType" name="MonitoringType" id="MonitoringType" class="form-control"
+                        data-ng-options="k as v for (k,v) in monitoringTypes" required>
+                    <option value="" hidden>Ընտրեք...</option>
+                </select>
+            </div>
+            <div class="row">
+                <ng-messages ng-if="LoanMonitoringForm.$submitted || LoanMonitoringForm.MonitoringType.$dirty"
+                             for="LoanMonitoringForm.MonitoringType.$error">
+                    <ng-message when="required" class="errors">
+                        Ընտրեք տեսակը
+                    </ng-message>
+                </ng-messages>
+            </div>
+        </div>
+    </div>
+    <div ng-if="monitoring.MonitoringType=='1'" class="form-group">
+        <label class="tab_title col-sm-5 " for="Conclusion">Մոնիթորինգի ենթատեսակ</label>
+
+        <div class="col-sm-6" data-ng-init="getMonitoringSubTypes()">
+            <div class="row">
+                <select data-ng-model="monitoring.MonitoringSubType" name="MonitoringSubType" id="MonitoringSubType" class="form-control"
+                        data-ng-options="k as v for (k,v) in monitoringSubTypes" required>
+                    <option value="" hidden>Ընտրեք...</option>
+                </select>
+            </div>
+            <div class="row">
+                <ng-messages ng-if="LoanMonitoringForm.$submitted || LoanMonitoringForm.MonitoringSubType.$dirty"
+                             for="LoanMonitoringForm.MonitoringType.$error">
+                    <ng-message when="required" class="errors">
+                        Ընտրեք տեսակը
+                    </ng-message>
+                </ng-messages>
+            </div>
+        </div>
+    </div>
+
+    <div class="bhoechie-tab-container col-sm-12" style="max-height:80%;margin:20px;margin-left:0;" id="loanMonitoringContainer">
+        <div class="bhoechie-tab-menu" style="display:inline-block;vertical-align: top;width:170px;">
+            <div class="list-group">
+                <div class="list-group-item text-center active" style="width:170px;"><span>Հասույթների/եկամտի անկում</span></div>
+                <div class="list-group-item text-center" style="width:170px;"><span>Վարկի ապահովվածություն</span></div>
+                <div class="list-group-item text-center" style="width:170px;"><span>Փոխկապակցված անձանց պարտավորություններ</span></div>
+            </div>
+        </div>
+        <div class="bhoechie-tab" style="width: calc(100% - 180px); display: inline-block;">
+            <div class="bhoechie-tab-content active">
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-10 " for="ProfitReduced">Հասույթները նվազել են կամ ակնկալվում է դրանց էական նվազում</label>
+                    <div class="col-sm-2 row">
+                        <div class="col-sm-12 ">
+                            <input type="checkbox" id="ProfitReduced" name="ProfitReduced" data-ng-model="monitoring.ProfitReduced">
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="monitoring.ProfitReduced=='1'" class="form-group">
+                    <label class="tab_title col-sm-5 " for="ReductionType">Հասույթների անկման տեսակ</label>
+
+                    <div class="col-sm-6" data-ng-init="getProfitReductionTypes()">
+                        <div class="row">
+                            <select data-ng-model="monitoring.ProfitReduceType" name="ProfitReduceType" id="ProfitReduceType" class="form-control"
+                                    data-ng-options="k as v for (k,v) in reductionTypes" required>
+                                <option value="" hidden>Ընտրեք...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="LoanMonitoringForm.$submitted || LoanMonitoringForm.ProfitReduceType.$dirty"
+                                         for="LoanMonitoringForm.ProfitReduceType.$error">
+                                <ng-message when="required" class="errors">
+                                    Ընտրեք տեսակը
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="monitoring.ProfitReduced=='1'" class="form-group">
+                    <label class="tab_title col-sm-5 control-label" for="ReductionSize">Նվազման չափ</label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-10 multiple_columns">
+                            <div style="padding-left:15px !important;padding-right:15px !important" class="col-sm-10 multiple_columns input-group">
+                                <input type="number" ng-model="monitoring.ProfitReductionSize" name="ReductionSize" required min="0" max="100" class="form-control tab_title" />
+                                <span class="input-group-addon" id="basic-addon2" style="width: 0;">%</span>
+                            </div>
+
+                            <ng-messages ng-if="LoanMonitoringForm.$submitted || LoanMonitoringForm.ReductionSize.$dirty"
+                                         for="LoanMonitoringForm.ReductionSize.$error">
+                                <ng-message when="required" class="errors">
+                                    Չափը լրացված չէ
+                                </ng-message>
+                                <ng-message when="max" class="errors">
+                                    Չափը սխալ է
+                                </ng-message>
+                                <ng-message when="min" class="errors">
+                                    Չափը սխալ է
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="bhoechie-tab-content ">
+                <div class="form-group">
+                    <label class="tab_title col-sm-5" for="ProvConclusion">Գրավի վիճակի վերաբերյալ եզրակացություն</label>
+                    <div class="my_title col-sm-6" data-ng-init="getProvisionQualityConclusionTypes()">
+                        <div class="row">
+                            <select chosen="" multiple="" name="ProvConclusion" id="ProvConclusion" data-ng-model="monitoring.ProvisionQualityConclusion" class="chosen-select col-sm-12" data-placeholder="Ընտրեք..."
+                                    data-ng-options="k as v for (k,v) in provQualityConclusions" ng-required="hasProv==true && isLaw=='False'"></select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="LoanMonitoringForm.$submitted || LoanMonitoringForm.ProvConclusion.$dirty"
+                                         for="LoanMonitoringForm.ProvConclusion.$error">
+                                <ng-message when="required" class="errors">
+                                    Եզրակացությունները ընտրված չեն
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 " for="ProvisionCostConclusion">Գրավների շուկայական արժեքի վերաբերյալ եզրակացություն</label>
+
+                    <div class="col-sm-6" data-ng-init="getProvisionCostConclusionTypes()">
+                        <div class="row">
+                            <select data-ng-model="monitoring.ProvisionCostConclusion" name="ProvisionCostConclusion" id="ProvisionCostConclusion" class="form-control"
+                                    data-ng-options="k as v for (k,v) in provCostConclusions" ng-required="hasProv==true && isLaw=='False'">
+                                <option value="" hidden>Ընտրեք...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="LoanMonitoringForm.$submitted || LoanMonitoringForm.ProvisionCostConclusion.$dirty"
+                                         for="LoanMonitoringForm.ProvisionCostConclusion.$error">
+                                <ng-message when="required" class="errors">
+                                    Ընտրեք եզրակացությունը
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label" for="ProvisionCoverCoefficient">Գրավով ծածկման գործակից</label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-12 multiple_columns">
+                            <div style="padding-left:15px !important;padding-right:15px !important" class="col-sm-10 multiple_columns input-group">
+                                <input type="text" class="form-control" disabled id="ProvisionCoverCoefficient" ng-required="hasProv==true && isLaw=='False'" name="ProvisionCoverCoefficient" data-ng-model="monitoring.ProvisionCoverCoefficient" fcsa-number>
+                                <span class="input-group-addon" id="basic-addon2" style="width: 0;">%</span>
+                                <span class="input-group-addon " id="basic-addon2" style="width: 0;cursor:pointer;" title="Հաշվարկել" data-placement="bottom" ng-click="getProvisionCoverCoefficient()"> <span class="glyphicon glyphicon-pencil"></span> </span>
+                            </div>
+                            <ng-messages ng-if="LoanMonitoringForm.$submitted || LoanMonitoringForm.ProvisionCoverCoefficient.$dirty"
+                                         for="LoanMonitoringForm.ProvisionCoverCoefficient.$error">
+                                <ng-message when="required" class="errors">
+                                    Գրավի ծածկման գործակիցը հաշվարկված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="bhoechie-tab-content ">
+
+                <div class="product-container" style="width:98%" ng-init="getLinkedLoans()">
+
+                    <div class="product-collapsable-section">
+                        <div class="product-container-header" style="height:44px;">
+                            <div style="text-align:center" class="col-sm-4">Հաճախորդ</div>
+                            <div style="text-align:center" class="col-sm-2">Վարկի գումար</div>
+                            <div style="text-align:center" class="col-sm-2">Սկիզբ</div>
+                            <div style="text-align:center" class="col-sm-2">Վերջ</div>
+                            <div style="text-align:center" class="col-sm-1">Կիրառել</div>
+                        </div>
+                        <div class="custom-scroll" id="linkedLoans" style="min-height:100px;max-height:300px;float:left;">
+                            <div ng-show="linkedLoans==undefined">
+                                <loading></loading>
+                            </div>
+                            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                                <tbody>
+                                    <tr ng-repeat="linkedLoan in monitoring.LinkedMonitoringLoans">
+                                        <td class="col-sm-4">{{::linkedLoan.CustomerNumber }}<br /> {{::linkedLoan.CustomerDescription}}</td>
+                                        <td class="col-sm-2">{{::linkedLoan.StartCapital | number:2}} {{::linkedLoan.Currency}}</td>
+                                        <td class="col-sm-2">{{::linkedLoan.StartDate | mydate | date: 'dd/MM/yyyy'}}</td>
+                                        <td class="col-sm-2">{{::linkedLoan.EndDate  | mydate | date: 'dd/MM/yyyy' }}</td>
+                                        <td class="col-sm-1"><input type="checkbox" ng-disabled="linkedLoan.MainProduct ||loanProductId==linkedLoan.ProductId" ng-model="linkedLoan.Linked" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+    </form>
+
+<script type="text/javascript">
+    $("#loanMonitoringContainer").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+    $("#linkedLoans").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+    $("#loanmonitoringform").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+
+

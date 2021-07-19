@@ -1,0 +1,100 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<form style="width:500px" ng-controller="LoanProductOrderCtrl" ng-init="getLoanOrder(selectedOrderId)">
+    <loading-control style="margin-left:20em" scopevariable="order.Id"></loading-control>
+    <div ng-if="order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && order.Quality !=50 && $root.SessionProperties.IsCalledFromHB != true" ng-show="order.Id" class="menu-bar dialog-menu light-green "
+         ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetLoanOrder)" style="margin-left:-3px;margin-top:0px">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 ">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5"><span class="glyphicon glyphicon-remove-circle"></span>&nbsp;Հրաժարման հայտ</span>
+            </li>
+        </ul>
+    </div>
+    <div ng-show="order.Id" class="product-details bhoechie-tab-content" style="min-width:500px;padding-left:10px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="$root.SessionProperties.IsCalledFromHB != true">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{order.OperationDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վարկի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{order.ProductTypeDescription}}</div>
+        </div>
+        <div ng-if="order.ProductAccount!=null" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վարկային հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{order.ProductAccount.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{order.StartDate| mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{order.EndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տոկոսադրույք</div>
+            <div class="product-detail-cell product-detail-value">{{order.InterestRate*100 |number:2}}%</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրավի հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{order.ProvisionAccount.AccountNumber}} {{order.ProvisionAccount.Currency}} {{order.ProvisionAccount.AccountTypeDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Amount|number:2}} {{order.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրավադրված գումար</div>
+            <div class="product-detail-cell product-detail-value">{{order.ProvisionAmount|number:2}} {{order.ProvisionCurrency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Առաջին մարման օր</div>
+            <div class="product-detail-cell product-detail-value">{{order.FirstRepaymentDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վեճերի լուծում</div>
+            <div class="product-detail-cell product-detail-value">{{order.DisputeResolutionDescription}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="order.CommunicationTypeDescription!=undefined">
+            <div class="product-detail-cell product-detail-lable">Հաղորդակցման եղանակ</div>
+            <div class="product-detail-cell product-detail-value">{{order.CommunicationTypeDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Օգտագործման երկիր</div>
+            <div class="product-detail-cell product-detail-value">{{order.LoanUseCountryDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Օգտագործման մարզ</div>
+            <div class="product-detail-cell product-detail-value">{{order.LoanUseRegionDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Օգտագործման շրջան</div>
+            <div class="product-detail-cell product-detail-value">{{order.LoanUseLocalityDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{ order.QualityDescription }}</div>
+            <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{ order.QualityDescription }}</div>
+            <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{ order.QualityDescription }}</div>
+        </div>
+        <div ng-if="order.Quality==31" ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մերժման պատճառ`</div>
+            <div class="product-detail-cell product-detail-value"><span class="redStyle">{{ rejectHistory.ReasonDescription }}</span></div>
+        </div>
+        <div class="product-detail-row" ng-if="$root.SessionProperties.IsCalledFromHB != true">
+            <div class="product-detail-cell my_text1">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+        </div>
+    </div>
+</form>

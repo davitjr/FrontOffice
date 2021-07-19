@@ -1,0 +1,137 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #arcaCardsTransactionOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #arcaCardsTransactionOrderForm {
+        padding: 10px;
+    }
+
+    .panel-info {
+        margin-bottom: 20px;
+    }
+</style>
+
+<div id="arcaCardsTransactionOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="ArcaCardsTransactionOrderCtrl" name="ArcaCardsTransactionOrderForm" style="min-width:580px;" id="arcaCardsTransactionOrderForm" role="form" class="form-horizontal" prevent-enter-submit novalidate labels-required>
+    <div id="arcacardtransaction_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="ArcaCardsTransactionOrderForm.$setSubmitted();ArcaCardsTransactionOrderForm.$valid && SaveArcaCardsTransactionOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('arcaCardsTransactionOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div style="max-width:540px;">
+            <errors></errors>
+        </div>
+        <div class="form-group">
+            <label class="tab_title col-sm-5">Մուտքագրման ա/թ</label>
+            <div class="col-sm-6 row ">
+                <div class="row multiple_columns col-sm-8">
+                    <input type="date" disabled="disabled" class="form-control tab_title unstyled" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" style="text-align:left;" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-5">Քարտի մասնաճյուղը</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="text" name="filialCode" ng-model="Card.FilialCode" class="form-control tab_title" ng-disabled="true" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-5" for="CardNumber">Քարտի համար</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="text" class="form-control" name="CardNumber" ng-model="Card.CardNumber" ng-disabled="true" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-5" for="ValidationDate">Գործողության ժամկետ</label>
+            <div class="col-sm-6" ng-init="Card.ExpDate = (Card.ValidationDate | mydate | date: 'dd/MM/yyyy')">
+                <div class="row" style="margin-top:5px;">
+                    {{Card.ExpDate}}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-5" for="ActionType">Գործողություն</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <select id="ActionType" ng-model="order.ActionType" name="ActionType" class="form-control" ng-init="GetActionsForCardTransaction(); GetUserFilialCode();" required>
+                        <option value="" style="margin-left:25px">Ընտրեք</option>
+                        <option ng-repeat="(key, value)  in ActionTypes" value="{{key}}" ng-disabled="( (isCardBlocked && key == 1 && BlockingReasonForBlockedCard != 14) || (!isCardBlocked && key == 2) || (isCardBlocked && key == 2 && BlockingReasonForBlockedCard == 14))">{{value}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5"></div>
+            <ng-messages ng-if="ArcaCardsTransactionOrderForm.$submitted || ArcaCardsTransactionOrderForm.ActionType.$dirty"
+                         for="ArcaCardsTransactionOrderForm.ActionType.$error">
+                <ng-message when="required" class="errors">
+                    Գործողությունը ընտրված չէ
+                </ng-message>
+            </ng-messages>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-5" for="ActionReasonId">Պատճառ</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <select ng-model="order.ActionReasonId" name="ActionReasonId" id="ActionReasonId" class="form-control" ng-init="GetReasonsForCardTransactionAction()" ng-disabled="isCardBlocked && ($root.SessionProperties.AdvancedOptions.accessToUnblockCardForSpecificReasons != '1') && BlockingReasonForBlockedCard != 14" required>
+                        <option value="" style="margin-left:25px">Ընտրեք</option>
+                        <option ng-repeat="(key, value)  in ReasonsForCardTransactionAction" ng-value="{{key}}" ng-disabled="(UserFilialCode != Card.FilialCode && key == 4)">{{value}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5"></div>
+            <ng-messages ng-if="ArcaCardsTransactionOrderForm.$submitted || ArcaCardsTransactionOrderForm.ActionReasonId.$dirty"
+                         for="ArcaCardsTransactionOrderForm.ActionReasonId.$error">
+                <ng-message when="required" class="errors">
+                    Պատճառը ընտրված չէ
+                </ng-message>
+            </ng-messages>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-5">Մեկնաբանություն</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <textarea ng-model="order.Comment" typeof="text" name="Comment" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-5" for="CardNumber">Նախորդ մեկնաբանություն</label>
+            <div class="col-sm-6" ng-init="GetPreviousBlockUnblockOrderComment();">
+                <div class="row">
+                    <textarea type="text" class="form-control" name="previousBlockUnblockOrderComment" ng-model="previousBlockUnblockOrderComment" ng-disabled="true"></textarea>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

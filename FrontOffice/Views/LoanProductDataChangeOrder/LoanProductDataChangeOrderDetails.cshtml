@@ -1,0 +1,31 @@
+﻿@{
+	Layout = null;
+}
+
+<form style="width:600px" ng-controller="LoanProductDataChangeOrderCtrl" data-ng-init="getLoanProductDataChangeOrder(selectedOrderId)">
+	<loading-control style="margin-left:20em" scopevariable="loanProductDataChangeOrder"></loading-control>
+	<div ng-show="loanProductDataChangeOrder" class="product-details bhoechie-tab-content" style="min-width:600px;padding-left:10px">
+		<div class="product-detail-row">
+			<div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+			<div class="product-detail-cell product-detail-value">{{loanProductDataChangeOrder.Id}}</div>
+		</div>
+
+		<div class="product-detail-row">
+			<div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+			<div class="product-detail-cell product-detail-value">{{loanProductDataChangeOrder.RegistrationDateString}}</div>
+		</div>
+
+		<div class="product-detail-row">
+			<div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+			<div class="product-detail-cell product-detail-value">{{loanProductDataChangeOrder.OperationDateString}}</div>
+		</div>
+		
+		<div class="product-detail-row">
+			<div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+			<div ng-if="loanProductDataChangeOrder.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{loanProductDataChangeOrder.QualityDescription}}</div>
+			<div ng-if="loanProductDataChangeOrder.Quality==31" class="product-detail-cell product-detail-value redStyle">{{loanProductDataChangeOrder.QualityDescription}}</div>
+			<div ng-if="loanProductDataChangeOrder.Quality!=31 && loanProductDataChangeOrder.Quality!=30" class="product-detail-cell product-detail-value">{{loanProductDataChangeOrder.QualityDescription}}</div>
+		</div>
+	</div>
+	<div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+</form>

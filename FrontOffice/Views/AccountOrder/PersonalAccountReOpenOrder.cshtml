@@ -1,0 +1,216 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #accountReOpenOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+<div id="acountReLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="AccountReOpenOrderCtrl" name="AccountReOpenOrderForm" id="accountReOpenOrderForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+    <div id="reopenaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li ng-if="customertype!=6" class="root-menu-item-3 " ng-click="AccountReOpenOrderForm.$setSubmitted();AccountReOpenOrderForm.$valid && printAccountReOpenApplication();">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon applicationButton">Դիմում</span>
+            </li>
+            <li ng-show="order.FeeChargeType==1" class="root-menu-item-3 " ng-click="AccountReOpenOrderForm.$setSubmitted();AccountReOpenOrderForm.$valid && getAccountReOpenOrderFeeDetails();">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Հանձնարարական</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="AccountReOpenOrderForm.$setSubmitted();AccountReOpenOrderForm.$valid && checkFeeAccount() && saveAccountReOpenOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li ng-if="$root.SessionProperties.AdvancedOptions['withCashRegister']=='1'&& $root.SessionProperties.AdvancedOptions['canSendToCashier']=='1'" class="root-menu-item-4 " ng-click="AccountReOpenOrderForm.$setSubmitted();order.OnlySaveAndApprove = true;AccountReOpenOrderForm.$valid && checkFeeAccount() && saveAccountReOpenOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ուղարկել դրամարկղ</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('reopenaccount')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-7">
+
+            <div style="max-width:500px">
+                <errors></errors>
+            </div>
+            <div class="form-group " style=" padding-left:10px">
+                <div class="col-sm-12" style="max-width:530px">
+                    <div class="row-no-margin">
+                        <section class=" panel panel-info">
+                            <header class="panel-heading">
+                                <span class="panel-title" style=" font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                            </header>
+                            <div class="panel-body">
+                                <span>Բոլոր դաշտերը անհրաժեշտ է մուտքագրել UNICODE-ով</span>
+                            </div>
+                        </section>
+                        <section ng-if="customerDocumentWarnings.length>0" class=" panel panel-warning">
+                            <header class="panel-heading">
+                                <span class="panel-title" style=" font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                            </header>
+                            <div class="panel-body">
+                                <div ng-repeat="war in customerDocumentWarnings">
+                                    {{$index+1}}.{{::war}}
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class="tab_title col-sm-6 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-8 ">
+                        <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-if="account!=undefined">
+                <label class="tab_title col-sm-6">Վերաբացման ենթակա հաշիվ</label>
+                <div class="col-sm-6 ">
+                    <div class="row">
+                        <input type="text" disabled="disabled" data-ng-model="account.AccountNumber" class="form-control tab_title" style="text-align: left;">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-6" for="currency">Միջնորդավճարի գանձում</label>
+                <div class="col-sm-6" data-ng-init="getFeeChargesTypes()">
+                    <div class="row">
+                        <select ng-show="feeTypes" data-ng-model="order.FeeChargeType" ng-change="getFeeAccounts(1,2);getFee();feeAccount=null" name="FeeType" id="FeeType" class="form-control" required
+                                data-ng-options="k as v for (k,v) in feeTypes"></select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="AccountReOpenOrderForm.$submitted || AccountReOpenOrderForm.FeeType.$dirty"
+                                     for="AccountReOpenOrderForm.FeeType.$error">
+                            <ng-message when="required" class="errors">
+                                Գանձման տեսակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-6" for="ReopenReasonDescription">Վերաբացման պատճառ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" data-ng-model="order.ReopenReasonDescription" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" class="form-control " id="ReopenReasonDescription" name="ReopenReasonDescription" required>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="AccountReOpenOrderForm.$submitted || AccountReOpenOrderForm.ReopenReasonDescription.$dirty"
+                                     for="AccountReOpenOrderForm.ReopenReasonDescription.$error">
+                            <ng-message when="required" class="errors">
+                                Պատճառը մուտքագրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-6">Քաղվածքի ստացման եղանակ</label>
+                <div class="col-sm-6" data-ng-init="getStatementDeliveryTypes()">
+                    <div class="row">
+                        <loading-control scopevariable="deliveryTypes"></loading-control>
+                        <select ng-show="deliveryTypes" data-ng-model="order.StatementDeliveryType" class="form-control " name="DeliveryType" id="DeliveryType"
+                                data-ng-options="k as v for (k,v) in deliveryTypes" required>
+                            <option class="tab_text" hidden value="">Ընտրեք...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="AccountReOpenOrderForm.$submitted || AccountReOpenOrderForm.DeliveryType.$dirty"
+                                     for="AccountReOpenOrderForm.DeliveryType.$error">
+                            <ng-message when="required" class="errors">
+                                Քաղվածքի ստացման եղանակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div ng-if="order.FeeChargeType==2">
+                <paymentaccount accounts="feeAccounts"
+                                account="order.feeAccount"
+                                accountselectname="feeAccount"
+                                data-ng-init="getFeeAccounts(1,2)"
+                                check="order.FeeChargeType==1?1:0"
+                                nameforaccount="'Միջնորդավճարի հաշիվ'"
+                                nameforcurrency="'Միջնորդավճարի արժույթ'"
+                                onlyamd="true">
+
+                </paymentaccount>
+                <div class="row">
+                    <div class="col-sm-6"></div>
+                    <ng-messages ng-if="AccountReOpenOrderForm.$submitted || AccountReOpenOrderForm.feeAccount.$dirty"
+                                 for="AccountReOpenOrderForm.feeAccount.$error">
+                        <ng-message when="required" class="errors">
+                            Հաշիվը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+
+            <div ng-if="account==undefined">
+                <div class="product-container" style="margin-bottom:20px;width:400px;margin-left:136px;margin-right:-40px">
+                    <div class="header-title">
+                        Վերաբացման ենթակա  հաշիվներ
+                    </div>
+                    <div class="product-collapsable-section">
+                        <div class="product-container-header" style="height:40px;">
+                            <div class="col-sm-5">Հաշվեհամար</div>
+                            <div class="col-sm-7" style="text-align:right">Մնացորդ</div>
+                        </div>
+                        <div class="product-content-table-full_height custom-scroll" id="statementContent" style="min-height:100px;overflow-y:visible">
+                            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                                <tbody>
+                                    <tr ng-repeat="account in reOpeningAccounts">
+                                        <td colspan="3">
+                                            <div class="row">
+                                                <div class="col-sm-5">{{ ::account.AccountNumber }}</div>
+                                                <div class="col-sm-7" style="text-align:right;">{{ ::account.BalanceString }} &nbsp; {{ ::account.Currency  }}</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+            <div class="sub_inner">
+                <h5>
+                    Միջնորդավճար` {{feeAmount != null ? (feeAmount  | number:2):(0|number:2)  }} AMD
+                </h5>
+            </div>
+            <br />
+
+        </div>
+        <div class="col-sm-5">
+            <cashopperson formname="AccountReOpenOrderForm" opperson="order.OPPerson"></cashopperson>
+        </div>
+
+    </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+

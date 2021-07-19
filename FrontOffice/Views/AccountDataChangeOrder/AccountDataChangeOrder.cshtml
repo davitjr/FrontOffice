@@ -1,0 +1,140 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #accountDataChangeOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+</style>
+<div  id="load" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div ng-controller="AccountCtrl as parentCtr">
+
+    <form style="min-width:500px;overflow-x:hidden" name="AccountDataChangeOrderForm"  id="accountDataChangeOrderForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+
+        <div id="accountDataChangeOrder_menu" class="menu-bar dialog-menu light-green">
+            <ul id="menu" class="dialog-menu">
+                <li class="root-menu-item-3 " ng-click="AccountDataChangeOrderForm.$setSubmitted(); AccountDataChangeOrderForm.$valid && saveAccountDataChangeOrder(true)">
+                    <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon submitButton">Պահպանել</span>
+                </li>
+                <li class="root-menu-item-4 " onclick="CloseBPDialog('accountDataChangeOrder')">
+                    <span id="h-menu-item-4"><img id="h-menu-icon-4" class="cancelButton h-menu-icon" >Հրաժարվել</span>
+                </li>
+            </ul>
+            <div id="right-menu" style="display:none;">
+            </div>
+        </div>​
+
+        <div style="max-width:600px">
+            <errors></errors>
+        </div>
+        <div class="col-sm-12">
+            <a style="color:red">
+                {{alert}}
+            </a>
+        </div>
+        <div class=" form-group">
+            <label class="tab_title col-sm-5 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+            <div class="col-sm-7 row">
+                <div class="multiple_columns col-sm-8 ">
+                    <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate">
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-5">Լրացուցիչ տվյալ</label>
+            <div class="col-sm-7" data-ng-init="getAccountAdditionsTypes()">
+                <div class="row">
+                    <loading-control scopevariable="additionsTypes"></loading-control>
+                    <select ng-show="additionsTypes" ng-model="order.AdditionType" name="AdditionType" id="AdditionType" class="form-control" required
+                            data-ng-options="k as v for (k,v) in additionsTypes">
+                        <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                    </select>
+
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="AccountDataChangeOrderForm.$submitted || AccountDataChangeOrderForm.AdditionType.$dirty"
+                                 for="AccountDataChangeOrderForm.AdditionType.$error">
+                        <ng-message when="required" class="errors">
+                            Լրացուցիչ տվյալի տեսակը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+        </div>
+        <div ng-if="order.AdditionType ==16">
+            <div class="form-group">
+                <label class="tab_title col-sm-5">Սնանկության գործով կառավարիչ</label>
+                <div class="col-sm-7 ">
+                    <div class="input-group">
+                        <input type="text" ng-model="order.AdditionValue" ng-minlength="12" ng-maxlength="12" maxlength="12" class="form-control" id="bankruptcyCustomerNumber" name="bankruptcyCustomerNumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                               data-update-model-on-enter-key-pressed ng-enter="inputBankruptcyManager(order.AdditionValue)" ng-disabled="disable" required>
+                        <div class="input-group-btn" style="display:block;">
+                            <button type="button" class="btn btn-primary" ng-click="inputBankruptcyManager(order.AdditionValue)" ng-disabled="disable" title="Ավելացնել Սնանկության գործով կառավարիչ"><span class="glyphicon glyphicon-plus"></span></button>
+                            <button type="button" class="btn btn-primary searchButton" ng-click="searchCustomers(true)" ng-disabled="disable" title="Հաճախորդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group" ng-if="order.BankruptcyManager.length==12" style="margin-left:15px">
+
+                <div class="row" style="margin-left:10px;">
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteBankruptcyManager()"><span class="glyphicon glyphicon-remove"></span></button>
+                    <customerinfo customernumber="order.BankruptcyManager" showfulldata="false"> </customerinfo>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <ng-messages ng-if="AccountDataChangeOrderForm.$submitted &&  order.BankruptcyManager.length !=12" class="errors">
+                            Սնանկության գործով կառավարիչը մուտքագրված չէ
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group" ng-if="order.AdditionType !=16">
+            <label class="tab_title col-sm-5">Արժեք</label>
+            <div class="col-sm-7">
+                <div class="row">
+                    <input type="text" data-ng-model="order.AdditionValue" name="AdditionValue" id="AdditionValue" class="tab_title form-control" required />
+                </div>
+                <div class="row ">
+                    <ng-messages ng-if="AccountDataChangeOrderForm.$submitted || AccountDataChangeOrderForm.AdditionValue.$dirty"
+                                 for="AccountDataChangeOrderForm.AdditionValue.$error">
+                        <ng-message when="required" class="errors">
+                            Արժեքը լրացված չէ
+                        </ng-message>
+
+
+                    </ng-messages>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+
+
+
+
+
+
+

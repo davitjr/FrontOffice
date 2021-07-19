@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    h4 {
+        color: #247d46;
+    }
+</style>
+
+<form ng-controller="CardCtrl" data-ng-init="getCardTariffAdditionalInformation(relatedofficenumber,cardtype)">
+    <div class="product-details bhoechie-tab-content" style="padding:30px;padding-top:10px;min-width:550px;display:inline-block!important">
+        <div class="row form-group">
+            <div class="col-sm-8">Նվազագույն մնացորդ</div> <div>{{cardTariffAdditionalInformation.MinRest|number:2}}</div>
+            <div class="col-sm-8">Քարտի փոխարինում </div> <div>{{cardTariffAdditionalInformation.ReplaceFee|number:2}}</div>
+            <div class="panel panel-success" style="margin-top:5px">
+                <div class="panel-heading" >Կազմակերպության կողմից վճարվող</div>
+                @*<div style="font-size:medium;padding-top:5px">Կազմակերպության կողմից վճարվող</div>*@
+                <div class="col-sm-8">Տարեկան սպասարկման վարձ</div> <div>{{cardTariffAdditionalInformation.ServiceFeeTotalFromOrganization|number:2}}</div>
+                <div class="col-sm-8">Գանձումների հաճախ․(ամիս)</div> <div>{{cardTariffAdditionalInformation.PeriodFromOrganization}}</div>
+                <div class="col-sm-8">Պարբերակ․գանձման գումար</div> <div>{{cardTariffAdditionalInformation.ServiceFeeFromOrganization|number:2}}</div>
+                <div class="col-sm-8">Առաջին գանձում</div>
+                     <div ng-if="cardTariffAdditionalInformation.DeductionStartFromOrganization == 0">սկզբում</div>
+                     <div ng-if="cardTariffAdditionalInformation.DeductionStartFromOrganization == 1">վերջում</div>
+                <div class="col-sm-8">Քարտի փոխարինում</div> <div>{{cardTariffAdditionalInformation.ReplaceFeeFromOrganization|number:2}}</div>
+                <div class="col-sm-8">Քարտի վերաթողարկում</div> <div>{{cardTariffAdditionalInformation.ReNewFeeFromOrganization|number:2}}</div>
+            </div>
+        </div>
+    </div>
+</form>

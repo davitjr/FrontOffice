@@ -1,0 +1,165 @@
+﻿
+@{
+    Layout = null;
+}
+
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<div ng-controller="PaidGuaranteeCtrl" id="paidguaranteedetails" data-ng-init="getPaidGuarantee(productId)">
+    <loading></loading>
+    <div id="paidGuarantee_details_menu" class="menu-bar dialog-menu light-green details-menu">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-2 " ng-if="$root.SessionProperties.SourceType == 2 && paidGuarantee.Quality==10" ng-controller="PopUpCtrl" ng-click="params={product:paidGuarantee,orderType:141};openWindow('/LoanProductActivationOrder/PersonalLoanProductActivationOrder','Վճարված երաշխիքի ակտիվացում','newLoanProductActivation')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="applicationButton h-menu-icon">Ակտիվացնել</span>
+            </li>
+            <li class="root-menu-item-5 " ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-if="paidGuarantee.Quality<10 && isOnlineAcc==true" ng-click="params={productId:paidGuarantee.ProductId,actionType:2,includingSurcharge:0,productType:paidGuarantee.ProductType};openWindow('/ClassifiedLoanActionOrder/PersonalClassifiedLoanActionOrder','Վճարված երաշխիքի դուրսգրում','newClassifiedLoanActionOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">Դուրս գրել</span>
+            </li>
+            <li class="root-menu-item-5 " ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-if="paidGuarantee.Quality==11 && isOnlineAcc==true" ng-click="params={productId:paidGuarantee.ProductId,actionType:1,includingSurcharge:0,productType:paidGuarantee.ProductType};openWindow('/ClassifiedLoanActionOrder/PersonalClassifiedLoanActionOrder','Վճարված երաշխիքի հետբերում','newClassifiedLoanActionOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">Հետ բերել </span>
+            </li>
+            <li class="root-menu-item-3 " ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-if="paidGuarantee.Quality==11 && isOnlineAcc==true" ng-click="params={productId:paidGuarantee.ProductId,actionType:3,includingSurcharge:0,productType:paidGuarantee.ProductType};openWindow('/ClassifiedLoanActionOrder/PersonalClassifiedLoanActionOrder','Արտաբալանսից հանում','newClassifiedLoanActionOrder')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">Հանել արտաբալանսից </span>
+            </li>
+            
+            <li class="root-menu-item-3" ng-controller="PopUpCtrl" ng-if="($root.SessionProperties.AdvancedOptions['isOnlineAccChief']=='1' || $root.SessionProperties.AdvancedOptions['isOnlineAcc']=='1'  ) && paidGuarantee.ProductId != undefined " ng-click="params={productId:paidGuarantee.ProductId,loanType:paidGuarantee.LoanType};openWindow('/CreditCommitmentForgivenessOrder/Index','Ներում','newMature')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon" src="~/Content/Images/help.png" style="height: 30px;width:36px;margin-top: 6px;" />Ներումներ</span>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <div ng-show="!loading" class="product-details bhoechie-tab-content" style="min-width:800px;margin-left:10px;">
+
+        <div class="product-detail-row" ng-if="paidGuarantee.CreditCode!=''">
+            <div class="product-detail-cell product-detail-lable">Կոդ</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{paidGuarantee.CreditCode}} </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;" ng-style="{ color: paidGuarantee.Quality==5 ||  paidGuarantee.Quality==11 || paidGuarantee.Quality==12 || paidGuarantee.Quality==2 ? 'red' : '' }">{{paidGuarantee.QualityDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{paidGuarantee.StartDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{paidGuarantee.EndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{paidGuarantee.StartCapitalString}} {{paidGuarantee.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տոկոսադրույք</div>
+            <div class="product-detail-cell product-detail-value">{{paidGuarantee.InterestRate * 100 }}%</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մնացորդ</div>
+            <div class="product-detail-cell product-detail-value">{{paidGuarantee.CurrentCapitalString}} {{paidGuarantee.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կուտակված (չվճարված) տոկոսագումար</div>
+            <div class="product-detail-cell product-detail-value">{{paidGuarantee.CurrentRateValueString}} {{paidGuarantee.Currency}}</div>
+        </div>
+        <div ng-if="paidGuarantee.Quality==40" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{paidGuarantee.DayOfRateCalculation | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="paidGuarantee.OverdueLoanDateForClassification!=null">
+            <div class="product-detail-cell product-detail-lable redStyle">Ժամկետանցի օր դասակարգման համար</div>
+            <div class="product-detail-cell product-detail-value redStyle">{{paidGuarantee.OverdueLoanDateForClassification | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="paidGuarantee.OverdueLoanDateForClassification!=null">
+            <div class="product-detail-cell product-detail-lable redStyle">Ժամկետանցի օրեր դասակարգման համար</div>
+            <div class="product-detail-cell product-detail-value redStyle">{{paidGuarantee.DayOfRateCalculation | datediff : paidGuarantee.OverdueLoanDateForClassification}}</div>
+        </div>
+    </div>
+
+
+    <div ng-show="!loading" class="bhoechie-tab-container" style="max-height:80%;">
+        <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+            <div class="list-group">
+                <div class="list-group-item text-center active">Լրացուցիչ</div>
+                <div class="list-group-item text-center"><span>Մոնիթորինգի եզրակացություն</span></div>
+            </div>
+        </div>
+        <div class="bhoechie-tab" style="width: calc(100% - 140px); display: inline-block;">
+            <div class="bhoechie-tab-content active">
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ընդհանուր պարտք</div>
+                    <div class="product-detail-cell product-detail-value">{{(paidGuarantee.CurrentCapital+paidGuarantee.PenaltyRate+paidGuarantee.OutCapital+paidGuarantee.CurrentRateValue+paidGuarantee.JudgmentRate+paidGuarantee.CurrentFee) | number:2}} {{paidGuarantee.Currency}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp; որից տոկոս տուգանք</div>
+                    <div class="product-detail-cell product-detail-value">{{( paidGuarantee.PenaltyRate + paidGuarantee.CurrentRateValue + paidGuarantee.JudgmentRate +  paidGuarantee.CurrentFee) | number:2}} <span ng-if="paidGuarantee.Currency!='AMD'">({{((paidGuarantee.PenaltyRate + paidGuarantee.CurrentRateValue + paidGuarantee.JudgmentRate +  paidGuarantee.CurrentFee) * kurs).toFixed(2)}} AMD)</span></div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ժամկետանց մաս</div>
+                    <div class="product-detail-cell product-detail-value">{{(paidGuarantee.OverdueCapital+paidGuarantee.InpaiedRestOfRate+paidGuarantee.PenaltyRate+paidGuarantee.JudgmentRate+paidGuarantee.OverdueAmount) | number:2}} {{paidGuarantee.Currency}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;որից տոկոս տուգանք</div>
+                    <div class="product-detail-cell product-detail-value">{{(paidGuarantee.InpaiedRestOfRate+paidGuarantee.PenaltyRate+paidGuarantee.OverdueAmount) | number:2}} <span ng-if="paidGuarantee.Currency!='AMD'">({{((paidGuarantee.InpaiedRestOfRate+paidGuarantee.PenaltyRate+paidGuarantee.OverdueAmount) * kurs).toFixed(2) | number:2}} AMD)</span></div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Պետ տուրքի փոխանցումից կուտակված տուժանք</div>
+                    <div class="product-detail-cell product-detail-value">{{(paidGuarantee.JudgmentRate).toFixed(0) | number:2}} <span ng-if="paidGuarantee.Currency!='AMD'">({{((paidGuarantee.JudgmentRate) * kurs).toFixed(2) | number:2}} AMD)</span></div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Փակման ա/թ</div>
+                    <div class="product-detail-cell product-detail-value">{{paidGuarantee.DayOfRateCalculation | mydate | date: 'dd/MM/yyyy'}}</div>
+                </div>
+                <div ng-if="paidGuarantee.Quality!=0 && paidGuarantee.Quality!=1">
+                    <div class="product-detail-row">
+                        <div class="product-detail-cell product-detail-lable">Որից ժամկետանց</div>
+                        <div class="product-detail-cell product-detail-value">{{paidGuarantee.InpaiedRestOfRate.toFixed(0) | number:2}} {{paidGuarantee.Currency}}</div>
+                    </div>
+                    <div class="product-detail-row">
+                        <div class="product-detail-cell product-detail-lable">Տուգանային տոկոս</div>
+                        <div class="product-detail-cell product-detail-value">{{paidGuarantee.PenaltyRate}} {{paidGuarantee.Currency}}</div>
+                    </div>
+                    <div class="product-detail-row">
+                        <div class="product-detail-cell product-detail-lable">Որից ժամկետանց</div>
+                        <div class="product-detail-cell product-detail-value">{{paidGuarantee.PenaltyAdd}} {{paidGuarantee.Currency}}</div>
+                    </div>
+                    <div class="product-detail-row">
+                        <div class="product-detail-cell product-detail-lable">Տոկոսագումարի հաշվարկի օր</div>
+                        <div class="product-detail-cell product-detail-value">{{paidGuarantee.DayOfRateCalculationString}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bhoechie-tab-content ">
+                <loanmonitoring ng-if="paidGuarantee" loan="paidGuarantee"></loanmonitoring>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#paidguaranteedetails div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('#paidguaranteedetails div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#paidguaranteedetails div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#paidguaranteedetails div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+
+
+    $("#loanDetailsContainer").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+
+</script>

@@ -1,0 +1,117 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<style type="text/css">
+    #ChangeBranchOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    .input-group-addon {
+        width: 0%;
+    }
+
+    #ChangeBranchOrderForm {
+        min-width: 650px;
+    }
+    /* .form-class {
+        display:grid;
+        grid-template-columns:1fr 1fr
+
+    }*/
+    .select-class {
+        width: 270px;
+        margin-left: -1.5rem;
+    }
+</style>
+
+<div id="ChangeBranchOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form id="ChangeBranchOrderForm" ng-controller="ChangeBranchOrderCtrl" style="min-width:650px;" name="ChangeBranchOrderForm" role="form" novalidate class="form-horizontal" data-ng-init="getCurrentBranch(card.CardNumber)">
+    <div id="ChangeBranch_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+
+
+            <li class="root-menu-item-4 " ng-click="saveChangeBranchOrder()">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('changeBranch')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div>
+        <div class="col-sm-10">
+            <div style="max-width:520px">
+                <errors></errors>
+            </div>
+
+            <div class="form-group">
+
+
+                <label class="tab_title col-sm-4  text-right" for="CardNumber">Քարտի համար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" disabled="disabled" class="form-control tab_title" style="text-align: left;" id="CardNumber" name="CardNumber" ng-model="card.CardNumber">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="tab_title col-sm-4  text-right" for="Filial">Ընթացիկ մասնաճյուղ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" disabled="disabled" class="form-control tab_title" style="text-align: left;" id="Filial" name="Filial" ng-model="Branch.Filial">
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label class="tab_title col-sm-4  text-right" for="newfilial">Նոր մասնաճյուղ</label>
+                <div class="col-sm-6" data-ng-init="getFilialList()">
+                    <loading-control scopevariable="FilialList"></loading-control>
+                    <select ng-show="FilialList" required
+                            data-ng-model="NewMovedFilial" class="form-control select-class" name="FilialList"
+                            ng-change="getFilialList(FilialList)"
+                            data-ng-options="x for x in FilialList">
+                        <option value="" required>Ընտրեք...</option>
+                    </select>
+
+                    <div class="col-sm-offset-0" ng-if="empty">
+                        <div class="errors">
+                            Մասնաճյուղը ընտրված չէ
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-0" ng-if="equal">
+                        <div class="errors">
+                            Ընթացիկ և նոր մասնաճյուղերը նույն են
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</form>
+
+

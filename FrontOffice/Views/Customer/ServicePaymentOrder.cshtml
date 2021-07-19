@@ -1,0 +1,63 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #ServicePaymentOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+<form ng-controller="ServicePaymentOrderCtrl" ng-init="setOrderType(debtType);initDebitAccount()" name="ServicePaymentOrderForm" class="form-horizontal" id="ServicePaymentOrderForm" role="form" novalidate prevent-enter-submit labels-required>
+
+    <div id="servicepaymentorder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="order.OnlySaveAndApprove = false;saveServicePaymentOrder()">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li ng-if="$root.SessionProperties.AdvancedOptions['withCashRegister']=='1'&& $root.SessionProperties.AdvancedOptions['canSendToCashier']=='1'" class="root-menu-item-4 " ng-click="order.OnlySaveAndApprove = true;saveServicePaymentOrder()">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ուղարկել դրամարկղ</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('servicepaymentorder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+
+    <div class="col-sm-11">
+        <div class="checkbox" style="margin-left:20px;margin-bottom:20px;">
+            <label class="tab_text" for="urgent">
+                <input type="checkbox" class="checkbox-inline" id="checkBox" name="checkBox" data-ng-model="checkBox" ng-change="setOrderType(debtType)">Գանձել խնդրահարույց տարանցիկ հաշվից
+            </label>
+        </div>
+        <div ng-show="checkBox" ng-model="debitAccount" style="margin-bottom:10px;color:brown;margin-left:20px;">
+            Տարանցիկ հաշվի մնացորդը՝    {{debitAccount | number:2}} {{order.Currency}}
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-3 control-label" for="amount">  Գումար</label>
+            <div class="col-sm-6">
+                <div class="row input-group">
+                    <input type="text" id="amount" name="amount" data-ng-model="amount" class="tab_title form-control" fcsa-number disabled="disabled">
+                    <div ng-show="checkBox" class="input-group-btn" style="width:auto">
+                        <button type="button" class="btn btn-primary" ng-controller="PopUpCtrl" ng-click="params={servicePaymentOrder:order,Amount:amount};openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder')" title="Կանխիկ մուտք տարանցիկ հաշվին"><span class="glyphicon glyphicon-plus"></span></button>
+                    </div>
+                </div>
+                <div>
+                    <span class="tab_title" ng-show="amount!='' && amount!=undefined">Արժույթ` {{order.Currency}}</span>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+
+
+
+
+
+
+</form>

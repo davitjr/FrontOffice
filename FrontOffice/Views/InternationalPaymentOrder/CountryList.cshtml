@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+}
+    <div class="form-group">
+
+        <label ng-if="true" class="tab_title col-sm-5 control-label" for="description">{{labeldescription}} <span class="redStyle">*</span></label>
+        <div class="col-sm-6 ">
+            <div class="row">
+                <div ng-class="{'col-sm-11':showforrussia==1,'col-sm-12':showforrussia!=1}" style="padding-left:0;padding-right:0">
+                    <select ng-model="country" name="Country" id="Country" class="form-control" ng-init="getCountryList() " ng-disabled="disabled1==1" ng-required="required==1">
+
+                        <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                        <option value="{{state.CountryCode}}" data-placement="top" title="{{state.AddInf == '' && state.RiskQuality == 2 ?  'Բարձր ռիսկային երկիր' : state.AddInf}}" ng-selected="state.CountryCode==selectedcountry" ng-style="state.RiskQuality==2 && showriskquality==1 && {'background-color':'red' ,'color':'white'}"
+                                ng-repeat="state in countryList  ">
+                            {{::state.CountryName}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-sm-1 " style="padding-right:0; padding-left :10px;padding-top :10px" ng-if="showforrussia==1">
+                    <input type="checkbox" ng-model="check" ng-change=" setCountry()" ng- title="Նշել RUSSIAN FEDERATION" ng-true-value="1" ng-false-value="0" ng-disabled="disabled1==1" />
+                </div>
+                <div ng-if="AddInf!='' && showriskquality==1" class="row" style="margin-bottom:0; padding-left:10px; padding-right :10px" >
+                    <h5 class="errors" style="text-align: justify; margin-bottom: 0; margin-top: 5px">  {{AddInf}}</h5>
+                </div>
+                @*<div class="row">
+                    <ng-messages ng-if="formname.$submitted"
+                                 for="formname.country.$error">
+                        <ng-message when="required" class="errors">
+                            {{labeldescription}}ը լրացված չէ
+                        </ng-message>
+
+                    </ng-messages>
+                </div>*@
+</div>
+    </div>
+ </div>

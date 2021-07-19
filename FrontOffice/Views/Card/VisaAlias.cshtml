@@ -1,0 +1,73 @@
+﻿@{
+    Layout = null;
+}
+
+<div id="aliasHistory" ng-init="GetVisaAliasHistory(CardNumber)">
+    <div class="product-container" style="width:90%">
+        <div class="header-title">
+            Կցված բջջ. հեռ.ներ
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div ng-show="aliasHistory.Status==null" ng-controller="PopUpCtrl" ng-click="params={ActionName: 0, cardNumber:card.CardNumber, operDay:aliasHistory.OperDay};openWindow('Card/VisaAliasDataChange','Ստեղծում','VisaAliasDataChange')" class="ng-scope">
+                    <i class="add-new-product tipB" data-original-title="Նոր գրություն"></i>
+                </div>
+
+            </div>
+            <div class="product-content-table-full_height custom-scroll" id="provisionsContent" style="min-height:100px;">
+
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-show="aliasHistory.Status!=null" style="max-height:200px">
+
+                            <td class="text-left col-sm-11">
+                                <div style="margin-left: 5pt;">
+                                    <div>
+                                        <span class="my_label" style="font-size: 15px; color: #245775; height: 23px;">Կարգավիճակ` </span>{{aliasHistory.Status}}
+                                    </div>
+
+                                    <div>
+                                        <span class="my_label" style="font-size: 15px; color: #245775; height: 23px;">Գրանցման ա/թ` </span>{{aliasHistory.ActionDate | mydate | date: 'dd/MM/yyyy HH:mm'}}
+                                    </div>
+
+                                    <div>
+                                        <span class="my_label" style="font-size: 15px; color: #245775; height: 23px;">Բջջային հեռախոսի համար՝ </span>{{aliasHistory.Alias}}
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="contextTokens1" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                        <tr ng-show="aliasHistory.Status==null">
+                            <td colspan="3" style="text-align:center;">
+                                Տվյալները բացակայում են
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul id="contextTokens1" class="dropdown-menu">
+                    @*  <li><a style="color: black;text-decoration:none!important ;" href="" class="my_button" ng-controller="PopUpCtrl" ng-click="params={ActionName: '0', cardNumber:card.CardNumber, operDay:aliasHistory.OperDay};openWindow('Card/VisaAliasDataChange','Ստեղծում','Visa_Alias_Data_Change_Order')">Ստեղծում </a></li>*@
+                    <li><a style="color: black;text-decoration:none!important ;" href="" class="my_button" ng-controller="PopUpCtrl" ng-click="params={ActionName: '1', cardNumber:card.CardNumber, operDay:aliasHistory.OperDay};openWindow('Card/VisaAliasDataChange','Փոփոխում','VisaAliasDataChange')">Փոփոխում </a></li>
+                    <li> <a style="color: black;text-decoration:none!important ;" href="" class="my_button" ng-controller="PopUpCtrl" ng-click="params={ActionName: '2', cardNumber:card.CardNumber, operDay:aliasHistory.OperDay};openWindow('Card/VisaAliasDataChange','Հեռացում','VisaAliasDataChange')">Հեռացում </a></li>
+                    <li><a style="color: black;text-decoration:none!important ;" href="" class="my_button" ng-controller="PopUpCtrl" ng-click="params={ActionName: '3', cardNumber:card.CardNumber, operDay:aliasHistory.OperDay};openWindow('Card/VisaAliasDataChange','Կարգավիճակի հարցում','VisaAliasDataChange')">Կարգավիճակի հարցում </a></li>
+                    <li> <a style="color: black;text-decoration:none!important ;" href="" class="my_button" ng-controller="PopUpCtrl" ng-click="params={ActionName: '4', cardNumber:card.CardNumber, operDay:aliasHistory.OperDay};openWindow('Card/VisaAliasDataChange','Կցման տվյալներ','VisaAliasDataChange')">Կցման տվյալներ </a></li>
+                </ul>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+

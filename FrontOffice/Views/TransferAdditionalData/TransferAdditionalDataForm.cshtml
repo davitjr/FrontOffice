@@ -1,0 +1,236 @@
+﻿<style>
+       .modal-content {
+        min-width: 870px;
+        min-height: 670px;
+    }
+
+    .nonUnicodeText {
+        font-size:13px
+    }
+</style>
+
+<form name="TransferAdditionalDataForm" id="transferAdditionalDataForm" role="form"  novalidate prevent-enter-submit>
+    <div id="transferAdditionalDetails" ng-init="getTransferSenderLivingPlaceTypes();getTransferReceiverLivingPlaceTypes();getTransferAmountTypes();getTransferAmountPurposeTypes()">
+
+        <div class="col-sm-12 popup_wrapper_top" style="height:25px; margin-bottom:4px;">
+            <div style="margin-top:-8px"> Փոխանցման լրացուցիչ տվյալներ </div>
+            <img src="/Content/images/close_pop.png " ng-click="closeTransferAdditionalDetailsModal()" style="margin-top:-14px;margin-right:-10px">
+
+        </div>
+
+        <div style="padding-top:40px;padding-left:10px;padding-right:10px">
+            <section class="panel panel-success">
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="form-group " style="margin-left:20px">
+                            <label class="tab_title col-sm-5" >Գումար <span ng-show="dataformtype==1">ստացող</span> <span ng-show="dataformtype==2">ուղարկող</span>  <span class="redStyle">*</span> </label>
+                            <div class="col-sm-7">
+                                <div class="row">
+                                    <select id="receiverLivingPlace" ng-change="setReceiverLivingPlace()" style="max-width:455px;" data-ng-model="transferAdditionalData.receiverLivingPlace" name="receiverLivingPlace" class="form-control"
+                                            data-ng-options="item.key as item.value for item in transferReceiverLivingPlaceTypes" required>
+                                        <option class="tab_text" hidden value="">Ընտրեք...</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="TransferAdditionalDataForm.$submitted || TransferAdditionalDataForm.receiverLivingPlace.$dirty"
+                                                 for="TransferAdditionalDataForm.receiverLivingPlace.$error">
+                                        <ng-message when="required" class="errors">
+                                            Ընտրեք գումար <span ng-show="dataformtype==1">ստացողին</span> <span ng-show="dataformtype==2">ուղարկողին</span>
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group " style="margin-left:20px">
+                            <label class="tab_title col-sm-5" style="margin-top:15px" >Գումար <span ng-show="dataformtype==2">ստացող</span> <span ng-show="dataformtype==1">ուղարկող</span> <span class="redStyle">*</span>  </label>
+                            <div class="col-sm-7" style="margin-bottom:15px;margin-top:15px">
+                                <div class="row">
+                                    <select id="senderrLivingPlace" style="max-width:455px" data-ng-model="transferAdditionalData.senderLivingPlace" name="senderLivingPlace" class="form-control"
+                                            data-ng-options="item.key as item.value for item in transferSenderLivingPlaceTypes" required>
+                                        <option class="tab_text" hidden value="">Ընտրեք...</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="TransferAdditionalDataForm.$submitted || TransferAdditionalDataForm.senderLivingPlace.$dirty"
+                                                 for="TransferAdditionalDataForm.senderLivingPlace.$error">
+                                        <ng-message when="required" class="errors">
+                                            Ընտրեք գումար <span ng-show="dataformtype==2">ստացողին</span> <span ng-show="dataformtype==1">ուղարկողին</span>
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group " style="margin-left:20px">
+                            <label class="tab_title col-sm-5" ><span ng-show="dataformtype==1">Փոխանցվող</span> <span ng-show="dataformtype==2">Ստացվող</span>  գումարի ուղիները <span class="redStyle">*</span>  </label>
+                            <div class="col-sm-7">
+                                <div class="row">
+                                    <select id="transferAmountType" style="max-width:455px" data-ng-model="transferAdditionalData.transferAmountType" name="transferAmountType" class="form-control"
+                                            data-ng-options="item.key as item.value for item in transferAmountTypes" required>
+                                        <option class="tab_text" hidden value="">Ընտրեք...</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="TransferAdditionalDataForm.$submitted || TransferAdditionalDataForm.transferAmountType.$dirty"
+                                                 for="TransferAdditionalDataForm.transferAmountType.$error">
+                                        <ng-message when="required" class="errors">
+                                            Ընտրեք <span ng-show="dataformtype==1">փոխանցվող</span> <span ng-show="dataformtype==2">ստացվող</span>  գումարի բնույթը
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+
+        <div class="panel panel-success" style="margin-top:15px;margin-left:10px;margin-right:10px">
+            <div ng-show="dataformtype==1" class="panel-heading">Փոխանցվող գումարի նպատակ </div>
+            <div ng-show="dataformtype==2" class="panel-heading">Ստացված գումարի փոխանցման նպատակ </div>
+            <div class="panel-body" style="padding-bottom: 5px; padding-top: 5px;padding-right: 15px;">
+                <div class="form-group " style="padding-right: 10px;">
+                    <div class="" style="">
+                        <div style="overflow:auto;margin-top:-5px;margin-left:-5px ">
+                            <table class="table table-condensed" style="margin-bottom:0;border:none">
+                                <thead>
+                                    <tr class="product-container-header" style="font-size:8pt;height:20px;">
+                                        <th class="col-sm-9" style="text-align:center;">Նպատակ</th>
+                                        <th class="col-sm-3" style="text-align:center;">Գումար</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                            <div id="amountPurposesDiv" class="div-table-content " style="max-height:170px; min-height:170px;border: #CFDAD0 1px solid; ">
+                                <table class="table table-condensed table-hover">
+                                    <tbody>
+                                        <tr ng-repeat="p in  transferAdditionalData.transferAmountPurposes" style="font-size:9pt; cursor:pointer;height:20px;">
+                                            <td class="col-sm-12">
+                                                <div class="col-sm-12">
+                                                    <div class="col-sm-9 nonUnicodeText">
+                                                        {{::p.description}}<span ng-show="p.purposeCode==11">({{::p.addInfo}})</span>
+                                                    </div>
+                                                    <div class="col-sm-2 nonUnicodeText" style="padding-left:50px">
+                                                        {{::p.amount | number:2}}
+                                                    </div>
+
+                                                    <script>
+                                                        $("[data-toggle=tooltip]").tooltip({
+                                                            placement: $(this).data("placement") || 'bottom'
+                                                        });
+                                                    </script>
+
+                                                    <div class="col-sm-1" style="padding-left:35px" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Հեռացնել">
+                                                        <img src="~/Content/newTheme/Images/delete.png" ng-click="deletePurpose()">
+                                                    </div>
+
+
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="amountPurposes.length==0">
+                                            <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-8 form-group">
+                        <select style="max-width:500px" data-ng-model="purpose" name="amountPurpose" class="form-control"
+                                data-ng-options="item as item.value for item in transferAmountPurposeTypes">
+                            <option class="tab_text" hidden value="">Ընտրեք...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group" style="">
+                        <input type="text" ng-model="purposeAmount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' name="amount" id="amount"  class="form-control tab_title" fcsa-number />
+                    </div>
+
+                    <div class="btn-group" aria-label="Default button group" style="margin-left:11px" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ավելացնել">
+                        <button ng-click="addPurpose(purpose,purposeAmount,addInfo)" type="button" class="btn btn-default">+</button>
+                    </div>
+
+                    <div class="form-group" ng-if="purpose.key==11" >
+                        <label class="tab_title col-sm-4 control-label" for="description">Լրացուցիչ նշումներ</label>
+                        <div class="col-sm-7 ">
+                            <div class="row">
+                                <textarea style="text-align:left;width:234px"  ng-model="$parent.addInfo" name="addInfo" class="form-control tab_title" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div ng-if="error.length>0" class="panel panel-danger" style="max-width:500px;margin-left:15px;margin-bottom:15px">
+                        <div class="panel-heading"><span class="glyphicon glyphicon-exclamation-sign"></span> Սխալներ</div>
+                        <div class="panel-body">
+                            <font color="#A94442">
+                                <a style="color:#A94442;display:block" href="" data-ng-repeat="err in error">
+                                    {{$index+1}}.{{::err.Description}}
+                                </a>
+                            </font>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-2 form-group" style="margin-right:-20px">
+                <button type="button" class="btn btn-primary" ng-click="TransferAdditionalDataForm.$setSubmitted();TransferAdditionalDataForm.$valid && save()" style="padding:2px 4px;margin-top:10px;margin-left:-15px">&nbsp;Հաստատել</button>
+            </div>
+
+            <div class="col-md-2 form-group">
+                <button type="button" class="btn btn-default" ng-click="closeTransferAdditionalDetailsModal()" style="padding:2px 4px;margin-top:10px;margin-left:-30px">&nbsp;Հրաժարվել</button>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

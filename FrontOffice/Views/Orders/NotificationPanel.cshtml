@@ -1,0 +1,85 @@
+﻿<style>
+    .rejectedNotification {
+        background-color: #ffe1e1 !important;
+    }
+
+    .readedNotification {
+        background-color: #fff3f3 !important;
+    }
+    .notifications-list > li {
+        height:120px;
+    }
+    #NotificationPanel {
+        height: 400px;
+        overflow: auto;
+    }
+    #loadingDiv {
+    background-color: #f2f2f2;
+    width: inherit;
+    margin-left: 8px;
+    margin-right: 1px;
+    height: 25px;
+    margin-bottom: 3px;
+    text-align:center
+    }
+</style>
+
+<div id="NotificationPanel" ng-show="$root.notificationCount!=0" class="notifications js-notifications" ng-controller="OrderCtrl" ng-init="setTotalUserMessages();" style="" when-scrolled="loadNots()">    
+    <div style="margin-bottom: -8px;margin-top: 5px;">
+        <span ng-click="getNotConfirmedOrders()" class="glyphicon glyphicon-refresh" data-placement="bottom" data-toggle="tooltip" style="cursor: pointer; margin-left: 15px;margin-top:5px" aria-hidden="true" data-original-title="Թարմացնել"> <a>Թարմացնել</a></span>
+        <span  class="include-closed-products" style="float:inherit;margin-left:40px">
+            <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-messages" data-ng-model="notificationFilter" ng-true-value="2" ng-false-value="1" ng-change="updateNotificationsFilter()">
+            <label for="include-closed-messages" name="include-closed-messages-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել կարդացվածները</label>
+        </span>
+        <script type="text/javascript">
+            $('span').tooltip();
+        </script>
+    </div>
+
+    <ul class="notifications-list"  style="padding-right:10px" >
+        <li ng-repeat="rejectedMessage in userRejectedMessages" ng-class="rejectedMessage.ReadDate==nul?'rejectedNotification':'readedNotification'" class="item js-item expired new " data-id="3">
+            <div class="details">
+                <a ng-controller="PopUpCtrl" ng-click="openNotConfirmedOrder(rejectedMessage.Order);openWindow('/Orders/OrderDetails',rejectedMessage.Order.SubTypeDescription,'orderDetails')" style="cursor: pointer;font-size:13px;color:#a42828" class="date"> {{rejectedMessage.Subject}}  </a>
+                <div class="notification-text text-truncate">
+                    <span> {{rejectedMessage.Message}} </span>
+                    <div class="notification-text"> Հաճախորդ՝  {{rejectedMessage.Order.CustomerNumber!=0?rejectedMessage.Order.CustomerNumber:'Բացակայում է'}} </div>
+                    <div>Գործարքի ա/թ՝ {{::rejectedMessage.RegistrationDate | mydate | date: 'dd/MM/yyyy'}}</div>
+                    <div class="notification-text">Տեսակ՝  {{::rejectedMessage.Order.SubTypeDescription}} </div>
+                </div>
+            </div>          
+            <div class="notification-button-pane">
+                <div class="notification-button" ng-show="rejectedMessage.ReadDate==null">
+                    <button type="button" class="button-default button-dismiss" ng-click="closeRejectedMessage(rejectedMessage.Id)">×</button>
+                </div>
+                <div class="notification-button fa fa-angle-down" onclick="ShowHideCompleteMessage(this)"></div>
+            </div>
+        </li>       
+    </ul>
+    <ul ng-if="userRejectedMessages.length==0 && notificationFilter==2" class="notifications-list">
+        <li class="item js-item expired new" data-id="3" style="background-color:white!important;margin-top: 80px;">
+            <div class="details" style="white-space:inherit">
+                    Առկա չեն կարդացված հաղորդագրություններ
+            </div>
+        </li>
+    </ul>
+
+    <ul class="notifications-list"  ng-if="notificationFilter!=2">
+        <li ng-repeat="notConfirmedOrder in notConfirmedOrders" class="item js-item expired new" data-id="3" ng-controller="PopUpCtrl" ng-click="openNotConfirmedOrder(notConfirmedOrder);openWindow('/Orders/OrderDetails',notConfirmedOrder.SubTypeDescription,'orderDetails')" style="cursor:pointer;">
+            <div class="details">
+                <a style="cursor: pointer;" class="date"> Գործարքի համար {{::notConfirmedOrder.Id}}  {{::notConfirmedOrder.RegistrationDate | mydate | date: 'dd/MM/yyyy'}}</a>
+                <span class="notification-text"> Հաճախորդ՝ {{notConfirmedOrder.CustomerNumber!=0?notConfirmedOrder.CustomerNumber:'Բացակայում է'}} </span>
+                <div class="notification-text">{{::notConfirmedOrder.SubTypeDescription}} </div>
+                <div class="notification-text">Կարգավիճակ՝ {{::notConfirmedOrder.QualityDescription}} </div>
+            </div>
+            
+        </li>
+    </ul>
+
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,29 @@
+﻿<div class=" col-md-10">
+    <form style="width:600px" ng-controller="CustomerDataOrderCtrl" ng-init="getCustomerDataOrder(selectedOrderId)">
+        <loading-control style="margin-left:20em" scopevariable="order"></loading-control>
+        <br><div ng-show="order" class="popup_wrapper_inner">
+            <div class="row">
+                <div class="col-md-11 my_class">
+                    <div class="col-sm-5 my_label">Հայտի համար</div><div class="col-sm-7 my_text1">{{order.Id}}</div>
+                    <div class="col-sm-5 my_label">Հայտի մուտքագրման ա/թ</div><div class="col-sm-7 my_text1">{{order.RegistrationDateString}}</div>
+                    <div ng-if="order.HomePhoneNumber!=''" class="col-sm-5 my_label ">Քաղաքային հեռախոսահամար</div><div ng-if="order.HomePhoneNumber!=''" class="col-sm-7 my_text1 "> {{order.HomePhoneNumber}}</div>
+                    <div ng-if="order.MobilePhoneNumber!=''" class="col-sm-5 my_label ">Բջջային հեռախոսահամար</div><div ng-if="order.MobilePhoneNumber!=''" class="col-sm-7 my_text1 ">{{order.MobilePhoneNumber}}</div>
+                    <div ng-if="order.EmailAddress.length>0" class="col-sm-5 my_label ">Էլեկտրոնային հասցեներ</div>
+                    <div ng-if="email.length>0" ng-repeat="email in order.EmailAddress" class="col-sm-7 my_text1 ">
+                        {{email}}
+                    </div>
+                    <div ng-if="order.Password!=''" class="col-sm-5 my_label ">Գաղտնաբառ</div><div ng-if="order.Password!=''" class="col-sm-7 my_text1">{{order.Password}}</div>
+                    <p class="text-left"></p><br />
+                    <div class="col-sm-5 my_label">Կարգավիճակ</div><div class="col-sm-7 my_text1">
+                        <span ng-if="order.Quality==30" class="greenStyle">{{ order.QualityDescription }}</span>
+                        <span ng-if="order.Quality==31" class="redStyle">{{ order.QualityDescription }}</span>
+                        <span ng-if="order.Quality!=31 && order.Quality!=30">{{ order.QualityDescription }}</span>
+                    </div>
+                    <div ng-if="order.Quality==31" ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="col-sm-12 my_text1">Մերժման պատճառ` <span class="redStyle">{{ rejectHistory.ReasonDescription }}</span></div>
+                    </div>
+                    <div class="col-sm-12 my_text1" ng-if="$root.SessionProperties.IsCalledFromHB != true">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+                    <p class="text-left"></p>
+                </div>
+            </div>
+    </form>
+</div>

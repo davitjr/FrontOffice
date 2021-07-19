@@ -1,0 +1,50 @@
+﻿<form ng-controller="ChangeBranchOrderCtrl" ng-init="getChangeBranchOrder(selectedOrderId)" style="width:400px">
+
+    <loading-control style="margin-left:260px" scopevariable="order"></loading-control>
+    <div ng-show="order" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 " ng-if="order.Quality == 3"
+                ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հեռացման հայտ','removalOrder',callbackgetPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton" alt="">Հեռացման հայտ</span>
+            </li>
+        </ul>
+    </div>
+
+
+    <div ng-show="order" class="product-details bhoechie-tab-content" style="padding:30px;padding-top:10px;min-width:400px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար    </div>
+            <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString }}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.CardNumber }}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ընթացիկ մասնաճյուղ</div>
+            <div class="product-detail-cell product-detail-value">{{order.FilialCode}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոփոխվող մասնաճյուղ</div>
+            <div class="product-detail-cell product-detail-value">{{order.MovedFilial}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">
+                <span ng-if="order.Quality==30" class="greenStyle" style="margin-left:-6px">{{ order.QualityDescription }}</span>
+                <span ng-if="order.Quality!=30" style="margin-left:-6px">{{ order.QualityDescription }}</span>
+            </div>
+        </div>
+        <div ng-if="order.Quality==31" ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մերժման պատճառ` </div>
+            <div class="product-detail-cell product-detail-value">
+                <span class="redStyle">{{ rejectHistory.ReasonDescription }}</span>
+            </div>
+        </div>
+    </div>
+</form>

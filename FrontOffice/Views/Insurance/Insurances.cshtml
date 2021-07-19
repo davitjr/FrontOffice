@@ -1,0 +1,87 @@
+﻿<script type="text/javascript">
+    $("#insuranceContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div class="product-container" ng-controller="InsuranceCtrl" id="AllInsurances" data-ng-init="getInsurances()" ng-show="(hideBlank!='true' && insurances.length==0) || (insurances.length!=0 && insurances.length!=undefined)">
+    <div class="header-title">
+        <a ui-sref="insurances" style="color:black;">Ապահովագրություն</a>
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="product-container-header">
+            <div class="include-closed-products">
+                <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-insurances" data-ng-model="filter" ng-true-value="2" ng-false-value="1" ng-change="QualityFilter()">
+                <label for="include-closed-insurances" name="include-closed-insurances-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+            </div>
+
+            <i class="add-new-product tipB" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,isLoanInsurance:isLoanInsurance,loanProductId:productId}; openWindow('/InsuranceOrder/PersonalInsuranceOrder','Ապահովագրության մուտքագրում','newInsuranceOrder')" data-original-title="Նոր պայմանագիր"></i>
+        </div>
+        <div class="product-content-table custom-scroll" id="insuranceContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+            <div ng-if="insurance==undefined">
+                <loading></loading>
+            </div>
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody>
+                    <tr ng-repeat="insurance in insurances | filter: { ConectedProductId: isLoanInsurance==true?productId:'' }" ng-if="filter==1 && insurances.length!=0 " ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,insurance)" ng-dblclick="openInsuranceDetails();" style="cursor: pointer;">
+                        <td class="col-md-4">
+                            <img ng-if="insurance.Company==1" src="~/Content/Images/IngoInsurance.ico" height="35" width="35" align="left" style="margin-right:3px" />
+                            <img ng-if="insurance.Company==2" src="~/Content/Images/RosgosstrakhInsurance.ico" height="35" width="35" align="left" style="margin-right:3px" />
+                            <img ng-if="insurance.Company==3" src="~/Content/Images/NairiInsurance.png" height="35" width="35" align="left" style="margin-right:3px" />
+                            <img ng-if="insurance.Company==5" src="~/Content/Images/SILInsurance.png" height="35" width="35" align="left" style="margin-right:3px" />
+                            Տեսակ` {{::insurance.InsuranceTypeDescription}}
+                            <br />Գումար՝ {{::insurance.CompensationAmount | number:2}} {{::insurance.CompensationCurrency}} <br />
+
+                            <span ng-if="insurance.InsuranceContractType==1 || insurance.InsuranceContractType==3">Պայմանագրի տեսակ՝ ձևակերպումով</span>
+
+                            <span ng-if="insurance.InsuranceContractType==2">Պայմանագրի տեսակ՝ չձևակերպումով</span>
+
+                        </td>
+                        <td class="col-sm-2" style="text-align:right;">
+                            Սկիզբ՝ {{::insurance.StartDate | mydatetime}}
+                            <br />Վերջ՝ {{::insurance.EndDate | mydatetime}}
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="insuranceContext" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+                    <tr ng-if="filter==1 && insurances.length==0 ">
+                        <td colspan="3" style="text-align:center;">
+                            Առկա չեն ապահովագրություններ
+                        </td>
+                    <tr ng-if="filter!=1"><td style="color:red; border-width:3px" colspan="3" class="col-sm-9">Փակված ապահովագրություններ</td></tr>
+                    <tr ng-repeat="insurance in closedInsurances | filter: { ConectedProductId: isLoanInsurance==true?productId:'' }" ng-if="filter!=1 && closedInsurances.length!=0 " ng-dblclick="isLoanInsuranceDetails=false;openInsuranceDetails();" ng-class="{'selected':$index == selectedRowClose}" ng-click="setClickedRowClose($index,insurance)" style="cursor: pointer;">
+                        <td class="col-md-4">
+                            <img ng-if="insurance.Company==1" src="~/Content/Images/IngoInsurance.ico" height="35" width="35" align="left" style="margin-right:3px" />
+                            <img ng-if="insurance.Company==2" src="~/Content/Images/RosgosstrakhInsurance.ico" height="35" width="35" align="left" style="margin-right:3px" />
+                            <img ng-if="insurance.Company==3" src="~/Content/Images/NairiInsurance.png" height="35" width="35" align="left" style="margin-right:3px" />
+                            <img ng-if="insurance.Company==5" src="~/Content/Images/SILInsurance.png" height="35" width="35" align="left" style="margin-right:3px" />
+                            Տեսակ` {{::insurance.InsuranceTypeDescription}}
+                            <br />Գումար՝ {{::insurance.Amount | number:2}} {{::insurance.Currency}}
+
+                        </td>
+                        <td class="col-sm-2" style="text-align:right;">
+                            Սկիզբ՝ {{::insurance.StartDate | mydatetime}}
+                            <br />Վերջ՝ {{::insurance.EndDate | mydatetime}}
+                        </td>
+                        <td ng-if="insurance.IsManualDeleted == true" class="col-sm-2" style="text-align:right;">
+                            Հեռացված
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="insuranceContext" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul id="insuranceContext" class="dropdown-menu">
+                <li ng-if="isLoanInsurance!=true && isPaidInsurance!=true"><a style="color: black;text-decoration:none!important ;" ui-sref="insuranceDetails({ productId : selectedProductId })">Մանրամասն դիտարկում</a></li>
+                <li ng-if="isLoanInsurance==true || isPaidInsurance==true" style="cursor:pointer"><a style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={productId:selectedProductId,isLoanInsuranceDetails:true}; openWindow('/Insurance/InsuranceDetails','Ապահովագրության տվյալներ','insuranceDetails')">Մանրամասն դիտարկում</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>

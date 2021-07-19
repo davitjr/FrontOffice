@@ -1,0 +1,16 @@
+﻿<form ng-controller="CardStatementSessionCtrl" ng-init="getSatementHistory(SessionNumber);getStatementSessionQualityTypes()">
+    <div ng-show="cardStatementHystory" class="product-details bhoechie-tab-content" style="padding:30px;padding-top:10px;min-width:640px">
+        <div class="product-detail-row" ng-repeat="history in cardStatementHystory">
+
+            <div class="product-detail-cell product-detail-lable"> Կարգավիճակ`</div>
+            <div class="product-detail-cell product-detail-value">
+                <span ng-if="history.ChangeUserName!=''">&nbsp;{{statementSessionQualityTypes[history.Quality]}} &nbsp;</span><span ng-if="history.Quality==null">Բացակայում է</span>
+            </div>
+
+            <div class="product-detail-cell product-detail-lable"></div>
+            <div class="product-detail-cell product-detail-value">
+                <span ng-if="history.ChangeUserName!=''">&nbsp;{{history.ChangeUserName}}&nbsp;(ՊԿ`{{history.userID}}) </span><span ng-if="history.ChangeUserName==null">Բացակայում է</span> {{history.ChangeDateString}}
+            </div>
+        </div>
+    </div>
+</form>

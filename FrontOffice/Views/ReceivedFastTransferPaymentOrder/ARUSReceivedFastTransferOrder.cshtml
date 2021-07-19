@@ -1,0 +1,889 @@
+﻿<style type="text/css">
+    #receivedFastTransferARUSOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #receivedFastTransferARUSOrderForm {
+        margin-right: 15px;
+    }
+</style>
+
+
+
+<form name="receivedFastTransferARUSOrderForm" role="form" class="form-horizontal col-sm-12" style="max-width: 815px; padding: 0" ng-init="getCustomer(); getBeneficiaryData(); getCountriesWithA3();" novalidate prevent-enter-submit labels-required>
+    <div id="receivedFastTransferLoad" class="overlay hidden">
+        <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+    </div>
+    <div id="fasttransferpaymentorder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu" style="max-width:100%!important; width:100%!important">
+            <li class="root-menu-item-4 " ng-click="receivedFastTransferARUSOrderForm.$setSubmitted();receivedFastTransferARUSOrderForm.$valid ? saveReceivedFastTransferPayment() : showValidationMessage();" ng-if="NewOrEditFromCallCenter!=2">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+           
+
+            <li class="root-menu-item-4 " ng-click="changeOrder.SubType=5; receivedFastTransferARUSOrderForm.$setSubmitted();receivedFastTransferARUSOrderForm.$valid ? saveReceivedFastTransferPayment() : showValidationMessage();" ng-if="NewOrEditFromCallCenter==2">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Հաստատել</span>
+            </li>
+
+            <li class="root-menu-item-4 " ng-click="showRejectTransfer();" ng-if="NewOrEditFromCallCenter==2">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Մերժել</span>
+            </li>
+
+          
+            <li class="root-menu-item-2 " ng-click="openRemittanceSearchModal();" style="padding:0px!important; display:inline-block ">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="h-menu-icon searchLeftMenuButton">Փոխանցման որոնում</span>
+            </li>
+            <li class="root-menu-item-5 " ng-click="openTransferAdditionalDetailsModal()" ng-if="isCallTransfer==0">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon transferAdditionalDataBtn">Լրացուցիչ տվյալներ </span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('receivedfasttransferpaymentorder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+
+
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+
+    <div>
+        <div class="" style="padding:0;padding-left:5px;">
+
+            <div ng-class="(isHasAdditionalData || NewOrEditFromCallCenter==2 )?'col-sm-7':''">
+                <div style="max-width:600px">
+                    <errors></errors>
+                </div>
+
+                <div class="form-group ">
+                    <div class="col-sm-12" style="max-width:600px">
+                        <div class="row-no-margin">
+
+                            <section class=" panel panel-info" ng-if="NewOrEditFromCallCenter!=1 && NewOrEditFromCallCenter!=2">
+                                <header class="panel-heading">
+                                    <span class="panel-title" style=" font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                                </header>
+                                <div class="panel-body">
+                                    <span>Բոլոր դաշտերը անհրաժեշտ է մուտքագրել UNICODE-ով</span>
+                                </div>
+                            </section>
+                            <section ng-show="customerDocumentWarnings.length>0" class=" panel panel-warning">
+                                <header class="panel-heading">
+                                    <span class="panel-title" style=" font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                                </header>
+                                <div class="panel-body">
+                                    <div ng-repeat="war in customerDocumentWarnings">
+                                        {{$index+1}}.{{::war}}
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section ng-show="customerDahk.length>0" class=" panel panel-warning">
+                                <header class="panel-heading">
+                                    <span class="panel-title" style=" font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Արգելանք</span>
+                                </header>
+                                <div class="panel-body">
+                                    <div class="panel-body">
+                                        <div ng-if="customerDahk.length!=0"> <span class="errors">{{customerDahk}}</span></div>
+                                    </div>
+                                </div>
+                            </section>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="panel panel-success" style=" margin-bottom: 10px;">
+                    <div class="panel-heading">Փաստաթուղթ</div>
+                    <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;padding-right: 15px;">
+
+
+                        <div class="form-group" style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5">Ամսաթիվ</label>
+                            <div class="col-sm-3">
+                                <div class="row">
+                                    <input type="date" readonly="readonly" ng-model="order.OperationDate" class="tab_title form-control unstyled" style="text-align:left; padding:0" name="RegistrationDate" required />
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" style="padding-right: 10px;" ng-if="isCustomer == false">
+                            <label class="tab_title col-sm-5">Հաճախորդ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="order.CustomerNumber"  class="form-control" id="CustomerNumber" name="CustomerNumber" required onkeypress="return event.keyCode != 13;" ng-change="getContractsForTransfersCall(1); getCustomer(); getBeneficiaryData();" ng-model-options="{updateOn: 'blur'}" data-update-model-on-enter-key-pressed>
+                                        <div class="input-group-btn" style="display:block;">
+                                            <button type="button" class="btn btn-default searchButton" ng-click="searchCustomers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div ng-messages="(PersonalTransferByCallForm.$submitted || PersonalTransferByCallForm.customerNumber.$dirty) && PersonalTransferByCallForm.customerNumber.$error" class="errors">
+                                        <ng-message when="required" class="errors"> Հաճախորդը լրացված չէ </ng-message>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group" style="padding-right: 10px;" ng-if="isCustomer==false && transferByCall.Source != 1 && transferByCall.Source != 5">
+                            <label class="col-sm-5 tab_title">Քարտի համար</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="transferByCall.cardNumber" class="form-control" id="cardNumber" name="cardNumber" onkeypress="return event.keyCode != 13;" ng-change="getContractsForTransfersCall(3)" ng-model-options="{updateOn: 'blur'}" data-update-model-on-enter-key-pressed>
+                                        <div class="input-group-btn" style="display:block;">
+                                            <button type="button" class="btn btn-default searchButton" ng-click="searchCards()" title="Քարտի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row additionalInfoLabel" ng-if="transferByCall.cardNumber != null">
+                                    Գաղտնաբառ` <b>{{transfer.Contract.MotherName}}</b>
+                                    <br />
+                                    Վերջ` <b>{{transfer.Contract.CardValidationDateString}}</b>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" style="padding-right: 10px;" ng-if="isCustomer==false && transferByCall.Source != 1 && transferByCall.Source != 5">
+                            <label class="col-sm-5 tab_title">Հաշիվ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="transferByCall.accountNumber" class="form-control" id="accountNumber" name="accountNumber" required onkeypress="return event.keyCode != 13;" ng-change="getContractsForTransfersCall(2)" ng-model-options="{updateOn: 'blur'}" data-update-model-on-enter-key-pressed>
+                                        <div class="input-group-btn" style="display:block;">
+                                            <button type="button" class="btn btn-default searchButton" ng-click="searchAccounts()" title="Հաշվի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row additionalInfoLabel" ng-if="transferByCall.accountNumber != null ">
+                                    Արժույթ` <b>{{transfer.Contract.Currency}}</b>
+                                </div>
+                                <div class="row">
+                                    <div ng-show="(receivedFastTransferARUSOrderForm.$submitted || receivedFastTransferARUSOrderForm.accountNumber.$dirty) && receivedFastTransferARUSOrderForm.accountNumber.$error.required" class="errors">
+                                        Հաշիվը լրացված չէ
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" style="padding-right: 10px;" ng-if="isCallTransfer==1 && transferByCall.Source != 1 && transferByCall.Source != 5">
+                            <label class="col-sm-5 tab_title">Համաձայնագիր</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div ng-if="transferContracts.length==0"><input type="text" class="form-control"></div>
+                                    <select ng-show="transferContracts.length!=0" data-ng-model="transfer.Contract" class="form-control" data-ng-options="t.AccountDescription  + ' ' + t.AccountNumber + ' ' +t.Currency +' '+t.ContractFilialCode+' '+t.CardNumber+' '+t.RelatedOfficeNumber+' '+t.CardType+' '+t.StartCapitalString for t in transferContracts" id="contract" ng-change="getContractDetails();" ng-disabled="NewOrEditFromCallCenter==2" name="contract" required>
+                                        <option value="" hidden="hidden" style="margin-left:25px">-Ընտրեք-</option>
+                                    </select>
+                                </div>
+                                <div class="row additionalInfoLabel">
+                                    <span ng-show="transferContracts.length!=0">Գաղտնաբառ` <b>{{transfer.Contract.ContractPassword}}</b></span>
+                                </div>
+                                <div class="row additionalInfoLabel">
+                                    <span ng-show="transferContracts.length!=0">Վերջ` <b>{{transfer.Contract.CardValidationDateString}}</b></span>
+                                </div>
+                                <div class="row additionalInfoLabel">
+                                    <span ng-show="transferContracts.length!=0">Քարտի գաղտնաբառ` <b>{{transfer.Contract.MotherName}}</b></span>
+                                </div>
+                                <div class="row additionalInfoLabel">
+                                    <div ng-if="transfer.Contract.CreditLineQuality ==11 || transfer.Contract.CreditLineQuality ==12"> <span class="errors">Վարկային գիծը/գերածախսը դուրս գրված է: </span></div>
+                                </div>
+                                <div class="row">
+                                    <div ng-messages="(receivedFastTransferARUSOrderForm.$submitted || receivedFastTransferARUSOrderForm.contract.$dirty) && receivedFastTransferARUSOrderForm.contract.$error && transferByCall.Source != 1 && transferByCall.Source != 5" class="errors">
+                                        <ng-message when="required" class="errors">Համաձայնագիրը լրացված չէ</ng-message>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="padding-right: 10px;" ng-if="isCallTransfer==1 && (transferByCall.Source == 1 || transferByCall.Source == 5)">
+                            <label class="col-sm-5 tab_title">Մուտքագրվող հաշիվ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div ng-if="transferByCall!=undefined">
+
+                                        <input type="text" data-ng-model="transferByCall.AccountNumber" style="width: 160px"
+                                               ng-disabled="true" class="form-control" id="receiverAccount" name="receiverAccount" required>
+                                        {{transferByCall.AccountCurrency}}
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div ng-messages="(receivedFastTransferARUSOrderForm.$submitted || receivedFastTransferARUSOrderForm.receiverAccount.$dirty) && receivedFastTransferARUSOrderForm.receiverAccount.$error && (transferByCall.Source == 1 || transferByCall.Source == 5)" class="errors">
+                                        <ng-message when="required" class="errors">Մուտքագրվող հաշիվը լրացված չէ</ng-message>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5">Համակարգ</label>
+                            <div class="col-sm-6" data-ng-init="getMTOList();">
+                                <div class="row">
+                                    <select data-ng-model="order.MTOAgentCode" class="form-control" data-ng-options="k as v for (k,v) in MTOList" disabled="disabled" id="MTOAgentCode" name="MTOAgentCode" required>
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք․․․</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.MTOAgentCode.$dirty"
+                                                 for="internationalPaymentOrderForm.SubType.$error">
+                                        <ng-message when="required" class="errors">
+                                            Փոխանցման համակարգը ընտրված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group " style="padding-right: 10px;" ng-if="NewOrEditFromCallCenter!=1">
+                            <label class="tab_title col-sm-5" for="Country">Երկիր</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <select data-ng-model="order.Country" class="form-control" data-ng-options="k as v for (k,v) in senderCountries"
+                                            id="Country" name="Country" ng-required="NewOrEditFromCallCenter!=1" disabled="disabled">
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.Country ==undefined || order.Country =='' || order.Country ==' ')">
+                                        Երկիրը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group " style="padding-right: 10px; margin-bottom: 0" ng-if="NewOrEditFromCallCenter==1 || NewOrEditFromCallCenter==2">
+                            <label class="tab_title col-sm-5" for="Code">Փոխանցման կոդ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input ng-model="order.Code" ng-enter="" name="Code" class="tab_title form-control" style="text-align:left" disabled="disabled" required />
+                                </div>
+                                <div class="row additionalInfoLabel">
+                                    <span style="color: green;">Նիշերի քանակ` <b>{{order.Code != null ? order.Code.length : 0 }} </b></span>
+                                </div>
+                                <div class="row">
+                                    @*<ng-messages ng-if="receivedFastTransferARUSOrderForm.$submitted || receivedFastTransferARUSOrderForm.Code.$dirty"
+                                 for="receivedFastTransferARUSOrderForm.Code.$error">
+                        <ng-message when="required" class="errors">
+                            Փոխանցման կոդ դաշտը լրացված չէ
+                        </ng-message>
+
+                    </ng-messages>*@
+
+
+                                    <ng-messages ng-if="receivedFastTransferARUSOrderForm.$submitted || receivedFastTransferARUSOrderForm.Code.$dirty"
+                                                 for="receivedFastTransferARUSOrderForm.Code.$error">
+                                        <ng-message when="required" class="errors">
+                                            Փոխանցման կոդ դաշտը լրացված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="panel panel-success" style=" margin-bottom: 10px;">
+                    <div class="panel-heading">Գումար </div>
+                    <div class="panel-body" style="padding-bottom: 0px; padding-top: 5px;padding-right: 15px;">
+                        <div class="form-group " style="margin-left :0; margin-right :0">
+
+                            <label class="tab_title col-sm-5" for="amount">Գումար</label>
+                            <div class="col-sm-3">
+                                <div class="row">
+                                    <input type="text" ng-model="order.Amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' name="amount" required class="tab_title form-control" ng-enter=""  disabled="disabled" fcsa-number />
+                                </div>
+                                <div class="row ">
+                                    <ng-messages ng-if="receivedFastTransferARUSOrderForm.$submitted || receivedFastTransferARUSOrderForm.amount.$dirty || isAddDataFormOpening "
+                                                 for="receivedFastTransferARUSOrderForm.amount.$error">
+                                        <ng-message when="required" class="errors">
+                                            Գումարը լրացված չէ
+                                        </ng-message>
+
+                                        <ng-message when="min" class="errors">
+                                            Գումարը պետք է լինի դրական
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="row">
+                                    <select data-ng-model="order.Currency" name="CurrencyMy" id="Currency" class="form-control" style="margin-left: 5px; padding-right: 0px; padding-left: 5px;" disabled required
+                                            data-ng-options="k as v for (k,v) in currencies">
+                                        <option value="" hidden="hidden">Ընտրեք...</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="receivedFastTransferARUSOrderForm.$submitted || receivedFastTransferARUSOrderForm.CurrencyMy.$dirty"
+                                                 for="receivedFastTransferARUSOrderForm.CurrencyMy.$error">
+                                        <ng-message when="required" class="errors">
+                                            Արժույթը ընտրված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group " style="margin-left :0; margin-right :0" ng-if="NewOrEditFromCallCenter==2">
+
+                            <label class="tab_title col-sm-5" for="CustomerAmount">Հաճախորդի գումար</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <label class="tab_title " style="text-align:right ">{{order.CustomerAmount| number :2}} {{order.Currency}}</label>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-success" style=" margin-bottom: 10px;" ng-if="NewOrEditFromCallCenter!=1">
+                    <div class="panel-heading">Փոխանցող </div>
+                    <div class="panel-body" style="padding-bottom: 5px; padding-top: 5px;padding-right: 15px;">
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="Receiver">Փոխանցող </label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <textarea rows="2" ng-model="order.Sender" name="SenderName" id="SenderName" ng-enter="" ng-required="NewOrEditFromCallCenter!=1" class="tab_title form-control" style="text-align:left" ng-disabled="NewOrEditFromCallCenter!=1" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.Sender ==undefined || order.Sender =='' || order.Sender ==' ') && NewOrEditFromCallCenter!=1">
+                                        Ուղարկողի անուն ազգանունը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="Receiver">Փոխանցող Հայերեն</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <textarea rows="2" ng-model="order.NATSender" name="NATSenderName" id="NATSenderName" ng-enter="" ng-required="NewOrEditFromCallCenter!=1" class="tab_title form-control" style="text-align:left" ng-disabled="NewOrEditFromCallCenter!=1" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.NATSender ==undefined || order.NATSender =='' || order.NATSender ==' ') && NewOrEditFromCallCenter!=1">
+                                        Ուղարկողի անուն ազգանունը (Հայերեն) լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="Receiver">Փոխանցողի հեռախոսահամար</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <textarea rows="2" ng-model="order.SenderPhone" name="SenderPhone" id="SenderPhone" ng-enter="" ng-required="NewOrEditFromCallCenter!=1" class="tab_title form-control" style="text-align:left" ng-disabled="NewOrEditFromCallCenter!=1" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.SenderPhone ==undefined || order.SenderPhone =='' || order.SenderPhone ==' ') && NewOrEditFromCallCenter!=1">
+                                        Փոխանցողի հեռախոսահամար
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="Receiver">Փոխանցողի ֆինանսական կազմակերպություն</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <textarea rows="2" ng-model="order.SenderAgentName" name="SenderAgentName" id="SenderAgentName" ng-enter="" ng-required="NewOrEditFromCallCenter!=1" class="tab_title form-control" style="text-align:left" ng-disabled="NewOrEditFromCallCenter!=1" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.SenderAgentName ==undefined || order.SenderAgentName =='' || order.SenderAgentName ==' ') && NewOrEditFromCallCenter!=1">
+                                        Փոխանցողի ֆինանսական կազմակերպություն
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group " style="padding-right: 10px; margin-bottom: 0" ng-if="NewOrEditFromCallCenter!=2">
+                            <label class="tab_title col-sm-5" for="Code">Փոխանցման հսկիչ համար<span class="redStyle">*</span></label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input ng-model="order.Code" ng-enter="" name="Code" class="tab_title form-control" style="text-align:left" disabled="disabled" required />
+                                </div>
+                                <div class="row additionalInfoLabel">
+                                    <span style="color: green;">Նիշերի քանակ` <b>{{order.Code != null ? order.Code.length : 0 }} </b></span>
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="receivedFastTransferARUSOrderForm.$submitted || receivedFastTransferARUSOrderForm.Code.$dirty"
+                                                 for="receivedFastTransferARUSOrderForm.Code.$error">
+                                        <ng-message when="required" class="errors">
+                                            Փոխանցման հսկիչ համար դաշտը լրացված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-success" style=" margin-bottom: 10px;">
+                    <div class="panel-heading">Ստացող </div>
+                    <div class="panel-body" style="padding-bottom: 5px; padding-top: 5px;padding-right: 15px;">
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryLastName">Ստացողի ազգանուն անգլերեն</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.BeneficiaryLastName" name="BeneficiaryLastName" id="BeneficiaryLastName" required class="tab_title form-control" style="text-align:left" disabled="disabled" />
+                                </div>
+                                <div class="row">
+
+                                    <ng-messages ng-if="receivedFastTransferARUSOrderForm.$submitted || receivedFastTransferARUSOrderForm.BeneficiaryLastName.$dirty"
+                                                 for="receivedFastTransferARUSOrderForm.BeneficiaryLastName.$error">
+                                        <ng-message when="required" class="errors">
+                                            Ստացողի ազգանունը լրացված չէ
+                                        </ng-message>
+
+                                    </ng-messages>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryFirstName">Ստացողի անուն անգլերեն</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.BeneficiaryFirstName" name="BeneficiaryFirstName" id="BeneficiaryFirstName" ng-enter="" required class="tab_title form-control" style="text-align:left" disabled="disabled" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.BeneficiaryFirstName ==undefined || order.BeneficiaryFirstName =='' || order.BeneficiaryFirstName ==' ')">
+                                        Ստացողի անունը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryMiddleName">Ստացողի հայրանուն անգլերեն</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.BeneficiaryMiddleName" name="BeneficiaryMiddleName" id="BeneficiaryMiddleName" ng-enter="" class="tab_title form-control" style="text-align:left" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="NATBeneficiaryLastName">Ստացողի ազգանուն հայերեն</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.NATBeneficiaryLastName" name="NATBeneficiaryLastName" id="NATBeneficiaryLastName" required class="tab_title form-control" style="text-align:left" disabled="disabled" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages ng-if="receivedFastTransferARUSOrderForm.$submitted || receivedFastTransferARUSOrderForm.NATBeneficiaryLastName.$dirty"
+                                                 for="receivedFastTransferARUSOrderForm.NATBeneficiaryLastName.$error">
+                                        <ng-message when="required" class="errors">
+                                            Ստացողի ազգանունը լրացված չէ
+                                        </ng-message>
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="NATBeneficiaryFirstName">Ստացողի անուն հայերեն</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.NATBeneficiaryFirstName" name="NATBeneficiaryFirstName" id="NATBeneficiaryFirstName" ng-enter="" required class="tab_title form-control" style="text-align:left" disabled="disabled" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.NATBeneficiaryFirstName ==undefined || order.NATBeneficiaryFirstName =='' || order.NATBeneficiaryFirstName ==' ')">
+                                        Ստացողի անունը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="NATBeneficiaryMiddleName">Ստացողի հայրանուն հայերեն</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.NATBeneficiaryMiddleName" name="BNATeneficiaryMiddleName" id="NATBeneficiaryMiddleName" ng-enter="" class="tab_title form-control" style="text-align:left" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryBirthDate">Ստացողի ծննդյան ամսաթիվ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="date" ng-model="order.BeneficiaryBirthDate" name="BeneficiaryBirthDate" id="BeneficiaryBirthDate" ng-enter="" required class="tab_title form-control" style="text-align:left" disabled="disabled" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.BeneficiaryBirthDate ==undefined || order.BeneficiaryBirthDate =='' || order.BeneficiaryBirthDate ==' ')">
+                                        Ստացողի ծննդյան ամսաթիվը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiarySexCode">Ստացողի սեռ</label>
+                            <div class="col-sm-6" data-ng-init="getSexes()">
+                                <div class="row">
+                                    <select data-ng-model="order.BeneficiarySexCode" class="form-control" data-ng-options="k as v for (k,v) in sexes" id="BeneficiarySexCode" name="BeneficiarySexCode" required disabled="disabled">
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.BeneficiarySexCode ==undefined || order.BeneficiarySexCode =='' || order.BeneficiarySexCode ==' ')">
+                                        Ստացողի սեռը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryResidencyCode">Ստացողի ռեզիդենտություն</label>
+                            <div class="col-sm-6" data-ng-init="getYesNo()">
+                                <div class="row">
+                                    <select data-ng-model="order.BeneficiaryResidencyCode" class="form-control" data-ng-options="k as v for (k,v) in YesNoList" id="BeneficiaryResidencyCode" name="BeneficiaryResidencyCode" disabled="disabled">
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryCountryCode">Ստացողի երկիր</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <select data-ng-model="order.BeneficiaryCountryCode" class="form-control" data-ng-options="k as v for (k,v) in countries"
+                                            id="BeneficiaryCountryCode" name="BeneficiaryCountryCode" required ng-disabled="NewOrEditFromCallCenter==2"
+                                            ng-change="getCitiesByCountry(order.BeneficiaryCountryCode, '1'); getStates(order.BeneficiaryCountryCode);">
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.BeneficiaryCountryCode ==undefined || order.BeneficiaryCountryCode =='' || order.BeneficiaryCountryCode ==' ')">
+                                        Ստացողի երկիրը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryStateCode">Ստացողի մարզ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <select data-ng-model="order.BeneficiaryStateCode" class="form-control" data-ng-options="k as v for (k,v) in states" id="BeneficiaryStateCode"
+                                            name="BeneficiaryStateCode" ng-change="getCitiesByState(order.BeneficiaryCountryCode, order.BeneficiaryStateCode);" ng-disabled="NewOrEditFromCallCenter==2">
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryCityCode">Ստացողի քաղաք</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <select data-ng-model="order.BeneficiaryCityCode" class="form-control" data-ng-options="k as v for (k,v) in cities" id="BeneficiaryCityCode" name="BeneficiaryCityCode" ng-disabled="NewOrEditFromCallCenter==2">
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryZipCode">Ստացողի փոստային կոդ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.BeneficiaryZipCode" name="BeneficiaryZipCode" id="BeneficiaryZipCode" ng-enter="" class="tab_title form-control" style="text-align:left" disabled="disabled" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryAddressName">Ստացողի հասցե</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <textarea type="text" rows="2" ng-model="order.BeneficiaryAddressName" name="BeneficiaryAddressName" id="BeneficiaryAddressName" ng-enter="" required class="tab_title form-control" style="text-align:left" disabled="disabled"></textarea>
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.BeneficiaryAddressName ==undefined || order.BeneficiaryAddressName =='' || order.BeneficiaryAddressName ==' ')">
+                                        Ստացողի հասցեն լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryEMailName">Ստացողի էլ․հասցե</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.BeneficiaryEMailName" name="BeneficiaryEMailName" id="BeneficiaryEMailName" ng-enter="" class="tab_title form-control" style="text-align:left" disabled="disabled" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="ReceiverPhone">Ստացողի հեռախոսահամար</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.ReceiverPhone" name="ReceiverPhone" id="ReceiverPhone" ng-enter="" class="tab_title form-control" style="text-align:left" ng-disabled="NewOrEditFromCallCenter==2" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryMobileNo">Ստացողի բջջային հեռախոսահամար</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.BeneficiaryMobileNo" name="BeneficiaryMobileNo" id="BeneficiaryMobileNo" ng-enter="" ng-required="NewOrEditFromCallCenter!=1" class="tab_title form-control" style="text-align:left" ng-disabled="NewOrEditFromCallCenter==2" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.BeneficiaryMobileNo ==undefined || order.BeneficiaryMobileNo =='' || order.BeneficiaryMobileNo ==' ')">
+                                        Ստացողի բջջային հեռախոսահամարը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryDocumentTypeCode">Ստացողի փաստաթղթի տեսակ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <select data-ng-model="order.BeneficiaryDocumentTypeCode" class="form-control" data-ng-options="k as v for (k,v) in documentTypes" id="BeneficiaryDocumentTypeCode" name="BeneficiaryDocumentTypeCode" required disabled>
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.BeneficiaryDocumentTypeCode ==undefined || order.BeneficiaryDocumentTypeCode =='' || order.BeneficiaryDocumentTypeCode ==' ')">
+                                        Ստացողի փաստաթղթի տեսակը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryIssueIDNo">Ստացողի փաստաթղթի համար</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.BeneficiaryIssueIDNo" name="BeneficiaryIssueIDNo" id="BeneficiaryIssueIDNo" ng-enter="" required class="tab_title form-control" style="text-align:left" disabled="disabled" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.BeneficiaryIssueIDNo ==undefined || order.BeneficiaryIssueIDNo =='' || order.BeneficiaryIssueIDNo ==' ')">
+                                        Ստացողի փաստաթղթի համարը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryIssueDate">Ստացողի փաստաթղթի տրման ամսաթիվ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.BeneficiaryIssueDate" name="BeneficiaryIssueDate" id="BeneficiaryIssueDate" ng-enter="" required class="tab_title form-control" style="text-align:left" disabled="disabled" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.BeneficiaryIssueDate ==undefined || order.BeneficiaryIssueDate =='' || order.BeneficiaryIssueDate ==' ') && NewOrEditFromCallCenter!=1">
+                                        Ստացողի փաստաթղթի տրման ամսաթիվը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryExpirationDate">Ստացողի փաստաթղթի ավարտման ամսաթիվ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.BeneficiaryExpirationDate" name="BeneficiaryExpirationDate" id="BeneficiaryExpirationDate" ng-enter="" required class="tab_title form-control" style="text-align:left" disabled="disabled" />
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.BeneficiaryExpirationDate ==undefined || order.BeneficiaryExpirationDate =='' || order.BeneficiaryExpirationDate ==' ')">
+                                        Ստացողի փաստաթղթի ավարտման ամսաթիվը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryIssueCountryCode">Ստացողի փաստաթղթի թողարկման երկիր</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <select data-ng-model="order.BeneficiaryIssueCountryCode" class="form-control" data-ng-options="k as v for (k,v) in documentCountries"
+                                            id="BeneficiaryIssueCountryCode" name="BeneficiaryIssueCountryCode" ng-change="getCitiesByCountry(order.BeneficiaryIssueCountryCode, '2')" required disabled="disabled">
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.BeneficiaryIssueCountryCode ==undefined || order.BeneficiaryIssueCountryCode =='' || order.BeneficiaryIssueCountryCode ==' ')">
+                                        Ստացողի փաստաթղթի թողարկման երկիրը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryIssueCityCode">Ստացողի փաստաթղթի թողարկման քաղաք</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <select data-ng-model="order.BeneficiaryIssueCityCode" class="form-control" data-ng-options="k as v for (k,v) in documentCities"
+                                            id="BeneficiaryIssueCityCode" name="BeneficiaryIssueCityCode" ng-disabled="NewOrEditFromCallCenter==2">
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryOccupationName">Ստացողի զբաղվածություն</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <textarea rows="2" ng-model="order.BeneficiaryOccupationName" name="BeneficiaryOccupationName" id="BeneficiaryOccupationName" ng-enter="" ng-required="NewOrEditFromCallCenter!=1" class="tab_title form-control" style="text-align:left" ng-disabled="NewOrEditFromCallCenter==2"></textarea>
+                                </div>
+                                <div class="row">
+                                    <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.BeneficiaryOccupationName ==undefined || order.ReceiverPhone =='' || order.ReceiverPhone ==' ')">
+                                        Ստացողի զբաղվածությունը լրացված չէ
+                                    </ng-messages>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryBirthPlaceName">Ստացողի ծննդավայր</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.BeneficiaryBirthPlaceName" name="BeneficiaryBirthPlaceName" id="BeneficiaryBirthPlaceName" ng-enter="" class="tab_title form-control" style="text-align:left" ng-disabled="NewOrEditFromCallCenter!=1" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="BeneficiaryFiscalCode">Ստացողի ֆիսկալ կոդ</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.BeneficiaryFiscalCode" name="BeneficiaryFiscalCode" id="BeneficiaryFiscalCode" ng-enter="" class="tab_title form-control" style="text-align:left" ng-disabled="NewOrEditFromCallCenter==2" />
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-success" style=" margin-bottom: 10px;">
+                    <div class="panel-heading">Գործարքի նկարագրություն</div>
+                    <div style="padding-right: 25px; padding-top: 5px;">
+                        <orderdescription ordertype="order.Type" operations="operations"
+                                          description="description" labeldescription="'Նկարագրություն'" formname="receivedFastTransferARUSOrderForm"></orderdescription>
+                    </div>
+                </div>
+
+                <div class="panel panel-success" style=" margin-bottom: 10px;">
+                    <div class="panel-heading">Ծախսեր</div>
+                    <div class="panel-body" style="padding-bottom: 0; padding-top: 5px;padding-right: 15px;">
+
+                        <div class="form-group " style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="FeeAcba">Միջնորդավճար ACBA</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <input type="text" ng-model="order.FeeAcba" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' ng-enter="" disabled="disabled" name="FeeAcba" class="tab_title form-control" style="text-align:left" fcsa-number />
+                                </div>
+                                @*<div class="row">
+                                        <ng-messages class="errors" ng-if="receivedFastTransferARUSOrderForm.$submitted && (order.FeeAcba ==undefined || order.FeeAcba ==0) && NewOrEditFromCallCenter!=1 ">
+                                            Միջնորդավճար ACBA դաշտը լրացված չէ
+                                        </ng-messages>
+                                    </div>*@
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="isCallTransfer==1 && ((order.ConvertationRate!=0 && order.ConvertationRate!=undefined) || (order.ConvertationRate1!=0 && order.ConvertationRate1!=undefined) || (ClientTransferAmount != 0 && ClientTransferAmount !=undefined))" style="margin-left:10px;margin-bottom:55px;">
+                    <div class="panel panel-success">
+                        <div class="panel-heading" style="font-size:11pt;padding:2px 2px;"><span class="glyphicon glyphicon-info-sign" style="margin-left:10px;"></span></div>
+                        <div class="panel-body">
+                            <div class="row" ng-show="order.ConvertationRate!=0">
+                                <div class="col-sm-6 amountLabelDescription">
+                                    Առքի փոխարժեք`
+                                </div>
+                                <div class="col-sm-5 amountLabel">
+                                    {{order.ConvertationRate }}
+                                </div>
+                            </div>
+                            <div class="row" ng-show="order.ConvertationRate1!=0">
+                                <div class="col-sm-6 amountLabelDescription">
+                                    Վաճառքի փոխարժեք`
+                                </div>
+                                <div class="col-sm-5 amountLabel">
+                                    {{order.ConvertationRate1}}
+                                </div>
+                            </div>
+
+                            <div class="row" ng-show="ClientTransferAmount != null">
+                                <div class="col-sm-6 amountLabelDescription">
+                                    Փոխանցվող գումար`
+                                </div>
+                                <div class="col-sm-5 amountLabel">
+                                    {{ClientTransferAmount != null ? ClientTransferAmount : (0 | number : 2)}} {{transfer.Contract.Currency}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div ng-class="(isHasAdditionalData|| NewOrEditFromCallCenter==2 )?'col-sm-5':''">
+                <div ng-if="isHasAdditionalData">
+                    <transferadditionaldatadetails></transferadditionaldatadetails>
+                </div>
+                <div ng-if=" NewOrEditFromCallCenter==2">
+                    <div class="form-group" id="customerInfo" style="margin-left:20px;">
+                        <customerinfoold customernumber="order.CustomerNumber"> </customerinfoold>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+</form>
+
+

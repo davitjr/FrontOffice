@@ -1,0 +1,53 @@
+﻿
+@{
+    Layout = null;
+}
+<style>
+
+    #accountHistory table {
+    width: 900px;
+}
+        #accountHistory td {
+            border: 1px solid #cecece;
+            
+        }
+        #accountHistory th {
+        border: 1px solid #cecece;
+       
+    }
+    .top th {
+        font-size: 12px;
+    }
+</style>
+
+<div class="table-wrapper"  ng-controller="AccountCtrl" ng-init="getAccountClosinghistory()">
+    <div class=" product-container" style="width:auto;min-width:900px">
+        <div class="header-title">
+            Հաշիվների փակման պատմություն
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section ">
+            <div class="product-container-header" style="text-align:center;">
+                <div class="col-sm-2">Հաշիվ</div>
+                <div class="col-sm-2">Փակման ա/թ</div>
+                <div class="col-sm-1">ՊԿ</div>
+                <div class="col-sm-4">Պատճառ</div>
+                <div class="col-sm-1">&nbsp;</div>
+                <div class="col-sm-2">&nbsp;</div>
+            </div>
+            <div class="product-content-table col-sm-12 " id="accountHistory" ng-class="{'product-content-table-full_height' : hideBlank!='true' }" style="min-height:100px;padding:0px">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="history in ::histories">
+                            <td style="text-align:center" class="col-sm-2">{{::history.AccountNumber}}&nbsp;&nbsp;</td>
+                            <td style="text-align:center" class="col-sm-2">{{::history.ClosingDate!=null?(history.ClosingDate | mydate | date: 'dd/MM/yyyy'):'-'}}&nbsp;&nbsp;</td>
+                            <td style="text-align:center" class="col-sm-1">{{::history.SetNumber}}&nbsp;&nbsp;</td>
+                            <td style="text-align:center" class="col-sm-4">{{::history.Description}}&nbsp;&nbsp;</td>
+                            <td style="text-align:center" class="col-sm-1">{{::history.ReasonType}}&nbsp;&nbsp;</td>
+                            <td style="text-align:center" class="col-sm-2">{{::history.HBDocId}}&nbsp;&nbsp;</td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

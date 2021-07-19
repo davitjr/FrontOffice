@@ -1,0 +1,75 @@
+﻿
+@{
+    Layout = null;
+}
+<style>
+    #tbl table, #tbl th, #tbl td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    #tbl table {
+        border-collapse: collapse;
+    }
+
+        #tbl table .top td {
+            font-size: 12px;
+        }
+
+        #tbl table tr {
+            height: 7px;
+        }
+
+    #tbl .form-horizontal {
+        margin-top: -22px;
+    }
+</style>
+<form style="max-width:900px" id="depositGrafik" ng-controller="DepositCtrl" ng-init="getDepositRepayments()"
+      role="form" class="form-horizontal" novalidate>
+    <div id="loanGrafik_menu" class="menu-bar dialog-menu light-green">
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-12" id="tbl">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tr class="product-container-header">
+                    <td style="text-align:center">Վճարման ա/թ</td>
+                    <td style="text-align:center">Տոկոսագումար</td>
+                    <td style="text-align:center">Եկամտահարկ</td>
+                    <td style="text-align:center">Մայր գումար</td>
+
+                </tr>
+                <tr ng-repeat="rep in ::repayment">
+                    <td style="text-align:center">{{::rep.DateOfRepaymentString}}&nbsp;&nbsp;</td>
+                    <td style="text-align:right">{{::rep.RateRepaymentToString}}&nbsp;&nbsp;</td>
+                    <td style="text-align:right">{{::rep.ProfitTaxToString}}&nbsp;&nbsp;</td>
+                    <td style="text-align:right">{{::rep.CapitalRepaymentToString}}&nbsp;&nbsp;</td>
+
+                </tr>
+            </table>
+            <div ng-show="repayment.length!=0" style="font-size:13px">
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ընդամենը</div>
+                    <div class="product-detail-cell product-detail-value"></div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Տոկոսագումար՝</div>
+                    <div class="product-detail-cell product-detail-value">{{::sum1.toFixed(2)| currency:''}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Եկամտահարկ՝</div>
+                    <div class="product-detail-cell product-detail-value">{{::sum3.toFixed(2)| currency:''}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Մայր գումար՝</div>
+                    <div class="product-detail-cell product-detail-value">{{::sum2.toFixed(2)| currency:''}}</div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</form>

@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div id="RightSidebar" class="right-sidebar" style="display:none;" ng-controller="CustomersNotesCtrl" data-ng-init="getPersonNotesHistory(1);checkCustomerHasArrests();">
+    <div class="blink bp-font-families warning" ng-if="customerArrests.HasArrests==true" id="hasArrests" style="margin-left: 10px;margin-top: 10px;color: red;font-weight:bold;">Հաճախորդը ունի ԱՐԳԵԼՔՆԵՐ</div>
+    <div class="blink bp-font-families warning" ng-if="customerArrests.HasInfo==true" id="hasArrests" style="margin-left: 10px;margin-top: 10px;color: red;font-weight:bold;">Հաճախորդը ունի ՄՈՒՏՔԱԳՐՎԱԾ ԻՆՖՈՐՄԱՑԻԱ</div>
+    <div id="noteCollapse" onclick="HideNoteInput()">Ավելացնել գրառում</div>
+    <div id="noteInput" class="display-none">
+        <div class="search-col">
+            <textarea ng-model="PersonNote.Note" id="note-text" class="search-text" cols="50" rows="3"></textarea>
+        </div>
+        <div class="search-col">
+            <button id="add-note-button" ng-click="savePersonNote(0)" ng-disabled="PersonNote.Note==''">Պահպանել</button>
+        </div>
+    </div>
+    <!-- Start .sidebar-scrollarea -->
+    <div id="rightSidebar" class="custom-scroll">
+        <div ng-repeat="note in personNoteHistory " id="noteContainer">
+            <table class="toast8 toast8-twitter">
+                <tbody>
+                    <tr>
+                        <td class="toast8-message-container">
+                            <div class="toast8-title">{{note.ActionUserName}}</div>
+                            <div class="toast8-title">{{note.ActionDateString}}</div>
+                            <div class="toast8-message ellipsis-multiline multiline">{{note.PersonNote.Note}}</div>
+                        </td>
+                        <td class="toast8-right-container">
+                            @*<button class="toast8-close-button">×</button>*@
+                            <i class="fa collapse-icon fa-angle-down" onclick="ShowHideCompleteNote(this)"></i>
+                            <i class="fa fa-info"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- End .sidebar-scrollarea -->
+</div>

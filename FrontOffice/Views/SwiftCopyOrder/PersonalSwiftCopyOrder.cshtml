@@ -1,0 +1,141 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #swiftCopyOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+<div id="swiftLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<form ng-controller="SwiftCopyOrderCtrl" name="SwiftCopyOrderForm" id="swiftCopyOrderForm" role="form" class="form-horizontal" novalidate labels-required ng-init="generateNewOrderNumber();getSwiftCopyOrderServiceFee();" prevent-enter-submit>
+
+    <div id="swiftcopyorder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li ng-if="cashType == 18" class="root-menu-item-3 " ng-click="SwiftCopyOrderForm.$setSubmitted();SwiftCopyOrderForm.$valid && getSwiftCopyOrderDetails();">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Հանձնարարական</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="SwiftCopyOrderForm.$setSubmitted();order.OnlySaveAndApprove = false;SwiftCopyOrderForm.$valid && saveSwiftCopyOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li ng-if="$root.SessionProperties.AdvancedOptions['withCashRegister']=='1'&& $root.SessionProperties.AdvancedOptions['canSendToCashier']=='1'" class="root-menu-item-4 " ng-click="SwiftCopyOrderForm.$setSubmitted();order.OnlySaveAndApprove = true;SwiftCopyOrderForm.$valid && saveSwiftCopyOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ուղարկել դրամարկղ</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('swiftcopyorder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div>
+        <div style="max-width:560px">
+            <errors></errors>
+        </div>
+
+        <div class="col-sm-7">
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6">
+                    <div class="cols-sm-8 multiple_columns">
+                        <input type="date" disabled="disabled" class="form-control tab_title unstyled" id="RegistrationDate" name="RegistrationDate" data-ng-model="order.OperationDate" style="text-align:left" required>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="orderNumber"> Գործարքի համար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control" id="ContractNumber" name="ContractNumber" data-ng-model="order.ContractNumber" required>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="SwiftCopyOrderForm.$submitted || SwiftCopyOrderForm.ContractNumber.$dirty"
+                                     for="SwiftCopyOrderForm.ContractNumber.$error">
+                            <ng-message when="required" class="errors">
+                                Գործարքի համար դաշտը լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="feeAccount">Միջնորդավճարի գանձում</label>
+                <div class="col-sm-6 ">
+                    <div class="row">
+                        <select data-ng-model="cashType" name="Fee" id="Fee" class=" form-control" required>
+                            <option value="" hidden></option>
+                            <option value="19" selected="selected">Անկանխիկ</option>
+                            <option value="18">Կանխիկ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            @*<div ng-show="cashType==19" class="form-group">
+
+                    <label class="tab_title col-sm-6 " for="feeAccount">Միջնորդավճարի գանձման հաշիվ</label>
+                    <loading-control scopevariable="feeAccounts"></loading-control>
+                    <div ng-show="feeAccounts" class="col-sm-6 " data-ng-init="getFeeAccounts()">
+                        <div class="row">
+                            <select data-ng-model="order.FeeAccount" name="FeeAccount" id="FeeAccount" class=" form-control"
+                                    data-ng-options="a.AccountNumber+' '+a.Currency group by a.AccountTypeDescription for a in feeAccounts" ng-required="cashType==19">
+                                <option value="" hidden>Ընտրեք հաշվեհամարը...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="SwiftCopyOrderForm.$submitted || SwiftCopyOrderForm.FeeAccount.$dirty"
+                                         for="SwiftCopyOrderForm.FeeAccount.$error">
+                                <ng-message when="required" class="errors">
+                                    Ընտրեք միջնորդավճարի գանձման հաշիվը
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>*@
+
+
+            <div ng-if="cashType==19">
+                <paymentaccount data-ng-init="getFeeAccounts()"
+                                accounts="feeAccounts"
+                                accountselectname="FeeAccount"
+                                account="order.FeeAccount"
+                                labels-required
+                                check="0"
+                                nameforaccount="'Միջնորդավճարի հաշիվ'">
+                </paymentaccount>
+                <div class="col-sm-5"></div>
+                <div class="row">
+                    <ng-messages ng-if="SwiftCopyOrderForm.$submitted || SwiftCopyOrderForm.FeeAccount.$dirty"
+                                 for="SwiftCopyOrderForm.FeeAccount.$error">
+                        <ng-message when="required" class="errors">
+                            Ընտրեք միջնորդավճարի գանձման հաշիվը
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+
+
+            <div class="col-sm-11" style="text-align:right">
+                <div class="row ">
+                    <h5>
+                        Միջնորդավճար` {{order.FeeAmount}} AMD
+                    </h5>
+                    <input type="hidden" disabled="disabled" id="feeAmount" name="feeAmount" data-ng-model="order.FeeAmount" class="tab_title form-control" required>
+                </div>
+            </div>
+            <br />
+
+        </div>
+        <div class="col-sm-5">
+            <customerdebts showonlystrictdebts="true"></customerdebts>
+            <noncashopperson formname="SwiftCopyOrderForm" ng-if="cashType == 19" opperson="order.OPPerson" accountnumber="order.FeeAccount.AccountNumber"></noncashopperson>
+            <cashopperson ng-if="cashType == 18" formname="SwiftCopyOrderForm" opperson="order.OPPerson"></cashopperson>
+        </div>
+    </div>
+
+
+</form>
+

@@ -1,0 +1,351 @@
+﻿<style type="text/css">
+    #plasticCardOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #plasticCardOrderForm {
+        min-width: 570px;
+    }
+
+    .form-group input, .form-group select {
+        height: 34px;
+    }
+
+    .form-horizontal {
+        max-width: 902px;
+    }
+</style>
+
+
+<div id="plasticCardLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="PlasticCardCtrl" name="plasticCardOrderForm" id="plasticCardOrderForm" role="form" class="form-horizontal" novalidate>
+    <div id="cardorder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="plasticCardOrderForm.$setSubmitted();plasticCardOrderForm.$valid ? saveCardOrder() : showValidationMessage();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('plasticcardorder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div>
+        <div class="col-sm-6">
+            <div style="max-width:530px">
+                <errors></errors>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="cardOrderDate">Դիմումի ա/թ</label>
+                <div class="col-sm-7">
+                    <input type="date" ng-model="plasticCardOrder.plasticCard.OpenDate" name="RegistrationDate" max="{{ maxDate| date:'yyyy-MM-dd'}}" placeholder="yyyy-MM-dd" required class="form-control" />
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.RegistrationDate.$dirty"
+                                 for="plasticCardOrderForm.RegistrationDate.$error">
+                        <ng-message when="required" class="errors">
+                            Դիմումի ամսաթիվը լրացված չէ
+                        </ng-message>
+                        <ng-message when="max" class="errors">
+                            Դիմումի ա/թ չի կարող գերազանցել գործառնական օրվա ամսաթիվը
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="CardSystem">Համակարգ</label>
+                <div class="col-sm-7" data-ng-init="getCardSystemTypes()">
+                    <loading-control scopevariable="cardSystemTypes"></loading-control>
+                    <select ng-show="cardSystemTypes"
+                            data-ng-model="plasticCardOrder.plasticCard.CardSystem" class="form-control" name="CardSystem"
+                            ng-change="getCardTypes(plasticCardOrder.plasticCard.CardSystem)"
+                            data-ng-options="k as v for (k,v) in cardSystemTypes" required>
+                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                    </select>
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.CardSystem.$dirty"
+                                 for="plasticCardOrderForm.CardSystem.$error">
+                        <ng-message when="required" class="errors">
+                            Համակարգը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="cardType">Քարտի տեսակ</label>
+                <div class="col-sm-7">
+                    <select data-ng-model="plasticCardOrder.plasticCard.cardType"
+                            data-ng-options="k as v for (k,v) in cardTypes"
+                            class="form-control" name="cardType" required>
+                        <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                    </select>
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.cardType.$dirty"
+                                 for="plasticCardOrderForm.cardType.$error">
+                        <ng-message when="required" class="errors">
+                            Քարտի տեսակը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="currency">Արժույթ</label>
+                <div class="col-sm-7">
+                    <select data-ng-model="plasticCardOrder.plasticCard.currency" class="form-control" name="currency" required>
+                        <option value="" style=" margin-left:25px">Ընտրեք...</option>
+                        <option value="AMD" style=" margin-left:25px">AMD</option>
+                        <option value="USD" style=" margin-left:25px">USD</option>
+                        <option value="EUR" style=" margin-left:25px">EUR</option>
+                    </select>
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.currency.$dirty"
+                                 for="plasticCardOrderForm.currency.$error">
+                        <ng-message when="required" class="errors">
+                            Քարտի արժույթը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div ng-if="$root.SessionProperties.CustomerType && $root.SessionProperties.CustomerType!= 6 " class="form-group">
+                <label class="tab_title col-sm-4" for="organisationNameEng">Հաստատության անվանում</label>
+                <div class="col-sm-7" data-ng-init="getOrganisationNameEng()">
+                    <textarea type="text" ng-model="plasticCardOrder.organisationNameEng" name="organisationNameEng" required class="form-control" style="text-align:left" ng-maxlength="30" ng-pattern="onlyBasicLatin"></textarea>
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.organisationNameEng.$dirty"
+                                 for="plasticCardOrderForm.organisationNameEng.$error">
+                        <ng-message when="required" class="errors">
+                            Հաստատության անվանումը լրացված չէ
+                        </ng-message>
+                        <ng-message when="maxlength" class="errors">
+                            Նիշերի քանակը գերազանցում է թույլատրելի 30 նիշը
+                        </ng-message>
+                        <ng-message when="pattern" class="errors">
+                            Անհրաժեշտ է մուտքագրել միայն անգլերեն սիմվոլներ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="motherName">Գաղտնաբառ</label>
+                <div class="col-sm-7" data-ng-init="GetCustomerLastMotherName()">
+                    <input type="text" ng-model="plasticCardOrder.motherName" name="motherName" required class=" form-control" style="text-align:left" />
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.motherName.$dirty"
+                                 for="plasticCardOrderForm.motherName.$error">
+                        <ng-message when="required" class="errors">
+                            Գաղտնաբառը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="RelatedOfficeNumber">Աշխ. ծրագիր</label>
+                <div class="col-sm-7">
+                    <input type="text" ng-model="plasticCardOrder.plasticCard.RelatedOfficeNumber" name="RelatedOfficeNumber" uib-typeahead="relOffice.Value for relOffice in searchRelatedOfficeTypes($viewValue)" typeahead-min-length="2" class="form-control" typeahead-on-select="onSelect($item, $model, $label)" required>
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.RelatedOfficeNumber.$dirty"
+                                 for="plasticCardOrderForm.RelatedOfficeNumber.$error">
+                        <ng-message when="required" class="errors">
+                            Աշխ. ծրագիրը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <textarea readonly ng-if="relOfficeDescription">{{relOfficeDescription}}</textarea>
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="UrgentSign"> Լրացուցիչ քարտ</label>
+                <div class="col-sm-1">
+                    <input type="checkbox" ng-disabled="plasticCardOrder.plasticCard.cardType==52" ng-model="plasticCard.attachedCard" style="width:18px" name="attachedCard" ng-change="changeCardSupplementaryType()" />
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="MainCard"> Հիմնական քարտ</label>
+                <div class="col-sm-7" data-ng-init="GetCustomerMainCardsForAttachedCardOrder()">
+                    <loading-control scopevariable="mainCards"></loading-control>
+                    <select ng-show="mainCards" data-ng-model="plasticCardOrder.plasticCard.MainCardNumber" class="form-control" name="MainCard" ng-disabled="!plasticCard.attachedCard"
+                            ng-options="a.CardNumber as a.CardNumber + ' ' + a.Currency+' '+a.CardTypeDescription for a in mainCards track by a.CardNumber" ng-required="plasticCard.attachedCard">
+                        <option value="" style=" margin-left:25px">Ընտրեք...</option>
+                    </select>
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.MainCard.$dirty"
+                                 for="plasticCardOrderForm.MainCard.$error">
+                        <ng-message when="required" class="errors">
+                            Հիմնական քարտը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="involvingSetNumber">Ներգրավողի ՊԿ</label>
+                <div class="col-sm-7">
+                    <input type="text" class="tab_title form-control" data-ng-model="plasticCardOrder.involvingSetNumber" name="involvingSetNumber" required style="text-align:left" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.involvingSetNumber.$dirty"
+                                 for="plasticCardOrderForm.involvingSetNumber.$error">
+                        <ng-message when="required" class="errors">
+                            Քարտը ներգրավողի ՊԿ-ն լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="servingSetNumber">Սպասարկողի ՊԿ</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" data-ng-model="plasticCardOrder.servingSetNumber" name="servingSetNumber" required style="text-align:left" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.servingSetNumber.$dirty"
+                                 for="plasticCardOrderForm.servingSetNumber.$error">
+                        <ng-message when="required" class="errors">
+                            Քարտը սպասարկողի ՊԿ-ն լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="cardReportReceivingType">Քաղվածքի ստացման եղանակ</label>
+                <div class="col-sm-7" data-ng-init="GetCardReportReceivingTypes()">
+                    <loading-control scopevariable="cardReportReceivingTypes"></loading-control>
+                    <select ng-show="cardReportReceivingTypes"
+                            data-ng-model="plasticCardOrder.cardReportReceivingType" class="form-control" name="cardReportReceivingType"
+                            data-ng-options="k as v for (k,v) in cardReportReceivingTypes" required>
+                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                    </select>
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.cardReportReceivingType.$dirty"
+                                 for="plasticCardOrderForm.cardReportReceivingType.$error">
+                        <ng-message when="required" class="errors">
+                            Քաղվածքի սատցման եղանակը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group" ng-if="$root.SessionProperties.CustomerType==6">
+                <label class="tab_title col-sm-4" for="reportReceivingEmail">Էլեկտրոնային փոստ</label>
+                <div class="col-sm-7" data-ng-init="GetCustomerEmails()">
+                    <loading-control scopevariable="reportReceivingEmails"></loading-control>
+                    <select ng-show="reportReceivingEmails"
+                            ng-required="plasticCardOrder.cardReportReceivingType==4"
+                            data-ng-model="plasticCardOrder.reportReceivingEmail" class="form-control" name="reportReceivingEmail"
+                            data-ng-options="v as v for v in reportReceivingEmails track by v" required></select>
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.reportReceivingEmail.$dirty"
+                                 for="plasticCardOrderForm.reportReceivingEmail.$error">
+                        <ng-message when="required" class="errors">
+                            Էլեկտրոնային փոստը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="cardPINCodeReceivingType">PIN-ի ստացման եղանակ</label>
+                <div class="col-sm-7" data-ng-init="GetCardPINCodeReceivingTypes()">
+                    <loading-control scopevariable="cardPINCodeReceivingTypes"></loading-control>
+                    <select ng-show="cardPINCodeReceivingTypes" ng-change="changeCardReceivingType()"
+                            data-ng-model="plasticCardOrder.cardPINCodeReceivingType" class="form-control" name="cardPINCodeReceivingType"
+                            data-ng-options="k as v for (k,v) in cardPINCodeReceivingTypes" required>
+                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                    </select>
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.cardPINCodeReceivingType.$dirty"
+                                 for="plasticCardOrderForm.cardPINCodeReceivingType.$error">
+                        <ng-message when="required" class="errors">
+                            PIN-ի սատցման եղանակը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="cardApplicationAcceptanceType">Դիմումի ընդունման տարբերակ</label>
+                <div class="col-sm-7" data-ng-init="GetCardApplicationAcceptanceTypes()">
+                    <loading-control scopevariable="cardApplicationAcceptanceTypes"></loading-control>
+                    <select ng-show="cardApplicationAcceptanceTypes" ng-change="changeCardReceivingType()"
+                            data-ng-model="plasticCardOrder.cardApplicationAcceptanceType" class="form-control" name="cardApplicationAcceptanceType"
+                            data-ng-options="k as v for (k,v) in cardApplicationAcceptanceTypes" required>
+                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                    </select>
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.cardApplicationAcceptanceType.$dirty"
+                                 for="plasticCardOrderForm.cardApplicationAcceptanceType.$error">
+                        <ng-message when="required" class="errors">
+                            Դիմումի ընդունման տարբերակը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="cardReceivingType">Քարտի ստացման եղանակ</label>
+                <div class="col-sm-7" data-ng-init="GetCardReceivingTypes()">
+                    <loading-control scopevariable="cardReceivingTypes"></loading-control>
+                    <select ng-show="cardReceivingTypes" ng-disabled="$root.SessionProperties.AdvancedOptions['userRegion']!='0' || plasticCardOrder.cardPINCodeReceivingType==1 || plasticCardOrder.cardApplicationAcceptanceType==2"
+                            data-ng-model="plasticCardOrder.cardReceivingType" class="form-control" name="cardReceivingType"
+                            data-ng-options="k as v for (k,v) in cardReceivingTypes" required>
+                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                    </select>
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.cardReceivingType.$dirty"
+                                 for="plasticCardOrderForm.cardReceivingType.$error">
+                        <ng-message when="required" class="errors">
+                            Քարտի ստացման եղանակը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="sub_inner form-group" ng-if="$root.SessionProperties.CustomerType==6">
+                <label class="tab_title col-sm-4" for="cardSMSPhone">Հեռախոսահամար</label>
+                <div class="col-sm-7" data-ng-init="GetCustomerPhones()">
+                    <loading-control scopevariable="cardSMSPhones"></loading-control>
+                    <select ng-show="cardSMSPhones"
+                            ng-required="plasticCardOrder.cardPINCodeReceivingType==2"
+                            data-ng-model="plasticCardOrder.cardSMSPhone" class="form-control" name="cardSMSPhone"
+                            data-ng-options="v.phone as v.phone for v in cardSMSPhones" required></select>
+                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.cardSMSPhone.$dirty"
+                                 for="plasticCardOrderForm.cardSMSPhone.$error">
+                        <ng-message when="required" class="errors">
+                            Հեռախոսահամար լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <cardordercustomer formname="plasticCardOrderForm" ng-if="$root.SessionProperties.CustomerType!=6" opperson="plasticCardOrder.OPPerson"></cardordercustomer>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <div ng-if="$root.SessionProperties.CustomerType==6" data-ng-init="GetCustomerEngData()">
+                    <div class="sub_inner form-group">
+                        <label class="tab_title col-sm-4" for="FirstNameEng">Անուն անգլերեն</label>
+                        <div class="col-sm-7">
+                            <loading-control scopevariable="FirstNameEng"></loading-control>
+                            <input ng-show="FirstNameEng" scopevariable="FirstNameEng" ng-disabled="true" type="text" class="form-control" name="FirstNameEng" value="{{FirstNameEng}}" />
+                            <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.FirstNameEng.$dirty"
+                                         for="plasticCardOrderForm.FirstNameEng.$error">
+                                <ng-message when="required" class="errors">
+                                    Անգլերեն անունը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                    <div class="sub_inner form-group">
+                        <label class="tab_title col-sm-4" for="LastNameEng">Ազգանուն անգլերեն</label>
+                        <div class="col-sm-7">
+                            <loading-control scopevariable="LastNameEng"></loading-control>
+                            <input ng-show="LastNameEng" scopevariable="LastNameEng" ng-disabled="true" type="text" class="form-control" name="LastNameEng" value="{{LastNameEng}}" />
+                            <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.LastNameEng.$dirty"
+                                         for="plasticCardOrderForm.LastNameEng.$error">
+                                <ng-message when="required" class="errors">
+                                    Անգլերեն ազգանունը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                    <div class="sub_inner form-group">
+                        <label class="tab_title col-sm-4" for="AddressEng">Հասցե անգլերեն</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" class="form-control" ng-model="plasticCardOrder.adrressEngTranslated" name="AddressEng" required></textarea>
+                            <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.AddressEng.$dirty"
+                                         for="plasticCardOrderForm.AddressEng.$error">
+                                <ng-message when="required" class="errors">
+                                    Անգլերեն հասցեն լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

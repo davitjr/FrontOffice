@@ -1,0 +1,46 @@
+﻿@{
+    Layout = null;
+}
+<form id="addSMSMessagingForm" ng-controller="SMSMessagingCtrl" style="width:400px;min-height:175px;overflow-x:hidden" name="addSMSMessagingForm" role="form" class="form-horizontal" labels-required>
+    <div id="addSMSMessagingForm_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="addSMSMessagingForm.$setSubmitted();addSMSMessagingForm.$valid && uploadMessages();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('addSMSMessagingSession')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <div style="max-width:400px;margin-left:5px">
+            <errors></errors>
+        </div>
+        <div class="form-group col-sm-12" style="padding-left:20px">
+            <label class="tab_title col-sm-5 text-right" style="padding-left: 9px;">Վերբեռնել</label>
+
+            <div class="col-sm-7">
+                @*<div class="product-detail-cell product-detail-lable">
+                        Վերբեռնել
+                    </div>*@
+
+                <input type="file" id="readFile" class="form-control" >
+                <span ng-if="addSMSMessagingForm.$submitted  && checkFile()" style="color:red" class="errors">
+                    Ֆայլը ընտրված չէ
+                </span>
+            </div>
+        </div>
+        <div class="form-group col-sm-12" style="padding-left:20px">
+            <label class="tab_title col-sm-5 text-right" style="padding-left: 9px;">Նկարագրություն</label>
+            <div class="col-sm-7">
+                <input name="descr" type="text" class="form-control tab_title" style="text-align: left" data-ng-model="messagingSession.description" required />
+                <ng-messages ng-if="addSMSMessagingForm.$submitted || addSMSMessagingForm.descr.$dirty"
+                             for="addSMSMessagingForm.descr.$error">
+                    <ng-message when="required" class="errors">
+                        Նկարագրությունը բացակայում է
+                    </ng-message>
+                </ng-messages>
+            </div>
+        </div>
+    </div>
+</form>

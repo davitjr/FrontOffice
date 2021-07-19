@@ -1,0 +1,38 @@
+﻿<div class="product-details bhoechie-tab-content">
+    <div style="clear:both;color:#6F6A6A;font-weight:bold">Կատարող՝</div>
+
+    <div class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Անուն,Ազգանուն</div>
+        <div class="product-detail-cell product-detail-value">{{opperson.PersonName}} {{opperson.PersonLastName}}</div>
+    </div>
+
+    <div ng-if="opperson.CustomerNumber!=''" class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Հաճախորդի համար</div>
+        <div class="product-detail-cell product-detail-value">{{opperson.CustomerNumber}}</div>
+    </div>
+
+    <div ng-if="opperson.PersonDocument!=''" class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Անձնագիր</div>
+        <div class="product-detail-cell product-detail-value">{{opperson.PersonDocument}}</div>
+    </div>
+
+    <div ng-if="opperson.PersonSocialNumber!=''" class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;ՀԾՀ</div>
+        <div class="product-detail-cell product-detail-value">{{opperson.PersonSocialNumber || "-"}}</div>
+
+    </div>
+
+    <div ng-if="opperson.PersonNoSocialNumber!='' && opperson.PersonNoSocialNumber!=undefined" class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;ՀԾՀ-ից հրաժարվելու տեղեկանք</div>
+        <div class="product-detail-cell product-detail-value">{{opperson.PersonNoSocialNumber}}</div>
+    </div>
+
+    <div ng-if="opperson.PersonPhone!='' && opperson.PersonPhone != undefined" class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Հեռախոսահամար</div>
+        <div class="product-detail-cell product-detail-value">{{opperson.PersonPhone}}</div>
+    </div>
+
+</div>
+
+
+

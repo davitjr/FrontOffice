@@ -1,0 +1,64 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+    #HBDocumentsByPassTransaction .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #HBDocumentsByPassTransaction {
+        min-width: 600px;
+        max-width: 700px;
+    }
+
+    .maximize-dialog {
+        display: none;
+    }
+
+    .minimize-dialog {
+        display: none;
+    }
+</style>
+<div id="HBDocumentsByPassTransaction" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="HBDocumentsCtrl" ng-init="initBypassList();" name="HBDocumentsByPassTransaction" id="HBDocumentsByPassTransaction" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+    <div id="hbTransactionError_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 " ng-click="writeBypassHistory()" style="margin-left:5px;">
+                <span id="h-menu-item-5" style="font-size:14px;"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " ng-click="approveUnconfirmedOrder();" style="margin-left:5px;" ng-show="allowApprove">
+                <span id="h-menu-item-5" style="font-size:14px;"><img id="h-menu-icon-3" class="h-menu-icon" src="~/Content/Images/confirm.png" style="height: 30px;width:36px;margin-top: 6px;">Կատարել</span>
+            </li>
+        </ul>
+            <div id="right-menu" style="display:none;">
+            </div>
+    </div>
+    
+    <div>
+        <table>
+            <thead>
+                <tr ng-repeat="bypass in bypassList" ng-if="bypass.ID == 3">
+                    <td><label class="tab_title col-md-10" style="font-family:'Arial Armenian'">{{ bypass.Description }}</label><input type="checkbox" ng-init="(bypass.IsChecked == true)? passChecked = true:passChecked = false;" ng-true-value="true" ng-false-value="false" ng-model="passChecked" @*ng-model="bypass.Selected"*@ ng-click="checkBypass(bypass.ID)"></td>
+                </tr>               
+            </thead>
+            
+        </table>
+    </div>
+    <br />
+</form>
+
+
+
+
+
+
+
+
+
+

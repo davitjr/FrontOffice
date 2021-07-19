@@ -1,0 +1,93 @@
+﻿<style>
+    .rejectedUserMessage {
+        float:right;
+        margin-right:295px
+    }
+</style>
+
+<form style="width:600px" ng-controller="OrderCtrl" ng-init="getOrder(selectedOrderId);getOrderHistory(selectedOrderId)">
+    <loading-control style="margin-left:20em" scopevariable="order"></loading-control>
+    <div class="product-details bhoechie-tab-content" style="min-width:600px;margin-right:10px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable ">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value" ng-class="historys!=undefined?'rejectedUserMessage':''">{{order.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{order.OperationDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{order.SubTypeDescription}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="order.Amount!=0">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Amount | number:2}} {{order.Currency}}</div>
+        </div>
+
+        <div style="clear:both;color:#6F6A6A;font-weight:bold">Կատարող՝</div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;<span ng-if="order.OPPerson.PersonLastName==undefined || order.OPPerson.PersonLastName==''">Անվանում</span> <span ng-if="order.OPPerson.PersonLastName!=undefined && order.OPPerson.PersonLastName!=''"> Անուն,Ազգանուն </span> </div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonName}} {{order.OPPerson.PersonLastName}}</div>
+        </div>
+
+        <div ng-if="order.OPPerson.PersonDocument!='' && order.OPPerson.PersonDocument!=undefined" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Անձնագիր</div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonDocument}}</div>
+        </div>
+
+        <div ng-if="order.OPPerson.PersonSocialNumber!='' && order.OPPerson.PersonSocialNumber!=undefined" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;ՀԾՀ</div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonSocialNumber || "-"}}</div>
+        </div>
+
+        <div ng-if="order.OPPerson.PersonNoSocialNumber!='' && order.OPPerson.PersonNoSocialNumber!=undefined" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;ՀԾՀ-ից հրաժարվելու տեղեկանք</div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonNoSocialNumber}}</div>
+        </div>
+
+
+
+        <div ng-if="order.OPPerson.CustomerNumber!=''" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Հաճախորդի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.CustomerNumber}}</div>
+        </div>
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{order.QualityDescription}}</div>
+        </div>
+        <br />
+
+        <div class="" ng-repeat="history in ::historys" style="width:200%" ng-style="">
+            <div class="product-detail-cell product-detail-lable" ng-if="history.Quality==1">Մուտքագրեց`</div><div ng-if="history.Quality==1" class="product-detail-cell product-detail-value"><span style="margin-left:75px" ng-if="history.ChangeUserName!=''">&nbsp;{{::history.ChangeUserName}}&nbsp;(ՊԿ`{{::history.ChangeUserId}}) </span><span ng-if="history.ChangeUserName==null">Բացակայում է</span> {{::history.ChangeDateString}}</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="history.Quality==50">Ուղարկեց հաստատման`</div><div ng-if="history.Quality==50" class="product-detail-cell product-detail-value"><span style="margin-left:15px" ng-if="history.ChangeUserName!=''">&nbsp;{{::history.ChangeUserName}}&nbsp;(ՊԿ`{{::history.ChangeUserId}}) </span><span ng-if="history.ChangeUserName==null">Բացակայում է</span> {{::history.ChangeDateString}}</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="history.Quality==3">Ուղարկեց կատարման`</div><div ng-if="history.Quality==3" class="product-detail-cell product-detail-value"><span style="margin-left:14px" ng-if="history.ChangeUserName!=''">&nbsp;{{::history.ChangeUserName}}&nbsp;(ՊԿ`{{::history.ChangeUserId}}) </span><span ng-if="history.ChangeUserName==null">Բացակայում է</span> {{::history.ChangeDateString}}</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="history.Quality==30">Կատարեց`</div><div ng-if="history.Quality==30" class="product-detail-cell product-detail-value"><span ng-if="history.ChangeUserName!=''">&nbsp;{{::history.ChangeUserName}}&nbsp;(ՊԿ`{{::history.ChangeUserId}}) </span><span ng-if="history.ChangeUserName==null">Բացակայում է</span> {{::history.ChangeDateString}}</div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable" ng-if="history.Quality==31">Մերժեց`</div><div ng-if="history.Quality==31" class="product-detail-cell product-detail-value"><span style="margin-left: 96px;" ng-if="history.ChangeUserName!=''">&nbsp;{{history.ChangeUserName}}&nbsp;(ՊԿ`{{history.ChangeUserId}}) </span><span ng-if="history.ChangeUserName==null">Բացակայում է</span> {{::history.ChangeDateString}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable" ng-if="history.Quality==31"> <span>Պատճառ`</span></div><div ng-if="history.Quality==31" class="product-detail-cell product-detail-value"><span style="margin-left:105px">&nbsp;{{::history.ReasonDescription}}</span></div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+    <br />
+</form>
+
+

@@ -1,0 +1,89 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #PhoneBankingContractActivationOrder .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #PhoneBankingContractActivationOrder {
+        min-width: 550px;
+    }
+</style>
+<div id="PBActivationOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="PhoneBankingActivationOrderCtrl" name="PhoneBankingContractActivationOrder" ng-init="generateNextOrderNumber();" id="PhoneBankingContractActivationOrder" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+
+    <div id="newPBActivationOrder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="PhoneBankingContractActivationOrder.$setSubmitted();PhoneBankingContractActivationOrder.$valid  && savePhoneBankingContractActivationOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newPBActivationOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+    <div class="col-sm-11">
+        <div class=" form-group">
+            <label class="tab_title col-sm-5 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+            <div class="col-sm-6 row">
+                <div class="multiple_columns col-sm-8 ">
+                    <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" required>
+                </div>
+
+            </div>
+        </div> 
+        <div class="form-group"  >
+            <div class="tab_title col-sm-5 " for="debitAccount">Սպասարկման վարձ</div>
+            <div class="col-sm-6 my_text1" style="padding-top: 7px;">{{order.Amount | number:2}} AMD</div>
+        </div>
+
+
+        <paymentaccount  ng-if="order.Amount>0"
+                        ng-init="getDebitAccounts(1,2)"
+                        accounts="debitAccounts"
+                        accountselectname="debitAccount"
+                        account="order.DebitAccount"
+                        check="0"
+                        nameforaccount="'Սպ. վարձի գանձման հաշիվ'"
+                        nameforcurrency="">
+        </paymentaccount>
+        <div class="row">
+            <div class="col-sm-5"></div>
+            <ng-messages ng-if="order.Amount>0 && (PhoneBankingContractActivationOrder.$submitted || PhoneBankingContractActivationOrder.debitAccount.$dirty)"
+                         for="PhoneBankingContractActivationOrder.debitAccount.$error">
+                <ng-message when="required" class="errors">
+                    Հաշիվը ընտրված չէ
+                </ng-message>
+            </ng-messages>
+
+        </div>
+        <div  class="form-group" ng-if="$root.SessionProperties.CustomerType==6">
+            <div class="ng-binding col-sm-5 " for="debitAccount"><strong>Անվճար</strong>&nbsp;
+                <input type="checkbox" ng-model="order.PBActivationRequest.IsFree" ng-change="setOrderAmount(order.PBActivationRequest)" ng-true-value="true" ng-false-value="false">
+            </div>
+            <br />
+            <br />
+        </div>
+        
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+

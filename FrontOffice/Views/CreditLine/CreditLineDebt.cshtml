@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = null;
+}
+
+<section class=" panel panel-info" style="max-width:800px;margin-left:10px">
+    <header class="panel-heading">
+        <span class="panel-title" style=" font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></span>
+    </header>
+    <div class="panel-body">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable redStyle">Ընդամենը պարտավորություն</div>
+            <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold!important;">{{creditLineDebt | number:2}} {{creditline.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable greenStyle">Հաշվի հասանելի գումար</div>
+            <div class="product-detail-cell product-detail-value greenStyle" style="font-weight:bold!important;">{{creditline.ConnectAccount.AvailableBalance | number:2}} {{creditline.ConnectAccount.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable redStyle">Ընդհանուր պարտավորության և հաշվի մնացորդի տարբերություն</div>
+            <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold!important;">{{allDebt | number:2}} {{creditline.Currency}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="creditline.Type!=25 && creditline.Type!=18 && creditline.Type!=46">
+            <div class="product-detail-cell product-detail-lable redStyle">Սպասարկման վարձ</div>
+            <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold!important;">{{serviceFee | number:2}} {{creditline.Currency}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="overdue!=0">
+            <div class="product-detail-cell product-detail-lable redStyle">Ժամկետանց մաս</div>
+            <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold!important;">{{overdue | number:2}} {{creditline.Currency}}</div>
+        </div>
+
+    </div>
+</section>

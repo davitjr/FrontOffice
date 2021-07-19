@@ -1,0 +1,133 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #accountOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+<div id="pensionAppliactionTerminationLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="PensionApplicationOrderCtrl" name="PensionApplicationTerminationOrderForm" id="PensionApplicationTerminationOrderForm" role="form" style="min-width:650px;" novalidate class="form-horizontal" labels-required>
+    <div id="newaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-3 " ng-click="pensionCloseApplication(order.PensionApplication.Account.AccountNumber)">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Դադարեցման դիմում</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="PensionApplicationTerminationOrderForm.$setSubmitted();PensionApplicationTerminationOrderForm.$valid && savePensionApplicationTerminationOrder()">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newPensionAppliactionTerminationOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+
+    <div class="col-sm-10">
+
+        <div class=" form-group">
+            <label class="tab_title col-sm-6 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+            <div class="col-sm-6 row">
+                <div class="multiple_columns col-sm-8 ">
+                    <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-init="getPensionAppliactionClosingTypes()">
+            <label class="tab_title col-sm-6" for="ClosingType">Դադարեցման հիմք</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <select ng-show="closingTypes" data-ng-model="order.ClosingType" name="ClosingType" id="ClosingType" class="form-control" required
+                            data-ng-options="k as v for (k,v) in closingTypes">
+                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="PensionApplicationTerminationOrderForm.$submitted || PensionApplicationTerminationOrderForm.ClosingType.$dirty"
+                                 for="PensionApplicationTerminationOrderForm.ClosingType.$error">
+                        <ng-message when="required" class="errors">
+                            Դադարեցման հիմքը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class=" form-group">
+            <label class="tab_title col-sm-6 " for="ClosingDate">Դադարեցման ա/թ</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="date" style="text-align:left" class="form-control tab_title" id="ClosingDate" name="ClosingDate" ng-model="order.ClosingDate" required>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="PensionApplicationTerminationOrderForm.$submitted || PensionApplicationTerminationOrderForm.ClosingDate.$dirty"
+                                 for="PensionApplicationTerminationOrderForm.ClosingDate.$error">
+                        <ng-message when="required" class="errors">
+                            Դադարեցման ա/թ նշված չէ
+                        </ng-message>
+                        <ng-message when="date" class="errors">
+                            Դադարեցման ա/թ սխալ է նշված
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+        <div class=" form-group" ng-if="order.ClosingType==2">
+            <label class="tab_title col-sm-6 " for="ClosingDate">Մահվան ա/թ</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="date" style="text-align:left" class="form-control tab_title" id="DeathDate" name="DeathDate" ng-model="order.DeathDate" required>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="PensionApplicationTerminationOrderForm.$submitted || PensionApplicationTerminationOrderForm.DeathDate.$dirty"
+                                 for="PensionApplicationTerminationOrderForm.DeathDate.$error">
+                        <ng-message when="required" class="errors">
+                            Մահվան ա/թ նշված չէ
+                        </ng-message>
+                        <ng-message when="date" class="errors">
+                            Մահվան ա/թ սխալ է նշված
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="order.ClosingType==2">
+            <label class="tab_title col-sm-6 control-label" for="DeathCertificateNumber">Մահվան վկայական</label>
+            <div class="col-sm-6 ">
+                <div class="row">
+                    <textarea style="text-align:left" onkeypress="return isArmenianUnicode(event.keyCode)" required onpaste="return CheckPasteText(event)" ng-model="order.DeathCertificateNumber" name="DeathCertificateNumber" id="DeathCertificateNumber" class="form-control tab_title"></textarea>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="PensionApplicationTerminationOrderForm.$submitted || PensionApplicationTerminationOrderForm.DeathCertificateNumber.$dirty"
+                                 for="PensionApplicationTerminationOrderForm.DeathCertificateNumber.$error">
+                        <ng-message when="required" class="errors">
+                            Լրացրեք մահվան վկայականը
+                        </ng-message>
+
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+

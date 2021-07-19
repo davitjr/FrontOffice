@@ -1,0 +1,70 @@
+﻿@{
+    Layout = null;
+}
+<form id="plasticCardRemovalOrderForm" ng-controller="PlasticCardRemovalOrderCtrl" ng-init="details=true">
+    <loading-control style="margin-left:260px" scopevariable="order"></loading-control>
+    <div ng-show="order" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 " ng-if="order.Quality == 3"
+                ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հեռացման հայտ','removalOrder',callbackgetPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton" alt="">Հեռացման հայտ</span>
+            </li>
+        </ul>
+    </div>
+    <div ng-init="getPlasticCardRemovalOrder(selectedOrderId)"></div>
+    <div class="product-details bhoechie-tab-content" style="padding-left:10px;min-width:600px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Card.CardNumber}}</div>
+        </div>
+        <div class="product-detail-row" ng-show="order.Card.CardAccount.AccountNumber">
+            <div class="product-detail-cell product-detail-lable">Քարտային հաշվեհամար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Card.CardAccount.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row" ng-show="order.Card.OverdraftAccount.AccountNumber">
+            <div class="product-detail-cell product-detail-lable">Գերածախսի հաշվեհամար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Card.OverdraftAccount.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտի արժույթ</div>
+            <div class="product-detail-cell product-detail-value">{{order.Card.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{order.Card.CardType}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{order.OperationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="type!=95 && order.Type!=113 && order.Type!=123">
+            <div class="product-detail-cell product-detail-lable">Նկարագրություն</div>
+            <div class="product-detail-cell product-detail-value">{{order.Description}}</div>
+        </div>
+
+        <orderoppersondetails opperson="order.OPPerson" ng-show="order.OPPerson"></orderoppersondetails>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{ order.QualityDescription }}</div>
+            <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{ order.QualityDescription }}</div>
+            <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{ order.QualityDescription }}</div>
+        </div>
+
+
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+</form>
+
+
+

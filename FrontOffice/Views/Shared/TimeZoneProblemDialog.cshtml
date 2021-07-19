@@ -1,0 +1,36 @@
+﻿
+<style>
+    .modal-backdrop {
+        background-color: rgb(90, 85, 85);
+    }
+
+    .modal-content {
+        width: 400px;
+    }
+
+    .modal-backdrop.in {
+        opacity: 0.5;
+    }
+</style>
+<form ng-controller="LoginCtrl">
+    <div class="popup_wrapper_top">
+        <div>
+            ՈՒշադրություն
+        </div>
+    </div>
+    <div class="popup_wrapper_inner modal-body">
+    <div style="text-align:center">
+            <div class="row">
+                <p class="warningClass">
+                    <img src="../../Content/Images/warning.png" alt="" />Ձեր համակարգչի ժամը սխալ է: Ստուգեք համակարգչի ժամը։
+                </p>
+            </div>
+
+            <button ng-click="closeSessionExpire()" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;OK</button>
+        </div>
+
+
+    </div>
+
+
+</form>

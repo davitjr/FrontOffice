@@ -1,0 +1,401 @@
+﻿<form style="width:550px" ng-controller="TransfersCtrl" ng-init="getTransfer(selectedTransferId); getApprovedTransfer(selectedTransferId)">
+    <div class="product-details bhoechie-tab-content" style="min-width:550px;padding-left:10px">
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փաստաթղթի համար</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DocumentNumber}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մասնաճյուղ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.FilialCode}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրանցող</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.RegisteredUserName}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.ConfirmationUserName!='' && transfer.ConfirmationUserName!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ձևակերպող</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.ConfirmationUserName}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.CustomerNumber!=0">
+            <div class="product-detail-cell product-detail-lable">Հաճախորդի համար</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.CustomerNumber}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.TransferDocumentDebAccount!='' && transfer.TransferDocumentDebAccount!=undefined">
+            <div class="product-detail-cell product-detail-lable"> Թղթակցային դեբետ հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.TransferDocumentDebAccount}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.TransferDocumentCredAccount!='' && transfer.TransferDocumentCredAccount!=undefined">
+            <div class="product-detail-cell product-detail-lable"> Թղթակցային կրեդիտ հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.TransferDocumentCredAccount}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.Transit!='' && transfer.Transit!=undefined">
+            <div class="product-detail-cell product-detail-lable"> Տարանցիկ հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.Transit}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.CountryName!='' && transfer.CountryName!=undefined">
+            <div class="product-detail-cell product-detail-lable">Երկիր</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.CountryName}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.MT!='' && transfer.MT!=undefined && transfer.MT!=0 &&  transfer.TransferGroup == 3 ">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.MT}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.TransactionGroupNumber!='' && transfer.TransactionGroupNumber!=undefined ">
+            <div class="product-detail-cell product-detail-lable">Դեբետ հաշվից ելքի տրանզակցիայի համար</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.TransactionGroupNumber}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.CashTransactionGroupNumber!='' && transfer.CashTransactionGroupNumber!=undefined ">
+            <div class="product-detail-cell product-detail-lable">Տարանցիկ հաշվից ելքի տրանզակցիայի համար</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.CashTransactionGroupNumber}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="transfer.DetailsOfCharges!='' && transfer.DetailsOfCharges!=undefined && !(transfer.SendOrReceived == 0 &&(transfer.TransferGroup == 3 || transfer.TransferGroup == 4)  )">
+            <div class="product-detail-cell product-detail-lable">Միջնորդավճարի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DetailsOfCharges}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.DetailsOfCharges!='' && transfer.DetailsOfCharges!=undefined &&  transfer.TransferGroup == 4">
+            <div class="product-detail-cell product-detail-lable">Միջնորդավճարի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DetailsOfCharges=='OUR'?'Ուղարկողից':'Ստացողից'}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.TransferSource!='' && transfer.TransferSource!=undefined ">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման աղբյուր</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.TransferSource}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.Quality==0 ? 'Նորմալ': 'Ետ վերադարձված'}}</div>
+        </div>
+
+    <br/>
+
+
+        <div class="product-detail-row" ng-if="transfer.SenderBankSwift!='' && transfer.SenderBankSwift!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ուղարկող բանկի SWIFT </div>
+            <div class="product-detail-cell product-detail-value">{{transfer.SenderBankSwift}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.SenderBank!='' && transfer.SenderBank!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ուղարկող բանկ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.SenderBank}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.SenderAccount!='' && transfer.SenderAccount!=undefined &&  transfer.SenderAccount!=transfer.DebitAccount">
+            <div class="product-detail-cell product-detail-lable">Ուղարկողի հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.SenderAccount}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ուղարկող</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.Sender}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.CustomerNumber!=0 && transfer.CustomerTypeDescription!='' && transfer.CustomerTypeDescription!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ուղարկողի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.CustomerTypeDescription}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.SenderAddress!='' && transfer.SenderAddress!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ուղարկողի հասցե</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.SenderAddress}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.SenderTown!='' && transfer.SenderTown!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ուղարկողի քաղաք</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.SenderTown}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.SenderCountry!='' && transfer.SenderCountry!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ուղարկողի երկիր</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.SenderCountry}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.SenderDateOfBirthString!='' && transfer.SenderDateOfBirth!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ուղարկողի ծննդյան ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.SenderDateOfBirthString}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.SenderPassport!='' && transfer.SenderPassport!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ուղարկողի անձնագիր</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.SenderPassport}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.SenderEmail!='' && transfer.SenderEmail!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ուղարկողի էլ. հասցե</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.SenderEmail}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.SenderCodeOfTax!='' && transfer.SenderCodeOfTax!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ուղարկողի ՀՎՀՀ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.SenderCodeOfTax}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.SenderPhone!='' && transfer.SenderPhone!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ուղարկողի հեռախոս</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.SenderPhone}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.SenderOtherBankAccount!='' && transfer.SenderOtherBankAccount!=undefined">
+            <div class="product-detail-cell product-detail-lable">Այլ բանկերում ուղարկողի հաշվեհամարներ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.SenderOtherBankAccount}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.Debtor!='' && transfer.Debtor!=undefined">
+            <div class="product-detail-cell product-detail-lable">Պարտատեր</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.Debtor}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.DebtorType!='' && transfer.DebtorType!=undefined && transfer.Debtor!='' && transfer.Debtor!=undefined">
+            <div class="product-detail-cell product-detail-lable">Պարտատիրոջ կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DebtorType}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="transfer.DebtorDocument!='' && transfer.DebtorDocument!=undefined && transfer.Debtor!='' && transfer.Debtor!=undefined">
+            <div class="product-detail-cell product-detail-lable">Պարտատիրոջ փաստաթուղթ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DebtorDocument}}</div>
+        </div>
+
+        <div ng-if="transfer.LTACode>0" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">ՏՀՏ կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.LTACode}}</div>
+        </div>
+
+        <div ng-if="transfer.PoliceCode>0" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ոստիկանության կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.PoliceCode}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.IntermediaryBankSwift!='' && transfer.IntermediaryBankSwift!=undefined">
+            <div class="product-detail-cell product-detail-lable">Միջնորդ բանկի SWIFT կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.IntermediaryBankSwift}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.IntermediaryBank!='' && transfer.IntermediaryBank!=undefined">
+            <div class="product-detail-cell product-detail-lable">Միջնորդ բանկ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.IntermediaryBank}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.ReceiverBankSwift!='' && transfer.ReceiverBankSwift!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ստացող բանկի SWIFT կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.ReceiverBankSwift}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.FedwireRoutingCode!='' && transfer.FedwireRoutingCode!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ստացող բանկի Fedwire Routing կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.FedwireRoutingCode}}</div>
+        </div>
+
+ 
+
+        <div class="product-detail-row" ng-if="transfer.ReceiverBank!='' && transfer.ReceiverBank!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ստացող բանկ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.ReceiverBank}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.ReceiverBankAddInf!='' && transfer.ReceiverBankAddInf!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ստացող բանկի լրացուցիչ տվյալներ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.ReceiverBankAddInf}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացող</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.Receiver}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.ReceiverAddInf!='' && transfer.ReceiverAddInf!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ստացողի լրացուցիչ տվյալներ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.ReceiverAddInf}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.ReceiverAccount!='' && transfer.ReceiverAccount!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ստացողի հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.ReceiverAccount}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.ReceiverPassport!='' && transfer.ReceiverPassport!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ստացողի անձնագիր</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.ReceiverPassport}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.ReceiverType!='' && transfer.ReceiverType!=undefined && transfer.Receiver!='' && transfer.Receiver!=undefined && transfer.SendOrReceived == 0">
+            <div class="product-detail-cell product-detail-lable">Ստացողի կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.ReceiverType}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.Code!='' && transfer.Code!=undefined">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.Code}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="transfer.DescriptionForPayment!='' && transfer.DescriptionForPayment!=undefined">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման մանրամասներ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DescriptionForPayment || "-"}}</div>
+        </div>
+
+ 
+      
+
+        <div class="product-detail-row" ng-if="transfer.DebitAccount.AccountNumber!='' && transfer.DebitAccount.AccountNumber!=undefined">
+            <div class="product-detail-cell product-detail-lable">Դեբետ հաշիվ</div>
+            <div class="product-detail-cell product-detail-value"> {{transfer.DebitAccount.AccountNumber}} {{transfer.DebitAccount.Currency}} <span ng-if="transfer.DebitAccount.AccountDescription!='' && transfer.DebitAccount.AccountDescription!=undefined" class="tab_title   control-label"> <span ng-if="transfer.DebitAccount.AccountDescription!='' && transfer.DebitAccount.AccountDescription!=undefined" class="tipB glyphicon glyphicon-info-sign" title={{transfer.DebitAccount.AccountDescription}} style="color:#5EB4FF"></span> </span> </div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.CreditAccount.AccountNumber!='' && transfer.CreditAccount.AccountNumber!=undefined">
+            <div class="product-detail-cell product-detail-lable">Կրեդիտ հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.CreditAccount.AccountNumber}} {{transfer.CreditAccount.Currency}} <span ng-if="transfer.CreditAccount.AccountDescription!='' && transfer.CreditAccount.AccountDescription!=undefined" class="tab_title   control-label"> <span ng-if="transfer.CreditAccount.AccountDescription!='' && transfer.CreditAccount.AccountDescription!=undefined" class="tipB glyphicon glyphicon-info-sign" title={{transfer.CreditAccount.AccountDescription}} style="color:#5EB4FF"></span> </span></div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.DebForTransferPayment.AccountNumber!='' && transfer.DebForTransferPayment.AccountNumber!=undefined &&  transfer.DebForTransferPayment.AccountNumber!='0'">
+            <div class="product-detail-cell product-detail-lable">Միջ. դեբետ հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DebForTransferPayment.AccountNumber}} {{transfer.DebForTransferPayment.Currency}} <span ng-if="transfer.DebForTransferPayment.AccountDescription!='' && transfer.DebForTransferPayment.AccountDescription!=undefined" class="tab_title   control-label"> <span ng-if="transfer.DebForTransferPayment.AccountDescription!='' && transfer.DebForTransferPayment.AccountDescription!=undefined" class="tipB glyphicon glyphicon-info-sign" title={{transfer.DebForTransferPayment.AccountDescription}} style="color:#5EB4FF"></span> </span></div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if=" transfer.TransferGroup == 3 ">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման համակարգ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.TransferSystemDescription}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.Amount | number:2}} {{transfer.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.AmountInDebCurrency!=0">
+            <div class="product-detail-cell product-detail-lable">Գումարը հաշվի արժույթով</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.AmountInDebCurrency | number:2}} {{transfer.DebitAccount.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="(transfer.SendOrReceived == 0 &&  transfer.TransferGroup == 3 && transfer.TransferSystem != 1 && transfer.TransferSystem != 0) || transfer.TransferGroup == 4">
+            <div class="product-detail-cell product-detail-lable">Վճարված գումար</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.PaidAmount | number:2}} {{transfer.Currency}}</div>
+        </div>
+
+
+
+        <div class="product-detail-row" ng-if="transfer.Description!='' && transfer.Description!=undefined">
+            <div class="product-detail-cell product-detail-lable">Գործարքի նկարագրություն</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.Description || "-"}}</div>
+        </div>
+
+
+
+        <div class="product-detail-row" ng-if="transfer.AddInf!='' && transfer.AddInf!=undefined">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման լրացուցիչ տվյալներ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.AddInf || "-"}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="!(transfer.SendOrReceived == 0 &&(transfer.TransferGroup == 3 || transfer.TransferGroup == 4 || $scope.transfer.TransferGroup == 5) )">
+            <div class="product-detail-cell product-detail-lable">Միջնորդավճար</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.AmountForPayment | number:2}} AMD</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.SendOrReceived == 1  && transfer.TransferGroup == 3 && transfer.TransferSystem != 1 && transfer.TransferSystem != 0">
+            <div class="product-detail-cell product-detail-lable">Միջնորդավճար հաճախորդից</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.FeeInCurrency | number:2}} {{transfer.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.TransferGroup == 3 && transfer.TransferSystem != 1 && transfer.TransferSystem != 0">
+            <div class="product-detail-cell product-detail-lable">Միջնորդավճար ACBA</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.FeeAcba | number:2}} {{transfer.SendOrReceived==0? transfer.Currency : 'AMD'}}</div>
+        </div>
+
+        <div ng-if="transfer.CreditCode!='' && transfer.CreditCode!=undefined" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp; Վարկային/կրեդիտ կոդը</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.CreditCode}}</div>
+        </div>
+        <div ng-if="transfer.Borrower!='' && transfer.Borrower!=undefined" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp; Վարկառու</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.Borrower}}</div>
+        </div>
+        <div ng-if="transfer.MatureTypeDescription!='' && transfer.MatureTypeDescription!=undefined" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp; Վարկի մարման տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.MatureTypeDescription}}</div>
+        </div>
+
+        <div ng-if="transfer.TransferGroup==3  && approvedTransfer!=undefined && approvedTransfer!=null">
+            <br/>
+        </div>
+        <div class="product-detail-row" ng-if="approvedTransfer.DescriptionForPayment!='' && approvedTransfer.DescriptionForPayment!=undefined">
+            <div class="product-detail-cell product-detail-lable" style="font-weight:700 ">Հաստատված տվյալներ</div>
+            <div class="product-detail-cell product-detail-value"></div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="approvedTransfer.DescriptionForPayment!='' && approvedTransfer.DescriptionForPayment!=undefined">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման մանրամասներ</div>
+            <div class="product-detail-cell product-detail-value">{{approvedTransfer.DescriptionForPayment || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="approvedTransfer.IntermediaryBankSwift!='' && approvedTransfer.IntermediaryBankSwift!=undefined">
+            <div class="product-detail-cell product-detail-lable">Միջնորդ բանկի SWIFT կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{approvedTransfer.IntermediaryBankSwift}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="approvedTransfer.IntermediaryBank!='' && approvedTransfer.IntermediaryBank!=undefined">
+            <div class="product-detail-cell product-detail-lable">Միջնորդ բանկ</div>
+            <div class="product-detail-cell product-detail-value">{{approvedTransfer.IntermediaryBank}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="approvedTransfer.ReceiverBankSwift!='' && approvedTransfer.ReceiverBankSwift!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ստացող բանկի SWIFT կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{approvedTransfer.ReceiverBankSwift}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="approvedTransfer.ReceiverBank!='' && approvedTransfer.ReceiverBank!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ստացող բանկ</div>
+            <div class="product-detail-cell product-detail-value">{{approvedTransfer.ReceiverBank}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="approvedTransfer.ReceiverBankAddInf!='' && approvedTransfer.ReceiverBankAddInf!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ստացող բանկի լրացուցիչ տվյալներ</div>
+            <div class="product-detail-cell product-detail-value">{{approvedTransfer.ReceiverBankAddInf}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="approvedTransfer.Receiver!='' && approvedTransfer.Receiver!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ստացող</div>
+            <div class="product-detail-cell product-detail-value">{{approvedTransfer.Receiver}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="approvedTransfer.ReceiverAccount!='' && approvedTransfer.ReceiverAccount!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ստացողի հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{approvedTransfer.ReceiverAccount}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="approvedTransfer.ReceiverAccount!='' && approvedTransfer.ReceiverAccount!=undefined">
+            <div class="product-detail-cell product-detail-lable">Ստացողի SWIFT</div>
+            <div class="product-detail-cell product-detail-value">{{approvedTransfer.ReceiverAccount}}</div>
+        </div>
+         
+
+    </div>
+
+    <div class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable"><transferattachments id="selectedTransferId"></transferattachments></div>
+    </div>
+
+</form>
+ 
+

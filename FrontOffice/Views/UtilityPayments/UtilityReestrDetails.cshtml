@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    #tblUtilityReestrDetails table, #tblUtilityReestrDetails th, #tblUtilityReestrDetails td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    #tblUtilityReestrDetails table {
+        border-collapse: collapse;
+    }
+
+        #tblUtilityReestrDetails table .top #tblReestrDetails td {
+            font-size: 13px;
+        }
+
+        #tblUtilityReestrDetails table #tblReestrDetails tr {
+            height: 30px;
+        }
+
+    #tblUtilityReestrDetails .form-horizontal {
+        margin-top: -22px;
+    }
+</style>
+<div class=" col-md-12">
+    <br />
+    <div>
+        <form role="form" class="form-horizontal" style="width:700px;">
+            
+            <table id="tblUtilityReestrDetails" cellspacing="0" cellpadding="0" border="0" style="width:600px;height:450px; ">
+
+                <tbody style=" overflow-y: scroll; height: 400px; position: absolute;">
+                    <tr class="product-container-header">
+                        <td style="text-align:center; width: 10%;">Փաստ. N</td>
+                        <td style="text-align:center">Ջրօգտ. կոդ</td>
+                        <td style="text-align:center">Համայնք</td>
+                        <td style="text-align:center">Անուն Ազգանուն</td>
+                        <td style="text-align:center">Ընդամենը գանձում</td>
+                        <td style="text-align:center">Ոռոգման ջրի վարձ</td>
+                        <td style="text-align:center">Անդամավաճար</td>
+                    </tr>
+                    <tr ng-repeat="COWaterReestrDetails in COWaterReestrDetails" style="cursor: pointer;">
+                        <td style="text-align:center">{{::COWaterReestrDetails.OrderNumber}}</td>
+                        <td style="text-align:center">{{::COWaterReestrDetails.AbonentNumber}}</td>
+                        <td style="text-align:center">{{::COWaterReestrDetails.City}}</td>
+                        <td style="text-align:center">{{::COWaterReestrDetails.FullName}}</td>
+                        <td style="text-align:center">{{::COWaterReestrDetails.TotalCharge | number:2}}</td>
+                        <td style="text-align:center">{{::COWaterReestrDetails.WaterPayment | number:2}}</td>
+                        <td style="text-align:center">{{::COWaterReestrDetails.MembershipFee | number:2}}</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+

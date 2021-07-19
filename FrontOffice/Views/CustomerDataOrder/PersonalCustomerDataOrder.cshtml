@@ -1,0 +1,66 @@
+﻿@{
+    Layout = null;
+}
+
+
+<div class="col-md-10">
+    <div>
+        <form ng-controller="CustomerDataOrderCtrl" ng-init="getCustomer()" name="CustomerDataOrderForm" role="form" class="form-horizontal" ng-submit="CustomerDataOrderForm.$valid && saveCustomerDataOrder()" novalidate>
+            <errors></errors>
+            <br />
+            
+            <div class="form-group sub_inner">
+                <label class="tab_title col-sm-4" for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-8">
+                    <input type="date" disabled="disabled" class="form-control tab_title" id="RegistrationDate" name="RegistrationDate" ng-model="order.RegistrationDate" style="text-align:left" required>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="tab_title col-sm-4" for="HomePhoneNumber"> Քաղաքային հեռախոսահամար</label>
+                <div class="col-sm-8">
+                    <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="tab_title form-control" id="HomePhoneNumber" name="HomePhoneNumber" data-ng-model="order.HomePhoneNumber" style="text-align:left" >
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="tab_title col-sm-4" for="MobilePhoneNumber"> Բջջային հեռախոսահամար</label>
+                <div class="col-sm-8">
+                    <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="tab_title form-control" id="MobilePhoneNumber" name="MobilePhoneNumber" data-ng-model="order.MobilePhoneNumber" style="text-align:left" >
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="tab_title col-sm-4" for="EmailAddress"> Էլեկտրոնային հասցեներ</label>
+                <div class="col-sm-8">
+                    <input type="email" class="tab_title form-control" id="MainEmail" name="FirstAddress" data-ng-model="FirstAddress" style="text-align:left" >
+                    <ng-messages class="col-sm-10" ng-if="CustomerDataOrderForm.$submitted || CustomerDataOrderForm.FirstAddress.$dirty"
+                                 for="CustomerDataOrderForm.FirstAddress.$error">
+                        <ng-message when="email" class="errors">
+                            Էլ. հասցեն ճիշտ չէ մուտքագրված
+                        </ng-message>
+                    </ng-messages>
+                    <input type="email" class="form-control tab_title" id="SecondaryEmail" name="SecondAddress" data-ng-model="SecondAddress" style="text-align:left;margin-top: 10px;">
+                    <ng-messages class="col-sm-10" ng-if="CustomerDataOrderForm.SecondAddress.$dirty"
+                                 for="CustomerDataOrderForm.SecondAddress.$error">
+                        <ng-message when="email" class="errors">
+                            Էլ. հասցեն ճիշտ չէ մուտքագրված
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="tab_title col-sm-4" for="frequency">Գաղտնաբառ</label>
+                <div class="col-sm-8">
+                    <input type="text" class="tab_title form-control" id="Password" name="Password" data-ng-model="order.Password" style="text-align:left" >
+                </div>
+            </div>
+            <div class="popup_buttons">
+                <button type="submit" class=" my_save_button">Պահպանել</button>
+                <a href="/#main">
+                    <div>
+                        Հրաժարվել
+                    </div>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+

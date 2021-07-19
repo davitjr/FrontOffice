@@ -1,0 +1,167 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    .form-control, textarea {
+        max-width: 235px !important;
+    }
+
+
+    .panel-body {
+        padding-top: 0px;
+    }
+    .glyphicon{
+        top: -2px !important;
+    }
+</style>
+<div>
+    <div class="panel-body" id="plasticCardOrderCustomer">
+        <div class="form-group " ng-if="!nonauthorizedcustomer">
+            <label class="tab_title col-sm-4" for="CustomerNumber">Հաճախորդի համար</label>
+            <div class="col-sm-7">
+                <div class="row-no-margin input-group">
+                    <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title" id="number" ng-minlength="0 || 12" maxlength="12" ng-enter="opperson.CustomerNumber.length == 12 && getCustomer(opperson.CustomerNumber)" name="CustomerNumber" data-ng-model="opperson.CustomerNumber" required>
+                    <div class="input-group-btn" style="width:auto">
+                        <button type="button" ng-disabled="opperson.CustomerNumber.length!=12" class="btn btn-primary" ng-click="getCustomer(opperson.CustomerNumber)" title="Լրացնել տվյալները"><span class="glyphicon glyphicon-plus"></span></button>
+                        <button type="button" class="btn btn-primary searchButton" ng-click="searchCustomers()" title="Հաճախորդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                    </div>
+                </div>
+                <ng-messages ng-if="formname.$submitted || formname.number.$dirty"
+                             for="formname.number.$error">
+                    <ng-message when="minlength" class="errors">
+                        Մուտքագրեք ամբողջ համարը(12 նիշ)
+                    </ng-message>
+                    <ng-message when="required" class="errors">
+                        Հաճախորդի համարը լրացված չէ
+                    </ng-message>
+                </ng-messages>
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <label class="tab_title col-sm-4" for="Name"> Անուն</label>
+            <div class="col-sm-7">
+                <div class="row-no-margin">
+                    <input ng-disabled="true" type="text" class="form-control tab_title" id="Name" name="Name" style="text-align:left" data-ng-model="opperson.PersonNameEng" required>
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.Name.$dirty"
+                                 for="formname.Name.$error">
+                        <ng-message when="required" class="errors">
+                            Անունը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <label class="tab_title col-sm-4" for="LastName"> Ազգանուն</label>
+            <div class="col-sm-7">
+                <div class="row-no-margin">
+                    <input ng-disabled="true" type="text" class="form-control tab_title" id="LastName" name="LastName" style="text-align:left" data-ng-model="opperson.PersonLastNameEng" required>
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.LastName.$dirty"
+                                 for="formname.LastName.$error">
+                        <ng-message when="required" class="errors">
+                            Ազգանունը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="tab_title col-sm-4" for="Passport"> Անձնագիր</label>
+            <div class="col-sm-7">
+                <div class="row-no-margin">
+                    <input ng-disabled="true" type="text" class="form-control tab_title" id="Passport" name="Passport" style="text-align:left" data-ng-model="opperson.PersonDocument" required>
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.Passport.$dirty"
+                                 for="formname.Passport.$error">
+                        <ng-message when="required" class="errors">
+                            Անձնագիրը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="sub_inner form-group">
+            <label class="tab_title col-sm-4" for="AddressEng">Հասցե անգլերեն</label>
+            <div class="col-sm-7">
+                <textarea type="text" class="form-control tab_title" data-ng-model="$parent.plasticCardOrder.adrressEngTranslated" name="AddressEng" required></textarea>
+                <ng-messages class="col-sm-11" ng-if="formname.$submitted || formname.AddressEng.$dirty"
+                             for="formname.AddressEng.$error">
+                    <ng-message when="required" class="errors">
+                        Անգլերեն հասցեն լրացված չէ
+                    </ng-message>
+                </ng-messages>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="tab_title col-sm-4" for="cardSMSPhone">Հեռախոս</label>
+            <div class="col-sm-7">
+                <div class="row-no-margin">
+                    <select style="text-align:left"
+                            data-ng-model="$parent.plasticCardOrder.cardSMSPhone" class="form-control tab_title" name="cardSMSPhone"
+                            data-ng-options="v.phone as v.phone for v in cardSMSPhones" ng-required="$parent.plasticCardOrder.cardPINCodeReceivingType==2" required></select>
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.Phone.$dirty"
+                                 for="formname.cardSMSPhone.$error">
+                        <ng-message when="required" class="errors">
+                            Հեռախոսը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="tab_title col-sm-4" for="reportReceivingEmail"> Էլ. հասցե</label>
+            <div class="col-sm-7">
+                <div class="row-no-margin">
+                    <select ng-required="$parent.plasticCardOrder.cardReportReceivingType==4"
+                            data-ng-model="$parent.plasticCardOrder.reportReceivingEmail" class="form-control" name="reportReceivingEmail"
+                            data-ng-options="v as v for v in reportReceivingEmails" required></select>
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.Email.$dirty"
+                                 for="formname.reportReceivingEmail.$error">
+                        <ng-message when="required" class="errors">
+                            Էլ. հասցեն լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="tab_title col-sm-4" for="amount"> Ծննդյան ա/թ</label>
+            <div class="col-sm-7">
+                <div class="row-no-margin">
+                    <input ng-disabled="true" class="form-control tab_title" id="Birth" name="Birth" style="text-align:left" data-ng-model="opperson.PersonBirth">
+                </div>
+                <div class="row-no-margin">
+                    <ng-messages ng-if="formname.$submitted || formname.Birth.$dirty"
+                                 for="formname.Birth.$error">
+                        <ng-message when="required" class="errors">
+                            Ծննդյան ա/թ լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div ng-show="warnings.length>0" class="panel panel-warning">
+            <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span> Ուշադրություն</div>
+            <div class="panel-body">
+                <div ng-repeat="war in warnings">
+                    {{$index+1}}.{{::war}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

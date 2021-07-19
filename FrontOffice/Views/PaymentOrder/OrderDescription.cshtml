@@ -1,0 +1,35 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="form-group" ng-show="!periodic">
+    <label ng-if="true" class="tab_title col-sm-5 control-label" for="description">{{labeldescription}}<span class="redStyle">*</span></label>
+    <div ng-open="{{periodic!=undefined?require2 = false:require2 = true}}"></div>
+    <div class="col-sm-6 " ng-init="getOperationsList()">
+        <div class="row">
+            <select ng-show="isCombo" name="description" id="description" ng-model="description" data-ng-options="state  for state in operations" class="form-control" ng-required="require2">
+                <option value="" hidden="hidden" style="margin-left:25px">{{description!=null && description!=''?description:'Ընտրեք․․․'}}</option>
+            </select>
+            <textarea ng-show="!isCombo" rows="4" type="text" name="description" ng-model="description" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" typeahead="state  for state in operations | filter:$viewValue | limitTo:8" class="form-control" ng-required="require2" ng-disabled="disable || ordertype==122"></textarea>
+
+        </div>
+        <div class="row">
+            <ng-messages ng-if="formname.$submitted || formname.description.$dirty"
+                         for="formname.description.$error">
+                <ng-message when="required" class="errors">
+                    {{labeldescription}}ը լրացված չէ
+                </ng-message>
+
+            </ng-messages>
+        </div>
+    </div>
+</div>
+<div class="form-group" ng-show="!periodic && additional!=undefined && hidetextarea!=true">
+    <label class="tab_title col-sm-5 control-label" for="description">Լրացուցիչ նկարագրություն</label>
+    <div class="col-sm-6 ">
+        <div class="row">
+            <textarea style="text-align:left" ng-disabled="ordertype==122" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="additional" name="Add" class="form-control tab_title"></textarea>
+        </div>
+
+    </div>
+</div>

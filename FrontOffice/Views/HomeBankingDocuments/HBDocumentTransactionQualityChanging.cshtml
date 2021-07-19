@@ -1,0 +1,79 @@
+﻿
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+    #HBDocumentTransactionQualityChangingForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #HBDocumentTransactionQualityChangingForm {
+        min-width: 400px;
+    }
+    .maximize-dialog{
+        display:none;
+    }
+    .minimize-dialog{
+        display:none;
+    }
+    table td{
+        border:none;
+    }
+</style>
+<div id="HBDocumentTransactionQualityChangingForm" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="HBDocumentsCtrl" ng-init="initTransactionRejectFields();" name="HBDocumentTransactionQualityChangingForm" @*ng-submit="confirmRejectClick();"*@ id="HBDocumentTransactionQualityChangingForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required style="width:400px;">
+    <center>
+        <div>
+            <div class="col-sm-11" style="margin-top:20px;">
+                <div class="form-group">
+
+                    <table style="width:350px;">
+                        <tbody>
+                            <tr>
+                                <td style="width:40px;">
+                                    <div style="display:inline-block;width:100px;">
+                                        <centter><img class="pm-dg-type-icon" src="~/Content/Images/info_icon.gif" style="width:80px;height:80px;"></centter>
+                                    </div>
+                                </td>
+                                <td style="width:120px;">
+                                    <div id="dialog-content-container" class="dialog-message-text">
+                                        <label class="tab_title col-sm-5" style="width:360px;font-size:17px;">Փոխե`լ նշնած գործարքի կարգավիճակը</label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-6 row">
+                        <div class="col-md-10 multiple_columns" style="width:400px;">
+                            <button type="button" class="buttonClass" style="height:31px;margin-left:150px;width:100px;" ng-click="confirmInsertClick();">Փոխել</button>
+                            <button type="button" class="buttonClass" style="height:31px;" ng-controller="PopUpCtrl" ng-click="CloseBPDialog('HBDocumentTransactionQualityChangingForm')">Հրաժարվել</button>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+            </div>
+        </div>
+    </center>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+

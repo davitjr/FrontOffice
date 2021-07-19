@@ -1,0 +1,124 @@
+﻿<div ng-controller="AccountCtrl">
+    <div class="product-container" id="{{forTransitAccounts==true?'transitAccounts':'accounts'}}" data-ng-init="forTransitAccounts==true?getCustomerTransitAccounts():getCurrentAccounts();" ng-show="(hideBlank!='true' && accounts.length==0) || (accounts.length!=0 && accounts.length!=undefined)">
+        <div class="header-title">
+            <a ng-if="forTransitAccounts" ui-sref="currentTransitAccounts" style="color:black;">
+                Հաճախորդի տարանցիկ հաշիվներ
+            </a>
+            <a ng-if="forTransitAccounts!=true" ui-sref="currentAccounts" style="color:black;">
+                Ընթացիկ հաշիվներ
+            </a>
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="include-closed-products">
+                    <input type="checkbox" class="css-square-checkbox lrg" id="{{forTransitAccounts==true?'include-closed-transit-accounts':'include-closed-accounts'}}" data-ng-model="filter" ng-true-value="2" ng-false-value="1" ng-change="QualityFilter();accountFlowDetails = undefined">
+                    <label for="{{forTransitAccounts==true?'include-closed-transit-accounts':'include-closed-accounts'}}" name="include-closed-accounts-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+                </div>
+                <div>
+                    &nbsp;&nbsp;&nbsp;
+                    <select ng-show="currencies" ng-init="getCurrencies()" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ արժույթի" data-ng-model="currency" style="max-width:75px;height:30px" name="Currency" id="Currency" class="form-control"
+                            data-ng-options="k as v for (k,v) in ::currencies">
+                        <option value=""></option>
+                    </select>
+                    &nbsp;&nbsp;&nbsp;
+                    <div class="btn-group" style="margin-left:5px" ng-if="hideBlank!='true'">
+                        <button type="button" class="btn btn-default" style="height:30px" aria-label="Justify" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-align-justify" aria-hidden="true" style="top:-4px !important"></span></button>
+
+                        <ul class="dropdown-menu">
+                            <li ng-if="filter==1"><a href="" ng-click="getAccountOpenContract(account.AccountNumber)">Տպել պայմանագիր</a></li>
+                            <li ng-if="$root.SessionProperties.CustomerType!=6 && filter==1"><a href="" ng-click="printAccountOpenApplication(selectedAccount)">Բացման դիմում</a></li>
+                            <li ng-if="$root.SessionProperties.CustomerType==6 && filter==1"><a href="" ng-click="getCurrentAccountServiceFee(selectedAccount)">Սպասարկման սակագներ</a></li>
+                            <li ng-if="filter==1 "><a href="" ng-controller="PopUpCtrl" ng-click="params={closingAccounts:closingAccounts};closingAccounts.length==0?noAccountSelected():openWindow('/AccountClosingOrder/PersonalAccountClosingOrder','Ընթացիկ հաշվի փակման հայտի մուտքագրում','closeaccount',callbackgetCurrentAccount)">Փակել հաշիվները</a></li>
+                            <li ng-if="filter==2 "><a href="" ng-controller="PopUpCtrl" ng-click="params={reOpeningAccounts:reOpeningAccounts};reOpeningAccounts.length==0?noAccountSelected():openWindow('AccountOrder/PersonalAccountReOpenOrder','Ընթացիկ հաշվի վերաբացման հայտի մուտքագրում','reopenaccount',callbackgetCurrentAccountAfterReopenAccount)">Վերաբացել  հաշիվները</a></li>
+                            <li><a href="" ng-controller="PopUpCtrl" ng-click="openWindow('/Account/AccountClosingHistory','Փակման/վերաբացման պատմություն','closinghistory')">Փակման/վերաբացման պատմություն</a></li>
+
+                        </ul>
+
+                    </div>
+                    <i class="add-new-product " ng-if="forTransitAccounts!=true" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Նոր ընթացիկ հաշիվ" ng-controller="PopUpCtrl" ng-click="openWindow('/AccountOrder/PersonalAccountOrder','Ընթացիկ հաշվի հայտի մուտքագրում','newaccount')"></i>
+                    <i class="add-new-product " ng-if="forTransitAccounts==true && ($root.SessionProperties.IsChiefAcc == true || $root.SessionProperties.AdvancedOptions['isOnlineAcc'] == '1' || $root.SessionProperties.AdvancedOptions['canAddCustomerTransitAccount'] == '1')" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Ավելացնել տարանցիկ հաշիվ" ng-controller="PopUpCtrl" ng-click="params={isCustomerTransitAccount:true};openWindow('/TransitAccountsForDebitTransactions/NewTransitAccountsForDebitTransactions','Ավելացնել տարանցիկ հաշիվ','newTransitAccount')"></i>
+                </div>
+            </div>
+            <div>
+                <div ng-show="hideBlank!='true'" style="margin-top:1px;margin-bottom:1px">
+                    <input style="margin-top:4px!important;margin-right:0px!important;margin-top:0px!important;margin-left:5px!important" type="checkbox" class="checkbox-inline" ng-model="isCheckSelectedAccounts" ng-change="checkSelectedAccounts(isCheckSelectedAccounts)">
+                    <span>Ընտրել բոլորը</span>
+                </div>
+            </div>
+
+            <div class="product-content-table custom-scroll" id="{{forTransitAccounts==true?'transitaccountsContent':'accountsContent'}}" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <div ng-if="accounts==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style::="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="account in accounts | filter: { Currency: currency!=undefined?currency:''}" ng-if="filter==1 && accounts.length!=0" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,account); selectedAccountIsAccessible  && hideBlank!='true' &&  getElementPosition($index);" style="max-height:200px;cursor:pointer;" ng-dblclick="selectedAccountIsAccessible && openAccountDetails();">
+                            <td id="accountRow_{{::$index}}">
+                                <input ng-show="hideBlank!='true'" type="checkbox" class="checkbox-inline" id="fund" ng-model="account.isClosingAccount" ng-change="addDeleteClosingAccounts(account)">
+                                <span>  {{ ::account.AccountNumber }} <span ng-if="account.AccountType==115" class="tab_title" style="color:brown;font-size:12px">({{ ::account.ProductNumber}})</span> </span>
+                                <br />{{ ::account.AccountDescription }}
+                                <span ng-if="account.JointTypeDescription != null" class="tab_title" style="color:brown;font-size:11px"><br />{{ ::account.JointTypeDescription}}</span>
+                                <span ng-if="account.FreezeDate!=null"><br />Սառեցման ա/թ՝ <span style="color:red">{{::account.FreezeDate | mydate | date: 'dd/MM/yyyy'}}</span></span>
+                                <br /><span class="tab_title" style="color:brown;font-size:11px">{{(account.Status==10)?'նախընտրական հիմնադրամ':account.AccountTypeDescription}}</span>
+                                <span class="tab_title" ng-if="account.Status==1" style="color:red;font-size:11px"><br />Ժամանակավոր</span>
+                            </td>
+                            <td style="text-align:right;">
+                                {{ ::account.BalanceString }} {{ ::account.Currency }}
+                                <span ng-if="account.UnUsedAmount>0" style="font-size:11px"><br />Սառեցված է՝     </span>
+                                <span ng-if="account.UnUsedAmount>0" style="color:red"><br />{{ ::account.UnUsedAmountString}} {{ ::account.Currency}}</span>
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="{{forTransitAccounts==true?'contextTransitAccounts':'contextAccounts'}}" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                        <tr ng-if="filter==1 && accounts.length==0 ">
+                            <td colspan="3" style="text-align:center;">
+                                {{forTransitAccounts!=true?'Առկա չեն գործող ընթացիկ հաշիվներ':'Առկա չեն գործող տարանցիկ հաշիվներ'}}
+                            </td>
+                        </tr>
+                        <tr ng-if="filter!=1"><td style="color:red; border-width:3px" colspan="3">Փակված հաշիվներ </td></tr>
+                        <tr ng-repeat="close in closedAccounts | filter: { Currency: currency!=undefined?currency:''}" ng-if="closedAccounts.length!=0" ng-class="{'selected':$index == selectedRowClose}" ng-click="setClickedRowClose($index,close); selectedAccountIsAccessible  && hideBlank!='true' &&  getElementPosition($index);" style="max-height:200px;border-width:3px;cursor:pointer;" ng-dblclick="selectedAccountIsAccessible && openAccountDetails();">
+                            <td id="accountRow_{{$index}}">
+                                <input ng-show="hideBlank!='true'" type="checkbox" class="checkbox-inline" id="fund" ng-model="close.isReOpeningAccount" ng-change="addDeleteReOpeningAccounts(close)">
+                                {{ ::close.AccountNumber }}
+                                <br />{{ ::close.AccountDescription }}
+                                <span ng-if="close.JointTypeDescription != null" class="tab_title" style="color:brown;font-size:11px"><br />{{::close.JointTypeDescription}}</span>
+                                <br /><span class="tab_title" style="color:brown;font-size:11px">{{::close.AccountTypeDescription}}</span>
+                            </td>
+                            <td style="text-align:right;">{{ ::close.BalanceString }} {{ ::close.Currency }}</td>
+                            <td class="col-sm-1 click_toggle" ng-if="close.isAccessible" context="contextAccounts" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                        <tr ng-if="filter!=1 && closedAccounts.length==0">
+                            <td colspan="3" style="text-align:center;">
+                                Առկա չեն փակված ընթացիկ հաշիվներ
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <ul id="{{forTransitAccounts==true?'contextTransitAccounts':'contextAccounts'}}" class="dropdown-menu">
+                @*TypeOfAccount 283 Սահմանափակ հասանելիությամ հաշվիներ*@
+                <li ng-if="$root.SessionProperties.SourceType == 2 && selectedRow!=null && AccountType != 61 && AccountType !=57 && TypeOfAccount != 224 && TypeOfAccount != 282 && TypeOfAccount != 279 && AccountType != 118 "><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={AccountNumber: selectedAccountNumber,checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:51};openWindowWithTemplate('paymentorder','Կանխիկ մուտք հաշվին','paymentorder')">Կանխիկ մուտք</a></li>
+                <li ng-if="$root.SessionProperties.SourceType == 2 && selectedRow!=null && AccountType != 61 && AccountType !=57 && TypeOfAccount != 224 && TypeOfAccount != 279 && TypeOfAccount != 282 && AccountType != 118"><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={AccountNumber: selectedAccountNumber,checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:95};openWindowWithTemplate('paymentorder','Կանխիկ մուտք հաշվին ռեեստրով','paymentorder')">Կանխիկ մուտք ռեեստրով</a></li>
+                <li ng-if="$root.SessionProperties.SourceType == 2 && selectedRow!=null && AccountType != 61 && AccountType !=57 && TypeOfAccount != 282  && TypeOfAccount != 283"><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={DebitAccountNumber: selectedAccountNumber,checkForDebitAccount:0,checkForReciverAccount:1,checkForFeeAccount:0,orderType:52};openWindowWithTemplate('paymentorder','Կանխիկ ելք հաշվից','paymentorder')">Կանխիկ ելք</a></li>
+                <li ng-if="selectedRow!=null && AccountType != 61 && AccountType !=57 && TypeOfAccount != 224 && TypeOfAccount != 279 && TypeOfAccount != 282  && TypeOfAccount != 283 "><a href="" style="color: black;text-decoration:none!important ;" ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:2,forInputCheckbox:true};openWindowWithTemplate('currencyexchangeorder','Փոխարկում','exchangeorder')">Փոխարկում</a></li>
+                <li ng-if="selectedRow!=null && AccountType != 61 && AccountType !=57 && TypeOfAccount != 282  && TypeOfAccount != 283 "><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('paymentorder','Փոխանցում սեփական հաշիվների միջև','paymentorder')">Փոխանցում հաշիվների միջև</a></li>
+                <li ng-if="selectedRow!=null && AccountType != 61 && AccountType !=57 && TypeOfAccount != 282  && TypeOfAccount != 224 && TypeOfAccount != 279 && TypeOfAccount != 283 "><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={DebitAccountNumber: selectedAccountNumber,forBankTransfers:true,checkForDebitAccount:0,checkForReciverAccount:0,orderType:1};openWindowWithTemplate('paymentorder','Փոխանցում Բանկի այլ հաշվեհամարին','paymentorder')">Փոխանցում Բանկի այլ հաշվեհամարին</a></li>
+                <li ng-if="selectedRow!=null && AccountType != 61 && AccountType !=57 && TypeOfAccount != 282  && TypeOfAccount != 224 && TypeOfAccount != 279 && TypeOfAccount != 283 "><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={DebitAccountNumber: selectedAccountNumber,checkForDebitAccountTransferArmPayment:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('transferarmpaymentorder','Փոխանցում ՀՀ տարածքում','transferarmpaymentorder')">Փոխանցում ՀՀ տարածքում</a></li>
+                <li ng-if="selectedRow!=null && AccountType != 61 && AccountType !=57 && TypeOfAccount != 282  && selectedaccount.Currency=='AMD' && TypeOfAccount != 224 && TypeOfAccount != 279 "><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={DebitAccountNumber: selectedAccountNumber,checkForDebitAccountBudgetPayment:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('budgetorder','Փոխանցում բյուջե','budgetpaymentorder')">Փոխանցում Բյուջե</a></li>
+                <li ng-if="selectedRow!=null && AccountType != 61 && AccountType !=57 && TypeOfAccount != 282  && TypeOfAccount != 224 && TypeOfAccount != 279 && TypeOfAccount != 283 "><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountInternationalPayment:0,checkForFeeAccount:0,DebitAccountNumber: selectedAccountNumber};openWindowWithTemplate('internationalorder','Միջազգային փոխանցում','internationalpaymentorder')">Միջազգային փոխանցում</a></li>
+                <li ng-if="selectedAccountIsAccessible"><a style="color: black;text-decoration:none!important ;" ui-sref="accountdetails({ selectedAccount: selectedAccountNumber,account:closedAccount})">Մանրամասն դիտարկում</a></li>
+            </ul>
+        </div>
+
+    </div>
+    <accountflowdetails ng-if="selectedAccountIsAccessible && hideBlank!='true' && selectedAccountNumber != null"></accountflowdetails>
+</div>
+<script>
+    $("[data-toggle=tooltip]").tooltip({
+        placement: $(this).data("placement") || 'bottom'
+    });
+</script>
+
+
+
+

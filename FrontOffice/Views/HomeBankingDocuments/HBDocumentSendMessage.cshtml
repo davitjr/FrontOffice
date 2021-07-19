@@ -1,0 +1,63 @@
+﻿
+<style>
+    .vl {
+        border-left: 6px solid green;
+        height: 500px;
+    }
+</style>
+
+<div id="HBDocumentTransactionRejectForm" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="HBDocumentsCtrl" name="HBDocumentTransactionRejectForm" id="HBDocumentTransactionRejectForm" role="form" ng-init="initSendMessageForm();sendMsg= true;custTpye = false;$scope.searchCustomerIcon = true;" style="position:center;width:800px !important;">
+    <div style="float:left;width:45%;padding-left:20px;">
+        <div>
+            <label class="tab_title col-sm-5">Վերնագիր </label>
+            <input type="text" class="form-control" name="subject" id="subject" style="width : 100%;height:33px;font-family:'Arial Armenian'" ng-model="msgInfo.Subject" />
+        </div>
+        <div>
+            <label class="tab_title col-sm-5" ng-model="msgInfo.Message">Հաղորդագրություն </label>
+            <textarea class="form-control" name="message" id="message" style="width : 100%;height:150px;font-family:'Arial Armenian'" ng-model="msgInfo.Message"></textarea>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary" style="height:33px;" ng-click="sendMessage();" ng-show="sendMsg"><span class="glyphicon glyphicon-send"></span> Ուղարկել</button>
+            <button type="button" class="btn btn-primary" style="height:33px;" ng-controller="PopUpCtrl" ng-click="CloseBPDialog('HBDocumentSendMessageForm')"><span class="fa fa-close"></span> Հրաժարվել</button>
+        </div>
+    </div>
+    <div class="vl" style="float:left;width:2%"></div>
+    <div style="float:left;width:49%;padding-left:10px;">
+        <div style="padding-top: 25px;">
+            <div ng-if="operationType3 == false">
+                <input @*ng-disabled="msgOperationType == '1'"*@ disabled type="number" ng-model="msgInfo.CustomerNumber" placeholder="Հաճախորդի համար" class="form-control" name="customerNumber" id="customerNumber" style="width : 48%;height:33px;" />
+                <button type="button" ng-show="searchCustomerIcon" class="btn btn-default searchButton" ng-click="searchCustomers()" title="Հաճախորդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+            </div>
+            <input ng-disabled="msgOperationType == '1'" type="text" name="sendDate" class="form-control" id="sendDate" title="Ամսաթիվ" placeholder="Ամսաթիվ" ng-model="msgInfo.SendDate" ng-if="operationType2 == false" style="width : 48%; height: 33px;" />
+            <div style="margin-top: -27px;" ng-if="operationType3 == true && operationType2 == true" ng-disabled="msgOperationType == '1'">
+                <label class="tab_title col-md-8">Հաճախորդի տեսակ </label>
+                <select data-toggle="tooltip" 
+                        data-trigger="hover" data-placement="top" title="Հաճախորդի տեսակ" ng-model="msgInfo.CustomerType"
+                        name="customerType" id="customerType" class="form-control select-font" style="height: 33px;width:278px;">
+                    <option value="">Ընտրեք հաճախորդի տեսակը</option>
+                    <option selected="selected" value="0">Բոլորին</option>
+                    <option value="1">Իրավաբանական անձանց</option>
+                    <option value="2">ՖԻզիկական անձանց</option>
+                </select>
+            </div>
+        </div>
+        <div style="padding-top: 7px;">
+            <input @*ng-disabled="msgOperationType == '1'"*@ disabled type="text" ng-model="msgInfo.CustomerFullname" ng-if="operationType3 == false" placeholder="Անուն Ազգանուն/Անվանում" class="form-control" name="customerFullname" id="customerFullname" style="width : 100%;height:33px;font-family:'Arial Armenian'" />
+            <textarea class="form-control" name="message" id="message" style="width : 100%;height:75px;color:red" ng-model="msgText" ng-if="operationType3 == true"></textarea>
+        </div>
+        <div>
+            <div ng-if="operationType2 == false">
+                <label class="tab_title col-sm-5">Վերնագիր </label>
+                <textarea ng-disabled="msgOperationType == '1'" type="text" class="form-control" name="subject" id="subject" style="width : 100%;height:80px;font-family:'Arial Armenian'" ng-model="msgInfo.CustomerSubject"></textarea>
+            </div>
+            <div ng-if="operationType2 == false">
+                <label class="tab_title col-sm-5">Հաղորդագրություն </label>
+                <textarea ng-disabled="msgOperationType == '1'" class="form-control" name="message" id="message" style="width : 100%;height:190px;font-family:'Arial Armenian'" ng-model="msgInfo.CustomerMessage"></textarea>
+            </div>
+        </div>
+    </div>
+</form>
+

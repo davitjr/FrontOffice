@@ -1,0 +1,30 @@
+﻿<form ng-controller="OverdueCtrl" name="LoanOverdueUpdateForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+
+    <div id="cardClosing_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="LoanOverdueUpdateForm.$setSubmitted();LoanOverdueUpdateForm.$valid && GenerateLoanOverdueUpdate()">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div class="col-lg-1" style="left:20px;">
+        <span class="product-detail-lable">Ժամկետանցի մարման ամսաթվի ուղղում</span>
+        <input type="date" ng-model="endDate" name="endDate" class="form-control ">
+    </div>
+    <div>
+        <label class="tab_title col-sm-6 control-label" for="description">Ուղղման պատճառ</label>
+        <div class="col-sm-12 ">
+            <ng-messages ng-if="LoanOverdueUpdateForm.$submitted || LoanOverdueUpdateForm.Add.$dirty"
+                         for="LoanOverdueUpdateForm.Add.$error">
+                <ng-message when="required" class="errors">
+                    Ուղղման պատճառը լրացված չէ
+                </ng-message>
+            </ng-messages>
+            <textarea style="text-align:left" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)"
+                      ng-model="updateReason" name="Add" class="form-control tab_title" required></textarea>
+
+        </div>
+    </div>
+</form>

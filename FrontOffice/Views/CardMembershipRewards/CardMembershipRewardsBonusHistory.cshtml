@@ -1,0 +1,127 @@
+﻿
+@{
+    Layout = null;
+}
+
+<form name="CardBonusHistory" class="form-horizontal" ng-controller="CardMembershipRewardsCtrl"  style="width:800px;">
+    <div class="product-container" style="min-width:780px;min-height:500px;margin-bottom:15px;">
+        <div class="header-title">
+            Քարտի համար` {{cardnumber}}
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+
+        <table>
+            <tr>
+                <td class="col-sm-12">
+                    <div >
+                        <span class=" product-detail-lable">Սկիզբ</span>
+                        <input type="date" ng-model="startDate" name="startDate" class="form-control my_class" required>
+                        <ng-messages ng-if="CardBonusHistory.$submitted || CardBonusHistory.startDate.$dirty"
+                                     for="CardBonusHistory.startDate.$error">
+                            <ng-message when="required" class="errors">
+                                Նշեք ա/թ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </td>
+                <td class="col-sm-12">
+                    <div>
+                        <span class=" product-detail-lable">Վերջ</span>
+                        <input type="date" ng-model="endDate" name="endDate" class="form-control my_class" required>
+                        <ng-messages ng-if="CardBonusHistory.$submitted || CardBonusHistory.endDate.$dirty"
+                                     for="CardBonusHistory.endDate.$error">
+                            <ng-message when="required" class="errors">
+                                Նշեք ա/թ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </td>
+                <td class="col-sm-10">
+                    <div>
+                        <br />
+                        <div class="btn-group">
+                            <button ng-click="getCardMembershipRewardsBonusHistory(cardnumber, startDate, endDate)" type="button" class="btn btn-primary " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-search"></span> Որոնել
+                            </button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <br />
+
+        <table id="cardMembershipRewardsBonus" class="product-collapsable-section">
+            <thead>
+                <tr class="product-container-header">
+                    @*<td class="text-center" style="width:10px;background-color:aqua">Ամսաթիվ</td>
+                    <td class="text-center" style="width:10px;background-color:bisque">MR համար</td>
+                    <td class="text-center " style="width:10px;background-color:blueviolet">Մուտք</td>
+                    <td class="text-center " style="width:5px;background-color:darkcyan">Ելք</td>
+                    <td class="text-center " style="width:5px;background-color:darkorange">Գործ. N</td>
+                    <td class="text-center " style="width:10px;background-color:fuchsia">Նկարագրություն</td>*@
+                    <td class="text-center col-sm-2" >Ամսաթիվ</td>
+                    <td class="text-center col-sm-1" >MR համար</td>
+                    <td class="text-center col-sm-2" >Մուտք</td>
+                    <td class="text-center col-sm-2" >Ելք</td>
+                    <td class="text-center col-sm-2" >Գործարքի N</td>
+                    <td class="text-center col-sm-3" >Նկարագրություն</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border: 1px ridge rgba(128, 128, 128, 0.15);" ng-repeat="mr in ::cardMRBonusHistory" style="max-height:300px">
+                    <td class="col-sm-1" style="text-align:center">{{::mr.RegistrationDateToString}}</td>
+                    <td class="col-sm-1" style="text-align:center">{{::mr.MRID}}</td>
+                    <td class="col-sm-2" style="text-align:right"><span ng-if="mr.DebetCredit=='c'">{{::mr.BonusScoresToString}}</span></td>
+                    <td class="col-sm-2" style="text-align:right"><span ng-if="mr.DebetCredit=='d'">{{::mr.BonusScoresToString}}</span></td>
+                    <td class="col-sm-2" style="text-align:center">{{::mr.TransactionNumber}}</td>
+                    <td class="col-sm-4" style="text-align:center">{{::mr.Description}}</td>
+                </tr>
+  
+                <tr style=" margin-bottom:15px;" ng-if="cardMRBonusHistory">
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white" colspan="2">
+                        <b>Ընդամենը մուտքեր`</b>
+                    </td>
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                        <b>{{sumCredit | number:2}}</b>&nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white" colspan="2">
+                        &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                        &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white;text-align:left">
+                        &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                        &nbsp;&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr style=" margin-bottom:15px;" ng-if="cardMRBonusHistory">
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white" colspan="2">
+                        <b>Ընդամենը ելքեր`</b>
+                    </td>
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                        <b>{{sumDebit | number:2}}</b>&nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white" colspan="2">
+                        &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                        &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white;text-align:left">
+                        &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                        &nbsp;&nbsp;&nbsp;
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+               
+
+    </div>
+</form>

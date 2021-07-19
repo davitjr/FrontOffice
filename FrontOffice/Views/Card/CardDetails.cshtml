@@ -1,0 +1,493 @@
+﻿@{
+    /**/
+
+    Layout = null;
+}
+<div id="load" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<div ng-controller="CardCtrl" data-ng-init="getCard(productId); getCardApplicationTypes();getCardStatus(productId);getPlasticCard(productId);getCardUSSDService(productId);getCard3DSecureService(productId)" id="cardDetails">
+    <div id="carddetails_menu" class="menu-bar dialog-menu light-green details-menu">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-if="card.ClosingDate==null">
+                <span id="h-menu-item-4" onclick="return false;">
+                    <img id="h-menu-icon-4" class="h-menu-icon cashInButton">Գործառնություններ
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+
+                    <li ng-if="$root.SessionProperties.SourceType == 2 &&  card.Type != 21" id="v-menuItem-3.2" ng-controller="PopUpCtrl" ng-click="params={AccountNumber: card.CardAccount.AccountNumber,checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:51};openWindowWithTemplate('paymentorder','Կանխիկ մուտք հաշվին','paymentorder')" data-permission-selector="">
+                        <span>Կանխիկ մուտք</span>
+                    </li>
+                    <li ng-if="$root.SessionProperties.SourceType == 2 &&  card.Type != 21" id="v-menuItem-3.2" ng-controller="PopUpCtrl" ng-click="params={AccountNumber: card.CardAccount.AccountNumber,checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:95};openWindowWithTemplate('paymentorder','Կանխիկ մուտք հաշվին ռեեստրով','paymentorder')" data-permission-selector="">
+                        <span>Կանխիկ մուտք ռեեստրով</span>
+                    </li>
+                    <li id="v-menuItem-3.3" class="last " ng-if="$root.SessionProperties.SourceType == 2" data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={DebitAccountNumber: card.CardAccount.AccountNumber,checkForDebitAccount:0,checkForReciverAccount:1,checkForFeeAccount:0,orderType:52};openWindowWithTemplate('paymentorder','Կանխիկ ելք հաշվից','paymentorder',callbackgetCard)">
+                        <span>Կանխիկ ելք</span>
+                    </li>
+                    <li id="v-menuItem-3.7" class="last " ng-class="{'my_disable':disabelButton==true}" data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:2,forInputCheckbox:true};openWindow('CurrencyExchangeOrder/PersonalCurrencyExchangeOrder','Փոխարկում','exchangeorder')">
+                        <span>Փոխարկում</span>
+                    </li>
+                    <li id="v-menuItem-3.1" ng-controller="PopUpCtrl" ng-click="params={AccountNumber: card.CardAccount.AccountNumber,checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('paymentorder','Փոխանցում սեփական հաշիվների միջև','paymentorder',callbackgetCard)" data-permission-selector="">
+                        <span>Փոխանցում հաշիվների միջև</span>
+                    </li>
+                    <li id="v-menuItem-3.6" class="last " data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={DebitAccountNumber: card.CardAccount.AccountNumber,forBankTransfers:true,checkForDebitAccount:0,checkForReciverAccount:0,orderType:1};openWindowWithTemplate('paymentorder','Փոխանցում Բանկի այլ հաշվեհամարին','paymentorder')">
+                        <span>Փոխանցում Բանկի այլ հաշվեհամարին</span>
+                    </li>
+                    <li id="v-menuItem-3.4" class="last " data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={DebitAccountNumber: card.CardAccount.AccountNumber,checkForDebitAccountTransferArmPayment:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('transferarmpaymentorder','Փոխանցում ՀՀ տարածքում','transferarmpaymentorder')">
+                        <span>Փոխանցում ՀՀ տարածքում</span>
+                    </li>
+                    <li id="v-menuItem-3.5" class="last " ng-if="card.CardAccount.Currency=='AMD'" data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={DebitAccountNumber: card.CardAccount.AccountNumber,checkForDebitAccountBudgetPayment:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('budgetorder','Փոխանցում բյուջե','budgetpaymentorder')">
+                        <span>Փոխանցում Բյուջե</span>
+                    </li>
+                    <li id="v-menuItem-3.8" class="last " data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountInternationalPayment:0,checkForFeeAccount:0,DebitAccountNumber:  card.CardAccount.AccountNumber};openWindowWithTemplate('internationalorder','Միջազգային փոխանցում','internationalpaymentorder')">
+                        <span>Միջազգային փոխանցում</span>
+                    </li>
+                    <li id="v-menuItem-3.9" class="last " data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={cardProductId:productId,checkForDebitAccount:0,checkForReciverAccount:1,checkForFeeAccount:0,orderType:83,cardNumber:card.CardNumber};openWindowWithTemplate('paymentorder','Քարտի սպասարկման միջնորդավճարի գանձում','paymentorder')">
+                        <span>Սպասարկման միջնորդավճարի գանձում</span>
+                    </li>
+                    <li id="v-menuItem-4.1" class="last " ng-class="{'my_disable':disabelButton==true}" data-permission-selector="" ng-if="$root.SessionProperties.SourceType == 2 && showMature" ng-controller="PopUpCtrl" ng-click="params={selectedCreditLine:card.CreditLine!=null?card.CreditLine:card.Overdraft};openWindow('/MatureOrder/PersonalMatureOrder','Վարկային գծի մարում','newMature')">
+                        <span>Վ/Գ մարում</span>
+                    </li>
+                    <li id="v-menuItem-5.1" ng-if="cardStatus.Status == 1 || cardStatus.Status == 3" data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={Card:card,orderType:206};openWindow('ArcaCardsTransactionOrder/ArcaCardsTransactionOrder','Բլոկավորում/ապաբլոկավորում','arcaCardsTransactionOrder')">
+                        <span>Բլոկավորում/ապաբլոկավորում</span>
+                    </li>
+                    <li id="v-menuItem-5.2" data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={Card:card,orderType:207};openWindow('CardLimitChangeOrder/CardLimitChangeOrder','Սահմանաչափի փոփոխություն','cardLimitChangeOrder')">
+                        <span>Սահմանաչափի փոփոխություն</span>
+                    </li>
+                </ul>
+            </li>
+            @*<li class="root-menu-item-2 " ng-if="card.ClosingDate==null" ng-controller="ModalCtrl" ng-click="showModal('../Card/ArCaBalance','CardCtrl')">
+                    <span id="h-menu-item-2"><img id="h-menu-icon-2" class="balanceButton h-menu-icon">ArCa մնացորդ</span>
+                </li>*@
+            <li class="root-menu-item-2 " ng-if="card.ClosingDate==null" ng-controller="ModalCtrl" ng-click="showModal('../Card/ArCaBalanceResponseData','CardCtrl')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="balanceButton h-menu-icon">ArCa մնացորդ</span>
+            </li>
+
+            <li class="root-menu-item-3" ng-if="($root.SessionProperties.AdvancedOptions['isOnlineAccChief']=='1' || $root.SessionProperties.AdvancedOptions['isOnlineAcc']=='1'  ) && card.CreditLine.ProductId != undefined " ng-controller="PopUpCtrl" ng-click="params={productId:card.CreditLine.ProductId,loanType:card.CreditLine.Type};openWindow('/CreditCommitmentForgivenessOrder/Index','Ներում','newMature')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon" src="~/Content/Images/help.png" style="height: 30px;width:36px;margin-top: 6px;" />Ներումներ</span>
+            </li>
+            @*<li class="root-menu-item-2" ng-show="(card.Type==8 || card.Type==9 || card.Type==18 || card.Type==25)" ng-controller="PopUpCtrl" ng-click="params={productId:card.ProductId,loanType:card.Type};openWindow('/CreditCommitmentForgiveness/Index','Ներում','newMature')">
+                    <span id="h-menu-item-2"><img id="h-menu-icon-3" class="balanceButton h-menu-icon">Ներում</span>
+                </li>*@
+            <li class="root-menu-item-4 " ng-if="card.CreditLine==null && card.MainCardNumber=='' && card.ClosingDate==null">
+                <span id="h-menu-item-4" onclick="return false;">
+                    <img id="h-menu-icon-3" class="openAccountButton h-menu-icon">Վարկային գիծ
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-3.2" ng-class="{'my_disable':disabelButton==true}" ng-if="$root.SessionProperties.CustomerType == 6  && card.Type != 52" ng-controller="PopUpCtrl" ng-click="params={orderType:159,cardProductId:productId,fastOverdraftCard:card};openWindow('/LoanProductOrder/FastOverdraftApplication','Վարկային դիմումի մուտքագրում ','newloan')" data-permission-selector="">
+                        <span>Արագ օվերդրաֆտ</span>
+                    </li>
+                    <li id="v-menuItem-3.2" ng-if="$root.SessionProperties.SourceType == 2 || $root.SessionProperties.SourceType == 6" ng-controller="PopUpCtrl" ng-class="{'my_disable':disabelButton==true}" ng-click="params={orderType:14,cardProductId:productId,productType:30};openWindow('/LoanProductOrder/PersonalLoanProductOrder','Ավանդի գրավով վարկային գծի հայտի մուտքագրում','newloan')" data-permission-selector="">
+                        <span>Ավանդի գրավով վարկային գիծ</span>
+                    </li>
+                    <li id="v-menuItem-3.2" ng-if="($root.SessionProperties.SourceType == 2 || $root.SessionProperties.SourceType == 6) && card.Type != 6 && card.Type != 20 && card.Type != 25 && card.Type != 26 && card.Type != 38 && card.Type != 39 && card.Type != 41" ng-controller="PopUpCtrl" ng-class="{'my_disable':disabelButton==true}" ng-click="params={orderType:14,cardProductId:productId,productType:50};openWindow('/LoanProductOrder/PersonalLoanProductOrder','Ավանդի գրավով նվազեցվող սահմանանաչափով վարկային գծի հայտի մուտքագրում','newloan')" data-permission-selector="">
+                        <span>Նվազեցվող սահմանանաչափով վ/գ</span>
+                    </li>
+                    <li id="v-menuItem-3.2" ng-if="$root.SessionProperties.SourceType == 2 && card.Type == 35" ng-controller="PopUpCtrl" ng-class="{'my_disable':disabelButton==true}" ng-click="params={orderType:14,cardProductId:productId, productType:51};openWindow('/LoanProductOrder/PersonalLoanProductOrder','Ավանդի գրավով չվերականգնվող քարտային վարկային գծի հայտի մուտքագրում','newloan')" data-permission-selector="">
+                        <span>Չվերականգնվող քարտային վ/գ</span>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="root-menu-item-5 " ng-if="card.ClosingDate==null">
+                <span id="h-menu-item-5" onclick="return false;">
+                    <img id="h-menu-icon-5" class="h-menu-icon printButton">Փաստաթղթեր
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    @*//CashBack NFC*@
+                    <li ng-if="(((card.Type == 34 || card.Type == 50) && type.Key == 16) || ($root.SessionProperties.CustomerType != 6 && type.Key == 14) || (type.Key != 14 && type.Key != 16 && type.Key != 7 && type.Key != 12))"
+                        ng-controller="CardCtrl" ng-repeat="type in CardApplicationTypes" ng-click="getCardApplicationDetails(type.Key, card.CardNumber)" data-permission-selector="">
+                        <span>
+                            {{::type.Value | stringShorten: 45}}
+                        </span>
+                    </li>
+
+                    @*<li ng-click="printCard3DSecureReport()">
+                            <span ng-if="card3DSecureService.Quality=='1' || card3DSecureService.Quality=='2'">
+                                3DSecure ծառայության ակտիվացման դիմում
+                            </span>
+                            <span >
+                               3DSecure ծառայության դադարեցման դիմում
+                            </span>
+                        </li>*@
+                    <li ng-if="$root.SessionProperties.CustomerType == 6 || $root.SessionProperties.CustomerType == 2" ng-click="getCardContractDetails()">
+                        <span>
+                            Երաշխավորման ծանուցում
+                        </span>
+                    </li>
+                    <li ng-if="$root.SessionProperties.CustomerType != 6" ng-click="getCardContractDetailsForBusinessCards()">
+                        <span>
+                            ՊՔ պայմանագիր
+                        </span>
+                    </li>
+                    <li ng-click="getCardTransactionsLimitApplication()">
+                        <span>
+                            Քարտով իրականացվող գործարքների սահմանափակման դիմում
+                        </span>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="root-menu-item-2 " ng-if="card.MainCardNumber=='' && card.ClosingDate!=null" ng-controller="PopUpCtrl" ng-click="params={cardProductId:productId,checkForDebitAccount:0,checkForReciverAccount:1,checkForFeeAccount:0,orderType:83,cardNumber:card.CardNumber};openWindowWithTemplate('paymentorder','Քարտի սպասարկման միջնորդավճարի գանձում','paymentorder')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="balanceButton h-menu-icon">Սպասարկման միջնորդավճարի գանձում</span>
+            </li>
+            <li class="h-menu-last-rendered" data-permission-selector="" id="cssmenu" ng-if="$root.SessionProperties.SourceType == 2 ">
+                <span id="menu-last-item"></span>
+                <ul>
+                    <li ng-if="card.MainCardNumber=='' && card.ClosingDate==null" ng-class="{'my_disable':disabelButton==true}" class="root-menu-item-6 " ng-controller="PopUpCtrl" ng-click="openWindow('/CardUnpaidPercentPaymentOrder/CardUnpaidPercentPaymentOrder','Քարտային հաշվի չվճարված դրական տոկոսագումարի վճարման հայտ','cardUnpaidPercentPayment')">
+                        <span id="h-menu-item-6"><img id="h-menu-icon-6">Ցպահանջ տոկոսի վճարում</span>
+                    </li>
+
+                    <li ng-if="accessToChangeCardBranchOrders == '1' " ng-class="{'my_disable':disabelButton==true}" class="root-menu-item-6 " ng-controller="PopUpCtrl" ng-click="openWindow('/ChangeBranchOrder/ChangeBranchOrder','Մասնաճյուղի փոխարինման հայտ','changeBranch')">
+                        <span id="h-menu-item-6"><img id="h-menu-icon-6">Փոխել քարտի մասնաճյուղը</span>
+                    </li>
+                    <li @*ng-if="accessToChangeCardBranchOrders == '1' " *@
+                        ng-class="{'my_disable':disabelButton==true}" class="root-menu-item-6 " ng-controller="PopUpCtrl" ng-click="openWindow('/PlasticCardSMSServiceOrder/PlasticCardSMSServiceOrder','SMS ծառայություն հայտ','PlasticCardSMSService')">
+                        <span id="h-menu-item-6"><img id="h-menu-icon-6">SMS ծառայություն</span>
+                    </li>
+
+                    <li class="root-menu-item-6"
+                        ng-if="plasticCard != null && card.Type != 51"
+                        ng-controller="PopUpCtrl"
+                        ng-click="params={productId:productId, plasticCard:plasticCard, card:card};
+                        openWindow('/CardRenewOrder/CardRenewOrder', 'Քարտի վերաթողարկում', 'cardRenewOrder', callbackgetrenewcard);">
+                        <span id="h-menu-item-6"><img id="h-menu-icon-6">Քարտի վերաթողարկում</span>
+                    </li>
+
+                    <li class="root-menu-item-6"
+                        ng-if="plasticCard != null && plasticCard.CardChangeType == 1"
+                        ng-controller="PopUpCtrl"
+                        ng-click="params={productId:productId, plasticCard:plasticCard};
+                        openWindow('/RenewedCardAccountRegOrder/RenewedCardAccountRegOrder', 'Վերաթողարկված քարտի հաշվի կցում', 'renewedCardAccountRegOrder', callbackgetrenewcard);">
+                        <span id="h-menu-item-6"><img id="h-menu-icon-6">Վերաթողարկված քարտի հաշվի կցում</span>
+                    </li>
+
+                    <li class="root-menu-item-6" ng-if="plasticCard != null" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard}; openWindow('/CardNotRenewOrder/CardNotRenewOrder', 'Չվերաթողարկել քարտը', 'cardnotreneworder');">
+                        <span id="h-menu-item-6"><img id="h-menu-icon-6">Չվերաթողարկել քարտը</span>
+                    </li>
+
+                    <li class="root-menu-item-6" ng-if="card.CreditLine!=null" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard};
+                        openWindow('/CreditLineCardReplaceOrder/CreditLineCardReplaceOrder', 'Փոխարինում՝ նոր համար, նոր ժամկետ - վ․գ․', 'creditLineCardReplaceOrder', callbackgetrenewcard);">
+                        <span id="h-menu-item-6"><img id="h-menu-icon-6">Փոխարինում՝ նոր համար, նոր ժամկետ - վ․գ․</span>
+                    </li>
+
+                    <li class="root-menu-item-6" ng-if="card.CreditLine==null" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard};
+                        openWindow('/NonCreditLineCardReplaceOrder/NonCreditLineCardReplaceOrder', 'Փոխարինում՝ նոր համար, նոր ժամկետ - առանց վ․գ․', 'nonCreditLineCardReplaceOrder', callbackgetrenewcard);">
+                        <span id="h-menu-item-6"><img id="h-menu-icon-6">Փոխարինում՝ նոր համար, նոր ժամկետ - առանց վ․գ․</span>
+                    </li>
+
+                    <li class="root-menu-item-6" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard}; openWindow('/PINRegenerationOrder/PINRegenerationOrder', 'Փոխարինում՝ նույն համար, նույն ժամկետ', 'pinreg', callbackgetrenewcard);">
+                        <span id="h-menu-item-6"><img id="h-menu-icon-6">Փոխարինում՝ նույն համար, նույն ժամկետ</span>
+                    </li>
+
+                    <li class="root-menu-item-6" ng-if="plasticCard != null && plasticCard.CardChangeType == 3 && card.ClosingDate == null" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard}; openWindow('/ReplacedCardAccountRegOrder/ReplacedCardAccountRegOrder', 'Փոխարինված քարտի հաշվի կցում', 'replacedCardAccountRegOrder', callbackgetrenewcard);">
+                        <span id="h-menu-item-6"><img id="h-menu-icon-6">Փոխարինված քարտի հաշվի կցում</span>
+                    </li>
+
+                    <li class="root-menu-item-2 " ng-if="card.ClosingDate==null " ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-click="openWindow('/CardClosingOrder/PersonalCardClosingOrder','Քարտի փակման հայտի մուտքագրում','cardClosing',foo)">
+                        <span id="h-menu-item-2"><img id="h-menu-icon-2">Փակել քարտը</span>
+                    </li>
+                    <li class="root-menu-item-2 " ng-controller="PopUpCtrl" ng-click="openWindow('/CardAccountClosingOrder/CardAccountClosingOrder','Քարտային հաշվի փակման հայտի մուտքագրում','cardaccountclosingorder',foo)">
+                        <span id="h-menu-item-2"><img id="h-menu-icon-2">Փակել Քարտային հաշիվը</span>
+                    </li>
+                    <li ng-if="accessToCardReOpenOrder == '1' && card.ClosingDate!=null"
+                        ng-class="{'my_disable':disabelButton==true}" class="root-menu-item-6 " ng-controller="PopUpCtrl" ng-click="openWindow('/CardReOpenOrder/CardReOpenOrder','Քարտի վերաբացման հայտ','CardReOpen')">
+                        <span id="h-menu-item-6"><img id="h-menu-icon-6">Քարտի վերաբացում</span>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div class="product-details bhoechie-tab-content" style="min-width:800px;margin-left:10px;">
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{card.CardType}}<span ng-if="card.MainCardNumber!=''"> (Կից քարտ)</span></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{cardNumber=card.CardNumber}}</div>
+        </div>
+        <div class="product-detail-row" ng-init="getCardTechnology(card.ProductId)">
+            <div class="product-detail-cell product-detail-lable">Տեխնոլոգիա</div>
+            <div class="product-detail-cell product-detail-value">{{cardTechnology}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="card.MainCardNumber!=''">
+            <div class="product-detail-cell product-detail-lable">Հիմնական քարտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{card.MainCardNumber}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="card.CreditCode!=''">
+            <div class="product-detail-cell product-detail-lable">Կոդ</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{card.CreditCode}}<span style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" ng-click="params={creditCode:card.CreditCode,loanCurrency:card.Currency};openWindow('/Loan/CreditCodeAccountDetails','Հաշվեհամարներ','creditCodeAccountDetails');" class="glyphicon glyphicon-info-sign" /></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաշվեհամար</div>
+            <div class="product-detail-cell product-detail-value">{{card.CardAccount.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաշվեհամարի բացման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{card.CardAccount.OpenDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաշվեհամարի փակման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{card.CardAccount.ClosingDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մասնաճյուղ</div>
+            <div class="product-detail-cell product-detail-value">{{card.FilialCode}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մնացորդ</div>
+            <div class="product-detail-cell product-detail-value">{{card.Balance|number:2}} {{card.Currency}} <span style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" ng-click="params={accountNumber:card.CardAccount.AccountNumber,accountCurrency:card.Currency};openWindowWithTemplate('accountflowdetails','Հաշվի շարժ','accountflowdetails');" class="glyphicon glyphicon-info-sign" /></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Աշխ. ծրագիր</div>
+            <div class="product-detail-cell product-detail-value" ng-if="card">
+                {{card.RelatedOfficeNumber}} ({{card.RelatedOfficeName}})
+                <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="openWindow('/Card/CardTariffContractDetails','Քարտի աշխատավարձային ծրագիր','CardTariffContract')" class="glyphicon glyphicon-info-sign" />
+                <span ng-if="$root.SessionProperties.IsChiefAcc == true || $root.SessionProperties.AdvancedOptions.isOnlineAcc== '1'|| $root.SessionProperties.AdvancedOptions.canChangeCardRelatedOfficeNumber== '1'" ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-click="params={productid:productId,fieldValue:card.RelatedOfficeNumber,fieldType:19,relOfficeDescription:card.RelatedOfficeName};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 5pt; color: #337AB7"></span>
+                <i ng-controller="PopUpCtrl" ng-click="params={productid:productId,fieldType:19};openWindow('/CardDataChangeOrder/RelatedOfficeNumberChangeHistory','Փոփոխված աշխ. ծրագրեր','cardDataChangeOrder')" title="Պատմություն" class="fa fa-header" style="color: #337AB7; padding-left: 10px; padding-right: 5px;"></i>
+            </div>
+        </div>
+        <div class="product-detail-row" ng-if="card">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-show="cardStatus.Status==1" class="product-detail-cell product-detail-value">
+                {{cardStatus.StatusDescription}}
+                <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={cardStatus:cardStatus}; openWindow('/Card/CardStatus','Քարտի կարգավիճակ','CardStatus')" class="glyphicon glyphicon-info-sign" />
+                <span ng-if="$root.SessionProperties.AdvancedOptions.canChangeCardStatus=='1'" ng-class="{'my_disable':disabelButton==true}" ng-click="saveCardStatusChangeOrder(card.ProductId)" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7">
+
+                </span>
+            </div>
+            <div ng-show="cardStatus.Status==2" class="product-detail-cell product-detail-value" style="color:green;">
+                {{cardStatus.StatusDescription}} <span ng-show="cardStatus.Status==2">( {{cardStatus.Reason}} )</span>
+                <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={cardStatus:cardStatus}; openWindow('/Card/CardStatus','Քարտի կարգավիճակ','CardStatus')" class="glyphicon glyphicon-info-sign" />
+                <span ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-click="params={productid:card.ProductId,cardStatus:cardStatus.Status};openWindow('/CardStatusChangeOrder/PersonalCardStatusChangeOrder','Քարտի տրման կարգավիճակի փոփոխում','card_status_change_order')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7">
+
+                </span>
+            </div>
+            <div ng-show="cardStatus.Status==3" class="product-detail-cell product-detail-value" style="color:red;">
+                {{cardStatus.StatusDescription}}
+                <span ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-click="params={productid:card.ProductId,cardStatus:cardStatus.Status};openWindow('/CardStatusChangeOrder/PersonalCardStatusChangeOrder','Քարտի տրման կարգավիճակի փոփոխում','card_status_change_order')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7">
+
+                </span>
+
+
+            </div>
+        </div>
+        <div class="product-detail-row" ng-if="card.CardNumber" ng-controller="ArcaCardsTransactionOrderCtrl" ng-show="order.ActionReasonId" ng-init="GetBlockingReasonForBlockedCard($parent.card.CardNumber) ; GetAllReasonsForCardTransactionAction();">
+            <div class="product-detail-cell product-detail-lable">Բլոկավորման պատճառ</div>
+            <div class="product-detail-cell product-detail-value">{{AllReasonsForCardTransactionAction[order.ActionReasonId]}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="card" ng-init="getCardMotherName(card.ProductId)">
+            <div class="product-detail-cell product-detail-lable">Գաղտնաբառ</div>
+            <div class="product-detail-cell product-detail-value">{{cardMotherName==null?'Բացակայում է':cardMotherName}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">SMS առկայության նշում</div>
+            <div class="product-detail-cell product-detail-value">
+                {{card.SMSApplicationPresent ? 'Այո' : 'Ոչ' }}
+                <span style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" ng-click="params={productID:card.ProductId,cardNumber:card.CardNumber};openWindow('/PlasticCardSMSServiceOrder/PlasticCardSMSServiceHistory','SMS լրացուցիչ տվյալներ','PlasticCardSMSServiceOrder')" class="glyphicon glyphicon-info-sign" />
+            </div>
+        </div>
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">USSD ծառայության նշում  </div>
+            <div ng-show="card.ClosingDate==null" class="product-detail-cell product-detail-value">
+                {{(USSDService=="1" || USSDService=="3" || USSDService=="5") ? 'Ընթացիկ' :(USSDService=="2" || USSDService=="6")? 'Այո':'Ոչ' }}
+                <span style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" ng-click="params={productID:card.ProductId,cardNumber:card.CardNumber};openWindow('/CardUSSDServiceOrder/CardUSSDServiceHistory','USSD լրացուցիչ տվյալներ','cardUSSDServiceOrder')" class="glyphicon glyphicon-info-sign" />
+                <span ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-click="params={cardUSSDService:USSDService,productID:card.ProductId,CardNumber:card.CardNumber};openWindow('/CardUSSDServiceOrder/CardUSSDServiceOrder','Քարտի USSD ծառայության ակտիվացում','card_USSD_service_order')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7">
+                </span>
+            </div>
+        </div>
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable"> 3DSecure Email ծառայության նշում</div>
+            <div class="product-detail-cell product-detail-value">
+                {{(card3DSecureService.Quality=="1" || card3DSecureService.Quality=="3" || card3DSecureService.Quality=="5") ? 'Ընթացիկ' :(card3DSecureService.Quality=="2" || card3DSecureService.Quality=="6")? 'Այո':'Ոչ' }}
+                <span style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" ng-click="params={productID:card.ProductId,cardNumber:card.CardNumber};openWindow('/Card3DSecureServiceOrder/Card3DSecureServiceDetails','3DSecure լրացուցիչ տվյալներ','card3DSecureOrder')" class="glyphicon glyphicon-info-sign" />
+                <span style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" ng-click="params={card3DSecureService:card3DSecureService,productID:card.ProductId,cardNumber:card.CardNumber};openWindow('/Card3DSecureServiceOrder/PersonalCard3DSecureServiceOrder','Նոր հայտ','card3DSecureOrder')" class="glyphicon glyphicon-pencil" />
+            </div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտի ստացման եղանակ</div>
+            <div class="product-detail-cell product-detail-value">  {{card.CardReceivingType!=0?(card.CardReceivingType==1?'Առաքում':'Տրամադրում մասնաճյուղում'):'-'}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="card.AMEX_MRServiceFee!=-1 && card.ClosingDate==null">
+            <div class="product-detail-cell product-detail-lable redStyle">MR պարտավորություն</div>
+            <div class="product-detail-cell product-detail-value redStyle">{{card.AMEX_MRServiceFee | number:2}} AMD<span ng-if="card.Currency!='AMD' && kurs"> ( {{(card.AMEX_MRServiceFee/kurs) | number:2}} {{card.Currency}} )</span> </div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{card.OpenDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{card.ValidationDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div ng-if="card.ClosingDate!=null" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման ա/թ</div>
+            <div class="product-detail-cell product-detail-value" style="color:red;">{{card.ClosingDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div ng-if="card.ClosingDate!=null" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման պատճառ</div>
+            <div class="product-detail-cell product-detail-value">{{card.ClosingReasonTypeDescription==null?'-':card.ClosingReasonTypeDescription}}</div>
+        </div>
+        <div ng-if="card.ClosingDate!=null" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">{{card.ClosingSetNumber==0?'-':card.ClosingSetNumber}}</div>
+        </div>
+        <div ng-if="card && card.ClosingDate==null" ng-init="hasAccountPensionApplication(card.CardAccount.AccountNumber)" class="product-detail-row">
+            <div ng-if="PensionApplicationSign == true" class="product-detail-cell product-detail-lable" style="color:brown;">Առկա է կենսաթոշակի դիմում համաձայնագիր</div>
+            <div class="product-detail-cell product-detail-value"></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Լրացուցիչ տվյալներ</div>
+            <div class="product-detail-cell product-detail-value">{{card.AddInf==null?'-':card.AddInf}}</div>
+        </div>
+        <div ng-if="cardDahkDetail" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">ԴԱՀԿ Արգելանք</div>
+            <div class="product-detail-cell product-detail-value">&nbsp;</div>
+        </div>
+        <div class="product-detail-row" ng-if="cardDahkDetail">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Հաշվեհամար</div>
+            <div class="product-detail-cell product-detail-value">{{cardDahkDetail.Account.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="cardDahkDetail">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{cardDahkDetail.Amount | number:2}} {{card.Currency}}</div>
+        </div>
+
+    </div>
+    <creditlinedebt ng-if="card.CreditLine!=null && update==false" creditline="card.CreditLine" card="card"></creditlinedebt>
+    <div class="bhoechie-tab-container" style="max-height:80%;" id="cardDetailsContainer">
+        <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+            <div class="list-group">
+                <div class="list-group-item text-center active">Քաղվածք</div>
+                <div class="list-group-item text-center"><span>Հաշվի քաղվածք</span></div>
+                <div class="list-group-item text-center"><span>Ակտիվացումներ ԱրՔա-ում</span></div>
+                <div class="list-group-item text-center" ng-show="card.CreditLine!=null"><span ng-if="card.CreditLine.Type==54">Արագ օվերդրաֆտ</span><span ng-if="card.CreditLine.Type!=54">Վարկային գիծ</span></div>
+                <div class="list-group-item text-center" ng-show="card.Overdraft!=null">Գերածախս</div>
+                <div class="list-group-item text-center" ng-show="card.CardNumber!=null">Սակագներ</div>
+                <div class="list-group-item text-center"><span>Սպասարկման միջնորդավճար</span></div>
+                <div class="list-group-item text-center" ng-show="(card.Type==20 || card.Type==41 || card.Type==40 || card.Type==23)  && card.MainCardNumber==''"><span>MR ծառայություն</span></div>
+                <div class="list-group-item text-center" ng-show="(card.Type==23 || card.Type==34 || card.Type==50 || card.Type==40)  && card.ClosingDate==null">Cashback</div>
+                <div class="list-group-item text-center"><span>Կցված փաստաթղթեր</span></div>
+                <div class="list-group-item text-center" ng-show="card.ClosingDate==null">Դրական տոկոս</div>
+                <div class="list-group-item text-center" ng-show="card.CardNumber!=null && card.MainCardNumber==''">Փակված վ/գծեր</div>
+                <div class="list-group-item text-center">Սառեցումներ</div>
+                <div class="list-group-item text-center">Դասակարգում</div>
+                <div class="list-group-item text-center"><span>Կցված թոքեններ</span></div>
+                <div class="list-group-item text-center"><span>Առգրավման պատմություն</span></div>
+                <div class="list-group-item text-center" ng-click="GetVisaAliasHistory(card.CardNumber)"><span>Կցված բջջ. հեռ.ներ</span></div>
+
+            </div>
+        </div>
+        <div class="bhoechie-tab" style="width: calc(100% - 140px); display: inline-block;">
+            <div class="bhoechie-tab-content active" ng-if="card">
+                <cardstatement cardnumber="card.CardNumber"></cardstatement>
+            </div>
+            <div class="bhoechie-tab-content" ng-if="card">
+                <accountstatement accountnumber="card.CardAccount.AccountNumber"></accountstatement>
+            </div>
+            <div class="bhoechie-tab-content" ng-if="card">
+                <cardactivationinarcadetails cardnumber="card.CardNumber"></cardactivationinarcadetails>
+            </div>
+            <div class="bhoechie-tab-content" ng-show="card.CreditLine!=null" style="padding-top:0px;">
+                <creditlinedetails ng-if="card.CreditLine!=null" productid="card.CreditLine.ProductId" cardnumber="card.CardNumber" cardtype="card.Type"></creditlinedetails>
+            </div>
+            <div class="bhoechie-tab-content" ng-show="card.Overdraft!=null" style="padding-top:0px;">
+                <creditlinedetails ng-if="card.Overdraft!=null" productid="card.Overdraft.ProductId" canmature="card.CreditLine==null ? true : false"></creditlinedetails>
+            </div>
+            <div class="bhoechie-tab-content" ng-show="card.CardNumber!=null">
+                <cardtariffs ng-if="card.CardNumber!=null" productid="card.ProductId"></cardtariffs>
+            </div>
+            <div class="bhoechie-tab-content" style="padding-top:0px;">
+                <cardservicefee ng-if="card" cardclosingdate="card.ClosingDate" cardnumber="card.CardNumber" relatedofficenumber="card.RelatedOfficeNumber" cardtype="card.Type" productid="card.ProductId"></cardservicefee>
+            </div>
+            <div class="bhoechie-tab-content" ng-show="card && (card.Type==20 || card.Type==41 || card.Type == 40|| card.Type == 23)  && card.MainCardNumber==''" style="padding-top:0px;">
+                <membershiprewards ng-if="card && (card.Type==20 || card.Type==41 || card.Type == 40|| card.Type == 23)  && card.MainCardNumber==''" cardtype="card.Type" cardnumber="card.CardNumber" productid="card.ProductId" closingdate="card.ClosingDate"></membershiprewards>
+            </div>
+            <div class="bhoechie-tab-content" ng-show="card && (card.Type==23 || card.Type==34 || card.Type==50 || card.Type==40) && card.ClosingDate==null" style="padding-top:15px;">
+                <div class="product-detail-row" ng-if="card && (card.Type==23 || card.Type==34 || card.Type==50 || card.Type==40) && card.ClosingDate==null" ng-init="getCardCashbackAccount(card.ProductId)">
+                    <div class="product-detail-cell product-detail-lable">Հաշվեհամար</div>
+                    <div class="product-detail-cell product-detail-value">{{cashbackAccount.AccountNumber}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Մնացորդ</div>
+                    <div class="product-detail-cell product-detail-value">{{cashbackAccount.BalanceString}} AMD</div>
+                </div>
+            </div>
+            <div class="bhoechie-tab-content">
+                <attachmentdocument productid="card.ProductId"></attachmentdocument>
+            </div>
+            <div class="bhoechie-tab-content" ng-show="card.ClosingDate==null">
+                <cardpositiverate ng-if="card && card.ClosingDate==null" card="card"></cardpositiverate>
+            </div>
+            <div class="bhoechie-tab-content" ng-show="card.CardNumber!=null && card.MainCardNumber==''">
+                <closedcreditlines ng-if="card.CardNumber!=null && card.MainCardNumber==''" cardnumber="card.CardNumber"></closedcreditlines>
+
+            </div>
+            <div class="bhoechie-tab-content">
+                <freezehistory ng-if="card" accountnumber="card.CardAccount.AccountNumber"></freezehistory>
+            </div>
+            <div class="bhoechie-tab-content">
+                <loanproductclassifications ng-if="card" products="[card.CreditLine == null ? 0 : card.CreditLine.ProductId ,card.Overdraft.ProductId]"></loanproductclassifications>
+            </div>
+            <div class="bhoechie-tab-content">
+                <virtualcards ng-if="card" productid="card.ProductId"></virtualcards>
+            </div>
+            <div class="bhoechie-tab-content">
+                <cardretainhistory ng-if="card.CardNumber!=null" cardnumber="card.CardNumber"></cardretainhistory>
+            </div>
+            <div class="bhoechie-tab-content">
+                <visaalias ng-if="card" cardnumber="card.CardNumber"></visaalias>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+</div>
+<script type="text/javascript">
+
+    $("#cardDetails div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('#cardDetails div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#cardDetails div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#cardDetails div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+
+
+    $("#cardDetailsContainer").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+
+</script>

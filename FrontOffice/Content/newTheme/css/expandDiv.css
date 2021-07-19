@@ -1,0 +1,254 @@
+
+/* .menu:before,
+.menu:after {
+  content: "";
+ 
+} */
+
+/* .menu:after {
+  clear: both;
+}
+
+.menu {
+  zoom:1;
+} */
+
+/* -------------------------------- */        
+
+/* .menu li {
+  position: relative;
+  float: left;
+  cursor: pointer;
+  color: #fff;
+} 
+
+.menu li:hover, .menu li:focus{
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,.2)), to(rgba(255,255,255,0)));
+  background-image: -webkit-linear-gradient(top, rgba(255,255,255,.2), rgba(255,255,255,0));
+  background-image: -moz-linear-gradient(top, rgba(255,255,255,.2), rgba(255,255,255,0));
+  background-image: -ms-linear-gradient(top, rgba(255,255,255,.2), rgba(255,255,255,0));
+  background-image: -o-linear-gradient(top, rgba(255,255,255,.2), rgba(255,255,255,0));
+  background-image: linear-gradient(top, rgba(255,255,255,.2), rgba(255,255,255,0));
+}
+
+.menu .cover{
+  z-index: 2;
+}
+
+.menu .cover:focus{
+  outline: 0;
+} */
+
+/* -------------------------------- */
+
+/* .menu li::after{
+
+  position: absolute;
+  color: rgba(255,255,255,.1);
+  opacity: 0;
+  -webkit-transition: all .2s ease-out;
+  -moz-transition: all .2s ease-out;
+  -ms-transition: all .2s ease-out; 
+  -o-transition: all .2s ease-out;  
+  transition: all .2s ease-out;    
+}      
+
+.menu li:hover::after, .menu li:focus::after{
+  font-size: 100px;
+  opacity: 1; 
+}
+
+.menu .cover::after{
+  z-index: -1;
+} */
+
+#subItems .content{
+  opacity: 0; display: none\9;
+  overflow: hidden;
+  position: absolute;
+  height: 100%;
+  width: 100%; /* Ideally: height: 100%; width: 100%; but works at it should just in FF */
+  left: 0px;
+  top: 0px;
+  z-index: -1;
+ /*  -webkit-transition: all .1s ease-out;
+  -moz-transition: all .1s ease-out;
+  -ms-transition: all .3s ease-out; 
+  -o-transition: all .3s ease-out;  
+  transition: all .3s ease-out;  */     
+}  
+
+#subItems .expanded{
+  opacity: .97; 
+  display: block\9;
+  overflow: hidden;
+  overflow-y:overlay;
+ /*  height: 100%;
+  width: 100%; */ /* Cover the entire area */
+  background-color:#fff;
+  left: 1px; 
+  top: 0px;
+  z-index: 2;
+}
+
+
+/* .menu .title{
+  position: absolute;
+  height: 100%; width: 100%;
+  text-align: center;
+  font: italic bold 1em/120px 'trebuchet MS', Arial, helvetica;
+  opacity: .2;
+} */
+
+/* .menu li:hover .title{
+  opacity: .7;
+}    
+ */
+/* -------------------------------- */
+
+#subItems .close {
+    display: none;
+    color: black;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    text-align: center;
+    top: 0px;
+    right: 20px;
+    background-size: 20px 20px;
+    background-image: url("../Images/Close.png");
+    -webkit-transition: -webkit-transform .4s ease-in-out;
+    transition: transform .4s ease-in-out;
+}
+
+/* .menu .cover {
+  display: block;
+} */
+#subItems .close{
+  display: block;	
+}
+#subItems .close:hover{
+	  top: 0px;
+  right: 20px; 
+	 -webkit-transform: rotate(90deg);
+  transform: rotate(90deg); 
+}
+#allProducts a{
+	background-color: rgb(85, 111, 167) !important;
+	outline-color:rgb(85, 111, 167) !important;
+}
+#currentAccounts a{
+	background-color: rgb(52, 167, 86) !important;
+	outline-color:rgb(52, 167, 86) !important;
+}
+#cards a{
+	background-color: rgb(52, 167, 86) !important;
+	outline-color:rgb(52, 167, 86) !important;
+}
+#deposits a{
+	background-color: rgb(52, 167, 86) !important;
+	outline-color:rgb(52, 167, 86) !important;
+}
+#loans a{
+	background-color: rgb(52, 167, 86) !important;
+	outline-color:rgb(52, 167, 86) !important;
+}
+#overdueHistory a{
+	background-color: rgba(169, 43, 73, 0.83) !important;
+	outline-color:rgba(169, 43, 73, 0.83) !important;
+}
+
+#credentials a{
+    background-color: rgba(106, 70, 154, 0.79) !important;
+	outline-color: rgba(106, 70, 154, 0.79) !important;
+}
+
+#exchangeRates a{
+ background-color: rgb(52, 167, 86) !important;
+	outline-color:rgb(52, 167, 86) !important;
+}
+
+#otherInformationProducts a,#otherInformationProductsDiv a{
+	background-color: rgb(243, 171, 48) !important;
+	outline-color:  rgb(243, 171, 48) !important;
+}
+
+#transfers a{
+	background-color: rgba(28, 132, 162, 0.83) !important;
+	outline-color: rgba(28, 132, 162, 0.83) !important;
+}
+
+#transfersByCall a{
+	background-color: rgba(62, 115, 125, 0.83) !important;
+	outline-color: rgba(62, 115, 125, 0.83) !important;
+}
+
+
+
+#cashOperations a, #cashOperationsDiv a{
+	background-color: rgba(62, 115, 125, 0.83) !important;
+	outline-color: rgba(62, 115, 125, 0.83) !important;
+}
+
+#nonCashOperations a, #nonCashOperationsDiv a{
+	background-color: rgba(28, 132, 162, 0.83) !important;
+	outline-color: rgba(28, 132, 162, 0.83) !important;
+}
+
+#exchangeOperations a{
+    background-color: rgba(106, 70, 154, 0.79) !important;
+	outline-color: rgba(106, 70, 154, 0.79) !important;
+
+}
+#exchange a{
+	background-color: rgba(106, 70, 154, 0.79) !important;
+	outline-color: rgba(106, 70, 154, 0.79) !important;
+}
+
+#exchangeInBank a{
+	background-color: rgba(106, 70, 154, 0.79) !important;
+	outline-color: rgba(106, 70, 154, 0.79) !important;
+}
+#utilityPayments a, #utilityPaymentsDiv a{
+	background-color: rgb(243, 171, 48) !important;
+	outline-color:  rgb(243, 171, 48) !important;
+}
+
+#directDebit a{
+	background-color: rgba(128, 49, 49, 0.77) !important;
+	outline-color:rgba(128, 49, 49, 0.77) !important;
+}
+
+#operationHistory a{
+	background-color: rgba(113, 120, 121, 0.83) !important;
+	outline-color: rgba(113, 120, 121, 0.83) !important;
+}
+#accreditive a, #accreditiveDiv a{
+	background-color: rgba(208, 70, 70, 0.79) !important;
+	outline-color: rgba(208, 70, 70, 0.79) !important;
+}
+
+#depositBox a{
+	background-color: rgba(210, 174, 79, 0.79) !important;
+	outline-color: rgba(210, 174, 79, 0.79) !important;
+}
+
+#application a, #applicationDiv a{
+	background-color: rgb(62, 135, 220) !important;
+	outline-color: rgb(62, 135, 220) !important;
+}
+
+#document a, #documentDiv a{
+	background-color: rgb(160, 142, 114) !important;
+	outline-color: rgb(160, 142, 114) !important;
+}
+.operation-menu-item:hover a{
+	outline-width: 3px !important;
+	outline-style:solid !important;
+}
+
+#calculators a{
+	background-color: rgba(113, 120, 121, 0.83) !important;
+	outline-color: rgba(113, 120, 121, 0.83) !important;
+}

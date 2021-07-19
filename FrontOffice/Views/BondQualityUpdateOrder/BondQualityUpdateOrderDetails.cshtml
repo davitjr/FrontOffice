@@ -1,0 +1,72 @@
+﻿
+@{
+    Layout = null;
+}
+
+<form style="width:600px" ng-controller="BondQualityUpdateOrderCtrl" data-ng-init="getBondQualityUpdateOrder(selectedOrderId)">
+    <loading-control style="margin-left:20em" scopevariable="qualityUpdateOrderDetails"></loading-control>
+    <div ng-show="qualityUpdateOrderDetails" class="product-details bhoechie-tab-content" style="min-width:600px;padding-left:10px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{qualityUpdateOrderDetails.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{qualityUpdateOrderDetails.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{qualityUpdateOrderDetails.OperationDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ընթացիկ հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{qualityUpdateOrderDetails.Bond.AccountForCoupon.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="qualityUpdateOrderDetails.Currency != 'AMD'">
+            <div class="product-detail-cell product-detail-lable">Ընթացիկ հաշիվ արտարժույթային</div>
+            <div class="product-detail-cell product-detail-value">{{qualityUpdateOrderDetails.Bond.AccountForBond.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">ԱՄՏԾ</div>
+            <div class="product-detail-cell product-detail-value">{{qualityUpdateOrderDetails.Bond.ISIN}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պարտատոմսի քանակ</div>
+            <div class="product-detail-cell product-detail-value">{{qualityUpdateOrderDetails.Bond.BondCount}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Անվանական արժեք</div>
+            <div class="product-detail-cell product-detail-value">{{qualityUpdateOrderDetails.Bond.UnitPrice}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Արժեթղթերի հաշվի առկայություն</div>
+            <div class="product-detail-cell product-detail-value">{{qualityUpdateOrderDetails.Bond.DepositaryAccountExistenceTypeDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Արժեթղթերի հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{qualityUpdateOrderDetails.Bond.CustomerDepositaryAccount.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Արժեթղթերի հաշվի նկարագրություն</div>
+            <div class="product-detail-cell product-detail-value">{{qualityUpdateOrderDetails.Bond.CustomerDepositaryAccount.Description}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="qualityUpdateOrderDetails.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{qualityUpdateOrderDetails.QualityDescription}}</div>
+            <div ng-if="qualityUpdateOrderDetails.Quality==31" class="product-detail-cell product-detail-value redStyle">{{qualityUpdateOrderDetails.QualityDescription}}</div>
+            <div ng-if="qualityUpdateOrderDetails.Quality!=31 && qualityUpdateOrderDetails.Quality!=30" class="product-detail-cell product-detail-value">{{qualityUpdateOrderDetails.QualityDescription}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="qualityUpdateOrderDetails.SubType == 3">
+            <div class="product-detail-cell product-detail-lable">Մերժման պատճառ</div>
+            <div class="product-detail-cell product-detail-value">{{qualityUpdateOrderDetails.Bond.RejectReasonDesctiption}}</div>
+        </div>
+
+      
+
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+</form>

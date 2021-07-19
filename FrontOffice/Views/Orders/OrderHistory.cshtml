@@ -1,0 +1,47 @@
+﻿<form ng-controller="OrderCtrl" ng-init="getOrderHistory(selectedOrderId)">
+    <div ng-show="historys" class="product-details bhoechie-tab-content" style="padding:30px;padding-top:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{::selectedOrderId}}</div>
+        </div>
+        <div class="product-detail-row" ng-repeat="history in ::historys">
+            <div class="product-detail-cell product-detail-lable" ng-if="history.Quality==1">Մուտքագրեց`</div>
+            <div ng-if="history.Quality==1" class="product-detail-cell product-detail-value">
+
+                <span ng-if="history.ChangeUserName!=''">&nbsp;{{::history.ChangeUserName}}&nbsp;<span ng-if="history.ChangeUserId != 0"> (ՊԿ`{{::history.ChangeUserId}} <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:(history.ChangeUserId)}; openWindow('/Home/UserDetails','Աշխատակցի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>)</span></span>
+                <span ng-if="history.ChangeUserName==null">Բացակայում է</span> {{::history.ChangeDateString}}
+            </div>
+            <div class="product-detail-cell product-detail-lable" ng-if="history.Quality==50">Ուղարկեց հաստատման`</div>
+            <div ng-if="history.Quality==50" class="product-detail-cell product-detail-value">
+
+                <span ng-if="history.ChangeUserName!=''">&nbsp;{{::history.ChangeUserName}}&nbsp;<span ng-if="history.ChangeUserId != 0"> (ՊԿ`{{::history.ChangeUserId}} <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:(history.ChangeUserId)}; openWindow('/Home/UserDetails','Աշխատակցի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>)</span></span>
+                <span ng-if="history.ChangeUserName==null">Բացակայում է</span> {{::history.ChangeDateString}}
+            </div>
+            <div class="product-detail-cell product-detail-lable" ng-if="history.Quality==3">Ուղարկեց կատարման`</div>
+            <div ng-if="history.Quality==3" class="product-detail-cell product-detail-value">
+                <span ng-if="history.ChangeUserName!=''">&nbsp;{{::history.ChangeUserName}}&nbsp;<span ng-if="history.ChangeUserId != 0"> (ՊԿ`{{::history.ChangeUserId}} <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:(history.ChangeUserId)}; openWindow('/Home/UserDetails','Աշխատակցի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>)</span></span>
+                <span ng-if="history.ChangeUserName==null">Բացակայում է</span> {{::history.ChangeDateString}}
+            </div>
+            <div class="product-detail-cell product-detail-lable" ng-if="history.Quality==30">Կատարեց`</div>
+            <div ng-if="history.Quality==30" class="product-detail-cell product-detail-value">
+
+                <span ng-if="history.ChangeUserName!=''">&nbsp;{{::history.ChangeUserName}}&nbsp;<span ng-if="history.ChangeUserId != 0"> (ՊԿ`{{::history.ChangeUserId}} <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:(history.ChangeUserId)}; openWindow('/Home/UserDetails','Աշխատակցի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>)</span></span>
+                <span ng-if="history.ChangeUserName==null">Բացակայում է</span> {{::history.ChangeDateString}}
+            </div>
+            <div class="product-detail-cell product-detail-lable" ng-if="history.Quality==31">Մերժեց`</div>
+            <div ng-if="history.Quality==31" class="product-detail-cell product-detail-value">
+
+                <span ng-if="history.ChangeUserName!=''">&nbsp;{{::history.ChangeUserName}}&nbsp;<span ng-if="history.ChangeUserId != 0"> (ՊԿ`{{::history.ChangeUserId}} <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:(history.ChangeUserId)}; openWindow('/Home/UserDetails','Աշխատակցի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>)</span></span>
+                <span ng-if="history.ChangeUserName==null">Բացակայում է</span> {{::history.ChangeDateString}}
+            </div>
+            <div class="product-detail-cell product-detail-lable" ng-if="history.Quality==31">Պատճառ`</div>
+            <div ng-if="history.Quality==31" class="product-detail-cell product-detail-value">&nbsp;{{history.ReasonDescription}}</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="history.Quality==41">Հեռացրեց`</div>
+            <div ng-if="history.Quality==41" class="product-detail-cell product-detail-value">
+
+                <span ng-if="history.ChangeUserName!=''">&nbsp;{{::history.ChangeUserName}}&nbsp;<span ng-if="history.ChangeUserId != 0"> (ՊԿ`{{::history.ChangeUserId}} <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:(history.ChangeUserId)}; openWindow('/Home/UserDetails','Աշխատակցի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>)</span></span>
+                <span ng-if="history.ChangeUserName==null">Բացակայում է</span> {{::history.ChangeDateString}}
+            </div>
+        </div>
+    </div>
+</form>

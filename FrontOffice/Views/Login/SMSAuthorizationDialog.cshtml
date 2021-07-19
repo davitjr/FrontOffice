@@ -1,0 +1,50 @@
+﻿<style>
+    .modal-backdrop {
+        background-color: rgb(90, 85, 85);
+    }
+
+    .modal-content {
+        width: 300px;
+    }
+
+    .modal-backdrop.in {
+        opacity: 0.5;
+    }
+</style>
+<div ng-controller="LoginCtrl">
+    <div class="popup_wrapper_top">
+        <div>
+            ՈՒշադրություն
+        </div>
+        <img src="/Content/images/close_pop.png " ng-click="closeSMSModal()">
+    </div>
+    <br>
+    <div class="popup_wrapper_inner modal-body">
+        <div style="text-align:center;" ng-if="sendStatus==0">
+            <div class="row">
+                Ուղարկե`լ նույնականացման SMS կոդը հաճախորդին:
+            </div>
+
+            <br />
+            <button class="btn btn-sm btn-success" ng-click="sendAutorizationSMS()"><span class="glyphicon glyphicon-send"></span>&nbsp;Ուղարկել</button>
+            <button class="btn btn-sm btn-danger" ng-click="closeSMSModal()"><span class=" glyphicon glyphicon-floppy-remove"></span>&nbsp;Հրաժարվել</button>
+        </div>
+        <loading></loading>
+        <div style="text-align:center;" ng-if="sendStatus==1">
+            <div class="row">
+                SMS կոդը ուղարկված է:
+                <br />
+                Շարունակելու համար մուտքագրեք հաճախորդից ստացված կոդը:
+            </div>
+            <div class="row">
+                <input ng-model="smsCode" name="smsCode" required min="0" class="tab_title form-control" />
+                <br />
+
+            </div>
+            <br />
+            <button class="btn btn-sm btn-success" ng-click="verifyAutorizationSMS(smsCode)"><span class="glyphicon glyphicon-ok"></span>&nbsp;Հաստատել</button>
+        </div>
+        <errors></errors>
+    </div>
+</div>
+

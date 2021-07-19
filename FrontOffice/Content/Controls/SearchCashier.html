@@ -1,0 +1,157 @@
+﻿<div>
+    <style>
+        .modal-content {
+            width: 760px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+
+        .nonUnicodeText {
+            font-family: 'Arial Armenian';
+            font-size: 15px;
+        }
+
+        .resultRow {
+            font-size: 10pt;
+            color: black;
+            font-weight: normal;
+        }
+
+        .resultRowAddInf {
+            font-size: 9pt;
+        }
+
+        .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .tableHeader {
+            font-size: 9pt;
+            height: 25px;
+        }
+    </style>
+
+    <style>
+        #searchCashir .product-container-header > th {
+            font-weight: inherit;
+        }
+
+        #searchCashir .div-table-content {
+            margin-top: -5px!important;
+            border-color: #CFDAD0 !important;
+        }
+    </style>
+
+    <div id="searchCashir">
+        <div class="col-sm-12 popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+            <div style="margin-top:-10px">Աշխատակցի որոնում</div>
+            <img src="/Content/images/close_pop.png " ng-click="closeSearchCashierModal()" style="margin-top:-10px;" alt="">
+        </div>
+        <div class="row rowWithFullWidth">
+            <div class="col-md-2">
+                <div class="form-group-search">
+                    ՊԿ
+                </div>
+                <div class="form-group-search">
+                    <input type="text" maxlength="4" ng-model="oneCashier.setNumber" id="setNumber" name="setNumber" class="form-control " onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group-search">
+                    Մասնաճյուղ
+                </div>
+                <div class="form-group-search" data-ng-init="getFilialList()">
+                    <select data-ng-model="oneCashier.filial.key" name="filialCode" id="filialCode" class="form-control"
+                            data-ng-options="k as v for (k,v) in filialList" required>
+                        <option value="">Ընտրեք մասնաճյուղը...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group-search">
+                    Անուն
+                </div>
+                <div class="form-group-search">
+                    <input type="text" ng-model="oneCashier.firstName" name="firstName" class="form-control  nonUnicodeText" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group-search">
+                    Ազգանուն
+                </div>
+                <div class="form-group-search">
+                    <input type="text" ng-model="oneCashier.lastName" name="lastName" class="form-control  nonUnicodeText" />
+                </div>
+            </div>
+        </div>
+        <div style="margin:5px">
+            <button type="button" class="btn btn-primary" ng-click="initParams();" title="Որոնել աշխատակցին"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+        </div>
+
+
+        <div style="overflow:auto; margin:5px; margin-bottom:0px; margin-top:0px; ">
+            <table class="table table-condensed" style="margin-bottom:0;">
+                <thead>
+                    <tr class="product-container-header">
+                        <th class="col-sm-1" style="text-align:center;">ՊԿ</th>
+                        <th class="col-sm-3" style="text-align:center;">Մ/ճ</th>
+                        <th class="col-sm-1" style="text-align:center;">Անուն</th>
+                        <th class="col-sm-3" style="text-align:center;">Ազգանուն</th>
+                        <th class="col-sm-4" style="text-align:center;">Պաշտոն</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="div-table-content " style="max-height:200px; min-height:200px;border: gray 1px solid; ">
+                <table class="table table-condensed table-hover" style="background-color:white">
+                    <tbody>
+                        <tr ng-if="cashiersList.length!=0" ng-repeat="cashier in cashiersList" style="font-size:9pt; cursor:pointer;" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" ng-dblclick="selectCashier()">
+                            <td>
+                                <div class="resultRow">
+                                    <div class="col-sm-2 ">
+                                        {{ ::cashier.setNumber }}
+                                    </div>
+                                    <div class="col-sm-2 ">
+                                        {{ ::cashier.filial.key }}
+                                    </div>
+                                    <div class="col-sm-2 ">
+                                        {{ ::cashier.firstName }}
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        {{ ::cashier.lastName}}
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        {{ ::cashier.position }}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="cashiersList.length==0">
+                            <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="margin-left:12px;">
+            Ընդամենը` {{totalRows}}
+        </div>
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                    ng-model="currentPage"
+                    total-items="totalRows"
+                    items-per-page="numPerPage"
+                    max-size="maxSize"
+                    boundary-links="true"
+                    previous-text="‹"
+                    next-text="›"
+                    first-text="«"
+                    last-text="»">
+        </div>
+
+    </div>
+
+   
+
+</div>

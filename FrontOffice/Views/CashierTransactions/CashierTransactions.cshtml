@@ -1,0 +1,604 @@
+﻿@{
+    Layout = "~/Views/Shared/CashierTransactions.cshtml";
+}
+
+<style>
+
+    .container {
+        width: 99.5%;
+        min-height: 100vh;
+        height: auto;
+        margin: auto;
+        box-sizing: border-box;
+        overflow-y: auto;
+        margin-bottom: 60px;
+    }
+
+    form {
+        background-color: white;
+        /* -webkit-box-shadow: 3px 5px 15px 5px #878686;
+    box-shadow: 3px 5px 15px 5px #878686;  */
+        -webkit-box-shadow: inset 0 0 5px #9c9c9c;
+        box-shadow: 0 0 5px #9c9c9c;
+        padding: 1rem 0;
+        margin: -9px auto 0;
+        border-radius: 2px;
+        width: 99%;
+    }
+
+    .grid1 {
+        margin-left: 1rem;
+        width: 60%;
+        display: grid;
+        grid-template-columns: 10rem repeat(4, minmax(105px,10%)) repeat(2, 13%) 3rem;
+        grid-gap: 1rem;
+    }
+
+        .grid1 > div {
+            display: grid;
+            grid-template-rows: repeat(2,auto);
+        }
+
+            .grid1 > div > input,
+            .grid1 > div > select {
+                height: 27.3px;
+                border: 1px solid #333;
+            }
+
+            .grid1 > div > select {
+                font-size: 14px;
+                padding: 0;
+            }
+
+    label {
+        color: #076938;
+        font-size: 13.68px;
+    }
+
+    .fa {
+        font-size: 3rem;
+        cursor: pointer;
+    }
+
+    .iconPlace {
+        align-self: end;
+    }
+
+    .grid1 > div > input {
+        padding-left: 5px;
+    }
+    /* երկրորդ շարքի գրիդ */
+    .grid2 {
+        width: 55%;
+        margin-top: 1rem;
+        margin-left: 1rem;
+        display: grid;
+        /* grid-template-columns: repeat(6, minmax(120px,13.7%)) ; */
+        grid-template-columns: repeat(4, minmax(120px,14%));
+        grid-gap: 1rem;
+    }
+
+        .grid2 > div {
+            display: grid;
+            grid-template-rows: auto auto;
+        }
+
+            .grid2 > div > input {
+                height: 27.3px;
+                border: 1px solid #333;
+                padding: 5px;
+            }
+
+    /* երրորդ շարքի գրիդ */
+    .grid3 {
+        width: 50%;
+        margin-top: 1rem;
+        margin-left: 1rem;
+        /* margin-bottom:2rem; */
+        display: grid;
+        grid-template-columns: 24% minmax(141px,15%) minmax(141px, 15%);
+        grid-gap: 1rem;
+    }
+
+        .grid3 > div {
+            display: grid;
+            grid-template-rows: auto auto;
+        }
+
+            .grid3 > div > input,
+            .grid3 > div > select {
+                height: 27.3px;
+                border: 1px solid #333;
+            }
+
+            .grid3 > div > input {
+                padding-left: 5px;
+            }
+
+            .grid3 > div > select {
+                font-size: 14px;
+                padding: 0;
+            }
+
+    .table-grid {
+        margin: 12px auto;
+        width: 99%;
+        -webkit-box-shadow: inset 0 0 5px #9c9c9c;
+        box-shadow: 0 0 5px #9c9c9c;
+    }
+
+    table {
+        width: 100%;
+        border: none;
+        font-family: Arial Armenian;
+        background-color: white;
+    }
+
+    #table {
+        min-width: 1600px;
+    }
+
+    table
+    tr {
+        border-bottom: 1px solid rgba(128, 128, 128, 0.76);
+        text-align: center;
+    }
+
+        table tr:last-child {
+            border-bottom: none;
+        }
+
+    table th {
+        background-color: #e0e0e0;
+        color: black;
+        text-align: center;
+        font-size: 1.2rem;
+    }
+
+    tbody {
+        cursor: pointer;
+    }
+
+    td,
+    th {
+        min-height: 1.8rem;
+        height: auto;
+        border-right: 1px solid rgba(128, 128, 128, 0.76);
+    }
+
+    table tr td {
+        font-size: 12px;
+    }
+
+    td:first-child {
+        border-left: 1px solid rgba(128, 128, 128, 0.76);
+    }
+
+    .sexm {
+        width: 10rem;
+    }
+
+    .tableGrid {
+        display: grid;
+        grid-template-rows: auto auto;
+    }
+
+    .hashveter {
+        color: blue;
+        margin: auto;
+        font-size: 1.2rem;
+    }
+
+    tr:hover {
+        background-color: lightgrey;
+    }
+
+    .paging {
+        margin: 12px auto 0;
+        width: 99%;
+        display: grid;
+        grid-template-columns: 0.97fr 1.03fr;
+        height: 40px;
+        background-color: white;
+        -webkit-box-shadow: inset 0 0 5px #9c9c9c;
+        box-shadow: 0 0 5px #9c9c9c;
+    }
+
+    .pagging-data-left {
+        align-self: center;
+        padding-left: 2rem;
+    }
+
+    .pagging-input {
+        align-self: center;
+        justify-self: center;
+    }
+
+    .pagging-nuber {
+        justify-self: center;
+        /* align-self: center; */
+    }
+
+    .pagination {
+        margin: 3px 0;
+    }
+
+        .pagination li > a {
+            cursor: pointer;
+        }
+
+    .footerGrid {
+        margin-top: 2.5rem;
+        margin-left: 2.5%;
+        margin-bottom: 60px;
+        width: 40%;
+        min-width: 250px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 15px;
+    }
+
+    .footerSubGrid {
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+
+    .footerlabel {
+        justify-self: end;
+    }
+
+    .subData {
+        display: grid;
+    }
+
+        .subData > div {
+            display: grid;
+            grid-template-columns: 1fr 1fr
+        }
+
+    .currency {
+        float: right;
+        margin-right: 1rem;
+    }
+
+    .fcurr {
+        justify-self: end;
+        margin-right: 1rem;
+    }
+
+    .amountType {
+        margin-left: 0.6rem;
+    }
+
+    .h-menu-icon:hover {
+        transform: scale(1.2)
+    }
+
+    .success {
+        color: green;
+    }
+
+    .error {
+        color: #a84232;
+        font-weight: bold;
+    }
+
+    .loading {
+        display: flex;
+        justify-content: center;
+        margin-top: 120px;
+    }
+
+        .loading > i {
+            color: green;
+            font-size: 35px;
+        }
+
+    .tr-message {
+        display: flex;
+        justify-content: center;
+        margin-top: 100px;
+        font-size: 18px;
+    }
+
+    .info {
+        width: 7rem;
+    }
+
+    .fa-print,
+    .fa-info-circle {
+        font-size: 25px;
+    }
+
+    .fa-print {
+        padding-left: 2px;
+    }
+
+        .fa-print:hover,
+        .fa-info-circle:hover {
+            color: green;
+        }
+
+    .row {
+        margin-top: 2rem;
+    }
+
+    .footer {
+        width: 99%;
+        position: fixed;
+        bottom: 0;
+        height: 40px;
+        -webkit-box-shadow: inset 0 0 5px #9c9c9c;
+        box-shadow: 0 0 5px #9c9c9c;
+        margin-left: 0.5%;
+        margin-bottom: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background-color: white;
+    }
+
+    .f-info {
+        padding-left: 20px;
+        align-self: center;
+        font-size: 14px;
+    }
+
+    .f-logo {
+        justify-self: end;
+        align-self: center;
+        margin-right: 20px;
+    }
+    /* Media query */
+
+    @@media screen and (max-width: 1440px) {
+        .container {
+            font-size: 12px;
+        }
+
+        .grid1 {
+            width: 80%;
+        }
+
+        .grid2 {
+            width: 60%;
+        }
+
+        .grid3 {
+            width: 60%
+        }
+
+        table > tr > td,
+        table > tr > th {
+            font-size: 11px;
+        }
+
+        .sexm {
+            width: 80px;
+        }
+
+        .info {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            margin: auto;
+        }
+    }
+
+    @@media screen and(max-width:1042px) {
+        .container {
+            padding-top: 100px;
+        }
+    }
+</style>
+
+<span ng-controller='CashierTransactionsCntr' class='container'>
+    <form name='myForm' novalidate style='font-family: Arial Armenian;'>
+        <div class='grid1'>
+            <div data-ng-init='getUserFilialCode()'>
+                <label for='OperationFilialCode'>Մասնաճյուղ</label>
+                <select ng-model='searchParams.branche' id='branches' name='branche' class='form-control'>
+                    <option value=''>{{branches[fillialCode]}}</option>
+                </select>
+            </div>
+            <div>
+                <label for="CustomerNumber">Հաճ․ Համար</label>
+                <input type="text" ng-model='searchOrders.CustomerNumber' id='CustomerNumber' class='form-control'
+                       ng-keydown='enter($event)' onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+            </div>
+
+            <div>
+                <label for="LastName">Ազգանուն</label>
+                <input type="text" ng-model='searchOrders.LastName' id='LastName' class='form-control' ng-keydown='enter($event)'>
+            </div>
+
+            <div>
+                <label for="FirstName">Անուն</label>
+                <input type="text" ng-model='searchOrders.FirstName' id='FirstName' class='form-control' ng-keydown='enter($event)'>
+            </div>
+
+            <div>
+                <label for="MiddleName">Հայրանուն</label>
+                <input type="text" ng-model='searchOrders.MiddleName' id='MiddleName' class='form-control' ng-keydown='enter($event)'>
+            </div>
+
+            @*<div>
+                    <label for="OrgName">Անվանում</label>
+                    <input type="text" ng-model='searchOrders.OrgName' id='OrgName' class='form-control' ng-keydown='enter($event)'>
+                </div>*@
+
+            <div>
+                <label for="DocumentNumber">Փաստաթուղթ</label>
+                <input type="text" ng-model='searchOrders.DocumentNumber' id='DocumentNumber' class='form-control' ng-keydown='enter($event)'>
+            </div>
+
+
+            <div class="iconPlace">
+                <i class="fa fa-search" ng-click="search()"></i>
+            </div>
+        </div>
+
+        <div class='grid2'>
+            <div>
+                <label for="AccountNumber">Հաշվեհամար</label>
+                <input type="text" ng-model='searchOrders.AccountNumber' id="AccountNumber" class='form-control'
+                       ng-keydown='enter($event)' onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+            </div>
+            <div>
+                <label for="Id">Գործարքի համար</label>
+                <input type="text" ng-model='searchOrders.Id' id='Id' class='form-control'
+                       ng-keydown='enter($event)' onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+            </div>
+            <div>
+                <label for="Id">Գործարքի գումար</label>
+                <input type="text" ng-model='searchOrders.Amount' id='Amount' class='form-control' ng-keydown='enter($event)'>
+            </div>
+        </div>
+
+
+        <div class='grid3'>
+            <div>
+                <label for="CurrentState">Գործարքներ</label>
+                <!-- <select ng-model='searchParams.transaction' ng-options='y for y in transactions' class='form-control'>
+                    <option value=''> Ընտրեք ․․․</option>
+                </select> -->
+                <select ng-model='searchOrders.CurrentState' name='CurrentState' id='CurrentState' class='form-control' ng-keydown='enter($event)'>
+                    <option value=''> Ընտրեք ․․․</option>
+                    <option ng-repeat='x in transactionsType' ng-value='x.type'>{{x.name}}</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="DateFrom">Սկիզբ</label>
+                <input type="date" ng-model='searchOrders.DateFrom' id='DateFrom' class='form-control' ng-keydown='enter($event)'>
+            </div>
+            <div>
+                <label for="DateTo">Վերջ</label>
+                <input type='date' ng-model='searchOrders.DateTo' id='DateTo' class='form-control' ng-keydown='enter($event)'>
+            </div>
+
+        </div>
+
+    </form>
+
+    <div style='overflow-x: auto' class='table-grid'>
+        <table id='table' data-ng-init='searchInit()'>
+            <thead>
+                <tr>
+                    <th style='width:7rem;'>Ստեղծման ժամ</th>
+                    <th style='width:7rem'>Ստեղծողի ՊԿ</th>
+                    <th style='width:9rem;'>Համար</th>
+                    <th style='width:12rem;'>Գումար</th>
+                    <th class='sexm' style='min-width:100px;padding-left:2px;'>Միջնորդավճար </th>
+                    <th style='width:15rem'>Գործարքի տեսակ</th>
+                    <th>Հաշվեհամար/Հաշվետեր</th>
+                    <th>Նկարագրություն</th>
+                    <th>Ազգանուն Անուն Հայրանուն</th>
+                    <th>Փաստաթուղթ</th>
+                    <th style='width:9rem'>Պահպանել</th>
+                    <th style='width:7rem;'></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat='xy in transactionsForPaging ' ng-if='!isLoading'>
+                    <td style='width:7rem;' title='Ստեղծման ժամ'>{{xy.Order.RegistrationDate | dateFilter | date :'shortTime' }}</td>
+                    <td class='sexm' title='Ստեղծողի ՊԿ'>{{xy.UserID}}</td>
+                    <td style='width:8rem;' title='Համար'>{{xy.Order.OrderNumber}}</td>
+                    <td style='width:12rem;' title='Գումար'>
+                        <span class='currency'>
+                            {{xy.Order.Amount | currency : " "}}
+                            <span ng-if='xy.Order.Currency==="AMD" && xy.Order.Amount !==0'>ՀՀ դրամ</span>
+                            <span ng-if='xy.Order.Currency==="USD" && xy.Order.Amount !==0'>USD</span>
+                            <span ng-if='xy.Order.Currency==="EUR" && xy.Order.Amount !==0'>EUR</span>
+                            <span ng-if='xy.Order.Currency==="RUR" && xy.Order.Amount !==0'>RUR</span>
+                        </span>
+                    </td>
+                    <td class='sexm' style='min-width:100px;' title='Միջնորդավճար'>
+                        <span class='currency'>
+                            {{xy.Order.Fees[0].Amount | currency : " "}}
+                            <span ng-if='xy.Order.Fees[0].Currency==="AMD" && xy.Order.Fees[0].Amount !==0'>ՀՀ դրամ</span>
+                            <span ng-if='xy.Order.Fees[0].Currency==="USD" && xy.Order.Fees[0].Amount !==0'>USD</span>
+                            <span ng-if='xy.Order.Fees[0].Currency==="EUR" && xy.Order.Fees[0].Amount !==0'>EUR</span>
+                            <span ng-if='xy.Order.Fees[0].Currency==="RUR" && xy.Order.Fees[0].Amount !==0'>RUR</span>
+                        </span>
+                    </td>
+                    <td style='width:15rem;' title='Գործարքի տեսակ'>{{xy.TypeDescription}}</td>
+                    <td title='Հաշվեհամար/Հաշվետեր'>
+                        <span class='tableGrid'>
+                            <span ng-If="xy.AccountNumber!=0">{{xy.AccountNumber}}</span>
+                            <span ng-If="xy.AccountNumber==0">-</span>
+                            <span class='hashveter' ng-click='serveCustomer(xy.Order.CustomerNumber)' ng-If='!button'>
+                                {{xy.AccountNumberDescription}}
+                            </span>
+                        </span>
+                    </td>
+                    <td title='Նկարագրություն'>{{xy.Order.Description}}</td>
+                    <td title='Ազգանուն Անուն Հայրանուն'>{{xy.FullName}}</td>
+                    <td title='Փաստաթուղթ'>{{xy.DocumentNumber }}</td>
+                    <td class='sexm' id='button' title='Կարգավիճակ'>
+                        <span class='success' ng-if='xy.Order.Quality === 30'>Կատարված</span>
+                        <span class="warning" ng-If="xy.Order.Quality === 50">Հաստատման ենթակա</span>
+                        <i class="submitButton h-menu-icon" ng-if='xy.Order.Quality === 3' ng-click='confirmOrder(xy.Order.Id, xy.Order.CustomerNumber)'></i>
+                        <span class='error'
+                              ng-if='xy.Order.Quality === 31 ||  xy.Order.Quality === 32 || xy.Order.Quality ===  40 || xy.Order.Quality ===  41 || xy.Order.Quality ===  6'
+                              title='Մերժված է համաձայն հայտի'>
+                            Մերժված
+                        </span>
+                    </td>
+                    <td style='width:7rem;'>
+                        <span class="info">
+                            <span ng-controller="PopUpCtrl" type="button" ng-click="params={customerNumber:xy.Order.CustomerNumber}; openWindow('/Customer/CustomerDetails','Հաճախորդի տվյալներ','customerdetails',params)" title='Հակիրճ տեղեկատվություն'>
+                                <span class="fa fa-info-circle" data-toggle="tooltip" data-original-title="Հաճախորդի տվյալներ"></span>
+                            </span>
+                            <span ng-controller="CustomerCtrl" type="button" style="float:right" ng-click="getAttachmentDocumentList(xy.Order.CustomerNumber,true,true);" title='Կցված փաստաթուղթ'>
+                                <span class="fa fa-print" data-toggle="tooltip" data-original-title="Կցված փաստաթղթեր"></span>
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="paging" ng-if='transactionsForPaging.length'>
+        <div class='pagging-data-left'>
+            <div ng-show='transactionsForPaging.length > 0'>
+                Ցուցադրված է: {{(criteria.page -1) * criteria.pagesize + 1}} -
+                {{ ((criteria.page -1) * criteria.pagesize + paging.showing)}}-ը  - {{paging.total}} Գործարքներից
+            </div>
+        </div>
+        <!-- <div class='pagging-input'>
+            Էջ: <input type='number' ng-model='criteria.page' min="1" max="{{paging.totalpages}}"
+                style='width:70px;padding-left:5px;' disabled/>
+
+        </div>  -->
+        <div class='pagging-number '>
+            <ul class="pagination ">
+                <li ng-class="{'active': item === criteria.page}" ng-repeat='item in paging.pagearray'>
+                    <a ng-if="item == 'Prev'" ng-click="Prev()">Նախորդ</a>
+                    <!-- Only for numbers -->
+                    <a ng-if="(!(item == 'Prev' || item == 'Next' ||  item == '..' || item == '...'))"
+                       ng-click="criteria.page = item;">{{item}}</a>
+                    <!-- No click event -->
+                    <a ng-if="(item == '..' || item == '...')">{{item}}</a>
+                    <a ng-if="item == 'Next'" ng-click="Next()">Հաջորդ</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div ng-If='isLoading ' class='loading'>
+        <i class="fa fa-spinner fa-spin"></i>
+    </div>
+    <div class='tr-message' ng-if='message !== ""'>{{message}}</div>
+
+    <div class="footer">
+        <div class='f-info'>
+            <div class="text-truncate"><text>©</text>2016 | «ԱԿԲԱ ԲԱՆԿ» ԲԲԸ | Բոլոր իրավունքները պաշտպանված են:</div>
+        </div>
+        <div class='f-logo'>
+            <img id="footer-logo" src="~/Content/newTheme/Images/acba-logo.png" />
+        </div>
+    </div>
+
+    </div>

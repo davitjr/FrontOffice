@@ -1,0 +1,197 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+<form name="ReferenceOrderForm" style="width:650px" ng-controller="ReferenceOrderCtrl" ng-init="getReferenceOrder(selectedOrderId)">
+    <loading-control scopevariable="filialList && embassyList && languages && referenceTypes && EmbassyDescription"></loading-control>    
+   <div ng-if="reference.Quality!=undefined && reference.Quality !=31 && reference.Quality !=30 && reference.Quality !=32 && reference.Quality !=40 && reference.Quality !=41 && reference.Quality !=6 && (((reference.Quality == 3 || reference.Quality == 20) && $root.SessionProperties.IsCalledFromHB == true) || $root.SessionProperties.IsCalledFromHB != true)" id="referenceOrder_menu" class="menu-bar dialog-menu light-green" style="">
+       <ul id="menu" class="dialog-menu">
+           <li class="root-menu-item-5 " ng-if="reference.Quality !=31 && reference.Quality !=30 && reference.Quality !=32 && reference.Quality !=40 && reference.Quality !=41 && reference.Quality !=6 && $root.SessionProperties.IsCalledFromHB != true" ng-controller="PopUpCtrl" ng-click="params={removableorder:reference};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetReferenceOrder)">
+               <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+           </li>
+           <li class="root-menu-item-3 " ng-if="(reference.Quality == 3 || reference.Quality == 20) && $root.SessionProperties.IsCalledFromHB == true && $root.SessionProperties.AdvancedOptions.isOnlineAcc=='1'" ng-controller="OrderCtrl" ng-click="confirmOrder(reference.Id);">
+               <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon" src="~/Content/Images/confirm.png" style="height: 30px;width:36px;margin-top: 6px;">Կատարել</span>
+           </li>
+       </ul>
+    </div> 
+
+   <div class="product-details bhoechie-tab-content" style="min-width:650px;padding-left:10px">
+       <div class="product-detail-row">
+           <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+           <div class="product-detail-cell product-detail-value">{{reference.Id}}</div>
+       </div>
+
+       <div class="product-detail-row">
+           <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+           <div class="product-detail-cell product-detail-value">{{reference.RegistrationDateString}}</div>
+       </div>
+       <div ng-if="reference.ReceiveDate" class="product-detail-row" ng-show="$root.SessionProperties.IsTestVersion == false">
+           <div class="product-detail-cell product-detail-lable">Տեղեկանքի ստացման օր</div>
+           <div class="product-detail-cell product-detail-value">{{reference.ReceiveDate | mydate | date: 'dd/MM/yyyy'}}</div>
+       </div>
+       <div class="product-detail-row" ng-if="$root.SessionProperties.IsCalledFromHB != true">
+           <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+           <div class="product-detail-cell product-detail-value">{{reference.OperationDateString}}</div>
+       </div>
+
+       <div class="product-detail-row">
+           <div class="product-detail-cell product-detail-lable">Տեղեկանքի տեսակ</div>
+           <loading-control class="col-sm-6 line_height" scopevariable="referenceTypes"></loading-control>
+           <div ng-show="referenceTypes" ng-repeat="ReferenceType in reference.ReferenceTypes" class="product-detail-value">
+               {{orderDetails.referenceTypes[ReferenceType]}} <span ng-if="ReferenceType == 8">` {{::reference.OtherTypeDescription}}</span>
+           </div>
+       </div>
+
+       <div ng-if="reference.OtherRequisites" class="product-detail-row">
+           <div class="product-detail-cell product-detail-lable">Այլ վավերապայմաններ</div>
+           <div class="product-detail-cell product-detail-value">{{reference.OtherRequisites}}</div>
+       </div>
+
+       <div ng-if="reference.ReferenceTypes.indexOf(3) > -1" class="product-detail-row">
+           <div class="product-detail-cell product-detail-lable">Շարժի սկիզբ</div>
+           <div class="product-detail-cell product-detail-value">{{reference.DateFrom | mydate | date: 'dd/MM/yyyy'}}</div>
+       </div>
+
+       <div ng-if="reference.ReferenceTypes.indexOf(3) > -1" class="product-detail-row">
+           <div class="product-detail-cell product-detail-lable">Շարժի վերջ</div>
+           <div class="product-detail-cell product-detail-value">{{reference.DateTo | mydate | date: 'dd/MM/yyyy'}}</div>
+       </div>
+
+       <div class="product-detail-row">
+           <div ng-if="reference.Accounts != undefined && reference.Accounts.length > 0" class="product-detail-cell product-detail-lable">Հաշվեհամարները</div>
+           <div ng-show="reference.Accounts" class="product-detail-cell product-detail-value">{{accounts}}</div>
+       </div>
+
+
+       @*<div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ներառել տեղեկություն վարկային գծերի վերաբերյալ</div>
+            <div ng-show="reference.IncludeCreditLine==0" class="product-detail-cell product-detail-value">Ոչ</div>
+            <div ng-show="reference.IncludeCreditLine==1" class="product-detail-cell product-detail-value">Այո</div>
+        </div>*@
+
+       <div class="product-detail-row">
+           <div class="product-detail-cell product-detail-lable">Տեղեկանքը ներկայացվելու է</div>
+           <div class="product-detail-cell product-detail-value">{{EmbassyDescription.desc}}<span ng-show="reference.ReferenceEmbasy==27">`{{reference.ReferenceFor}}</span></div>
+       </div>
+
+
+
+       <div class="product-detail-row">
+           <div class="product-detail-cell product-detail-lable">Տեղեկանքի լեզու</div>
+           <div ng-show="languages" class="product-detail-cell product-detail-value">{{languages[reference.ReferenceLanguage]}}</div>
+       </div>
+
+       <div class="product-detail-row">
+           <div class="product-detail-cell product-detail-lable">Տեղեկանքի ստացման մասնաճյուղ</div>
+           <div ng-show="filialList" class="product-detail-cell product-detail-value">{{orderDetails.filialList[reference.ReferenceFilial]}}</div>
+       </div>
+
+       <div class="product-detail-row" ng-show="$root.SessionProperties.IsTestVersion == false">
+           <div class="product-detail-cell product-detail-lable">Շտապ</div>
+           <div ng-show="reference.Urgent==0" class="product-detail-cell product-detail-value">Ոչ</div>
+           <div ng-show="reference.Urgent==1" class="product-detail-cell product-detail-value">Այո</div>
+       </div>
+
+       <div class="product-detail-row">
+           <div class="product-detail-cell product-detail-lable">Միջնորդավճար</div>
+           <div class="product-detail-cell product-detail-value">{{reference.FeeAmount | number:2}} {{reference.FeeAccount.Currency}}</div>
+       </div>
+
+       <div ng-if="reference.FeeAccount" class="product-detail-row">
+           <div class="product-detail-cell product-detail-lable">Միջնորդավճարի գանձման հաշիվ</div>
+           <div class="product-detail-cell product-detail-value">{{reference.FeeAccount.AccountNumber}}  {{reference.FeeAccount.Currency}} {{reference.FeeAccount.AccountTypeDescription}}</div>
+       </div>
+
+       <div ng-if="reference.ReferenceReceiptType != 0 && $root.SessionProperties.IsTestVersion == true" class="product-detail-row" >
+           <div class="product-detail-cell product-detail-lable">Տեղեկանքի ստացման եղանակ</div>
+           <div class="product-detail-cell product-detail-value">{{reference.ReferenceReceiptTypeDescription}}</div>
+       </div>
+
+       <div  class="product-detail-row" ng-if="reference.ReferenceReceiptType == 3 && $root.SessionProperties.IsTestVersion == true">
+           <div class="product-detail-cell product-detail-lable">Առաքման ամբողջական հասցե</div>
+           <div class="product-detail-cell product-detail-value">{{reference.FullDeliveryAddress}}</div>
+       </div>
+
+       <div class="product-detail-row" ng-if="reference.ReferenceReceiptType == 3 && $root.SessionProperties.IsTestVersion == true">
+           <div class="product-detail-cell product-detail-lable">Անձը հաստատող փաստաթուղթ</div>
+           <div class="product-detail-cell product-detail-value">{{reference.PassportDetails}}</div>
+       </div>
+
+       <div class="product-detail-row" ng-if="reference.ReferenceReceiptType == 3 && $root.SessionProperties.IsTestVersion == true">
+           <div class="product-detail-cell product-detail-lable">Բջջային հեռախոսահամար</div>
+           <div class="product-detail-cell product-detail-value">{{reference.PhoneNumber}}</div>
+       </div>
+
+       <div class="product-detail-row">
+           <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+           <div ng-if="reference.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{reference.QualityDescription}}</div>
+           <div ng-if="reference.Quality==31" class="product-detail-cell product-detail-value redStyle">{{reference.QualityDescription}}</div>
+           <div ng-if="reference.Quality!=31 && reference.Quality!=30" class="product-detail-cell product-detail-value">{{reference.QualityDescription}}</div>
+       </div>
+
+       <div ng-if="reference.Quality==31" class="">
+           <div ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="" style="clear:both;color:#6F6A6A;font-weight:bold">Մերժման պատճառ`</div>
+           <div class="redStyle">&nbsp;&nbsp;&nbsp;{{ rejectHistory.ReasonDescription }}</div>
+       </div>
+   </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px" ng-if="$root.SessionProperties.IsCalledFromHB != true">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+
+
+
+</form>
+
+    @*<div class=" col-md-10">
+
+        <form ng-controller="ReferenceOrderCtrl" ng-init="getReferenceOrder(selectedOrderId)">
+            
+                <loading-control scopevariable="filialList && embassyList && languages && referenceTypes && EmbassyDescription"></loading-control>
+                <div ng-show="filialList && embassyList && languages && referenceTypes && EmbassyDescription" class="popup_wrapper_inner">
+                    <div class="row">
+                        <div class="col-md-12 my_class">
+                            <div class="col-sm-6 my_label line_height" style="clear:both">Հայտի համար</div><div class="col-sm-6 my_text1 line_height">{{reference.Id}}</div>
+                            <div class="col-sm-6 my_label line_height" style="clear:both">Մուտքագրման ա/թ</div><div class="col-sm-6 my_text1 line_height">{{reference.RegistrationDateString}}</div>
+                            <div class="col-sm-6 my_label line_height" style="clear:both">Գործառնական օր</div><div class="col-sm-6 my_text1 line_height">{{reference.OperationDateString}}</div>
+                            <div class="col-sm-6 my_label line_height" style="clear:both">Տեղեկանքի տեսակ</div><loading-control class="col-sm-6 line_height" scopevariable="referenceTypes"></loading-control>  <div ng-show="referenceTypes" class="col-sm-6 my_text1">{{referenceTypes[reference.ReferenceType]}}</div>
+                            <div class="col-sm-6 my_label line_height" ng-if="reference.ReferenceType==3" style="clear:both">Շարժի սկիզբ</div><div class="col-sm-6 my_text1 line_height" ng-if="reference.ReferenceType==3">{{reference.DateFrom | mydate | date: 'dd/MM/yyyy'}}</div>
+                            <div class="col-sm-6 my_label line_height" ng-if="reference.ReferenceType==3" style="clear:both">Շարժի վերջ</div><div class="col-sm-6 my_text1 line_height" ng-if="reference.ReferenceType==3">{{reference.DateTo | mydate | date: 'dd/MM/yyyy'}}</div>
+                            <div ng-if="reference.ReferenceType!=4" class="col-sm-6 my_label line_height" style="clear:both"> Հաշվեհամարները</div><div ng-show="reference.Accounts" class="col-sm-6 my_text1 line_height"> {{accounts}} </div>
+                            <div class="col-sm-6 my_label line_height" style="clear:both">Ներառել տեղեկություն վարկային գծերի վերաբերյալ</div>
+                            <div ng-show="reference.IncludeCreditLine==0" class="col-sm-3 my_text1 line_height">Ոչ</div>
+                            <div ng-show="reference.IncludeCreditLine==1" class="col-sm-3 my_text1 line_height">Այո</div>
+                            <div class="col-sm-6 my_label line_height" style="clear:both">Տեղեկանքը ներկայացվելու է</div>
+                            <div class="col-sm-6 my_text1 line_height">{{EmbassyDescription.desc}}<span ng-show="reference.ReferenceEmbasy==27">` {{reference.ReferenceFor}}</span></div>
+                            <div class="col-sm-6 my_label line_height" style="clear:both">Տեղեկանքի լեզու</div>
+                            <div ng-show="languages" class="col-sm-6 my_text1 line_height">{{languages[reference.ReferenceLanguage]}}</div>
+                            <div class="col-sm-6 my_label line_height" style="clear:both">Տեղեկանքի ստացման մասնաճյուղ</div>
+                            <div ng-show="filialList" class="col-sm-6 my_text1 line_height">{{filialList[reference.ReferenceFilial]}}</div>
+                            <div class="col-sm-6 my_label line_height" style="clear:both">Շտապ</div>
+                            <div ng-show="reference.Urgent==0" class="col-sm-3 my_text1 line_height">Ոչ</div>
+                            <div ng-show="reference.Urgent==1" class="col-sm-3 my_text1 line_height">Այո</div>
+                            <div class="col-sm-6 my_label line_height" style="clear:both">Միջնորդավճար</div><div class="col-sm-6 my_text1 line_height">{{reference.FeeAmount | number:2}} {{reference.FeeAccount.Currency}}</div>
+                            <div ng-if="reference.FeeAccount" class="col-sm-6 my_label line_height" style="clear:both">Միջնորդավճարի գանձման հաշիվ</div><div ng-if="reference.FeeAccount" class="col-sm-6 my_text1 line_height">{{reference.FeeAccount.AccountNumber}}  {{reference.FeeAccount.Currency}} {{reference.FeeAccount.AccountTypeDescription}}</div>
+                            <p class="text-left"></p>
+                            <div class="col-sm-6 my_label line_height" style="clear:both">Կարգավիճակ</div>
+                            <div class="col-sm-6 my_text1 line_height">
+                                <span ng-if="reference.Quality==30" class="greenStyle">{{ reference.QualityDescription }}</span>
+                                <span ng-if="reference.Quality==31" class="redStyle">{{ reference.QualityDescription }}</span>
+                                <span ng-if="reference.Quality!=31 && reference.Quality!=30">{{ reference.QualityDescription }}</span>
+                            </div>
+                            <div ng-if="order.Quality==31" ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="col-sm-12 my_text1">Մերժման պատճառ` <span class="redStyle">{{ rejectHistory.ReasonDescription }}</span></div>
+                            <div class="col-sm-12 my_text1 line_height">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                </div>
+            <div>
+                <button ng-if="order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && order.Quality !=50" type="button" class="btn btn-sm btn-primary" ng-controller="PopUpCtrl" ng-click="params={removableorder:reference};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetReferenceOrder)"> <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;Հրաժարման հայտ</button>
+            </div>
+        </form>
+</div>*@
+
+
+
+
+   

@@ -1,0 +1,234 @@
+﻿
+<div id="interDetailsLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<form ng-controller="InternationalPaymentOrderCtrl" ng-init="getInternationalPaymentOrder(selectedOrderId);" style="min-height:100px;min-width:100px" name="internationalPaymentOrderDetailsForm">
+    
+    <div ng-show="orderDetails" class="menu-bar dialog-menu light-green " style="margin-left:-3px;margin-top:0px" ng-if="((orderDetails.Quality == 3 || orderDetails.Quality == 20) && $root.SessionProperties.IsCalledFromHB == true && $root.SessionProperties.AdvancedOptions.isOnlineAcc=='1') || $root.SessionProperties.IsCalledFromHB != true">
+        <ul id="menu" class="dialog-menu">
+            @*<li class="root-menu-item-5 " ng-if="orderDetails" ng-click="printInternationalPaymentOrder(0)">
+            <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon printButton">Հանձնարարական</span>
+        </li>*@
+            <li class="root-menu-item-5 " ng-if="orderDetails.Quality!=undefined && orderDetails.Quality ==30 && $root.SessionProperties.IsCalledFromHB != true" ng-controller="PopUpCtrl" ng-click="params={removableorder:orderDetails};openWindow('/RemovalOrder/RemovalOrder','Հեռացման հայտ','removalOrder',callbackgetPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հեռացման հայտ</span>
+            </li>
+
+            <li class="root-menu-item-5 " ng-if="orderDetails.Quality!=undefined && orderDetails.Quality !=31 && orderDetails.Quality !=30 && orderDetails.Quality !=32 && orderDetails.Quality !=40 && orderDetails.Quality !=41 && orderDetails.Quality !=6 && orderDetails.Quality !=50 && $root.SessionProperties.IsCalledFromHB != true" ng-controller="PopUpCtrl" ng-click="params={removableorder:orderDetails};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+            </li>
+            <li class="root-menu-item-4 " ng-if="(orderDetails.Quality == 3 || orderDetails.Quality == 20) && $root.SessionProperties.IsCalledFromHB == true" ng-click="internationalPaymentOrderDetailsForm.$setSubmitted();internationalPaymentOrderDetailsForm.$valid ? saveInternationalPaymentAddresses() : showValidationMessage();" style="padding-right:0">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-3 " ng-if="orderDetails.Quality!=undefined && (orderDetails.Quality == 3 || orderDetails.Quality == 20) && $root.SessionProperties.IsCalledFromHB == true" ng-controller="OrderCtrl" ng-click="confirmOrder(orderDetails.Id);">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon" src="~/Content/Images/confirm.png" style="height: 30px;width:36px;margin-top: 6px;">Կատարել</span>
+            </li>
+
+        </ul>
+    </div>
+    <div ng-show="orderDetails" class="product-details bhoechie-tab-content" style="min-width:600px;padding-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Id}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.RegistrationDateString}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="$root.SessionProperties.IsCalledFromHB != true">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.OperationDateString}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.Type==3">
+            <div class="product-detail-cell product-detail-lable">Ելքագրվող (դեբետ) հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.DebitAccount.AccountNumber}} {{orderDetails.DebitAccount.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Amount | number:2}} {{orderDetails.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable" ng-style="$root.SessionProperties.IsCalledFromHB == true? {'font-weight':'bold'}:''" ng-if="orderDetails.SenderType == 6">Ուղարկողի անուն ազգանուն</div>
+            <div class="product-detail-cell product-detail-lable" ng-style="$root.SessionProperties.IsCalledFromHB == true? {'font-weight':'bold'}:''" ng-if="orderDetails.SenderType != 6">Ուղարկողի անվանում</div>
+            <div class="product-detail-cell product-detail-value" ng-style="$root.SessionProperties.IsCalledFromHB == true? {'font-weight':'bold'}:''">{{orderDetails.Sender}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրանցման հասցե</div>
+            <div class="product-detail-cell product-detail-value" ng-if="$root.SessionProperties.IsCalledFromHB != true || ((orderDetails.Quality != 3 && orderDetails.Quality != 20) && $root.SessionProperties.IsCalledFromHB == true)">{{orderDetails.SenderAddress || "-"}}</div>
+            <div class="col-sm-6" ng-if="$root.SessionProperties.IsCalledFromHB == true && (orderDetails.Quality == 3 || orderDetails.Quality == 20)">
+                <div class="row">
+                    <textarea rows="2" ng-model="orderDetails.SenderAddress" name="SenderAddress" id="SenderAddress" ng-enter="" required class="tab_title form-control" style="text-align:left"></textarea>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.SenderAddkress.$dirty"
+                                 for="internationalPaymentOrderForm.SenderAddress.$error">
+                        <ng-message when="required" class="errors">
+                            Գրանցման հասցեն լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.Currency!='RUR'">
+            <div class="product-detail-cell product-detail-lable">Գրանցման քաղաք</div>
+            <div class="product-detail-cell product-detail-value" ng-if="$root.SessionProperties.IsCalledFromHB != true || ((orderDetails.Quality != 3 && orderDetails.Quality != 20) && $root.SessionProperties.IsCalledFromHB == true)">{{orderDetails.SenderTown || "-"}}</div>
+            <div class="col-sm-6" ng-if="$root.SessionProperties.IsCalledFromHB == true && (orderDetails.Quality == 3 || orderDetails.Quality == 20)">
+                <div class="row">
+                    <input type="text" ng-model="orderDetails.SenderTown" name="SenderTown" id="SenderTown" ng-enter="" required class="tab_title form-control" style="text-align:left" />
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.SenderTown.$dirty"
+                                 for="internationalPaymentOrderForm.SenderTown.$error">
+                        <ng-message when="required" class="errors">
+                            Գրանցման քաղաքը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.Currency!='RUR'">
+            <div class="product-detail-cell product-detail-lable">Գրանցման երկիր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.SenderCountryName || "-"}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.SenderType == 6">
+            <div class="product-detail-cell product-detail-lable">Անձնագիր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.SenderPassport}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.SenderType == 6">
+            <div class="product-detail-cell product-detail-lable">Ծննդյան ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.SenderDateOfBirth  | date: 'dd/MM/yyyy' }}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.SenderType == 6">
+            <div class="product-detail-cell product-detail-lable">Էլեկտրոնային հասցե</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.SenderEmail || "-"}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.SenderType != 6">
+            <div class="product-detail-cell product-detail-lable">ՀՎՀՀ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.SenderCodeOfTax}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հեռախոսահամար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.SenderPhone || "-"}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Այլ բանկերում հաշվեհամարներ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.SenderOtherBankAccount || "-"}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.Currency!='RUR'">
+            <div class="product-detail-cell product-detail-lable">Միջնորդ բանկի SWIFT կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.IntermediaryBankSwift || "-"}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.Currency!='RUR'">
+            <div class="product-detail-cell product-detail-lable">Միջնորդ բանկի տվյալներ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.IntermediaryBank || "-"}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.Currency!='RUR'">
+            <div class="product-detail-cell product-detail-lable">Ստացող բանկի SWIFT կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.ReceiverBankSwift || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.FedwireRoutingCode!='' && orderDetails.FedwireRoutingCode!=undefined  && orderDetails.FedwireRoutingCode!=null ">
+            <div class="product-detail-cell product-detail-lable">Ստացող բանկի Fedwire Routing կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.FedwireRoutingCode || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացող բանկի տվյալներ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.ReceiverBank}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացող բանկի լրացուցիչ տվյալներ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.ReceiverBankAddInf || "-"}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.Currency=='RUR'">
+            <div class="product-detail-cell product-detail-lable">ԲԻԿ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BIK}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.Currency=='RUR'">
+            <div class="product-detail-cell product-detail-lable">Թղթակցային հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.CorrAccount}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.Currency=='RUR'">
+            <div class="product-detail-cell product-detail-lable">ԿՊՊ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.KPP}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի հաշվի համար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.ReceiverAccount.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable" ng-style="$root.SessionProperties.IsCalledFromHB == true? {'font-weight':'bold'}:''">Ստացողի անվանում</div>
+            <div class="product-detail-cell product-detail-value" ng-style="$root.SessionProperties.IsCalledFromHB == true? {'font-weight':'bold'}:''">{{orderDetails.Receiver}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի լրացուցիչ տվյալներ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.ReceiverAddInf || "-"}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.Currency=='RUR'">
+            <div class="product-detail-cell product-detail-lable">Ստացողի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.ReceiverType==1?'Ֆիզիկական անձ':orderDetails.ReceiverType==2? 'Իրավաբանական անձ' : 'Անհատ ձեռնարկատեր'}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.Currency=='RUR'">
+            <div class="product-detail-cell product-detail-lable">Ստացողի ԻՆՆ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.INN}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործարքի նկարագրություն</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Description || "-"}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable" ng-style="$root.SessionProperties.IsCalledFromHB == true? {'font-weight':'bold'}:''">Վճարման մանրամասներ</div>
+            <div class="product-detail-cell product-detail-value" ng-style="$root.SessionProperties.IsCalledFromHB == true? {'font-weight':'bold'}:''">{{orderDetails.DescriptionForPayment || "-"}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable" ng-style="$root.SessionProperties.IsCalledFromHB == true? {'font-weight':'bold'}:''">Երկիր</div>
+            <div class="product-detail-cell product-detail-value" ng-style="$root.SessionProperties.IsCalledFromHB == true? {'font-weight':'bold'}:''">{{orderDetails.CountryName}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման եղանակ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.DetailsOfCharges}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Շտապ փոխանցում</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.UrgentSign==true?'Այո':'Ոչ'}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.Type==3">
+            <div class="product-detail-cell product-detail-lable">Միջնորդավճարի հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.FeeAccount.AccountNumber}} {{orderDetails.FeeAccount.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Միջնորդավճար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.TransferFee | number:2}} AMD</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.CardFee>0">
+            <div class="product-detail-cell product-detail-lable">Քարտային ելքագրման միջնորդավճար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.CardFee | number:2}} {{orderDetails.CardFeeCurrency}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.ReasonIdDescription != undefined || orderDetails.ReasonIdDescription != null">
+            <div class="product-detail-cell product-detail-lable">Քարտից ելքագրման պատճառ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.ReasonIdDescription}}</div>
+        </div>
+
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value greenStyle" ng-if="orderDetails.Quality==30">{{ orderDetails.QualityDescription }}</div>
+            <div class="product-detail-cell product-detail-value redStyle" ng-if="orderDetails.Quality==31">{{ orderDetails.QualityDescription }}</div>
+            <div class="product-detail-cell product-detail-value" ng-if="orderDetails.Quality!=31 && orderDetails.Quality!=30">{{ orderDetails.QualityDescription }}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.Quality==31" ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)">
+            <div class="product-detail-cell product-detail-lable">Քարտային ելքագրման միջնորդավճար</div>
+            <div class="product-detail-cell product-detail-value">Մերժման պատճառ` <span class="redStyle">{{ rejectHistory.ReasonDescription }}</span></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable" ng-if="$root.SessionProperties.IsCalledFromHB != true">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable"><orderattachments orderid="selectedOrderId"></orderattachments></div>
+        </div>
+    </div>
+</form>

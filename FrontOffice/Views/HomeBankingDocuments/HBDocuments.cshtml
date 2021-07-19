@@ -1,0 +1,650 @@
+﻿@*@{
+        Layout = "~/Views/Shared/_Layout_HB_Documents.cshtml";
+    }*@
+
+<style type="text/css">
+    .filters {
+        border: none;
+        border-style: hidden;
+        padding: 0px 3px 3px 3px;
+        vertical-align: top;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        height: 34px;
+    }
+
+    .caption {
+        color: #076938;
+        text-align: center;
+        padding: 0px;
+        font-size: 14px;
+    }
+
+    .ui-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .td {
+        width: auto;
+        height: 25px;
+        padding: 5px;
+        margin: 0px;
+    }
+
+    button[type=button]:disabled {
+        background-color: #bfbfbf;
+    }
+
+    .buttonClass {
+        box-shadow: inset 0 1px 0 0 #fff;
+        background: -webkit-gradient(linear,left top,left bottom,color-stop(.05,#f9f9f9),color-stop(1,#e9e9e9));
+        background: -moz-linear-gradient(center top,#f9f9f9 5%,#e9e9e9 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9',endColorstr='#e9e9e9');
+        background-color: #f9f9f9;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border: 1px solid #dcdcdc;
+        display: inline-block;
+        color: #076938;
+        font-family: Sylfaen !important;
+        font-size: 15px;
+        font-weight: bold;
+        font-style: normal;
+        /*height: 37px;
+        width: 110px;*/
+        text-decoration: none;
+        text-align: center;
+        text-shadow: 1px 1px 0 #fff;
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+
+        .buttonClass:hover {
+            background: -webkit-gradient(linear,left top,left bottom,color-stop(.05,#e4e4e4),color-stop(1,#e4e4e4));
+            border: 1px solid #A6A6B1;
+            color: #2b6d59;
+        }
+
+    #btnpagination {
+        padding: 5px;
+        margin: 0px;
+        width: 30px;
+        height: 25px;
+        padding-top: 0px
+    }
+
+    #accountflowdetails .product-content-table-full_height {
+        min-height: 150px !important;
+    }
+
+    #accountflowdetails .my_class {
+        font-size: 13px !important;
+    }
+    /*--------*/
+
+    .pop-availability {
+        border-radius: 8px;
+        border: groove;
+        display: inline-block;
+        min-width: 375px;
+        position: absolute;
+    }
+
+    .tdBorder {
+        border: inset;
+    }
+
+    .dot {
+        height: 15px;
+        width: 15px;
+        background-color: red;
+        border-radius: 65%;
+        display: inline-block;
+    }
+
+    /*.select-font {
+        font-family: 'Arial Armenian' !important
+    }
+
+    select option {
+        font-family: 'Arial Armenian' !important
+    }*/
+    .select_style {
+        font-family: 'Arial Armenian' !important;
+    }
+
+    .select_options_style {
+        font-family: 'Arial Armenian' !important;
+    }
+
+    .vl {
+        border-left: 6px solid;
+        color: #cfdad0;
+        height: 500px;
+    }
+    /*.tabletd {
+        width: 100px !important;
+        text-align: center;
+        border: 1px solid #ddd;
+    }*/
+    .tableCaption {
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .td_border {
+        border: 1px solid #ddd;
+        /*height: 40px;*/
+    }
+
+    .tooltiptext {
+        width: 250px;
+        height: auto;
+        background-color: lightgray;
+        color: black;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+    }
+
+    .header-borader {
+        border: 1px solid #b7b3b3;
+    }
+
+    .click_toggle_menu {
+        cursor: pointer;
+        text-align: center;
+        padding: 0;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        -moz-user-select: none;
+    }
+
+        .click_toggle_menu div {
+            height: 6px;
+            width: 11px;
+            background-repeat: no-repeat;
+            background-position: left top;
+            display: inline-block;
+        }
+
+    .click_toggle_menu_selected {
+        background-position: right top !important;
+    }
+
+    .custom-scroll::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .custom-scroll::-webkit-scrollbar-track {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }
+
+    .custom-scroll::-webkit-scrollbar-thumb {
+        background-image: -webkit-gradient(linear, 40% 0%, 75% 84%, from(#4D9C41), to(#19911D), color-stop(.6,#57ad5d));
+        background-color: #FFF;
+        border-radius: 10px;
+        outline: 1px solid slategrey;
+    }
+
+    #HbDocTable tr th, #HbDocTable tr td {
+        word-break: break-word;
+    }
+
+    .hb-thead-width-min {
+        width: calc(100% - 8px);
+    }
+
+    .hb-thead-width-max {
+        width: 100%;
+    }
+
+    .selected {
+        background-color: #def1ce !important;
+    }
+
+    .col_width {
+        width: 335px;
+        min-width: 335px;
+        max-width: 335px;
+    }
+
+    .details_table_max_width {
+        width: 687px;
+    }
+
+    .details_table_min_width {
+        width: 670px;
+    }
+</style>
+
+<form id="HBDocuments" name="HBDocuments" ng-controller="HBDocumentsCtrl">
+    <div ng-init="initOperDay();initSearchParamsDefaultValues();noOperation = true;selectedCardIsAccessible =false;getUserFilialCode();getSourceTypes();getQualityTypes();getDocumentTypes();getDocumentSubTypes();getCurrencyTypes();showTransactionErrorWindow = false;showCreditAccount = false;">
+        <div class="product-container " id="AllHBRequests" style="width:99%">
+            <div style="width:100%; height:auto; display:inline-block;">
+                <table style="margin-top:0.25%;float:left;width:53%;float:left">
+                    <tbody>
+                        <tr class="filters">
+                            <td class="tabletd filters" style="width:8%">
+                            </td>
+                            <td class="tabletd filters" style="width:10.5%">
+                                <input type="date" name="startDate" class="form-control" id="startDate" title="Սկիզբ" placeholder="Ամսաթվի սկիզբ" ng-model="searchParams.StartDate" style="width : 100%; height: 33px;" ng-change="checkStartDate();" />
+                            </td>
+                            <td class="tabletd filters" style="width:19.5%">
+                                <select data-toggle="tooltip"
+                                        data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ ստացող փոխանցումների տեսակի" ng-model="searchParams.OnlyACBA"
+                                        name="onlyACBA" id="onlyACBA" class="form-control select_style" style="width: 245px;height: 33px;font-family: Arial Unicode, 'Arian AMU', Tahoma, Segoe UI, Arial Armenian !important;" ng-change="updateOnlyACBAField();">
+                                    <option value="" disabled="disabled">Ընտրեք ստացող փոխանցումների տեսակը</option>
+                                    <option selected="selected" value="0">Բոլորը</option>
+                                    <option style="font-family: none !important;" value="1">Միայն «ԱԿԲԱ ԲԱՆԿ»</option>
+                                </select>
+                            </td>
+                            <td class="tabletd filters" style="width:16%">
+                                <select style="height: 33px;margin-left: 5%;width: 201px;" data-toggle="tooltip"
+                                        data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ փոխանցման տեսակի" ng-model="searchParams.DocumentSubType"
+                                        name="documentSubType" id="documentSubType" class="form-control select-font select_style"
+                                        ng-change="updateDocumentSubTypeField();"
+                                        data-ng-options="k as v for (k,v) in documentSubtypes">
+                                    <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                                </select>
+                            </td>
+                            <td class="tabletd filters" style="width:27.5%">
+                                <select data-toggle="tooltip"
+                                        data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ հաստատման տեսակի" ng-model="searchParams.OperationType"
+                                        name="operationType" id="operationType" class="form-control select-font select_style" style="height: 33px;margin-left: 6%;">
+                                    <option value="">Ընտրեք հաստատման տեսակը</option>
+                                    <option value="0">Բոլորը</option>
+                                    <option value="1">Ավտոմատ</option>
+                                    <option selected="selected" value="2">Ձեռքով</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style="display:inline-block;margin-left:-1%;margin-top:0.25%;width:15%;">
+                    <tbody>
+                        <tr>
+                            <td class="tabletd filters" style="border:none !important">
+                                <button type="button" class="btn btn-primary" ng-click="getSearchedHBDocuments()" style="height:33px;width: 176px;"><span class="glyphicon glyphicon-search"></span> Որոնում</button>
+                            </td>
+                            <td class="tabletd filters" style="width: 42%;border:none !important"><button type="button" style="height:33px;width:50px" class="btn btn-primary" ng-click="resetFilters()" data-toggle="tooltip" title="Դատարկել որոնման դաշտերը"><span class="glyphicon glyphicon-trash"></span></button></td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+                <br />
+                <table style="margin-top:0.25%;width:95.5%">
+                    <tbody>
+                        <tr class="filters">
+
+                            <td class="tabletd filters" style="width:6.4%">
+                                <input type="number" class="form-control" name="transactionCode" id="transactionCode" placeholder="Գործարքի կոդ" title="Գործարքի կոդ" ng-model="searchParams.TransactionCode" style="width : 100%; height: 33px;" @*ng-change="setTransactionCodeChange();"*@ />
+                            </td>
+                            <td class="tabletd filters" style="width:8.5%">
+                                <input type="date" name="endDate" class="form-control" id="endDate" title="Վերջ" placeholder="Ամսաթվի վերջ" ng-model="searchParams.EndDate" style="width : 100%; height: 33px;margin-left:-1%" ng-change="checkEndDate();" />
+                            </td>
+                            <td class="tabletd filters" style="width:6.5%">
+                                <select style="height: 33px;margin-left: -1%;" data-toggle="tooltip"
+                                        data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ մասնաճյուղի" ng-model="searchParams.FilialCode" ng-disabled="IsDisableFilial"
+                                        name="filialCode" id="filialCode" class="form-control select-font select_style"
+                                        ng-change="changeFilialClick();"
+                                        data-ng-options="k as v for (k,v) in filialsList">
+                                    <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                                </select>
+                            </td>
+                            <td class="tabletd filters" style="width:10%">
+                                <div class="input-group" style="display:inline-flex;margin-left:-2%" ng-init="text='Ցուցադրել նշված հաճախորդի փոխանցումները'">
+
+                                    <span class="input-group-addon" style="display: inline-block;padding-right: 12px;padding-top: 10px;" title="" data-placement="left" data-toggle="tooltip" data-original-title="{{text}}">
+                                        <input type="checkbox" name="onlySelectedCustomer" id="onlySelectedCustomer" ng-true-value="true" ng-false-value="false" ng-model="searchParams.OnlySelectedCustomer" ng-click="updateOnlySelectedCustomerField();" style="margin-left:-5px;">
+                                    </span>
+                                    <input type="number" class="form-control" name="customerNumber" id="customerNumber" placeholder="Հաճախորդի համար" title="Հաճախորդի համար" ng-model="searchParams.CustomerNumber" style="width : 100%;height:33px;" ng-change="updateFiledForCustomer();" ng-dblclick="searchHBCustomers()" />
+                                </div>
+                            </td>
+
+                            <td class="tabletd filters" style="width:5%">
+                                <select style="height: 33px;margin-left:-4%" data-toggle="tooltip"
+                                        data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ գործարքի տեսակի" ng-model="searchParams.DocumentType"
+                                        name="documentType" id="documentType" class="form-control select-font select_style"
+                                        ng-change="changeDocumentTypeClick();"
+                                        data-ng-options="k as v for (k,v) in documentTypes">
+                                    <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                                </select>
+                            </td>
+                            <td class="tabletd filters" style="width:9%">
+                                <input type="text" class="form-control" name="amount" id="amount" placeholder="Գումար" title="Գումար" ng-model="searchParams.Amount" style="margin-left: -4%;width : 100%;height:33px;" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' fcsa-number />
+                            </td>
+                            <td class="tabletd filters" style="width:6%">
+                                <select style="height: 33px;margin-left: -8%;" data-toggle="tooltip"
+                                        data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ արժույթի" ng-model="searchParams.CurrencyType"
+                                        name="currencyType" id="currencyType" class="form-control select-font select_style"
+                                        data-ng-options="k as v for (k,v) in currencyTypes">
+                                    <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                                </select>
+                            </td>
+                            <td class="tabletd filters" style="width:12.5%">
+
+                                <div class="input-group" style="display:inline-flex;margin-left:-2%;height:33px">
+                                    <input type="number" class="form-control" name="debitAccount" id="debitAccount" placeholder="Դեբետ հաշիվ" title="Դեբետ հաշիվ" ng-model="searchParams.DebitAccount" style="width : 77%;height:33px;margin-left: -4%;" />
+                                    <span class="input-group-addon" title="" data-placement="left" data-toggle="tooltip" data-original-title="{{text}}"
+                                          style="position: relative;right: 12px;top: -6px;height: 33px;background: transparent;border: none;">
+                                        <select data-toggle="tooltip" style="width: 64px;height:33px;"
+                                                data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ արժույթի" ng-model="searchParams.DebitcountCurrencyType"
+                                                name="currencyType" id="currencyType" class="form-control select-font select_style"
+                                                data-ng-options="k as v for (k,v) in currencyTypes">
+                                            <option value="" hidden="hidden">Ընտրեք...</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </td>
+
+                            <td class="tabletd filters" style="width:16%">
+                                <input type="text" name="description" class="form-control" id="description" placeholder="Նկարագրություն" title="Նկարագրություն" ng-model="searchParams.Description" style="margin-left: 4%;height:33px;font-family: 'Arial Armenian','Helvetica Neue', Helvetica, Arial, sans-serif;" />
+                            </td>
+                            <td style="width:15%"></td>
+
+                            <td style="width:14.5%"></td>
+                            <td class="tabletd filters" style="width: 4%;">
+                                <select style="height: 33px;margin-left:13%" data-toggle="tooltip"
+                                        data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ աղբյուրի" ng-model="searchParams.SourceType"
+                                        name="sourceType" id="sourceType" class="form-control select-font select_style"
+                                        ng-change="updateSourceTypeField();"
+                                        data-ng-options="k as v for (k,v) in sourceTypes">
+                                    <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                                </select>
+                            </td>
+
+                            <td class="tabletd filters" style="width: 5.75%;">
+                                <select style="height: 33px;margin-left:5%" data-toggle="tooltip"
+                                        data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ կարգավիճակի" ng-model="searchParams.QualityType"
+                                        name="qualityType" id="qualityType" class="form-control select-font select_style"
+                                        ng-change="updateQualityTypeField();"
+                                        data-ng-options="k as v for (k,v) in qualityTypes">
+                                    <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                                </select>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div style="height:100%;background-color: white;float: left;margin-left: 10px;border: 2px solid #CFCFCF;margin-top:7px;width:99%">
+            <table style="width:100% !important;overflow-x:hidden;height:480px" id="HbDocTable">
+                <thead style="display:block;width: calc(100% - 8px);" @*ng-class="hbDocuments.length > 13? 'hb-thead-width-min':'hb-thead-width-max'"*@>
+                    <tr class="product-container-header" style="display: table; width: 100%; table-layout: fixed;">
+                        <th class="tableCaption header-borader" style="font-size:14px;text-align: center;width:5%;" ng-click="SortValues('TransactionCode');">Գործարքի կոդ</th>
+                        <th class="tableCaption header-borader" style="font-size:14px;text-align: center;width:7%" ng-click="SortValues('TransactionDate');">Ամսաթիվ</th>
+                        <th class="tableCaption header-borader" style="font-size:14px;text-align: center;width:5%" ng-click="SortValues('FilialCode');">Մ/ճ</th>
+                        <th class="tableCaption header-borader" style="font-size:14px;text-align: center;width:8%" ng-click="SortValues('CustomerNumber');">Հաճախորդ</th>
+                        <th class="tableCaption header-borader" style="font-size:14px;text-align: center;width:4%;" ng-click="SortValues('DocumentType');">Գոր </br> ծարք</th>
+                        <th class="tableCaption header-borader" style="font-size:14px;text-align: center;width:7%;" ng-click="SortValues('TransactionAmount');">Գումար</th>
+                        <th class="tableCaption header-borader" style="font-size:14px;text-align: center;width:5%;" ng-click="SortValues('TransactionCurrency');">Արժույթ</th>
+                        <th class="tableCaption header-borader" style="font-size:14px;text-align: center;width:11%;" ng-click="SortValues('DebitAccount');">Դեբետ հաշիվ</th>
+                        <th class="tableCaption header-borader" style="font-size:14px;text-align: center;width:12.75%;max-width:250px" ng-click="SortValues('TransactionDescription');">Նկարագրություն</th>
+                        <th class="tableCaption header-borader" style="font-size:14px;text-align: center;width:12%;" ng-click="SortValues('ReceiverName');">Ստացողի անվանում (մուտքագրված)</th>
+                        <th class="tableCaption header-borader" style="font-size:14px;text-align: center;width:12%;" ng-click="SortValues('ReceiverNameInRecords');">Ստացողի անվանում </br> (բանկի տվյալ)</th>
+                        <th class="tableCaption header-borader" style="font-size:14px;text-align: center;width:3%;" ng-click="SortValues('TransactionSource');">Աղբյուր</th>
+                        <th class="tableCaption header-borader" style="font-size:14px;text-align: center;width:4.25%;" ng-click="SortValues('TransactionQuality');">Կարգա </br> վիճակ</th>
+                        <th colspan="2" class="tableCaption header-borader" style="width:4%" >
+                            <i ng-if="$root.SessionProperties.AdvancedOptions.isOnlineAcc=='1'" style="width: 22px;height: 17px;background-image:url('../../Content/Images/hb_menu.png');background-size: contain;background-repeat: no-repeat;" context="contextHBActions" class="click_toggle_menu" @*ng-click="showMenuList($event)"*@>
+                                <div id="contextMenu" style="width:17px;height:18px;"></div>
+                            </i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" style="border-collapse: collapse;height:460px;width:100%;overflow-y:scroll;overflow-x:hidden;display:block;" class="custom-scroll">
+                    <tr ng-if="hbDocuments.length!=0" ng-repeat="document in hbDocuments | orderBy:sortField:reverseOrder" ng-class="{'selected':document == selectedRow}" style="cursor: pointer;text-align:center; display: table; width: 100%;" ng-click="setClickedRow(document,$index);selectRow(document);initCustomerAccountAndInfo(document);" @*ng-dblclick="showTransferDetailsForSpesialTypes(document.DocumentType);" // showCustomerInfoDetails(document.TransactionCode);openAccountDetails(document.TransactionCode);*@>
+                        <td class="tabletd td_border" style="width:5%">{{ ::document.TransactionCode }}</td>
+                        <td class="tabletd td_border" style="width:7%">{{ ::document.TransactionDate | date: 'dd/MM/yyyy' }}</td>
+                        <td class="tabletd td_border" style="width:5%">{{ ::document.FilialCode }}</td>
+                        <td class="tabletd td_border" style="width:8%" ng-click="setClickedRow(document);selectRow(document);">
+                            <span ng-click="ShowCustomerInSearch(document.CustomerNumber)">{{ ::document.CustomerNumber }} </span>
+                            <span class="fa fa-info-circle" ng-if="document.CustomerNumber != 0" data-toggle="tooltip" data-original-title="Հաճախորդի տվյալներ" ng-controller="PopUpCtrl" ng-click="params={customerNumber:document.CustomerNumber}; openWindow('/Customer/CustomerDetails','Հաճախորդի տվյալներ','customerdetails')"></span>
+                        </td>
+                        <td class="tabletd td_border" style="width:4%" ng-mousemove="showDocumentTypeDescription($event,document.DocumentType);" ng-mouseleave="closeDocumentTypeDescription()">{{ ::document.DocumentType }}</td>
+                        <td class="tabletd td_border" style="width:7%;text-align:right;padding-right: 5px;">{{ ::document.TransactionAmount | currency : value ="" }}</td>
+                        <td class="tabletd td_border" style="width:5%">{{ ::document.TransactionCurrency }}</td>
+                        <td class="tabletd td_border" style="width:11%">
+                            {{ ::document.DebitAccount }}
+                            <span class="fa fa-info-circle" ng-if="document.DebitAccount != 0" style="color:#337AB7" data-toggle="tooltip" data-original-title="Դեբետ հաշվի հաճախորդի տվյալներ" ng-controller="PopUpCtrl" ng-click="setClickedRow(document);selectRow(document);setDebitAccountCustomerNumber(document.DebitAccount);"></span>
+                        </td>
+                        <td class="tabletd td_border" style="width:12.75%;font-family:'Arial Armenian' !important;text-align:left;max-width:250px" ng-mousemove="showDescriptionFullText($event,document.TransactionDescription)" ng-mouseleave="hideDescriptionFullText();">{{ ::document.TransactionDescription | limitTo : 30 }}<span ng-if="document.TransactionDescription.length > 30">...</span></td>
+                        <td class="tabletd td_border" style="width:12%;font-family:'Arial Armenian' !important;text-align:left;">{{ ::document.ReceiverName }}</td>
+                        <td class="tabletd td_border" style="width:12%;text-align:right;font-family:'Arial Armenian' !important;text-align:left;">{{ ::document.ReceiverNameInRecords }}</td>
+                        <td class="tabletd td_border" style="width:3%" ng-mousemove="showTransactionSourceDescription($event,document.TransactionSource);" ng-mouseleave="closeTransactionSourceDescription()">{{ ::document.TransactionSource }}</td>
+                        <td class="tabletd td_border" style="width:4.25%" ng-mousemove="showTransactionQualityDescription($event,document.TransactionQuality);" ng-mouseleave="closeTransactionQualityDescription()">{{ ::document.TransactionQuality }}</td>
+                        <td class="click_toggle  td_border" context="contextHBDocuments" style="width:4%;border-left:none !important;" colspan="2">
+                            <input type="checkbox" style="margin-left:-10px" data-toggle="tooltip" data-trigger="hover" id="autoCheckbox" ng-if="document.TypeIsForAutomatonfirmated == true && (document.TransactionQuality == 3 || document.TransactionQuality == 20)" ng-true-value="true" ng-false-value="false" data-placement="top" title="Նշել/հանել ավտոմատ կատարումից" ng-init="(document.ForAutomatConfirmated == true)? transactionChecked = true:transactionChecked = false;" ng-model="transactionChecked" ng-click="selectOrRemoveFromAutomaticExecution(transactionChecked,document.TransactionCode);" />
+                            <div id="contextMenu" style="width:10px;margin-left:7px;"></div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot style="width: calc(100% - 8px);display:block">
+                    <tr class="product-container-header" style="display: table;">
+                        <td class="col-lg-12">
+                            <div class="col-lg-4" style="float:left;margin-top:3px;">
+                                <label class="form-control" style="background-color:transparent;border:none;font-weight:bolder;color:black">Ընդամենը։ գումար՝ <label style="font-weight:bold;color:black">{{ totalAmount | currency : value ="" }}</label>   քանակ՝ <label style="font-weight:bold;color:black">{{ totalQuantity }}</label></label>
+                            </div>
+                            <div style="float:left" class="col-lg-4">
+                                <div style="margin-left:auto;margin-right:auto">
+                                    <div class="col-sm-1 td"><button style="padding: 3px; margin: -2px;" id="btnpagination" class="buttonClass" title="Սկիզբ" type="button" ng-disabled="searchParams.PageNumber <= 1 || allCount == 0" ng-click="searchParams.PageNumber = 1; backToFirstPage()"><span class="fa fa-fast-backward"></span></button></div>
+                                    <div class="col-sm-1 td"><button style="padding: 3px; margin: -2px" id="btnpagination" class="buttonClass" title="Հետ" type="button" ng-disabled="searchParams.PageNumber <= 1 || allCount == 0" ng-click="searchParams.PageNumber = searchParams.PageNumber - 1 ; backOnePage()"><span class="fa fa-backward"></span></button></div>
+                                    <div class="col-sm-1 td">Էջ <input class="ui-pg-input" type="number" name="id" ng-model="searchParams.PageNumber" ng-keypress="($event.charCode==13)?getSearchedHBDocumentsList():return" style="width : 50px; height : 21px;" /></div>
+                                    <div class="col-sm-1 td">Էջերի քանակ {{pageCount}}</div>
+                                    <div class="col-sm-1 td"><button style="padding: 3px; margin: -2px" id="btnpagination" class="buttonClass" title="Առաջ" type="button" ng-disabled="searchParams.PageNumber == pageCount || allCount == 0" ng-click="searchParams.PageNumber = searchParams.PageNumber + 1 ; moveForwardOnePage()"><span class="fa fa-forward"></span></button></div>
+                                    <div class="col-sm-1 td"><button style="padding: 3px; margin: -2px" id="btnpagination" class="buttonClass" title="Վերջ" type="button" ng-disabled="searchParams.PageNumber == pageCount || allCount == 0" ng-click="searchParams.PageNumber = pageCount ; goToLastPage()"><span class="fa fa-fast-forward"></span></button></div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4">
+                                <div style="width:400px;position:relative;left:25%">
+                                    <button type="button" class="buttonClass" style="margin-top:2px" ng-if="params.type != 9 " ng-controller="OrderCtrl" ng-click="params.type == 6? initReestrFromHB():'';authorizeCustomer();getRowTypesInfo();showModalOrder(DocType, DocSubType,Description)"><span class="glyphicon glyphicon-eye-open" style="font-weight:bold;"></span> Դիտարկել</button>
+                                    <button type="button" ng-if="($root.SessionProperties.AdvancedOptions.isOnlineAcc=='1')&&(params.type != 19 && params.type != 18 && params.type != 4 && params.type != 26) && (params.quality == 3 || params.quality == 20) && ((params.type == 1 && params.subType != 1) || params.type == 2 || params.type == 3 || params.type == 21 ||params.type == 20 || params.type == 15)" class="buttonClass" style="margin-top:2px" ng-click="authorizeCustomer();confirmOrder(params.selectedOrderId);"><span style="font-weight:bold;" class="glyphicon glyphicon-ok-circle"></span> Կատարել</button>
+                                    <button type="button" ng-if="($root.SessionProperties.AdvancedOptions.isOnlineAcc=='1')&&(params.type != 19 && params.type != 18 && params.type != 4) && (params.quality == 3 || params.quality == 20) && params.type == 6" class="buttonClass" style="margin-top:2px" ng-click="authorizeCustomer();confirmReestr(params.selectedOrderId);"><span style="font-weight:bold;" class="glyphicon glyphicon-ok-circle"></span> Կատարել</button>
+                                    <button type="button" ng-if="($root.SessionProperties.AdvancedOptions.isOnlineAcc=='1')&&(params.type != 19 && params.type != 18 && params.type != 4) && (params.quality == 3 || params.quality == 20) && params.type == 1 && params.subType == 1" class="buttonClass" style="margin-top:2px" ng-click="authorizeCustomer();confirmArmTransfer(params.selectedOrderId);"><span style="font-weight:bold;" class="glyphicon glyphicon-ok-circle"></span> Կատարել</button>
+                                    <button type="button" ng-if="($root.SessionProperties.AdvancedOptions.isOnlineAcc=='1')&&(params.type == 19 || params.type == 18 || params.type == 4) && (params.quality == 3 || params.quality == 20)" class="buttonClass" style="margin-top:2px" ng-click="authorizeCustomer();reestrTransactionTerminationConfirmation(0,0,0,0,0);"><span style="font-weight:bold;" class="glyphicon glyphicon-ok-circle"></span>  Կատարել</button>
+                                    <button type="button" class="buttonClass" style="margin-top:2px" ng-if="$root.SessionProperties.AdvancedOptions.isOnlineAcc=='1'" ng-click="formulateAll()"><span class="glyphicon glyphicon-check"></span> Ձևակերպել բոլորը</button>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <ul id="contextHBDocuments" class="dropdown-menu" >
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="openWindow('/HomeBankingDocuments/HBDocumentTransactionError','Սխալի Նկարագրություն','HBDocumentsTransactionErrorForm');">Գործարքի կատարման սխալ</a></li>
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-click="printCustomerallProducts(params.customerNumber);">Հաճախորդի բոլոր պրոդուկտներ</a></li>
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-click="authorizeCustomer();checkArCaBalance();">Մնացորդ ArCa-ում</a></li>
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-if="debitAccountNumber != 0" ng-controller="PopUpCtrl" ng-click="params={accountnumber:debitAccountNumber};openWindow('/AccountFreeze/AccountFreezeHistory','Հաշվի սառեցման գրություններ','FreezeHistoryForm');">Հաշվի սառեցման գրություններ</a></li>
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="openWindow('/HomeBankingDocuments/HBDocumentConfirmationHistory','Հաստատումների պատմություն','HBDocumentsConfirmationHistoryForm');">Հաստատումների պատմություն</a></li>
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-click="productAccordanceClick();">Կապը ձևակերպված պրոդուկտի հետ</a></li>
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-if="$root.SessionProperties.AdvancedOptions.isOnlineAcc=='1'" ng-click="changeTransactionQualityClick();">Փոխել գործարքի կարգավիճակը</a></li>
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-if="$root.SessionProperties.AdvancedOptions.isOnlineAcc=='1' && (params.quality == 3 || params.quality == 20)" ng-click="bypassUnconfirmedOrder();">Շրջանցել</a></li>
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-if="$root.SessionProperties.AdvancedOptions.isOnlineAcc=='1' && (params.quality == 3 || params.quality == 20)" ng-click="rejectTransactionClick();">Մերժել</a></li>
+
+        </ul>
+        <ul id="contextHBActions" class="dropdown-menu">  
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-click="setHBDocumentAutomatConfirmationSign();">Նշել բոլորը ավտոմատ կատարման համար</a></li>
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-click="excludeCardAccountTransactions();">Բացառել քարտային հաշիվները</a></li>
+        </ul>
+        <div style="height:100%;min-height:180px;max-height:180px;background-color: white;float: left;margin-left: 10px;border: 2px solid #CFCFCF;margin-top:7px;width:99%">
+            <div id="hbAccountflowdetails" style="float:left;border-style:ridge;margin-left:10px;margin-top:0.5%">
+
+                <div id="accountflowdetails" style="margin-top:1px !important;height:148px !important;width: 450px;">
+                    <div class="product-collapsable-section">
+
+                        <div class="product-content-table" style="height:146px !important">
+                            <table class="table table-condensed table-hover" style="margin-top:0px !important;background-color: #eef6e7!important;">
+                                <tbody>
+                                    <tr style="max-height:200px;cursor:pointer;">
+                                        <td style="width: 0px;">
+                                            <span class="my_class">Սկիզբ</span>
+                                        </td>
+
+                                        <td style="text-align:right">
+                                            <span class="my_class">{{ accountFlowDetails.EntryAMD | number:2}} AMD</span>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <span style="color:green" class="my_class">{{ accountFlowDetails.EntryCurrency | currency : value ="" }} {{ accountFlowDetails.AccountCurrency }}</span>
+                                        </td>
+
+                                    </tr>
+                                    <tr style="max-height:200px;cursor:pointer;">
+                                        <td>
+                                            <span class="my_class">Դեբետ</span>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <span class="my_class">{{ accountFlowDetails.DebitAMD | number:2}} AMD</span>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <span style="color:green" class="my_class">{{ accountFlowDetails.DebitCurrency | currency : value ="" }} {{ accountFlowDetails.AccountCurrency }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr style="max-height:200px;cursor:pointer;">
+                                        <td>
+                                            <span class="my_class">Կրեդիտ</span>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <span class="my_class">{{ accountFlowDetails.CreditAMD | number:2}} AMD</span>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <span style="color:green" class="my_class">{{ accountFlowDetails.CreditCurrency | currency : value ="" }} {{ accountFlowDetails.AccountCurrency }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr style="max-height:200px;cursor:pointer;">
+                                        <td>
+                                            <span class="my_class">Վերջ</span>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <span class="my_class"> {{ accountFlowDetails.BalanceAMD | number:2}} AMD</span>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <span style="color:green" class="my_class"> {{ accountFlowDetails.BalanceCurrency | currency : value ="" }} {{ accountFlowDetails.AccountCurrency }}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div style="margin-left:1%;float: left;display: inline-block;margin-top: -133px;width:100%">
+                <table ng-class="{{document.getElementById('customerInfoDetailsTable').clientHeight > 140? 'details_table_max_width':'details_table_min_width'}}"
+                       id="customerInfoDetailsTable" style="float:left;margin-left:455px;margin-top:-1%;overflow-y:auto;overflow-x:hidden;display:block;height:100%;max-height:152px;border-style:ridge;border: 2px solid #CFCFCF;" class="custom-scroll">
+                    <tbody>
+                        <tr>
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;color:#076938;font-family:'Arial Armenian' !important;">
+                                <p ng-if="customerInfoDetails.CustomerDescription != '' && customerInfoDetails.CustomerDescription != null" style="display:inline">{{ customerInfoDetails.CustomerDescription }}</p>
+                                <p ng-if="customerInfoDetails.CustomerDescription == '' || customerInfoDetails.CustomerDescription == null" style="display:inline">{{ accountFlowDetails.Description }}</p>
+                                <p ng-if="accountFlowDetails != null && accountFlowDetails.CardNumber != null && accountFlowDetails.CardNumber != 0" style="display:inline">( {{ accountFlowDetails.CardNumber }} {{ accountFlowDetails.CardType }} )</p><br />
+                                <p style="font-weight: bold;color: #ea1e31;" ng-if="customerInfoDetails.IsCustomerBirthday == true"> Այսօր հաճախորդի ծննդյան օրն է: </p>
+                                <p style="color:blue;display:inline" ng-if=" customerInfoDetails.CustomerIsMember == 1"> + </p>
+                                <p style="color:blue;display:inline" ng-if=" customerInfoDetails.CustomerPOS == 1"> "POS" </p>
+                                <p style="color:blue;display:inline" ng-if=" customerInfoDetails.CustomerVIPTypes != null"> "{{ customerInfoDetails.CustomerVIPTypes }}" </p>
+                            </td>
+                            <td class="tdBorder col_width" style="text-align:right;font-weight:bold;font-size:14px;color:#076938;font-family:'Arial Armenian' !important;color:blue;">{{ customerInfoDetails.PosOnlineDescription }}</td>
+                        </tr>
+                        <tr ng-if="customerInfoDetails.AccountType == 1 && customerInfoDetails != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important;color:red">Ժամանակավոր</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important"></td>
+                        </tr>
+                        <tr ng-if="customerInfoDetails.AparikDescription != '' && customerInfoDetails != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important;color:blue">{{ customerInfoDetails.AparikDescription }}</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important"></td>
+                        </tr>
+                        <tr ng-if="customerInfoDetails.ClosingDate == '' && customerInfoDetails.FreezeDate != '' && customerInfoDetails != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important;">Հաշիվը սառեցված է</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important;color:red">{{ customerInfoDetails.FreezeDate | date: 'dd/MM/yyyy' }}</td>
+                        </tr>
+                        <tr ng-if="customerInfoDetails.ClosingDate != '' && customerInfoDetails != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important;">Փակված է</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important;color:red">{{ customerInfoDetails.ClosingDate | date: 'dd/MM/yyyy' }}</td>
+                        </tr>
+                        <tr ng-if="customerInfoDetails.Debt != 0 && customerInfoDetails != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important;">Պարտք է</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important;color:red">{{ customerInfoDetails.Debt | number:2}}</td>
+                        </tr>
+                        <tr ng-if="customerInfoDetails.DebtAcc != 0 && customerInfoDetails != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important;">Պարտավորություն հաշիվների սպ․ գծով</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important;color:red">{{ customerInfoDetails.DebtAcc | number:2}}</td>
+                        </tr>
+                        <tr ng-if="customerInfoDetails.DebtHb != 0 && customerInfoDetails != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important;">Պարտավորություն ՀԲ սպ․ գծով</td>
+                            <td class="tdBorder" style="text-align:right;font-family:'Arial Armenian' !important;color:red">{{ customerInfoDetails.DebtHb | number:2}}</td>
+                        </tr>
+                        <tr ng-if="customerInfoDetails.UnUsedAmount != 0 && customerInfoDetails != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important;">Գումարը սառեցված է</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important;color:red;font-weight:bold">{{ customerInfoDetails.UnUsedAmount | number:2}}</td>
+                        </tr>
+                        <tr ng-if="customerInfoDetails.UnUsedAmount != 0 && customerInfoDetails != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important;">Սառեցման ամսաթիվ</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important;color:red;font-weight:bold">{{ customerInfoDetails.UnUsedAmountDate }}</td>
+                        </tr>
+                        <tr ng-if="(customerInfoDetails.ExtractsReceivingTypeDescription != '' && customerInfoDetails.ExtractsReceivingTypeDescription != null) || customerInfoDetails == null" ng-repeat="(key, value) in customerInfoDetails.ExtractsReceivingTypeDescription">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important">{{ key }}</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important">{{ value }}</td>
+                        </tr>
+                        <tr ng-if="customerInfoDetails.ProvisionAMDDescription != '' && customerInfoDetails.ProvisionAMDDescription != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important">Գրավադրված է {{ customerInfoDetails.ProvisionAMDDescription }}</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important">{{ customerInfoDetails.ProvisionAMDAmount | currency : value ="" }}</td>
+                        </tr>
+                        <tr ng-if="customerInfoDetails.ProvisionUSDDescription != '' && customerInfoDetails.ProvisionUSDDescription != null">
+                            <td class="tdBorder" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important">Գրավադրված է {{ customerInfoDetails.ProvisionUSDDescription }}</td>
+                            <td class="tdBorder" style="text-align:right;font-family:'Arial Armenian' !important">{{ customerInfoDetails.ProvisionUSDAmount | currency : value ="" }}</td>
+                        </tr>
+                        <tr ng-if="customerInfoDetails.ProvisionEURDescription != '' && customerInfoDetails.ProvisionEURDescription != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important">Գրավադրված է {{ customerInfoDetails.ProvisionEURDescription }}</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important">{{ customerInfoDetails.ProvisionEURAmount | currency : value ="" }}</td>
+                        </tr>
+
+                        <tr ng-if="customerInfoDetails.ProvisionRURDescription != '' && customerInfoDetails.ProvisionRURDescription != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important">Գրավադրված է {{ customerInfoDetails.ProvisionRURDescription }}</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important">{{ customerInfoDetails.ProvisionRURAmount | currency : value ="" }}</td>
+                        </tr>
+
+                        <tr ng-if="customerInfoDetails.DAHKDescription != '' && customerInfoDetails.DAHKDescription != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important">{{ customerInfoDetails.DAHKDescription }}</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important;color:red">{{ customerInfoDetails.DAHKAmount }}</td>
+                        </tr>
+
+                        <tr ng-if="customerInfoDetails.MovedAmountDescription != '' && customerInfoDetails.MovedAmountDescription != null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important">{{ customerInfoDetails.MovedAmountDescription }}</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important">{{ customerInfoDetails.MovedAmount }}</td>
+                        </tr>
+
+                        <tr ng-if="(customerInfoDetails.LastUpdatedInfoDescription != '' && customerInfoDetails.LastUpdatedInfoDescription != null) || customerInfoDetails == null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important">{{ customerInfoDetails.LastUpdatedInfoDescription }}</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important">{{ customerInfoDetails.LastUpdatedDate | date: 'dd/MM/yyyy'  }}</td>
+                        </tr>
+
+                        <tr ng-if="(customerInfoDetails.AMLDescription != '' && customerInfoDetails.AMLDescription != null) || customerInfoDetails == null">
+                            <td class="tdBorder col_width" style="font-weight:bold;font-size:14px;font-family:'Arial Armenian' !important">{{ customerInfoDetails.AMLDescription }}</td>
+                            <td class="tdBorder col_width" style="text-align:right;font-family:'Arial Armenian' !important"><span class="dot" ng-if="(customerInfoDetails.AMLDescription != '' && customerInfoDetails.AMLDescription != null) || customerInfoDetails != null"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br />
+        </div>
+
+        <span class="tooltiptext showElementDescription" id="showElementDescription" style="display:none;font-family:'Arial Armenian';width:auto;height:auto;" ng-model="elementDescription">{{ elementDescription }}</span>
+
+    </div>
+</form>
+

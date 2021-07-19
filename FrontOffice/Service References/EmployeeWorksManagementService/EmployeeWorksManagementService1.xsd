@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/EmployeeWorksManagement" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/EmployeeWorksManagement" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="EmployeeWork">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClosingDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ClosingDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClosingSetNumber" nillable="true" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="CustomerIdentityId" type="xs:unsignedLong" />
+      <xs:element minOccurs="0" name="DescriptionType" type="xs:unsignedShort" />
+      <xs:element minOccurs="0" name="DescriptionTypeDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExecutorSetNumber" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="Id" type="xs:unsignedLong" />
+      <xs:element minOccurs="0" name="Importance" type="xs:unsignedShort" />
+      <xs:element minOccurs="0" name="ImportanceDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OtherDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Quality" type="xs:unsignedShort" />
+      <xs:element minOccurs="0" name="QualityDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegistrationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SetNumber" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="Type" type="xs:unsignedShort" />
+      <xs:element minOccurs="0" name="TypeDescription" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EmployeeWork" nillable="true" type="tns:EmployeeWork" />
+  <xs:complexType name="ActionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Errors" nillable="true" type="tns:ArrayOfActionError" />
+      <xs:element minOccurs="0" name="ResultCode" type="tns:ResultCode" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ActionResult" nillable="true" type="tns:ActionResult" />
+  <xs:complexType name="ArrayOfActionError">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ActionError" nillable="true" type="tns:ActionError" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfActionError" nillable="true" type="tns:ArrayOfActionError" />
+  <xs:complexType name="ActionError">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" type="xs:short" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ActionError" nillable="true" type="tns:ActionError" />
+  <xs:simpleType name="ResultCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Normal">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Failed">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NotAutorized">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ValidationError">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ResultCode" nillable="true" type="tns:ResultCode" />
+  <xs:complexType name="SearchEmployeeWork">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BeginRow" type="xs:int" />
+      <xs:element minOccurs="0" name="ClosingDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ClosingSetNumber" nillable="true" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="CustomerIdentityId" nillable="true" type="xs:unsignedLong" />
+      <xs:element minOccurs="0" name="CustomerNumber" type="xs:unsignedLong" />
+      <xs:element minOccurs="0" name="DescriptionType" type="xs:unsignedShort" />
+      <xs:element minOccurs="0" name="DescriptionTypeDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EndRow" type="xs:int" />
+      <xs:element minOccurs="0" name="ExecutorSetNumber" nillable="true" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="Id" type="xs:unsignedLong" />
+      <xs:element minOccurs="0" name="Importance" nillable="true" type="xs:unsignedShort" />
+      <xs:element minOccurs="0" name="ImportanceDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsFilialHead" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Quality" nillable="true" type="xs:unsignedShort" />
+      <xs:element minOccurs="0" name="QualityDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegistrationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="RowCount" type="xs:int" />
+      <xs:element minOccurs="0" name="SetNumber" nillable="true" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:unsignedShort" />
+      <xs:element minOccurs="0" name="TypeDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserFilialCode" type="xs:unsignedInt" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchEmployeeWork" nillable="true" type="tns:SearchEmployeeWork" />
+  <xs:complexType name="ArrayOfSearchEmployeeWork">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SearchEmployeeWork" nillable="true" type="tns:SearchEmployeeWork" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSearchEmployeeWork" nillable="true" type="tns:ArrayOfSearchEmployeeWork" />
+</xs:schema>

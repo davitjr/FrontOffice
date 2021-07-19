@@ -1,0 +1,580 @@
+﻿<style type="text/css">
+    #paymentOrderFormArm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    .paymentOrderFormArm {
+        min-width: 850px;
+    }
+
+    .forPeriodic {
+        padding-left: 0;
+    }
+
+    .paymentOrderFormArmPeriodic {
+        min-width: 650px;
+    }
+
+    .for_error_transfer_arm {
+        margin-left: 217px !important;
+    }
+</style>
+<div id="armload" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form name="transferArmPaymentOrderForm" role="form" class="form-horizontal" ng-init="isUrgentTime();" ng-class="{'paymentOrderFormArm':!periodic,'paymentOrderFormArmPeriodic':periodic}" id="paymentOrderFormArm" ng-init="!periodic || periodic==1?getCustomer():''" novalidate prevent-enter-submit labels-required>
+    <div ng-show="!periodic" id="transferarmpaymentorder_menu" class="menu-bar dialog-menu light-green">
+        <ul ng-if="!periodic" id="menu" class="dialog-menu">
+            <li ng-if="order.Type != 86" class="root-menu-item-3 " ng-click="transferArmPaymentOrderForm.$setSubmitted();transferArmPaymentOrderForm.$valid ? getPersonalPaymentOrderDetails() : showValidationMessage();$parent.checkForTransit = true;">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Հանձնարարական</span>
+            </li>
+            <li ng-if="order.Type == 56 || order.Type == 86" class="root-menu-item-4 " ng-controller="PopUpCtrl" ng-click="checkDebitAccountForTransitPaymentOrder() &&  openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder')">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="cashInButton h-menu-icon">Կանխիկ մուտք</span>
+            </li>
+            <li ng-if="(order.Type == 56 || order.Type == 86) && order.Currency!='AMD'  && order.Currency!=undefined" class="root-menu-item-4 " ng-controller="PopUpCtrl" ng-click="checkDebitAccountForTransitPaymentOrder(true) &&  openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder')">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="cashInButton h-menu-icon">Միջնորդավճար</span>
+            </li>
+            <li ng-if="order.Type == 1 || order.Type == 90" class="root-menu-item-4 " ng-controller="PopUpCtrl" ng-click="params={AccountNumber: order.DebitAccount.AccountNumber,checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:51};openWindowWithTemplate('paymentorder','Մուտք հաշվին','paymentorder')">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="cashInButton h-menu-icon">Կանխիկ մուտք</span>
+            </li>
+            <li ng-if="!periodic" class="root-menu-item-6 " ng-click="searchTransfersBankMail();">
+                <span id="h-menu-item-6"><img id="h-menu-icon-6" class="h-menu-icon searchMenuButton">Շաբլոն</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="transferArmPaymentOrderForm.$setSubmitted();order.OnlySaveAndApprove = false; transferArmPaymentOrderForm.$valid ? checkFeeAccount() && saveTransferArmPayment() : showValidationMessage();$parent.checkForTransit = true;">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li ng-if="$root.SessionProperties.AdvancedOptions['withCashRegister']=='1'&& $root.SessionProperties.AdvancedOptions['canSendToCashier']=='1'" class="root-menu-item-4 " ng-click="transferArmPaymentOrderForm.$setSubmitted();order.OnlySaveAndApprove = true; transferArmPaymentOrderForm.$valid ? checkFeeAccount() && saveTransferArmPayment() : showValidationMessage();$parent.checkForTransit = true;">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ուղարկել դրամարկղ</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('transferarmpaymentorder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div ng-class="{'col-sm-7':!periodic,'col-sm-12 forPeriodic':periodic}">
+            <div style="max-width:530px">
+                <errors></errors>
+            </div>
+            <div class="form-group ">
+                <div class="col-sm-12" style="max-width:530px">
+                    <div class="row-no-margin">
+
+
+                        <section class="panel panel-info">
+                            <header class="panel-heading">
+                                <span class="panel-title" style="font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                            </header>
+                            <div class="panel-body">
+                                <span ng-if="!periodic && $root.SessionProperties.IsNonCustomerService==true && swiftMessage == undefined">400,000.00 AMD-ից ավել գործարքի դեպքում անհրաժեշտ է մուտքագել հաճախորդի համարը</span>
+                                <br ng-if="!periodic && $root.SessionProperties.IsNonCustomerService==true" />
+                                <span>Բոլոր դաշտերը անհրաժեշտ է մուտքագրել UNICODE-ով</span>
+                            </div>
+                        </section>
+
+                        <section ng-show="customerDocumentWarnings.length>0" class="panel panel-warning">
+                            <header class="panel-heading">
+                                <span class="panel-title" style="font-size: 14px;color:red;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                            </header>
+                            <div class="panel-body">
+                                <div ng-repeat="war in customerDocumentWarnings">
+                                    {{$index+1}}.{{::war}}
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+
+                </div>
+            </div>
+            <div ng-if="!periodic || periodic==1" labels-required>
+                <div class="form-group ">
+                    <label class="tab_title col-sm-5" for="amount"> Համար</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-8 multiple_columns">
+                                <input type="text" readonly="readonly" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title" id="number" name="number" ng-init="!periodic || periodic==1?generateNewOrderNumber():''" data-ng-model="order.OrderNumber" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="transferArmPaymentOrderForm.$submitted || transferArmPaymentOrderForm.number.$dirty"
+                                         for="transferArmPaymentOrderForm.number.$error">
+                                <ng-message when="required" class="errors">
+                                    Համար դաշտը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-if="!periodic || periodic==1">
+                <label class="tab_title col-sm-5" for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-8 multiple_columns">
+                            <input disabled="disabled" type="date" ng-model="order.OperationDate" name="registrationDate" class="tab_title form-control unstyled" style="text-align:left" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <paymentaccount data-ng-init="!periodic || periodic==1?getDebitAccounts(1,2):''"
+                            accountselectname="debitAccount"
+                            accounts="debitAccounts"
+                            accountnumber="DebitAccountNumber"
+                            disable="swiftMessage != undefined"
+                            ngblur="order.Currency=order.DebitAccount.Currency;getFee()"
+                            account="order.DebitAccount"
+                            check="checkForDebitAccountTransferArmPayment"
+                            nameforaccount="'Դեբետագրվող հաշիվ'"
+                            nameforcurrency="'Դեբետագրվող արժույթ'">
+            </paymentaccount>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="transferArmPaymentOrderForm.$submitted || transferArmPaymentOrderForm.debitAccount.$dirty"
+                             for="transferArmPaymentOrderForm.debitAccount.$error">
+                    <ng-message when="required" class="errors">
+                        <span ng-if="checkForDebitAccountTransferArmPayment==0">Հաշիվը ընտրված չէ</span>
+                        <span ng-if="checkForDebitAccountTransferArmPayment==1">Արժույթը ընտրված չէ</span>
+                    </ng-message>
+                </ng-messages>
+            </div>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="!transferArmPaymentOrderForm.debitAccount.$dirty && checkForDebitAccountTransferArmPayment==1 && checkForTransit == false" class="errors">
+                    Արժույթը ընտրված չէ
+                </ng-messages>
+            </div>
+            <div ng-if="(!periodic || periodic==1) && !interBankTransfer" labels-required>
+                <div class="form-group ">
+                    <label class="tab_title col-sm-5" for="ReceiverAccount">Կրեդիտագրվող հաշիվ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+
+                            <input ng-disabled="swiftMessage != undefined" type="text" ng-model="order.ReceiverAccount.AccountNumber" class="form-control tab_title" id="ReceiverAccount"
+                                   name="ReceiverAccount" style="text-align:right"
+                                   required onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model-options="{updateOn: 'blur'}" data-update-model-on-enter-key-pressed
+                                   ng-change="receiverAccountAfterApdate();" />
+
+                        </div>
+                        <div class="row">
+                            <span ng-if="order.ReceiverAccount.AccountNumber!=undefined" class="tab_title" ng-model="ReceiverBank" name="ReceiverBank" required style="font-size: 80%;text-align:justify"> {{ReceiverBank}} </span>
+                            <div ng-show="warnings.length>0" class="row panel panel-warning">
+                                <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span> Ուշադրություն</div>
+                                <div class="panel-body">
+                                    <div ng-repeat="war in warnings">
+                                        {{$index+1}}.{{::war}}
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-messages ng-if="transferArmPaymentOrderForm.$submitted || transferArmPaymentOrderForm.ReceiverAccount.$dirty"
+                                         for="transferArmPaymentOrderForm.ReceiverAccount.$error">
+                                <ng-message when="required" class="errors">
+                                    Հաշիվը լրացված չէ
+                                </ng-message>
+
+
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="!periodic" labels-required>
+                <div class="form-group ">
+                    <label class="tab_title col-sm-5" for="amount">Գումար</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+
+                            <div class="input-group col-sm-10">
+                                <input type="text" ng-disabled="DebitAccountNumber!=undefined && order.DebitAccount.AccountNumber==undefined || swiftMessage != undefined" ng-model="order.Amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' name="amount" required class="form-control tab_title" ng-blur="getFee();" fcsa-number />
+                                <span class="input-group-addon" id="basic-addon2" style="width: 0;"> {{order.Currency!=undefind?order.Currency:'&nbsp;&nbsp;&nbsp;'}} </span>
+                            </div>
+
+                        </div>
+
+                        <div class="row ">
+                            <ng-messages ng-if="transferArmPaymentOrderForm.$submitted || transferArmPaymentOrderForm.amount.$dirty"
+                                         for="transferArmPaymentOrderForm.amount.$error">
+                                <ng-message when="required" class="errors">
+                                    Գումարը լրացված չէ
+                                </ng-message>
+
+                                <ng-message when="fcsaNumber" class="errors">
+                                    Գումարը սխալ է լրացված
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <reasonforouttransfer reasonid="order.ReasonId"
+                                  reasoniddescription="order.ReasonIdDescription"
+                                  formname="transferArmPaymentOrderForm"
+                                  ng-if="(orderType==52 || orderType==1) &&(order.DebitAccount.AccountType == 11 || order.DebitAccount.AccountType == 111) ">
+
+            </reasonforouttransfer>
+
+            <div ng-if="!periodic || periodic==1" labels-required>
+                <div class="form-group ">
+                    <label class="tab_title col-sm-5" for="Receiver">Ստացող</label>
+                    <div class="col-sm-6">
+                        <div class="row ">
+                            <textarea rows="2" ng-model="order.Receiver" id="Receiver" name="Receiver" onkeypress="return isArmenianUnicode(event.keyCode)" ng-disabled="swiftMessage != undefined" ng-blur="addDescription() " onpaste="return CheckPasteText(event)" required class="tab_title form-control" style="text-align:left" />
+                        </div>
+                        <div class="row ">
+                            <ng-messages ng-if="transferArmPaymentOrderForm.$submitted || transferArmPaymentOrderForm.Receiver.$dirty"
+                                         for="transferArmPaymentOrderForm.Receiver.$error">
+                                <ng-message when="required" class="errors">
+                                    Ստացողը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group " ng-if="interBankTransfer">
+                <label class="tab_title col-sm-5" for="ReceiverStatus">Ստացողի կարգավիճակ<span class="redStyle">*</span></label>
+                <div class="col-sm-6" data-ng-init="getReceiverStatuses()">
+                    <div class="row">
+                        <loading-control scopevariable="receiverStatuses"></loading-control>
+                        <select data-ng-model="receiverStatus" class="form-control" name="ReceiverStatus" data-ng-options="k as v for (k,v) in receiverStatuses"
+                                required ng-change="setReceiverStatus(receiverStatus)">
+                            <option value="" hidden="hidden">Ընտրեք...</option>
+                        </select>
+                    </div>
+                    <div class="row" ng-if="transferArmPaymentOrderForm.$submitted">
+                        <ng-messages ng-if="transferArmPaymentOrderForm.$submitted "
+                                     for="transferArmPaymentOrderForm.ReceiverStatus.$error">
+                            <ng-message when="required" class="errors">
+                                Ստացողի կարգավիճակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if=" order.ReceiverAccount.AccountNumber=='103008661003'" data-ng-init="getLoanMatureTypes()">
+                <div class="form-group ">
+                    <label class="tab_title col-sm-5" for="PublicContributor">Նվիրաբերողի հրապարակում</label>
+                    <div class="col-sm-6">
+                        <div class="row ">
+                            <select data-ng-model="order.PublicContributor" class="form-control" name="PublicContributor" required>
+                                <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք</option>
+                                <option value="0" style="margin-left:25px">Նվիրաբերողի տվյալների հրապարակում</option>
+                                <option value="1" style="margin-left:25px">Նվիրաբերողի տվյալների գաղտնիություն</option>
+                            </select>
+
+                        </div>
+                        <div class="row ">
+                            <ng-messages ng-if="transferArmPaymentOrderForm.$submitted || transferArmPaymentOrderForm.PublicContributor.$dirty"
+                                         for="transferArmPaymentOrderForm.PublicContributor.$error">
+                                <ng-message when="required" class="errors">
+                                    Նվիրաբերողի հրապարակումը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <orderdescription ng-if="!periodic || periodic==1"
+                              operations="operations"
+                              description="order.Description"
+                              labeldescription="'Վճարման նպատակ'"
+                              formname="transferArmPaymentOrderForm"
+                              disable="swiftMessage != undefined">
+            </orderdescription>
+
+            <div ng-if="!periodic  && !interBankTransfer && !(transferArmPaymentOrderForm.ForCreditor==true)  && swiftMessage == undefined">
+                <div class="form-group ">
+                    <label class="tab_title col-sm-5" for="CreditCode">Վարկային կոդ</label>
+                    <div class="col-sm-6">
+                        <div class="row ">
+                            <div class="input-group" style="display:inline-flex;width: 100%;">
+
+                                <span class="input-group-addon" style="display: inline-block;padding-right: 20px;padding-top: 10px;" data-placement="left">
+                                    <input type="checkbox" style="width:18px" name="WithCreditCode" ng-model="transferArmPaymentOrderForm.WithCreditCode" ng-change="order.CreditCode=null; order.Borrower=null" />
+                                </span>
+
+
+                                <input type="text" ng-disabled="!(transferArmPaymentOrderForm.WithCreditCode==true)" ng-model="order.CreditCode" id="CreditCode" name="CreditCode" class="form-control" style="text-align:left" ng-required="order.ReceiverAccount.AccountNumber.length==5" />
+
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            <ng-messages ng-if="transferArmPaymentOrderForm.$submitted &&  order.ReceiverAccount.AccountNumber.length==5 && (order.CreditCode==undefined || order.CreditCode=='')"
+                                         for="transferArmPaymentOrderForm.CreditCode.$error">
+                                <ng-message when="required" class="errors">
+                                    Վարկային կոդը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="transferArmPaymentOrderForm.WithCreditCode==true">
+                <div class="form-group ">
+                    <label class="tab_title col-sm-5" for="Borrower">Վարկառուի անվանում</label>
+                    <div class="col-sm-6">
+                        <div class="row ">
+                            <textarea rows="1" ng-model="order.Borrower" id="Borrower" name="Borrower" class="tab_title form-control" style="text-align:left" required />
+                        </div>
+                        <div class="row ">
+                            <ng-messages ng-if="transferArmPaymentOrderForm.$submitted || transferArmPaymentOrderForm.Borrower.$dirty"
+                                         for="transferArmPaymentOrderForm.Borrower.$error">
+                                <ng-message when="required" class="errors">
+                                    Վարկառուի անվանումը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="transferArmPaymentOrderForm.WithCreditCode==true" data-ng-init="getLoanMatureTypes()">
+                <div class="form-group ">
+                    <label class="tab_title col-sm-5" for="MatureType">Վարկի մարման տեսակ</label>
+                    <div class="col-sm-6">
+                        <div class="row ">
+                            <select data-ng-model="order.MatureType" ng-change=" setMatureTypeDescription()" class="form-control" name="MatureType" data-ng-options="k as v for (k,v) in loanMatureTypes" required></select>
+                        </div>
+                        <div class="row ">
+                            <ng-messages ng-if="transferArmPaymentOrderForm.$submitted || transferArmPaymentOrderForm.MatureType.$dirty"
+                                         for="transferArmPaymentOrderForm.MatureType.$error">
+                                <ng-message when="required" class="errors">
+                                    Վարկի մարման տեսակը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group sub_inner" ng-if="!periodic && !interBankTransfer  && swiftMessage == undefined && isUrgentTime == 'True'">
+
+                <label class="tab_title col-sm-5" for="UrgentSign"> Շտապ փոխանցում</label>
+                <div class="col-sm-1 row">
+                    <input type="checkbox" ng-change="getFee()" ng-disabled="order.DebitAccount.Currency != 'AMD' || (ReceiverBankCode>='22000' && ReceiverBankCode<='22300')" ng-model="order.UrgentSign" style="width:18px" name="UrgentSign" />
+                </div>
+                <br />
+
+            </div>
+            <div class="form-group sub_inner" ng-if="!periodic && !interBankTransfer  && swiftMessage == undefined && isUrgentTime == 'True'">
+                <label class="tab_title col-sm-12" style="font-style:italic; color:red;">ՀՀ դրամով փոխանցումը կարող է ընդունվել Շտապ պայմանով ժամը 14:30-ից մինչև 15:30-ը:</label>
+            </div>
+            <div class="checkbox" ng-if="interBankTransfer" style="margin-left:20px;margin-bottom:20px;">
+                <label class="tab_text" for="urgent">
+                    <input type="checkbox" class="checkbox-inline" id="checkBox" ng-change="getFeeForInterBankTransfer(checkBox)" name="checkBox" data-ng-model="checkBox"><span ng-click="checkBox==true?checkBox=false:checkBox=true;getFeeForInterBankTransfer(checkBox)">Միջնորդավճարը փոխանցողի կողմից</span>
+                </label>
+            </div>
+
+
+            <div ng-if="!periodic && order.TransferFee>0">
+                <div ng-open="{{ (order.Type==56 || order.Type==86 )?checkForFeeAccount=1:checkForFeeAccount=0}}"></div>
+                <paymentaccount accountselectname="feeAccount"
+                                accountnumber="feeAccountNumber"
+                                accounts="feeAccounts"
+                                account="order.FeeAccount"
+                                onlyamd="true"
+                                check="order.TransferFee>0?checkForFeeAccount:1"
+                                nameforaccount="'Միջնորդավճարի հաշիվ'"
+                                nameforcurrency="'Միջնորդավճարի արժույթ'"
+                                showcashinbutton="order.Type==56 || order.Type==86?true:false">
+                </paymentaccount>
+                <div class="row">
+                    <div class="col-sm-5"></div>
+                    <ng-messages ng-if="transferArmPaymentOrderForm.$submitted || transferArmPaymentOrderForm.feeAccount.$dirty"
+                                 for="transferArmPaymentOrderForm.feeAccount.$error">
+                        <ng-message when="required" class="errors">
+                            <span ng-if="checkForDebitAccountTransferArmPayment==0">Հաշիվը ընտրված չէ</span>
+                            <span ng-if="checkForDebitAccountTransferArmPayment==1">Արժույթը ընտրված չէ</span>
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="form-group sub_inner" ng-if="!periodic  && !interBankTransfer && !(transferArmPaymentOrderForm.WithCreditCode==true)  && swiftMessage == undefined">
+                <label class="tab_title col-sm-5">Հօգուտ այլ անձի (պարտատիրոջ)</label>
+
+                <div class="col-sm-1 row">
+                    <input type="checkbox" style="width:18px" name="ForCreditor" ng-model="transferArmPaymentOrderForm.ForCreditor" ng-change="setCreditor(); " />
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-if="transferArmPaymentOrderForm.ForCreditor==true">
+                <label class="tab_title col-sm-5" for="amount">Պարտատեր</label>
+                <div class="col-sm-6">
+                    <div class="row input-group">
+                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title" id="number" ng-minlength="12" maxlength="12" ng-change="order.CreditorDescription = ''; transferArmPaymentOrderForm.CreditorDocumentNumber1 = ''; transferArmPaymentOrderForm.CreditorDocumentNumber2 = ''; transferArmPaymentOrderForm.CreditorDocumentNumber3 = '';transferArmPaymentOrderForm.CreditorDocumentNumber4 = '';  order.CreditorStatus=''" name="CreditorCustomerNumber" data-ng-model="order.CreditorCustomerNumber" ng-required="order.CreditorStatus=='20'">
+                        <div class="input-group-btn" style="width:auto">
+                            <button type="button" ng-disabled="order.CreditorCustomerNumber.length!=12" class="btn btn-primary" ng-click="getCreditorCustomer(order.CreditorCustomerNumber)" title="Լրացնել տվյալները"><span class="glyphicon glyphicon-plus"></span></button>
+                            <button type="button" class="btn btn-primary searchButton" ng-click="searchCustomers()" title="Հաճախորդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                    <ng-messages ng-if="transferArmPaymentOrderForm.$submitted || transferArmPaymentOrderForm.CreditorCustomerNumber.$dirty"
+                                 for="transferArmPaymentOrderForm.CreditorCustomerNumber.$error">
+                        <ng-message when="minlength" class="errors">
+                            Մուտքագրեք ամբողջ համարը(12 նիշ)
+                        </ng-message>
+                        <ng-message when="required" class="errors">
+                            Մուտքագրեք պարտատիրոջ հաճախորդի համարը
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="form-group " ng-if="transferArmPaymentOrderForm.ForCreditor==true" data-ng-init="getCreditorStatuses()">
+                <label class="tab_title col-sm-5" for="CreditorStatus">Պարտատիրոջ կարգավիճակ</label>
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <loading-control scopevariable="creditorStatuses"></loading-control>
+                        <select data-ng-model="order.CreditorStatus" class="form-control" name="CreditorStatus" data-ng-options="k as v for (k,v) in creditorStatuses"
+                                required ng-disabled="order.CreditorCustomerNumber!=undefined && order.CreditorCustomerNumber!=''" ng-change="resetCreditorDocumentNumbers()">
+                            <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                        </select>
+                    </div>
+                    <div class="row" ng-if="transferArmPaymentOrderForm.$submitted">
+                        <ng-messages ng-if="transferArmPaymentOrderForm.$submitted "
+                                     for="transferArmPaymentOrderForm.CreditorStatus.$error">
+                            <ng-message when="required" class="errors">
+                                Պարտատիրոջ կարգավիճակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group " ng-if="transferArmPaymentOrderForm.ForCreditor==true && order.CreditorStatus != null  && order.CreditorStatus != '' && (order.CreditorStatus=='10' || order.CreditorStatus=='20')">
+                <label class="tab_title col-sm-5" for="CreditorDescription">Պարտատիրոջ անուն ազգանուն</label>
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <textarea rows="2" ng-model="order.CreditorDescription" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" name="CreditorNameSurname" required class="tab_title form-control" style="text-align:left" />
+                    </div>
+                    <div class="row">
+                        <ng-messages class="col-sm-7" ng-if="transferArmPaymentOrderForm.$submitted || transferArmPaymentOrderForm.CreditorNameSurname.$dirty"
+                                     for="transferArmPaymentOrderForm.CreditorNameSurname.$error">
+                            <ng-message when="required" class="errors">
+                                Պարտատիրոջ անուն ազգանունը լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group " ng-if="transferArmPaymentOrderForm.ForCreditor==true && order.CreditorStatus != null  && order.CreditorStatus != ''  && order.CreditorStatus!='10' && order.CreditorStatus!='20'">
+
+                <label class="tab_title col-sm-5" for="CreditorDescription">Պարտատիրոջ անվանում</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <textarea rows="2" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="order.CreditorDescription" name="CreditorName" required class="tab_title form-control" style="text-align:left" />
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="transferArmPaymentOrderForm.$submitted || transferArmPaymentOrderForm.CreditorName.$dirty"
+                                     for="transferArmPaymentOrderForm.CreditorName.$error">
+                            <ng-message when="required" class="errors">
+                                Պարտատիրոջ անվանումը լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group " ng-if="order.CreditorStatus=='10'">
+                <label class="tab_title col-sm-5">Պարտատիրոջ ՀԾՀ</label>
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input style="width:initial;margin-top:-2px" type="radio" value="1" name="creditorDocument" ng-model="order.CreditorDocumentType" ng-change="clearDocumentNumber(2, 1)">
+                        <input type="text" ng-model="transferArmPaymentOrderForm.CreditorDocumentNumber1" name="CreditorSocNumber" style=" width: 145px" class="form-control tab_title"
+                               ng-disabled="order.CreditorDocumentType != 1" ng-required="forPSN && order.CreditorDocumentType == 1" />
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group " ng-if="order.CreditorStatus=='10'">
+                <label class="tab_title col-sm-5" for="CreditorDocumentNumber">Պարտատիրոջ ՀԾՀ չստանալու մասին տեղեկանքի համար</label>
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input style="width:initial;margin-top:-2px" type="radio" value="2" name="CreditorDocument" ng-model="order.CreditorDocumentType" ng-change="clearDocumentNumber(1, 1)">
+                        <input type="text" ng-model="transferArmPaymentOrderForm.CreditorDocumentNumber2" name="CreditorNoSocNumber" style="width: 145px" class="form-control tab_title"
+                               ng-disabled="order.CreditorDocumentType != 2" ng-required="forPSN == true && order.CreditorDocumentType == 2" />
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group " ng-if="order.CreditorStatus=='20'">
+                <label class="tab_title col-sm-5" for="CreditorPassport">Պարտատիրոջ անձնագիր</label>
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" ng-model="transferArmPaymentOrderForm.CreditorDocumentNumber3" name="CreditorPassport" class="form-control tab_title" />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group " ng-if="order.CreditorStatus!='10' && order.CreditorStatus != null && order.CreditorStatus != ''  && order.CreditorStatus!='20'">
+                <label class="tab_title col-sm-5" for="CreditorDocumentNumber">Պարտատիրոջ ՀՎՀՀ</label>
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" ng-model="transferArmPaymentOrderForm.CreditorDocumentNumber4" name="CreditorTIN" class="form-control tab_title" />
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div class="form-group " ng-if="!periodic &&  order.Fees.length>0 ">
+
+                <div class="col-sm-12" ng-init="getAllBankOperationFeeTypes()">
+                    <div class="row-no-margin">
+
+                        <section class="panel panel-success">
+                            <header class="panel-heading">
+                                <span class="panel-title" style="font-size: 14px;">Միջնորդավճարներ</span>
+                            </header>
+                            <div ng-repeat="fee in order.Fees" class="panel-body">
+                                <div class="col-sm-7">{{allFeeTypes[fee.Type]}}`</div><div class="col-sm-5 my_class1">{{fee.Amount | number:2 }}&nbsp; {{fee.Currency}}</div>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+
+            <div ng-show="warnings!='' && warnings!=null  " class="panel panel-warning">
+                <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span> Ուշադրություն</div>
+                <div class="panel-body">
+                    {{warnings}}
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-sm-5" ng-if="!periodic">
+            <customerdebts showonlystrictdebts="true" ng-if="!nonauthorizedcustomer"></customerdebts>
+            <noncashopperson formname="transferArmPaymentOrderForm" ng-if="checkForDebitAccountTransferArmPayment==0 && $root.SessionProperties.CustomerType==6 && swiftMessage == undefined" opperson="order.OPPerson" armbudget="true" accountnumber="order.DebitAccount.AccountNumber" account-type="order.DebitAccount.AccountType"></noncashopperson>
+            <cashopperson ng-if="checkForDebitAccountTransferArmPayment==1 && nonauthorizedcustomer" formname="transferArmPaymentOrderForm" opperson="order.OPPerson" nonauthorizedcustomer="true" armbudget="true"></cashopperson>
+            @*   <cashopperson ng-if="checkForDebitAccountTransferArmPayment==1 && !nonauthorizedcustomer" formname="paymentOrderForm" armbudget="true" opperson="order.OPPerson"></cashopperson>*@
+            <paymentattachment ng-if="!interBankTransfer" arraybuffer="orderAttachment.attachmentArrayBuffer" attachment="orderAttachment.attachmentFile"></paymentattachment>
+        </div>
+    </div>
+
+
+</form>
+
+
+

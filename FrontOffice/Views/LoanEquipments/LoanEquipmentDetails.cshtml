@@ -1,0 +1,149 @@
+﻿@{
+    Layout = null;
+}
+<form style="width:620px" ng-controller="LoanEquipmentsCtrl" ng-init="getEquipmentDetails(equipmentID)">
+
+    <div id="transitPaymentOrder_menu" ng-show="false" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0">
+        <ul id="menu" class="dialog-menu"></ul>
+    </div>
+    <div class="product-details bhoechie-tab-content" style="min-width:620px;padding-left:10px">
+
+        <h5 align="center"><strong>Գույքի նկարագրություն</strong></h5>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրավի համար</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.EquipmentID}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրավի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.EquipmentType}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրավի նկարագրություն</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.EquipmentDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրավի հասցե</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.EquipmentAddress}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրավի սեփականատեր(եր)</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.EquipmentOwner}}</div>
+        </div>
+
+        <h5 align="center"><strong>Գույքի գնահատում բանկի կողմից</strong></h5>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գնահատված արժեք</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.ProvisionAmountString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Լիկվիդային արժեք</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.HistoryAmountString}}</div>
+        </div>
+
+        <h5 align="center"><strong>Գույքի գնահատում գնահատող ընկերության կողմից</strong></h5>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Շուկայական արժեք</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.MarketPriceString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Լիկվիդային արժեք</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.SalePriceString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գնահատման ամսաթիվ (վերջնական)</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.LastAppraisingDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գնահատող ընկերություն</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.AppraiserOrganisation}}</div>
+        </div>
+
+        <h5 align="center"><strong>Աճուրդային գործընթաց</strong></h5>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Աճուրդի կազմակերպիչ</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.AuctionOrganizer}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փորձագետի կողմից գնահատված արժեք</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.ExpertAppraisedValueString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Առաջին աճուրդի մեկնարկային գին</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.FirstAuctionInitialPriceString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Առաջին աճուրդի սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.FirstAuctionStartDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ընթացիկ աճուրդի սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.AuctionStartDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ընթացիկ աճուրդի վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.AuctionEndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ընթացիկ աճուրդի մեկնարկային գին</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.EquipmentPriceString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Բանկի կողմից գնման գնի սահմանաչափ</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.PriceLimitByTheBankString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Այլ տեղեկատվություն</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.EventAddInf}}</div>
+        </div>
+
+        <h5 align="center"><strong>Աճուրդում վաճառքի գործընթաց</strong></h5>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Առքուվաճառքի պայամանագրի ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.DateOfContractSale | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վաճառքի գին</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.EquipmentSalePriceString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վաճառված գույքից բանկ փոխանցված գումար</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.BankTransferedMoneyString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վաճառված գույքից Բանկ փոխանցված գումարի ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.DateOfContractSale | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ձեռք է բերվել բանկի կողմից</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.AcquiredByTheBank}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գնորդի անուն ազգանուն/անվանում</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.BuyersFullName}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Այլ տեղեկատվություն</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.AddInf}}</div>
+        </div>
+
+        <h5 align="center"><strong>Գրավի փակման տվյալներ</strong></h5>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.ClosingDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.ClosingSetNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման պատճառ</div>
+            <div class="product-detail-cell product-detail-value">{{loanEquipmentDetails.ClosingReason}}</div>
+        </div>
+
+        <p>&nbsp;</p>
+
+
+    </div>
+
+
+</form>

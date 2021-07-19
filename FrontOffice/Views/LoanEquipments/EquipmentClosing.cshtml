@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #equipmentClosingLoad .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+<form style="width:600px" ng-controller="LoanEquipmentsCtrl" ng-init="initLoanEquipmentClosing(equipmentID)">
+
+
+    <div id="equipmentClosingLoad" class="overlay hidden">
+        <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+    </div>
+
+    <div style="max-width:600px">
+        <errors>
+        </errors>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 product-detail-cell product-detail-lable" style="margin-left:35px;">
+            Փակման պատճառ
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <textarea id="close" ng-model="loanEquipmentClosing.closingReason" style="max-width:550px !important; width:550px; height:70px;margin-left:23px;"></textarea>
+        </div>
+    </div> 
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-sm-9"></div>
+            <div class="col-sm-3">
+                <button type="button" ng-click="closeLoanEquipment()" class="btn btn-primary" style="width:130px;">Հաստատել</button>
+            </div>
+        </div>
+    </div>
+
+
+    <p>&nbsp;</p>
+
+
+
+
+
+</form>

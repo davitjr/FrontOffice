@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+}
+
+<link href="~/Content/newTheme/css/style.css" rel="stylesheet" />
+
+<div id="operDayModeSaveLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="OperDayModeCtrl" name="OperDayModeSaveForm" id="OperDayModeSaveForm" role="form" style="min-width:400px;min-height:280px;" novalidate class="form-horizontal" labels-required-always>
+
+    <div id="OperDayModeSave_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="saveOperDayMode()">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newOperDayMode')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div style="max-width:630px; width:90%; margin-left:30px">
+        <errors></errors>
+    </div>
+
+    <div class="col-sm-7" style="padding:0;padding-left:5px;width:100%">
+        <div class="col-sm-2" style="display:inline-block; width:100%">
+            <label class="tab_title" for="operDayMode" style="font-size:16px;">24/7 ռեժիմի տեսակ</label>
+            <loading-control scopevariable="operDayModes"></loading-control>
+            <div data-ng-init="getTypeOf24_7Modes()">
+                <select ng-show="operDayModes" ng-model="mode24_7key" class="form-control"
+                        data-ng-options="k as v for (k,v) in operDayModes" style="margin-bottom:10px; width: 100%"></select>
+            </div>
+        </div>
+    </div>
+</form>

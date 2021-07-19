@@ -1,0 +1,185 @@
+﻿<div>
+    <style type="text/css">
+        .modal-content {
+            width: 1200px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+
+
+
+        .resultRow {
+            font-size: 10pt;
+            color: black;
+            font-weight: normal;
+        }
+
+        .resultRowAddInf {
+            font-size: 9pt;
+        }
+
+        .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .tableHeader {
+            font-size: 9pt;
+            height: 25px;
+        }
+
+        #searchRemittance .product-container-header > th {
+            font-weight: inherit;
+        }
+
+        #searchRemittance .div-table-content {
+            margin-top: -7px;
+            border-color: #CFDAD0 !important;
+        }
+
+
+        #searchRemittance .popup_wrapper_top {
+            margin-top: -10px !important;
+        }
+    </style>
+    <div id="searchRemittanceLoad" class="overlay hidden">
+        <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+    </div>
+    <div id="searchRemittance">
+
+
+        <div class="col-sm-12 popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+            <div style="margin-top:-10px">Արագ դրամական համակարգերով փոխանցումների որոնում</div>
+            <img src="/Content/images/close_pop.png " ng-click="closeRemittanceDetailsModal()" style="margin-top:-10px;" alt="">
+        </div>
+
+        <div style="max-width:1000px">
+            <errors></errors>
+        </div>
+
+        <div class="col-sm-12" style="padding:0;margin-bottom:15px">
+
+            <div class="col-sm-3" style="display:inline-block; ">
+                <label class="tab_title">Փոխանցման հսկիչ համար</label>
+                <div>
+                    <input type="text" ng-model="searchParams.URN" name="URN" class="form-control  " />
+                </div>
+
+            </div>
+
+            <div class="col-sm-2">
+                <label class="tab_title"></label>
+                <div style="margin-top:5px">
+                    <button type="button" class="btn btn-primary" ng-click="btnFindClick();" title="Որոնել"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class=" col-sm-12 div-table-content " style="max-height:400px; min-height:200px;overflow:scroll;   margin-bottom:0px; margin-top:0px; ">
+            <table class="table table-condensed table-hover" style="margin-bottom:0; table-layout:initial!important">
+
+                <thead>
+
+                    <tr class="product-container-header" style="position:static">
+
+                        <th style="text-align:center;">Փոխանցող</th>
+                        <th style="text-align:center;">Ստացող</th>
+                        <th style="text-align:center;">Ստացողի անձնագիր</th>
+                        <th style="text-align:center;">Գումար</th>
+                        <th style="text-align:center;">Արժույթ</th>
+                        <th style="text-align:center;">Հսկիչ համար</th>
+                        <th style="text-align:center;">Երկիր</th>
+                        <th style="text-align:center;">Միջն.</th>
+                        <th style="text-align:center;">ԱԿԲԱ միջ.</th>
+                        <th style="text-align:center;">Ուղարկողի հասցե</th>
+                        <th style="text-align:center;">Ուղարկողի հեռախոս</th>
+                        <th style="text-align:center;">Ստացողի հասցե</th>
+                        <th style="text-align:center;">Ստացողի հեռախոս</th>
+
+                    </tr>
+                </thead>
+
+
+
+                <tbody>
+                    <tr ng-if="remittanceDetails.URN!= undefined" style="font-size:8pt; cursor:pointer;" ng-class="{'selected':$index == selectedRow} " ng-dblclick="selectRemittance()">
+
+
+                        <td style="padding:5px!important">
+                            {{ remittanceDetails.SenderFirstName.substring(0,17) }} &nbsp;   {{ remittanceDetails.SenderLastName.substring(0,17) }}
+                        </td>
+                        <td style="padding:5px!important">
+                            {{ remittanceDetails.BeneficiaryFirstName.substring(0,17) }}  &nbsp;   {{ remittanceDetails.BeneficiaryLastName.substring(0,17) }}
+                        </td>
+                        <td style="padding:5px!important">
+                            {{ remittanceDetails.BeneficiaryIssueIDNo.substring(0,17) }}
+                        </td>
+                        <td style="padding:5px!important">
+                            {{ remittanceDetails.PrincipalAmount | number:2 }}
+                        </td>
+                        <td style="padding:5px!important">
+                            {{ remittanceDetails.CurrencyCode}}
+                        </td>
+                        <td style="padding:5px!important">
+                            {{ remittanceDetails.URN}}
+                        </td>
+                        <td style="padding:5px!important">
+                            {{ remittanceDetails.SenderCountryName}}
+                        </td>
+                        <td style="padding:5px!important">
+                            {{ remittanceDetails.RemittanceFee | number:0}}
+                        </td>
+                        <td style="padding:5px!important">
+                            {{ remittanceDetails.BeneficiaryFee | number:2 }}
+                        </td>
+                        <td style="padding:5px!important">
+                            {{ remittanceDetails.SenderAddressName.substring(0,17) }}
+                        </td>
+                        <td style="padding:5px!important">
+                            {{ remittanceDetails.SenderPhoneNo.substring(0,17) }}
+                        </td>
+                        <td style="padding:5px!important">
+                            {{ remittanceDetails.BeneficiaryAddressName.substring(0,17) }}
+                        </td>
+                        <td style="padding:5px!important">
+                            {{ remittanceDetails.BeneficiaryPhoneNo.substring(0,17) }}
+                        </td>
+
+
+                    </tr>
+                    <tr ng-if="remittanceDetails.URN!= undefined">
+                        <td colspan="13">
+
+                            <div style="clear:both;color:#6F6A6A;font-weight:bold;">
+                                Մանրամասն դիտարկում` &nbsp;
+                                <span style="left:1pt; color: #337AB7; cursor:pointer;vertical-align:central;" ng-controller="PopUpCtrl" ng-click="openRemittanceWholeDetailsModal();" class="glyphicon glyphicon-info-sign" />
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr ng-if="remittanceDetails.URN == undefined" style="text-align: center">
+                        <td colspan="13" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+
+        </div>
+
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+             ng-model="currentPage"
+             items-per-page="numPerPage"
+             total-items="totalRows"
+             max-size="maxSize"
+             boundary-links="true"
+             previous-text="‹"
+             next-text="›"
+             first-text="«"
+             last-text="»">
+        </div>
+    </div>
+</div>

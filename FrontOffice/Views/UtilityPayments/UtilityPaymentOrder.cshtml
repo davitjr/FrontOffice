@@ -1,0 +1,293 @@
+﻿<style type="text/css">
+    .redStyle {
+        color: red;
+    }
+
+    .greenStyle {
+        color: green;
+    }
+    
+
+    #accountsTable tbody:hover {
+        cursor: pointer;
+    }
+
+        #paymentOrderFormUtils .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #paymentOrderFormUtils {
+       min-width:880px;
+    }
+
+</style>
+
+<div id="utilityLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+    <form ng-controller="UtilityPaymentSearchCtrl" id="paymentOrderFormUtils" name="paymentOrderForm" role="form" class="form-horizontal" data-ng-init="getUtilityTypeDescription();getUtilityPaymentDetails(3);initPaymentOrder();getAccountsForOrder();getUtilityPaymentDescription()"  novalidate prevent-enter-submit>
+        <div id="utilitypaymentorder_menu" class="menu-bar dialog-menu light-green">
+            <ul id="menu" class="dialog-menu">
+                <li class="root-menu-item-3 " ng-if="ordertype==117 || ordertype==118" onclick="document.getElementById('utilitypaymentorder_my_file_input').click();">
+                    <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon applicationButton">Ներբեռնել Excel-ի ֆայլը</span>
+                </li>
+
+                <li class="root-menu-item-4 " ng-if="ordertype==117 || ordertype==118">
+                    <span id="h-menu-item-4" onclick="return false;">
+                        <img id="h-menu-icon-4" class="printButton h-menu-icon">&nbsp;
+                        <img id="arrow-down" class="arrowButton">
+                    </span>
+                    <ul>
+                        <li id="v-menuItem-3.1"  data-permission-selector="" ng-click="paymentOrderForm.$setSubmitted();paymentOrderForm.$valid ?getUtilityPaymentOrderDetails(false,true): showValidationMessage();close(true);">
+                            <span>2 օրինակ</span>
+                        </li>
+                        <li id="v-menuItem-3.2" class="last" data-permission-selector="" ng-click="paymentOrderForm.$setSubmitted();paymentOrderForm.$valid ?getUtilityPaymentOrderDetails(false): showValidationMessage();close(true);">
+                            <span>4 օրինակ</span>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+                <li class="root-menu-item-4 " ng-if="ordertype!=117 && ordertype!=118" ng-click="paymentOrderForm.$setSubmitted();paymentOrderForm.$valid ? getUtilityPaymentOrderDetails(false) : showValidationMessage();">
+                    <span id="h-menu-item-4"><img id="h-menu-icon-4" class="printButton h-menu-icon">Հանձնարարական</span>
+                </li>
+                <li class="root-menu-item-4 " ng-if="ordertype!=117 && ordertype!=118" ng-click="paymentOrderForm.$setSubmitted();paymentOrderForm.$valid ? savePayment() : showValidationMessage();close(true);">
+                    <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+                </li>
+                <li class="root-menu-item-4 " ng-if="ordertype==117 || ordertype==118" ng-click="paymentOrderForm.$setSubmitted();paymentOrderForm.$valid ? saveReestrUtilityPaymentOrder() : showValidationMessage();close(true);">
+                    <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+                </li>
+                <li class="root-menu-item-5 " onclick="CloseBPDialog('utilitypaymentorder')">
+                    <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+                </li>
+                <li class="root-menu-item-6 " ng-if="ordertype!=117 && ordertype!=118" ng-controller="PopUpCtrl" ng-click="openWindow('/UtilityPayment/UtilityPaymentDetails','Մանրամասներ','utilitydetails')">
+                    <span id="h-menu-item-6"><img id="h-menu-icon-6" class="h-menu-icon infoButton">Մանրամասներ</span>
+                </li>
+            </ul>
+            <div id="right-menu" style="display:none;">
+            </div>
+        </div>
+
+      <div>
+
+          <input style="display:none" type="file" id="utilitypaymentorder_my_file_input" />
+
+          <div ng-class="{'col-sm-7':(!periodic && ((checkForDebitAccount==0 && $root.SessionProperties.CustomerType==6) || (checkForDebitAccount==1 && nonauthorizedcustomer=='true'))),'col-sm-12':periodic}">
+              
+              <div class="form-group "  style="padding-left:10px">
+                 
+                  <div class="col-sm-12" style="max-width:530px">
+                      <div class="row-no-margin">
+                          <section class="panel panel-info">
+                              <header class="panel-heading">
+                                  <span class="panel-title" style="font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                              </header>
+                              <div class="panel-body">
+                                  <span>Բոլոր դաշտերը անհրաժեշտ է մուտքագրել UNICODE-ով</span>
+                              </div>
+                          </section>
+                          <section ng-if="customerDocumentWarnings.length>0"  class="panel panel-warning">
+                              <header class="panel-heading">
+                                  <span class="panel-title" style="font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                              </header>
+                              <div class="panel-body">
+                                  <div ng-repeat="war in customerDocumentWarnings">
+                                      {{$index+1}}.{{::war}}
+                                  </div>
+                              </div>
+                          </section>
+                          <div style="max-width:530px">
+                              <errors></errors>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+
+              <div class="form-group " style="padding-left:10px;padding-right:10px;">
+                  <div class="col-sm-12" >
+                      <div class="row-no-margin">
+                          <section class="panel panel-primary">
+                              <header class="panel-heading">
+                                  <span class="panel-title" style="font-size: 14px;">{{utilityTypeDescription}} ծառայության դիմաց վճարում</span>
+                              </header>
+                              <div class="panel-body">
+                                  <div ng-repeat="utilityDetail in utilityPaymentDetails">
+                                      <div class="product-detail-row">
+                                          <div class="product-detail-cell product-detail-lable">{{ ::utilityDetail.Description }} `</div>
+                                          <div class="product-detail-cell product-detail-value" style="text-align:right;">{{ ::utilityDetail.Value }}</div>
+                                      </div>
+
+                                       
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+                      </div>
+                      
+                  </div>
+                  <loading></loading>
+                               
+                  <div class="col-sm-12">
+
+
+                      <div class="form-group ">
+                          <label class="tab_title col-sm-5" for="amount"> Համար</label>
+                          <div class="col-sm-6">
+                              <div class="row">
+                                  <div class="col-sm-8 multiple_columns">
+                                      <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title" id="number" name="number" ng-init="generateNewOrderNumber();" data-ng-model="order.OrderNumber" required>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <ng-messages ng-if="paymentOrderForm.$submitted || paymentOrderForm.number.$dirty"
+                                               for="paymentOrderForm.number.$error">
+                                      <ng-message when="required" class="errors">
+                                          Համար դաշտը լրացված չէ
+                                      </ng-message>
+                                  </ng-messages>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="tab_title col-sm-5 ">
+                              Մուտքագրման ա/թ
+                          </label>
+                          <div class="col-sm-6">
+                              <div class="row">
+                                  <div class="col-sm-8 multiple_columns">
+                                      <input disabled="disabled" type="date" ng-model="order.OperationDate" name="registrationDate" class="tab_title form-control unstyled" style="text-align:left" required />
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+
+                      <div class="form-group " ng-if="utilityType==14 || ordertype==117 || ordertype==118">
+                          <label class="tab_title col-sm-5" for="paymentType"> Վճարման տեսակ</label>
+                          <div class="col-sm-6">
+                              <div class="row">
+                                  <select data-ng-model="order.PaymentType" class="form-control" required ng-change="getCOWaterOrderAmount(order.PaymentType);" name="PaymentType" id="PaymentType">
+                                      <option value="" style="margin-left:25px" hidden="hidden">Ընտրեք տեսակը</option>
+                                      <option value="1">Անդամավճար</option>
+                                      <option value="2">Ոռոգման ջրի վճար</option>
+                                  </select>
+                              </div>
+                              <div class="row">
+                                  <ng-messages ng-if="paymentOrderForm.$submitted || paymentOrderForm.PaymentType.$dirty"
+                                               for="paymentOrderForm.PaymentType.$error">
+                                      <ng-message when="required" class="errors">
+                                          Վճարման տեսակը լրացված չէ
+                                      </ng-message>
+                                  </ng-messages>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div ng-show="checkForDebitAccount == 0">
+                          <paymentaccount accountselectname="debitAccount"
+                                          accounts="debitAccounts"
+                                          account="order.DebitAccount"
+                                          onlyamd="onlyAMD"
+                                          check="checkForDebitAccount"
+                                          nameforaccount="'Դեբետագրվող հաշիվ'"
+                                          nameforcurrency="'Դեբետագրվող արժույթ'">
+                          </paymentaccount>
+                          <div class="row">
+                              <div class="col-sm-5"></div>
+                              <ng-messages ng-if="paymentOrderForm.$submitted || paymentOrderForm.debitAccount.$dirty"
+                                           for="paymentOrderForm.debitAccount.$error">
+                                  <ng-message when="required" class="errors">
+                                      <span ng-if="checkForDebitAccount==0">Հաշիվը ընտրված չէ</span>
+                                      <span ng-if="checkForDebitAccount==1">Արժույթը ընտրված չէ</span>
+                                  </ng-message>
+                              </ng-messages>
+                          </div>
+                      </div>
+
+
+
+                      <div class="form-group">
+                          <label class="tab_title col-sm-5">
+                              Գումար
+                          </label>
+                          <div class="col-sm-6">
+                              <div class="row">
+                                  <div class="input-group col-sm-10" ng-style="{ display: ordertype==117 || ordertype==118 ? 'flex' : '' }">
+                                      <script>
+                                          $("[data-toggle=tooltip]").tooltip({
+                                              placement: $(this).data("placement") || 'bottom'
+                                          });
+                                      </script>
+
+                                      <input type="text" ng-model="order.Amount" name="amount" ng-disabled="PrepaidSign==2 || ordertype==117 || ordertype==118 || disableAmountButton" required style="text-align:right;" class="tab_title form-control" fcsa-number />
+                                      <span class="input-group-addon" id="basic-addon2" style="width:50px; padding-left:10px;padding-top:10px;"> AMD </span>
+                                      <div ng-show="ordertype==117 || ordertype==118" ng-controller="PopUpCtrl" ng-click="params={COWaterReestrDetails:order.COWaterReestrDetails,}; openWindow('/UtilityPayment/UtilityReestrDetails','Կոմունալ ռեեստրի տվյալներ','utilityreestrDetails')" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ռեեստրի տվյալներ">
+                                          <button style="padding-left: 9px;padding-right: 9px;" type="button" class="btn btn-default" aria-label="Justify"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div ng-messages="(paymentOrderForm.$submitted || paymentOrderForm.amount.$dirty) && paymentOrderForm.amount.$error" class="errors">
+                                      <span ng-message="required">
+                                          <span ng-if="ordertype!=117 && ordertype!=118">Գումար դաշտը լրացված չէ</span>
+                                          <span ng-if="ordertype==117 || ordertype==118">Ներբեռնեք Excel-ի ֆայլը</span>
+                                      </span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="form-group sub_inner" ng-if="PrepaidSign==2" ng-init="forPepaidSign()">
+                          <label class="tab_title col-sm-5" for="UrgentSign"> Կանխավճարային </label>
+                          <div class="col-sm-1 row">
+                              <input type="checkbox" ng-change="forPepaidSign()" ng-disabled="" ng-model="order.PrepaidSign" ng-true-value="1" ng-false-value="0" 
+                                     style="width:18px" name="prepaidCheck" />
+                          </div>
+                      </div>
+
+                      <div ng-show="selectedAbonentType == 1" ng-if="utilityType==4" class="form-group">
+                          <label class="tab_title col-sm-5">
+                              Սպասարկման գումար
+                          </label>
+                          <div class="col-sm-6 ">
+                              <div class="input-group row">
+                                  <span class="input-group-addon" style="width: 0;"><input type="checkbox" ng-model="IsServiceAmountActive" ng-click="order.ServiceAmount=0" ng-true-value="true" ng-false-value="false" /></span>
+                                  <input type="text" ng-model="order.ServiceAmount" name="ServiceAmount" ng-disabled="!IsServiceAmountActive" style="text-align:right;" class="tab_title form-control" fcsa-number />
+                                  <span class="input-group-addon" id="basic-addon2" style="width: 0;"> AMD </span>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="form-group" ng-if="ordertype!=117 && ordertype!=118">
+                          <label class="tab_title col-sm-5" for="Description">Նկարագրություն</label>
+                          <div class="col-sm-6 ">
+                              <div class="row">
+                                  <textarea rows="4" type="text" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" name="description" ng-model="order.Description" class="form-control"></textarea>
+                              </div>
+                              <div class="row">
+                                  <ng-messages ng-if="paymentOrderForm.$submitted || paymentOrderForm.description.$dirty"
+                                               for="paymentOrderForm.description.$error">
+                                      <ng-message when="required" class="errors">
+                                          Նկարագրությունը լրացված չէ
+                                      </ng-message>
+
+                                  </ng-messages>
+                              </div>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+          <div class="col-sm-5" ng-if="!periodic">
+              <customerdebts showonlystrictdebts="true"></customerdebts>
+              <noncashopperson formname="paymentOrderForm" ng-if="checkForDebitAccount==0 && $root.SessionProperties.CustomerType==6" opperson="order.OPPerson" accountnumber="order.DebitAccount.AccountNumber"></noncashopperson>
+              <cashopperson ng-if="checkForDebitAccount==1 && nonauthorizedcustomer=='true'" utility="true" formname="paymentOrderForm" opperson="order.OPPerson" nonauthorizedcustomer="true"></cashopperson>
+              @* <cashopperson ng-if="checkForDebitAccount==1 && nonauthorizedcustomer=='false'" utility="true" formname="paymentOrderForm" opperson="order.OPPerson"></cashopperson>*@
+          </div>
+      </div>
+    
+
+</form>

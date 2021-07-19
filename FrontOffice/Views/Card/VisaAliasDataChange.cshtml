@@ -1,0 +1,141 @@
+﻿@*VisaAliasDataChange.$setSubmitted();VisaAliasDataChange.$valid &&*@
+
+@{
+    Layout = null;
+}
+
+<div id="VisaAliasDataChangeLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="CardCtrl" style="min-width:650px;" id="VisaAliasDataChangeID" name="VisaAliasDataChangeForm" role="form" novalidate class="form-horizontal" prevent-enter-submit>
+ 
+    <div id="cardDataChangeOrder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="VisaAliasDataChangeForm.$setSubmitted();VisaAliasDataChangeForm.$valid && SaveVisaAliasDataChange(ActionName, cardNumber, VisaAlias, ChangeReasonAdd)">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('VisaAliasDataChange')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div style="max-width:700px">
+            <errors></errors>
+        </div>
+
+        <div class="col-sm-11">
+            <div class=" form-group">
+                <label class="tab_title col-sm-5 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input disabled="disabled" type="date" class="form-control tab_title" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="OperDay" required>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group" ng-show="ActionName==1">
+                <label class="tab_title col-sm-5" id="VisaAlias ">Հեռախոսահամար</label>
+                <div class="col-sm-7">
+                    <div class="row">
+                        <textarea onkeypress='return event.charCode >= 48 && event.charCode <= 57' rows="1" ng-required="ActionName==1" style="text-align:left" id="VisaAlias" name="VisaAlias" ng-model="VisaAlias" class="form-control tab_title"></textarea>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="VisaAliasDataChangeForm.$submitted || VisaAliasDataChangeForm.VisaAlias.$dirty" for="VisaAliasDataChangeForm.VisaAlias.$error">
+                            <ng-message when="required" class="errors">
+                                Հեռախոսահամարը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group " ng-show="ActionName==0 || ActionName==1">
+                <label class="tab_title col-sm-5" id="ChangeReasonAdd">Նշումներ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <textarea rows="3" style="text-align:left" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="ChangeReasonAdd" id="ChangeReasonAdd" name="ChangeReasonAdd" class="form-control tab_title"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-11" ng-show="aliasInfo.IssuerName">
+
+        <div class=" form-group">
+            <label class="tab_title col-sm-5 ">Բանկ</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    {{aliasInfo.IssuerName}}
+                </div>
+
+            </div>
+        </div>
+
+        <div class=" form-group" ng-show="aliasInfo.RecipientName">
+            <label class="tab_title col-sm-5 ">Քարտապան</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    {{aliasInfo.RecipientName}}
+                </div>
+
+            </div>
+        </div>
+
+        <div class=" form-group" ng-show="aliasInfo.RecipientFirstName">
+            <label class="tab_title col-sm-5 ">Քարտապան</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    {{aliasInfo.RecipientFirstName}}  {{aliasInfo.RecipientLastName}}
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class=" form-group">
+            <label class="tab_title col-sm-5 ">Քարտ</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    {{aliasInfo.RecipientPrimaryAccountNumber}}
+                </div>
+
+            </div>
+        </div>
+
+        <div class=" form-group" ng-show="aliasInfo.Country">
+            <label class="tab_title col-sm-5 ">Գրացման երկիր</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    {{aliasInfo.Country}}
+                </div>
+
+            </div>
+        </div>
+
+        <div class=" form-group" ng-show="aliasInfo.CardType">
+            <label class="tab_title col-sm-5 ">Քարտատեսակ</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    {{aliasInfo.CardType}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+

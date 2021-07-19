@@ -1,0 +1,216 @@
+﻿<div style="margin-left:15px;margin-top:5px" ng-controller="ClassifiedLoanCtrl" ng-init="setSearchParameters()" id="ClassifiedLoan" class="container">
+    <form class="ClassifiedLoanForm">
+        <div class="col-sm-7" style="padding:0;margin-bottom:5px"> 
+            <div style="max-width:530px;padding:10px">
+                <errors></errors>
+            </div>
+            <div class="col-sm-3">
+                <div class="product-detail-cell product-detail-lable">
+                    Արժույթ
+                </div>
+                <div data-ng-init="getCurrencies()">
+                    <select ng-show="cur" data-ng-model="searchParams.Currency" class="form-control"
+                            style="width: 155px">
+                        <option ng-repeat="k in ::cur" value="{{k.Key}}">{{k.Value}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="product-detail-cell product-detail-lable">
+                    Մասնաճյուղ
+                </div>
+                <div data-ng-init="getFilialList()">
+                    <loading-control scopevariable="filialList"></loading-control>
+                    <select ng-show="filialList" data-ng-model="searchParams.FilialCode" name="Filial" id="Filial" class="form-control">
+                        <option ng-repeat="k in ::filialList" value="{{k.id}}">{{k.name}}</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="product-detail-cell product-detail-lable">
+                    Ցանկի տեսակ
+                </div>
+                <div>
+                    <select data-ng-model="searchParams.ListType" class="form-control" style="width: 155px">
+                        <option value="2" style="margin-left:25px" >Դուրսգրման ենթակա վարկեր</option>
+                        <option value="1" style="margin-left:25px" selected ="selected">Հետբերման ենթակա վարկեր</option>
+                    </select>
+                </div>
+            </div>             
+            <div class="col-sm-3">
+                <div class="product-detail-cell product-detail-lable">
+                    Հաճախորդի համար
+                </div>
+                <div>
+                    <input type="text" ng-model="searchParams.CustomerNumber" id="customerNumber" style="width: 155px;" class="form-control" />
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="product-detail-cell product-detail-lable">
+                    Վարկային հաշիվ
+                </div>
+                <div>
+                    <input type="text" ng-model="searchParams.LoanFullNumber" id="LoanFullNumber" style="width: 155px;" class="form-control" />
+                </div>
+            </div>
+            <div class="col-sm-2 ">
+                <div class="product-detail-cell product-detail-lable">
+                </div>
+                <div>
+                    <button type="button" class="btn-sm btn-primary" ng-click="getSearchedClassifiedLoans()"><span class="glyphicon glyphicon-search"></span> Որոնել</button>
+                </div>
+            </div>
+            <div class="col-sm-3  ">
+                <div class="product-detail-cell product-detail-lable">                    
+                </div>
+                <div>
+                    <button type="button" class="btn-sm btn-primary" ng-click="customersClassification()"><span class="glyphicon"></span> Նախնական դասակարգում</button>
+                </div>
+            </div>
+        </div>
+        
+    </form>
+    
+    <div class="product-container" style="width:600px;">
+        <div class="header-title">
+            Դասակարգված վարկեր
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+
+        <loading-control style="margin-left:20em" scopevariable="classifiedLoans"></loading-control>
+        <div class="product-collapsable-section">
+            <div class="product-container-header"  ng-if="classifiedLoans!=undefined" >
+                <div class="include-closed-products">
+                    Քանակ` {{totalRows}}
+                </div>
+            </div>
+            <div class="product-content-table custom-scroll" id="classifiedLoans" style="margin:0px; padding-top:0px">
+                <table class="table table-condensed table-hover" style="background-color:white;"  ng-if="classifiedLoans!=undefined" >
+                    <thead>
+                        <tr style="cursor: pointer;" ng-class="{'selected':$index == selectedRow}">
+                            <td class="col-sm-24" style="width:580px">
+                                <table style="margin:0px; padding:0">
+                                    <tr>
+                                        <td class="col-sm-1">
+                                            <input style="margin:0px!important" type="checkbox"
+                                                   class="checkbox-inline" ng-model="isCheckedAllCredits" ng-change="checkSelectedCredits(isCheckedAllCredits)">
+                                        </td>
+                                        <td class="col-sm-2" align="center">Հաճախորդի համար&nbsp;&nbsp; </td>
+                                        <td class="col-sm-2" align="center"><strong> &nbsp;&nbsp;Գումար</strong></td>
+                                        <td class="col-sm-2" align="center">Արժույթ</td>
+                                        <td class="col-sm-2" align="center"><strong>Մնացորդ</strong></td>
+                                        <td class="col-sm-3" align="center">Վարկային հաշիվ</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="col-sm-1"></td>
+
+                            <td class="col-sm-1 click_toggle" context="contextCreditActions" id="contextMenu"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="classifiedLoans.length!=0" ng-repeat="credit in classifiedLoans" style="cursor: pointer;margin:0px; padding:0" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow(credit)">
+                            <td class="col-sm-24" style="width:600px;margin:0px; padding:0">
+                                <table style="margin:0px; padding:0">
+                                    <tr style="margin:0px; padding:0">
+                                        <td class="col-sm-1"><input type="checkbox" style="margin:0px!important" class="checkbox-inline" ng-true-value="true" ng-false-value="false" ng-model="credit.isChecked"></td>
+                                        <td class="col-sm-2">{{::credit.CustomerNumber}}</td>
+                                        <td class="col-sm-3" align="right"><strong>&nbsp;&nbsp;{{::credit.StartCapital | number : 2}}</strong>&nbsp;&nbsp;{{::credit.Currency}}</td>
+                                        <td class="col-sm-2" align="right"><strong>&nbsp;&nbsp;{{::credit.CurrentCapital | number : 2}}</strong></td>
+                                        <td class="col-sm-3" align="right">&nbsp;&nbsp;{{::credit.LoanAccount.AccountNumber}}</td>
+                                        <td class="col-sm-1 click_toggle" context="contextCreditActions" id="contextMenu"><div id="contextMenu"></div> </td>
+                                    </tr>
+                                    <tr style="margin:0px; padding:0">
+                                        <td></td>
+                                        <td colspan="4" style="margin:0px; padding:0">
+                                            <i>
+                                                {{::credit.Filial}}&nbsp;&nbsp;
+                                                {{::credit.QualityDescription}}&nbsp;&nbsp;
+                                                {{::credit.ClassificationDateString}}&nbsp;&nbsp;
+                                                {{::credit.LoanClassTypeDescription}}&nbsp;&nbsp;
+                                            </i>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                        </tr>
+
+                        <tr ng-if="classifiedLoans.length==0">
+                            <td colspan="3" style="text-align:center">Առկա չեն դասակարգված վարկեր</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+
+            </div>
+
+            <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                 ng-model="currentPage"
+                 items-per-page="numPerPage"
+                 total-items="totalRows"
+                 max-size="maxSize"
+                 boundary-links="true"
+                 previous-text="‹"
+                 next-text="›"
+                 first-text="«"
+                 last-text="»"> 
+            </div>
+        <ul id="contextCreditActions" class="dropdown-menu">
+            <li><a href="" ng-controller="PopUpCtrl" ng-click="params={productId:selectedClassifiedLoan.ProductId,productid:selectedClassifiedLoan.ProductId,productType:selectedClassifiedLoan.ProductType}; 
+              openWindow('/Loan/LoanDetailsForCurrentCustomerB?productId='+selectedClassifiedLoan.ProductId+'&productType='+selectedClassifiedLoan.ProductType,'Վարկի մանրամասներ','loanDetails_div');">Մանրամասն դիտարկում</a></li>
+             
+        </ul>
+        <br />
+        <div style="margin:20px">
+            {{loans.length}}
+            <button type="button" ng-if="classifiedloans.length!=0 && searchParams.ListType == 1" class="btn-sm btn-primary" ng-controller="PopUpCtrl" ng-click="classifiedloans.length!=0 && setCurrentClassifiedLoans() && openWindow('/ClassifiedLoan/ClassifiedLoanActionOrders/2','Նշված դասակարգված վարկերի հետբերման հայտերի ձևավորում ','ClassifiedLoanActionOrders')"
+                    style="height:30px" tooltip="Ձևավորել հայտեր">
+                Ձևավորել հետբերման հայտ նշված վարկերի համար
+                <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true" style="top:-4px !important"></span>
+            </button>
+            <button type="button" ng-if="classifiedloans.length!=0 && searchParams.ListType == 2" class="btn-sm btn-primary" ng-controller="PopUpCtrl" ng-click="classifiedloans.length!=0 && setCurrentClassifiedLoans() && openWindow('/ClassifiedLoan/ClassifiedLoanActionOrders/3','Նշված դասակարգված վարկերի դուրսգրման հայտերի ձևավորում ','ClassifiedLoanActionOrders')"
+                    style="height:30px" tooltip="Ձևավորել հայտեր">
+                Ձևավորել դուրսգրման հայտ նշված վարկերի համար 
+                <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true" style="top:-4px !important"></span>
+            </button>
+            <br />
+
+        </div>
+            <section class="panel panel-success col-sm-12" style="width:600px;padding-right:5px">
+                <header class="panel-heading" style="margin-left: -15px;margin-right: -5px;">
+                    <span class="panel-title" style="font-size:14px;">Ընդամենը</span>
+                </header>
+                <div class="panel-body">
+                    <table id="summary">
+                        <tbody>
+                            <tr ng-if="totalsByCurrency.length!=0">
+                                <td>
+                                    <span class="product-detail-lable"><strong>Արժույթ</strong></span>
+                                </td>
+                                <td>
+                                    <span class="product-detail-lable"><strong>Գումար</strong></span>
+                                </td>
+                                <td>
+                                    <span class="product-detail-lable"><strong>Մնացորդ</strong> </span>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="t in totalsByCurrency">
+                                <td>
+                                    <span class="product-detail-lable">{{t.Currency}} ` </span>
+                                </td>
+                                <td>
+                                    <span class="product-detail-lable">{{t.Total  | number:2}} </span>
+                                </td>
+                                <td>
+                                    <span class="product-detail-lable">{{t.TotalCurrent  | number:2}} </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+    </div>
+    </div>
+</div>

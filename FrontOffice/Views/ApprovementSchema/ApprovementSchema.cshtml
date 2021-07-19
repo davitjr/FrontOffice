@@ -1,0 +1,89 @@
+﻿<script type="text/javascript">
+    $("#ApprovementSchemaContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div ng-controller="ApprovementSchemaCtrl">
+
+    <div class="product-container" id="ApprovementSchema" data-ng-init="getApprovementSchema();">
+        <div class="header-title">
+            <a href="/#approvementSchema" style="color:black;">
+                Հաստատման սխեմայի քայլեր
+            </a>
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+
+                <div>
+
+                    <i class="add-new-product tip" ng-controller="PopUpCtrl" ng-click="params={schema: schema};openWindow('/ApprovementSchema/ApprovementSchemaDetails','Հաստատման սխեմայի քայլի ավելացում','newapprovementschemadetails')" data-toggle="tooltip" data-trigger="hover" title="Նոր քայլ"></i>
+                </div>
+            </div>
+
+
+            <div class="product-content-table custom-scroll" id="ApprovementSchemaContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+               
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="schemaDetail in schema.SchemaDetails" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,schemaDetail);">
+                            <td id="schemaDetailRow_{{$index}}">
+                                <span class="tab_text">Քայլ` </span>
+                                <span>
+                                    {{ ::schemaDetail.Step.Description }}
+                                </span>
+                                <br />
+                                <span class="tab_text">Կարգահամար` </span>
+                                <span>
+                                    {{ ::schemaDetail.Order }}
+                                </span>
+                                <br />
+                                <span class="tab_text">Խումբ` </span> <span>{{ ::schemaDetail.Group.GroupName }}</span>
+
+                            </td>
+                      
+
+                            <td class="col-sm-1 click_toggle" context="contextApprovementSchema" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                        <tr ng-if="schema.length==0 || schema.SchemaDetails.length==0">
+                            <td colspan="3" style="text-align:center;">
+                                Առկա չեն հաստատման սխեմայի քայլեր
+                            </td>
+                        </tr>
+                      
+
+                    </tbody>
+                </table>
+            </div>
+
+            <ul id="contextApprovementSchema" class="dropdown-menu">
+                <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={schemaDetails: selectedSchemaDetails, actionType: 2, schema: schema};openWindowWithTemplate('approvementschemadetails','Հաստատման սխեմայի քայլի խմբագրում','newapprovementschemadetails')">Խմբագրել</a></li>
+                <li ng-click="ApprovementSchemaDetailsRemoval(selectedSchemaDetails)"><a style="font-weight: bold;text-decoration:none!important;cursor:pointer">Հեռացնել</a></li>
+                
+            </ul>
+        </div>
+
+        @*---------------------------------------------------------------------------------------------------------------------------------------------*@
+    </div>
+
+</div>
+<script>
+    $("[data-toggle=tooltip]").tooltip({
+        placement: $(this).data("placement") || 'bottom'
+    });
+</script>
+
+
+
+
+
+
+
+

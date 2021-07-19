@@ -1,0 +1,91 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+
+    .tree-node {
+        border: 1px solid #dae2ea;
+        background: #f8faff;
+        color: #7c9eb2;
+    }
+</style>
+<div ng-controller="ClaimCtrl" ng-if="loan" ng-init="getProductClaims(loan.ProductId)" id="loanJudgment" class="panel-group">
+    <div class="panel panel-default " style="background-color:#eeeeee">
+
+        <div class="panel-body">
+            <div ui-tree >
+                <ol ui-tree-nodes="" ng-model="claims">
+                    <li style="margin-bottom:15px;border:2px solid #A6A6B1" ng-repeat="item in claims" ui-tree-node>
+                        <div  class="tree-node tree-node-content">
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        <a style="cursor:pointer" ng-if="claims && item.Events.length > 0" data-nodrag ng-click="toggle()">
+                                            <span class="glyphicon" ng-class="{'glyphicon-plus': collapsed,'glyphicon-minus': !collapsed}"></span>
+                                        </a>Դատական գործ
+                                    </td>
+                                    <td>{{::item.ClaimDate | mydate | date: 'dd/MM/yyyy'}}</td>
+                                    <td>ՊԿ՝ {{::item.SetNumber}}</td>
+                                    <td>{{::item.QualityDescription}}</td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <ol  ui-tree-nodes="" ng-class="{hidden: collapsed}" ng-model="item.Events">
+                            <li  ng-repeat="subItem in item.Events" ui-tree-node>
+
+                                <div  class="tree-node tree-node-content ">
+
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <a style="cursor:pointer" ng-if="item.Events && subItem.EventTax.length > 0" data-nodrag ng-click="toggle()">
+                                                    <span class="glyphicon" ng-class="{'glyphicon-plus': collapsed,'glyphicon-minus': !collapsed}"></span>
+                                                </a>{{::subItem.TypeDescription}}
+                                            </td>
+                                            <td>{{::subItem.EventDate | mydate | date: 'dd/MM/yyyy'}}</td>
+                                            <td>ՊԿ՝ {{::subItem.SetNumber}}</td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                                <ol  ui-tree-nodes="" ng-if="collapsed!=true" ng-class="{hidden: collapsed}" ng-model="subItem.EventTax">
+                                    <li ng-repeat="tax in subItem.EventTax" ui-tree-node >
+                                        <div class="tree-node tree-node-content " ng-click="setClickedRow(tax)">
+
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="line_height">Պետ. տուրք</div>
+                                                        <div class="my_label line_height">Ա/թ` {{::tax.RegistrationDate | mydate | date: 'dd/MM/yyyy'}}</div>
+                                                        <div class="my_label line_height">ՊԿ`  {{::tax.SetNumber}}</div>
+                                                        <div class="my_label line_height">Կարգավիճակ`  {{::tax.QualityDescription}}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="line_height">Գումար</div>
+                                                        <div class="my_label line_height">Տուրք`  {{::tax.Amount|number:2}}</div>
+                                                        <div class="my_label line_height">Մարված`  {{::tax.MaturedAmount|number:2}}</div>
+                                                        <div class="my_label line_height">Զիջված`  {{::tax.ConcedeAmount|number:2}}</div>
+                                                    </td>
+                                                    <td class="col-sm-1 click_toggle" context="contextJudgment" id="contextMenu"><div id="contextMenu"></div> </td>
+
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <ul id="contextJudgment" class="dropdown-menu">
+                                            <li><a style="color: black;text-decoration:none!important ;cursor:pointer" ng-if="$root.SessionProperties.AdvancedOptions['isOnlineAcc'] == '1'" ng-click="changeProblemLoanTaxQuality(selectedtax.ProductId)">Փոփոխել կարգավիճակը</a></li>
+                                            <li><a style="color: black;text-decoration:none!important ;cursor:pointer" ng-if="selectedtax.Quality!=40 && selectedtax.Quality!=10" ng-controller="PopUpCtrl" ng-click="params={selectedLoan:loan,ClaimRepayment:true,taxAmount:(selectedtax.Amount-selectedtax.MaturedAmount).toFixed(2),TaxProductId:selectedtax.ProductId};openWindow('/MatureOrder/PersonalMatureOrder','Պետ. տուրքի մարում','newMature')">Մարել</a></li>
+                                            <li><a style="color: black;text-decoration:none!important ;cursor:pointer" ng-controller="PopUpCtrl" ng-click="params={loan:loan,tax:selectedtax};openWindow('/Loan/LoanTaxDetails','Պետ. տուրքի դիտարկում','LoanTaxDetails')">Մանրամասն դիտարկում</a></li>
+                                        </ul>
+                                    </li>
+                                </ol>
+
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>

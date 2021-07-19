@@ -1,0 +1,104 @@
+﻿@{
+    Layout = null;
+}
+<div id="hpTokenLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<style>
+    #productNotificationConfigurations {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: 600px;
+    }
+</style>
+
+
+<div ng-controller="productNotificationConfigurationsOrderCtrl" ng-init="getProductNotificationConfigurations(productId)" style="min-height:300px;" id="productNotificationConfigurations">
+    <div class="product-container" style="width:550px;">
+
+        <div class="header-title">
+            Ինֆորմացիայի տրամադրման կարգավորումներ
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div ng-controller="PopUpCtrl" ng-click="params={productId:productid, productType:producttype,operationType:1, informationType:informationtype, customernumber:customernumber};openWindow('/ProductNotificationConfigurationsOrder/PersonalProductNotificationConfigurationsOrder','Նոր կարգավորում','productNotificationConfigurationsOrder')">
+                    <i class="add-new-product tipB" data-original-title="Նոր կարգավորում"></i>
+                </div>
+            </div>
+            <div class="product-content-table-full_height custom-scroll" id="productNotificationConfigurationContent" style="min-height:100px;">
+                <div ng-if="productNotificationConfigurations==undefined">
+                    <loading></loading>
+                </div>
+                <table  class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="config in productNotificationConfigurations" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" style="max-height:200px">
+                            <td class="text-left col-sm-11">
+                                <div style="margin-left: 5pt;">
+                                    <div>
+                                        <span class="my_label" style="font-size:13px">Տեղեկատվության տեսակ` </span>{{ ::config.InformationTypeDescription }}
+                                    </div>
+                                    <div>
+                                        <span class="my_label" style="font-size:13px">Տրամադրման եղանակը` </span>{{ ::config.NotificationOptionDescription }}
+                                    </div>
+                                    <div>
+                                        <span class="my_label" style="font-size:13px"><span ng-show="config.NotificationOption==2"> Էլ․Հասցեներ`</span> <span ng-show="config.NotificationOption==5">Հեռախոսահամարներ՝</span>  </span>{{ ::config.CommunicationsDescription }}
+                                    </div>
+
+                                    <div>
+                                        <span class="my_label" style="font-size:13px"> Տրամադրման հաճախականությունը` </span>{{ ::config.NotificationFrequencyDescription }}
+                                    </div>
+
+                                    <div>
+                                        <span class="my_label" style="font-size:13px"> Լեզուն ` </span>{{ ::config.LanguageDescription }}
+                                    </div>
+
+                                </div>
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="contextConfigs" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                        <tr ng-if="productNotificationConfigurations.length==0 ">
+                            <td colspan="3" style="text-align:center;">
+                                Տվյալները բացակայում են
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <ul id="contextConfigs" class="dropdown-menu">
+                    <li><a style="color: black;text-decoration:none!important ;" href="" ng-controller="PopUpCtrl" class="my_button" ng-click="params={operationType:2, config:selectedConfig,customernumber:customernumber};openWindow('/ProductNotificationConfigurationsOrder/PersonalProductNotificationConfigurationsOrder','Խմբագրել','productNotificationConfigurationsOrder')">Խմբագրել</a></li>
+                    <li><a style="color: black;text-decoration:none!important ;" href="" ng-controller="PopUpCtrl" class="my_button" ng-click="params={operationType:3, config:selectedConfig};openWindow('/ProductNotificationConfigurationsOrder/PersonalProductNotificationConfigurationsOrder','Հեռացնել','productNotificationConfigurationsOrder')">Հեռացնել</a></li>
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $("#notesTable").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+
+<script>
+    $("[data-toggle=tooltip]").tooltip({
+        placement: $(this).data("placement") || 'bottom'
+    });
+</script>
+
+
+
+
+

@@ -1,0 +1,74 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #CardAdditionalDataListForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    .form-group input, .form-group select {
+        height: 34px;
+    }
+
+    .tab_title {
+        border-left-width: 15px;
+        padding-left: 30px;
+        width: 195px;
+    }
+
+    #h-menu-icon-3 {
+        margin-top: 8px !important;
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+</style>
+<div id="CardAdditionalDataListLoad" class="overlay hidden">
+    <img class="non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<form ng-controller="CardAdditionalDataOrderCtrl" name="CardAdditionalDataListForm" id="CardAdditionalDataListForm" role="form" style="min-width:650px;min-height:532px;" novalidate class="form-horizontal" labels-required>
+    <div id="CardAdditionalDataList_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu" ng-if="IsClosed==0">
+            <li class="root-menu-item-1 " data-ng-click="AddCardAdditionalData()">
+                <span id="h-menu-item-1"><img id="h-menu-icon-1" class="newItemButton h-menu-icon">Ավելացնել</span>
+            </li>
+            <ng-container ng-if="IsVisible==true">
+                <li class="root-menu-item-2 " data-ng-click="EditCardAdditionalData()">
+                    <span id="h-menu-item-2"><img id="h-menu-icon-2" class="editButton h-menu-icon">Խմբագրել</span>
+                </li>
+            </ng-container>
+            <li class="root-menu-item-3 " data-ng-click="RemoveCardAdditionalData()">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="Close1Buttone h-menu-icon">Հեռացնել</span>
+            </li>
+            <li class="root-menu-item-4 " onclick="CloseBPDialog('cardadditionaldata')">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+
+    <div class="form-group">
+        <label class="tab_title col-sm-6 " for="card">Քարտի համար</label>
+        <div class="col-sm-4" data-ng-init="GetCustomerPlasticCardsForAdditionalData()">
+            <div class="row">
+                <loading-control scopevariable="cards"></loading-control>
+                <select ng-show="cards" data-ng-model="card" data-ng-change="GetCardAdditionalDatas(card.CardNumber,card.ExpiryDate)" name="card" id="card" class="form-control card_shadow_field card_selectbox"
+                        data-ng-options="k as k.CardNumber + ' ' +k.ExpiryDate  for k in cards">
+                    <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                </select>
+            </div>
+        </div>
+        <div class="include-closed-products">
+            <input type="checkbox" class="css-square-checkbox lrg" id="closed-cards" ng-model="IsClosed"
+                   ng-true-value="1" ng-false-value="0" ng-change="Filter()">
+            <label for="closed-cards" name="closed-cards-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+        </div>
+    </div>
+    <div style="margin-left: 20px" data-ng-click="ShowHide()">
+        <div ui-grid="gridOptions" ui-grid-selection class="uiGrid"></div>
+    </div>
+</form>

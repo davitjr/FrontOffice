@@ -1,0 +1,103 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    #cardUSSDServiceHistory {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: 850px;
+    }
+
+
+        #cardUSSDServiceHistory td, th {
+            border: 1px solid #cecece;
+            font-size: 13px;
+        }
+
+        #cardUSSDServiceHistory top th {
+            font-size: 12px;
+        }
+
+    #historyTable table .top td {
+        font-size: 12px;
+    }
+
+    .redBackground {
+        background-color: rosybrown;
+    }
+</style>
+
+
+<div style="min-height:300px;min-width:985px" id="cardUSSDServiceHistory" ng-controller="CardUSSDServiceOrderCtrl" ng-init="getCardUSSDServiceHistory()">
+    <div class="product-container" style="width:auto;min-width:940px">
+
+        <div class="header-title">
+            Պատմություն
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+
+        <div class="product-collapsable-section " style="margin-bottom:15px;">
+
+            <div id="historyTable" class="product-content-table custom-scroll">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <thead class="product-container-header">
+                        <tr>
+                            <td style="text-align:center;" class="col-sm-2">Գործողության տեսակ</td>
+                            <td style="text-align:center;" class="col-sm-2">Ա/Թ</td>
+                            <td style="text-align:center;" class="col-sm-5">Ուղարկված ֆայլ</td>
+                            <td style="text-align:center;" class="col-sm-2">Arca-ի պատասխան</td>
+                            <td style="text-align:center;" class="col-sm-1">ՊԿ</td>
+                            
+
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="history in cardUSSDServiceHistory">
+                            <td style="text-align:center;" class="col-sm-2">{{::history.ActionTypeDescription}}</td>
+                            <td style="text-align:center;" class="col-sm-2">{{::history.RegistrationDate| mydate | date:'dd/MM/yyyy'}}</td>
+                            <td style="text-align:center;" class="col-sm-5">{{::history.RequestFileName}}</td>
+                            <td style="text-align:center;" class="col-sm-2">
+                                <span ng-show="history.ArcaResponse==0">OK</span>
+                                <span ng-show="history.ArcaResponse==1">ERROR</span>
+                            </td>
+                            <td style="text-align:center;" class="col-sm-1">{{::history.SetNumber}}</td>
+                            
+
+
+                        </tr>
+                        <tr ng-if="card3dSecureServiceHistory.length==0">
+                            <td colspan="6" style="text-align:center">Տվյալներ առկա չեն</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $("#historyTable").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+
+<script>
+    $("[data-toggle=tooltip]").tooltip({
+        placement: $(this).data("placement") || 'bottom'
+    });
+</script>
+
+
+
+
+

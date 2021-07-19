@@ -1,0 +1,378 @@
+﻿@{
+    Layout = null;
+}
+
+<style type="text/css">
+    #transitPaymentOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #transitPaymentOrderForm {
+        min-width: 970px;
+    }
+
+    .forCalculator {
+        width: 50px;
+        padding-left: 10px;
+        padding-top: 10px;
+    }
+</style>
+
+<div id="transitLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="TransitPaymentOrderCtrl" name="TransitPaymentOrderForm" id="transitPaymentOrderForm" role="form" class="form-horizontal" ng-submit="TransitPaymentOrderForm.$valid ? saveTransitPaymentOrder() : showValidationMessage();" novalidate labels-required prevent-enter-submit>
+    <div id="transitpaymentorder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-show="forTranferFromTransit!=true" ng-click="TransitPaymentOrderForm.$setSubmitted();TransitPaymentOrderForm.$valid ? getPersonalPaymentOrderDetails() : showValidationMessage();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="printButton h-menu-icon">Հանձնարարական</span>
+            </li>
+            <li ng-if="order.Type != 19" class="root-menu-item-4 " ng-click="TransitPaymentOrderForm.$setSubmitted();order.OnlySaveAndApprove = false;TransitPaymentOrderForm.$valid ? (isLeasingAccount && (order.PayType == 4 || order.PayType == 9) ? checkLeasingPayments():saveTransitPaymentOrder()): showValidationMessage();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li ng-if="order.Type != 19 && $root.SessionProperties.AdvancedOptions['withCashRegister']=='1'&& $root.SessionProperties.AdvancedOptions['canSendToCashier']=='1'" class="root-menu-item-4 " ng-click="TransitPaymentOrderForm.$setSubmitted();order.OnlySaveAndApprove = true;TransitPaymentOrderForm.$valid ? saveTransitPaymentOrder() : showValidationMessage();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ուղարկել դրամարկղ</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('transitpaymentorder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-7">
+            <div style="max-width:560px">
+                <errors></errors>
+            </div>
+            <div class="form-group" style="margin-left: 0;" ng-if="$root.SessionProperties.HasFilialATSAccount==true">
+                <input type="checkbox" class="checkbox-inline" id="forATSAccount" ng-model="$parent.ForATSAccount" ng-true-value="true" ng-false-value="false" ng-click="getATSSystemAccounts(order.Currency)">
+                <label class="tab_title" style="font-size:11px" ng-click="$parent.ForATSAccount==true?$parent.ForATSAccount=false:$parent.ForATSAccount=true;getATSSystemAccounts(order.Currency)">
+                    Կատարել փոխանցում ԱԳՍ հաշվով
+                </label>
+            </div>
+            <div class="form-group " ng-if="customerDocumentWarnings.length>0">
+                <div class="col-sm-12" style="max-width:530px">
+                    <div class="row-no-margin">
+                        <section class=" panel panel-warning">
+                            <header class="panel-heading">
+                                <span class="panel-title" style=" font-size: 14px;color:red;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                            </header>
+                            <div class="panel-body">
+                                <div ng-repeat="war in customerDocumentWarnings">
+                                    {{$index+1}}.{{::war}}
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6 row ">
+                    <div class="row multiple_columns col-sm-11">
+                        <input type="date" disabled="disabled" class="form-control tab_title unstyled" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" style="text-align:left" required>
+                    </div>
+                </div>
+            </div>
+
+
+            <paymentaccount ng-if="nonCashPayment && !forTranferFromTransit"
+                            accounts="debitAccounts"
+                            accountselectname="debitAccount"
+                            account="order.DebitAccount"
+                            check="0"
+                            nameforaccount="'Դեբետագրվող հաշիվ'"
+                            nameforcurrency=""
+                            formname="TransitPaymentOrderForm">
+            </paymentaccount>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="TransitPaymentOrderForm.$submitted || DepositOrderForm.debitAccount.$dirty"
+                             for="TransitPaymentOrderForm.debitAccount.$error">
+                    <ng-message when="required" class="errors">
+                        Հաշիվը ընտրված չէ
+                    </ng-message>
+                </ng-messages>
+            </div>
+
+            <div class="form-group " ng-if="nonCashPayment!=true">
+                <label class="tab_title col-sm-5" for="currency">  Արժույթ<span class="redStyle">*</span></label>
+                <div class="col-sm-6" data-ng-init="getCurrencies()">
+                    <div class="row">
+                        <loading-control scopevariable="currencies"></loading-control>
+                        <select ng-show="currencies" data-ng-model="order.Currency" ng-disabled="forLoanMature && claimRepayment!=true || forBond  || isLeasingAccount" ng-blur="setTransitPaymentOrderDescription()" ng-change="getATSSystemAccounts(order.Currency)" name="Currency" id="Currency" class="form-control"
+                                data-ng-options="k as v for (k,v) in currencies" required>
+                            <option value="" hidden>Ընտրեք արժույթը...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="TransitPaymentOrderForm.$submitted || TransitPaymentOrderForm.Currency.$dirty || isClickingCalc"
+                                     for="TransitPaymentOrderForm.Currency.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք արժույթը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="showForATSDebitAccount">
+                <paymentaccount accountselectname="debitAccountForATS"
+                                accounts="debitAccounts"
+                                accountnumber="DebitAccountNumber"
+                                account="order.DebitAccount"
+                                check="0"
+                                nameforaccount="'Դեբետագրվող հաշիվ'"
+                                nameforcurrency="'Դեբետագրվող արժույթ'"
+                                showforats="showForATSDebitAccount">
+                </paymentaccount>
+                <div class="row">
+                    <div class="col-sm-5"></div>
+                    <ng-messages ng-if="TransitPaymentOrderForm.$submitted || TransitPaymentOrderForm.debitAccountForATS.$dirty"
+                                 for="TransitPaymentOrderForm.debitAccountForATS.$error">
+                        <ng-message when="required" class="errors">
+                            <span>Հաշիվը ընտրված չէ</span>
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="form-group" ng-if="forTranferFromTransit">
+                <label class="tab_title col-sm-5" for="accounttype">Դեբետագրվող տարանցիկ հաշիվ</label>
+                <div class="col-sm-6" data-ng-init="getTransitAccountTypes(forTranferFromTransit)">
+                    <div class="row">
+                        <select ng-disabled="forTranferFromTransit" ng-init="order.DebitTransitAccountType='2'" ng-change="setTransitAccount()" ng-show="transitAccountTypesforTranferFromTransit" data-ng-model="order.DebitTransitAccountType" name="DebitTransitAccountType" id="DebitTransitAccountType" class="form-control"
+                                data-ng-options="k as v for (k,v) in transitAccountTypesforTranferFromTransit" required>
+                            <option value="" hidden>Ընտրեք հաշիվը...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="TransitPaymentOrderForm.$submitted || TransitPaymentOrderForm.DebitTransitAccountType.$dirty"
+                                     for="TransitPaymentOrderForm.DebitTransitAccountType.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք հաշիվը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="accounttype">Տարանցիկ հաշիվ</label>
+                <div class="col-sm-6" data-ng-init="getTransitAccountTypes()">
+                    <div class="row">
+                        @*<loading-control scopevariable="transitAccountTypes"></loading-control>*@
+                        <select ng-disabled="paymentOrder || matureOrder || servicePaymentOrder || forBond" ng-change="setTransitAccount()" ng-show="transitAccountTypes" data-ng-model="order.TransitAccountType" name="AccountType" id="AccountType" class="form-control"
+                                data-ng-options="k as v for (k,v) in transitAccountTypes" required>
+                            <option value="" hidden>Ընտրեք հաշիվը...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="TransitPaymentOrderForm.$submitted || TransitPaymentOrderForm.AccountType.$dirty"
+                                     for="TransitPaymentOrderForm.AccountType.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք հաշիվը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="showCustomerTypes">
+                <label class="tab_title col-sm-5" for="accounttype">  Հաճախորդի տեսակ</label>
+                <div class="col-sm-6" data-ng-init="getCustomerTypes()">
+                    <div class="row">
+                        <select ng-model="order.CustomerType" name="CustomerType" id="CustomerType" class="form-control">
+                            <option value="">Ընտրեք հաճախորդի տեսակը...</option>
+                            <option value="1">Ֆիզիկական անձ</option>
+                            <option value="2">Իրավաբանական անձ</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="TransitPaymentOrderForm.$submitted || TransitPaymentOrderForm.CustomerType.$dirty"
+                                     for="TransitPaymentOrderForm.CustomerType.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք հաճախորդի տեսակը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-if="isLeasingAccount">
+                <label class="tab_title col-sm-5" for="PaymentType">Վճարման տեսակ<span class="redStyle">*</span></label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-8 multiple_columns">
+                            <select class="form-control accountSelect" ng-change="updateDescription();getLeasingInsuranceDeatils();" data-ng-model="order.PayType" name="PaymentType" id="PaymentType" required>
+                                <option value="" hidden="hidden">Ընտրեք ...</option>
+                                <option value="1">Ստանդարտ</option>
+                                <option value="2">Մասնակի</option>
+                                <option value="8">Լրիվ մարում</option>
+                                <option value="9">Կանխավճար</option>
+                                <option value="3">Գույքահարկ</option>
+                                <option value="4">Ապահովագրավճար</option>
+                                <option value="5">Միջնորդավճար</option>
+                                <option value="6">Նախավարձ</option>
+                                <option value="7">Փոխհատուցվող հարկեր և տուրքեր</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="TransitPaymentOrderForm.$submitted || TransitPaymentOrderForm.PaymentType.$dirty"
+                                     for="TransitPaymentOrderForm.PaymentType.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք վճարման տեսակը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="isLeasingAccount && order.PayType == 4 && selectedLeasingInsuranceAmount != 0">
+                <label class="tab_title col-sm-5" for="PaymentType"><span class="redStyle"></span></label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12 multiple_columns" style="top: -10px !important;">
+                            <p class="tab_title">Ապահովագրավճար : {{ selectedLeasingInsuranceAmount | number:2 }}</p>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="form-group ">
+                <label class="tab_title col-sm-5" for="amount"> Գումար</label>
+                <div class="col-sm-5">
+                    <div class="row">
+                        <div class="input-group col-sm-10" ng-style="{ display: order.Type==63 ? 'flex' : '' }">
+                            <script>
+                                $("[data-toggle=tooltip]").tooltip({
+                                    placement: $(this).data("placement") || 'bottom'
+                                });
+                            </script>
+                            <input type="text" ng-model="order.Amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' name="amount" ng-blur="getFee()" required class="form-control tab_title" fcsa-number />
+                            <span ng-class="order.Type==63 ?'forCalculator':'notForCalculator'" class="input-group-addon" id="basic-addon2" ng-style="{ width: order.Type==63 ? '50px' : '0px' }"> {{order.Currency!=undefind?order.Currency:'&nbsp;&nbsp;&nbsp;'}} </span>
+                            <div ng-click="openCurNominalModal()" ng-show="order.Type==63" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Հաշվիչ"><button style="padding-left: 9px;padding-right: 9px;" type="button" class="btn btn-default" aria-label="Justify"><img style="height:18px" class="calculatorButton"></button></div>
+                            @*<div ng-show="order.Type==63" ng-click="openCurNominalModal()"  data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Հաշվիչ"><button type="button" class="btn btn-default" aria-label="Justify"><span class="glyphicon glyphicon-modal-window"></span></button></div>*@
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="TransitPaymentOrderForm.$submitted || TransitPaymentOrderForm.amount.$dirty"
+                                     for="TransitPaymentOrderForm.amount.$error">
+                            <ng-message when="required" class="errors">
+                                Գումար դաշտը լրացված չէ
+                            </ng-message>
+                            <ng-message when="fcsaNumber" class="errors">
+                                Գումարը սխալ է լրացված
+                            </ng-message>
+                        </ng-messages>
+
+                    </div>
+                </div>
+            </div>
+
+            <orderdescription periodic="periodic"
+                              operations="operations"
+                              description="description"
+                              labeldescription="'Նկարագրություն'"
+                              withaddition="true"
+                              additional="additional"
+                              formname="TransitPaymentOrderForm"
+                              disable="isLeasingAccount || forBond"
+                              hidetextarea="isLeasingAccount">
+            </orderdescription>
+
+
+
+
+            <div class="form-group" ng-show="order.Currency=='RUR'  || order.Currency=='GBP' || order.Currency=='CHF' ||
+                 (order.Currency == 'AMD' && (order.TransitAccountType == '5' || order.TransitAccountType == '3') && showFeeTypeBlock==true && forTranferFromTransit!=true)">
+                <label class="tab_title col-sm-5 control-label" for="description">Միջնորդավճարի տեսակ</label>
+                <div class="col-sm-6 ">
+                    <div class="row">
+                        <select data-ng-model="feeType" name="FeeType" class="form-control"
+                                data-ng-options="k as v for (k,v) in feeTypes" ng-change="getFee();">
+                            <option value="" hidden="hidden" style="margin-left:25px">{{feeTypes[0]}}</option>
+                        </select>
+                    </div>
+                    <ng-messages ng-if="TransitPaymentOrderForm.$submitted || TransitPaymentOrderForm.FeeType.$dirty"
+                                 for="TransitPaymentOrderForm.FeeType.$error">
+                        <ng-message when="required" class="errors">
+                            Միջնորդավճարի տեսակը ընտրված չէ
+                        </ng-message>
+
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="form-group " ng-if=" order.Currency == 'AMD' && (order.TransitAccountType == '5' || order.TransitAccountType == '3') && feeType==0">
+
+                <label class="tab_title col-sm-5 " for="DescriptionForRejectFeeType">Չգանձման պատճառ  <span class="redStyle">*</span></label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <textarea rows="3" required style="text-align:left" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="order.DescriptionForRejectFeeType" id="DescriptionForRejectFeeType" name="DescriptionForRejectFeeType" class="form-control tab_title"></textarea>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="TransitPaymentOrderForm.$submitted || TransitPaymentOrderForm.DescriptionForRejectFeeType.$dirty"
+                                     for="TransitPaymentOrderForm.DescriptionForRejectFeeType.$error">
+                            <ng-message when="required" class="errors">
+                                Չգանձման պատճառը նշված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <paymentaccount ng-if="(order.Currency=='RUR'  || order.Currency=='GBP' || order.Currency=='CHF' || (order.Currency == 'AMD' && (order.TransitAccountType == '5' || order.TransitAccountType == '3'))) && feeType>0 && order.TransferFee>0"
+                            accountselectname="feeAccount"
+                            accounts="feeAccounts"
+                            account="order.FeeAccount"
+                            check="checkForFeeAccount"
+                            nameforaccount="'Միջնորդավճարի հաշիվ'"
+                            nameforcurrency="'Արժույթ'"
+                            onlyamd="true">
+            </paymentaccount>
+            <div class="row" ng-if="(order.Currency=='RUR'  || order.Currency=='GBP' || order.Currency=='CHF' || (order.Currency == 'AMD' && (order.TransitAccountType == '5' || order.TransitAccountType == '3'))) && feeType>0 && order.TransferFee>0">
+                <div class="col-sm-5"></div>
+                <ng-messages class="errors" ng-if="TransitPaymentOrderForm.$submitted && order.FeeAccount.AccountNumber==undefined && checkForFeeAccount==0 && feeType>0 && order.TransferFee>0">
+                    Հաշիվը ընտրված չէ
+                </ng-messages>
+            </div>
+
+            <div class="form-group " ng-if="!periodic && order.Fees.length > 0 && showFeeTypeBlock==true">
+
+                <div class="col-sm-12">
+                    <div class="row">
+
+                        <section class="panel panel-success">
+                            <header class="panel-heading">
+                                <span class="panel-title" style="font-size: 14px;">Միջնորդավճարներ</span>
+                            </header>
+                            <div ng-repeat="fee in order.Fees" class="panel-body">
+                                <div class="col-sm-7">{{fee.Type!=7?feeTypes[fee.Type]:'Քարտային ելքագրման միջնորդավճար'}} `</div><div class="col-sm-5 my_class1">{{fee.Amount | number:2 }}  AMD</div>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+
+            <br />
+
+        </div>
+        <div class="col-sm-5">
+            <cashopperson formname="TransitPaymentOrderForm" ng-if="!$root.SessionProperties.IsNonCustomerService && (!nonCashPayment || forTranferFromTransit)" opperson="order.OPPerson"></cashopperson>
+            <cashopperson formname="TransitPaymentOrderForm" ng-if="$root.SessionProperties.IsNonCustomerService && paymentOrder" opperson="order.OPPerson" nonauthorizedcustomer="true"></cashopperson>
+            <cashopperson formname="TransitPaymentOrderForm" ng-if="$root.SessionProperties.IsNonCustomerService && !paymentOrder" opperson="order.OPPerson" nonauthorizedcustomer="true"></cashopperson>
+            <noncashopperson formname="TransitPaymentOrderForm" ng-if="nonCashPayment && !forTranferFromTransit" opperson="order.OPPerson" ordertype="order.Type" accountnumber="order.DebitAccount.AccountNumber" account-type="order.DebitAccount.AccountType"></noncashopperson>
+
+            <div ng-show="order.TransitAccountType==3 && isLeasingAccount==true">
+                <leasingdetails leasingdata="selectedLeasingLoanDetails" searchleasingcustomers="searchLeasingCustomers()"></leasingdetails>
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+</form>

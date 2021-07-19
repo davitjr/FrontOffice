@@ -1,0 +1,49 @@
+﻿
+@{
+    Layout = null;
+}
+<style type="text/css">
+
+    .maximize-dialog {
+        display: none;
+    }
+
+    .minimize-dialog {
+        display: none;
+    }
+    #resetEarlyRepaymentFee {
+        overflow-x: hidden;
+    }
+    textarea {
+        font-family: 'Arial Armenian','Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    }
+</style>
+<div id="ResetEarlyRepaymentFeeForm" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="LoanCtrl" name="resetEarlyRepaymentFeeForm" id="resetEarlyRepaymentFeeForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required style="width:500px;">
+    <div class="menu-bar dialog-menu light-green ">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="resetEarlyRepaymentFeeForm.$setSubmitted();resetEarlyRepaymentFeeForm.$valid ? saveResetEarlyRepaymentFee(productId) : showValidationMessage();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+
+        </ul>
+    </div>
+    <div style="margin-left: 2%;">
+        <orderdescription operations="operations" ordertype="resetDescription" description="resetDescription" labeldescription="'Նկարագրություն'"
+                          withaddition="true" additional="additional" formname="resetEarlyRepaymentFeeForm"></orderdescription>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,41 @@
+﻿<style type="text/css">
+        .product-container {
+            width: 750px;
+        }
+    </style>
+ 
+     <div id="credithereandnow">
+        <div class="bhoechie-tab-container" style="max-height:80%;" id="credithereandnowtab">
+            <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+                <div class="list-group">
+                    <div class="list-group-item text-center active" id="creditsHereAndNow_tab">Վարկեր</div>
+                    <div class="list-group-item text-center" id="preOrders_tab"><span>Ձևավորված հայտեր</span></div>
+                </div>
+            </div>
+            <div class="bhoechie-tab" style="width: calc(100% - 140px); display: inline-block;">
+                <div class="bhoechie-tab-content active" id="creditTab">
+                    <creditshereandnow id="creditshereandnow"></creditshereandnow>
+                    <br />
+                </div>
+                <div class="bhoechie-tab-content  " id="preorderTab" >
+                    <preorderdetailshistory id="preorderdetailshistory" preordertype ="1"></preorderdetailshistory>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+        $("#credithereandnow div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+            e.preventDefault();
+            $(this).siblings('#credithereandnow div.active').removeClass("active");
+            $(this).addClass("active");
+            var index = $(this).index();
+            $("#credithereandnow div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+            $("#credithereandnow div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+        });
+
+    </script>
+
+

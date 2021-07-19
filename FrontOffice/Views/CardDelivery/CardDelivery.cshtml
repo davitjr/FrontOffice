@@ -1,0 +1,43 @@
+﻿<style type="text/css">
+    #CardDelivery {
+        width: 750px;
+    }
+</style>
+<form name="CardDeliveryOrderForm" style="margin-left:15px;margin-top:5px" ng-controller="CardDeliveryOrderCtrl" id="CardDelivery" class="container">
+    <div class="col-sm-12 " style="width:110%">
+        <div class="col-sm-3 ">
+            <div class="product-detail-cell product-detail-lable">
+                Սկզբնաժամկետ
+            </div>
+            <input type="date" ng-model="searchParams.DateFrom" name="DateFrom" class="form-control"
+                   required>
+            <ng-messages ng-if="CardDeliveryOrderForm.$submitted || CardDeliveryOrderForm.DateFrom.$dirty"
+                         for="CardDeliveryOrderForm.DateFrom.$error">
+                <ng-message when="required" class="errors">
+                    Նշեք ա/թ
+                </ng-message>
+            </ng-messages>
+        </div>
+        <div class="col-sm-3">
+            <div class="product-detail-cell product-detail-lable">
+                Վերջնաժամկետ
+            </div>
+            <input type="date" ng-model="searchParams.DateTo" name="DateTo" class="form-control"
+                   required>
+            <ng-messages ng-if="CardDeliveryOrderForm.$submitted || CardDeliveryOrderForm.DateTo.$dirty"
+                         for="CardDeliveryOrderForm.DateTo.$error">
+                <ng-message when="required" class="errors">
+                    Նշեք ա/թ
+                </ng-message>
+            </ng-messages>
+        </div>
+        <br>
+        <div class="col-sm-2  ">
+            <button type="submit" class="btn btn-primary" ng-click="DownloadOrderXMLs()"><span class="glyphicon glyphicon-download"></span>&nbsp;Ներբեռնել</button>
+        </div>
+        <br>
+        <br>
+    </div>
+</form>
+
+

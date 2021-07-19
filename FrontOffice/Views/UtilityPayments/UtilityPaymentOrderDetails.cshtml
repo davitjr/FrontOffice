@@ -1,0 +1,70 @@
+﻿<form ng-controller="UtilityPaymentSearchCtrl" ng-init="getUtilityPaymentOrder(selectedOrderId)" style="min-width:500px">
+                <loading-control class="col-sm-12" style="left:300px;height:60px;width:100px" scopevariable="order"></loading-control>
+    <div ng-show="utilityTypeDescription" class="menu-bar dialog-menu light-green"
+         style="margin-left:-3px;margin-top:0px;" ng-if="((order.Quality == 3 || order.Quality == 20) && $root.SessionProperties.IsCalledFromHB == true) || $root.SessionProperties.IsCalledFromHB != true">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 " ng-if="order.Quality!=undefined && $root.SessionProperties.IsCalledFromHB != true" ng-click="getUtilityPaymentOrderDetails(true)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-4" class="printButton h-menu-icon">&nbsp;Հանձնարարական</span>
+            </li>
+            <li ng-if="order.Quality!=undefined && order.Quality ==30 && $root.SessionProperties.IsCalledFromHB != true" class="root-menu-item-5 " ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հեռացման հայտ','removalOrder',callbackgetUtilityPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">&nbsp;Հեռացման հայտ</span>
+            </li>
+            <li ng-if="order.Quality!=undefined && order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && $root.SessionProperties.IsCalledFromHB != true" class="root-menu-item-5 " ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetUtilityPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">&nbsp;Հրաժարման հայտ</span>
+            </li>
+            <li class="root-menu-item-3 " ng-if="(order.Quality == 3 || order.Quality == 20) && $root.SessionProperties.IsCalledFromHB == true && $root.SessionProperties.AdvancedOptions.isOnlineAcc=='1'" ng-controller="OrderCtrl" ng-click="confirmOrder(order.Id);">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon" src="~/Content/Images/confirm.png" style="height: 30px;width:36px;margin-top: 6px;">Կատարել</span>
+            </li>
+        </ul>
+    </div>
+    <div ng-show="utilityTypeDescription" class="product-details bhoechie-tab-content" style="padding-left:10px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործարքի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործարքի ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{utilityTypeDescription}} ծառայության դիմաց վճարում</div>
+        </div>
+        <div ng-if="order.Type!=60" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ելքագրվող (դեբետ) հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{order.DebitAccount.AccountNumber}}  {{order.DebitAccount.Currency}} {{order.DebitAccount.AccountTypeDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{order.AmountString}} {{order.Currency}}</div>
+        </div>
+        <div ng-if="order.CommunalType==4" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սպասարկման գումար</div>
+            <div class="product-detail-cell product-detail-value">{{order.ServiceAmount | number:2}} {{order.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Բաժանորդի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Code}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Նկարագրություն</div>
+            <div class="product-detail-cell product-detail-value">{{order.Description}}</div>
+        </div>
+
+        <orderoppersondetails opperson="order.OPPerson" ng-show="order.OPPerson" ng-if="$root.SessionProperties.IsCalledFromHB != true"></orderoppersondetails>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{ order.QualityDescription }}</div>
+            <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{ order.QualityDescription }}</div>
+            <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{ order.QualityDescription }}</div>
+                </div>
+        <div ng-if="order.Quality==31" ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մերժման պատճառ`</div>
+            <div class="product-detail-cell product-detail-value"><span class="redStyle">{{ rejectHistory.ReasonDescription }}</span></div>
+                </div>
+        <div class="product-detail-row" ng-if="$root.SessionProperties.IsCalledFromHB != true">
+            <div class="product-detail-cell my_text1">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+            </div>
+</div>
+</form>

@@ -1,0 +1,67 @@
+﻿<style>
+    .modal-content {
+        width: 350px;
+        height: 220px;
+        margin-top: 300px;
+
+    }
+
+    .redStyle {
+        color: red;
+    }
+
+    .greenStyle {
+        color: #0D4E26;
+    }
+</style>
+<div ng-controller="CardCtrl" data-ng-init="getArCaBalanceResponseData(selectedCard)">
+    <div class="popup_wrapper_top">
+        <div>
+            ArCa մնացորդ
+        </div>
+        <img ng-if="text" src="/Content/images/close_pop.png " ng-click="closemodal()">
+    </div>
+    <br /> <loading-control scopevariable="arcaBalanceResponse"></loading-control>
+    
+           <div ng-show="arcaBalanceResponse" style="margin-left:10px;">
+               <div class="col-sm-12">
+                   <span>Քարտի համար՝</span> <b>{{::cardNumber}}</b><br /><br />
+                   <span>Քարտի կարգավիճակ՝</span><b><span ng-class="{redStyle: cardArCaStatus==2}"> {{cardArCaStatus==1||cardArCaStatus==2?(cardArCaStatus==1?'Ակտիվ':'Բլոկավորված'):'-'}}</span></b><br /><br />
+
+               </div>
+
+               <div ng-if="arcaBalanceResponse.ResponseCode!='00'" class="my_text1" style="text-align:center">
+                   Տվյալ պահին հասանելի չէ
+                   <br /><br />
+                   <div style="text-align:left;">
+                       <span style="margin-left:10px;" class="my_text1">Պատասխանի կոդ՝ </span><span style="color:red;">{{::arcaBalanceResponse.ResponseCode}}</span>
+                       <br />
+                       <span style="margin-left:10px;" class="my_text1">Նկարագրություն՝ </span><span style="color:red;">{{::arcaBalanceResponse.ResponseDescription}}</span>
+                   </div>
+
+                   <div class="col-sm-12">
+
+                       <div class="col-sm-3"> </div>
+                       <button style="width:90px" class="col-sm-5 my_save_button" ng-click="closemodal()">OK</button>
+
+                   </div>
+               </div>
+               <div ng-if="arcaBalanceResponse.ResponseCode=='00'" style="text-align:left;margin-top:-20px">
+                   <span class="my_text1">Մնացորդը ըստ ArCa-ի՝ </span> <span ng-class="{redStyle: arcaBalanceResponse.Amout<0,  greenStyle : arcaBalanceResponse.Amout>0 }"><b>{{::arcaBalanceResponse.Amount | number : 2 }} {{::selectedCardCurrency}}</b></span>
+                   <br />
+                   <span style="margin-left:10px;" class="my_text1">Որից</span>
+                   <br />
+                   <span style="margin-left:20px;">Վարկային գծի չօգտ. մաս՝ </span><span ng-class="{redStyle: arcaBalanceResponse.AvailableExceedLimit<0,  greenStyle : arcaBalanceResponse.AvailableExceedLimit>0 }"><b>{{::arcaBalanceResponse.AvailableExceedLimit  | number : 2}} {{::selectedCardCurrency}}</b></span>
+                   <br />
+                   <span style="margin-left:20px;">Սեփական միջոցներ՝ </span><span ng-class="{redStyle: arcaBalanceResponse.OwnFunds<0,  greenStyle : arcaBalanceResponse.OwnFunds>0 }"><b>{{::arcaBalanceResponse.OwnFunds | number : 2}} {{::selectedCardCurrency}}</b></span>
+                   <br />
+                   <div class="col-sm-12">
+                       <div class="col-sm-3"> </div>
+                       <button style="width:90px;margin-top:10px" class="col-sm-5 my_save_button" ng-click="closemodal()">OK</button>
+
+                   </div>
+               </div>
+           </div>
+</div>
+
+

@@ -1,0 +1,119 @@
+﻿<style>
+    .redBold {
+        font-weight: bold;
+        color: red;
+    }
+
+   .blueBold {
+        font-weight: bold;
+        color: blue;
+    }
+</style>
+
+<script type="text/javascript">
+    $("#loansContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div class="product-container" ng-controller="LoanCtrl" id="AllLoans" data-ng-init="getLoans()" ng-show="(hideBlank!='true' && loans.length==0) || (loans.length!=0 && loans.length!=undefined)">
+    <div class="header-title">
+        <a ui-sref="loans" style="color:black;">Վարկեր</a> 
+        
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="product-container-header">
+            <div class="include-closed-products">
+                <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-loans" data-ng-model="filter" ng-true-value="2" ng-false-value="1" ng-change="QualityFilter()">
+                <label for="include-closed-loans" name="include-closed-loans-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+            </div>
+            <div  >
+                &nbsp;&nbsp;&nbsp;
+                <select ng-show="currencies" ng-init="getCurrencies()" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ արժույթի" data-ng-model="currency" style="max-width:80px;height:30px" name="Currency" id="Currency" class="form-control"
+                        data-ng-options="k as v for (k,v) in ::currencies">
+                    <option value=""></option>
+                </select>
+                <script>
+                    $("[data-toggle=tooltip]").tooltip({
+                        placement: $(this).data("placement") || 'bottom'
+                    });
+                </script>
+                &nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-default" style="height:30px" title="Չմարված վարկեր" ng-click="printNotMaturedLoans()" ><span class="glyphicon glyphicon-print" style="top:-4px !important"></span></button>
+                <i class="add-new-product tipB" ng-if="$root.SessionProperties.SourceType == 2 && $root.SessionProperties.CustomerType==6" ng-controller="PopUpCtrl" ng-click="params={orderType:13};openWindow('/LoanProductOrder/PersonalLoanProductOrder','Ավանդի գրավով վարկի հայտի մուտքագրում','newloan')" data-original-title="Ավանդի գրավով վարկ"></i>
+            </div>
+        </div>
+        <div class="product-content-table custom-scroll" id="loansContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+            <div ng-if="loans==undefined">
+                <loading></loading>
+            </div>
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody>
+                    <tr ng-repeat="loan in loans | filter: { Currency: currency!=undefined?currency:'' }" ng-if="filter==1 && loans.length!=0" ng-class="{'selected':$index==selectedRow}" ng-click="setClickedRow($index,loan)" ng-dblclick="selectedLoanIsAccessible && openLoanDetails();" style="cursor: pointer;">
+                        <td class="col-sm-3">
+                            {{ ::loan.LoanTypeDescription }}<span ng-if="loan.LoanType==38">({{ ::loan.ContractNumber}})</span>
+                            <span ng-if="loan.CreditCode!=''" style="color:brown;"><br />Կոդ՝ {{ ::loan.CreditCode}}</span>
+                            <br /> Պայմ. գումար`{{ ::(loan.Is_24_7?loan.ContractAmountString:loan.StartCapitalString)}} {{ ::loan.Currency }}
+                            <br /><span style="font-weight:bold;" ng-class="{ 'redBold': loan.Quality==5 ||  loan.Quality==11 || loan.Quality==12 || loan.Quality==2,'blueBold':loan.Quality==10  }">{{ ::loan.QualityDescription }}</span>
+                            <span><br />Հաշվեհամար՝{{ ::loan.LoanAccount.AccountNumber}}</span>
+
+                            <span><br />Ընթ․ հաշիվ՝{{ ::loan.ConnectAccount.AccountNumber}}</span>
+                            <span ng-if="loan.NextRepayment"><br />Հերթական մարում՝ {{ ::loan.NextRepaymentDateString}} </span>
+                            <br /> <span class="tab_text">Վերջ`</span> <span>{{ ::loan.EndDate | mydate | date: 'dd/MM/yyyy'}}</span>
+                        </td>
+                        <td class="col-sm-2" style="text-align:right;">
+                            <span>{{ ::loan.SumOfCurrentAndOutCapitalsString }} {{ ::loan.Currency }}</span>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <span>{{ ::loan.NextRepaymentAmountString}} {{ ::loan.Currency}}</span> 
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="contextLoans" ng-if="loan.isAccessible" id="contextMenu"><div id="contextMenu"></div> </td>
+                        <td class="col-sm-1 click_toggle"  ng-if="!loan.isAccessible" ></td>
+                    </tr>
+                    <tr ng-if="filter==1 && loans.length==0 ">
+                        <td class="col-sm-3" style="text-align:center;">
+                            Առկա չեն գործող վարկեր
+                        </td>
+                        <td class="col-sm-2"></td>
+                        <td class="col-sm-1"></td>
+                    </tr>
+                    <tr ng-if="filter!=1"><td style="color:red; border-width:3px" colspan="3">Մարված վարկեր </td></tr>
+                    <tr ng-repeat="loan in closingLoans | filter: { Currency: currency!=undefined?currency:'' }" ng-if="closingLoans.length!=0" ng-class="{'selected':$index==selectedRowClose}" ng-click="setClickedRowClose($index,loan)" ng-dblclick="selectedLoanIsAccessible && openLoanDetails();" style="cursor: pointer;">
+                        <td class="col-sm-3">
+                            {{ ::loan.LoanTypeDescription }}
+                            <br /> {{ ::loan.QualityDescription }}
+                            <br /> <span class="tab_text">Գումար`</span> <span>{{ ::loan.StartCapitalString}} {{ ::loan.Currency }}</span>
+                            <br /> <span class="tab_text">Սկիզբ`</span> <span>{{ ::loan.StartDate | mydate | date: 'dd/MM/yyyy'}}</span>
+                            <br /> <span class="tab_text">Վերջ`</span> <span>{{ ::loan.EndDate | mydate | date: 'dd/MM/yyyy'}}</span>
+                            <span class="tab_text">Փակման ա/թ`<br /></span><span>{{ ::loan.DayOfRateCalculation | mydate | date: 'dd/MM/yyyy'}}</span>
+
+                        </td>
+                        <td class="col-sm-2" style="text-align:right;">{{ ::loan.CurrentCapitalString}} {{ ::loan.Currency }}</td>
+                        <td class="col-sm-1 click_toggle" context="contextLoans" ng-if="loan.isAccessible" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul id="contextLoans" class="dropdown-menu">
+                <li ng-if="selectedLoanIsAccessible  && selectedRow!=null && selectedQuality!=10"><a href="" style="color: black;text-decoration:none!important ;" ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-click="openWindow('/MatureOrder/PersonalMatureOrder','Վարկի մարում','newMature',callbackgetLoans)">Վարկի մարում</a></li>
+                <li ng-if="$root.SessionProperties.SourceType == 2 && selectedQuality==10 && selectedLoanType!=49"><a href="" ng-class="{'my_disable':disabelButton==true}" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={product:contractLoan,orderType:73};openWindow('/LoanProductActivationOrder/PersonalLoanProductActivationOrder','Վարկի ակտիվացում','newLoanProductActivation')">Վարկի ակտիվացում</a></li>
+                <li ng-if="selectedLoanIsAccessible"><a style="color: black;text-decoration:none!important ;" ui-sref="loanDetails({ productId : selectedProductId,closedLoan:selectedLoan })">Մանրամասն դիտարկում</a></li>
+             </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+

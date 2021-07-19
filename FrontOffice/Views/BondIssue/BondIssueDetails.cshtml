@@ -1,0 +1,138 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div id="Loader" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div style="max-width:630px">
+    <errors></errors>
+</div>
+<div ng-controller="BondIssueCtrl" data-ng-init="getBondIssue(ProductId)" id="BondIssueDetails">
+    <div id="BondIssueDetails_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="approveBondIssue(ProductId);" ng-if="bondIssue.Quality==1 && hideButton!=true ">
+                <span id="h-menu-item-4"><i id="h-menu-icon-4" class="submitButton h-menu-icon"></i></span>
+                <span>Հաստատել</span>
+            </li>
+            <li  ng-if="(bondIssue.Quality==1 || (bondIssue.Quality!=1 && bondIssue.IssuerType == 3)) && hideButton!=true " class="root-menu-item-4 " ng-controller="PopUpCtrl" ng-click="params={actionType: 2, bondIssueId: ProductId};openWindow('/BondIssue/BondIssueSave','Պարտատոմսի թողարկման խմբագրում','newbondissue')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="editButton h-menu-icon">Խմբագրել</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="deleteBondIssue(ProductId);" ng-if="bondIssue.Quality==1 && hideButton!=true ">
+                <span id="h-menu-item-4"><i class="glyphicon glyphicon-remove-circle" style="font-size:21px;" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title=""></i></span>
+                <span>Հեռացնել</span>
+            </li>
+    
+            <li class="root-menu-item-4 " onclick="CloseBPDialog('oneBondIssueDetails')">
+                <span id="h-menu-item-4"><i id="h-menu-icon-4" class="h-menu-icon cancelButton"></i></span>
+                <span>Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div class="product-details bhoechie-tab-content" style="position:relative;top:0;left:0;min-width: 710px;margin-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Թողարկող</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.IssuerTypeDescription}}</div>
+        </div>
+        @*<div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պարտատոմսի ժամկետի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.PeriodTypeDescription}}</div>
+        </div>*@
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ունիկալ համար</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.ID}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տվյալ թողարկման ԱՄՏԾ (ISIN)</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.ISIN}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+            <div class="product-detail-cell product-detail-lable">Պարտատոմսերի ձեռքբերման բանկի հաշվեհամար</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.BankAccount.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Թողարկման կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.QualityDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրանցման օր</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.RegistrationDateToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Արժույթ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Թողարկման ընդհանուր ծավալ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.TotalVolume}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+            <div class="product-detail-cell product-detail-lable">Մեկ պարտատոմսի անվանական արժեք</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.NominalPrice}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+            <div class="product-detail-cell product-detail-lable">Շրջանառության ժամկետ  (ամիսներ)</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.EditionCirculation}}</div>
+        </div>
+      
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տարեկան արժեկտրոնային դրույք</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.InterestRateValueToString}} %</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+            <div class="product-detail-cell product-detail-lable">Արժեկտրոնների վճարման պարբերականություն` տարվա կտրվածքով</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.CouponPaymentPeriodicity}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType != 3">
+            <div class="product-detail-cell product-detail-lable">Արժեկտրոնների վճարման քանակ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.CouponPaymentCount}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+            <div class="product-detail-cell product-detail-lable">Արժեկտրոնների հաշվարկման օրեր</div>
+            <div class="product-detail-cell product-detail-value">
+                <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl"
+                      ng-click="params={bondIssue:bondIssue, forNew: 0};openWindow('/BondIssue/BondIssueSchedule','Արժեկտրոնների հաշվարկման օրերի գրաֆիկ','bondissueschedule');"
+                      class="glyphicon glyphicon-info-sign" data-original-title="Tooltip on right" />
+            </div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+            <div class="product-detail-cell product-detail-lable">Պարտատոմսերի տեղաբաշխման սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.ReplacementDateToString}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+            <div class="product-detail-cell product-detail-lable">Պարտատոմսերի տեղաբաշխման ավարտ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.ReplacementEndDateToString}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType != 3">
+            <div class="product-detail-cell product-detail-lable">Պարտատոմսերի թողարկման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.IssueDateToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մարման օր</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.RepaymentDateToString}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+            <div class="product-detail-cell product-detail-lable">Քանակ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.TotalCount}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+            <div class="product-detail-cell product-detail-lable">Նվազագույն ձեռքբերման քանակ (մեկ ներդրողի նկատմամբ)</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.MinSaleQuantity}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+            <div class="product-detail-cell product-detail-lable">Առավելագույն ձեռքբերման քանակ (մեկ ներդրողի նկատմամբ)</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.MaxSaleQuantity}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+            <div class="product-detail-cell product-detail-lable">Ձեռքբերման համար կատարվող վճարման վերջնաժամկետ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.PurchaseDeadlineTimeToString}}</div>
+        </div>
+    </div>
+
+    <br />
+</div>
+

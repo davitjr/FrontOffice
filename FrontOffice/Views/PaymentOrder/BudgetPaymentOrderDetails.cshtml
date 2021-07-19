@@ -1,0 +1,239 @@
+﻿<form ng-controller="BudgetPaymentOrderCtrl" ng-init="details=true;getBudgetPaymentOrder(selectedOrderId);" style="width:600px" >
+        <loading-control style="margin-left:20em" scopevariable="order"></loading-control>
+        <div id="budgetPaymentOrder_menu" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0" ng-if="$root.SessionProperties.IsCalledFromHB != true">
+            <ul id="menu" class="dialog-menu">
+                <li class="root-menu-item-4 "  ng-click="getBudgetPaymentOrderDetails(true)">
+                    <span id="h-menu-item-4"><img id="h-menu-icon-4" class="printButton h-menu-icon">Հանձնարարական</span>
+                </li>
+
+                <li class="root-menu-item-5 " ng-if="order.Quality ==30 " ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հեռացման հայտ','removalOrder',callbackgetBudgetPaymentOrder)">
+                    <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հեռացման հայտ</span>
+                </li>
+
+                <li class="root-menu-item-5 " ng-if="order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && order.Quality !=50" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetBudgetPaymentOrder)">
+                    <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+                </li>
+
+            </ul>
+        </div>  
+
+        <div class="product-details bhoechie-tab-content" style="min-width:600px;padding-left:10px">
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+                <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+                <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+            </div>
+
+            <div class="product-detail-row" ng-if="$root.SessionProperties.IsCalledFromHB != true">
+                <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+                <div class="product-detail-cell product-detail-value">{{order.OperationDateString}}</div>
+            </div>
+
+            <div ng-if="order.Type!=56" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Դեբետագրվող հաշիվ</div>
+                <div class="product-detail-cell product-detail-value">{{order.DebitAccount.AccountNumber}} {{order.DebitAccount.Currency}}</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Կրեդիտագրվող հաշիվ</div>
+                <div class="product-detail-cell product-detail-value">{{order.ReceiverAccount.AccountNumber}} {{order.ReceiverAccount.Currency}}</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Գումար</div>
+                <div class="product-detail-cell product-detail-value">{{order.AmountString}} {{order.Currency}}</div>
+            </div>
+
+            <div ng-if="order.PayerDocumentNumber != null" class="product-detail-row">
+                <div ng-if="order.PayerDocumentType == 1" class="product-detail-cell product-detail-lable">ՀԾՀ</div>
+                <div ng-if="order.PayerDocumentType == 2" class="product-detail-cell product-detail-lable">ՀԾՀ չստանալու մասին տեղեկանքի համար</div>
+                <div ng-if="order.PayerDocumentType == 3" class="product-detail-cell product-detail-lable">Անձնագիր</div>
+
+                <div class="product-detail-cell product-detail-value">{{order.PayerDocumentNumber}}</div>
+            </div>
+
+            <div ng-if="order.SubType!=3" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Վճարման նպատակ</div>
+                <div class="product-detail-cell product-detail-value">{{order.Description}}</div>
+            </div>
+
+            <div ng-if="order.SubType!=3" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Ստացող</div>
+                <div class="product-detail-cell product-detail-value">{{order.Receiver}}</div>
+            </div>
+
+            <div ng-if="order.LTACode>0" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">ՏՀՏ կոդ</div>
+                <div class="product-detail-cell product-detail-value">{{order.LTACode}}</div>
+            </div>
+
+
+            <div ng-if="order.PoliceCode>0" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Ոստիկանության կոդ</div>
+                <div class="product-detail-cell product-detail-value">{{order.PoliceCode}}</div>
+            </div>
+
+            <div ng-if="order.SubType!=3" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Շտապ փոխանցում</div>
+                <div class="product-detail-cell product-detail-value">{{order.UrgentSign==true?'Այո':'Ոչ'}}</div>
+            </div>
+
+            <div ng-if="order.Exaction==1" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable" style=" font-weight :700">Բռնագանձում</div>
+                <div class="product-detail-cell product-detail-value">Այո</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Միջնորդավճար</div>
+                <div class="product-detail-cell product-detail-value">{{FeesString}}</div>
+            </div>
+            <div class="product-detail-row" ng-if="order.ReasonIdDescription != undefined || order.ReasonIdDescription != null">
+                <div class="product-detail-cell product-detail-lable">Քարտից ելքագրման պատճառ</div>
+                <div class="product-detail-cell product-detail-value">{{order.ReasonIdDescription}}</div>
+            </div>
+
+            <div ng-if="order.CreditorStatus > 0" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Հօգուտ այլ անձի (պարտատիրոջ)</div>
+                <div class="product-detail-cell product-detail-value">{{order.CreditorStatus>0?'Այո':'Ոչ'}}</div>
+            </div>
+
+            <div ng-if="order.CreditorStatus > 0" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Այլ անձի (պարտատիրոջ) կարգավիճակ</div>
+                <div class="product-detail-cell product-detail-value">{{order.CreditorStatusDescription}}</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div ng-if="order.CreditorStatus == 10 || order.CreditorStatus == 20" class="product-detail-cell product-detail-lable">Այլ անձի (պարտատիրոջ) անուն ազգանուն</div>
+                <div ng-if="order.CreditorStatus != 10 && order.CreditorStatus != 20 && order.CreditorStatus > 0">Այլ անձի (պարտատիրոջ) անվանում</div>
+
+                <div ng-if="order.CreditorDescription != null" class="product-detail-cell product-detail-value">{{order.CreditorDescription}}</div>
+            </div>
+
+
+            <div class="product-detail-row">
+                <div ng-if="order.CreditorDocumentNumber != null && order.CreditorDocumentType == 1" class="product-detail-cell product-detail-lable">Այլ անձի (պարտատիրոջ) ՀԾՀ</div>
+                <div ng-if="order.CreditorDocumentNumber != null && order.CreditorDocumentType == 2" class="product-detail-cell product-detail-lable">Այլ անձի (պարտատիրոջ) ՀԾՀ չստանալու մասին տեղեկանքի համար</div>
+                <div ng-if="order.CreditorDocumentNumber != null && order.CreditorDocumentType == 3" class="product-detail-cell product-detail-lable">Այլ անձի (պարտատիրոջ) անձնագիրր</div>
+                <div ng-if="order.CreditorDocumentNumber != null && order.CreditorDocumentType == 4" class="product-detail-cell product-detail-lable">Այլ անձի (պարտատիրոջ) ՀՎՀՀ</div>
+                <div class="product-detail-cell product-detail-value">{{order.CreditorDocumentNumber}}</div>
+            </div>
+
+
+            <div ng-if="order.CreditorDeathDocument != null && order.CreditorDeathDocument !=''" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Այլ անձի (պարտատիրոջ) մահվան վկայական</div>
+                <div class="product-detail-cell product-detail-value">{{order.CreditorDeathDocument}}</div>
+            </div>
+
+
+            <div style="clear:both;color:#6F6A6A;font-weight:bold" ng-if="$root.SessionProperties.IsCalledFromHB != true">Կատարող՝</div>
+            <div class="product-detail-row" ng-if="$root.SessionProperties.IsCalledFromHB != true">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;<span ng-if="order.OPPerson.PersonLastName==undefined || order.OPPerson.PersonLastName==''">Անվանում</span> <span ng-if="order.OPPerson.PersonLastName!=undefined && order.OPPerson.PersonLastName!=''"> Անուն,Ազգանուն </span> </div>
+                <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonName}} {{order.OPPerson.PersonLastName}}</div>
+            </div>
+
+
+            <div ng-if="order.OPPerson.PersonDocument!='' && order.OPPerson.PersonDocument!=undefined && $root.SessionProperties.IsCalledFromHB != true" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Անձնագիր</div>
+                <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonDocument}}</div>
+            </div>
+
+            <div ng-if="order.OPPerson.PersonSocialNumber!='' && order.OPPerson.PersonSocialNumber!=undefined && $root.SessionProperties.IsCalledFromHB != true" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;ՀԾՀ</div>
+                <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonSocialNumber || "-"}}</div>
+            </div>
+
+            <div ng-if="order.OPPerson.PersonNoSocialNumber!='' && order.OPPerson.PersonNoSocialNumber!=undefined && $root.SessionProperties.IsCalledFromHB != true" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;ՀԾՀ-ից հրաժարվելու տեղեկանք</div>
+                <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonNoSocialNumber}}</div>
+            </div>
+
+            <div ng-if="order.OPPerson.CustomerNumber!='' && $root.SessionProperties.IsCalledFromHB != true" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Հաճախորդի համար</div>
+                <div class="product-detail-cell product-detail-value">{{order.OPPerson.CustomerNumber}}</div>
+            </div>
+
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+                <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{order.QualityDescription}}</div>
+                <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{order.QualityDescription}}</div>
+                <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{order.QualityDescription}}</div>
+            </div>
+
+            <div ng-if="order.Quality==31" class="">
+                <div ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="" style="clear:both;color:#6F6A6A;font-weight:bold">Մերժման պատճառ`</div>
+                <div class="redStyle">&nbsp;&nbsp;&nbsp;{{ rejectHistory.ReasonDescription }}</div>
+            </div>
+
+        </div>
+        <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px" ng-if="$root.SessionProperties.IsCalledFromHB != true">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+        <br /><br />
+        <orderattachments orderid="selectedOrderId"></orderattachments>
+
+
+            @*<div ng-show="order" class="popup_wrapper_inner">
+                <div class="row">
+                    <div class="col-md-11 my_class">
+                        <div class="col-sm-5 my_label" style="clear:both">Հայտի համար</div><div class="col-sm-7 my_text1">{{order.Id}}</div>
+                        <div class="col-sm-5 my_label " style="clear:both">Մուտքագրման ա/թ</div><div class="col-sm-7 my_text1">{{order.RegistrationDateString}}</div>
+                        <div class="col-sm-5 my_label " style="clear:both">Գործառնական օր</div><div class="col-sm-7 my_text1">{{order.OperationDateString}}</div>
+                        <div class="col-sm-5 my_label " ng-if="order.Type!=56" style="clear:both">Դեբետագրվող հաշիվ</div><div ng-if="order.Type!=56" class="col-sm-7 my_text1">{{order.DebitAccount.AccountNumber}} {{order.DebitAccount.Currency}}</div>
+                        <div class="col-sm-5 my_label" style="clear:both">Կրեդիտագրվող հաշիվ</div><div class="col-sm-7 my_text1">{{order.ReceiverAccount.AccountNumber}} {{order.ReceiverAccount.Currency}}</div>
+                        <div class="col-sm-5 my_label" style="clear:both">Գումար</div><div class="col-sm-5 my_text1 ">{{order.AmountString}} {{order.Currency}}</div>
+                        <div ng-if="order.PayerDocumentNumber != null && order.PayerDocumentType == 1" class="col-sm-5 my_label " style="clear:both">ՀԾՀ</div>
+                        <div ng-if="order.PayerDocumentNumber != null && order.PayerDocumentType == 2" class="col-sm-5 my_label " style="clear:both">ՀԾՀ չստանալու մասին տեղեկանքի համար</div>
+                        <div ng-if="order.PayerDocumentNumber != null && order.PayerDocumentType == 3" class="col-sm-5 my_label " style="clear:both">Անձնագիր</div>
+                        <div ng-if="order.PayerDocumentNumber != null" class="col-sm-7 my_text1 ">{{order.PayerDocumentNumber}}</div>
+
+
+                        <div ng-if="order.SubType!=3" class="col-sm-5 my_label " style="clear:both">Վճարման նպատակ</div><div ng-if="order.SubType!=3" class="col-sm-7 my_text1 ">{{order.Description}}</div>
+                        <div ng-if="order.SubType!=3" class="col-sm-5 my_label " style="clear:both">Ստացող</div><div ng-if="order.SubType!=3" class="col-sm-7 my_text1 ">{{order.Receiver}}</div>
+                        <div ng-if="order.LTACode>0" class="col-sm-5 my_label " style="clear:both">ՏՀՏ կոդ</div><div ng-if="order.LTACode>0" class="col-sm-7 my_text1 ">{{order.LTACode}}</div>
+                        <div ng-if="order.PoliceCode>0" class="col-sm-5 my_label " style="clear:both">Ոստիկանության կոդ</div><div ng-if="order.PoliceCode>0" class="col-sm-7 my_text1 ">{{order.PoliceCode}}</div>
+                        <div ng-if="order.SubType!=3" class="col-sm-5 my_label " style="clear:both">Շտապ փոխանցում</div><div ng-if="order.SubType!=3" class="col-sm-7 my_text1 ">{{order.UrgentSign==true?'Այո':'Ոչ'}}</div>
+
+                        <div class="col-sm-5 my_label " style="clear:both">Միջնորդավճար</div>
+                        <div class="col-sm-7 my_text1 ">{{FeesString}}</div>
+
+                        <div ng-if="order.CreditorStatus > 0" class="col-sm-5 my_label " style="clear:both">Հօգուտ այլ անձի (պարտատիրոջ)</div><div ng-if="order.CreditorStatus>0" class="col-sm-7 my_text1 ">{{order.CreditorStatus>0?'Այո':'Ոչ'}}</div>
+                        <div ng-if="order.CreditorStatus > 0" class="col-sm-5 my_label " style="clear:both">Այլ անձի (պարտատիրոջ) կարգավիճակ</div><div ng-if="order.CreditorStatus > 0" class="col-sm-7 my_text1 ">{{order.CreditorStatusDescription}}</div>
+                        <div ng-if="order.CreditorStatus == 10 || order.CreditorStatus == 20" class="col-sm-5 my_label " style="clear:both">Այլ անձի (պարտատիրոջ) անուն ազգանուն</div><div ng-if="order.CreditorStatus != 10 && order.CreditorStatus != 20 && order.CreditorStatus > 0" class="col-sm-5 my_label " style="clear:both">Այլ անձի (պարտատիրոջ) անվանում</div><div ng-if="order.CreditorDescription != null" class="col-sm-7 my_text1 ">{{order.CreditorDescription}}</div>
+
+                        <div ng-if="order.CreditorDocumentNumber != null && order.CreditorDocumentType == 1" class="col-sm-5 my_label " style="clear:both">Այլ անձի (պարտատիրոջ) ՀԾՀ</div>
+                        <div ng-if="order.CreditorDocumentNumber != null && order.CreditorDocumentType == 2" class="col-sm-5 my_label " style="clear:both">Այլ անձի (պարտատիրոջ) ՀԾՀ չստանալու մասին տեղեկանքի համար</div>
+                        <div ng-if="order.CreditorDocumentNumber != null && order.CreditorDocumentType == 3" class="col-sm-5 my_label " style="clear:both">Այլ անձի (պարտատիրոջ) անձնագիր</div>
+                        <div ng-if="order.CreditorDocumentNumber != null && order.CreditorDocumentType == 4" class="col-sm-5 my_label " style="clear:both">Այլ անձի (պարտատիրոջ) ՀՎՀՀ</div>
+
+                        <div ng-if="order.CreditorDocumentNumber != null" class="col-sm-7 my_text1 ">{{order.CreditorDocumentNumber}}</div>
+                        <div ng-if="order.CreditorDeathDocument != null && order.CreditorDeathDocument !=''" class="col-sm-5 my_label " style="clear:both">Այլ անձի (պարտատիրոջ) մահվան վկայական</div> <div ng-if="order.CreditorDeathDocument != null && order.CreditorDeathDocument !=''"  class="col-sm-7 my_text1 ">{{order.CreditorDeathDocument}}</div>
+                        <div class="col-sm-5 my_text1" style="clear:both">Կատարող՝</div>
+                        <div class="col-sm-5 my_label" style="clear:both"> &nbsp;&nbsp;&nbsp;<span ng-if="order.OPPerson.PersonLastName==undefined || order.OPPerson.PersonLastName==''">Անվանում</span><span ng-if="order.OPPerson.PersonLastName!=undefined && order.OPPerson.PersonLastName!=''">Անուն,Ազգանուն</span></div><div class="col-sm-7 my_text1 ">{{order.OPPerson.PersonName}} {{order.OPPerson.PersonLastName}}</div>
+                        <div ng-if="order.OPPerson.PersonDocument!='' && order.OPPerson.PersonDocument!=undefined" class="col-sm-5 my_label" style="clear:both"> &nbsp;&nbsp;&nbsp;Անձնագիր</div><div ng-if="order.OPPerson.PersonDocument!=''  && order.OPPerson.PersonDocument!=undefined" class="col-sm-7 my_text1 ">{{order.OPPerson.PersonDocument}}</div>
+                        <div ng-if="order.OPPerson.PersonSocialNumber!='' && order.OPPerson.PersonSocialNumber!=undefined" class="col-sm-5 my_label" style="clear:both"> &nbsp;&nbsp;&nbsp;ՀԾՀ</div><div ng-if="order.OPPerson.PersonSocialNumber!='' && order.OPPerson.PersonSocialNumber!=undefined" class="col-sm-7 my_text1 ">{{order.OPPerson.PersonSocialNumber || "-"}}</div>
+                        <div ng-if="order.OPPerson.PersonNoSocialNumber!='' && order.OPPerson.PersonNoSocialNumber!=undefined" class="col-sm-5 my_label" style="clear:both"> &nbsp;&nbsp;&nbsp;ՀԾՀ-ից հրաժարվելու տեղեկանք</div><div ng-if="order.OPPerson.PersonNoSocialNumber!='' && order.OPPerson.PersonNoSocialNumber!=undefined" class="col-sm-7 my_text1 ">{{order.OPPerson.PersonNoSocialNumber}}</div>
+                        <div ng-if="order.OPPerson.CustomerNumber!=''" class="col-sm-5 my_label" style="clear:both"> &nbsp;&nbsp;&nbsp;Հաճախորդի համար</div><div ng-if="order.OPPerson.CustomerNumber!=''" class="col-sm-7 my_text1 ">{{order.OPPerson.CustomerNumber}}</div>
+
+                        <div class="col-sm-5 my_label " style="clear:both">Կարգավիճակ</div>
+                        <div class="col-sm-7 my_text1 ">
+                            <span ng-if="order.Quality==30" class="greenStyle">{{ order.QualityDescription }}</span>
+                            <span ng-if="order.Quality==31" class="redStyle">{{ order.QualityDescription }}</span>
+                            <span ng-if="order.Quality!=31 && order.Quality!=30">{{ order.QualityDescription }}</span>
+                        </div>
+                        <div ng-if="order.Quality==31" ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="col-sm-12 my_text1">Մերժման պատճառ` <span class="redStyle">{{ rejectHistory.ReasonDescription }}</span></div>
+                        <div class="col-sm-12 my_text1 ">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+                    </div>
+                    <br /><br />
+                    <orderattachments orderid="selectedOrderId"></orderattachments>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="getBudgetPaymentOrderDetails(true)"> <span class="glyphicon glyphicon-print"></span>&nbsp;Հանձնարարական</button>
+                    <button ng-if="order.Quality ==30 " type="button" class="btn btn-sm btn-primary" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հեռացման հայտ','removalOrder',callbackgetBudgetPaymentOrder)"> <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;Հեռացման հայտ</button>
+                    <button ng-if="order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && order.Quality !=50" type="button" class="btn btn-sm btn-primary" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetBudgetPaymentOrder)"> <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;Հրաժարման հայտ</button>
+                </div>
+            </div>*@
+</form>
+
+

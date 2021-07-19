@@ -1,0 +1,110 @@
+﻿@{
+    Layout = null;
+}
+<div id="depositCasePenaltyMatureOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="DepositCasePenaltyMatureOrderCtrl" name="DepositCasePenaltyMatureOrderForm" id="DepositCasePenaltyMatureOrderForm" role="form" style="min-width:650px;" novalidate class="form-horizontal" labels-required>
+    <div id="newaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-3 " ng-if="checkForDebitAccount==1" ng-click="DepositCasePenaltyMatureOrderForm.$setSubmitted();DepositCasePenaltyMatureOrderForm.$valid && getCashInPaymentOrder();">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Հանձնարարական</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="DepositCasePenaltyMatureOrderForm.$setSubmitted();DepositCasePenaltyMatureOrderForm.$valid && saveDepositCasePenaltyMatureOrder()">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newDepositCasePenaltyMatureOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+    <div>
+        <div class="col-sm-10">
+            <div class=" form-group">
+                <label class="tab_title col-sm-5 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-8 ">
+                        <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" >
+                <label class="tab_title col-sm-5">Պահատուփի համար</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-8">
+                        <input type="text" disabled="disabled" ng-model="CaseNumber" id="CaseNumber" name="CaseNumber" class="form-control tab_title" />
+                    </div>
+                </div>
+            </div>
+            <paymentaccount data-ng-init="getDebitAccounts();checkForDebitAccount=0"
+                            accounts="debitAccounts"
+                            accountselectname="DebitAccount"
+                            account="order.DebitAccount"
+                            nameforaccount="'Դեբետագրվող հաշիվ'"
+                            nameforcurrency="'Դեբետագրվող արժույթ'"
+                            onlyamd="true"
+                            formname="DepositCasePenaltyMatureOrderForm"
+                            forinputcheckbox="true"
+                            check="checkForDebitAccount">
+            </paymentaccount>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="DepositCasePenaltyMatureOrderForm.$submitted || DepositCasePenaltyMatureOrderForm.DebitAccount.$dirty"
+                             for="DepositCasePenaltyMatureOrderForm.DebitAccount.$error">
+                    <ng-message when="required" class="errors">
+                        Դեբետագրվող հաշիվը լրացված չէ
+                    </ng-message>
+                </ng-messages>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="Amount">Գումար</label>
+                <div class="col-sm-6 row">
+                    <div class="input-group col-sm-10">
+                        <input type="text" required onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' ng-model="order.Amount" id="Amount" name="Amount" class="form-control tab_title" fcsa-number />
+                        <span class="input-group-addon" id="basic-addon2" style=" width: 0;"> AMD </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="DepositCasePenaltyMatureOrderForm.$submitted || DepositCasePenaltyMatureOrderForm.Amount.$dirty"
+                             for="DepositCasePenaltyMatureOrderForm.Amount.$error">
+                    <ng-message when="required" class="errors">
+                        Գումար դաշտը լրացված չէ
+                    </ng-message>
+
+                    <ng-message when="fcsaNumber" class="errors">
+                        Գումարը սխալ է մուտքագրված
+                    </ng-message>
+                </ng-messages>
+            </div>
+
+            <orderdescription description="order.Description"
+                              operations="null"
+                              labeldescription="'Նկարագրություն'"
+                              formname="DepositCasePenaltyMatureOrderForm">
+            </orderdescription>
+
+
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+

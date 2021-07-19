@@ -1,0 +1,149 @@
+﻿@{
+    Layout = null;
+}
+@*<style type="text/css">
+        #BondOrderForm .ui-widget input {
+            font-family: 'webly_semibold';
+        }
+    </style>*@
+
+
+<div id="fondChangeOrderSaveLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="FondChangeOrderCtrl" data-ng-init="getFondByID(fondID); initFondChangeOrder()" name="FondChangeOrderForm" id="FondChangeOrderForm" role="form" style="min-width:600px;min-height:570px;" novalidate class="form-horizontal" labels-required>
+
+    <div id="FondOrder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="FondChangeOrderForm.$setSubmitted(); saveFondChangeOrder()">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('fondchange')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+    </div>
+ 
+
+    <div class="col-sm-12" style="padding:0;padding-left:5px;">
+
+        <div class="col-sm-12" style="max-width:1000px">
+
+            <div style="max-width:630px">
+                <errors></errors>
+            </div>
+
+
+            <div class="product-details bhoechie-tab-content" style="min-width:210px;margin-left:10px;">
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Համար</div>
+                    <div class="product-detail-cell product-detail-value">{{fond.ID}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Անվանում</div>
+                    <div class="product-detail-cell product-detail-value">{{::fond.Description}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Սուբսիդավորում</div>
+                    <div class="product-detail-cell product-detail-value">{{fond.IsSubsidia==true?'Այո':'Ոչ'}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Գործող ֆոնդ</div>
+                    <div class="product-detail-cell product-detail-value">{{fond.IsActive==true?'Այո':'Ոչ'}}</div>
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                    <label class="tab_title col-sm-5" for="IsSubsidia">Գործող ֆոնդ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <select data-ng-model="fondOrder.Fond.IsActive" ng-disabled="orderType==192" name="IsActive" id="IsActive" style="font-weight:800;" class="form-control" required>
+                                <option value="" hidden="hidden" style="margin-left:25px; width:50px;">{{fond.IsActive==true?'Այո':'Ոչ'}}</option>
+                                <option value="true">Այո</option>
+                                <option value="false">Ոչ</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="FondOrderForm.$submitted || FondOrderForm.IsActive.$dirty"
+                                         for="FondOrderForm.IsActive.$error">
+                                <ng-message when="required" class="errors">
+                                    Գործող լինելու վերաբերյալ նշում արված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+
+                    </div>
+                </div>*@
+
+            <div class="form-group" data-ng-init="getCurrentAccountCurrencies()">
+
+                <div class="col-sm-12">
+                    <div class="row-no-margin">
+
+                        <section class="panel panel-success" style="max-width: 520px">
+                            <header class="panel-heading">
+                                <span class="panel-title" style="font-size: 14px;">Ֆոնդի տրամադրման պայմաններ  </span>
+                            </header>
+                            <div class="panel-body">
+                                <div ng-repeat="providingDetail in fond.ProvidingDetails">
+                                    <div class="input-group col-sm-12">
+                                        <span style="display:inline-block ; ">
+                                            <select ng-show="currencies" ng-disabled="providingDetail.isDisable" data-ng-model="providingDetail.Currency" name="Currency" id="Currency" class="form-control " required style="max-width:120px"
+                                                    data-ng-options="k as v for (k,v) in ::currencies">
+                                                <option value="" hidden="hidden" style="margin-left:10px">Ընտրեք...</option>
+                                            </select>
+                                        </span>
+                                        <span class="input-group" style="display:inline-block ; ">
+                                            <input type="text" class="form-control" required fcsa-number onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' id="InterestRate" name="InterestRate"
+                                                   ng-model="providingDetail.InterestRate" style="max-width:150px" aria-describedby="basic-addon2">
+                                            <span class="input-group-addon" style="height:34px; ">%</span>
+                                        </span>
+
+                                        @*<span class="input-group" style="display:inline-block ; ">
+                                                <input ng-hide="providingDetail.TerminationDate == undefined" type="date" class="form-control" required fcsa-number onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' id="TerminationDate" name="TerminationDate"
+                                                       ng-model="providingDetail.TerminationDate" style="max-width:150px" aria-describedby="basic-addon2" disabled ="disabled" >
+                                            </span>
+
+                                            <span style="display:inline-block ;">
+                                                <button ng-hide="providingDetail.TerminationDate != undefined" ng-click="setFondProvidingTerminationDate($index)" type="button" style="background-color:white;height:34px;" class="btn" ><span style="color:grey;" class="glyphicon glyphicon-remove-circle"></span></button>
+                                            </span>
+
+                                            <span style="display:inline-block ;">
+                                                <button ng-hide="providingDetail.TerminationDate == undefined" ng-click="removeFondProvidingTerminationDate($index)" type="button" style="background-color:white;height:34px;" class="btn"><span style="color:grey;" class="glyphicon glyphicon-ok-circle"></span></button>
+                                            </span>*@
+
+                                        <span style="display:inline-block ;">
+                                            <button type="button" style="background-color:white;height:34px;" class="btn" ng-hide="providingDetail.isDisable" ng-click="delete($index)"><span style="color:red;" class="glyphicon glyphicon-remove"></span></button>
+                                        </span>
+
+                                    </div>
+
+                                </div>
+                                @*<div class="panel-body" style="float:left; display:inline-block; width:30%;cursor:pointer">
+                                        <button type="button" class="btn" ng-click="addFondProvidingDetail()">Ավելացնել</button>
+                                    </div>*@
+
+                            </div>
+                        </section>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+

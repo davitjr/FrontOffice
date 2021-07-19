@@ -1,0 +1,179 @@
+﻿@{
+    Layout = null;
+}
+
+<div id="InputTransitAccountsForDebitTransactionsLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="TransitAccountsForDebitTransactionsCtrl" style="min-width:650px;" id="InputTransitAccountsForDebitTransactionsForm" name="InputTransitAccountsForDebitTransactionsForm" role="form" novalidate class="form-horizontal" prevent-enter-submit>
+   
+    <div  id="cardDataChangeOrder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 "  ng-if="isEditAccount!=true" ng-click="InputTransitAccountsForDebitTransactionsForm.$setSubmitted();InputTransitAccountsForDebitTransactionsForm.$valid && saveTransitAccountForDebitTransactions();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-4 " ng-if="isEditAccount==true" ng-click="InputTransitAccountsForDebitTransactionsForm.$setSubmitted();InputTransitAccountsForDebitTransactionsForm.$valid && updateTransitAccountForDebitTransactions();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Խմբագրել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('card_status_change_order')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div style="max-width:700px">
+            <errors></errors>
+        </div>
+
+
+        <div class="col-sm-11">
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input disabled="disabled" type="date" class="form-control tab_title" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="account.OpenDate" required>
+                    </div>
+
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class="tab_title col-sm-5 " for="RegistrationDate">Հաշվեհամար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input ng-disabled="isEditAccount==true" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title" ng-maxlength="15" maxlength="15" ng-minlength="15" style="text-align: left;" id="AccountNumber" name="AccountNumber" ng-model="account.TransitAccount.AccountNumber" required>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="InputTransitAccountsForDebitTransactionsForm.$submitted || InputTransitAccountsForDebitTransactionsForm.AccountNumber.$dirty"
+                                     for="InputTransitAccountsForDebitTransactionsForm.AccountNumber.$error">
+                            <ng-message when="maxlength" class="errors">
+                                Մուտքագրել առնավազն 15 նիշ
+                            </ng-message>
+                            <ng-message when="minlength" class="errors">
+                                Մուտքագրել առնավազն 15 նիշ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group " ng-if="isCustomerTransitAccount!=true">
+                <label class="tab_title col-sm-5 " for="Reason">Հաշվի նկարագրություն</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <textarea ng-disabled="isEditAccount==true" rows="3" style="text-align:left" required onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="account.Description" id="Description" name="Description" class="form-control tab_title"></textarea>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="InputTransitAccountsForDebitTransactionsForm.$submitted || InputTransitAccountsForDebitTransactionsForm.Description.$dirty"
+                                     for="InputTransitAccountsForDebitTransactionsForm.Description.$error">
+                            <ng-message when="required" class="errors">
+                                Հաշվի նկարագրություն նշված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-if="isCustomerTransitAccount!=true">
+                <label class="tab_title col-sm-5" for="RecontractPossibility">Պահանջել հաստատում</label>
+                <div class="col-sm-6">
+                    <div class="row" ng-init="account.RequiresApproval='true'">
+                        <select ng-disabled="isEditAccount==true" data-ng-model="account.RequiresApproval" name="RequiresApproval" id="RequiresApproval" class="form-control" required>
+                            <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք տեսակը...</option>
+                            <option value="true">Այո</option>
+                            <option value="false">Ոչ</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="InputTransitAccountsForDebitTransactionsForm.$submitted || InputTransitAccountsForDebitTransactionsForm.RequiresApproval.$dirty"
+                                     for="InputTransitAccountsForDebitTransactionsForm.RequiresApproval.$error">
+                            <ng-message when="required" class="errors">
+                                Տեսակն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="isCustomerTransitAccount!=true">
+                <label class="tab_title col-sm-5" for="ForAllBranches">Բոլոր մ/ճ-երի համար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="checkbox" ng-disabled="isEditAccount==true" class="checkbox-inline" id="ForAllBranches" ng-model="account.ForAllBranches" ng-change="account.FilialCode=undefined" ng-true-value="true" ng-false-value="false">
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group" data-ng-init="getFilialList()" ng-if="isCustomerTransitAccount!=true">
+                <label class="tab_title col-sm-5" for="FilialCode">Մասնաճյուղ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <loading-control scopevariable="filialList"></loading-control>
+                        <select ng-disabled="isEditAccount==true || account.ForAllBranches==true" ng-required="account.ForAllBranches!=true" ng-show="filialList" data-ng-model="account.FilialCode" class="form-control" data-ng-options="k as v for (k,v) in filialList" id="FilialCode" name="FilialCode" required>
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="InputTransitAccountsForDebitTransactionsForm.$submitted || InputTransitAccountsForDebitTransactionsForm.FilialCode.$dirty"
+                                     for="InputTransitAccountsForDebitTransactionsForm.FilialCode.$error">
+                            <ng-message when="required" class="errors">
+                                Մասնաճյուղը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group " ng-if="isCustomerTransitAccount!=true">
+                <label class="tab_title col-sm-5 " for="FeeRate">Միջնորդավճարի տոկոսադրույք</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="input-group col-sm-11">
+                            <input class="form-control tab_title" style="text-align: left;" id="FeeRate" name="FeeRate"
+                                   ng-model="account.FeeRate" type="number" required />
+                            <span class="input-group-addon" id="basic-addon2" style="width: 0;">%</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="InputTransitAccountsForDebitTransactionsForm.$submitted || InputTransitAccountsForDebitTransactionsForm.FeeRate.$dirty"
+                                     for="InputTransitAccountsForDebitTransactionsForm.FeeRate.$error">
+                            <ng-message when="required" class="errors">
+                                Միջնորդավճարի տոկոսադրույքը մուտքագրված չէ
+                            </ng-message>
+
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group" ng-if="isCustomerTransitAccount!=true">
+                <label class="tab_title col-sm-5 " for="MinFeeAmount">Միջնորդավճարի նվազագույն գումար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" class="form-control tab_title" maxlength="20"
+                               style="text-align: left;" id="MinFeeAmount" fcsa-number name="MinFeeAmount" ng-model="account.MinFeeAmount" required>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="InputTransitAccountsForDebitTransactionsForm.$submitted || InputTransitAccountsForDebitTransactionsForm.MinFeeAmount.$dirty"
+                                     for="InputTransitAccountsForDebitTransactionsForm.MinFeeAmount.$error">
+                            <ng-message when="required" class="errors">
+                                Միջնորդավճարի նվազագույն գումարը մուտքագրված չէ
+                            </ng-message>
+                            <ng-message when="fcsa-number" class="errors">
+                                Միջնորդավճարի նվազագույն գումարը սխալ է լրացված
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+

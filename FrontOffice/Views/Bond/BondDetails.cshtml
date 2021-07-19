@@ -1,0 +1,154 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div id="Loader" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div style="max-width:630px">
+    <errors></errors>
+</div>
+<div ng-controller="BondCtrl" data-ng-init="getBondByID(ProductId)" id="BondDetails">
+   
+    <div id="bonddetails_menu"  class="menu-bar dialog-menu light-green details-menu" style="min-width:810px;">
+        <ul id="menu" class="dialog-menu">
+
+            <li class="root-menu-item-2 " ng-if="bond.Quality == 10 && OpenType == 1" ng-controller="PopUpCtrl" ng-click="params={bondId: bond.ID, subType: 1};openWindow('/BondQualityUpdateOrder/BondQualityUpdateOrder','Պարտատոմսի հեռացման հայտ','newBondQualityUpdateOrder')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">&nbsp;&nbsp;&nbsp;Հեռացնել</span>
+            </li>
+
+            <li class="root-menu-item-2 " ng-if="bond.Quality == 20 && OpenType == 2 && bondFilterType == 2" ng-controller="PopUpCtrl" ng-click="params={bondId: bond.ID, subType: 2};openWindow('/BondQualityUpdateOrder/BondQualityUpdateOrder','Պարտատոմսի հաստատման հայտ','newBondQualityUpdateOrder')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Հաստատել</span>
+            </li>
+
+            <li class="root-menu-item-3 " ng-if="(bond.Quality == 20 || bond.Quality == 10) && (bondFilterType == 1 || bondFilterType == 2)" ng-controller="PopUpCtrl" ng-click="params={bondId: bond.ID, subType: 3};openWindow('/BondQualityUpdateOrder/BondQualityUpdateOrder','Պարտատոմսի մերժման հայտ','newBondQualityUpdateOrder')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="reopenAccountButton h-menu-icon">Մերժել</span>
+            </li>
+
+            <li class="root-menu-item-2 " ng-if="bond.Quality == 10 && OpenType == 1" ng-controller="PopUpCtrl" ng-click="params={bondID: bond.ID, currency: bond.Currency, totalPrice: bond.TotalPrice, bondCount: bond.BondCount};openWindow('/BondAmountChargeOrder/BondAmountChargeOrder','Պարտատոմսի գումարի գանձման հայտ','amountChargeOrderForBond')">
+                <span id="h-menu-item-7"><i class="cashInButton h-menu-icon" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title=""></i></span>
+                <span>Գումարի գանձում</span>
+            </li>
+
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('oneBondDetails')" ng-if="bondFilterType == 1 || bondFilterType == 2">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+
+        </ul>
+    </div>
+    
+    <div class="product-details bhoechie-tab-content" style="min-width: 810px;margin-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մասնաճյուղ</div>
+            <div class="product-detail-cell product-detail-value">{{bond.FilialCode}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի ներկայացման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{bond.RegistrationDateToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{bond.DocumentNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտը ներկայացնողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">{{bond.SetNumber}} &nbsp;&nbsp;
+                <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:bond.SetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" 
+                      class="glyphicon glyphicon-info-sign"></span>
+            </div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պարտատոմսի ԱՄՏԾ (ISIN)</div>
+            <div class="product-detail-cell product-detail-value">{{bond.ISIN}}
+                <span style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" 
+                      ng-click="params={ProductId:bond.BondIssueId , hideButton: true};openWindow('/BondIssue/BondIssueDetails','Մանրամասն դիտարկում ','oneBondIssueDetails')" 
+                      class="glyphicon glyphicon-info-sign" />
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ձեռք բերված պարտատոմսերի քանակ</div>
+            <div class="product-detail-cell product-detail-value">{{bond.BondCount}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մեկ պարտատոմսի ձեռքբերման գին</div>
+            <div class="product-detail-cell product-detail-value">{{bond.UnitPrice}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ձեռք բերված պարտատոմսերի ընդհանուր գումար</div>
+            <div class="product-detail-cell product-detail-value">{{bond.TotalPrice}}</div>
+        </div>
+        <div class="product-detail-row" >
+            <div class="product-detail-cell product-detail-lable" >Ընթացիկ հաշիվ AMD</div>
+            <div class="product-detail-cell product-detail-value">{{bond.AccountForCoupon.AccountNumber}} 
+                <span ng-if="OpenType == 1" style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" 
+                      ng-click="params={accountNumber:bond.AccountForBond.AccountNumber,accountCurrency:bond.Currency};openWindowWithTemplate('accountflowdetails','Հաշվի շարժ','accountflowdetails');" 
+                      class="glyphicon glyphicon-info-sign" />
+            </div>
+        </div>
+
+        <div class="product-detail-row" ng-if="bond.Currency!='AMD'">
+            <div class="product-detail-cell product-detail-lable">Ընթացիկ հաշիվ (արտարժութային)</div>
+            <div class="product-detail-cell product-detail-value">{{bond.AccountForBond.AccountNumber}} 
+                <span ng-if="OpenType == 1" style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" 
+                      ng-click="params={accountNumber:bond.AccountForCoupon.AccountNumber,accountCurrency:bond.Currency};openWindowWithTemplate('accountflowdetails','Հաշվի շարժ','accountflowdetails');" 
+                      class="glyphicon glyphicon-info-sign" />
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Արժեթղթերի հաշվի առկայություն</div>
+            <div class="product-detail-cell product-detail-value">{{bond.DepositaryAccountExistenceTypeDescription}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Արժեթղթերի հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{bond.CustomerDepositaryAccount.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Արժեթղթերի հաշիվը հաշվառող անձի անվանում</div>
+            <div class="product-detail-cell product-detail-value">{{bond.CustomerDepositaryAccount.Description}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">{{bond.QualityDescription}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bond.Quality != 10">
+            <div class="product-detail-cell product-detail-lable">Դրամական միջոցների մուտքագրման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{bond.AmountChargeDateToString}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bond.Quality != 10">
+            <div class="product-detail-cell product-detail-lable">Դրամական միջոցների մուտքագրման ժամ</div>
+            <div class="product-detail-cell product-detail-value">{{bond.AmountChargeTimeToString}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="bond.Quality == 31">
+            <div class="product-detail-cell product-detail-lable">Մերժման պատճառ</div>
+            <div class="product-detail-cell product-detail-value">{{bond.RejectReasonDescription}}</div>
+        </div>
+    </div>
+
+   
+
+    <div class="bhoechie-tab-container" style="max-height:80%;" id="bondDetailsContainer">
+        <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+            <div class="list-group">    
+
+                <div class="list-group-item text-center active"><span>Կցված փաստաթղթեր</span></div>               
+            </div>
+        </div>
+
+
+        <div class="bhoechie-tab" style="width: calc(100% - 140px); display: inline-block;">
+            
+                       
+            <div class="bhoechie-tab-content active">
+                <attachmentdocument productid="bond.AppId"></attachmentdocument>
+            </div>
+            
+        </div>
+    </div>
+
+    <br />
+</div>
+

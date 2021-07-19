@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    #CrossRateshistory.table-wrapper {
+        overflow-x: scroll;
+        overflow-y: visible;
+        width: 900px;
+    }
+
+
+    #CrossRateshistory td, #CrossRateshistory th {
+        border: 1px solid #cecece;
+        width: 100px;
+    }
+
+    #CrossRateshistory .top th {
+        font-size: 12px;
+    }
+</style>
+<form ng-show="false">
+    <div class="menu-bar dialog-menu light-green">
+    </div>
+    <div>
+    </div>
+</form>
+<div class="table-wrapper" id="CrossRateshistory" ng-controller="RateCtrl" ng-init="GetCrossExchangeRatesHistory()">
+    <div class="product-container" style="width:auto;min-width:900px">
+        <div class="header-title">
+            Առք/Վաճառքի Քրոսս փոխարժեքներ
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-7 ">
+                <div class="col-sm-4">
+                    <div class="product-detail-cell product-detail-lable">
+                        Պատմություն սկսած
+                    </div>
+                    <div>
+                        <input type="date" data-ng-model="searchParams.StartDate" class="form-control" ng-blur="GetCrossExchangeRatesHistory()" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="product-collapsable-section " style="height:auto;width:1300px;font-size:13px;text-align:center;">
+            <div class="product-content-table custom-scroll col-sm-12 " ng-class="{'product-content-table-full_height' : hideBlank!='true' }" style="max-height:450px; min-height:100px;padding:0px">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr>
+                            <td class="col-sm-1 "             style="text-align:center;background-color: #35a982;font-size: 12px;width: 50px;">Ա/թ</td>
+                            <td class="col-sm-1 " colspan="2" style="text-align:center;background-color: #35a982;font-size: 12px;">EUR/USD</td>
+                            <td class="col-sm-1 " colspan="2" style="text-align:center;background-color: #35a982;font-size: 12px;">USD/RUR</td>
+                            <td class="col-sm-1 " colspan="2" style="text-align:center;background-color: #35a982;font-size: 12px;">EUR/RUR</td>
+                            <td class="col-sm-1 " colspan="2" style="text-align:center;background-color: #35a982;font-size: 12px;">GBP/USD</td>
+                            <td class="col-sm-1 " colspan="2" style="text-align:center;background-color: #35a982;font-size: 12px;">EUR/GBP</td>
+                            <td class="col-sm-1 " colspan="2" style="text-align:center;background-color: #35a982;font-size: 12px;">USD/CHF</td>
+                            <td class="col-sm-1 " colspan="2" style="text-align:center;background-color: #35a982;font-size: 12px;">EUR/CHF</td>
+                        </tr>
+                        <tr ng-repeat="rates in ::crossExchangeRatesHistory">
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.RegistrationDate | mydate | date: 'dd/MM/yyyy'}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.EURBuy/rates.USDSale).toFixed(6)}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.EURSale/rates.USDBuy).toFixed(6)}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.USDBuy/rates.RURSale).toFixed(6)}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.USDSale/rates.RURBuy).toFixed(6)}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.EURBuy/rates.RURSale).toFixed(6)}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.EURSale/rates.RURBuy).toFixed(6)}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.GBPBuy/rates.USDSale).toFixed(6)}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.GBPSale/rates.USDBuy).toFixed(6)}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.EURBuy/rates.GBPSale).toFixed(6)}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.EURSale/rates.GBPBuy).toFixed(6)}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.USDBuy/rates.CHFSale).toFixed(6)}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.USDSale/rates.CHFBuy).toFixed(6)}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.EURBuy/rates.CHFSale).toFixed(6)}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{(rates.EURSale/rates.CHFBuy).toFixed(6)}}</td>
+
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

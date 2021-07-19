@@ -1,0 +1,17 @@
+﻿    <form style="width:700px" ng-app="app" ng-controller="UtilityPaymentSearchCtrl"  name="utilityDetailsForm" role="form" class="form-horizontal" data-ng-init="getUtilityPaymentDetails(2);" novalidate>
+    <div >   
+    
+        <loading></loading>
+        <table class="table table-striped" style="background-color:#EAEAEA" ng-controller="UtilityPaymentSearchCtrl" >
+            <tbody>
+                <tr ng-repeat="utilityDetail in ::utilityPaymentDetails">
+                    <td>{{ ::utilityDetail.Description }} ` {{ ::utilityDetail.Value }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br />
+
+
+</form>

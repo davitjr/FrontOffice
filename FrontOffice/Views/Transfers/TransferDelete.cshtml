@@ -1,0 +1,53 @@
+﻿
+
+<style type="text/css">
+    #transferDeleteForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #transferDeleteForm {
+        margin-right: 15px;
+    }
+</style>
+
+
+
+<form style="width:550px" class="form-horizontal col-sm-12" ng-controller="TransfersCtrl" name="transferDeleteForm"  novalidate>
+    <div class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+             <li class="root-menu-item-4 " ng-click=" deleteTransfer()" style="padding-right:0">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Հեռացնել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('TransferDelete')" style="padding-right:0">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div class="col-sm-12"   style="padding-bottom:15px;">
+
+        
+            <div class="col-sm-6 product-detail-cell product-detail-lable">
+                Հեռացման պատճառ  
+            </div>
+
+ 
+                <div class="col-sm-6">
+                    <div class="row">
+                        <textarea rows="2" ng-model="deleteDescription" ng-enter="" onkeypress="return isArmenianUnicode(event.keyCode)"  name="Description" class="tab_title form-control" style="text-align:left"></textarea>
+ 
+                    </div>
+ 
+            </div>
+      
+         
+ 
+ 
+ 
+    </div> 
+
+</form>
+ 
+

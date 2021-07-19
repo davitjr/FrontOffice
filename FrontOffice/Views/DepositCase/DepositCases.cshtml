@@ -1,0 +1,92 @@
+﻿<style>
+    .redBold {
+        font-weight: bold;
+        color: red;
+    }
+
+    .blueBold {
+        font-weight: bold;
+        color: blue;
+    }
+</style>
+<script type="text/javascript">
+    $("#depositCasesContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div class="product-container" ng-controller="DepositCaseCtrl" id="AllDepositCases" data-ng-init="getDepositCases();getUserFilialCode()" ng-show="(hideBlank!='true' && depositcases.length==0) || (depositcases.length!=0 && depositcases.length!=undefined)">
+    <div class="header-title">
+        <a ui-sref="depositcases" style="color:black;">Պահատուփեր</a>
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="product-container-header">
+            <div class="include-closed-products">
+                <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-deposit-cases" data-ng-model="filter" ng-true-value="2" ng-false-value="1" ng-change="QualityFilter()">
+                <label for="include-closed-deposit-cases" name="include-closed-deposit-cases-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+            </div>
+
+
+            <i ng-if="userFilialCode==22041 || userFilialCode==22006 || userFilialCode==22046" class="add-new-product tipB" ng-controller="PopUpCtrl" ng-click="params={userFilialCode:$parent.userFilialCode,orderType:98}; openWindow('/DepositCaseOrder/PersonalDepositCaseOrder','Պահատուփի մուտքագրում','newDepositCaseOrder')" data-original-title="Նոր պահատուփի"></i>
+        </div>
+        <div class="product-content-table custom-scroll" id="depositCasesContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+            <div ng-if="depositcases==undefined">
+                <loading></loading>
+            </div>
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody>
+                    <tr ng-repeat="depositcase in depositcases" ng-if="filter==1 && depositcases.length!=0 " ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" ng-dblclick="openDepositCaseDetails();" style="cursor: pointer;">
+                        <td class="col-md-4">
+
+                            <span class="tab_text">Պահատուփի համար`</span>{{::depositcase.CaseNumber}}
+                            <br />
+                            <span style="font-weight:bold;" ng-class="{ 'redBold': depositcase.Quality==5 ||  depositcase.Quality==11 || depositcase.Quality==12 || depositcase.Quality==2,'blueBold':depositcase.Quality==10  }">{{::depositcase.QualityDescription}}</span>
+                            <br />
+                            <span class="tab_text">Մասնաճյուղ`</span> {{::depositcase.FilialName}}
+                            <br />
+                            <span class="tab_text">Ավտոմատ երկարաձգում`</span> {{depositcase.RecontractPossibility==true?'Այո':'Ոչ'}}
+                        </td>
+                        <td class="col-sm-2" style="text-align:right;">
+                            {{::depositcase.StartDateToString}}
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="context1" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+                    <tr ng-if="filter==1 && depositcases.length==0 ">
+                        <td colspan="3" style="text-align:center;">
+                            Առկա չեն պահատուփեր
+                        </td>
+                    </tr>
+                    <tr ng-if="filter!=1"><td style="color:red; border-width:3px" class="col-sm-9" colspan="3">Փակված պահատուփեր </td></tr>
+                    <tr ng-repeat="depositcase in closedDepositCases" ng-if="closedDepositCases.length!=0 " ng-dblclick="openDepositCaseDetails();" ng-class="{'selected':$index == selectedRowClose}" ng-click="setClickedRowClose($index)" style="cursor: pointer;">
+                        <td class="col-sm-4">
+                            <span ng-style="{ color: depositcase.Quality==5 ? 'red' : '' }">{{::depositcase.QualityDescription}}</span>
+                            <br />
+                            <span class="tab_text">Մասնաճյուղ`</span> {{::depositcase.FilialName}}
+                        </td>
+                        <td class="col-sm-2" style="text-align:right;">
+                            {{::depositcase.StartDateToString}}
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="context1" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul id="context1" class="dropdown-menu">
+                <li><a style="color: black;text-decoration:none!important ;" ui-sref="depositCaseDetails({ productId : selectedProductId,depositCase:selectedDepositCase })">Մանրամասն դիտարկում</a></li>
+                <li style="cursor:pointer" ng-if="(userFilialCode==22041 || userFilialCode==22006 || userFilialCode==22046) && selectedDepositCase.Quality!=10 && selectedDepositCase.Quality!=40" ng-controller="PopUpCtrl" ng-click="params={userFilialCode:$parent.userFilialCode,orderType:101,DepositCase:selectedDepositCase}; openWindow('/DepositCaseOrder/PersonalDepositCaseOrder','Պահատուփի դադարեցում','newDepositCaseOrder')"><a style="color: black;text-decoration:none!important ;">Պահատուփի դադարեցում</a></li>
+                <li style="cursor:pointer" ng-if="(userFilialCode==22041 || userFilialCode==22006 || userFilialCode==22046) && selectedDepositCase.Quality==10" ng-controller="PopUpCtrl" ng-click="params={userFilialCode:$parent.userFilialCode,orderType:99,DepositCase:selectedDepositCase}; openWindow('/DepositCaseOrder/PersonalDepositCaseOrder','Պահատուփի ակտիվացում','newDepositCaseOrder')"><a style="color: black;text-decoration:none!important ;">Պահատուփի ակտիվացում</a></li>
+                <li style="cursor:pointer" ng-if="(userFilialCode==22041 || userFilialCode==22006 || userFilialCode==22046) && selectedDepositCase.Quality==10" ng-click="DepositCaseRemovalOrder()"><a style="color: black;text-decoration:none!important ;">Պայմանագրի հեռացում</a></li>
+                <li style="cursor:pointer" ng-if="selectedDepositCase.Quality==5 && $root.SessionProperties.SourceType == 2" ng-controller="PopUpCtrl" ng-click="params={CaseNumber:selectedDepositCase.CaseNumber,penaltyAmount:selectedDepositCase.PenaltyAmount,ProductId:selectedProductId}; openWindow('/DepositCasePenaltyMatureOrder/DepositCasePenaltyMatureOrder','Տուժանքի մարում','newDepositCasePenaltyMatureOrder')"><a style="color: black;text-decoration:none!important ;">Տուժանքի մարում</a></li>
+                <li style="cursor:pointer" ng-if="selectedDepositCase.Quality!=10"  ng-click="printOrder()"><a style="color: black;text-decoration:none!important ;">Տպել մուտքի օրդեր</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>

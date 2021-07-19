@@ -1,0 +1,211 @@
+﻿
+@{
+    Layout = null;
+}
+<style type="text/css">
+    #cashOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+</style>
+
+<div id="cashLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="CashOrderCtrl" name="CashOrderForm" id="cashOrderForm" role="form" style="min-width:550px;" class="form-horizontal" novalidate prevent-enter-submit labels-required>
+    
+    <div id="cashorder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="CashOrderForm.$setSubmitted();CashOrderForm.$valid && saveCashOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('cashorder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+          
+    <div class="col-sm-10">
+        <div style="max-width:480px">
+            <errors></errors>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-6" for="RegistrationDate">Մուտքագրման ա/թ</label>
+            <div class="col-sm-6 row">
+                <div class="multiple_columns col-sm-9">
+                    <input type="date" disabled="disabled" class="form-control tab_title unstyled" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" style="text-align:left" required>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="tab_title col-sm-6" for="SubType">  Հայտի տեսակ</label>
+            <div class="col-sm-6" data-ng-init="getCashOrderTypes()">
+                <div class="row">
+                    <loading-control scopevariable="cashTypes"></loading-control>
+                    <select ng-show="cashTypes" data-ng-model="order.SubType" name="SubType" id="SubType" class="form-control"
+                            data-ng-options="k as v for (k,v) in cashTypes" required>
+                        <option value="" hidden>Ընտրեք տեսակը...</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="CashOrderForm.$submitted || CashOrderForm.SubType.$dirty"
+                                 for="CashOrderForm.SubType.$error">
+                        <ng-message when="required" class="errors">
+                            Ընտրեք հայտի տեսակը
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="tab_title col-sm-6" for="currency">  Արժույթ</label>
+            <div class="col-sm-6" data-ng-init="getCurrencies()">
+                <div class="row">
+                    <loading-control scopevariable="currencies"></loading-control>
+                    <select ng-show="currencies" data-ng-model="order.Currency" name="Currency" id="Currency" class="form-control"
+                            data-ng-options="k as v for (k,v) in currencies" required>
+                        <option value="" hidden>Ընտրեք արժույթը...</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="CashOrderForm.$submitted || CashOrderForm.Currency.$dirty"
+                                 for="CashOrderForm.Currency.$error">
+                        <ng-message when="required" class="errors">
+                            Ընտրեք արժույթը
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div ng-if="order.SubType==1" labels-required>
+            <div class="form-group ">
+                <label class="tab_title col-sm-6" for="amount"> Գումար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title" id="amount" name="amount" data-ng-model="order.Amount" min="6000000" required fcsa-number>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="CashOrderForm.$submitted || CashOrderForm.amount.$dirty"
+                                     for="CashOrderForm.amount.$error">
+                            <ng-message when="required" class="errors">
+                                Գումար դաշտը լրացված չէ
+                            </ng-message>
+                            <ng-message when="min" class="errors">
+                                Գումարը կանխիկի դեպքում պետք է մեծ լինի 6000000 դրամից կամ համարժեք արտարժույթից
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="tab_title col-sm-6" for="filial">  Ստացման մասնաճյուղ</label>
+                <div class="col-sm-6" data-ng-init="getFilialList()">
+                    <div class="row">
+
+
+                        <loading-control scopevariable="filialList"></loading-control>
+                        <select ng-show="filialList" data-ng-model="order.CashFillial" name="CashFillial" id="CashFillial" class="form-control"
+                                data-ng-options="k as v for (k,v) in filialList" required>
+                            <option value="" hidden>Ընտրեք մասնաճյուղը...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="CashOrderForm.$submitted || CashOrderForm.CashFillial.$dirty"
+                                     for="CashOrderForm.CashFillial.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք գումարի ստացման մասնաճյուղը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="tab_title col-sm-6" for="CashDate">Ստացման ա/թ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="date" class="form-control tab_title" id="CashDate" name="CashDate" ng-model="order.CashDate" style="text-align:left" required>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="CashOrderForm.$submitted || CashOrderForm.CashDate.$dirty"
+                                     for="CashOrderForm.CashDate.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք գումարի ստացման ա/թ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div ng-if="order.SubType==2" labels-required>
+            <div class="form-group">
+                <label class="tab_title col-sm-6" for="amount"> Գումար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title" id="amount" name="amount" data-ng-model="order.Amount" min="100000000" required fcsa-number>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="CashOrderForm.$submitted || CashOrderForm.amount.$dirty"
+                                     for="CashOrderForm.amount.$error">
+                            <ng-message when="required" class="errors">
+                                Գումար դաշտը լրացված չէ
+                            </ng-message>
+                            <ng-message when="min" class="errors">
+                                Գումարը անկանխիկի դեպքում պետք է մեծ լինի 100000000 դրամից կամ համարժեք արտարժույթից
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-6" for="filial">  Փոխանցման մասնաճյուղ</label>
+                <div class="col-sm-6" data-ng-init="getFilialList()">
+                    <div class="row">
+                        <loading-control scopevariable="filialList"></loading-control>
+                        <select ng-show="filialList" data-ng-model="order.CashFillial" name="CashFillial" id="CashFillial" class="form-control"
+                                data-ng-options="k as v for (k,v) in filialList" required>
+                            <option value="" hidden>Ընտրեք մասնաճյուղը...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="CashOrderForm.$submitted || CashOrderForm.CashFillial.$dirty"
+                                     for="CashOrderForm.CashFillial.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք գումարի փոխանցման մասնաճյուղը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-6" for="CashDate">Փոխանցման ա/թ</label>
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="date" class="form-control tab_title" id="CashDate" name="CashDate" ng-model="order.CashDate" style="text-align:left" required>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="CashOrderForm.$submitted || CashOrderForm.CashDate.$dirty"
+                                     for="CashOrderForm.CashDate.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք գումարի փոխանցման ա/թ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <br />
+   
+</form>
+
+

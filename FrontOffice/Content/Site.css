@@ -1,0 +1,263 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-family: Arial Unicode, 'Arian AMU', Tahoma, Sylfaen !important;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.watermark {
+    color: #999;
+}
+    .ng-modal-overlay {
+        /* A dark translucent div that covers the whole screen */
+        position: absolute;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000000;
+        opacity: 0.8;
+    }
+
+    .ng-modal-dialog {
+        /* A centered div above the overlay with a box shadow. */
+        z-index: 10000;
+        position: absolute;
+        width: 50%; /* Default */
+        /* Center the dialog */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        background-color: #fff;
+        box-shadow: 4px 4px 80px #000;
+    }
+
+    .ng-modal-dialog-content {
+        padding: 10px;
+        text-align: left;
+    }
+
+    .ng-modal-close {
+        position: absolute;
+        top: 3px;
+        right: 5px;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 120%;
+        display: inline-block;
+        font-weight: bold;
+        font-family: 'arial', 'sans-serif';
+    }
+    .grid-align-right {
+     text-align: right;
+    }
+.errors {
+color:red;
+font-size:12px
+}
+.form-group {
+  margin-bottom: 10px;
+}
+
+.selected {
+    background-color:#eef6e7!important;
+}
+
+
+    table {
+    table-layout:fixed;
+}
+
+.div-table-content {
+   
+  height:auto;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+.loading {padding:10px; margin:20px 5px; width:auto;}
+
+
+  /*Logout սթայլեր*/
+  .gb_3a.gb_wa .gb_6, .gb_3a.gb_wa .gb_7, .gb_3a.gb_wa .gb_z {
+    display: block;
+}
+.gb_z {
+    background: none repeat scroll 0% 0% #FFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: absolute;
+    top: 0px;
+    animation: 0.2s ease 0s normal none 1 gb__a;
+    border-radius: 2px;
+    z-index:150;
+    -moz-user-select: text;
+}
+.gb_sc {
+    white-space: nowrap;
+}
+.gb_cc {
+    line-height: normal;
+    text-align: left;
+}
+.gb_Fb > .gb_e {
+    line-height: 58px;
+}
+.gb_5 {
+    text-align: right;
+}
+.gb_Fb {
+    font: 13px/27px Arial,sans-serif;
+}
+.gb_aa {
+    margin: 20px;
+}
+.gb_ba {
+    margin-right: 20px;
+    position: relative;
+}
+.gb_ba, .gb_ca {
+    display: inline-block;
+    vertical-align: top;
+}
+.gbip {
+    background-image: url('../../Content/Images/user_login.png');
+}
+.gb_da {
+    background-size: 96px 96px;
+    border: medium none;
+    vertical-align: top;
+    height: 96px;
+    width: 96px;
+}
+.gb_ea {
+    background: none repeat scroll 0% 0% rgba(78, 144, 254, 0.7);
+    bottom: 0px;
+    color: #FFF;
+    font-size: 9px;
+    font-weight: bold;
+    left: 0px;
+    line-height: 9px;
+    position: absolute;
+    padding: 7px 0px;
+    text-align: center;
+    width: 96px;
+}
+.gb_fa {
+    font-weight: bold;
+    margin: -4px 0px 1px;
+}
+.gb_ga {
+    color: #666;
+}
+.gb_9 {
+    color: #CCC;
+    margin: 6px 0px;
+}
+
+#LogoutContainer
+{
+    position:absolute;
+	top:60px;
+	right:303px;
+
+}
+#LogoutContainer a.gb_8.gb_8, #gb .gb_9.gb_9 a {
+    color: #36C;
+    text-decoration: none;
+}
+.gb_9 a:first-child {
+    margin-left: 0px;
+}
+.gb_9 a {
+    margin: 0px 10px;
+}
+#LogoutContainer .gb_ca a.gb_T.gb_T {
+    color: #FFF;
+}
+#LogoutContainer a.gb_T.gb_T {
+    color: #666;
+    cursor: pointer;
+    text-decoration: none;
+}
+.gb_ca .gb_T {
+    background: none repeat scroll 0% 0% #4D90FE;
+    border-color: #3079ED;
+    font-weight: bold;
+    margin: 10px 0px 0px;
+}
+.gb_T {
+    background: none repeat scroll 0% 0% #F8F8F8;
+    border: 1px solid #C6C6C6;
+    display: inline-block;
+    line-height: 28px;
+    padding: 0px 12px;
+    border-radius: 2px;
+}
+.gb_ha {
+    background: none repeat scroll 0% 0% #F5F5F5;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 0, 0, 0.2);
+    padding: 10px 0px;
+    width: 100%;
+    display: table;
+	}
+.gb_ha .gb_T {
+    margin: 0px 20px;
+}
+.gb_ha > div:first-child {
+    text-align: left;
+}
+.gb_ha > div {
+    display: table-cell;
+    text-align: right;
+}
+a.gb_ba
+{
+    padding: 0px !important;
+}
+#not accordion-group{
+    height:150px;
+    overflow-y:auto;
+}
+
+.warningClass {
+    color: Red;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+    font-family:'webly_semibold';
+	font-size:16px;
+    }
+
+.simple_price-row {
+    float: left;
+    width: 100%;
+    height: 31px;
+    border-bottom: 1px solid #CECECE;
+    border-top: 1px solid #CECECE;
+}

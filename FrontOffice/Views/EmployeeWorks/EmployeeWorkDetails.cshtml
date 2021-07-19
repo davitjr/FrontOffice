@@ -1,0 +1,121 @@
+﻿@{
+    Layout = null;
+}
+
+<form ng-controller="EmployeeWorksCtrl" id="employeework_details" ng-init="getEmployeeWork(employeeWork.Id);getUserID()" role="form" style="min-width:600px;" novalidate class="form-horizontal" labels-required>
+    <div id="newaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu" ng-show="employeeWorkDetails.Quality!=undefined">
+            <li class="root-menu-item-4 " ng-if="employeeWorkDetails.Quality==10 && employeeWorkDetails.ExecutorSetNumber==userSetNumber" ng-click="chancgeWorkQuality(20)">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4"  class="startButton h-menu-icon">Սկսել</span>
+            </li>
+            <li class="root-menu-item-5 " ng-if="employeeWorkDetails.Quality==20 && employeeWorkDetails.ExecutorSetNumber==userSetNumber" ng-click="chancgeWorkQuality(30)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ավարտել</span>
+            </li>
+            <li class="root-menu-item-5 " ng-if="employeeWorkDetails.Quality!=40 && employeeWorkDetails.Quality!=30 &&((employeeWorkDetails.ExecutorSetNumber==userSetNumber) || canChangeDetails)" ng-click="chancgeWorkQuality(40)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+            <li class="root-menu-item-5 " ng-if="employeeWorkDetails.Quality!=40 && employeeWorkDetails.Quality!=30 &&  canChangeDetails"
+                ng-controller="PopUpCtrl" ng-click="params={ employeeWork: employeeWork };openWindow('/EmployeeWorks/ChangeWorkDetails','Աշխատանքի խմբագրում','changeworkdetails')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-4" class="closeAccountButton  h-menu-icon">Խմբագրել</span>
+            </li>
+
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('currentWorkdetails')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Ելք</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-12">
+            <div class="col-sm-12">
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Հերթական համար</div>
+                    <div class="product-detail-cell product-detail-value">{{employeeWorkDetails.Id}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+                    <div class="product-detail-cell product-detail-value">{{employeeWorkDetails.RegistrationDate | mydatetime}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Տեսակ</div>
+                    <div class="product-detail-cell product-detail-value">{{employeeWorkDetails.TypeDescription}}</div>
+                </div>
+                
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Մուտքագրող</div>
+                    <div class="product-detail-cell product-detail-value">{{employeeWorkDetails.SetNumber}}
+                        <span title="Օգտագործողի  տվյալներ" style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:employeeWorkDetails.SetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>
+                    </div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Նկարագրություն</div>
+                    <div class="product-detail-cell product-detail-value">{{employeeWorkDetails.DescriptionTypeDescription}}</div>
+                </div>
+
+                <div class="product-detail-row" ng-if="employeeWorkDetails.OtherDescription!=null && employeeWorkDetails.OtherDescription!=''">
+                    <div class="product-detail-cell product-detail-lable">Այլ նկարագրություն</div>
+                    <div class="product-detail-cell product-detail-value">{{employeeWorkDetails.OtherDescription}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Կարևորություն</div>
+                    <div class="product-detail-cell product-detail-value">{{employeeWorkDetails.ImportanceDescription}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Վերջնաժամկետ</div>
+                    <div class="product-detail-cell product-detail-value">{{employeeWorkDetails.EndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+                </div>
+                <div ng-if="employeeWorkDetails.ExecutorSetNumber" ng-init="isUserManager(employeeWorkDetails.ExecutorSetNumber)"></div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Կատարող</div>
+                    <div class="product-detail-cell product-detail-value">{{employeeWorkDetails.ExecutorSetNumber}}
+                        <span title="Օգտագործողի  տվյալներ" style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:employeeWorkDetails.ExecutorSetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>
+                    </div>
+                </div>
+
+               
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+                    <div class="product-detail-cell product-detail-value">{{employeeWorkDetails.QualityDescription}} <span ng-if="employeeWorkDetails.IsOverdueWork" style="color:red">(Ժամկետանց)</span></div>
+                </div>
+
+                <div class="product-detail-row" ng-if="employeeWorkDetails.ClosingDate!=null">
+                    <div class="product-detail-cell product-detail-lable">Փակման ա/թ</div>
+                    <div class="product-detail-cell product-detail-value">{{employeeWorkDetails.ClosingDate | mydate | date: 'dd/MM/yyyy'}}</div>
+                </div>
+
+                <div class="product-detail-row" ng-if="employeeWorkDetails.ClosingSetNumber!=null">
+                    <div class="product-detail-cell product-detail-lable">Փակողի ՊԿ</div>
+                    <div class="product-detail-cell product-detail-value">{{employeeWorkDetails.ClosingSetNumber}}
+                        <span title="Օգտագործողի  տվյալներ" style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:employeeWorkDetails.ClosingSetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>
+                    </div>
+                </div>
+
+                <div class="product-detail-row" ng-if="employeeWorkDetails.ClosingDescription!=null && employeeWorkDetails.ClosingDescription!=''">
+                    <div class="product-detail-cell product-detail-lable">Հրաժարման պատճառ</div>
+                    <div class="product-detail-cell product-detail-value">{{employeeWorkDetails.ClosingDescription}}</div>
+                </div>
+
+                
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+

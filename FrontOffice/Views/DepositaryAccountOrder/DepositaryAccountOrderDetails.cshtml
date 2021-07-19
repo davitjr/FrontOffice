@@ -1,0 +1,44 @@
+﻿
+@{
+    Layout = null;
+}
+
+<form style="width:600px" ng-controller="DepositaryAccountOrderCtrl" data-ng-init="getDepositaryAccountOrder(selectedOrderId)">
+    <loading-control style="margin-left:20em" scopevariable="depositaryAccountOrderDetails"></loading-control>
+    <div ng-show="depositaryAccountOrderDetails" class="product-details bhoechie-tab-content" style="min-width:600px;padding-left:10px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{depositaryAccountOrderDetails.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{depositaryAccountOrderDetails.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{depositaryAccountOrderDetails.OperationDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Բանկի կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{depositaryAccountOrderDetails.AccountNumber.BankCode}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Բանկի անվանում</div>
+            <div class="product-detail-cell product-detail-value">{{depositaryAccountOrderDetails.AccountNumber.Description}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Արժեթղթերի հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{depositaryAccountOrderDetails.AccountNumber.AccountNumber}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="depositaryAccountOrderDetails.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{depositaryAccountOrderDetails.QualityDescription}}</div>
+            <div ng-if="depositaryAccountOrderDetails.Quality==31" class="product-detail-cell product-detail-value redStyle">{{depositaryAccountOrderDetails.QualityDescription}}</div>
+            <div ng-if="depositaryAccountOrderDetails.Quality!=31 && depositaryAccountOrderDetails.Quality!=30" class="product-detail-cell product-detail-value">{{depositaryAccountOrderDetails.QualityDescription}}</div>
+        </div>
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+</form>

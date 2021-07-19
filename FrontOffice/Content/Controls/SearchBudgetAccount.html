@@ -1,0 +1,163 @@
+﻿<div>
+    <style>
+        .modal-content {
+            width: 1000px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+
+
+
+        .resultRow {
+            font-size: 10pt;
+            color: black;
+            font-weight: normal;
+        }
+
+        .resultRowAddInf {
+            font-size: 9pt;
+        }
+
+        .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .tableHeader {
+            font-size: 9pt;
+            height: 25px;
+        }
+    </style>
+
+
+    <style>
+        #searchBudget .product-container-header > th {
+            font-weight: inherit;
+        }
+
+        #searchBudget .div-table-content {
+            margin-top: -5px;
+            border-color: #CFDAD0 !important;
+        }
+
+
+        #searchBudget .popup_wrapper_top {
+            margin-top: -7px !important;
+        }
+    </style>
+
+    <div id="searchBudget">
+        <div class="col-sm-12 popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+            <div style="margin-top:-10px">Բյուջետային հաշիվների որոնում</div>
+            <img src="/Content/images/close_pop.png " ng-click="closeBudgetAccountModal()" style="margin-top:-10px;" alt="">
+        </div>
+
+        <div class="col-sm-12" style="padding:0;margin-bottom:15px">
+            <div class="col-sm-2" style="display:inline-block; padding:5px">
+                <label class="tab_title">Հաշիվ</label>
+                <div>
+                    <input type="text" ng-model="searchParams.AccountNumber" name="AccountNumber" class="form-control  " />
+                </div>
+            </div>
+            <div class="col-sm-6" style="display:inline-block; padding:5px">
+                <label class="tab_title">Նկարագրություն</label>
+                <div>
+                    <input type="text" style="max-width:100%!important;" ng-model="searchParams.Description" name="Description" class="form-control  " />
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block; padding:5px">
+                <label class="tab_title">Հաշվի տեսակ</label>
+                <select data-ng-model="searchParams.AccountType" class="form-control" style="width: 155px">
+                    <option value="" style="margin-left:25px"> -Ընտրել- </option>
+                    <option value="1" style="margin-left:25px">Հարկային</option>
+                    <option value="2" style="margin-left:25px">Մաքսային</option>
+                    <option value="3" style="margin-left:25px">Այլ</option>
+                </select>
+            </div>
+            <div class="col-sm-2" style="display:inline-block; padding:5px">
+                <label class="tab_title">Հաճախորդի տեսակ</label>
+                <select data-ng-model="searchParams.CustomerType" class="form-control" style="width: 155px">
+                    <option value="" style="margin-left:25px"> -Ընտրել- </option>
+                    <option value="1" style="margin-left:25px">Իրավաբանական անձ</option>
+                    <option value="2" style="margin-left:25px">Անհատ ձեռնարկատեր</option>
+                    <option value="3" style="margin-left:25px">Ֆիզիկական անձ</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="margin:5px">
+            <button type="button" class="btn btn-primary" ng-click="btnFindClick();" title="Որոնել"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+        </div>
+        <div style="overflow:auto; margin:5px; margin-bottom:0px; margin-top:0px; ">
+            <table class="table table-condensed" style="margin-bottom:0;">
+                <thead>
+                    <tr class="product-container-header">
+                        <th class="col-sm-2" style="text-align:center;">Հաշիվ</th>
+                        <th class="col-sm-5" style="text-align:center;">Նկարագրություն</th>
+                        <th class="col-sm-1" style="text-align:center;">Հաշվի տեսակ</th>
+                        <th class="col-sm-1" style="text-align:center;">Իրավա- բանական</th>
+                        <th class="col-sm-1" style="text-align:center;">Ա/Ձ</th>
+                        <th class="col-sm-1" style="text-align:center;">Ֆիզի- կական</th>
+                        <th class="col-sm-1" style="text-align:center;">ՀԾՀ կիրառում</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="div-table-content " style="max-height:200px; min-height:200px;border: grey 1px solid;  ">
+                <table class="table table-condensed table-hover" style="background-color:white">
+                    <tbody>
+                        <tr ng-if="budgetAccountsList.length!=0" ng-repeat="account in budgetAccountsList" style="font-size:8pt; cursor:pointer;" ng-class="{'selected':$index == selectedRow} " ng-click="setClickedRow($index)" ng-dblclick="selectBudgetAccount()">
+                            <td>
+
+                                <div class="col-sm-2" style="text-align:center;">
+                                    {{ ::account.AccountNumber }}
+                                </div>
+                                <div class="col-sm-5 ">
+                                    {{ ::account.Description }}
+                                </div>
+                                <div class="col-sm-1 " style="text-align:right;">
+                                    {{ ::account.AccountType }}
+                                </div>
+                                <div class="col-sm-1 " style="text-align:right;">
+                                    {{ ::account.IsLegal }}
+                                </div>
+                                <div class="col-sm-1 " style="text-align:right;">
+                                    {{ ::account.IsEntrepreneur}}
+                                </div>
+                                <div class="col-sm-1 " style="text-align:right;">
+                                    {{ ::account.IsPhysical }}
+                                </div>
+                                <div class="col-sm-1 " style="text-align:right;">
+                                    {{ ::account.Soc }}
+                                </div>
+
+
+                            </td>
+                        </tr>
+                        <tr ng-if="budgetAccountsList.length==0">
+                            <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="margin-left:12px;">
+            Ընդամենը` {{totalRows}}
+        </div>
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                    ng-model="currentPage"
+                    total-items="totalRows"
+                    items-per-page="numPerPage"
+                    max-size="maxSize"
+                    boundary-links="true"
+                    previous-text="‹"
+                    next-text="›"
+                    first-text="«"
+                    last-text="»">
+        </div>
+
+
+    </div>
+
+</div>

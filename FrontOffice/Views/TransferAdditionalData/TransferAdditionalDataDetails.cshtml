@@ -1,0 +1,88 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<style>
+    .editAdditionalBtn1 {
+        margin-left: 108px;
+        margin-right: 7px;
+        height: 32px;
+        margin-top: -3px;
+    }
+
+    .editAdditionalBtn2 {
+        margin-left: 70px;
+        margin-right: 7px;
+        height: 32px;
+        margin-top: -3px;
+    }
+</style>
+<div style="">
+    <div class="panel panel-success" style="border-bottom:thin">
+        <div class="panel-heading" style="height:33px">
+            <script>
+                $("[data-toggle=tooltip]").tooltip({
+                    placement: $(this).data("placement") || 'bottom'
+                });
+            </script>
+            Լրացուցիչ  տվյալներ
+            <button data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Խմբագրել" ng-click="openTransferAdditionalDetailsModal()" type="button" class="btn btn-default" ng-class="transferAdditionalData.dataformtype==1?'editAdditionalBtn1':'editAdditionalBtn2'" aria-label="Justify" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-edit"></span></button>
+            <button data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Հեռացնել" ng-click="deleteAdditionalData()" type="button" class="btn btn-default" style="margin-left:-8px;height:32px;margin-top:-3px" aria-label="Justify" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+        <div class="panel-body" style="margin-left:20px" ng-if="transferAdditionalData">
+            <div class="row" style="width:108%">
+
+
+                <div class="product-detail-row" >
+                    <div class="product-detail-cell product-detail-lable"> <span ng-show="transferAdditionalData.dataformtype==1">Ստացող</span> <span ng-show="transferAdditionalData.dataformtype==2">Ուղարկող</span> </div>
+                    <div class="product-detail-cell product-detail-value" ><span ng-show="transferAdditionalData.dataformtype==1">{{receiverLivingPlaceDesc}}</span> <span ng-show="transferAdditionalData.dataformtype==2">{{senderLivingPlaceDesc}}</span></div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable"><span ng-show="transferAdditionalData.dataformtype==2">Ստացող</span> <span ng-show="transferAdditionalData.dataformtype==1">Ուղարկող</span></div>
+                    <div class="product-detail-cell product-detail-value"><span ng-show="transferAdditionalData.dataformtype==2">{{receiverLivingPlaceDesc}}</span> <span ng-show="transferAdditionalData.dataformtype==1">{{senderLivingPlaceDesc}}</span></div>
+                </div>
+
+
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Բնույթը</div>
+                    <div class="product-detail-cell product-detail-value" >{{transferAmountPurposeDesc}} </div>
+                </div>
+            </div>
+
+            <div class="product-container" style="width:auto;margin-left:-25px;margin-right:-5px">
+
+                <div class="header-title">
+                    <span>Գումարի նպատակը</span>
+                </div>
+
+                <div class="product-collapsable-section " style="margin-bottom:15px;">
+                    <div id="notesTable" class="product-content-table custom-scroll" style="max-height:200px">
+                        <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                            <thead class="product-container-header">
+                                <tr>
+                                    <td style="width:85px;">Նպատակ</td>
+                                    <td style="width:35px;">Գումար</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="p in transferAdditionalData.transferAmountPurposes">
+                                    <td style="width:85px!important">{{::p.description}}<span ng-show="p.purposeCode==11">({{::p.addInfo}})</span></td>
+                                    <td style="text-align:right;width:35px!important">{{::p.amount | number:2 }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <ul id="contextSevicePaymentNote" class="dropdown-menu">
+                        <li><a href="" style="color: #4a8a2b;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={selectedNote:selectedNote};openWindow('/ServicePaymentNoteOrder/DeleteServicePaymentNoteOrder','Սպասարկան վարձի գանձման նշման հեռացման հայտի մուտքագրում','deleteServicePaymentNote')">Հեռացնել</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

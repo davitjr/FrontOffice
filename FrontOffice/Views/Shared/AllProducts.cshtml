@@ -1,0 +1,85 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+
+<div class="section"> 
+    <div ng-if="$root.SessionProperties.IsTimeZoneValid == 1">
+        <div>
+            <currentaccounts hide-blank="true"></currentaccounts>
+        </div>
+        <div>
+            <customertransitaccounts hide-blank="true" for-transit-accounts="true"></customertransitaccounts>
+        </div>
+        <div>
+            <cards hide-blank="true"></cards>
+        </div>
+        <div>
+            <deposits hide-blank="true"></deposits>
+        </div>
+        <div>
+            <loans hide-blank="true"></loans>
+        </div>
+        <div>
+            <creditlines hide-blank="true"></creditlines>
+        </div>
+        <div>
+            <periodictransfers hide-blank="true"></periodictransfers>
+        </div>
+        <div>
+            <depositcases hide-blank="true"></depositcases>
+        </div>
+        <div ng-show="$root.SessionProperties.CustomerType != 6">
+            <guarantees hide-blank="true"></guarantees>
+        </div>
+        <div ng-show="$root.SessionProperties.CustomerType != 6">
+            <accreditives hide-blank="true"></accreditives>
+        </div>
+        <div ng-show="$root.SessionProperties.CustomerType != 6">
+            <paidguarantees hide-blank="true"></paidguarantees>
+        </div>
+        <div ng-show="$root.SessionProperties.CustomerType != 6">
+            <paidaccreditives hide-blank="true"></paidaccreditives>
+        </div>
+        <div>
+            <factorings hide-blank="true"></factorings>
+        </div>
+        <div ng-show="$root.SessionProperties.CustomerType != 6">
+            <paidfactorings hide-blank="true"></paidfactorings>
+        </div>
+        <div ng-show="$root.SessionProperties.CustomerType == 6">
+            <pensionapplications hide-blank="true"></pensionapplications>
+        </div>
+
+        <div ng-show="$root.SessionProperties.CustomerType != 6">
+            <cardtariffcontracts hide-blank="true"></cardtariffcontracts>
+        </div>
+
+        <div ng-show="$root.SessionProperties.CustomerType != 6">
+            <customerposlocations hide-blank="true"></customerposlocations>
+        </div>
+
+        <div>
+            <insurances hide-blank="true"></insurances>
+        </div>
+
+        <div>
+            <hbapplication hide-blank="true"></hbapplication>
+        </div>
+        <div ng-show="$root.SessionProperties.CustomerType == 6">
+            <phonebankingcontract hide-blank="true"></phonebankingcontract>
+        </div>
+        <div>
+            <bonds hide-blank="true"></bonds>
+        </div>
+        <div>
+            <depositaryaccount hide-blank="true"></depositaryaccount>
+        </div>
+        <div >
+            <pension-payment-order hide-blank="true"></pension-payment-order>
+        </div>
+
+    </div>
+</div>

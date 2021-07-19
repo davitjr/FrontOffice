@@ -1,0 +1,130 @@
+﻿@{
+    Layout = null;
+}
+
+<form style="width:600px" ng-controller="RemittanceAmendmentOrderCtrl" data-ng-init="getRemittanceAmendmentOrder(selectedOrderId)">
+    <loading-control style="margin-left:20em" scopevariable="orderDetails"></loading-control>
+
+
+    <div id="remittanceCancellationOrderDetails_menu" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0">
+        <ul id="menu" class="dialog-menu">
+            <li lass="root-menu-item-4 " ng-click="getRemittanceAmendmentApplication(2);">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="h-menu-icon printButton">Տվյալների ուղղման դիմում</span>
+            </li>
+            <li class="root-menu-item-5 " ng-if="orderDetails.Quality!=undefined && orderDetails.Quality !=31 && orderDetails.Quality !=30 && orderDetails.Quality !=32 && orderDetails.Quality !=40 && orderDetails.Quality !=41 && orderDetails.Quality !=6" ng-controller="PopUpCtrl" ng-click="params={removableorder:orderDetails};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+            </li>
+        </ul>
+    </div>
+
+    <div ng-show="orderDetails" class="product-details bhoechie-tab-content" style="min-width:600px;padding-left:10px">
+        <div style="clear:both;font-weight:bold;" class="redStyle" ng-if="orderDetails.ARUSSuccess == 0 && orderDetails.ARUSErrorMessage != undefined && orderDetails.ARUSErrorMessage!=''">Չի կատարվել STAK համակարգի կողմից հետևյալ պատճառով՝</div>
+        <div style="clear:both;font-weight:bold;" class="redStyle" ng-if="orderDetails.ARUSSuccess == 0 && orderDetails.ARUSErrorMessage != undefined && orderDetails.ARUSErrorMessage!=''">{{orderDetails.ARUSErrorMessage}}</div>
+
+        <div style="clear:both;font-weight:bold;color:green;" ng-if="orderDetails.ARUSSuccess == 1">Կատարվել է STAK համակարգի կողմից </div>
+        <br />
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.OperationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման հսկիչ համար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.URN}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոփոխման պատճառ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.AmendmentReasonName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի ազգանուն</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeforeBeneLastName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի անուն</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeforeBeneFirstName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի հայրանուն</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeforeBeneMiddleName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի ազգանուն (նոր)</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryLastName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի անուն (նոր)</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryFirstName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի հայրանուն (նոր)</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryMiddleName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի ազգանուն</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeforeNATBeneficiaryLastName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի անուն</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeforeNATBeneficiaryMiddleName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի հայրանուն</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeforeNATBeneficiaryFirstName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի ազգանուն (նոր)</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.NATBeneficiaryLastName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի անուն (նոր)</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.NATBeneficiaryFirstName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի հայրանուն (նոր)</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.NATBeneficiaryMiddleName}}</div>
+        </div>
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման գումար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Transfer.Amount}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման արժույթ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Transfer.Currency}}</div>
+        </div>
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="orderDetails.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{orderDetails.QualityDescription}}</div>
+            <div ng-if="orderDetails.Quality==31" class="product-detail-cell product-detail-value redStyle">{{orderDetails.QualityDescription}}</div>
+            <div ng-if="orderDetails.Quality!=31 && orderDetails.Quality!=30" class="product-detail-cell product-detail-value">{{orderDetails.QualityDescription}}</div>
+        </div>
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+</form>
+
+
+

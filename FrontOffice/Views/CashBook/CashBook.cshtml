@@ -1,0 +1,286 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#cashBookContent").mCustomScrollbar({
+            theme: "rounded-dark",
+            scrollButtons: {
+                scrollAmount: 15,
+                enable: true
+            },
+            mouseWheel: {
+                scrollAmount: 50
+            }
+        });
+
+    });
+</script>
+<style>
+    #summary tr {
+        height: auto;
+        max-width: 100%;
+    }
+</style>
+<link href="~/Content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+
+<form name="cashBookForm" id="CashBookForm" ng-controller="CashBookCtrl" ng-init="getUserID();getUserFilialCode()" ng-submit="getCashBooks()" novalidate style="margin-top:15px">
+
+    <div class="product-details bhoechie-tab-content col-sm-6" style="min-width:760px;margin-left:10px;">
+        <div class="row">
+            <div class="col-sm-12 ">
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ա/թ
+                    </div>
+                    <input type="date" ng-model="searchParams.RegistrationDate" name="registrationDate" class="form-control"
+                           required>
+                    <ng-messages ng-if="cashBookForm.$submitted || cashBookForm.registrationDate.$dirty"
+                                 for="cashBookForm.registrationDate.$error">
+                        <ng-message when="required" class="errors">
+                            Նշեք ա/թ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Մուտք/Ելք
+                    </div>
+                    <div data-ng-init="getOperationTypes(false)">
+                        <loading-control scopevariable="OperationTypes"></loading-control>
+                        <select ng-show="OperationTypes" data-ng-model="searchParams.OperationType" name="OperationType" id="OperationType" class="form-control"
+                                data-ng-options="OperationType.Key as OperationType.Value for OperationType in OperationTypes">
+                            <option selected="selected" value="" hidden>Բոլորը</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Արժույթ
+                    </div>
+                    <div>
+                        <div data-ng-init="getCurrencies()">
+                            <select ng-show="currencies" data-ng-model="searchParams.Currency" name="currency" id="currency" class="form-control" required
+                                    data-ng-options="c for c in ::currencies">
+                                <option selected="selected" value="" style="margin-left:25px">Ընտրեք արժույթը...</option>
+                            </select>
+                            <span ng-show="report.nocurrency" class="redStyle">Արժույթը ընտրված չէ</span>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+
+                <br />
+                <div class="col-sm-3 " style="margin-left:0px;">
+                    <button type="submit" class="btn btn-primary" style="width:113px;"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                </div>
+                <br />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Կարգավիճակ 
+                    </div>
+                    <div data-ng-init="GetCashBookQualityTypes()">
+                        <loading-control scopevariable="QualityTypes"></loading-control>
+                        <select ng-show="QualityTypes" data-ng-model="searchParams.Quality" name="QualityType" id="QualityType" class="form-control"
+                                data-ng-options="QualityType.Key as QualityType.Value for QualityType in ::QualityTypes">
+                            <option selected="selected" value="" hidden>Բոլորը</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-3" ng-if="SessionProperties.AdvancedOptions.isHeadCashBook == '1' && $root.SessionProperties.AdvancedOptions.isEncashmentDepartment!='1'  ">
+                    <div class="product-detail-cell product-detail-lable">Մասնաճյուղ</div>
+                    <div class="col-sm-6 row" style="width:138%">
+                        <div class="input-group col-sm-10">
+                            <div class="form-group-search" data-ng-init="getFilialList()">
+                                <select ng-disabled="SessionProperties.AdvancedOptions.isHeadCashBook != '1' || (SessionProperties.AdvancedOptions.isHeadCashBook == '1' && searchParams.rowType == '0') "
+                                        data-ng-model="searchParams.FillialCode" name="fillialCode" id="fillialCode" class="form-control"
+                                        data-ng-options="k as v for (k,v) in filialList" required></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 " style="width: 281px;" ng-if="SessionProperties.AdvancedOptions.canApproveCashBookSurplusDeficit == '1' || SessionProperties.AdvancedOptions.isHeadCashBook == '1' ||  $root.SessionProperties.AdvancedOptions.CanChangeCashBookSetNumber == '1' ">
+                    <div class="product-detail-cell product-detail-lable">ՊԿ</div>
+                    <div>
+                        <usersetnumber withoutlabel="true" setnumber="searchParams.SearchUserID" labelname=""></usersetnumber>
+                    </div>
+                </div>
+
+                <div class="col-sm-2 " ng-style="(SessionProperties.AdvancedOptions.canApproveCashBookSurplusDeficit == '1' || SessionProperties.AdvancedOptions.isHeadCashBook == '1') && {'margin-left':'-68px'}">
+                    <div class="product-detail-cell product-detail-lable">
+                        Տեսակ
+                    </div>
+                    <div data-ng-init="getRowTypes(false)" style="width:170px;">
+                        <loading-control scopevariable="rowTypes"></loading-control>
+                        <select ng-show="rowTypes" data-ng-model="searchParams.rowType" name="rowType" id="rowType" class="form-control"
+                                data-ng-options="k as v for (k,v) in ::rowTypes"
+                                ng-click="setRowTypesForOtherFilial()"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <loading></loading>
+    </div>
+
+    <br />
+    <div class="col-sm-6" style="padding:0px">
+        <div class="product-container col-sm-12" style="min-width:760px;margin-left:10px;margin-top:-5px;padding:0px;width:100%;">
+            <div class="header-title">
+                Գործարքների պատմություն
+                <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+            </div>
+            <div class="product-collapsable-section">
+                <div style="height:30px;background-color:#eeeeee">
+                    <div class="checkbox checkbox-success" style="text-align:left;padding-left:38px;display:inline">
+                        <input ng-change="checkAllCashBooks()" type="checkbox" ng-model="isCheckCashBooks" class="styled" value="option2" aria-label="Single checkbox One">
+                        <label>Ընտրել բոլորը</label>
+                        <button ng-disabled="!isAnyUnConfirmedCashBook" type="button" class="btn btn-default" style="height:30px;margin-left:121px;" title="Հաստատել նշվածները" ng-click="approveCashBooks()"><span class="" style="top:-4px !important;color:#0043ff!important">Հաստատել նշվածները</span></button>
+                    </div>
+                </div>
+                <div class="product-container-header" style="height:31px">
+                    <div class="col-sm-11">
+                        <div class="col-sm-2 " style="width:17%">Ա/թ</div>
+                        <div class="col-sm-1" style="width:15%">Գումար</div>
+                        <div class="col-sm-2" style="width:10%">Արժույթ</div>
+                        <div class="col-sm-2" style="width:10%">Տեսակ</div>
+                        <div class="col-sm-2" style="width:20%">Կարգավիճակ</div>
+                        <div class="col-sm-2" style="width:16%">Մասնաճյուղ</div>
+                        <div class="col-sm-1" style="width:7%">ՊԿ</div>
+                        <div class="col-sm-1" style="width:4%">Թղթ.ՊԿ</div>
+                    </div>
+                    <div ng-controller="PopUpCtrl" ng-click="openWindow('/CashBook/InputCashBook','Դրամարկղի մատյանի մուտք/ելք','inputCashBook')">
+                        <i class="add-new-product tipB" style="margin-top:3px" data-original-title="Մուտքագրում"></i>
+                    </div>
+                </div>
+                <div id="cashBookContent" class="product-content-table custom-scroll" style="height:220px">
+                    <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                        <tbody>
+                            <tr ng-repeat="cashBook in cashBooks" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" style="max-height:200px" ng-if="UserID == cashBook.CorrespondentSetNumber || UserID==cashBook.RegisteredUserID || (SessionProperties.AdvancedOptions.isHeadCashBook == '1'  && (cashBook.Type==1 || cashBook.Type==3)) || ($root.SessionProperties.AdvancedOptions.Is_ChiefAcc == '1' && (cashBook.Type==2 || cashBook.Type==4))">
+                                <td>
+                                    <div>
+                                        <span class="col-sm-2  " style="width:18%">
+                                            <input ng-change="ckeckCashBook()" ng-model="cashBook.isChecked" type="checkbox" ng-if="(cashBook.Quality==0 && UserID == cashBook.CorrespondentSetNumber) || (cashBook.Quality==0 && $root.SessionProperties.AdvancedOptions.Is_ChiefAcc == '1' && (cashBook.Type==2 || cashBook.Type==4))" />
+                                            {{ ::cashBook.RegistrationDate | mydatetime }}
+                                        </span>
+                                        <span class="col-sm-1  " style="width:15%; text-align:right;">
+                                            {{ ::cashBook.Amount | number:2}} <br /><span style="color:forestgreen" ng-if="(cashBook.Type==1 && cashBook.OperationType == 1) || (cashBook.OperationType == 2 && cashBook.Type==3)">
+                                                Մարված՝ {{(cashBook.MaturedAmount).toFixed(2)}}
+                                                <span style="color:orangered">Մնացորդ՝ {{(cashBook.Amount - cashBook.MaturedAmount).toFixed(2)}}</span>
+                                            </span>
+                                        </span>
+
+                                        <span class="col-sm-2  " style="width:9%">{{ ::cashBook.Currency }}</span>
+                                        <span class="col-sm-2  " style="width:10%" ng-class="cashBook.OperationType == 1 ? 'redStyle' : 'greenStyle'">{{ ::cashBook.OperationTypeString }}</span>
+                                        <span class="col-sm-2  " style="width:20%">
+                                            {{ ::cashBook.QualityDescription }} 
+                                            <a style="color:#0043ff!important" ng-click="changeCashBookStatus(cashBook,2)" href="#" ng-if="(cashBook.Quality==0 && UserID == cashBook.CorrespondentSetNumber || (cashBook.Quality==0 && $root.SessionProperties.AdvancedOptions.Is_ChiefAcc == '1' && (cashBook.Type==2 || cashBook.Type==4)))">Հաստատել</a>
+                                        </span>
+                                        <span class="col-sm-2  " style="width:15%" ng-if="$root.SessionProperties.AdvancedOptions.isEncashmentDepartment!='1'">{{ ::cashBook.FillialCode }}</span>
+                                        <span class="col-sm-2  " style="width:15%" ng-if="$root.SessionProperties.AdvancedOptions.isEncashmentDepartment=='1'">{{ ::searchParams.FillialCode }}</span>
+                                        <span class="col-sm-2" style="width:9%">{{ ::cashBook.RegisteredUserID}}</span>
+                                        <span class="col-sm-2" style="width:4%">{{ ::cashBook.CorrespondentSetNumber}}</span>
+                                    </div>
+                                </td>
+                                <td class="col-sm-1 click_toggle" context="context">
+                                    <div id="contextMenu" ng-if="(cashBook.Quality==0 && cashBook.RegisteredUserID==UserID) || (cashBook.Quality==0 && cashBook.CorrespondentSetNumber==UserID) || (SessionProperties.AdvancedOptions.isHeadCashBook == '1' && (cashBook.Type==1 || cashBook.Type==3) && cashBook.Quality==0) || (cashBook.LinkedRowID == 0 || (cashBook.Amount - cashBook.MaturedAmount > 0)) && (cashBook.Quality == 2 && (cashBook.Type == 1 && cashBook.OperationType == 1) || (cashBook.Type == 3  && cashBook.OperationType == 2))">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="cashBooks.length==0" style="color:red;font-size:16px;text-align:center;">Նշված ժամանակահատվածում գործարքները բացակայում են</div>
+                </div>
+            </div>
+        </div>
+        <section class="panel panel-success col-sm-12" style="min-width:760px;padding:0px;margin-left:10px;margin-top:15px">
+            <header class="panel-heading">
+                <span class="panel-title" style="font-size:14px;">Ընդամենը</span>
+            </header>
+            <div class="panel-body">
+                <table id="summary">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="product-detail-lable">Ընդամենը հաստատված </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center">
+                                <span class="product-detail-lable" style="color:green;">Մուտք </span>
+                            </td>
+                            <td>
+                                <span class="product-detail-lable" style="color:green; font-weight:bold;">{{ TotalCredit  | number:2}} </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center">
+                                <span class="product-detail-lable" style="color:red;">Ելք </span>
+                            </td>
+                            <td>
+                                <span class="product-detail-lable" style="color:red;font-weight:bold;">{{ TotalDebit | number:2}}</span>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="product-detail-lable" style="color:blue;">Մնացորդ </span>
+                            </td>
+                            <td>
+                                <span class="product-detail-lable" style="color:blue;font-weight:bold;">{{rest[1].value | number:2}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center">
+                                <span class="product-detail-lable" style="color: #337AB7">Ըստ ձևակերպումների </span>
+                            </td>
+                            <td>
+                                <span class="product-detail-lable" style="color:blue;font-weight:bold;color: #337AB7">{{rest[0].value  | number:2}}</span>
+                            </td>
+                        </tr>
+                        <tr></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+    <ul id="context" class="dropdown-menu">
+        <li ng-if="cashBooks[selectedRow].CorrespondentSetNumber==UserID && cashBooks[selectedRow].Quality==0"><a style="color: black;text-decoration:none!important ;" class="my_button" ng-click="changeCashBookStatus(cashBooks[selectedRow],-2)">Մերժել</a></li>
+        <li ng-if="cashBooks[selectedRow].RegisteredUserID==UserID && cashBooks[selectedRow].Quality==0 && cashBooks[selectedRow].Type !=1"><a style="color: black;text-decoration:none!important ;" class="my_button" ng-click="changeCashBookStatus(cashBooks[selectedRow],-3)">Հեռացնել</a></li>
+        <li ng-if="(cashBooks[selectedRow].FillialCode == searchParams.FillialCode || $root.SessionProperties.AdvancedOptions.isEncashmentDepartment) && (cashBooks[selectedRow].ID < cashBooks[selectedRow].CorrespondentID) && cashBooks[selectedRow].Quality == 2 &&  cashBooks[selectedRow].Type == 1 && (cashBooks[selectedRow].IsClosed == false || (cashBooks[selectedRow].Amount - cashBooks[selectedRow].MaturedAmount > 0)) "
+            ng-click="checkPartially(false);getCashBookAmount(cashBooks[selectedRow].ID); hasUnconfirmedOrder(cashBooks[selectedRow].ID)">
+            <a style="color: black;text-decoration:none!important ;" class="my_button" context="context2" id="contextMenu">Ավելցուկի փակում</a>
+        </li>
+        <li ng-if="(cashBooks[selectedRow].FillialCode == searchParams.FillialCode || $root.SessionProperties.AdvancedOptions.isEncashmentDepartment) && (cashBooks[selectedRow].ID < cashBooks[selectedRow].CorrespondentID) && cashBooks[selectedRow].Quality == 2 &&  cashBooks[selectedRow].Type == 1  && (cashBooks[selectedRow].IsClosed == false || (cashBooks[selectedRow].Amount - cashBooks[selectedRow].MaturedAmount > 0)) "
+            ng-click="checkPartially(true);getCashBookAmount(cashBooks[selectedRow].ID);hasUnconfirmedOrder(cashBooks[selectedRow].ID)">
+            <a style="color: black;text-decoration:none!important ;" class="my_button" context="context2" id="contextMenu">Մասնակի ավելցուկի փակում</a>
+        </li>
+        <li ng-if="(cashBooks[selectedRow].FillialCode == searchParams.FillialCode || $root.SessionProperties.AdvancedOptions.isEncashmentDepartment) && (cashBooks[selectedRow].ID < cashBooks[selectedRow].CorrespondentID) && cashBooks[selectedRow].Quality == 2 &&  cashBooks[selectedRow].Type == 3  && (cashBooks[selectedRow].IsClosed == false || (cashBooks[selectedRow].Amount - cashBooks[selectedRow].MaturedAmount > 0)) "
+            ng-click="checkPartially(false);getCashBookAmount(cashBooks[selectedRow].ID);hasUnconfirmedOrder(cashBooks[selectedRow].ID)">
+            <a style="color: black;text-decoration:none!important ;" class="my_button" context="context2" id="contextMenu">Պակասորդի փակում</a>
+        </li>
+        <li ng-if="(cashBooks[selectedRow].FillialCode == searchParams.FillialCode || $root.SessionProperties.AdvancedOptions.isEncashmentDepartment) && (cashBooks[selectedRow].ID < cashBooks[selectedRow].CorrespondentID) && cashBooks[selectedRow].Quality == 2 &&  cashBooks[selectedRow].Type == 3  && (cashBooks[selectedRow].IsClosed == false || (cashBooks[selectedRow].Amount - cashBooks[selectedRow].MaturedAmount > 0))"
+            ng-click="checkPartially(true);getCashBookAmount(cashBooks[selectedRow].ID);hasUnconfirmedOrder(cashBooks[selectedRow].ID)">
+            <a style="color: black;text-decoration:none!important ;" class="my_button" context="context2" id="contextMenu">Մասնակի պակասորդի փակում</a>
+        </li>
+    </ul>
+    <ul id="context2" class="dropdown-menu">
+        <li>
+            <a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl" ng-click="params={linked_cashBook : cashBooks[selectedRow],correspondentAccountType:1, disabled:!isPartially,MaturedAmount : cashBooks[selectedRow].MaturedAmount, filialCodeForClose:userFilialCode};
+                    openWindow('/CashBook/CashBookOrder','Ավելցուկի/պակասորդի փակում','newCashBookOrder')">Հաճախորդի հաշվով</a>
+        </li>
+        <li>
+            <a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl" ng-click="params={linked_cashBook : cashBooks[selectedRow],correspondentAccountType:2, disabled:!isPartially,MaturedAmount : cashBooks[selectedRow].MaturedAmount, filialCodeForClose:userFilialCode};
+                    openWindow('/CashBook/CashBookOrder','Ավելցուկի/պակասորդի փակում','newCashBookOrder')">Կանխիկ</a>
+        </li>
+    </ul>
+
+</form>​

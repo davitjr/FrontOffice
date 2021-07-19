@@ -1,0 +1,67 @@
+﻿<form style="width:600px" ng-controller="ChequeBookReceiveOrderCtrl" ng-init="getChequeBookReceiveOrder(selectedOrderId)">
+    <loading-control scopevariable="order.ChequeBookAccount"></loading-control>
+    <div ng-show="order.ChequeBookAccount">
+        <div ng-if="order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && order.Quality !=50" id="chequeBookReceiveOrderDetails_menu" class="menu-bar dialog-menu light-green " style="margin-left:-3px;margin-top:0">
+            <ul id="menu" class="dialog-menu">
+                <li class="root-menu-item-5 " ng-if="order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && order.Quality !=50" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetChequeBookReceiveOrder)">
+                    <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+                </li>
+            </ul>
+        </div>
+
+        <div ng-show="order.ChequeBookAccount">
+            <div class="product-details bhoechie-tab-content" style="min-width:600px;padding-left:10px;">
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+                    <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+                    <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+                    <div class="product-detail-cell product-detail-value">{{order.OperationDateString}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Հաշվեհամարը</div>
+                    <div class="product-detail-cell product-detail-value">{{order.ChequeBookAccount.AccountNumber}} {{order.ChequeBookAccount.Currency}} {{order.ChequeBookAccount.AccountTypeDescription}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Էջի սկիզբ</div>
+                    <div class="product-detail-cell product-detail-value">{{order.pageNumberStart}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Էջի վերջ</div>
+                    <div class="product-detail-cell product-detail-value">{{order.pageNumberEnd}}</div>
+                </div>
+
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+                    <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{order.QualityDescription}}</div>
+                    <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{order.QualityDescription}}</div>
+                    <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{order.QualityDescription}}</div>
+                </div>
+
+                <div ng-if="order.Quality==31" class="">
+                    <div ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="" style="clear:both;color:#6F6A6A;font-weight:bold">Մերժման պատճառ`</div>
+                    <div class="redStyle">&nbsp;&nbsp;&nbsp;{{ rejectHistory.ReasonDescription }}</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div style="clear:both;color:#6F6A6A;font-weight:bold; margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+
+    </div>
+</form>
+
+

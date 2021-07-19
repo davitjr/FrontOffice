@@ -1,0 +1,49 @@
+﻿<form style="width:550px" ng-controller="ServicePaymentNoteOrderCtrl" ng-init="getServicePaymentNoteOrder(selectedOrderId);">
+    <loading-control style="margin-left:20em" scopevariable="orderDetails"></loading-control>
+    <div class="product-details bhoechie-tab-content" style="min-width:550px;padding-left:10px">
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.OperationDateString}}</div>
+        </div>
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Նշման տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Note.NoteActionTypeDescription}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Նշման բացատրություն</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Note.NoteReasonDescription}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Լրացուցիչ բացատրություն</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Note.AdditionalDescription}}</div>
+        </div>
+
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="orderDetails.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{orderDetails.QualityDescription}}</div>
+            <div ng-if="orderDetails.Quality==31" class="product-detail-cell product-detail-value redStyle">{{orderDetails.QualityDescription}}</div>
+            <div ng-if="orderDetails.Quality!=31 && orderDetails.Quality!=30" class="product-detail-cell product-detail-value">{{orderDetails.QualityDescription}}</div>
+        </div>
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+    <br /><br />
+</form>
+ 
+

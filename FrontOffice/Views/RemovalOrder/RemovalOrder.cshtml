@@ -1,0 +1,99 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+    .chosen-container {
+        position: fixed;
+        z-index: 99;
+        height: 35px;
+    }
+</style>
+<div id="removalOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+        <form ng-controller="RemovalOrderCtrl" style="max-width:600px;" name="RemovalOrderForm" role="form" novalidate class="form-horizontal" labels-required prevent-enter-submit>
+           
+            <div id="removalOrder_menu" class="menu-bar dialog-menu light-green">
+                <ul id="menu" class="dialog-menu">
+                    <li class="root-menu-item-4 " ng-click="getRemovableOrderApplication();">
+                        <span id="h-menu-item-4"><img id="h-menu-icon-4" class="applicationButton h-menu-icon">Դիմում</span>
+                    </li>
+                    <li ng-if="order.Type != 19" class="root-menu-item-4 " ng-click="RemovalOrderForm.$setSubmitted();RemovalOrderForm.$valid && saveRemovalOrder();">
+                        <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+                    </li>
+                    <li class="root-menu-item-5 " onclick="CloseBPDialog('removalOrder')">
+                        <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+                    </li>
+                </ul>
+                <div id="right-menu" style="display:none;">
+                </div>
+            </div>
+           
+            <div style="max-width:520px">
+                <errors></errors>
+            </div>
+            <div class="col-sm-11">
+                <div ng-if="order.Type != 19" class=" form-group" style="padding-top:15px;">
+                    <label class="tab_title col-sm-5 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                    <div class="col-sm-7">
+                        <input disabled="disabled" type="date" class="form-control tab_title" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate">
+                    </div>
+                </div>
+                <div ng-if="order.Type != 19" class="form-group">
+                    <label ng-if="order.Type == 19" class="tab_title col-sm-5" style="padding-left:0" for="reason">Հեռացման պատճառ</label>
+                    <label ng-if="order.Type == 18" class="tab_title col-sm-5" style="padding-left:0" for="reason">Հրաժարման պատճառ</label>
+                    <div ng-show="removingReasons" class="my_title col-sm-7" data-ng-init="getOrderRemovingReasons()">
+                        <select name="RemovingReason" id="RemovingReason" data-ng-model="order.RemovingReason" class="form-control" data-placeholder="Ընտրեք պատճառը..."
+                                data-ng-options="k as v for (k,v) in removingReasons" required>
+                            <option value="" hidden>Ընտրեք պատճառը...</option>
+                        </select>
+                        <ng-messages ng-if="RemovalOrderForm.$submitted || RemovalOrderForm.RemovingReason.$dirty"
+                                     for="RemovalOrderForm.RemovingReason.$error">
+                            <br />
+                            <ng-message when="required" class="errors">
+                                Պատճառն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+
+                <div ng-if="order.RemovingReason==9" class="form-group">
+                    <label class="tab_title col-sm-5 control-label" for="description">Լրացուցիչ</label>
+                    <div class="col-sm-7 ">
+                        <textarea style="text-align:left" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="order.RemovingReasonAdd" name="Add" class="form-control tab_title" required></textarea>
+                        <ng-messages ng-if="RemovalOrderForm.$submitted || RemovalOrderForm.Add.$dirty"
+                                     for="RemovalOrderForm.Add.$error">
+                            <ng-message when="required" class="errors">
+                                Լրացուցիչ պատճառն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label" for="description">Հաճախորդ</label>
+                    <div class="col-sm-7 ">
+
+                        <input type="text" style="text-align:left" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="order.Customer" name="Customer" class="form-control tab_title" required />
+                        <ng-messages ng-if="RemovalOrderForm.$submitted || RemovalOrderForm.Customer.$dirty"
+                                     for="RemovalOrderForm.Customer.$error">
+                            <ng-message when="required" class="errors">
+                                Հաճախորդը մուտքագրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+                <br />
+            </div>
+          
+
+            
+        </form>
+  
+
+
+

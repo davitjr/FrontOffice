@@ -1,0 +1,198 @@
+﻿@{
+    Layout = null;
+}
+
+<div id="DemandDepositRateChangeOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="DemandDepositRateChangeOrderCtrl" style="min-width:650px;" id="DemandDepositRateChangeOrderForm" name="DemandDepositRateChangeOrderForm" role="form" novalidate class="form-horizontal" prevent-enter-submit>
+
+    <div id="cardDataChangeOrder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="DemandDepositRateChangeOrderForm.$setSubmitted();DemandDepositRateChangeOrderForm.$valid && saveDemandDepositRateChangeOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('demandDepositRateChangeOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-12">
+            <div style="max-width:520px;min-width:520px;">
+                <errors></errors>
+            </div>
+
+            <div class=" form-group">
+                <label class="tab_title col-sm-5 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input disabled="disabled" type="date" class="form-control tab_title" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" required>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="form-group ">
+                <label class="tab_title col-sm-5" for="demandDepositAccount">Ցպահանջ ավանդային հաշիվ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+
+                        <input type="text" ng-model="demandDepositAccount.AccountNumber" disabled="disabled" class="form-control tab_title" id="demandDepositAccount"
+                               name="ReceiverAccount" style="text-align:right" />
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="order.TariffGroup==2">
+                <label class="tab_title col-sm-5" for="Amount">Գումար</label>
+                <div class="col-sm-6 row">
+                    <div class="input-group col-sm-10">
+                        <input type="text" required onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' ng-model="order.Amount" id="Amount" name="Amount" class="form-control tab_title" fcsa-number />
+                        <span class="input-group-addon" id="basic-addon2" style="width: 0;"> {{demandDepositAccount.Currency}} </span>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DemandDepositRateChangeOrderForm.$submitted || DemandDepositRateChangeOrderForm.AmountInAmd.$dirty"
+                                     for="DemandDepositRateChangeOrderForm.Amount.$error">
+                            <ng-message when="required" class="errors">
+                                Գումար դաշտը լրացված չէ
+                            </ng-message>
+
+                            <ng-message when="fcsaNumber" class="errors">
+                                Գումարը սխալ է մուտքագրված
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="order.TariffGroup==2">
+                <label class="tab_title col-sm-5" for="Rate">Տոկոսադրույք</label>
+                <div class="col-sm-6 row">
+                    <div class="input-group col-sm-10">
+                        <input type="text" required onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' ng-model="order.Rate" id="Rate" name="Rate" class="form-control tab_title" fcsa-number="{ max: 100 }" />
+                        <span class="input-group-addon" id="basic-addon2" style="width: 0;"> % </span>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DemandDepositRateChangeOrderForm.$submitted || DemandDepositRateChangeOrderForm.Rate.$dirty"
+                                     for="DemandDepositRateChangeOrderForm.Rate.$error">
+                            <ng-message when="required" class="errors">
+                                Տոկոսադրույք դաշտը լրացված չէ
+                            </ng-message>
+
+                            <ng-message when="fcsaNumber" class="errors">
+                                Տոկոսադրույքը սխալ է մուտքագրված
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-init="getDemandDepositsTariffGroups();order.TariffGroup=currentTariffGroup.toString()">
+                <label class="tab_title col-sm-5" for="TariffGroup">Սակագնի տեսակ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select data-ng-model="order.TariffGroup" name="TariffGroup" id="TariffGroup" class="form-control" required
+                                data-ng-options="k as v for (k,v) in demandDepositsTariffGroups" ng-change="order.DocumentNumber=undefined;order.DocumentDate=undefined;order.Rate=undefined;order.Amount=undefined;">
+
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք սակագնի տեսակը...</option>
+
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DemandDepositRateChangeOrderForm.$submitted || DemandDepositRateChangeOrderForm.TariffGroup.$dirty"
+                                     for="DemandDepositRateChangeOrderForm.TariffGroup.$error">
+                            <ng-message when="required" class="errors">
+                                Սակագնի տեսակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="order.TariffGroup!=3 && order.TariffGroup!=1 || (currentTariffGroup==2 && order.TariffGroup==1)">
+                <label class="tab_title col-sm-5" for="DocumentNumber">Հրամանի համար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <textarea rows="2" onkeypress="return isArmenianUnicode(event.keyCode)"
+                                  onpaste="return CheckPasteText(event)" ng-model="order.DocumentNumber"
+                                  name="DocumentNumber" id="DocumentNumber" required class="form-control" style="text-align:left"></textarea>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DemandDepositRateChangeOrderForm.$submitted || DemandDepositRateChangeOrderForm.DocumentNumber.$dirty"
+                                     for="DemandDepositRateChangeOrderForm.DocumentNumber.$error">
+                            <ng-message when="required" class="errors">
+                                Հրամանի համարը լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group " ng-if="order.TariffGroup!=3 && order.TariffGroup!=1 || (currentTariffGroup==2 && order.TariffGroup==1)">
+                <label class="tab_title col-sm-5 " for="DocumentDate">Հրամանի ամսաթիվ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="date" style="text-align:left" class="form-control tab_title" id="DocumentDate" name="DocumentDate" ng-model="order.DocumentDate" required>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DemandDepositRateChangeOrderForm.$submitted || DemandDepositRateChangeOrderForm.DocumentDate.$dirty"
+                                     for="DemandDepositRateChangeOrderForm.DocumentDate.$error">
+                            <ng-message when="required" class="errors">
+                                Հրամանի ա/թ-ն նշված չէ
+                            </ng-message>
+                            <ng-message when="date" class="errors">
+                                Հրամանի ա/թ-ն սխալ է նշված
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+            <div ng-controller="AccountCtrl" class="form-group" ng-init="getCurrentAccounts();">
+                <label class="tab_title col-sm-5" for="accountDescription">Ցպահանջ տոկոսադրույքի վճարման հաշիվ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select ng-model="order.PercentCreditAccount"
+                                name="account" id="account" class="form-control" required>
+                            <option value="">Ընտրեք Հաշվեհամարը...</option>
+                            <option class="select_options_style" ng-repeat='account in accounts ' ng-if="account.Currency == 'AMD'" style="margin-left:25px" value='{{ account.AccountNumber }}'>{{ account.AccountNumber }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="DemandDepositRateChangeOrderForm.$submitted || DemandDepositRateChangeOrderForm.CreditAccount.$dirty"
+                                 for="DemandDepositRateChangeOrderForm.DocumentNumber.$error">
+                        <ng-message when="required" class="errors">
+                            Հաշվեհամարը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+</form>
+
+
+
+
+
+
+
+
+
+
+

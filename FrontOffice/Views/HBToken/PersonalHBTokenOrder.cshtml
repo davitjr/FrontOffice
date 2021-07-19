@@ -1,0 +1,157 @@
+﻿@{
+    Layout = null;
+    bool disableGemalto = System.Configuration.ConfigurationManager.AppSettings["EnabledOldMobileCompatibility"] == "true";
+}
+<style type="text/css">
+    #HBApplicationoOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+
+<div id="hpTokenLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="HBTokenCtrl" name="HBTokenOrderForm" id="HBTokenOrderForm" role="form" style="min-width:600px;min-height:250px;" novalidate class="form-horizontal" labels-required ng-init="setLastHBTokenId();initDefaultValues();">
+    <div id="hbapplication_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li ng-if="editToken==undefined" class="root-menu-item-4 " ng-click="HBTokenOrderForm.$setSubmitted();HBTokenOrderForm.$valid  && saveHBTokenOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ավելացնել</span>
+            </li>
+            <li ng-if="editToken" class="root-menu-item-4 " ng-click="editHBToken();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li ng-if="editToken==undefined" class="root-menu-item-5 " onclick="CloseBPDialog('newhbtoken')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+            <li ng-if="editToken!=undefined" class="root-menu-item-5 " onclick="CloseBPDialog('edithbtoken')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+    <div class="col-sm-11" ng-if="lastHBTokenId">
+
+        @*<div class="form-group">
+            <label class="tab_title col-sm-6 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+            <div class="col-sm-6 row">
+                <div class="multiple_columns col-sm-10 ">
+                    <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.RegistrationDate" required>
+                </div>
+            </div>
+        </div>*@
+        <div class="form-group">
+            <label class="tab_title col-sm-6" for="tokenType">Տոկենի տեսակ <span class="redStyle">*</span></label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <select ng-change="changeTokenType(@(disableGemalto.ToString().ToLower()));getTokenServiceFee()" convert-to-number name="tokenType" id="tokenType" data-ng-model="order.HBToken.TokenType" class="form-control" ng-disabled="editToken && editToken.newInserted==undefined">
+                        <option value="1">Տոկեն </option>
+                        <option value="3">Մոբայլ բանկինգ</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" data-ng-init="getSubTypesOfTokens()">
+            <label class="tab_title col-sm-6" for="tokenSubType">Ենթատեսակ<span class="redStyle">*</span></label>
+            <loading-control scopevariable="subTypesOfTokens"></loading-control>
+
+            <div ng-if="subTypesOfTokens" class="col-sm-6" ng-init="sortSubTypesOfTokens();">
+                <div class="row">
+                    <select data-ng-model="order.HBToken.TokenSubType" name="tokenSubType" id="tokenSubType" class="form-control" ng-disabled="editToken && editToken.newInserted==undefined" ng-change="getTokenServiceFee()" required
+                            data-ng-options="k as v for (k,v) in subTypesOfTokens"></select>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="HBTokenOrderForm.$submitted || HBTokenOrderForm.tokenSubType.$dirty"
+                                 for="HBTokenOrderForm.tokenSubType.$error">
+                        <ng-message when="required" class="errors">
+                            Տոկենի ենթատեսակը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="@(disableGemalto.ToString().ToLower()) || order.HBToken.TokenType == '1'" ng-init="getTokenNumbers();">
+            <label class="tab_title col-sm-6 " for="RegistrationDate">Տոկենի համար<span class="redStyle">*</span></label>
+            <loading-control scopevariable="hbTokenNumbers"></loading-control>
+            <div ng-if="hbTokenNumbers" class="col-sm-6">
+                <div class="row">
+                    <select required ng-model="order.HBToken.TokenNumber" name="tokenNumber" id="tokenNumber" class="form-control" ng-disabled="editToken && editToken.newInserted==undefined"
+                            ng-options="t for t in hbTokenNumbers">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="HBTokenOrderForm.$submitted || HBTokenOrderForm.tokenSubType.$dirty"
+                                 for="HBTokenOrderForm.tokenSubType.$error">
+                        <ng-message when="required" class="errors">
+                            Տոկենի համարն ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-6" for="dayLimit">Օրական սահմանաչափ<span class="redStyle">*</span></label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-11 multiple_columns">
+                        <input style="width:275px" type="text" ng-model="order.HBToken.DayLimit" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' name="dayLimit" id="dayLimit" required class="form-control tab_title" fcsa-number ng-disabled="disableLimit" />
+                    </div>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="HBTokenOrderForm.$submitted || HBTokenOrderForm.dayLimit.$dirty"
+                                 for="HBTokenOrderForm.dayLimit.$error">
+                        <ng-message when="required" class="errors">
+                            Օրական սահմանաչափը լրացված չԷ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-6" for="TransLimit">Գործարքի Սահմանաչափ<span class="redStyle">*</span></label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-11 multiple_columns">
+                        <input style="width:275px" type="text" ng-model="order.HBToken.TransLimit" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' name="TransLimit" id="TransLimit" required class="form-control tab_title" fcsa-number ng-disabled="disableLimit" />
+                    </div>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="HBTokenOrderForm.$submitted || HBTokenOrderForm.transLimit.$dirty"
+                                 for="HBTokenOrderForm.transLimit.$error">
+                        <ng-message when="required" class="errors">
+                            Գործարքի սահմանաչափը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-11" style="text-align:right">
+            <div class="row ">
+                <h5 style="font-weight:bold;">
+                    Միջնորդավճար` {{FeeAmount}} AMD
+                </h5>
+                <input type="hidden" disabled="disabled" id="feeAmount" name="feeAmount" data-ng-model="FeeAmount" class="tab_title form-control" required>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+

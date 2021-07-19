@@ -1,0 +1,139 @@
+﻿@{
+    Layout = null;
+}
+@*<style type="text/css">
+        #BondOrderForm .ui-widget input {
+            font-family: 'webly_semibold';
+        }
+    </style>*@
+
+
+<div id="fondOrderSaveLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="FondOrderCtrl" name="FondOrderForm" id="FondOrderForm" role="form" style="min-width:600px;min-height:570px;" novalidate class="form-horizontal" data-ng-init="initFondOrder()" labels-required>
+
+    <div id="FondOrder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="FondOrderForm.$setSubmitted();FondOrderForm.$valid && saveFondOrder()">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newfondorder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div class="col-sm-12" style="padding:0;padding-left:5px;">
+
+        <div class="col-sm-12" style="max-width:1000px">
+
+            <div style="max-width:630px">
+                <errors></errors>
+            </div>
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="FondDescription">Ֆոնդի անվանում</label>
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="multiple_columns col-sm-12">
+                            <input class="form-control tab_title unstyled" style="text-align: left; width:700px;"
+                                   id="FondDescription" name="FondDescription" ng-model="fondOrder.Fond.Description" required />
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <ng-messages ng-if="FondOrderForm.$submitted || FondOrderForm.FondDescription.$dirty"
+                                     for="FondOrderForm.FondDescription.$error">
+                            <ng-message when="required" class="errors">
+                                Ֆոնդի անվանումը մուտքագրված չէ
+                            </ng-message>
+
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="IsSubsidia">Սուբսիդավորում</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select data-ng-model="fondOrder.Fond.IsSubsidia" ng-disabled="orderType==192" name="IsSubsidia" id="IsSubsidia" class="form-control" required>
+                            <option value="" hidden="hidden" style="margin-left:25px; width:50px;">Ընտրեք ...</option>
+                            <option value="true">Այո</option>
+                            <option value="false">Ոչ</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="FondOrderForm.$submitted || FondOrderForm.IsSubsidia.$dirty"
+                                     for="FondOrderForm.IsSubsidia.$error">
+                            <ng-message when="required" class="errors">
+                                Սուբսիդավորման վերաբերյալ նշում արված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group" data-ng-init="getCurrentAccountCurrencies()">
+
+                <div class="col-sm-12">
+                    <div class="row-no-margin">
+
+                        <section class="panel panel-success" style="max-width: 520px">
+                            <header class="panel-heading">
+                                <span class="panel-title" style="font-size: 14px;">Ֆոնդի տրամադրման պայմաններ  </span>
+                            </header>
+                            <div class="panel-body">
+                                <div ng-repeat="providingDetail in fondOrder.Fond.ProvidingDetails">
+                                    <div class="input-group col-sm-12">
+                                        <span style="display:inline-block ; ">
+                                            <select ng-show="currencies" data-ng-model="providingDetail.Currency" name="Currency" id="Currency" class="form-control " required style="max-width:120px"
+                                                    data-ng-options="k as v for (k,v) in ::currencies">
+                                                <option value="" hidden="hidden" style="margin-left:10px">Ընտրեք...</option>
+                                            </select>
+                                        </span>
+                                        <span class="input-group" style="display:inline-block ; ">
+                                            <input type="text" class="form-control" required fcsa-number onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' id="InterestRate" name="InterestRate"
+                                                   ng-model="providingDetail.InterestRate" style="max-width:150px" aria-describedby="basic-addon2">
+                                            <span class="input-group-addon" style="height:34px; ">%</span>
+                                        </span>
+                                        <span style="display:inline-block ;">
+                                            <button type="button" style="background-color:white;height:34px;" class="btn" ng-click="delete($index)"><span style="color:red;" class="glyphicon glyphicon-remove"></span></button>
+                                        </span>
+                                    </div>
+
+                                </div>
+                                <div class="panel-body" style="float:left; display:inline-block; width:30%;cursor:pointer">
+                                    <button type="button" class="btn" ng-click="addFondProvidingDetail()">Ավելացնել</button>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+

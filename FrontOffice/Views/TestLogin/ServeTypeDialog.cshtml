@@ -1,0 +1,71 @@
+﻿
+<style>
+    .modal-backdrop {
+        background-color: rgb(90, 85, 85);
+    }
+
+    .modal-content {
+        width: 565px;
+    }
+
+    .modal-backdrop.in {
+        opacity: 0.5;
+    }
+</style>
+<form class="form-horizontal" role="form">
+
+    <div class="popup_wrapper_top">
+        <div>
+            Հաճախորդների սպասարկում
+        </div>
+    </div>
+    <br>
+    <div class="popup_wrapper_inner modal-body">
+        <div>
+            <div class="form-group " style="margin-right:5px;">
+                <label class="tab_title col-sm-5" style="margin-left: -24px;">Հաճախորդի համարը:</label>
+                <div class="col-sm-5 " style="">
+                    <div class="row">
+                        <div class="input-group">
+                            <input type="text" maxlength="12" class="form-control" id="custumerNumberId" style="margin-left:70px" ng-model="custNum" autocomplete="on" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            <div class="input-group-btn" style="display:block;">
+                                <button type="button" class="btn btn-primary  searchButton" style="height:34px" title="Համատեղ հաճախորդի որոնում" ng-click="changeCustomerNumber(custNum)"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>       
+        <div style="margin-left:25px">
+            <customerinfo customernumber="customerNumber" showfulldata="false"> </customerinfo>
+        </div>
+        <a ng-click="$root.OpenMode = 1" href="/Login/CashBookSharePoint">lnk</a>
+       
+   <br />
+        <div class="form-group">
+            <div class="col-xs-12" style="margin-left:20px">
+                <div class="form-inline">
+                    <div class="form-group col-xs-5">
+                        <button type="button" class="btn btn-success form-control  " ng-click="serveCustomer(customerNumber)">Հաճախորդի սպասարկում</button>
+                    </div>
+                    <div class="col-xs-1">
+
+                    </div>
+                    <div class="form-group col-xs-5">
+                        <button type="button" class="btn btn-default form-control  " ng-click="serveNonCustomer()">Ոչ հաճախորդի սպասարկում</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+</form>
+
+
+
+
+
+
+
+

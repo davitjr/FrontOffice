@@ -1,0 +1,128 @@
+﻿
+@{
+    Layout = null;
+}
+
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+        #statmentByEmailOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+</style>
+
+
+<div id="statementLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+        <form ng-controller="StatmentByEmailOrderCtrl"  name="StatmentByEmailOrderForm" id="statmentByEmailOrderForm" role="form" style="min-width:600px;" class="form-horizontal" ng-submit="StatmentByEmailOrderForm.$valid && saveStatmentByEmailOrder()" novalidate prevent-enter-submit labels-required>
+            <div id="statmentbyemailorder_menu" class="menu-bar dialog-menu light-green">
+                <ul id="menu" class="dialog-menu">
+                    <li class="root-menu-item-4 " ng-click="StatmentByEmailOrderForm.$setSubmitted();StatmentByEmailOrderForm.$valid && saveStatmentByEmailOrder();">
+                        <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+                    </li>
+                    <li class="root-menu-item-5 " onclick="CloseBPDialog('statmentbyemailorder')">
+                        <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+                    </li>
+                </ul>
+                <div id="right-menu" style="display:none;">
+                </div>
+            </div>
+            <div class="col-sm-10">
+                <div style="max-width:700px">
+                    <errors></errors>
+                </div>
+
+                <div class="form-group ">
+                    <label class="tab_title col-sm-6" for="RegistrationDate">Մուտքագրման ա/թ</label>
+                    <div class="col-sm-6 ">
+                        <div class=" row multiple_columns">
+                            <input type="date" disabled="disabled" class="form-control tab_title unstyled" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" style="text-align:left" required>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-6" for="orderNumber"> Էլեկտրոնային հասցեներ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <input type="email" class="form-control tab_title" id="MainEmail" name="MainEmail" data-ng-model="order.MainEmail" style="text-align:left" required>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="StatmentByEmailOrderForm.$submitted || StatmentByEmailOrderForm.MainEmail.$dirty"
+                                         for="StatmentByEmailOrderForm.MainEmail.$error">
+                                <ng-message when="email" class="errors">
+                                    Էլ. հասցեն ճիշտ չէ մուտքագրված
+                                </ng-message>
+                                <ng-message when="required" class="errors">
+                                    Մուտքագրեք Էլ. հասցեն
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <input type="email" class="form-control tab_title" id="SecondaryEmail" name="SecondaryEmail" data-ng-model="order.SecondaryEmail" style="text-align:left">
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="StatmentByEmailOrderForm.SecondaryEmail.$dirty"
+                                         for="StatmentByEmailOrderForm.SecondaryEmail.$error">
+                                <ng-message when="email" class="errors">
+                                    Էլ. հասցեն ճիշտ չէ մուտքագրված
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="tab_title col-sm-6" for="Accounts">  Հաշվեհամարները</label>
+
+                    <loading-control scopevariable="accounts"></loading-control>
+                    <div ng-show="accounts" class="col-sm-6 my_title" data-ng-init="getAccounts()">
+                        <div class="row">
+                            <select chosen="" multiple="" data-ng-model="order.Accounts" name="Accounts" id="Accounts" class="chosen-select col-sm-12" data-placeholder="Ընտրեք հաշվեհամարը..."
+                                    data-ng-options="a.AccountNumber +' '+a.Currency group by a.AccountTypeDescription for a in accounts" required></select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="StatmentByEmailOrderForm.$submitted || StatmentByEmailOrderForm.Accounts.$dirty"
+                                         for="StatmentByEmailOrderForm.Accounts.$error">
+                                <ng-message when="required" class="errors">
+                                    Հաշվեհամարները ընտրված չեն
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class=" form-group">
+                    <label class="tab_title col-sm-6" for="Periodicity"> Պարբերականություն</label>
+                    <loading-control scopevariable="frequency"></loading-control>
+                    <div ng-show="frequency" class="col-sm-6" data-ng-init="getStatementFrequency()">
+                        <div class="row">
+                            <select data-ng-model="order.Periodicity" name="Periodicity" id="Periodicity" class="form-control"
+                                    data-ng-options="k as v for (k,v) in frequency" required>
+                                <option value="" hidden>Ընտրեք պարբերականությունը...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="StatmentByEmailOrderForm.$submitted || StatmentByEmailOrderForm.Periodicity.$dirty"
+                                         for="StatmentByEmailOrderForm.Periodicity.$error">
+                                <ng-message when="required" class="errors">
+                                    Ընտրեք պարբերականությունը
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    <br />
+   
+</form>
+
+

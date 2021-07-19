@@ -1,0 +1,67 @@
+﻿<script type="text/javascript">
+    $("#posLocationsContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div class="product-container" ng-controller="PosLocationCtrl" id="PosLocations" data-ng-init="$root.SessionProperties.CustomerType != 6 && getCustomerPosLocations()" ng-show="(hideBlank!='true' && customerPosLocations.length==0) || (customerPosLocations.length!=0 && customerPosLocations.length!=undefined)">
+    <div class="header-title">
+        <a href="/#customerposlocations" style="color:black;">Վճարային քարտերի սպասարկում</a>
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="product-container-header">
+            <div class="include-closed-products">
+                <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-poslocations" data-ng-model="filter" ng-true-value="2" ng-false-value="1" ng-change="QualityFilter()">
+                <label for="include-closed-poslocations" name="include-closed-poslocations-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+            </div>
+        </div>
+        <div class="product-content-table custom-scroll" id="posLocationsContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+            <div ng-if="customerPosLocations==undefined">
+                <loading></loading>
+            </div>
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody>
+                    <tr ng-if="filter==1 && customerPosLocations.length!=0" ng-repeat="posLoc in ::customerPosLocations" ng-class="{'selected':$index==selectedLocationRow}" ng-click="setClickedLocationRow($index,posLoc);" style="cursor: pointer;" ng-dblclick="openPosLocationDetails();">
+                        <td class="col-md-4">
+                            <span class="tab_text">Անվանում` </span> {{ ::posLoc.Description }}
+                            <br /> <span class="tab_text">Հասցե` </span> <span class="tab_title">{{ ::posLoc.Address }}</span>
+                            <br />{{ ::contract.Description }}
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="contextPosLocations" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+                    <tr ng-if="filter==1 && customerCardTariffContracts.length==0">
+                        <td colspan="2" style="text-align:center;">
+                            Առկա չեն գործող աշխատավարձային ծրագրեր
+                        </td>
+                    </tr>
+                    <tr ng-if="filter!=1"><td style="color:red; border-width:3px" colspan="2">Փակված սպասարկման կետեր </td></tr>
+                    <tr  ng-if="closingCustomerPosLocations.length!=0" ng-repeat="posLoc in ::closingCustomerPosLocations" ng-class="{'selected':$index == selectedLocationRow}" ng-click="setClickedLocationRow($index,posLoc);" ng-dblclick="openPosLocationDetails();" style="cursor: pointer;">
+                        <td class="col-md-4">
+                            <span class="tab_text">Անվանում` </span> {{ ::posLoc.Description }}
+                            <br /> <span class="tab_text">Հասցե` </span> <span class="tab_title">{{ ::posLoc.Address }}</span>
+                            <br />{{ ::contract.Description }}
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="contextPosLocations" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <ul id="contextPosLocations" class="dropdown-menu">
+            <li><a style="color: black;text-decoration:none!important ;" ui-sref="posLocationDetails({ selectedPosLoc:selectedPosLoc })">Մանրամասն դիտարկում</a></li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+

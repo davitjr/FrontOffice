@@ -1,0 +1,75 @@
+﻿<style>
+    .redBold {
+        font-weight: bold;
+        color: red;
+    }
+
+    .blueBold {
+        font-weight: bold;
+        color: blue;
+    }
+</style>
+<script type="text/javascript">
+    $("#loanApplicationsContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div ng-controller="LoanApplicationCtrl">
+    <div class="product-container" id="AllApplications" data-ng-init="getLoanApplications()" ng-show="(hideBlank!='true' && loanApplications.length==0) || (loanApplications.length!=0 && loanApplications.length!=undefined)">
+        <div class="header-title">
+            <a ui-sref="loanApplications" style="color:black;">Վարկային դիմումներ</a>
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div>
+                    &nbsp;&nbsp;&nbsp;
+                    <select ng-show="currencies" ng-init="getCurrencies()" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ արժույթի" data-ng-model="currency" style="max-width:80px;height:30px;" name="Currency" id="Currency" class="form-control"
+                            data-ng-options="k as v for (k,v) in currencies">
+                        <option value=""></option>
+                    </select>
+                    <div ng-if="$root.SessionProperties.SourceType == 2" class="add-new-product" context="contextNewLoanApplication" id="contextMenu"><div id="contextMenu"></div></div>
+                </div>
+            </div>
+            <div class="product-content-table custom-scroll" id="loanApplicationsContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <div ng-if="loanApplications==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="loanApplications.length!=0" ng-repeat="application in loanApplications | filter: { Currency: currency!=undefined?currency:'' }" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,application);hideBlank!='true' &&  getElementPosition($index);" style="cursor: pointer;">
+                            <td class="col-sm-3" id="loanApplicationRow_{{$index}}">
+                                <span class="tab_text">Համար` </span> {{ ::application.LoanApplicationNumber }}
+                                <br />{{ ::application.ProductTypeDescription }}
+                                <br />Դիմելու ա/թ` {{ ::application.ApplicationDate | mydate | date: 'dd/MM/yyyy' }}
+                                <br />Վարկի տևողություն` ({{ ::application.Duration}}) ամիս
+                                <br /><span style="font-weight:bold;" ng-class="{ 'redBold': application.Quality==6 ,'blueBold':application.Quality==1  }">{{ ::application.QualityDescription }}</span>
+                            </td>
+                            <td class="col-sm-2" style="text-align:right;">
+                                {{ ::application.Amount | number : 2 }} {{ ::application.Currency }}
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="contextLoanApplications" id="contextMenu" ><div id="contextMenu"></div> </td>
+                        </tr>
+                        <tr ng-if="loanApplications.length==0">
+                            <td colspan="3" style="text-align:center">Առկա չեն վարկային դիմումներ</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul id="contextLoanApplications" class="dropdown-menu">
+                    <li ng-if="selectedRow!=null"><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={ProductId: selectedProductId};openWindow('LoanApplication/LoanApplicationDetails','Վարկային դիմումի դիտարկում','loanApplicationDetails');">Մանրամասն դիտարկում</a></li>
+                </ul>
+                <ul id="contextNewLoanApplication" class="dropdown-menu">
+                    <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="LoginCtrl" ng-click="redirectToLoanManagementSystem('1')">Վարկ</a></li>
+                    <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="LoginCtrl" ng-click="redirectToLoanManagementSystem('2')">Վարկային գիծ</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

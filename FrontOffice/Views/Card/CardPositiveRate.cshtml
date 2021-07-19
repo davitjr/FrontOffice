@@ -1,0 +1,36 @@
+﻿
+@{
+    Layout = null;
+}
+<div ng-controller="CardCtrl" ng-if="card">
+    <div class="product-details" style="margin-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տարեկան տոկոսադրույք</div>
+            <div class="product-detail-cell product-detail-value">{{card.PositiveInterestRate===''? ' - ' : card.PositiveInterestRate*100|number:2}} <span ng-if="card.PositiveInterestRate!=null"> %</span></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Էֆեկտիվ տոկոսադրույք</div>
+            <div class="product-detail-cell product-detail-value">{{card.InterestRateEffective===''? ' - ' : card.InterestRateEffective*100|number:2}} <span ng-if="card.InterestRateEffective!=null"> %</span></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կուտակված տոկոս</div>
+            <div class="product-detail-cell product-detail-value">{{card.PositiveRate===''? ' - ' : card.PositiveRate|number:2}} <span ng-if="card.PositiveRate!=null"> {{card.Currency}}</span></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաշվարկի ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{card.LastDayOfPositiveRateCalculation===''? ' - ' : card.LastDayOfPositiveRateCalculation | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջին վճար. ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{card.LastDayOfPositiveRateRepair===''? ' - ' : card.LastDayOfPositiveRateRepair | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաշվարկի դադարեցման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{card.PositiveRateStoppingDay===''? ' - ' : card.PositiveRateStoppingDay | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ընդամենը (վճ. + չվճ.)</div>
+            <div class="product-detail-cell product-detail-value">{{card.TotalPositiveRate===''? ' - ' : card.TotalPositiveRate|number:2}} <span ng-if="card.TotalPositiveRate!=null"> {{card.Currency}}</span></div>
+        </div>
+    </div>
+</div>

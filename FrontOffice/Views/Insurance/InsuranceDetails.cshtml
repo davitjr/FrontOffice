@@ -1,0 +1,69 @@
+﻿@{
+    Layout = null;
+}
+<form ng-if="isLoanInsuranceDetails" ng-show="false">
+    <div class="menu-bar dialog-menu light-green">
+    </div>
+    <div>
+    </div>
+</form>
+
+<div ng-controller="InsuranceCtrl" data-ng-init="getInsurance(productId);HasPermissionForDelete()">
+    <loading-control scopevariable="insurance"></loading-control>
+
+    <div ng-show="insurance" class="product-details bhoechie-tab-content" ng-style="{ minWidth: isLoanInsuranceDetails == true ? '500px' : '800px' }" style="margin-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ապահովագրական ընկերություն</div>
+            <div class="product-detail-cell product-detail-value">{{insurance.CompanyName}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{insurance.InsuranceTypeDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ապահովագրավճար</div>
+            <div class="product-detail-cell product-detail-value">{{insurance.Amount | number:2}} {{insurance.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{insurance.StartDate | mydatetime}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{insurance.EndDate | mydatetime}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ապահովագրական գումար</div>
+            <div class="product-detail-cell product-detail-value">{{insurance.CompensationAmount | number:2}} {{insurance.CompensationCurrency}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">{{insurance.QualityDescription}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ապահովագրական պայմանագրի տեսակ</div>
+            <div ng-if="insurance.InsuranceContractType==2" class="product-detail-cell product-detail-value">Առանց ձևակերպման</div>
+            <div ng-if="insurance.InsuranceContractType==1 || insurance.InsuranceContractType==3" class="product-detail-cell product-detail-value">Ձևակերպված</div>
+        </div>
+
+
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">
+                {{insurance.InvolvingSetNumber}}
+                <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:insurance.InvolvingSetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>
+            </div>
+        </div>
+
+        <div class="product-detail-row">
+            <button class="product-detail-cell product-detail-value" ng-if="showDelete == true && insurance.Quality != 40 && insurance.InsuranceContractType==2" ng-controller="PopUpCtrl" ng-click="params={insuranceid:insuranceid};  Remove()">Հեռացնել</button>
+        </div>
+
+    </div>
+</div>
+

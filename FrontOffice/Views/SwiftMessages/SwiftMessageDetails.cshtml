@@ -1,0 +1,113 @@
+﻿@{
+    Layout = null;
+}
+<form style="width:620px" ng-controller="SwiftMessagesCtrl" ng-init="getSwiftMessage(messageUnicNumber)">
+   
+    <div id="transitPaymentOrder_menu" ng-show="false" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0">
+        <ul id="menu" class="dialog-menu">
+
+        </ul>
+    </div>
+    <div class="product-details bhoechie-tab-content" style="min-width:620px;padding-left:10px">
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Համար</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.ID}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">MT</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.MtCode}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==0">
+            <div class="product-detail-cell product-detail-lable">Ստացված</div>
+            <div class="product-detail-cell product-detail-value"></div>
+        </div>
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1 && swiftMessageDetails.FileContent!=null">
+            <div class="product-detail-cell product-detail-lable">Ուղարկված</div>
+            <div class="product-detail-cell product-detail-value"></div>
+        </div>
+        <div class="col-sm-12" ng-if="swiftMessageDetails.FileContent!=null">
+            <textarea class="col-sm-12" disabled="disabled" cols="10" style="max-width:100%" rows="10" ng-model="swiftMessageDetails.FileContent"></textarea>
+        </div>
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">Հաշվեհամար</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.Account['AccountNumber']}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">Միջնորդավճարի հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.FeeAccount['AccountNumber']}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">Հաճախորդի համար</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.CustomerNumber}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">Մասնաճյուղ</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.FilialCode}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">Գրանցման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.RegistrationDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">Գրանցողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.UserId}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">Հաստատման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.ConfirmationDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">Հաստատողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.ConfirmationSetNumber}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">SWIFT կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.SWIFTCode}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">Միջնորդավճար</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.FeeAmount | number:2}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">Ֆայլի անուն</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.FileName}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման խմբի համար</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.TransactionNumber}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">Ֆայլի ստեղծման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.FileCreatedDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="swiftMessageDetails.InputOutput==1">
+            <div class="product-detail-cell product-detail-lable">Հեռացնողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">{{swiftMessageDetails.DeletedSetNumber}}</div>
+        </div>
+
+        <p>&nbsp;</p>
+
+        
+    </div>
+
+
+</form>

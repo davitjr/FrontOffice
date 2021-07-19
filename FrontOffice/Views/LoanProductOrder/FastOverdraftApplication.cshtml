@@ -1,0 +1,250 @@
+﻿
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+    #loanOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #loanOrderForm {
+        min-width: 600px;
+    }
+</style>
+
+
+<form ng-show="false">
+    <div class="menu-bar dialog-menu light-green">
+    </div>
+    <div>
+    </div>
+</form>
+
+
+<div ng-controller="LoanProductOrderCtrl">
+    <div id="loanProductLoad" ng-if="showLoanApplication!=true" class="overlay hidden">
+        <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+    </div>
+    <form ng-if="showLoanApplication!=true" name="LoanOrderForm" id="loanOrderForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+        <div id="newloan_menu" class="menu-bar dialog-menu light-green">
+            <ul id="menu" class="dialog-menu">
+                <li class="root-menu-item-4 " ng-click="LoanOrderForm.$setSubmitted();LoanOrderForm.$valid && saveLoanProductOrder();">
+                    <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+                </li>
+                <li class="root-menu-item-5 " onclick="CloseBPDialog('newloan')">
+                    <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+                </li>
+            </ul>
+            <div id="right-menu" style="display:none;">
+            </div>
+        </div>
+        <div>
+            <div style="max-width:560px" ng-init="fastOverdraftValidations(fastOverdraftCard.CardNumber)">
+                <errors></errors>
+            </div>
+            <div class="col-sm-11">
+                <div class="form-group">
+                    <label class="tab_title col-sm-5" for="RegistrationDate">Մուտքագրման ա/թ</label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-10 multiple_columns">
+                            <input type="date" disabled="disabled" class="tab_title form-control unstyled" id="RegistrationDate" name="RegistrationDate" data-ng-model="order.OperationDate" style="text-align:left" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5" for="Accounts">Արագ օվերդրաֆտի հաշվեհամար</label>
+                    <loading-control scopevariable="fastOverdraftApplicationAccounts"></loading-control>
+                    <div ng-show="fastOverdraftApplicationAccounts" class="my_title col-sm-6" data-ng-init="getFastOverdraftApplicationAccounts()">
+                        <div class="row">
+                            <select data-ng-model="fastOverdraftCard" name="ProductAccount" id="ProductAccount" class="form-control"
+                                    data-ng-options="a.CardNumber+' '+a.CardType+' '+a.Currency for a in fastOverdraftApplicationAccounts" required="">
+                                <option value="" hidden>Ընտրեք հաշվեհամարը...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="LoanOrderForm.$submitted || LoanOrderForm.ProvisionAccount.$dirty"
+                                         for="LoanOrderForm.ProvisionAccount.$error">
+                                <ng-message when="required" class="errors">
+                                    Հաշվեհամարը ընտրված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" form-group">
+                    <label class="tab_title col-sm-5 " for="RegistrationDate">Սկիզբ</label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-10 multiple_columns">
+                            <input type="date" disabled="disabled" class="tab_title form-control unstyled" id="RegistrationDate" name="RegistrationDate" data-ng-model="order.OperationDate" style="text-align:left" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-init="getFastOverdraftApplicationEndDate()">
+                    <label class="tab_title col-sm-5" for="RegistrationDate">Վերջ</label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-10 multiple_columns">
+                            <input type="date" class="tab_title form-control " id="EndDate" name="EndDate" data-ng-model="order.EndDate" style="text-align:left" ng-disabled="order.Type==159" required>
+                            <ng-messages ng-if="LoanOrderForm.$submitted || LoanOrderForm.EndDate.$dirty"
+                                         for="LoanOrderForm.EndDate.$error">
+                                <ng-message when="required" class="errors">
+                                    Ընտրեք վերջը
+                                </ng-message>
+                                <ng-message when="date" class="errors">
+                                    Վերջը սխալ է նշված
+                                </ng-message>
+
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 " for="CreditLine">
+                        Արժույթ
+                    </label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-10 multiple_columns">
+                            <input type="text" class="form-control " id="Currency" disabled name="Currency" data-ng-model="order.Currency">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 " for="CreditLine" ng-init="getInterestRate()">
+                        Տոկոսադրույք
+                    </label>
+                    <div class="col-sm-6 row">
+                        <div style="padding-left:15px !important;padding-right:15px !important" class="col-sm-10 multiple_columns input-group">
+                            <input type="text" class="form-control" ng-disabled="rateDisableStatus" id="InterestRate" name="InterestRate" data-ng-model="interestRateShow" fcsa-number>
+                            <span class="input-group-addon" id="basic-addon2" style="width: 0;">%</span>
+                            <span ng-if="canChangeDepositLoanRate=='1'" class="input-group-addon " id="basic-addon2" style="width: 0;" title="Փոփոխել տոկոսադրույքը" data-placement="bottom" ng-click="ChangeDisableInterestRateStatus()"> <span class="glyphicon glyphicon-pencil"></span> </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 " for="Amount">Գումար</label>
+
+                    <div class="col-sm-6" data-ng-init="getListOfLoanApplicationAmounts()">
+                        <div class="row">
+                            <select data-ng-model="amount" name="Amount" id="Amount" class="form-control"
+                                    data-ng-options="k as v for (k,v) in loanApplicationAmounts" ng-change="setOrderAmountForFastOverdraftApplication(amount)" required>
+                                <option value="" hidden>Ընտրեք...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="LoanOrderForm.$submitted || LoanOrderForm.Amount.$dirty"
+                                         for="LoanOrderForm.Amount.$error">
+                                <ng-message when="required" class="errors">
+                                    Ընտրեք գումարը
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="order.Currency!='AMD'">
+                    <label class="tab_title col-sm-5 " for="orderAmount">
+                        Գումար {{order.Currency}}
+                    </label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-10 multiple_columns">
+                            <input type="text" class="form-control " id="orderAmount" disabled name="orderAmount" fcsa-number data-ng-model="order.Amount">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 " for="feeAmount">
+                        Միջնորդավճար
+                    </label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-10 multiple_columns">
+                            <input type="text" class="form-control " id="feeAmount" disabled name="feeAmount" fcsa-number data-ng-model="feeAmount">
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 " for="Country">Օգտագործման երկիր</label>
+                    <div class="col-sm-6" data-ng-init="getCountries()">
+                        <div class="row">
+                            <select data-ng-model="order.LoanUseCountry" name="LoanUseCountry" id="LoanUseCountry" ng-change="getRegions();order.LoanUseRegion=undefined;order.LoanUseLocality=undefined;" class="form-control"
+                                    data-ng-options="a.id as a.desc for a in countries| orderBy:'desc'" required>
+                                <option value="" hidden>Ընտրեք...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="LoanOrderForm.$submitted || LoanOrderForm.LoanUseCountry.$dirty"
+                                         for="LoanOrderForm.LoanUseCountry.$error">
+                                <ng-message when="required" class="errors">
+                                    Ընտրեք օգտագործման երկիրը
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 " for="Region">Օգտագործման մարզ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <select data-ng-model="order.LoanUseRegion" name="Region" id="Region" ng-change="getArmenianPlaces()" class="form-control"
+                                    data-ng-options="k as v for (k,v) in regions" required>
+                                <option value="" hidden>Ընտրեք...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="LoanOrderForm.$submitted || LoanOrderForm.Region.$dirty"
+                                         for="LoanOrderForm.Region.$error">
+                                <ng-message when="required" class="errors">
+                                    Ընտրեք օգտագործման մարզը
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5" for="Locality">Օգտագործման շրջան</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <select data-ng-model="order.LoanUseLocality" name="Place" id="Place" class="form-control"
+                                    data-ng-options="a.id as a.desc for a in places| orderBy:'desc'" required>
+                                <option value="" hidden>Ընտրեք...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="LoanOrderForm.$submitted || LoanOrderForm.Place.$dirty"
+                                         for="LoanOrderForm.Place.$error">
+                                <ng-message when="required" class="errors">
+                                    Ընտրեք օգտագործման շրջանը
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+
+
+
+
+    </form>
+    <loanapplicationdetails ng-if="showLoanApplication" docid="$parent.loanApplicationDocId" getbydocid="true"></loanapplicationdetails>
+</div>
+
+
+
+
+
+

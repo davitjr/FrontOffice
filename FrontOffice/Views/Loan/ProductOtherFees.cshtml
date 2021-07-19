@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+}
+
+<div ng-controller="LoanCtrl" ng-if="productid" ng-init="getProductOtherFees(productid)" class="product-container" style="width:90%">
+    <div class="header-title">
+        Միջ/վճար և այլ մուծ.
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="product-container-header" style="height:44px;">
+            <div style="text-align:center" class="col-sm-2">Վճարման ա/թ.</div>
+            <div style="text-align:center" class="col-sm-5">Վճարման տեսակ</div>
+            <div style="text-align:center" class="col-sm-5">Գումար</div>
+        </div>
+        <div class="product-content-table-full_height custom-scroll" id="loanMainContractContent" style="min-height:100px;float:left;">
+            <div ng-if="otherFee==undefined">
+                <loading></loading>
+            </div>
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody ng-repeat="fee in otherFee" style="background-color: white;">
+                    <tr>
+                        <td style="text-align:center" class="col-sm-2">{{::fee.PaymentDate | mydate | date: 'dd/MM/yyyy'}}</td>
+                        <td style="text-align:left" class="col-sm-5">{{::fee.TypeDescription}}</td>
+                        <td style="text-align: right" class="col-sm-5">{{::fee.Amount |number:2}} {{::fee.Currency}}</td>
+                    </tr>
+                    <tr ng-if="otherFee.length==0 " style="background-color: white;">
+                        <td colspan="6" style="text-align: center;">
+                            Տվյալները բացակայում են
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

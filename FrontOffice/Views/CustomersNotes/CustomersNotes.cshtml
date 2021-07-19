@@ -1,0 +1,214 @@
+﻿<style type="text/css">
+    .product-container {
+        width: 750px;
+    }
+</style>
+
+<div style="margin-left:15px;margin-top:5px" ng-controller="CustomersNotesCtrl" ng-init="setSearchParameters()" id="CustomersNotes" class="container">
+    <form class="form  ">
+        <div class="col-sm-9" style="padding:0;margin-bottom:5px">
+
+
+            <div class="col-sm-3  ">
+                <div class="product-detail-cell product-detail-lable">
+                    Մուտքագրման ա/թ
+                </div>
+                <div>
+                    <input type="date" ng-model="searchParams.RegistrationDate" style="width: 155px;" class="form-control">
+                </div>
+            </div>
+
+
+            <div class="col-sm-3  ">
+                <div class="product-detail-cell product-detail-lable">
+                    Հաճախորդի համար
+                </div>
+                <div>
+                    <div class="input-group">
+                        <input type="text" style="width:122px" class="form-control" ng-disabled="disableCustomerNumber" id="CustomerNumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="CustomerNumber" ng-model="searchParams.CustomerNumber">
+                        <div class="input-group-btn" style="display:inline-block;">
+                            <button type="button" title="Հաճախորդի-ի որոնում" ng-disabled="disableCustomerNumber" class="btn btn-primary searchButton" ng-click="searchCustomers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <div class="col-sm-3  ">
+                <div class="product-detail-cell product-detail-lable">
+                    Մուտքագրող
+                </div>
+                <div>
+                    <div class="input-group">
+                        <input type="text" style="width:122px" class="form-control" id="setnumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="setnumber" ng-model="searchParams.SetNumber">
+                        <div class="input-group-btn" style="display:inline-block;">
+                            <button type="button" title="ՊԿ-ի որոնում" class="btn btn-primary searchButton" ng-click="searchCashiers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                    <div class="product-detail-cell product-detail-lable">
+                        {{SetNumberDescription}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3  ">
+                <div class="product-detail-cell product-detail-lable">
+                    Նկարագրություն
+                </div>
+                <div>
+                    <input type="text" style="width:122px" class="form-control" id="Note" name="Note" ng-model="searchParams.Note">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-9" style="padding:0;display:inline-block">
+
+
+
+
+
+            <div class="col-sm-3  ">
+                <div class="product-detail-cell product-detail-lable">
+                    Կարգավիճակ
+                </div>
+                <div>
+                    <select data-ng-model="searchParams.Quality" class="form-control" ng-change="changeQuality(searchParams.Quality)" style="width: 155px">
+                        <option value="" style="margin-left:25px">Բոլորը</option>
+                        <option value="1" style="margin-left:25px">Ընթացիկ</option>
+                        <option value="2" style="margin-left:25px">Փակված</option>
+                        <option value="3" style="margin-left:25px">Հրաժարված</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-3  " ng-if="searchParams.Quality==2 || searchParams.Quality==3">
+                <div class="product-detail-cell product-detail-lable">
+                    Փակման/Հրաժարման ա/թ
+                </div>
+                <div>
+                    <input type="date" ng-model="searchParams.ClosingDate" style="width: 155px;" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-3  " ng-if="searchParams.Quality==2 || searchParams.Quality==3">
+                <div class="product-detail-cell product-detail-lable">
+                    Փակողի/Հրաժարողի ՊԿ
+                </div>
+                <div>
+                    <div class="input-group">
+                        <input type="text" style="width:122px" class="form-control" id="setnumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="setnumber" ng-model="searchParams.ClosingSetNumber">
+                        <div class="input-group-btn" style="display:inline-block;">
+                            <button type="button" title="ՊԿ-ի որոնում" class="btn btn-primary searchButton" ng-click="searchCashiers(true)"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                    <div class="product-detail-cell product-detail-lable">
+                        {{ClosingSetNumberDescription}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12" style="padding:0;display:inline-block">
+
+
+
+            <div class="col-sm-2  ">
+                <div class="product-detail-cell product-detail-lable">
+                    &nbsp;
+                </div>
+                <div>
+                    <button type="button" class="btn-sm btn-primary" ng-click="getSearchedPersonNotes()"><span class="glyphicon glyphicon-search"></span> Որոնել</button>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+    <div class="product-container">
+        <div class="header-title">
+            Գրառումներ
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="include-closed-products">
+                    Քանակ` {{totalRows}}<span style="color:red;font-weight: bold;" ng-show="notReadedNotesCount>0">&nbsp;&nbsp; Չկարդացված՝ {{notReadedNotesCount}}</span>
+                </div>
+                <div ng-if="$root.SessionProperties.SourceType == 2" ng-controller="PopUpCtrl" ng-click="params={isNewNote:true}; openWindow('/CustomersNotes/CustomerNewNote','Հաճախորդի նոր գրառում','customernewnote')">
+                    <i class="add-new-product tipB" data-original-title="Հաճախորդի նոր գրառում"></i>
+                </div>
+            </div>
+            <div class="product-content-table custom-scroll" id="customersNotesList">
+                <div ng-if="customerNote==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="customersNotes.length!=0" ng-repeat="customerNote in customersNotes" style="cursor: pointer;" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow(customerNote)" >
+                            <td class="col-sm-7">
+                       
+                                <span class="tab_text">Հերթական համար` </span> <span style="font-weight: bold;">{{ customerNote.NoteID }}</span>
+                                <br />
+                                <span class="tab_text">Հաճախորդի համար` </span> <span style="font-weight: bold;">{{ customerNote.CustomerNumber }}</span>
+                                <br />
+                                <span class="tab_text">Մուտքագրման ա/թ` </span> {{ customerNote.RegistrationDate | mydate | date: 'dd/MM/yyyy' }}
+                                <br />
+                                <span class="tab_text">Նկարագրություն` </span> {{ customerNote.Note | limitTo: 20}} {{customerNote.Note.length > 20 ? ' ...' : ''}}
+                            </td>
+                            <td class="col-sm-4">
+
+                                
+                                <span class="tab_text">Մուտքագրող ՊԿ` </span> {{ customerNote.SetNumber}}
+                                <br />
+                                <span ng-style="{ color : customerNote.NotReadedNote==true ?'red':''}" style="font-weight: bold;">{{ customerNote.QualityDescription }}</span> <span ng-if="customerNote.NotReadedNote" style="color: red;font-weight: bold;">/ Չկարդացված</span>
+                            </td>
+                            
+                            <td class="col-sm-1 click_toggle" context="contextTransfer" id="contextMenu"><div id="contextMenu"></div> </td>
+
+                        </tr>
+                        <tr ng-if="customersNotes.length==0">
+                            <td colspan="3" style="text-align:center">Առկա չեն գրառումներ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                    ng-model="currentPage"
+                    items-per-page="numPerPage"
+                    total-items="totalRows"
+                    max-size="maxSize"
+                    boundary-links="true"
+                    previous-text="‹"
+                    next-text="›"
+                    first-text="«"
+                    last-text="»">
+        </div>
+        <ul id="contextTransfer" class="dropdown-menu">
+            <li ng-if="selectedcustomerNote.NotReadedNote"><a href="" style="color: black;text-decoration:none!important ;" ng-click="changePersonNoteReadingStatus(selectedcustomerNote.NoteID)">Նշել կարդացված</a></li>
+            <li><a href="" ng-if="selectedcustomerNote.Quality==1" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={selectedNote:selectedcustomerNote}; openWindow('/CustomersNotes/CustomerNewNote','Հաճախորդի գրառման խմբագրում','customernewnote')">Խմբագրել</a></li>
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={selectedNote:selectedcustomerNote}; openWindow('/CustomersNotes/CustomerNoteDetails','Հաճախորդի գրառման տվյալներ','customernotedetails')">Դիտարկել</a></li>
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-click="redirectProducts(selectedcustomerNote.CustomerNumber)">Հաճախորդի պրոդուկտներ</a></li>
+           
+        </ul>
+    </div>
+</div>
+
+
+<script>
+    (function ($) {
+        $(window).on('load',function () {
+
+            $("#customersNotesList").mCustomScrollbar({
+                theme: "rounded-dark",
+                scrollButtons: {
+                    scrollAmount: 200,
+                    enable: true
+                },
+                mouseWheel: {
+                    scrollAmount: 200
+                }
+            });
+
+        });
+    })(jQuery);
+</script>

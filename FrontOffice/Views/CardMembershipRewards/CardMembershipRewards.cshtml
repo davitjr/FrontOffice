@@ -1,0 +1,92 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div id="CardMembershipRewardsDiv" ng-controller="CardMembershipRewardsCtrl" ng-if="cardnumber" ng-init="getCardMembershipRewards(cardnumber)">
+    <errors></errors>
+    <div id="cardmr_menu" class="menu-bar dialog-menu light-green details-menu" style="margin-top:0px;margin-left:0px;">
+        <ul id="menu" class="dialog-menu">
+            <li  class="root-menu-item-2 "   ng-controller="PopUpCtrl" ng-click="params={cardnumber:cardnumber};openWindow('/CardMembershipRewards/CardMembershipRewardsStatusHistory','MR պատմություն')">
+                <span   id="h-menu-item-2"><img id="h-menu-icon-2"  class="applicationButton h-menu-icon">Պատմություն</span>
+            </li>
+            <li class="root-menu-item-2 " ng-controller="PopUpCtrl" ng-click="params={cardnumber:cardnumber};openWindow('/CardMembershipRewards/CardMembershipRewardsBonusHistory','MR Բոնուսներ')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="applicationButton h-menu-icon">MR Բոնուս</span>
+            </li>
+            <li class="root-menu-item-2 "  ng-if="closingdate==null && (cardMR == '' || cardMR.Status==4 || cardMR.Status==3) && (cardtype==41 || cardtype==20)" ng-click="saveCardMembershipRewardsOrder(productid, 174)">
+                <span id="h-menu-item-2" ><i class="add-new-product  ng-scope" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="" style="font-weight:bolder;margin-top:10px;"></i></span> 
+                <span>Գրանցում</span>
+            </li>
+            <li class="root-menu-item-7 "  ng-if="closingdate==null && cardMR.Status==1" ng-click="saveCardMembershipRewardsOrder(cardMR.Id, 176)">
+                <span id="h-menu-item-7"><i class="cashInButton h-menu-icon" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title=""></i></span>
+                <span>Սպասարկման վարձի գանձում</span>
+            </li>
+            <li class="root-menu-item-7 "  ng-if="closingdate==null && cardMR.Status==2 && (cardtype==41 || cardtype==20)" ng-click="saveCardMembershipRewardsOrder(cardMR.Id, 177)">
+                <span id="h-menu-item-7"><i class="fa fa-repeat fa-1x" aria-hidden="true" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title=""></i></span>
+                <span>Վերաթողարկում</span>
+            </li>
+            <li class="root-menu-item-2 " ng-if="closingdate==null && cardMR.Status==1 || cardMR.Status==2 && (cardtype==41 || cardtype==20)" ng-click="saveCardMembershipRewardsOrder(cardMR.Id, 178)">
+                <span id="h-menu-item-2"><i class="glyphicon glyphicon-remove-circle"  style="font-size:21px;"  data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title=""></i></span>
+                <span>Դադարեցում</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+     <div class="my_label panel-body" ng-if="cardMR.Id==0 || cardMR==''">Տվյալ AmEx քարտի համար ակտիվացված չէ Membership Rewards ծառայությունը</div>
+     <div class="product-details" style="margin-left:10px" ng-if="cardMR.Id != undifined ">
+         
+         <div class="product-detail-row">
+             <div class="product-detail-cell product-detail-lable">MR համար</div>
+             <div class="product-detail-cell product-detail-value">{{cardMR.Id}}</div>
+         </div>
+         <div class="product-detail-row">
+             <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+             <div class="product-detail-cell product-detail-value" ng-style="cardMR.Status == 1 ? {'color':'blue'} : cardMR.Status == 2 ? {'color':'green'} : {'color':'red'}" style="font-weight:bold">{{cardMR.StatusDescription}}</div>
+         </div>
+         <div class="product-detail-row">
+             <div class="product-detail-cell product-detail-lable">Պայմանագրի սկիզբ</div>
+             <div class="product-detail-cell product-detail-value">{{cardMR.RegistrationDateToString}}</div>
+         </div>
+         <div class="product-detail-row">
+             <div class="product-detail-cell product-detail-lable">Պայմանագրի վերջ</div>
+             <div class="product-detail-cell product-detail-value">{{cardMR.EndDateToString}}</div>
+         </div>
+         <div class="product-detail-row">
+             <div class="product-detail-cell product-detail-lable">Անդամակցության վճար</div>
+             <div class="product-detail-cell product-detail-value">{{cardMR.ServiceFee|number:2}} AMD</div>
+         </div>
+         <div class="product-detail-row">
+             <div class="product-detail-cell product-detail-lable">Վճարման ենթակա գումար</div>
+             <div class="product-detail-cell product-detail-value" ng-style="cardMR.ServiceFeeReal > 0 ? {'font-weight':'bold'} : {'font-weight':'normal'} ">{{cardMR.ServiceFeeReal|number:2}} AMD</div>
+         </div>
+         <div class="product-detail-row">
+             <div class="product-detail-cell product-detail-lable">Վճարված գումար</div>
+             <div class="product-detail-cell product-detail-value">{{cardMR.ServiceFeePayed|number:2}} AMD</div>
+         </div>
+         <div class="product-detail-row">
+             <div class="product-detail-cell product-detail-lable">Վճարման ա/թ</div>
+             <div class="product-detail-cell product-detail-value">{{cardMR.FeePaymentDateToString}}</div>
+         </div>
+         <div class="product-detail-row">
+             <div class="product-detail-cell product-detail-lable">Բոնուսային միավորներ</div>
+             <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{cardMR.BonusBalance|number:2}}</div>
+         </div>
+         <div class="product-detail-row">
+             <div class="product-detail-cell product-detail-lable">Բոնուսի հաշվարկի ա/թ</div>
+             <div class="product-detail-cell product-detail-value">{{cardMR.LastDayOfBonusCalculationToString}}</div>
+         </div>
+         <div class="product-detail-row">
+             <div class="product-detail-cell product-detail-lable">Փակման ա/թ</div>
+             <div class="product-detail-cell product-detail-value">{{cardMR.ClosingDateToString}}</div>
+         </div>
+         <div class="product-detail-row">
+             <div class="product-detail-cell product-detail-lable">Գործողության ժամկետ</div>
+             <div class="product-detail-cell product-detail-value">{{cardMR.ValidationDateToString}}</div>
+         </div>
+         <div class="product-detail-row">
+             <div class="product-detail-cell product-detail-lable">Գրանցողի ՊԿ</div>
+             <div class="product-detail-cell product-detail-value">{{cardMR.SetNumber}}</div>
+         </div>
+     </div>
+</div>

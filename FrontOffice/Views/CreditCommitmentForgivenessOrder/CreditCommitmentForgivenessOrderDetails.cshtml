@@ -1,0 +1,75 @@
+﻿@{
+    Layout = null;
+}
+
+<form style="width:850px" ng-controller="CreditCommitmentForgivenessOrderCtrl" data-ng-init="getCreditCommitmentForgiveness(selectedOrderId)">
+    <loading-control scopevariable="orderDetails.Id"></loading-control>
+
+    <div ng-if="orderDetails.Quality!=undefined && orderDetails.Quality !=31 && orderDetails.Quality !=30 && orderDetails.Quality !=32
+                            && orderDetails.Quality !=40 && orderDetails.Quality !=41 && orderDetails.Quality !=6 && orderDetails.Quality !=50"
+         ng-show="orderDetails" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 " ng-controller="PopUpCtrl" ng-click="params={removableorder:orderDetails};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+            </li>
+        </ul>
+    </div>
+
+    <div ng-show="orderDetails" class="product-details bhoechie-tab-content" style="min-width:800px;padding-left:10px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.OperationDateToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Արժույթ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Currency}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.ProductType !=2 && orderDetails.ProductType !=3 && orderDetails.ProductType !=4 && orderDetails.ProductType !=5 ">
+            <div class="product-detail-cell product-detail-lable">Սպասարկման վճար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.CurrentFeeToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տոկոս</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.CurrentRateValueToString}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.ProductType ==5">
+            <div class="product-detail-cell product-detail-lable">Չօգտագործված մասի դիմաց կուտակված տոկոս</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.CurrentRateValueNusedToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հիմքի ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.DateOfFoundationToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հիմքի համար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.NumberOfFoundation}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պետական տուրքի փոխանցումից հետո կուտակված տուժանք</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.JudgmentPenaltyRateToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մայր գումար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.OutCapitalToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տուժանք</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.PenaltyRateToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հարկ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.TaxToString}}</div>
+        </div>
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+</form>

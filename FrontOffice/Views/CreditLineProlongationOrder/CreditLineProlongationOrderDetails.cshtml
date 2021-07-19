@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = null;
+}
+
+<form style="width:600px" ng-controller="CreditLineProlongationOrderCtrl" ng-init="getCreditLineProlongationOrder(selectedOrderId);IsCreditLineActivateOnApiGate(selectedOrderId)">
+    <loading-control style="margin-left:20em" scopevariable="creditLineProlongationOrderDetails"></loading-control>
+    <div ng-show="creditLineProlongationOrderDetails" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 " ng-show="creditLineProlongationOrderDetails.Quality!=undefined && creditLineProlongationOrderDetails.Quality !=31 && creditLineProlongationOrderDetails.Quality !=30 && creditLineProlongationOrderDetails.Quality !=32 && creditLineProlongationOrderDetails.Quality !=40 && creditLineProlongationOrderDetails.Quality !=41 && creditLineProlongationOrderDetails.Quality !=6 && creditLineProlongationOrderDetails.Quality !=50" ng-controller="PopUpCtrl" ng-click="params={removableorder:creditLineProlongationOrderDetails};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+            </li>
+        </ul>
+    </div>
+    <div ng-show="creditLineProlongationOrderDetails" class="product-details bhoechie-tab-content" style="min-width:600px;padding-left:10px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{creditLineProlongationOrderDetails.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{creditLineProlongationOrderDetails.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{creditLineProlongationOrderDetails.OperationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="creditLineProlongationOrderDetails.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{creditLineProlongationOrderDetails.QualityDescription}}</div>
+            <div ng-if="creditLineProlongationOrderDetails.Quality==31" class="product-detail-cell product-detail-value redStyle">{{creditLineProlongationOrderDetails.QualityDescription}}</div>
+            <div ng-if="creditLineProlongationOrderDetails.Quality!=31 && depositaryAccountOrderDetails.Quality!=30" class="product-detail-cell product-detail-value">{{creditLineProlongationOrderDetails.QualityDescription}}</div>
+        </div>
+
+        <div ng-if="isApiGate==0" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ակտիվացման եղանակ</div>
+            <div class="product-detail-cell product-detail-value">APIGate</div>
+        </div>
+
+        <div ng-if="isApiGate==1" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ակտիվացման եղանակ</div>
+            <div class="product-detail-cell product-detail-value">ARCA ֆայլով</div>
+        </div>
+
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+</form>

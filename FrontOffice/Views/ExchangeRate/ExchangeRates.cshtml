@@ -1,0 +1,233 @@
+﻿<style type="text/css">
+
+    #Rates .nav-tabs > li > a:hover,#Rates .nav-tabs > li.active > a, #Rates .nav-tabs > li.active > a:hover, #Rates .nav-tabs > li.active > a:focus {
+        color: white;
+        background-color:red;
+        border:0;
+    }
+    /*#Rates a:hover{
+        color: #247D46;
+        background-color:red;
+    }*/
+   #Rates .nav > li> a{
+        color:#247D46
+    }
+    #Rates .nav > li > a{
+        padding:3px 0px;
+    }
+    #Rates .nav-tabs{
+        border:0;
+    }
+    #exchangerateskendo div.k-window-content{
+        width:300px;
+        
+    }
+    #Rates table{
+        margin-bottom:0;
+    }
+
+    .k-window-titlebar {
+        background-color: seagreen;
+    }
+    .k-window-title {
+        color: #FFFDFD;
+    }
+     #exchangerateskendo .k-i-expand {
+        background-position:-64px -288px
+    }
+
+
+    #Rates .button {
+            background-color: #FFFFFF; /* Green */
+            border: 1px;
+            color: darkblue;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 400;
+            margin: 2px 1px;
+            cursor: pointer;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+            box-shadow: 0 0px 0px 0 rgba(0,0,0,0.24), 0 1px 2px 0 rgba(0,0,0,0.19);
+        }
+   #Rates .button2:hover {
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+
+    
+    </style>
+
+
+<form ng-show="false">
+    <div class="menu-bar dialog-menu light-green">
+    </div>
+    <div>
+    </div>
+</form>
+
+
+<div class="col-md-11 container">
+    <form id="Rates" ng-controller="RateCtrl" ng-init="getExchangeRates()" style="max-width:350px;min-width:350px">
+        <div style="font-size:11px;padding:0;">
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="active" style="width:20%;text-align:center;"><a data-toggle="tab" href data-target="#cashRates">Կանխիկ</a></li>
+                    <li style="width:25%;text-align:center;"><a data-toggle="tab" href data-target="#uncashRates">Անկանխիկ</a></li>
+                    <li style="width:13%;text-align:center;"><a data-toggle="tab" href data-target="#atmRates">Քարտ</a></li>
+                    <li style="width:12%;text-align:center;"><a data-toggle="tab" href data-target="#crossRates">Քրոս</a></li>
+                    <li style="width:30%;text-align:center;"><a data-toggle="tab" href data-target="#transferRates">ACBATransfer</a></li>
+                </ul>
+                <div class="tab-content">
+
+                    <div id="cashRates" class="tab-pane fade in active">
+                        <loading></loading>
+                        <table ng-show="!loading" class="table table-condensed">
+                            <thead>
+                                <tr style="font-size:13px;">
+                                    <th class="col-sm-1" style="border-right: 1px solid #ddd;text-align:center">
+                                        <div class="glyphicon glyphicon-refresh click_me" style="padding:0" ng-click="cond=false;getExchangeRates()"></div>
+                                    </th>
+                                    <th class="col-sm-2" style="text-align:center">Գնում</th>
+                                    <th class="col-sm-2 " style="text-align:center">Վաճառք</th>
+                                    <th class="col-sm-2 " style="text-align:center">ԿԲ</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="rates in ::exchangeRates">
+                                    <td class="col-sm-1 " style="border-right: 1px solid #ddd;text-align:right"><button class="button button2" ng-controller="PopUpCtrl" ng-click="params={sourceCurrency:rates.SourceCurrency}; openWindow('../ExchangeRate/ExchangeRatesHistory','Փոխարժեքների պատմություն','exchangerateshistory')">{{::rates.SourceCurrency }}</button> </td>
+                                    <td class="col-sm-2 " style="text-align:right">{{::rates.BuyRateCash | number:2}}</td>
+                                    <td class="col-sm-2 " style="text-align:right">{{::rates.SaleRateCash| number:2}}</td>
+                                    <td class="col-sm-2 " style="text-align:right">{{::rates.RateCB| number:2}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="font-size:11px;"> <span class="glyphicon glyphicon-repeat"></span>  տվյալները՝ {{exchangeRates[0].RegistrationDate| mydate | date: 'dd/MM/yyyy HH:mm'}} դրությամբ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="uncashRates" class="tab-pane fade">
+                        <loading></loading>
+                        <table ng-show="!loading" class="table table-condensed">
+                            <thead>
+                                <tr style="font-size:13px;">
+                                    <th class="col-sm-1" style="border-right: 1px solid #ddd;text-align:center">
+                                        <div class="glyphicon glyphicon-refresh click_me" style="padding:0" ng-click="cond=false;getExchangeRates()"></div>
+                                    </th>
+                                    <th class="col-sm-2 " style="text-align:center">Գնում</th>
+                                    <th class="col-sm-2 " style="text-align:center">Վաճառք</th>
+                                    <th class="col-sm-2 " style="text-align:center">ԿԲ</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="rates in ::exchangeRates">
+
+                                    <td class="col-sm-1 " style="border-right: 1px solid #ddd;text-align:right"><button class="button button2" ng-controller="PopUpCtrl" ng-click="params={sourceCurrency:rates.SourceCurrency}; openWindow('../ExchangeRate/ExchangeRatesHistory','Փոխարժեքների պատմություն','exchangerateshistory')">{{::rates.SourceCurrency }}</button> </td>
+                                    <td class="col-sm-2 " style="text-align:right">{{::rates.BuyRate| number:2}}</td>
+                                    <td class="col-sm-2 " style="text-align:right">{{::rates.SaleRate| number:2}}</td>
+                                    <td class="col-sm-2 " style="text-align:right">{{::rates.RateCB| number:2}}</td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="font-size:11px;"> <span class="glyphicon glyphicon-repeat"></span>  տվյալները՝ {{exchangeRates[0].RegistrationDate| mydate | date: 'dd/MM/yyyy HH:mm'}} դրությամբ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="atmRates" class="tab-pane fade">
+                        <loading></loading>
+                        <table ng-show="!loading" class="table table-condensed">
+                            <thead style="font-size:13px;">
+                                <tr>
+                                    <th class="col-sm-1  " style="border-right: 1px solid #ddd;text-align:center">
+                                        <div class="glyphicon glyphicon-refresh click_me" style="padding:0" ng-click="cond=false;getExchangeRates()"></div>
+                                    </th>
+                                    <th class="col-sm-2" style="text-align:center">Գնում</th>
+                                    <th class="col-sm-2 " style="text-align:center">Վաճառք</th>
+                                    <th class="col-sm-2" style="text-align:center">ԿԲ</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="rates in ::exchangeRates">
+
+                                    <td class="col-sm-1 " style="border-right: 1px solid #ddd;text-align:right"><button class="button button2" ng-controller="PopUpCtrl" ng-click="params={sourceCurrency:rates.SourceCurrency}; openWindow('../ExchangeRate/ExchangeRatesHistory','Փոխարժեքների պատմություն','exchangerateshistory')">{{::rates.SourceCurrency }}</button> </td>
+                                    <td class="col-sm-2" style="text-align:right">{{::rates.BuyRateATM| number:2}}</td>
+                                    <td class="col-sm-2 " style="text-align:right">{{::rates.SaleRateATM| number:2}}</td>
+                                    <td class="col-sm-2" style="text-align:right">{{::rates.RateCB| number:2}}</td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="font-size:11px;"> <span class="glyphicon glyphicon-repeat"></span>  տվյալները՝ {{exchangeRates[0].RegistrationDate| mydate | date: 'dd/MM/yyyy HH:mm'}} դրությամբ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="crossRates" class="tab-pane fade">
+                        
+                        <table ng-show="!loading" class="table table-condensed">
+                            <thead style="font-size:13px;">
+                                <tr>
+                                    <th class="col-sm-1" style="border-right: 1px solid #ddd;text-align:center">
+                                        <div class="glyphicon glyphicon-refresh click_me" style="padding:0" ng-click="cond=false;getExchangeRates()"></div>
+                                    </th>
+                                    <th class="col-sm-2" style="text-align:center">Գնում</th>
+                                    <th class="col-sm-2" style="text-align:center">Վաճառք</th>
+                                    <th class="col-sm-2" style="text-align:center">ԿԲ</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="rates in ::exchangeRates">
+
+                                    <td class="col-sm-1 " style="border-right: 1px solid #ddd;text-align:right"><button class="button button2" ng-controller="PopUpCtrl" ng-click="params={sourceCurrency:rates.SourceCurrency}; openWindow('../ExchangeRate/CrossExchangeRatesHistory','Քրոսս փոխարժեքների պատմություն','crossexchangerateshistory')">{{::rates.SourceCurrency }}</button> </td>
+                                    <td class="col-sm-2" style="text-align:right">{{::rates.BuyRateCross| number:2}}</td>
+                                    <td class="col-sm-2" style="text-align:right">{{::rates.SaleRateCross| number:2}}</td>
+                                    <td class="col-sm-2" style="text-align:right">{{::rates.RateCB| number:2}}</td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="font-size:11px;"> <span class="glyphicon glyphicon-repeat"></span>  տվյալները՝ {{exchangeRates[0].RegistrationDate| mydate | date: 'dd/MM/yyyy HH:mm'}} դրությամբ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="transferRates" class="tab-pane fade">
+                        <loading></loading>
+                        <table class="table table-condensed">
+                            <thead style="font-size:13px;">
+                                <tr>
+                                    <th class="col-sm-1" style="border-right: 1px solid #ddd;text-align:center">
+                                        <div class="glyphicon glyphicon-refresh click_me" style="padding:0" ng-click="cond=false;getExchangeRates()"></div>
+                                    </th>
+                                    <th class="col-sm-2" style="text-align:center">Գնում</th>
+                                    <th class="col-sm-2" style="text-align:center">Վաճառք</th>
+                                    <th class="col-sm-2" style="text-align:center">ԿԲ</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="rates in ::exchangeRates">
+
+                                    <td class="col-sm-1 " style="border-right: 1px solid #ddd;text-align:right"><button class="button button2" ng-controller="PopUpCtrl" ng-click="params={sourceCurrency:rates.SourceCurrency}; openWindow('../ExchangeRate/ExchangeRatesHistory','Փոխարժեքների պատմություն','exchangerateshistory')">{{::rates.SourceCurrency }}</button> </td>
+                                    <td class="col-sm-2" style="text-align:right">{{::rates.BuyRateTransfer| number:2}}</td>
+                                    <td class="col-sm-2" style="text-align:right">{{::rates.SaleRateTransfer| number:2}}</td>
+                                    <td class="col-sm-2" style="text-align:right">{{::rates.RateCB| number:2}}</td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="font-size:11px;"> <span class="glyphicon glyphicon-repeat"></span>  տվյալները՝ {{exchangeRates[0].RegistrationDate| mydate | date: 'dd/MM/yyyy HH:mm'}} դրությամբ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,123 @@
+﻿@{
+    Layout = null;
+}
+
+<div id="loadMain" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div style="margin-left:15px;margin-top:5px" ng-controller="BondCtrl" id="BondDealing" data-ng-init="initBondFilterForDealing();getBondsForDealing(filter);" class="container">
+ 
+    <form class="form">
+        <div class="col-sm-12" style="padding:0;margin-bottom:5px">
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Սկիզբ</label>
+                <div>
+                    <input type="date" ng-model="filter.StartDate" style="width: 155px;" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Վերջ</label>
+                <div>
+                    <input type="date" ng-model="filter.EndDate" style="width:155px" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">ԱՄՏԾ</label>
+                <div>
+                    <input type="text" ng-model="filter.ISIN" style="width: 155px" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Հաճախորդի համար</label>
+                <div>
+                    <input type="text" ng-model="filter.CustomerNumber" style="width: 155px" class="form-control">
+                </div>
+            </div>
+        <div class="col-sm-2" style="display:inline-block;margin-top: 26px;">
+            <button type="button" class="btn-sm btn-primary" ng-click="getBondsForDealing(filter)"><span class="glyphicon glyphicon-search"></span> Որոնել</button>
+        </div>
+        </div>
+       
+          
+    </form>
+
+
+    <div class="product-container" style="width: 750px;padding:0;margin-bottom:5px;margin-left: inherit">
+        <div class="header-title" ng-if="bondFilterType == 1">
+            Բանկի բազայում արժեթղթերի հաշիվ չունեցող անձանց պարտատոմսեր
+            <div class="product-collapse tipB fa fa-chevron-down " data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="header-title" ng-if="bondFilterType == 2">
+            Հաստատման ենթակա պարտատոմսեր
+            <div class="product-collapse tipB fa fa-chevron-down " data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+
+
+        <div class="product-collapsable-section">
+            <div class="product-content-table custom-scroll" id="bondsDealingList" style="width:750px;min-height:545px;margin-left:0px;margin-top: 0px;border-top-width: 0px;border-right-width: 0px;border-left-width: 0px;">
+                <div ng-if="bondsDealingList==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="bondsDealingList.length==0">
+                            <td colspan="3" style="text-align:center" ng-if="bondFilterType == 1">Բանկի բազայում արժեթղթերի հաշիվ չունեցող անձանց պարտատոմսեր առկա չեն</td>
+                            <td colspan="3" style="text-align:center" ng-if="bondFilterType == 2">Հաստատման ենթակա պարտատոմսեր առկա չեն</td>
+                        </tr>
+                        <tr ng-if="bondsDealingList.length!=0" ng-repeat="bondDealing in bondsDealingList" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRowDealing($index)">
+                            <td class="col-sm-5">
+                                <span class="tab_text">Գործարքի համար` </span> {{bondDealing.HBDocId}}
+                                <br />
+                                <span class="tab_text">ԱՄՏԾ` </span> {{bondDealing.ISIN}}
+                            </td>
+                            <td class="col-sm-5">
+                                <span class="tab_text">Հաճախորդի համար` </span> {{bondDealing.CustomerNumber}}
+                                <br />
+                                <span class="tab_text">Մասնաճյուղ` </span> {{bondDealing.FilialCode}}
+                            </td>
+
+                            <td class="col-sm-1" style="text-align:right;font-weight:bold;">{{::bondDealing.QualityDescription }}</td>
+                            <td class="click_toggle" style="padding-left:38px;" context="context" id="contextMenu"><div id="contextMenu"></div> </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <ul id="context" class="dropdown-menu">
+                <li>
+                    <a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl"
+                       ng-click="params={ProductId:currentBondDealing.ID, bondFilterType: bondFilterType}; openWindow('/Bond/BondDetails','Մանրամասն դիտարկում','oneBondDetails')">Մանրամասն դիտարկում</a>
+                </li>
+                <li>
+                    <a style="color: black;text-decoration:none!important ;" class="my_button" ng-if="bondFilterType == 1" ng-controller="PopUpCtrl"
+                  ng-click="params={CustomerNumber:currentBondDealing.CustomerNumber}; openWindow('/DepositaryAccountOrder/DepositaryAccountOrder','Արժեթղթերի հաշվի կցում','DepositaryAccountOrder')">Արժեթղթերի հաշվի կցում</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    (function ($) {
+        $(window).on('load', function () {
+
+            $("#bondsDealingList").mCustomScrollbar({
+                theme: "rounded-dark",
+                scrollButtons: {
+                    scrollAmount: 200,
+                    enable: true
+                },
+                mouseWheel: {
+                    scrollAmount: 200
+                }
+            });
+
+        });
+    })(jQuery);
+</script>
+
+

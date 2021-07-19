@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="cb8a30b4-a3b7-4cc1-8a3a-8ffc2da142ef" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="EmployeeWorksManagementService.xsd" MetadataType="Schema" ID="805cce78-bbbf-43bb-9409-8e3c9c407c81" SourceId="1" SourceUrl="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc?xsd=xsd3" />
+    <MetadataFile FileName="EmployeeWorksManagementService1.xsd" MetadataType="Schema" ID="529dce62-7c4a-417b-bb6a-abc4c28f0fb8" SourceId="1" SourceUrl="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc?xsd=xsd2" />
+    <MetadataFile FileName="EmployeeWorksManagementService.wsdl" MetadataType="Wsdl" ID="2292e20c-c07f-4b44-8e14-6b754e8b2795" SourceId="1" SourceUrl="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc?wsdl" />
+    <MetadataFile FileName="EmployeeWorksManagementService2.xsd" MetadataType="Schema" ID="2dbfa942-fd9b-441a-b466-eea44034882e" SourceId="1" SourceUrl="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc?xsd=xsd4" />
+    <MetadataFile FileName="EmployeeWorksManagementService.disco" MetadataType="Disco" ID="a10ce2ed-e0fc-4769-aa52-e8c3147d682c" SourceId="1" SourceUrl="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc?disco" />
+    <MetadataFile FileName="EmployeeWorksManagementService3.xsd" MetadataType="Schema" ID="2cd6fc85-05eb-48e7-917f-89268b789aab" SourceId="1" SourceUrl="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc?xsd=xsd1" />
+    <MetadataFile FileName="EmployeeWorksManagementService4.xsd" MetadataType="Schema" ID="0cf8afd2-5eff-4aab-9e46-27bc637a9113" SourceId="1" SourceUrl="http://localhost/ACBAOperationService/EmployeeWorksManagementService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

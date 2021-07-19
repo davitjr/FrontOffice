@@ -1,0 +1,85 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    #collectionsDetails {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: 900px;
+    }
+
+
+    #collectionsTable td, th {
+        border: 1px solid #cecece;
+        width: 100px;
+        font-size: 12px;
+    }
+
+    #collectionsTable top th {
+        font-size: 12px;
+    }
+
+    #tbl table .top td {
+        font-size: 12px;
+    }
+
+    .redBackground {
+        background-color: rosybrown;
+    }
+
+    .greenStyle {
+        color: green;
+    }
+</style>
+
+<div id="posRatesDetails" ng-controller="PosLocationCtrl" ng-init="getPosRates(terminalId)">
+    <div class="product-container" style="width:500px;margin:5px;">
+        <div class="header-title">
+            Միջնորդավճար
+           
+        </div>
+        <div class="product-collapsable-section ">
+            <div id="collectionsTable" class="product-content-table" style="min-height:100px;padding:0px;margin:5px;">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <thead class="product-container-header">
+                        <tr>
+                            <td style="text-align:center;width:20px;">Տեսակ </td>
+                            <td style="text-align:center;width:20px;">%</td>
+                            <td style="text-align:center;width:20px;">% Լոկալ</td>
+                            <td style="text-align:center;width:20px;">Ֆիքս․ գումար</td>             
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="rate in ::posRates">
+                            <td >
+                                <img ng-if="rate.CardSystem==3" src="~/Content/Images/Amex_icon.png" height="20" width="20" align="left" style="margin-right:5px;margin-top:3px;" />
+                                <img ng-if="rate.CardSystem==4" src="~/Content/Images/Visa_icon.png" height="20" width="20" align="left" style="margin-right:5px;margin-top:3px;" />
+                                <img ng-if="rate.CardSystem==5" src="~/Content/Images/MC_icon.png" height="20" width="20" align="left" style="margin-right:5px;margin-top:3px;" />
+                                <img ng-if="rate.CardSystem==9" src="~/Content/Images/arca.png" height="20" width="20" align="left" style="margin-right:5px;margin-top:3px;" />
+                                <span style="font-size:13px;vertical-align:middle;">{{::rate.CardSystemDescription}}</span>
+                            </td>
+                            <td style="text-align:center">{{::rate.Rate*100  | number:2}} %</td>
+                            <td style="text-align:center">{{::rate.LocalRate*100  | number:2}}%</td>
+                            <td style="text-align:right">{{::rate.FixedRate  | number:2}}</td>                           
+                        </tr>
+                        <tr ng-if="posRates.length==0">
+                            <td colspan="8" style="text-align:center">Տվյալներ առկա չեն</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#collectionsTable").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>

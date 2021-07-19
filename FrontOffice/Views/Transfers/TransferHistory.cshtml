@@ -1,0 +1,53 @@
+﻿
+
+<style>
+    #tbl table, #tbl th, #tbl td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    #tbl table {
+        border-collapse: collapse;
+    }
+
+        #tbl table .top td {
+            font-size: 12px;
+        }
+
+        #tbl table tr {
+            height: 7px;
+        }
+
+    #tbl .form-horizontal {
+        margin-top: -22px;
+    }
+</style>
+
+
+<form style="max-width:700px" id="transferHistory" 
+      role="form" class="form-horizontal" novalidate>
+
+    <div>
+        <div class="col-sm-12" id="tbl">
+
+            <table border="1" width="100" id="transferHistoryContent">
+                <tr class="product-container-header">
+                    <td style="text-align:center;width: 4%;">N</td>
+                    <td style="text-align:center" class="col-sm-2">Կարգավիճակ</td>
+                    <td style="text-align:center" class="col-sm-2">ՊԿ/անուն ազգանուն</td>
+                    <td style="text-align:center" class="col-sm-2">Ամսաթիվ/ժամ</td>
+                </tr>
+
+                <tr ng-repeat="historyItem in transferHistory">
+                    <td style="text-align:right">{{$index+1}}&nbsp;&nbsp;&nbsp;</td>
+                    <td style="text-align:center" class="col-sm-2">{{historyItem.QualityName}}</td>
+                    <td style="text-align:center" class="col-sm-2">{{historyItem.User.userID}} / {{historyItem.User.userName}} </td>
+                    <td style="text-align:center" class="col-sm-2">{{historyItem.ChangeDate}}</td>
+
+                </tr>
+            </table>
+            <br />
+        </div>
+    </div>
+
+</form>

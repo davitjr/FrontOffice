@@ -1,0 +1,253 @@
+﻿@{
+    Layout = null;
+}
+
+<style type="text/css">
+    #customerDebtsContent div.bhoechie-tab-container{
+      z-index: 10;
+      background-color: #ffffff;
+      padding: 0 !important;
+      background-clip: padding-box;
+      opacity: 0.97;
+      filter: alpha(opacity=97);
+      width: 800px;
+    }
+
+       #customerDebtsContent div.bhoechie-tab-container
+       {
+           border:none;
+           margin-left:10px;
+           margin-top:0px;
+       }
+
+
+    #customerDebtsContent div.bhoechie-tab-menu{
+      padding-right: 0;
+      padding-left: 0;
+      padding-bottom: 0;
+      width: 100%;
+    }
+    #customerDebtsContent div.bhoechie-tab-menu{
+      margin-bottom: 0;
+    }
+    #customerDebtsContent div.bhoechie-tab-menu>div{
+      margin-bottom: 0;
+      height: 50px;
+      line-height:1;
+      text-align:center!important;
+    }
+    #customerDebtsContent div.bhoechie-tab-menu>div .glyphicon,
+    #customerDebtsContent div.bhoechie-tab-menu>div .fa {
+      color: #01723a;
+
+    }
+
+    #customerDebtsContent div.bhoechie-tab-menu>div.active,
+    #customerDebtsContent div.bhoechie-tab-menu>div.active .glyphicon,
+    #customerDebtsContent div.bhoechie-tab-menu>div.active .fa{
+      border-color: #01723a;
+      font-weight:bold;
+      color:#01723a!important;
+    }
+
+    #customerDebtsContent div.bhoechie-tab-content{
+      background-color: #ffffff;
+      min-height:100px;
+    }
+
+    #customerDebtsContent div.bhoechie-tab div.bhoechie-tab-content:not(.active){
+      display: none;
+    }
+
+    #customerDebtsContent .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus{
+        border-color: #087640;
+        cursor:pointer;
+        border-bottom:none!important;
+    }
+    #customerDebtsContent .list-group-item:not(.active):hover{
+        cursor:pointer;
+        color:black;
+        font-size:15px;
+        border-bottom-color: #01723a;
+        border-left:none!important;
+        border-top:none!important;
+         -webkit-box-shadow:none!important;
+        box-shadow:none!important;
+        -moz-box-shadow:none!important;
+
+
+    }
+    #customerDebtsContent .list-group-item {
+        position: relative;
+        background-color: #fff;
+        border-top: 3px solid #ddd;
+        border-bottom: 3px solid #ddd;
+        padding:5px;
+        display:inline-block;
+        border-radius:0px !important;
+        width:160px;
+        float: left;
+        border-right:none;
+        border-left:none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    #customerDebtsContent .panel-body {
+        padding: 15px;
+        text-align: left;
+    }
+    #customerDebtsContent .product-details{
+        display:table;
+        font-size:14px;
+        padding: 10px 0 10px 0px;
+    }
+    #customerDebtsContent .product-detail-row{
+        display: table-row;
+        height: 30px;
+        line-height: 30px;
+    }
+     #customerDebtsContent .product-detail-row:hover{
+        cursor:pointer;
+        background-color:#F5F5F5;
+    }
+    #customerDebtsContent .product-detail-cell{
+        display: table-cell;
+        padding:3px;
+    }
+    #customerDebtsContent .product-detail-lable{
+        color: #245775;
+        padding-left: 10px;
+    }
+
+    #customerDebtsContent .product-detail-value{
+        color: #670505;
+        padding-left:35px;
+    }
+    #customerDebtsContent .item-counter{
+        font-size: 11px;
+        color: red;
+        width: 5px;
+        float: right;
+        top: 3px;
+        right: 10px;
+        font-weight: normal;
+        position: absolute;
+        font-weight:bold;
+    }
+    </style>
+    <div id="customerDebtsContent" ng-controller="CustomerCtrl" data-ng-init="getCustomerDebts()" >
+
+        <div class="bhoechie-tab-container" id="fullCustomerDebts" style="margin-bottom:15px;margin-left:0px;" ng-show="customerDebts.length>0 && showonlystrictdebts==false">
+            <div class=" bhoechie-tab-menu">
+                <div class="list-group-item text-center" id="serviceFeeDebts"><div class="item-counter" ng-init="serviceFeeCount = 0">{{ serviceFeeCount}}</div>Սպասարկման պարտք</div>
+                <div class="list-group-item text-center" id="overdraftDebts"><div class="item-counter" ng-init="overdraftCount = 0">{{ overdraftCount}}</div>Գերածախս</div>
+                <div class="list-group-item text-center" id="overdueDebts"><div class="item-counter" ng-init="overdueCount = 0">{{ overdueCount}}</div>Ժամկետանց և դուրսգրված</div>
+                <div class="list-group-item text-center" id="provisionDebts"><div class="item-counter" ng-init="provisionCount = 0">{{ provisionCount}}</div>Գրավադրված միջոցներ</div>
+                <div class="list-group-item text-center" id="blockageDebts"><div class="item-counter" ng-init="blockageCount = 0">{{ blockageCount}}</div>Արգելանքներ</div>
+            </div>
+            <div class="bhoechie-tab">
+                <div class="bhoechie-tab-content active">
+                    <div ng-repeat="debt in customerDebts" ng-if="debt.DebtType==1 || debt.DebtType==2 || debt.DebtType==3">
+                       
+                        <div ng-init="ActiveDivContentLoad()">
+                            <div class="product-detail-row" ng-if="debt.DebtType==1 || debt.DebtType==2">
+                                <div class=" product-detail-cell product-detail-lable">{{ ::debt.DebtDescription }}</div>
+                                <div class="product-detail-cell product-detail-value">{{ ::debt.Amount | number:2 }} {{::debt.AmountDescription}} {{::debt.Currency}}</div>
+                                <span ng-if="$root.SessionProperties.SourceType == 2 && debt.DebtType==1">
+                                    <button type="button" class="btn btn-xs btn-primary" ng-controller="PopUpCtrl" ng-click="params={amount:debt.Amount, debtType: debt.DebtType};openWindow('/Customer/ServicePaymentOrder','Հաշիվների սպ. վարձի գծով պարտավորության գանձում','servicepaymentorder',callbackgetCustomerDebts) "><span class="glyphicon success"></span> Գանձում</button>
+                                </span>
+                                <span ng-if="$root.SessionProperties.SourceType == 2 && debt.DebtType==2">
+                                    <button type="button" class="btn btn-xs btn-primary" ng-controller="PopUpCtrl" ng-click="params={amount:debt.Amount, debtType: debt.DebtType};openWindow('/Customer/ServicePaymentOrder','HB սպ. վարձի գծով պարտավորության գանձում','servicepaymentorder',callbackgetCustomerDebts) "><span class="glyphicon success"></span> Գանձում</button>
+                                </span>
+                            </div>
+                            <div class="product-detail-row" ng-if="debt.DebtType==3">
+                                <div class=" product-detail-cell product-detail-lable">{{ ::debt.DebtDescription }}</div>
+                                <div class="product-detail-cell product-detail-value">Քարտի համար` {{ ::debt.ObjectNumber}}<br />Գումար` {{ ::debt.Amount | number:2 }} {{ ::debt.AmountDescription}} {{ ::debt.Currency}}</div>
+                            </div>
+                        </div>
+                       
+
+                    </div>
+                </div>
+                <div class="bhoechie-tab-content ">
+                    <div ng-repeat="debt in  customerDebts" ng-if="debt.DebtType==4">
+
+                        <div class="product-detail-row" ng-init="ActiveDivContentLoad()">
+                            <div class=" product-detail-cell product-detail-lable">{{ ::debt.DebtDescription }}</div>
+                            <div class="product-detail-cell product-detail-value">Քարտի համար` {{ ::debt.ObjectNumber}}<br />Գումար` {{ ::debt.Amount | number:2 }} {{ ::debt.AmountDescription}} {{ ::debt.Currency}}</div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="bhoechie-tab-content">
+                    <div ng-repeat="debt in  customerDebts" ng-if="debt.DebtType==6 || debt.DebtType==7 || debt.DebtType==8 ">
+
+                        <div class="product-detail-row" ng-init="ActiveDivContentLoad()">
+                            <div class="product-detail-cell product-detail-lable">{{ ::debt.DebtDescription }}</div>
+                            <div class="product-detail-cell product-detail-value" ng-if="debt.DebtType==6">Վարկային հաշիվ`{{ ::debt.ObjectNumber}}<br />Գումար`{{ ::debt.Amount | number:2 }} {{ ::debt.AmountDescription}} {{ ::debt.Currency}}</div>
+                            <div class="product-detail-cell product-detail-value" ng-if="debt.DebtType==7">{{ ::debt.ObjectNumber}}<br />Գումար`{{ ::debt.Amount | number:2 }} {{ ::debt.AmountDescription}} {{ ::debt.Currency}}</div>
+                            <div class="product-detail-cell product-detail-value" ng-if="debt.DebtType==8">Երաշխիքի համար`{{ ::debt.ObjectNumber}}<br />Գումար`{{ ::debt.Amount | number:2 }} {{ ::debt.AmountDescription}} {{ ::debt.Currency}}</div>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="bhoechie-tab-content" >
+                    <div ng-if="debt.DebtType==5"   ng-repeat="debt in  customerDebts">
+                        <div class="product-detail-row" ng-init="ActiveDivContentLoad()">
+                            <div class="product-detail-cell product-detail-lable">{{ ::debt.DebtDescription }}</div>
+                            <div class="product-detail-cell product-detail-value">{{ ::debt.Amount | number:2 }} {{ ::debt.AmountDescription}} {{ ::debt.Currency}}</div>
+                        </div>
+
+
+                    </div>
+                </div>
+              
+                <div class="bhoechie-tab-content">
+                    <div ng-repeat="debt in  customerDebts" ng-if="debt.DebtType==9 || debt.DebtType==10">
+
+                        <div class="product-detail-row" ng-init="ActiveDivContentLoad()">
+                            <div ng-if="debt.DebtType==9">
+                                <div class="product-detail-cell product-detail-lable">{{ ::debt.DebtDescription }}</div>
+                                <div class="product-detail-cell product-detail-value">{{ ::debt.Amount | number:2 }} {{ ::debt.AmountDescription | fordahkamount}} {{ ::debt.Currency}}</div>
+                            </div>
+                            <div ng-if="debt.DebtType==10">
+                                <div class="product-detail-cell product-detail-lable" style="color:red;font-weight:bold;">{{ ::debt.DebtDescription }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-warning" ng-show="customerStrictDebts.length>0 && showonlystrictdebts==true" style="border-color:red">
+            <div class="panel-heading" style="color: white; border-color: red; background-color:red"><span class="glyphicon glyphicon-warning-sign"></span> Հաճախորդի պարտավորություններ</div>
+            <div style="margin-left:15px;">
+                <div ng-if="customerStrictDebts[$index-1].DebtType!=customerStrictDebts[$index].DebtType" ng-repeat="k in  customerStrictDebts">
+                    <div>
+                        <div ng-if="k.DebtType==9" class="col-sm-12" style="color:red;font-weight:bold;">ԴԱՀԿ պարտավորություններ</div>
+                        <div ng-if="k.DebtType!=9 && k.DebtType!=10" class="col-sm-12">{{ ::k.DebtDescription }}</div>
+                        <div ng-if="k.DebtType==10" class="col-sm-12" style="color:red;font-weight:bold;"><span>{{ ::k.DebtDescription }}</span></div>
+                    </div>
+                    <div ng-if="k.DebtType==debt.DebtType" ng-repeat="debt in customerStrictDebts">
+                        <span ng-if="debt.DebtType==9">
+                            <span>{{ ::debt.DebtDescription}}</span>
+                        </span><br />
+                        <span ng-if="debt.DebtType!=10" class="tab_text">Գումար` </span>
+                        <span ng-if="debt.DebtType!=10" style="color:#990000">
+                            {{ ::debt.Amount | number:2 }} {{ ::debt.AmountDescription | fordahkamount}} {{ ::debt.Currency}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+    <script type="text/javascript">
+        $("#customerDebtsContent div.bhoechie-tab-menu>div").click(function (e) {
+            e.preventDefault();
+            $(this).siblings('#customerDebtsContent div.active').removeClass("active");
+            $(this).addClass("active");
+            var index = $(this).index();
+            $("#customerDebtsContent div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+            $("#customerDebtsContent div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+        });
+    </script>

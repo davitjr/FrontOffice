@@ -1,0 +1,60 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #accountOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+<div id="pensionAppliactionLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="PrintDocumentsCtrl" name="CustomerMergeApplicationform" id="customermergeapplicationform" role="form" style="min-width:650px;" novalidate class="form-horizontal" labels-required>
+    <div id="newaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-3 "  ng-click="CustomerMergeApplicationform.$setSubmitted();CustomerMergeApplicationform.$valid && getCustomerMergeApplicationAgreement()">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Դիմում</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div class="col-sm-10"style="padding-left:10px">
+
+        <div class="form-group" data-ng-init="getFilialList()">
+            <label class="tab_title col-sm-5" for="FilialCode"> Նոր մասնաճյուղ</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <loading-control scopevariable="filialList"></loading-control>
+                    <select ng-show="filialList" data-ng-model="mergeApplicationDetails.filialChangeCode" class="form-control" data-ng-options="k as v for (k,v) in filialList" id="FilialCode" name="FilialCode" required>
+                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="CustomerMergeApplicationform.$submitted || CustomerMergeApplicationform.FilialCode.$dirty"
+                                 for="CustomerMergeApplicationform.FilialCode.$error">
+                        <ng-message when="required" class="errors">
+                            Մասնաճյուղը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+        </div>
+
+     
+    </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+

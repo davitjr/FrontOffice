@@ -1,0 +1,29 @@
+﻿<style>
+    #userdetails_content {
+        height: 80%;
+    }
+</style>
+<form ng-controller="CasherCtrl" id="userDet" ng-init="getUserPicture(setNumber);getCashier(setNumber)" style="height:100px">
+
+    <div class="top-container">
+        <div class="logo-container">
+            <div class="picture-container">
+                <img class="big-man" ng-src="{{userPicture}}" />
+            </div>
+        </div>
+        <div class="user-data" style="width:400px">
+            <span  style="color:black;font-size:14px;font-weight :900;margin-left:10px">{{cashier.firstName}} &nbsp;&nbsp; {{cashier.lastName}}</span>
+            <div class="product-details bhoechie-tab-content" style="padding-left:10px">               
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Մասնաճյուղ</div>
+                    <div class="product-detail-cell product-detail-value">{{cashier.filial.key}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Պաշտոն</div>
+                    <div class="product-detail-cell product-detail-value">{{cashier.position}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

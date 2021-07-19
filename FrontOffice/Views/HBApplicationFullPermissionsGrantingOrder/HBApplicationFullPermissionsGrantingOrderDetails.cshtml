@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+
+
+<form style="width:620px" ng-controller="hbApplicationFullPermissionsGrantingOrderCtrl" ng-init="getHBApplicationFullPermissionsGrantingOrder(selectedOrderId)">
+    <loading-control scopevariable="order.Id"></loading-control>
+    <div class="product-details bhoechie-tab-content" style="min-width:620px;padding-left:10px">
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{order.OperationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{order.QualityDescription}}</div>
+        </div>
+
+        <div ng-if="order.Quality==31" class="">
+            <div ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="" style="clear:both;color:#6F6A6A;font-weight:bold">Մերժման պատճառ`</div>
+            <div class="redStyle">&nbsp;&nbsp;&nbsp;{{ rejectHistory.ReasonDescription }}</div>
+        </div>
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+
+
+</form>

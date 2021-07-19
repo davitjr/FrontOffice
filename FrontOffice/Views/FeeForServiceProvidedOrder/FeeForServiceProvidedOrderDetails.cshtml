@@ -1,0 +1,124 @@
+﻿<form style="width:800px" ng-controller="FeeForServiceProvidedOrderCtrl" ng-init="details=true;getFeeForServiceProvidedOrder(selectedOrderId)">
+    <loading-control style="margin-left:260px" scopevariable="order.ServiceTypeDescription"></loading-control>
+    <div id="feeForServiceProviderDetails_menu" class="menu-bar dialog-menu light-green" style="margin-left:0;margin-top:0">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-if="order.Quality!=undefined" ng-click="getPersonalPaymentOrderDetails(true)">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="printButton h-menu-icon">Հանձնարարական</span>
+            </li>
+
+            <li class="root-menu-item-5 " ng-if="order.Quality!=undefined && order.Quality ==30 "  ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հեռացման հայտ','removalOrder',callbackgetFeeForServiceProvidedOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հեռացման հայտ</span>
+            </li>
+
+            <li class="root-menu-item-5 " ng-if="order.Quality!=undefined && order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && order.Quality !=50"  ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetFeeForServiceProvidedOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="product-details bhoechie-tab-content" style="min-width:800px;padding-left:10px">
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{order.OperationDateString}}</div>
+        </div>
+
+        <div  class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ծառայության տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{order.ServiceTypeDescription}}</div>
+        </div>
+
+        <div ng-if="order.Type==71" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Դեբետագրվող հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{order.DebitAccount.AccountNumber}} {{order.DebitAccount.Currency}}</div>
+        </div>
+
+        <div  class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{order.AmountString}} {{ order.Currency }}</div>
+        </div>
+
+        <div ng-if="order.SubType!=3" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Նկարագրություն</div>
+            <div class="product-detail-cell product-detail-value">{{order.Description}}</div>
+        </div>
+       
+
+        <orderoppersondetails opperson="order.OPPerson" ng-show="order.OPPerson"></orderoppersondetails>
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{order.QualityDescription}}</div>
+        </div>
+
+        <div ng-if="order.Quality==31" class="">
+            <div ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="" style="clear:both;color:#6F6A6A;font-weight:bold">Մերժման պատճառ`</div>
+            <div class="redStyle">&nbsp;&nbsp;&nbsp;{{ rejectHistory.ReasonDescription }}</div>
+        </div>
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+
+</form>
+
+    @*<div class=" col-md-12">
+            <div>
+                <form ng-controller="FeeForServiceProvidedOrderCtrl" ng-init="details=true;getFeeForServiceProvidedOrder(selectedOrderId)">
+                    <loading-control style="margin-left:260px" scopevariable="order.ServiceTypeDescription"></loading-control>
+                    <div ng-show="order.ServiceTypeDescription" class="popup_wrapper_inner">
+
+                        <div class="row">
+                            <div class="col-md-12 my_class">
+                                <div class="col-sm-5 my_label " style="clear:both">Հայտի համար</div><div class="col-sm-7 my_text1 ">{{order.Id}}</div>
+                                <div class="col-sm-5 my_label " style="clear:both">Մուտքագրման ա/թ</div><div class="col-sm-7 my_text1 ">{{order.RegistrationDateString}}</div>
+                                <div class="col-sm-5 my_label " style="clear:both">Գործառնական օր</div><div class="col-sm-7 my_text1 ">{{order.OperationDateString}}</div>
+                                <div class="col-sm-5 my_label " style="clear:both">Ծառայության տեսակ</div><div class="col-sm-7 my_text1 ">{{order.ServiceTypeDescription}}</div>
+                                <div class="col-sm-5 my_label " ng-if="order.Type==71" style="clear:both">Դեբետագրվող հաշիվ</div><div ng-if="order.Type==71" class="col-sm-7 my_text1 ">{{order.DebitAccount.AccountNumber}} {{order.DebitAccount.Currency}}</div>
+                                <div class="col-sm-5 my_label " style="clear:both">Գումար</div><div class="col-sm-7 my_text1 ">{{order.AmountString}} {{ order.Currency }}</div>
+                                <div class="col-sm-5 my_label " style="clear:both">Նկարագրություն</div><div class="col-sm-7 my_text1 ">{{order.Description}}</div>
+
+                                <div class="col-sm-5 my_text1" style="clear:both">Կատարող՝</div>
+                                <div class="col-sm-5 my_label" style="clear:both"> &nbsp;&nbsp;&nbsp;<span ng-if="order.OPPerson.PersonLastName==undefined || order.OPPerson.PersonLastName==''">Անվանում</span><span ng-if="order.OPPerson.PersonLastName!=undefined && order.OPPerson.PersonLastName!=''">Անուն,Ազգանուն</span></div><div class="col-sm-7 my_text1 ">{{order.OPPerson.PersonName}} {{order.OPPerson.PersonLastName}}</div>
+                                <div ng-if="order.OPPerson.PersonDocument!='' && order.OPPerson.PersonDocument!=undefined" class="col-sm-5 my_label" style="clear:both"> &nbsp;&nbsp;&nbsp;Անձնագիր</div><div ng-if="order.OPPerson.PersonDocument!=''  && order.OPPerson.PersonDocument!=undefined" class="col-sm-7 my_text1 ">{{order.OPPerson.PersonDocument}}</div>
+                                <div ng-if="order.OPPerson.PersonSocialNumber!='' && order.OPPerson.PersonSocialNumber!=undefined" class="col-sm-5 my_label" style="clear:both"> &nbsp;&nbsp;&nbsp;ՀԾՀ</div><div ng-if="order.OPPerson.PersonSocialNumber!='' && order.OPPerson.PersonSocialNumber!=undefined" class="col-sm-7 my_text1 ">{{order.OPPerson.PersonSocialNumber || "-"}}</div>
+                                <div ng-if="order.OPPerson.PersonNoSocialNumber!='' && order.OPPerson.PersonNoSocialNumber!=undefined" class="col-sm-5 my_label" style="clear:both"> &nbsp;&nbsp;&nbsp;ՀԾՀ-ից հրաժարվելու տեղեկանք</div><div ng-if="order.OPPerson.PersonNoSocialNumber!='' && order.OPPerson.PersonNoSocialNumber!=undefined" class="col-sm-7 my_text1 ">{{order.OPPerson.PersonNoSocialNumber}}</div>
+                                <div ng-if="order.OPPerson.CustomerNumber!=''" class="col-sm-5 my_label" style="clear:both"> &nbsp;&nbsp;&nbsp;Հաճախորդի համար</div><div ng-if="order.OPPerson.CustomerNumber!=''" class="col-sm-7 my_text1 ">{{order.OPPerson.CustomerNumber}}</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-5 my_label " style="clear:both">Կարգավիճակ</div>
+                    <div class="col-sm-5 my_text1 ">
+                        <span ng-if="order.Quality==30" class="greenStyle" style="margin-left:-6px">{{ order.QualityDescription }}</span>
+                        <span ng-if="order.Quality==31" class="redStyle" style="margin-left:-6px">{{ order.QualityDescription }}</span>
+                        <span ng-if="order.Quality!=31 && order.Quality!=30" style="margin-left:-6px">{{ order.QualityDescription }}</span>
+                    </div>
+
+                    <div ng-if="order.Quality==31" ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="col-sm-12 my_text1">Մերժման պատճառ` <span class="redStyle">{{ rejectHistory.ReasonDescription }}</span></div>
+
+                    <div class="col-sm-12 my_text1 ">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+                    <br />
+                    <br />
+                    <div>
+
+                        <button type="button" class="btn btn-sm btn-primary" ng-click="getPersonalPaymentOrderDetails(true)"> <span class="glyphicon glyphicon-print"></span>&nbsp;Հանձնարարական</button>
+                        <button ng-if="order.Quality ==30 " type="button" class="btn btn-sm btn-primary" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հեռացման հայտ','removalOrder',callbackgetFeeForServiceProvidedOrder)"> <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;Հեռացման հայտ</button>
+                        <button ng-if="order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && order.Quality !=50" type="button" class="btn btn-sm btn-primary" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetFeeForServiceProvidedOrder)"> <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;Հրաժարման հայտ</button>
+                    </div>
+                </form>
+            </div>
+        </div>*@

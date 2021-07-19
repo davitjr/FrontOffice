@@ -1,0 +1,219 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    #tblReestrDetails table, #tblReestrDetails th, #tblReestrDetails td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    #tblReestrDetails table {
+        border-collapse: collapse;
+    }
+
+        #tblReestrDetails table .top #tblReestrDetails td {
+            font-size: 13px;
+        }
+
+        #tblReestrDetails table #tblReestrDetails tr {
+            height: 30px;
+        }
+
+    #tblReestrDetails .form-horizontal {
+        margin-top: -22px;
+    }    
+    .style_without_HB {
+        min-width: 650px;
+    }
+    .style_with_HB {
+        min-width: 1200px;
+    }
+    .credit_account_HB {
+        width: 12%;
+    }
+    .credit_account {
+        width: 25%;
+    }
+    .amount_HB {
+        width: 11%;
+    }
+
+    .amount {
+        width: 25%;
+    }
+    .receiver_HB {
+        width: 15%;
+    }
+
+    .receiver {
+        width: 25%;
+    }
+    .checked_without_HB {
+        width: 15%;
+    }
+    .checked_with_HB {
+        width: 20%;
+    }
+    .number_HB {
+        width: 5%;
+    }
+    .number_without_HB {
+        width: 10%;
+    }
+    .hb_dahk_class {
+        width:170px;
+    }
+    .dahk_class{
+        width:120px;
+    }
+    .hb_dahk_style{
+        width:507px;
+    }
+        
+
+</style>
+<div class=" col-md-11">
+    <br />
+    <div>
+        <form ng-class="$root.SessionProperties.IsCalledFromHB == true? 'style_with_HB':'style_without_HB' " id="reestrDetailsForm" ng-controller="PaymentOrderCtrl" role="form" class="form-horizontal" ng-init="changeFormPosition();getCurrencyExchangeOrder(selectedOrderId);checkOkResult = false;checkErrorResult = false;freezedAmount = false;$parent.checkPaymentTypeForAll = false;$parent.paymentTypeForAll = undefined;">
+
+            <div id="paymentorder_menu" class="menu-bar dialog-menu light-green" ng-if="($root.SessionProperties.IsCalledFromHB == true && $root.SessionProperties.AdvancedOptions.isOnlineAcc=='1' && (order.Quality == 3 || order.Quality == 20)) || $root.SessionProperties.IsCalledFromHB != true">
+                <ul id="menu" class="dialog-menu">
+                    <li class="root-menu-item-3 " ng-if="isOrderDetails!=true && ((order.Type == 6 && (order.Quality == 3 || order.Quality == 20) && $root.SessionProperties.IsCalledFromHB == true) || $root.SessionProperties.IsCalledFromHB != true)" ng-click="$parent.filterSelected=true;checkReestrTransferAdditionalDetails()">
+                        <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon applicationButton">Ստուգել</span>
+                    </li>
+                    <li class="root-menu-item-3 " ng-if="isOrderDetails!=true && order.Type == 6 && (order.Quality == 3 || order.Quality == 20)" ng-controller="OrderCtrl" ng-click="saveReestrPaymentDetails(order.Id);">
+                        <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon" src="~/Content/Images/confirm.png" style="height: 30px;width:36px;margin-top: 6px;">Կատարել</span>
+                    </li>
+                    <li class="root-menu-item-5 " onclick="CloseBPDialog('reestrDetails')" ng-if="$root.SessionProperties.IsCalledFromHB != true">
+                        <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+                    </li>
+                </ul>
+                <div id="right-menu" style="display:none;">
+                </div>
+            </div>
+            <div class="col-sm-8" style="font-size:13px;" ng-init="sumAmount=0;filterSelected=false">
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Դեբետագրվող հաշիվ</div>
+                    <div class="product-detail-cell product-detail-value">
+                        {{DebitAccount.AccountNumber}} {{DebitAccount.Currency}}
+                    </div>
+                    <div class="product-detail-cell product-detail-lable" ng-if="$root.SessionProperties.IsCalledFromHB == true" style="padding-left: 15px;font-size:14px !important;">
+                        Ընդամենը`
+                    </div>
+                    <div class="product-detail-cell product-detail-value" style="font-size:14px !important;" ng-if="$root.SessionProperties.IsCalledFromHB == true">
+                        {{order.AmountString}}&nbsp;&nbsp;
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group" ng-if="forCashin!=true && isOrderDetails==true" ng-init="$parent.transactionConfirmStatus='0'">
+                <label class="tab_title col-sm-4">Գործարքի կատարման նշում</label>
+                <div class="col-sm-3">
+                    <div class="row">
+                        <select data-ng-model="$parent.transactionConfirmStatus" ng-change="$parent.filterSelected=true" name="transactionConfirmStatus" id="transactionConfirmStatus" class="form-control">
+                            <option value="0" style="margin-left:25px">Բոլորը</option>
+                            <option value="1">Կատարված</option>
+                            <option value="2">Չկատարված</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group"  ng-style="$root.SessionProperties.IsCalledFromHB == true? {'float':'left', 'width':'510px'}:''" ng-if="forCashin!=true && isOrderDetails!=true" ng-init="$parent.transactionCheckStatus='0'">
+                <label @*class="tab_title col-sm-5"*@ ng-class="$root.SessionProperties.IsCalledFromHB == true? 'tab_title col-sm-5':'tab_title col-sm-4'">Ստուգման կարգավիճակ</label>
+                <div @*class="col-sm-5"*@ ng-class="$root.SessionProperties.IsCalledFromHB == true? 'col-sm-6':'col-sm-3'">
+                    <div class="row">
+                        <select data-ng-model="$parent.transactionCheckStatus" ng-change="$parent.filterSelected=true" name="transactionCheckStatus" id="transactionCheckStatus" class="form-control">
+                            <option value="0" style="margin-left:25px">Բոլորը</option>
+                            <option value="1">Ստուգում անցած</option>
+                            <option value="2">Ստուգում չանցած</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" style="display:table-cell;width:690px;" ng-if="(order.Quality == 3 || order.Quality == 20) && $root.SessionProperties.IsCalledFromHB == true && isCheckedHBReestr == true && reestrHasDAHK == true">
+                <label class="tab_title col-sm-7" style="float:left">Նշել ԴԱՀԿ արգելադրման նպատակը բոլորի համար</label>
+                <div class="row" style="display:inline-block">
+                    <select ng-model="$parent.paymentTypeForAll"
+                            name="PaymentTypeForAll" id="PaymentTypeForAll" class="form-control" style="width:260px"
+                            data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Նշել ԴԱՀԿ արգելադրման նպատակը բոլորի համար"
+                            data-ng-options="k as v for (k,v) in typeOfPaymentDescriptions" ng-change="setPaymentTypeForAll();">
+                        <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div ng-if="showPaymentType" ng-init="getTypeOfPaymentDescriptions()"></div>
+            <div ng-if="forCashin!=true && isOrderDetails!=true" ng-init="initReestrTransferAdditionalDetails()"></div>
+            <br /><br />
+
+            <table id="tblReestrDetails" cellspacing="0" cellpadding="0" border="0" style="width:700px;height:450px;">
+
+                <tbody style=" overflow-y: scroll; height: 400px; position: absolute;width:100%">
+                    <tr class="product-container-header">
+                        <td style="text-align:center;" ng-class="$root.SessionProperties.IsCalledFromHB == true? 'number_HB':'number_without_HB' ">Տող N</td>
+                        <td style="text-align:center;" ng-class="$root.SessionProperties.IsCalledFromHB == true? 'receiver_HB':'receiver' ">{{forCashin==true?'Նկարագրություն':'Ստացող'}}</td>
+                        <td style="text-align:center;" ng-class="$root.SessionProperties.IsCalledFromHB == true? 'credit_account_HB':'credit_account' ">Կրեդիտագրվող հաշիվ</td>
+                        <td style="text-align:center;" ng-class="$root.SessionProperties.IsCalledFromHB == true? 'amount_HB':'amount' ">Գումար</td>
+                        <td style="text-align:center;width:15%;" ng-if="$root.SessionProperties.IsCalledFromHB == true">Փոխանցման նկարագրություն</td>
+                        <td style="text-align:center;" ng-class="$root.SessionProperties.IsCalledFromHB == true? 'checked_with_HB':'checked_without_HB' " ng-if="forCashin!=true && isOrderDetails!=true">Ստուգված</td>
+                        <td style="text-align:center;width: 15%;" ng-if="forCashin!=true && isOrderDetails==true">Գործարքի կատարման նշում</td>
+                        <td style="text-align:center;width: 25%;" ng-if="showPaymentType==true">Արգելադրման նպատակ</td>
+                    </tr>
+                    <tr ng-repeat="reestrTransferAdditionalDetail in order.ReestrTransferAdditionalDetails | reestrDetails:transactionConfirmStatus | reestrDetails2:transactionCheckStatus" ng-style="{ backgroundColor : reestrTransferAdditionalDetail.NonValidate==true ?'#e67878':''}">
+                        <td style="text-align:center;width: 10%;">{{$index+1}}&nbsp;&nbsp;</td>
+                        <td style="text-align:center"> {{::reestrTransferAdditionalDetail.Description}}&nbsp;&nbsp; </td>
+                        <td style="text-align:right">{{::reestrTransferAdditionalDetail.CreditAccount.AccountNumber}}&nbsp;&nbsp;</td>
+                        <td style="text-align:right" ng-init="filterSelected==false?($parent.sumAmount=$parent.sumAmount+reestrTransferAdditionalDetail.Amount):''">
+                            {{::reestrTransferAdditionalDetail.Amount | number:2}}&nbsp;&nbsp;
+                        </td>
+
+                        <td style="text-align:center;font-family:'Arial Armenian' !important" ng-if="$root.SessionProperties.IsCalledFromHB == true && (order.Description == '' || order.Description == null)" ng-mousemove="showDescriptionFullText($event,reestrTransferAdditionalDetail.TransactionDescription)" ng-mouseleave="hideDescriptionFullText();"> {{::reestrTransferAdditionalDetail.TransactionDescription | limitTo : 20 }}<span ng-if="reestrTransferAdditionalDetail.TransactionDescription.length > 20">...</span> </td>
+                        <td style="text-align:center;font-family:'Arial Armenian' !important" ng-if="$root.SessionProperties.IsCalledFromHB == true && order.Description != '' && order.Description != null" ng-mousemove="showDescriptionFullText($event,order.Description)" ng-mouseleave="hideDescriptionFullText();"> {{::order.Description | limitTo : 20 }}<span ng-if="order.Description.length > 20">...</span> </td>
+
+                        <td style="text-align:center;width: 10%;" ng-if="forCashin!=true && isOrderDetails!=true && order.Type != 6 && $root.SessionProperties.IsCalledFromHB != true">
+                            <span ng-if="reestrTransferAdditionalDetail.CardClosed==false && reestrTransferAdditionalDetail.CardHasDAHK==false" class="glyphicon glyphicon-ok greenStyle"></span>
+                            <span ng-if="reestrTransferAdditionalDetail.CardClosed==true || reestrTransferAdditionalDetail.CardHasDAHK==true" title="{{::reestrTransferAdditionalDetail.WarningDescription}}" class="glyphicon glyphicon-warning-sign" style="color:#c3a509"></span>
+                            &nbsp;&nbsp;
+                        </td>
+                        <td style="text-align:center;width: 10%;" ng-if="forCashin!=true && isOrderDetails!=true && order.Type == 6 && $root.SessionProperties.IsCalledFromHB == true">
+                            <span ng-if="(reestrTransferAdditionalDetail.HBCheckResult == 'OK' || reestrTransferAdditionalDetail.HBCheckResult == 'OKBankMail') && reestrTransferAdditionalDetail.HBCheckResult != null" class="greenStyle" style="font-family:'Arial Armenian' !important">{{ reestrTransferAdditionalDetail.HBCheckResult }}</span>
+                            <span ng-if="reestrTransferAdditionalDetail.HBCheckResult != 'OK' && reestrTransferAdditionalDetail.HBCheckResult != 'OKBankMail' && reestrTransferAdditionalDetail.HBCheckResult != null" title="{{::reestrTransferAdditionalDetail.WarningDescription}}" style="color:#f91010;font-family:'Arial Armenian' !important">{{ reestrTransferAdditionalDetail.HBCheckResult }}</span>
+                            &nbsp;&nbsp;
+                        </td>
+                        <td style="text-align:center;width: 10%;" ng-if="forCashin!=true && isOrderDetails==true">
+                            <span ng-if="reestrTransferAdditionalDetail.TransactionsGroupNumber!=null" class="glyphicon glyphicon-ok greenStyle"></span>
+                            <span ng-if="reestrTransferAdditionalDetail.TransactionsGroupNumber==null" class="glyphicon glyphicon-remove" style="color:red">
+                            </span>
+                            &nbsp;&nbsp;
+                        </td>
+                        <td ng-if="showPaymentType==true">
+                            <select ng-if="reestrTransferAdditionalDetail.CardHasDAHK==true && $parent.showPaymentType==true" ng-init="$root.SessionProperties.IsCalledFromHB == true && reestrTransferAdditionalDetail.PaymentType != 0? '':reestrTransferAdditionalDetail.PaymentType=undefined"
+                                    ng-model="reestrTransferAdditionalDetail.PaymentType" ng-disabled="order.Quality == 30 && $root.SessionProperties.IsCalledFromHB == true && reestrTransferAdditionalDetail.PaymentType != 0"
+                                    name="PaymentType" id="PaymentType" class="form-control" @*style="width:120px"*@ ng-class="{{$root.SessionProperties.IsCalledFromHB == true? 'hb_dahk_class':'dahk_class'}}"
+                                    data-ng-options="k as v for (k,v) in typeOfPaymentDescriptions" ng-change="$root.SessionProperties.IsCalledFromHB == true? updatePaymentTypeForAll():''">
+                                <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">&nbsp;</td>
+                        <td style="text-align:center">&nbsp;</td>
+                        <td style="text-align:right">&nbsp;</td>
+                        <td style="text-align:right" ng-if="$root.SessionProperties.IsCalledFromHB != true">Ընդամենը` {{sumAmount | number:2}}&nbsp;&nbsp;</td>
+                        <td style="text-align:right" ng-if="$root.SessionProperties.IsCalledFromHB == true">Ընդամենը` {{order.AmountString}}&nbsp;&nbsp;</td>
+                        <td style="text-align:right" ng-if="$root.SessionProperties.IsCalledFromHB == true">&nbsp;</td>
+                        <td style="text-align:right" ng-if="forCashin!=true">&nbsp;</td>
+                        <td style="text-align:right" ng-if="showPaymentType==true">&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <span class="tooltiptext" id="showDescription" style="display:none;font-family:'Arial Armenian'" ng-model="elementTransactionDescription">{{ elementTransactionDescription }}</span>
+
+            <br />
+        </form>
+    </div>
+</div>
+

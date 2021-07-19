@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="6e2a1ef2-837b-4e99-911c-54086663d82b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="5441e78d-9915-4e48-835d-bba7023f89fc" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="service3.xsd" MetadataType="Schema" ID="e824f53d-79af-4c46-824a-8f68c9bf3606" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="ExternalBanking1.xsd" MetadataType="Schema" ID="207e6d6e-ba32-401a-97f6-870af6a88c73" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="ACBALibrary1.xsd" MetadataType="Schema" ID="c8a77021-ce9f-4cdc-ac5a-abd5a135646b" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="Arrays1.xsd" MetadataType="Schema" ID="690be390-451e-4ab5-b961-0055641f1702" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="System.Collections.Generic1.xsd" MetadataType="Schema" ID="0567d54e-a8ac-4d68-8eb6-963b6c0793e3" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="service31.xsd" MetadataType="Schema" ID="8ab61e2e-1d0a-453a-b81e-3e495d4c1503" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="InformationSecurityLibrary1.xsd" MetadataType="Schema" ID="15a1831c-d704-4fa1-9c3e-e5a395358ed6" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="ExternalBanking.XBManagement1.xsd" MetadataType="Schema" ID="987ddf7f-2fdb-4e7f-a175-7eec4706d801" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="service32.xsd" MetadataType="Schema" ID="4b809fd6-8844-49ff-a964-242b3bd54818" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="System1.xsd" MetadataType="Schema" ID="a4c0e9ec-d47d-4936-a593-e72a58753dad" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="ARUSInfrastructure1.xsd" MetadataType="Schema" ID="4998de89-cb8c-43e3-87e3-90f5dc41832c" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="CBDataService.PoliceViolations1.xsd" MetadataType="Schema" ID="7f67fd44-a9ff-4841-a90d-17c28f707ccb" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="ACBAOperationService1.xsd" MetadataType="Schema" ID="86ed9174-9001-4625-a85f-bc8592a34acd" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="ACBALibrary.CustomerIdentificationAlgorithm.Models1.xsd" MetadataType="Schema" ID="9e4c7732-1d91-477b-a9cc-bdeaa878f150" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="ExternalBankingSecurityLibrary.PersonalAccountSecurity1.xsd" MetadataType="Schema" ID="9a18c963-2c88-40f1-87c6-14c9e37ba52f" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="ExternalBankingSecurityLibrary1.xsd" MetadataType="Schema" ID="64c7de28-7cde-49a6-a554-458802357ab7" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="SAPCRM1.xsd" MetadataType="Schema" ID="90d80bde-e49b-4023-ab9d-b9cc37a46d77" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="CBDataService1.xsd" MetadataType="Schema" ID="70339e9b-72b3-4116-9b0d-c3bfcd72bb2b" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="ACBALibrary.ContactsChangingRiskDetails1.xsd" MetadataType="Schema" ID="ee239a0f-46dd-4143-a76c-18a619841d0c" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="ExternalBanking.UtilityPaymentsManagment1.xsd" MetadataType="Schema" ID="713a9944-bf99-4d43-b889-658ec7c91c26" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="ExternalBankingSecurityLibrary.TokenOperations1.xsd" MetadataType="Schema" ID="556ae0c6-d567-400c-b163-7278c25442a5" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="AcbaOnlineSecurityService.Helpers1.xsd" MetadataType="Schema" ID="70774ef6-57d1-45c4-b949-cf8df3e55a08" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+    <MetadataFile FileName="ExternalBankingService1.xsd" MetadataType="Schema" ID="b452a0b1-31ba-4dc7-9413-fe6430354bb0" SourceId="1" SourceUrl="net.tcp://localhost/ExternalBankingService/XBService.svc/mex/mex/mex/mex/mex/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

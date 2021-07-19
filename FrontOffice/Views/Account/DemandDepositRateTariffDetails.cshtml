@@ -1,0 +1,72 @@
+﻿
+@{
+    Layout = null;
+}
+<style>
+    #tbl table, #tbl th, #tbl td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    #tbl table {
+        border-collapse: collapse;
+    }
+
+        #tbl table .top td {
+            font-size: 12px;
+        }
+
+        #tbl table tr {
+            height: 7px;
+        }
+
+    #tbl .form-horizontal {
+        margin-top: -22px;
+    }
+</style>
+<form style="max-width:700px" ng-controller="AccountCtrl" ng-init="getDemandDepositRateTariffs()"
+      role="form" class="form-horizontal" novalidate>
+    <div id="credentialTermination_menu" ng-show="false" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <p>&nbsp;</p>
+        <div class="col-sm-12" id="tbl">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tr class="product-container-header">
+                    <td style="text-align:center" class="col-sm-2">Սակագին</td>
+                    <td style="text-align:center">Գումար</td>
+                    <td style="text-align:center" class="col-sm-2">Տոկոսադրույք</td>
+                    
+                </tr>
+                <tr ng-repeat="demandDepositRateTariff in demandDepositRateTariffs" ng-if="demandDepositRateTariff.TariffGroup!=2">
+                    <td style="text-align:center">{{::demandDepositRateTariff.TariffGroupDescription}}&nbsp;&nbsp;</td>
+
+                    <td>
+                        <span ng-repeat="demandDepositRateTariffDetails in demandDepositRateTariff.DemandDepositRateTariffDetails">
+                            {{::demandDepositRateTariffDetails.AmountFrom | number:2}} {{::demandDepositRateTariffDetails.ProductCurrency}} {{demandDepositRateTariffDetails.AmountTo!=-1?('-ից '+(demandDepositRateTariffDetails.AmountTo | number:2)+' '+demandDepositRateTariffDetails.ProductCurrency+' (ներառյալ)'):'-ից ավել'}}&nbsp;&nbsp;
+                            <br />
+                        </span>
+
+                    </td>
+                    <td>
+                        <span ng-repeat="demandDepositRateTariffDetails in demandDepositRateTariff.DemandDepositRateTariffDetails">
+                            {{::demandDepositRateTariffDetails.InterestRate*100 | number:2}}%&nbsp;&nbsp;
+                            <br />
+                        </span>
+
+                    </td>
+
+                    
+                </tr>
+            </table>
+        </div>
+        <p>&nbsp;</p>
+    </div>
+
+
+</form>

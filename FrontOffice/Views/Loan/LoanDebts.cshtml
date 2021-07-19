@@ -1,0 +1,31 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div>
+    <div class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable">Ընդհանուր պարտք</div>
+        <div class="product-detail-cell product-detail-value">{{(loan.TotalDebt - loan.NextPeriodRateAccountBalance) | number:2}} {{loan.Currency}} <span ng-if="loan.Currency!='AMD'">({{loan.TotalDebtAMD|number:2}} AMD)</span></div>
+    </div>
+    <div class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp; որից տոկոս/տուգանք</div>
+        <div class="product-detail-cell product-detail-value">{{loan.TotalRate | number:2}} {{loan.Currency}} <span ng-if="loan.Currency!='AMD'">({{loan.TotalRateAMD|number:2}} AMD)</span></div>
+    </div>
+    <div class="product-detail-row" ng-if="loan.SubsidiaInterestRate>0">
+        <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;որից սուբսիդվող տոկոս</div>
+        <div class="product-detail-cell product-detail-value">{{loan.SubsidiaCurrentRateValue | number:2}} {{loan.Currency}}</div>
+    </div>
+    <div class="product-detail-row" ng-if="loan.TotalOverdue!=0">
+        <div class="product-detail-cell product-detail-lable" style="color:red;">Ժամկետանց մաս</div>
+        <div class="product-detail-cell product-detail-value">{{loan.TotalOverdue | number:2}} {{loan.Currency}} <span ng-if="loan.Currency!='AMD'">({{loan.TotalOverdueAMD|number:2}} AMD)</span></div>
+    </div>
+    <div class="product-detail-row" ng-if="loan.TotalOverdue!=0">
+        <div class="product-detail-cell product-detail-lable" style="color:red;">&nbsp;&nbsp;որից տոկոս/տուգանք</div>
+        <div class="product-detail-cell product-detail-value">{{loan.TotalOverdueRate | number:2}} {{loan.Currency}} <span ng-if="loan.Currency!='AMD'">({{loan.TotalOverdueRateAMD|number:2}} AMD)</span></div>
+    </div>
+    <div class="product-detail-row" ng-if="loan.JudgmentRateABS!=0">
+        <div class="product-detail-cell product-detail-lable" style="color:red;">&nbsp;&nbsp;Պետ տուրքի փոխանցումից հետո կուտակված տուժանք</div>
+        <div class="product-detail-cell product-detail-value">{{loan.JudgmentRateABS | number:2}} {{loan.Currency}} <span ng-if="loan.Currency!='AMD'">({{loan.JudgmentRateAMD|number:2}} AMD)</span></div>
+    </div>
+</div>

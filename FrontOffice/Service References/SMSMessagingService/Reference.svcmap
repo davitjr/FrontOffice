@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5b386438-e5ad-46a2-961e-fc11c153a0aa" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/ACBAOperationService/SMSMessagingService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SMSMessagingService.xsd" MetadataType="Schema" ID="b2e31f7e-bb05-45b4-87b9-decf5c681a13" SourceId="1" SourceUrl="http://localhost/ACBAOperationService/SMSMessagingService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SMSMessagingService1.xsd" MetadataType="Schema" ID="ca6d5fe2-bd8b-4912-a076-beb8484bb6f4" SourceId="1" SourceUrl="http://localhost/ACBAOperationService/SMSMessagingService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SMSMessagingService.wsdl" MetadataType="Wsdl" ID="004d8879-4750-48b8-b627-4d158458b3bd" SourceId="1" SourceUrl="http://localhost/ACBAOperationService/SMSMessagingService.svc?wsdl" />
+    <MetadataFile FileName="SMSMessagingService.disco" MetadataType="Disco" ID="e96f9028-f7ed-48cf-99ae-c8d9f2b92b1b" SourceId="1" SourceUrl="http://localhost/ACBAOperationService/SMSMessagingService.svc?disco" />
+    <MetadataFile FileName="SMSMessagingService2.xsd" MetadataType="Schema" ID="b34d9e6e-1ebe-48a6-86fd-5452c4f43b74" SourceId="1" SourceUrl="http://localhost/ACBAOperationService/SMSMessagingService.svc?xsd=xsd2" />
+    <MetadataFile FileName="SMSMessagingService3.xsd" MetadataType="Schema" ID="7a05a1b3-6351-4fac-a914-5853284421e5" SourceId="1" SourceUrl="http://localhost/ACBAOperationService/SMSMessagingService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

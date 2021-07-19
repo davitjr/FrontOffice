@@ -1,0 +1,97 @@
+﻿@{
+    Layout = null;
+}
+<div ng-controller="CardCtrl" ng-if="productid" ng-init="getCardServiceFee(productid);getCardServiceFeeGrafik()" id="cardServiceFeeDetails">
+    <div id="cardservicefee_menu" class="menu-bar dialog-menu light-green details-menu" style="margin-top:0px;margin-left:0px;">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-2 " ng-controller="PopUpCtrl" ng-click="params={productid:productid,cardnumber:cardnumber};openWindow('/Card/CardServiceFeeGrafikDetails','Քարտի սպասարկման միջն/վճար գրաֆիկ','cardServiceFeegrafik')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="applicationButton h-menu-icon">Գրաֆիկ</span>
+            </li>
+            <li class="root-menu-item-2 " ng-controller="CardServiceFeeGrafikDataChangeOrderCtrl" ng-if="hascardServiceFeeGrafik && ($root.SessionProperties.IsChiefAcc == true || $root.SessionProperties.AdvancedOptions.tmpIsCardDepartment=='1')" ng-click="saveCardServiceFeeGrafikRemovableOrder(productid)">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">Հեռացնել գրաֆիկ</span>
+            </li>
+            <li class="root-menu-item-4 " ng-if="change!=true && cardclosingdate==null && ($root.SessionProperties.IsChiefAcc == true || $root.SessionProperties.AdvancedOptions.tmpIsCardDepartment=='1') " ng-click="$parent.change=true">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="closeAccountButton  h-menu-icon">Փոփոխել</span>
+            </li>
+            <li class="root-menu-item-5 " ng-if="change==true" ng-click="$parent.change=false">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+            <li class="root-menu-item-2 " ng-controller="PopUpCtrl"  ng-click="params={cardtype:cardtype,relatedofficenumber:relatedofficenumber};openWindow('/Card/CardTariffAdditionalInformation','Քարտային սակագների լրացուցիչ տվյալներ','cardtariffadditionalinformation')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="applicationButton  h-menu-icon" >Սակագներ</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div class="product-details" style="margin-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ընդհանուր սպասարկման միջն/վճար</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardServiceFee.ServiceFeeTotal|number:2}} AMD
+                <span ng-if="change && hascardServiceFeeGrafik!=true" ng-controller="PopUpCtrl" ng-click="params={productid:productid,fieldValue:cardServiceFee.ServiceFeeTotal,fieldType:1,valueType:'AMD'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սպաս. պարբ. գանձումների գումար</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardServiceFee.ServiceFee|number:2}} AMD
+                <span ng-if="change && hascardServiceFeeGrafik!=true" ng-controller="PopUpCtrl" ng-click="params={productid:productid,fieldValue:cardServiceFee.ServiceFee,fieldType:2,valueType:'AMD'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գանձումների հաճախականություն</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardServiceFee.Period}} ամիս
+                <span ng-if="change && hascardServiceFeeGrafik!=true" ng-controller="PopUpCtrl" ng-click="params={productid:productid,fieldValue:cardServiceFee.Period,fieldType:3,valueType:'ամիս'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Առաջին գանձում</div>
+            <div class="product-detail-cell product-detail-value">{{cardServiceFee.FirstCharge}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վճարված սպասարկման միջն/վճար</div>
+            <div class="product-detail-cell product-detail-value" ng-style="cardServiceFee.ServiceFeePayed!=0 && {'color':'green'}">
+                {{cardServiceFee.ServiceFeePayed|number:2}} AMD
+                <span ng-show="change" ng-controller="PopUpCtrl" ng-click="params={productid:productid,fieldValue:cardServiceFee.ServiceFeePayed,fieldType:4,valueType:'AMD'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջին վճարման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardServiceFee.LastDayOfServiceFeePayment===''? ' - ' : cardServiceFee.LastDayOfServiceFeePayment | mydate | date: 'dd/MM/yyyy'}}
+                <span ng-show="change" ng-controller="PopUpCtrl" ng-click="params={productid:productid,fieldValue:cardServiceFee.LastDayOfServiceFeePayment,fieldType:5,isDate:true};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաջորդ վճարման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardServiceFee.NextDayOfServiceFeePayment===''? ' - ' : cardServiceFee.NextDayOfServiceFeePayment | mydate | date: 'dd/MM/yyyy'}}
+                <span ng-show="change" ng-controller="PopUpCtrl" ng-click="params={productid:productid,fieldValue:cardServiceFee.NextDayOfServiceFeePayment,fieldType:6,isDate:true};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պարտք</div>
+            <div class="product-detail-cell product-detail-value" ng-style="cardServiceFee.Debt!=0 && {'color':'red'}">
+                {{cardServiceFee.Debt|number:2}} AMD
+                <span ng-show="change" ng-controller="PopUpCtrl" ng-click="params={productid:productid,fieldValue:cardServiceFee.Debt,fieldType:7,valueType:'AMD'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխարինման միջն/վճար</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardServiceFee.ReplacementFee|number:2}} AMD
+                <span ng-show="change" ng-controller="PopUpCtrl" ng-click="params={productid:productid,fieldValue:cardServiceFee.ReplacementFee,fieldType:8,valueType:'AMD'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վճարված փոխարինման միջն/վճար</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardServiceFee.PayedReplacementFee|number:2}} AMD
+                <span ng-show="change" ng-controller="PopUpCtrl" ng-click="params={productid:productid,fieldValue:cardServiceFee.PayedReplacementFee,fieldType:9,valueType:'AMD'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+    </div>
+</div>
+

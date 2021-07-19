@@ -1,0 +1,253 @@
+﻿<style type="text/css">
+    .product-container {
+        width: 750px;
+    }
+</style>
+
+<div style="margin-left:15px;margin-top:5px" ng-controller="EmployeeWorksCtrl" id="employeeWorks" ng-init="setSearchParameters()" class="container">
+    <form class="form  ">
+        <div class="col-sm-9" style="padding:0;margin-bottom:0px">
+
+
+            <div class="col-sm-3  ">
+                <div class="product-detail-cell product-detail-lable">
+                    Մուտքագրման ա/թ
+                </div>
+                <div>
+                    <input type="date" ng-model="searchParams.RegistrationDate" style="width: 155px;" class="form-control">
+                </div>
+            </div>
+
+
+            <div class="col-sm-3  ">
+                <div class="product-detail-cell product-detail-lable">
+                    Հաճախորդի համար
+                </div>
+                <div>
+                    <div class="input-group">
+                        <input type="text" style="width:122px" class="form-control" ng-disabled="disableCustomerNumber" id="CustomerNumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="CustomerNumber" ng-model="searchParams.CustomerNumber">
+                        <div class="input-group-btn" style="display:inline-block;">
+                            <button type="button" title="Հաճախորդի-ի որոնում" ng-disabled="disableCustomerNumber" class="btn btn-primary searchButton" ng-click="searchCustomers(true)"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <div class="col-sm-3  ">
+                <div class="product-detail-cell product-detail-lable">
+                    Կատարող
+                </div>
+                <div>
+                    <div class="input-group">
+                        <input type="text" style="width:122px" class="form-control" id="setnumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="setnumber" ng-model="searchParams.ExecutorSetNumber">
+                        <div class="input-group-btn" style="display:inline-block;">
+                            <button type="button" title="ՊԿ-ի որոնում" class="btn btn-primary searchButton" ng-click="searchCashiers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                    <div class="product-detail-cell product-detail-lable">
+                        {{SetNumberDescription}}
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+
+        <div class="col-sm-9" style="padding:0;margin-bottom:25px">
+
+            <div class="col-sm-3 " ng-init="getTypeOfEmployeeWorkQualities()">
+                <div class="product-detail-cell product-detail-lable">
+                    Կարգավիճակ
+                </div>
+                <div>
+                    <select data-ng-model="searchParams.Quality" name="Quality" id="Quality" class="form-control" required
+                            data-ng-options="k as v for (k,v) in typeOfEmployeeWorkQualities" style="width: 155px">
+                        <option value="" style="margin-left:25px">Բոլորը...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-3 " ng-init="getTypeOfEmployeeWorks()">
+                <div class="product-detail-cell product-detail-lable">
+                    Տեսակ
+                </div>
+                <div>
+                    <select data-ng-model="searchParams.Type" name="Type" id="Type" class="form-control" required
+                            data-ng-options="k as v for (k,v) in typeOfEmployeeWorks" style="width: 155px">
+                        <option value="" style="margin-left:25px">Բոլորը...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-3 " ng-init="getTypeOfEmployeeWorkImportances()">
+                <div class="product-detail-cell product-detail-lable">
+                    Կարևորություն
+                </div>
+                <div>
+                    <select data-ng-model="searchParams.Importance" name="Importance" id="Importance" class="form-control" required
+                            data-ng-options="k as v for (k,v) in typeOfEmployeeWorkImportances" style="width: 155px">
+                        <option value="" style="margin-left:25px">Բոլորը...</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-9" style="padding:0;display:inline-block">
+            <div class="col-sm-3">
+                <div class="product-detail-cell product-detail-lable">
+                    Վերջնաժամկետ
+                </div>
+                <div>
+                    <input type="date" ng-model="searchParams.EndDate" style="width: 155px;" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-3  " ng-if="searchParams.Quality==30 || searchParams.Quality==40">
+                <div class="product-detail-cell product-detail-lable">
+                    Փակման/Հրաժարման ա/թ
+                </div>
+                <div>
+                    <input type="date" ng-model="searchParams.ClosingDate" style="width: 155px;" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-3  " ng-if="searchParams.Quality==30 || searchParams.Quality==40">
+                <div class="product-detail-cell product-detail-lable">
+                    Փակողի/Հրաժարողի ՊԿ
+                </div>
+                <div>
+                    <div class="input-group">
+                        <input type="text" style="width:122px" class="form-control" id="setnumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="setnumber" ng-model="searchParams.ClosingSetNumber">
+                        <div class="input-group-btn" style="display:inline-block;">
+                            <button type="button" title="ՊԿ-ի որոնում" class="btn btn-primary searchButton" ng-click="searchCashiers(true)"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                    <div class="product-detail-cell product-detail-lable">
+                        {{ClosingSetNumberDescription}}
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="col-sm-12" style="padding:0;display:inline-block">
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        &nbsp;
+                    </div>
+                    <div>
+                        <button type="button" class="btn-sm btn-primary" ng-click="searchEmployeesWorks()"><span class="glyphicon glyphicon-search"></span> Որոնել</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+</form>
+
+    <div class="product-container">
+        <div class="header-title">
+            Աշխատանքներ
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="include-closed-products">
+                    Քանակ` {{totalRows}}<span style="color:red;font-weight: bold;" ng-show="newWorkCount>0">&nbsp;&nbsp; Նոր՝ {{newWorkCount}}</span>
+                </div>
+                <div ng-controller="PopUpCtrl" ng-click="params={disableCustomerNumber:disableCustomerNumber}; openWindow('/EmployeeWorks/NewEmployeeWork','Նոր աշխատանք','newemployeework')">
+                    <i class="add-new-product tipB" data-original-title="Նոր աշխատանք"></i>
+                </div>
+            </div>
+            <div class="product-content-table custom-scroll" id="employeeWorkList">
+                <div ng-if="employeeWorks==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="employeeWorks.length!=0" ng-repeat="employeeWork in employeeWorks" style="cursor: pointer;" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow(employeeWork)">
+                            <td class="col-sm-7">
+
+                                <span class="tab_text">Հերթական համար` </span> <span style="font-weight: bold;">{{ employeeWork.Id }}</span>
+                                <br />
+                                <span ng-if="employeeWork.Type==1" title="{{employeeWork.TypeDescription}}" >
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<span title="{{employeeWork.TypeDescription}}" class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    <br />
+                                </span>
+                                <span ng-if="employeeWork.Type==2" title="{{employeeWork.TypeDescription}}" >
+                                    <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+                                    <br />
+                                </span>
+                                <span ng-if="employeeWork.Type==3" title="{{employeeWork.TypeDescription}}" >
+                                    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                    <br />
+                                </span>
+                                <span ng-if="employeeWork.Type==5" title="{{employeeWork.TypeDescription}}" >
+                                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                    <br />
+                                </span>
+                                <span ng-if="employeeWork.Type==4" title="{{employeeWork.TypeDescription}}" >
+                                     <span class="glyphicon glyphicon-text-background" aria-hidden="true"></span>
+                                     <br />
+                                 </span>
+                                 <span title="{{employeeWork.TypeDescription}}" class="tab_text">Հաճախորդի համար` </span> <span style="font-weight: bold;">{{ employeeWork.CustomerNumber }}</span>
+                                 <br />
+                                 <span title="{{employeeWork.TypeDescription}}" class="tab_text">Մուտքագրման ա/թ` </span> {{ employeeWork.RegistrationDate | mydatetime }}
+                                 <br />
+                                 <span title="{{employeeWork.TypeDescription}}" class="tab_text">Վերջնաժամկետ` </span> {{ employeeWork.EndDate | mydate | date: 'dd/MM/yyyy' }}
+                                 <br />
+                                 <span class="tab_text">Նկարագրություն` </span> {{ employeeWork.DescriptionTypeDescription}}
+</td>
+                            <td class="col-sm-4">
+
+
+                                <span class="tab_text">Մուտքագրող ՊԿ` </span> {{ employeeWork.SetNumber}}&nbsp;<span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" title="Օգտագործողի  տվյալներ" ng-click="params={setNumber:employeeWork.SetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>
+                                <br />
+                                <span class="tab_text">Կարգավիճակ` </span><span ng-style="{ color : employeeWork.Quality==10 ?'green':''}">{{ employeeWork.QualityDescription}}</span> <span ng-if="employeeWork.IsOverdueWork==true" style="color:red" title="Ժամկետանց" class="glyphicon glyphicon-flash" aria-hidden="true"></span>
+                                <br />
+                                <span class="tab_text">Կատարող ՊԿ` </span> {{ employeeWork.ExecutorSetNumber}} &nbsp;<span title="Օգտագործողի  տվյալներ" style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:employeeWork.ExecutorSetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>
+
+                            </td>
+
+                            <td class="col-sm-1 click_toggle" context="contextWork" id="contextMenu"><div id="contextMenu"></div> </td>
+
+                        </tr>
+                        <tr ng-if="employeeWorks.length==0">
+                            <td colspan="3" style="text-align:center">Առկա չեն աշխատանքեր</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                    ng-model="currentPage"
+                    items-per-page="numPerPage"
+                    total-items="totalRows"
+                    max-size="maxSize"
+                    boundary-links="true"
+                    previous-text="‹"
+                    next-text="›"
+                    first-text="«"
+                    last-text="»">
+        </div>
+        <ul id="contextWork" class="dropdown-menu">
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={employeeWork:selectedWork}; openWindow('/EmployeeWorks/EmployeeWorkDetails','Աշխատանքի տվյալներ','currentWorkdetails')">Դիտարկել</a></li>
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-if="disableCustomerNumber!=true" ng-click="redirectProducts(selectedWork.CustomerNumber)">Հաճախորդի պրոդուկտներ</a></li>
+
+        </ul>
+    </div>
+</div>
+
+
+<script>
+    (function ($) {
+        $(window).on('load',function () {
+
+            $("#employeeWorkList").mCustomScrollbar({
+                theme: "rounded-dark",
+                scrollButtons: {
+                    scrollAmount: 200,
+                    enable: true
+                },
+                mouseWheel: {
+                    scrollAmount: 200
+                }
+            });
+
+        });
+    })(jQuery);
+</script>

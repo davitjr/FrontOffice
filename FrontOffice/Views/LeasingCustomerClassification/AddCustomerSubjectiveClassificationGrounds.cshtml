@@ -1,0 +1,150 @@
+﻿<style type="text/css">
+    *[tabindex]:focus {
+        outline: 3px green solid !important;
+    }
+</style>
+
+<form style=" overflow-y: hidden;  overflow-x: hidden;  width:500px" name="AddForTable1" ng-controller="LeasingCustomerClassificationCtrl" id="addCustomerSubjectiveClassificationGroundsForm" data-ng-init=" GetReasonTypes() ">
+
+
+    <div class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li tabindex="7" ng-click="AddCustomerSubjectiveClassificationGrounds() " ng-keypress="keyPressAddCustomerSubjectiveClassificationGrounds($event)" style="padding-right:0">
+                <span><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ավելացնել</span>
+            </li>
+            <li tabindex="8" ng-controller="PopUpCtrl" ng-click="CloseBPDialog('addCustomerSubjectiveClassificationGroundsForm')" ng-keypress="keyPressCloseBPDialogAddCustomerSubjectiveClassificationGrounds($event)" style="padding-right:0">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+    </div>
+
+     
+
+    <div>
+
+        <div class="row" style="padding-bottom:20px">
+            <div class="col-sm-3">
+                <div align="left">Տեսակը</div>
+            </div>
+            <div class="col-sm-2">
+                <select tabindex="1" name="status" ng-model="classificationType" ng-change="GetReasonTypes()" convert-to-number>
+                    <option value="0" selected="selected">Ընտրել տեսակը</option>
+                    <option value="2">դասակարգում</option>
+                    <option value="1">հետդասակարգում</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="row" style="padding-bottom:20px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Հիմք</div>
+            </div>
+            <div class="col-sm-2">
+                <div>
+                    <select tabindex="2" ng-show="types" ng-model="reasonDescriptionID" name="" id="xxx" convert-to-number>
+                        <option ng-repeat="(key, value) in types" value="{{key}}">{{value}}</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style=" padding-bottom:15px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Զեկուցագրի համարը </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <input tabindex="3" type="text" ng-model="reportNumber" style="width:280px" id="group">
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style=" padding-bottom:15px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Զեկուցագրի ա/թ </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <input tabindex="4" type="date" ng-model="reportDate" name="Date" style="height:30px;  width:auto" required>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style=" padding-bottom:15px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Լրացուցիչ նկարագրություն </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <textarea tabindex="5" rows="3" ng-model="additionalDescription" cols="40"></textarea>
+                </div>
+            </div>
+        </div>
+
+
+        <div ng-show="classificationType==2" data-ng-init="RiskDaysCountAndName() " class="row" style=" padding-bottom:20px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Դաս</div>
+            </div>
+            <div class="col-md-3">
+                <select tabindex="6" name="Class" ng-model="classificationClass" ng-change="RiskDaysCountAndName()" convert-to-number>
+                    <option value="0">ստանդարտ</option>
+                    <option value="1">հսկվող</option>
+                    <option value="2">ոչ ստանդարտ</option>
+                    <option value="3">կասկածելի</option>
+                    <option value="4">անհուսալի</option>
+                </select>
+                @*<select ng-show="riskDaysCount" ng-model="classificationClass" ng-change="RiskDaysCountAndName()" name="" id="">
+                        <option ng-repeat="(key, value) in riskDaysCount" value="{{key}}">{{value}}</option>
+                    </select>*@
+            </div>
+        </div>
+        <div ng-if="classificationType==1" class="row" style=" padding-bottom:15px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Դաս </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <input type="text" value="ստանդարտ" style="width:280px; height:30px; " disabled>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div ng-show="isDaysAccumulated==1" class="row" style=" padding-bottom:15px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Դասակարգման ա/թ </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="input-group" ng-show="classificationType==1">
+                    <input type="date" ng-model="classificationdate" disabled name="Date" style="height:30px;  width:auto" required>
+                </div>
+                <div class="input-group" ng-show="classificationType==2">
+                    <input type="date" ng-model="classificationdate" ng-blur="ChangeClassificationClass()" name="Date" style="height:30px;  width:auto" required>
+                </div>
+
+            </div>
+            <div class=" col-sm-4" ng-if=" isDaysAccumulated==1 &&  classificationClass!=0">
+                <label style=" color:red">{{riskDaysCountAndName.m_Item1}} օր ({{riskDaysCountAndName.m_Item2}})</label>
+            </div>
+
+
+        </div>
+
+        <div class="row" align="left" style=" padding-bottom:15px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">
+                    Դասակարգում օրերի կուտակումով
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <input type="checkbox" ng-model="isDaysAccumulated" ng-change="" ng-true-value="1" ng-false-value="0">
+            </div>
+        </div>
+
+    </div>
+</form>

@@ -1,0 +1,46 @@
+﻿            <form ng-controller="SwiftCopyOrderCtrl" ng-init="getSwiftCopyOrder(selectedOrderId)" style="width:500px">
+    <loading-control class="col-sm-12" scopevariable="order.Id"></loading-control>
+    <div ng-if="order.Quality!=undefined && order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && $root.SessionProperties.IsCalledFromHB != true" ng-show="order.Id" class="menu-bar dialog-menu light-green details-menu"
+         style="margin-left:-3px;margin-top:0px">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 " ng-if="$root.SessionProperties.IsCalledFromHB != true" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetSwiftCopyOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5"><span class="glyphicon glyphicon-remove-circle"></span>&nbsp;Հրաժարման հայտ</span>
+            </li>
+        </ul>
+    </div>
+    <div ng-show="order.Id" class="product-details bhoechie-tab-content" style="padding-left:10px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="$root.SessionProperties.IsCalledFromHB != true">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{order.OperationDateString}}</div>
+                            </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Swift Գործարքի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.ContractNumber}}</div>
+                        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Միջնորդավճար</div>
+            <div class="product-detail-cell product-detail-value">{{order.FeeAmount | number:2}} {{order.FeeAccount.Currency}}</div>
+                    </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{ order.QualityDescription }}</div>
+            <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{ order.QualityDescription }}</div>
+            <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{ order.QualityDescription }}</div>
+                </div>
+        <div ng-if="order.Quality==31" ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մերժման պատճառ`</div>
+            <div class="product-detail-cell product-detail-value"><span class="redStyle">{{ rejectHistory.ReasonDescription }}</span></div>
+                </div>
+        <div class="product-detail-row" ng-if="$root.SessionProperties.IsCalledFromHB != true">
+            <div class="product-detail-cell my_text1">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+            </div>
+</div>
+</form>

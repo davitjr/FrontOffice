@@ -1,0 +1,180 @@
+﻿<div>
+    <style>
+        .modal-content {
+            width: 760px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+
+        .closedCard {
+            color:red;
+        }
+
+          .resultRow
+        {
+            font-size:10pt;
+            color:black;
+            font-weight:normal;
+        }
+
+       .resultRowAddInf
+        {
+            font-size:9pt;
+        }
+
+       .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+       .tableHeader{
+           font-size:9pt;
+           height:25px;
+
+       }
+    </style>
+
+    <style>
+        #searchCard .product-container-header > th {
+            font-weight: inherit;
+        }
+
+        #searchCard .div-table-content {
+            margin-top: -5px!important;
+            border-color: #CFDAD0 !important;
+        }
+
+    </style>
+
+
+
+  
+
+    <div id="searchCard">
+        <div class="col-sm-12 popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+            <div style="margin-top:-10px">Քարտի որոնում</div>
+            <img src="/Content/images/close_pop.png " ng-click="closeSearchCardsModal()" style="margin-top:-10px;" alt="">
+        </div>
+        <div class="row">
+            <div class="col-md-6 ">
+                <div class="col-md-5 form-group-search">
+                    Քարտի համար
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <input type="text" maxlength="16" ng-model="searchParams.cardNumber" name="cardNumber" class="form-control tab_title " onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' />
+                </div>
+                <div class="col-md-5 form-group-search">
+                    Հաճախորդ
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <div class="input-group">
+                        <input type="text" maxlength="12" ng-model="searchParams.customerNumber" name="customerNumber" class="form-control tab_title " onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' />
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default searchButton" ng-click="searchCustomers()" title="Հաճախորդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-4 form-group-search">
+                    Մասնաճյուղ
+                </div>
+                <div class="col-md-8 form-group-search" data-ng-init="getFilialList()">
+                    <select data-ng-model="searchParams.filialCode" name="filialCode" id="filialCode" class="form-control"
+                            data-ng-options="k as v for (k,v) in filialList" required>
+                        <option value="" hidden>Ընտրեք մասնաճյուղը...</option>
+                    </select>
+                </div>
+                <div class="col-md-4 form-group-search">
+                    Արժույթ
+                </div>
+                <div class="col-md-8 form-group-search">
+                    <select data-ng-model="searchParams.currency" name="currency" id="cusrrency" class="form-control"
+                            required>
+                        <option value="">Ընտրեք արժույթը...</option>
+                        <option value="AMD">AMD</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row rowWithFullWidth">
+            <div class="col-md-6 checkbox">
+                <label for="includeCloseCards">
+                    <input type="checkbox" ng-model="searchParams.includeCloseCards" name="includeCloseCards" />
+                    Ներառել փակվածները
+                </label>
+            </div>
+        </div>
+        <div style="margin:5px">
+            <button type="button" class="btn btn-primary" ng-click="btnFindClick();" title="Որոնել քարտը"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+        </div>
+        <div style="overflow:auto; margin:5px; margin-bottom:0px; margin-top:0px; ">
+            <table class="table table-condensed" style="margin-bottom:0;">
+                <thead>
+                    <tr class="product-container-header">
+                        <th class="col-sm-1" style="text-align:center;">Մ/ճ</th>
+                        <th class="col-sm-3" style="text-align:center;">Քարտի համար</th>
+                        <th class="col-sm-1" style="text-align:center;">Արժույթ</th>
+                        <th class="col-sm-3" style="text-align:center;">Տեսակ</th>
+                        <th class="col-sm-4" style="text-align:center;">Հաճախորդ</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="div-table-content " style="max-height:200px; min-height:200px;border: gray 1px solid; ">
+                <table class="table table-condensed table-hover" style="background-color:white">
+                    <tbody>
+                        <tr ng-if="cardsList.length!=0" ng-repeat="card in filteredCards" style="font-size:9pt; cursor:pointer;" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" ng-dblclick="selectCard()">
+                            <td>
+                                <div class="resultRow" ng-class="{'closedCard': card.ClosingDate != null }">
+                                    <div class="col-sm-1 ">
+                                        {{ ::card.FilialCode }}
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        {{ ::card.CardNumber }}
+                                    </div>
+                                    <div class="col-sm-1 ">
+                                        {{ ::card.Currency }}
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        {{ ::card.CardType }}
+                                    </div>
+                                    <div class="col-sm-4 ">
+                                        {{ ::card.CardHolderDescription }}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="cardsList.length==0">
+                            <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="margin-left:12px;">
+            Ընդամենը` {{totalRows}}
+        </div>
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                    ng-model="currentPage"
+                    total-items="totalRows"
+                    items-per-page="numPerPage"
+                    max-size="maxSize"
+                    boundary-links="true"
+                    previous-text="‹"
+                    next-text="›"
+                    first-text="«"
+                    last-text="»">
+        </div>
+    </div>
+
+    
+</div>
+
+
+
+

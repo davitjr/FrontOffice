@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+}
+<form ng-show="false">
+    <div class="menu-bar dialog-menu light-green">
+    </div>
+    <div>
+    </div>
+</form>
+<form style="width:970px" ng-controller="ProvisionCtrl" ng-init="getProvisionOwners(productId)">
+    <div class="product-container" style="min-width:950px">
+        <div class="header-title">
+            Գրավին կից հաճախորդներ
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="col-sm-4">Համար</div>
+                <div class="col-sm-5">Անուն Ազգանուն Հայրանուն/ Անվանում</div>
+                <div class="col-sm-2">Անձնագիր/ՀՎՀՀ</div>
+                <div class="col-sm-1">ՀԾՀ</div>
+            </div>
+            <div class="product-content-table custom-scroll" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="owner in owners" style="font-size:9pt; cursor:pointer;" ng-class="{'selected':$index == selectedRow}">
+                            <td><customerinfo customernumber="owner" viewmod="1"></customerinfo></td>
+                        </tr>
+                        <tr ng-if="owners.length==0">
+                            <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,105 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    table, td, th {
+        border: 0.2px solid;
+    }
+</style>
+
+<form ng-controller="UtilityPaymentSearchCtrl" data-ng-init="getENAPayments(abonentNumber,branch);getENAPaymentDates(abonentNumber,branch);getFilialList()" style="width:720px">
+
+    <div style="margin-top:20px;">
+        <div class="col-sm-4">
+            <div class="product-detail-cell product-detail-lable">
+                Վճարման ա/թ
+            </div>
+            <div>
+                <select ng-model="PaymentDate " name="paymentDate" id="paymentDate" class="form-control"
+                        data-ng-options="v as v | mydate | date: 'dd/MM/yyyy' for (k,v) in ENAPaymentDates">
+                    <option value="" style="margin-left:25px">Ընտրեք ամսաթիվը</option>
+                </select>
+                <br />
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="product-detail-cell product-detail-lable">
+                Վճարված գումար
+            </div>
+            <div>
+                <input type="number" class="form-control" id="amount" name="amount" ng-model="Amount">
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="product-detail-cell product-detail-lable">
+                Թերթիկի N
+            </div>
+            <div>
+                <input type="number" class="form-control" id="orderNumber" name="orderNumber" ng-model="OrderNumber">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4" style="margin-bottom:20px;margin-top:20px;">
+        <div class="product-detail-cell product-detail-lable">
+            Մասնաճյուղ
+        </div>
+        <div>
+            <select ng-model="Filial " name="filial" id="filial" class="form-control"
+                    data-ng-options="k as v for (k,v) in FilialList">
+                <option value="" style="margin-left:25px">Ընտրեք մասնաճյուղը</option>
+            </select>
+            <br />
+        </div>
+    </div>
+
+    <div class="col-sm-4" style="margin-bottom:20px;margin-top:20px;">
+        <div class="product-detail-cell product-detail-lable">
+            Էլ․ ցանցի մ/ճ
+        </div>
+        <div>
+            <input type="text" class="form-control" id="branch" name="branch" ng-model="Branch">
+        </div>
+    </div>
+
+
+    <div class="product-container" style="min-width:700px!important;margin-bottom:10px ">
+        <div class="header-title">
+            Կատարված գործարքներ
+        </div>
+        <div>
+            <div class="product-container-header" style="height:25px;">
+                <div class="col-sm-3" style="text-align:center">Վճարման ա/թ</div>
+                <div class="col-sm-3" style="text-align:center">Վճարված գումար</div>
+                <div class="col-sm-2" style="text-align:center">Թերթիկի N</div>
+                <div class="col-sm-2" style="text-align:center">Մասնաճյուղ</div>
+                <div class="col-sm-2" style="text-align:center">Էլ․ ցանցի մ/ճ</div>
+            </div>
+            <div class="product-content-table custom-scroll">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="payment in ENAPayments | filter: { FilialCode: Filial!=undefined?Filial:'',PaidAmount:Amount!=undefined?Amount:'',
+                        Branch:Branch!=undefined?Branch:'',PaymentOrderNumber:OrderNumber!=undefined?OrderNumber:'' }
+                        | dateCompare:PaymentDate as filteredStuff" ng-if="ENAPayments.length!=0 && ENAPayments">
+                            <td class="col-sm-3" style="text-align:center;padding:0;">{{::payment.PaymentDate | mydate | date: 'dd/MM/yyyy' }}</td>
+                            <td class="col-sm-3" style="text-align:right;padding-right:20px;">{{::payment.PaidAmount | number:2}} </td>
+                            <td class="col-sm-2" style="text-align:center;padding:0;">{{::payment.PaymentOrderNumber}}</td>
+                            <td class="col-sm-2" style="text-align:center;padding:0;">{{::payment.FilialCode}}</td>
+                            <td class="col-sm-2" style="text-align:center;padding:0;">{{::payment.Branch}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="padding:20px; border-top-style:solid; border-top-color:#ddd; border-top-width:1px">
+            Ընդամենը՝ {{calculateENAPaymentTotal(filteredStuff) | number:2}}
+        </div>
+    </div>
+
+</form>

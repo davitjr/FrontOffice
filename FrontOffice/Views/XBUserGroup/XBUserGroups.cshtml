@@ -1,0 +1,79 @@
+﻿<script type="text/javascript">
+    $("#XBUserGroupContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div ng-controller="XBUserGroupCtrl">
+
+    <div class="product-container" id="XBUserGroups" ng-init="getXBUserGroups()">
+        @*<div class="header-title">
+                <a href="/#xbUserGroups" style="color:black;">
+                   Հաստատման խմբեր
+                </a>
+                <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+            </div>*@
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+
+                <div>
+
+                    <i ng-show="hbapplicationquality!=6" class="add-new-product tip" ng-controller="PopUpCtrl" ng-click="openWindow('/XBUserGroup/XBUserGroup','Հասանելիության խմբի մուտքագրում','newxbusergroup')" data-toggle="tooltip" data-trigger="hover" title="Նոր խումբ"></i>
+                </div>
+            </div>
+
+
+            <div ng-if="ApprovementSchema" class="product-content-table custom-scroll" id="XBUserGroupContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+
+             
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="schemaDetails in ApprovementSchema.SchemaDetails" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,schemaDetails.Group);">
+                            <td id="groupRow_{{$index}}">
+
+                                {{ ::schemaDetails.Group.GroupName }}
+
+                            </td>
+
+                            <td class="col-sm-1 click_toggle" context="contextXBGroups" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                        <tr ng-if="groups.length==0 ">
+                            <td colspan="3" style="text-align:center;">
+                                Առկա չեն հասանելիության խմբեր
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <ul id="contextXBGroups" class="dropdown-menu" ng-show="hbapplicationquality!=6">
+                <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={group: selectedGroup, hbusers: hbusers};openWindowWithTemplate('xbusersset','Օգտագործողների ավելացում/հեռացում','xbusersset')">Օգտագործողների ավելացում/հեռացում</a></li>
+                @*<li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={group: selectedGroup, hbusers: hbusers};openWindow('/XBUserGroup/XBUsersSet','Օգտագործողների ավելացում/հեռացում','xbusersset',callbackGetXBUsersSet)">Օգտագործողների ավելացում/հեռացում</a></li>*@
+                @*<li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={group: selectedGroup, actionType: 2};openWindowWithTemplate('xbusergroup','Հասանելիության խմբի խմբագրում','newxbusergroup')">Խմբագրել</a></li>*@
+                @*<li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={group: selectedGroup};openWindowWithTemplate('xbusergroupremove','Հասանելիության խմբի հեռացում','newxbusergroupremove')">Հեռացնել</a></li>*@
+                <li ng-click="XBUserGroupRemoval(selectedGroup)"><a style="font-weight: bold;text-decoration:none!important;cursor:pointer">Հեռացնել</a></li>
+            </ul>
+        </div>
+
+        @*---------------------------------------------------------------------------------------------------------------------------------------------*@
+    </div>
+
+</div>
+<script>
+    $("[data-toggle=tooltip]").tooltip({
+        placement: $(this).data("placement") || 'bottom'
+    });
+</script>
+
+
+
+
+
+

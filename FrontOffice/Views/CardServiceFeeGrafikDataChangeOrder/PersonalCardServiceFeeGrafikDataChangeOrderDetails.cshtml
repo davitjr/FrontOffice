@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+}
+
+
+<form style="width:620px" ng-controller="CardServiceFeeGrafikDataChangeOrderCtrl" ng-init="getCardServiceFeeGrafikDataChangeOrder(selectedOrderId)">
+    <loading-control scopevariable="order.Id"></loading-control>
+    <div id="transitPaymentOrder_menu" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0">
+        <ul id="menu" class="dialog-menu">
+
+            <li class="root-menu-item-5 " ng-if="order.Quality!=undefined && order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetTransitPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+            </li>
+
+        </ul>
+    </div>
+    <div class="product-details bhoechie-tab-content" style="min-width:620px;padding-left:10px">
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{order.OperationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրաֆիկ</div>
+            <div class="product-detail-cell product-detail-value">&nbsp;</div>
+        </div>
+        <br />
+        <div ng-show="order.CardServiceFeeGrafik!=null && order.CardServiceFeeGrafik!=undefined" class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="col-sm-4">Վճարման ամսաթիվ</div>
+                <div class="col-sm-5">Միջնորդավճար</div>
+                <div class="col-sm-3">Արժույթ</div>
+            </div>
+            <div class="product-content-table custom-scroll">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="g in order.CardServiceFeeGrafik">
+                            <td style="text-align:center" colspan="1">{{::g.PeriodEnd | mydate | date: 'dd/MM/yyyy'}}
+                             <td style="text-align:center" colspan="1">
+                                 <span>{{::g.ServiceFee|number:2}}&nbsp;&nbsp;</span>
+                            </td>
+                             <td style="text-align:center" colspan="1">{{::g.Currency}}&nbsp;&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br />
+        <div style="clear:both;color:#6F6A6A;font-weight:bold">Կատարող՝</div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;<span ng-if="order.OPPerson.PersonLastName==undefined || order.OPPerson.PersonLastName==''">Անվանում</span> <span ng-if="order.OPPerson.PersonLastName!=undefined && order.OPPerson.PersonLastName!=''"> Անուն,Ազգանուն </span> </div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonName}} {{order.OPPerson.PersonLastName}}</div>
+        </div>
+
+        <div ng-if="order.OPPerson.PersonDocument!='' && order.OPPerson.PersonDocument!=undefined" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Անձնագիր</div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonDocument}}</div>
+        </div>
+
+        <div ng-if="order.OPPerson.PersonSocialNumber!='' && order.OPPerson.PersonSocialNumber!=undefined" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;ՀԾՀ</div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonSocialNumber || "-"}}</div>
+        </div>
+
+        <div ng-if="order.OPPerson.PersonNoSocialNumber!='' && order.OPPerson.PersonNoSocialNumber!=undefined" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;ՀԾՀ-ից հրաժարվելու տեղեկանք</div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonNoSocialNumber}}</div>
+        </div>
+
+
+        <div ng-if="order.OPPerson.CustomerNumber!=''" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Հաճախորդի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.CustomerNumber}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{order.QualityDescription}}</div>
+        </div>
+
+        <div ng-if="order.Quality==31" class="">
+            <div ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="" style="clear:both;color:#6F6A6A;font-weight:bold">Մերժման պատճառ`</div>
+            <div class="redStyle">&nbsp;&nbsp;&nbsp;{{ rejectHistory.ReasonDescription }}</div>
+        </div>
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+
+
+</form>

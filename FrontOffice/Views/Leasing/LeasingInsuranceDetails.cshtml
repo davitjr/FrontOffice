@@ -1,0 +1,89 @@
+﻿
+
+<style>
+
+    .form-group-search {
+        margin-bottom: 5px;
+    }
+
+    .nonUnicodeText {
+        font-family: serif, font-size: 13px;
+        padding: 0;
+    }
+
+    .resultRow {
+        font-size: 10pt;
+        color: black;
+        font-weight: normal;
+    }
+
+    .resultRowAddInf {
+        font-size: 9pt;
+    }
+
+    .rowWithFullWidth {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .tableHeader {
+        font-size: 9pt;
+        height: 25px;
+    }
+
+
+    #LeasingInsuranceInfoForm {
+        margin: 0 auto !important;
+        position: center !important;
+        z-index: 2000 !important;
+    }
+
+    .maximize-dialog {
+        display: none;
+    }
+
+    .minimize-dialog {
+        display: none;
+    }
+</style>
+
+<div id="LeasingInsuranceInfo" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<form id="LeasingInsuranceInfoForm" name="LeasingInsuranceInfoForm" role="form" class="form-horizontal" prevent-enter-submit labels-required ng-init="initInsuranceInformation()" style=" width:1050px!important; " ng-controller="LeasingCtrl">
+
+    <div class="" style="padding-left:13px;padding-right:13px">
+        <section class="panel panel-success" style="border-color:white">
+            <div class="panel-body">
+                <div style="margin-top:-5px;margin-left:-5px ">
+                    <div style="line-height: 20px;font-size: 13px;  text-align:center;">
+                        <span> <b>Ապահովագրավճարներ </b></span>
+                    </div>
+
+                    <div class="div-table-content " style="max-height:120px; min-height:120px;border: gray 1px solid; margin-top:5px; overflow: hidden;">
+                        <table class="table table-condensed table-hover" style="background-color:white; max-height:120px; min-height:120px;">
+                            <thead>
+                                <tr class="product-container-header" style="font-size:10pt;height:20px; display: table; table-layout: fixed;">
+                                    <th style="text-align:center">Նկարագրություն </th>
+                                    <th style="text-align:center">Գումար</th>
+                                    <th style="text-align:center"><span style="margin-right: 35px;">Ամսաթիվ</span></th>
+                                </tr>
+                            </thead>
+                            <tbody style="overflow-y:scroll;overflow-x:hidden;display:block;max-height:100px; min-height:82px;">
+                                <tr ng-repeat="detail in detailedInfoObj" style="font-size:9pt; cursor:pointer;height:20px; text-align: center;font-family:'Arial Armenian';" ng-class="{'selected':detail == selectedRow}" ng-click="setClickedInsurance(detail)" ng-dblclick="selectLeasingInsurance(detail)">
+                                    <td style="text-align:center;width:350px;">{{::detail.OperDescription}}</td>
+                                    <td style="text-align:center;width:320px;"> {{::detail.SumAmd |number:2 }}</td>
+                                    <td style="text-align:center;width:320px;">{{::detail.PayDate  | mydate | date: 'dd/MM/yyyy' }}</td>
+                                </tr>
+                                <tr ng-if="detailedInfoObj.length==0">
+                                    <td colspan="3" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</form>

@@ -1,0 +1,57 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+
+<style type="text/css" >
+        #draggablePanelList .panel-heading {
+        cursor: move;
+    }
+</style>
+
+<script type="text/javascript" >
+    jQuery(function ($) {
+        var panelList = $('#draggablePanelList');
+        panelList.sortable({
+            // Only make the .panel-heading child elements support dragging.
+            // Omit this to make then entire <li>...</li> draggable.
+            handle: '.panel-heading',
+            update: function () {
+                $('.panel', panelList).each(function (index, elem) {
+                    var $listItem = $(elem),
+                        newIndex = $listItem.index();
+                });
+            }
+        });
+    });
+</script>
+<br />
+
+
+    <div class="section">
+        <div class="container">
+            <div id="draggablePanelList" class="list-unstyled">
+                    <div class="panel-heading col-md-6 ">
+                        @Html.Partial("../Account/Accounts")
+                    </div>
+                    <div class="panel-heading col-md-6">
+                        @Html.Partial("../Card/Cards")
+                    </div>
+                <div class="panel-heading col-md-6">
+                    @Html.Partial("../Deposit/Deposits")
+                </div>
+                <div class="panel-heading col-md-6">
+                    @Html.Partial("../Loan/Loans")
+                </div>
+                <div class="panel-heading col-md-6">
+                    @Html.Partial("../CreditLine/CreditLines")
+                </div>                 
+                <div class="panel-heading col-md-6">
+                    @Html.Partial("../PeriodicTransfer/PeriodicTransfers")
+                </div>
+                         
+</div>
+</div>
+    </div>

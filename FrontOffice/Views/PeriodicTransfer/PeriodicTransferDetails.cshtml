@@ -1,0 +1,161 @@
+﻿@{
+    Layout = null;
+}
+<div ng-controller="PeriodicTransferCtrl" id="periodicTransferDetails" data-ng-init="getPeriodicTransfer(productId)">
+
+
+    <div id="periodicTransferDetails_menu" class="menu-bar dialog-menu light-green details-menu">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-if="isClosed!=true" ng-click="periodic.Type!=100?getPeriodicTransferDetails(periodic.ProductId):getPeriodicSWIFTStatementTransferDetails(periodic.ProductId);">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="printButton h-menu-icon">Տպել հանձնարարություն</span>
+            </li>
+            <li class="root-menu-item-5 " ng-if="isClosed!=true" ng-controller="PopUpCtrl" ng-click="openWindow('/PeriodicTransfer/PersonalPeriodicTerminationOrder','Պարբերականի դադարեցման հայտի մուտքագրում','periodicTermination',callbackgetPeriodicTransfer)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Դադարեցում</span>
+            </li>
+            <li class="root-menu-item-6 " ng-if="isClosed!=true" ng-controller="PopUpCtrl" ng-click="params={periodicType:periodic.Type,currentPeriodic:periodic};openWindow('/PeriodicTransferDataChangeOrder/PeriodicTransferDataChangeOrder','Պարբերական փոխանցման փոփոխում','periodicDataChange')">
+                <span id="h-menu-item-6"><img id="h-menu-icon-6" class="submitButton h-menu-icon">Փոփոխել</span>  
+            </li>
+            <li class="root-menu-item-5 " ng-if="isClosed==true" ng-click="getPeriodicTransferClosingDetails(periodic.ProductId);">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Դադարեցման դիմում</span>
+            </li>
+        </ul>
+    </div>
+
+
+        
+    <div class="product-details bhoechie-tab-content" style="min-width:800px;margin-left:10px;" ng-show="periodic.Number">
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Համար</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.Number}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.TypeDescription}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">{{periodic.Type!=100?'Դեբետ':'SWIFT քաղվածքի հաշիվ'}}   </div>
+            <div class="product-detail-cell product-detail-value">{{periodic.PeriodicTransferAccountNumber}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="periodic.Type==100">
+            <div class="product-detail-cell product-detail-lable">SWIFT կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.ReceiverBankSwiftCode}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="periodic.Type==100">
+            <div class="product-detail-cell product-detail-lable">Շրջանառության առկայություն</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.ExistenceOfCirculation==true?'Այո':'Ոչ'}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.StartDateString}}</div>
+        </div>
+
+        <div ng-if="periodic.DurationType==2" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.EndDateString}}</div>
+        </div>
+
+        <div ng-if="periodic.EditingDate!=null" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.EditingDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div ng-if="periodic.DurationType==1" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.DurationTypeDescription}}</div>
+        </div>
+
+        <div ng-if="periodic.Type==1 || periodic.Type==2" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացող</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.CreditAccount}} <span ng-if="periodic.Type==1">({{periodic.CrediAccountDescription}})</span> </div>
+        </div>
+
+        <div ng-if="periodic.ReceiverName!='' && periodic.Type!=1 && periodic.Type!=2 " class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի անվանում</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.ReceiverName}}</div>
+        </div>
+
+        <div ng-if="periodic.Type!=1 && periodic.Type!=2 && periodic.Type!=100" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Բաժանորդ</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.AbonentNumber }}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div ng-if="periodic.ChargeType!=0" class="product-detail-cell product-detail-value">
+                {{periodic.ChargeTypeDescription}} <span ng-if="periodic.Type==4">({{periodic.AmountSubTypeByPurposeDescription}})</span>
+            </div>
+            <div ng-if="periodic.ChargeType==0" class="product-detail-cell product-detail-value">
+                {{periodic.AmountString}} {{periodic.Currency}} <span ng-if="periodic.Type==4">({{periodic.AmountSubTypeByPurposeDescription}})</span>
+            </div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Թողնվող մնացորդ</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.MinDebetAccountRest | number:2}} {{periodic.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="periodic.Type!=1 && periodic.Type!=2 && periodic.ChargeType==1">
+            <div class="product-detail-cell product-detail-lable">Վճարման տեսակ</div>
+            <div class="product-detail-cell product-detail-value" ng-init="content = periodic.PayIfNoDebt==0?'Պարտքի առկայության դեպքում':'Անկախ պարտքի առկայությունից'"> {{ content }} </div>
+        </div> 
+
+        <div ng-if="periodic.ChargeType==2" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Նվազագույն գումար</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.MinAmountLevel | number:2}} {{periodic.Currency}}</div>
+        </div>
+
+        <div ng-if="periodic.ChargeType==2" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Առավելագույն գումար</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.MaxAmountLevel | number:2}} {{periodic.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման առաջին օր</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.FirstTransferDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պարբերականություն</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.Periodicity}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կատարման փորձի օրերի քանակ</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.CheckDaysCount}} օր</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="periodic.Type!=1 && periodic.Type!=2">
+            <div class="product-detail-cell product-detail-lable">Մասնակի վճարման հնարավորություն</div>
+            <div class="product-detail-cell product-detail-value">
+                <span ng-if="periodic.PartialPaymentSign==0">Ոչ</span>
+                <span ng-if="periodic.PartialPaymentSign==1">Այո</span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման նպատակ</div>
+            <div class="product-detail-cell product-detail-value">{{periodic.Description}}</div>
+        </div>
+    </div>
+
+    <div class="bhoechie-tab-container" style="max-height:80%;" id="periodicTransferDetailsContainer">
+        <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+            <div class="list-group">
+                <div class="list-group-item text-center active">Քաղվածք</div>
+            </div>
+        </div>
+        <div class="bhoechie-tab " style="width: calc(100% - 140px); display: inline-block;">
+            <div class="bhoechie-tab-content active">
+                <transfershistory></transfershistory>
+                <br />
+            </div>
+        </div>
+    </div>
+
+    </div>
+

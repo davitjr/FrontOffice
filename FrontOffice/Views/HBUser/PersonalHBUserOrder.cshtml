@@ -1,0 +1,412 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #HBUserOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #newhbuser_content {
+        min-width: 700px;
+    }
+</style>
+
+<style>
+    .scroll-div {
+        height: 170px;
+        overflow: auto;
+        border: solid;
+    }
+
+    thead tr {
+        height: 50px;
+    }
+</style>
+
+
+<div id="hpUserLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+
+<form ng-controller="HBUserCtrl" name="HBUserOrderForm" id="HBUserOrderForm" role="form" style="width :700px;overflow-x:hidden" novalidate class="form-horizontal" labels-required ng-init="setLastHBUserId();initSchemaDetails(editUser)" >
+    <div id="hbuser_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li  ng-if="editUser==undefined"  class="root-menu-item-4 " ng-click="HBUserOrderForm.$setSubmitted();HBUserOrderForm.$valid  && saveHBUserOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ավելացնել</span>
+            </li>
+            <li ng-if="editUser" ng-click="editHBUser();" class="root-menu-item-5 ">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Պահպանել</span>
+            </li>
+            <li ng-if="editUser==undefined"  class="root-menu-item-5 " onclick="CloseBPDialog('newhbuser')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+
+            <li ng-if="editUser" class="root-menu-item-5 " onclick="CloseBPDialog('edithbuser')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+
+    <div style="margin-left:15px;margin-right:30px" ng-if="lastHBUserId" ng-init="$root.SessionProperties.CustomerType==6 && getCustomerMainData()">
+        <div class="form-group" ng-if="!editUser">
+            <label class="tab_title col-sm-6 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+            <div class="col-sm-6 row">
+                <div class="multiple_columns col-sm-8 ">
+                    <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.RegistrationDate" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-if="$root.SessionProperties.CustomerType!=6"  >
+            <label class="tab_title col-sm-6 tab_title " for="userGroups">Խմբեր</label>
+            <div  class="col-sm-6">
+                <div class="row">
+                    <select    chosen="" multiple="" name="userGroups" id="userGroups" data-ng-model="order.schemaDetails" class="chosen-select col-sm-12" data-placeholder="Ընտրեք Խումբը..."
+                            data-ng-options="s.Group.GroupName  for s in schema.SchemaDetails" ></select>
+                </div>
+            </div>
+            @*<div class="row col-sm-offset-6">
+                    <ng-messages ng-if="HBUserOrderForm.$submitted || HBUserOrderForm.userGroups.$dirty"
+                                 for="HBUserOrderForm.userGroups.$error">
+                        <ng-message when="required" class="errors">
+                           Խումբը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>*@
+        </div>
+
+        <div  class="form-group" ng-if="$root.SessionProperties.CustomerType!=6">
+            <label for="customerNumber" class="col-sm-6 tab_title">Հաճախորդ<span class="redStyle">*</span></label>
+            <div class="col-sm-6 ">
+                <div class="row">
+                    <div class="input-group">
+                        <input type="text" ng-model="order.HBUser.CustomerNumber" style="width:200px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" class="form-control" id="customerNumber" name="customerNumber" ng-change="getCustomerMainData()" ng-disabled="editUser && editUser.newInserted==false" required>
+                        <div class="input-group-btn" style="display:inline-block;">
+
+                            <button type="button" title="Ավելացնել հաճախորդին" class="btn btn-primary" @*ng-click="addCustomer(order.HBUser.CustomerNumber)"*@><span class="glyphicon glyphicon-plus"></span></button>
+                            <button type="button" title="Հաճախորդի որոնոմ" class="btn btn-primary searchButton" ng-click="searchCustomers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <ng-messages ng-if="HBUserOrderForm.$submitted || HBUserOrderForm.customerNumber.$dirty"
+                                 for="HBUserOrderForm.customerNumber.$error">
+                        <ng-message when="required" class="errors">
+                            Հաճախորդի համարը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                    <div ng-if="customerMainData">
+                        <span style="color:red;font-size:12px" ng-if="customerMainData.CustomerType !=6">Հնարավոր է կցել միայն ֆիզիկական անձ տեսակի հաճախորդ</span>
+                    </div>
+                    <div ng-if="order.HBUser.CustomerNumber!=undefined && order.HBUser.CustomerNumber.toString().length!=12">
+                        <span style="color:red;font-size: 12px;">Հաճախորդի համարը պետք է լինի 12 նիշ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="$root.SessionProperties.CustomerType==6" ng-init="getHBAssigneeCustomers()">
+            <label for="customerNumber" class="col-sm-6 tab_title">Հաճախորդ<span class="redStyle">*</span></label>
+            <div class="col-sm-6 ">
+                <div class="row">
+                    <select data-ng-model="order.HBUser.CustomerNumber" class="form-control " name="asignCustmer" id="asignCustmer" style="max-width:100%;" ng-change="getCustomerMainData()"
+                            data-ng-options="a.CustomerNumber as a.CustomerNumber +' '+a.FullName+' '+a.DefaultDocument  for a in assigneeCustomers" required>
+                        <option value="" hidden>Ընտրեք հաճախորդին կամ նրա լիազորված անձին...</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="HBUserOrderForm.$submitted || HBUserOrderForm.asignCustmer.$dirty"
+                                 for="HBUserOrderForm.asignCustmer.$error">
+                        <ng-message when="required" class="errors">
+                            Հաճախորդի համարը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="order.HBUser.CustomerNumber">
+            <div class="col-sm-6">
+                <div class="row" style="margin-left:10px;">
+                    @*<button type="button" class="btn btn-danger btn-xs" ng-click="deleteCustomer()"><span class="glyphicon glyphicon-remove"></span></button>*@
+                    <customerinfo customernumber="order.HBUser.CustomerNumber" showfulldata="false"> </customerinfo>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="tab_title col-sm-6" for="UserName">Օգտագործող</label>
+            <div class="col-sm-6">
+                <div class="row" >
+                    <div class="col-sm-11 " style="padding-left:0">
+                        <div class="input-group">
+                            <input type="text" class="form-control tab_title input-group-lg" id="user" name="UserName" data-ng-model="order.HBUser.UserName"  ng-change="checkHBUserNameAvailability()" ng-disabled="editUser && !editUser.newInserted" ng-pattern="emailFormat" required>
+                            <div style="display:flex;">
+                                <span  ng-if="usernameAvailability==false && order.HBUser.UserName.length>0 " class="glyphicon glyphicon-remove redStyle"></span>
+                                <span  ng-if="usernameAvailability==true && order.HBUser.UserName.length>0" class="glyphicon glyphicon-ok greenStyle" style="display:inline-block;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="HBUserOrderForm.$submitted || HBUserOrderForm.UserName.$dirty"
+                                 for="HBUserOrderForm.UserName.$error">
+                        <ng-message when="required" class="errors">
+                            Օգտագործողը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                    <div ng-show='HBUserOrderForm.UserName.$error.pattern' >
+                        <p class="redStyle">
+                            Օգտագործողը սխալ է լրացված․թույլատրվում են լատինատառեր և թվեր
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div >
+            <div class="form-group" ng-if="customerMainData.Emails.length>0">
+                <label class="tab_title col-sm-6" for="Email">Էլ․ հասցե <span class="redStyle">*</span> </label>
+                <div class="col-sm-5">
+                    <div class="row">
+                        <select data-ng-model="order.HBUser.Email" name="Email" id="Email" class="form-control"
+                                data-ng-options="item as item.email.emailAddress for item  in customerMainData.Emails"  required>
+                            <option value="" hidden>Ընտրեք Էլ․հասցե ...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="HBUserOrderForm.$submitted || HBUserOrderForm.Email.$dirty"
+                                     for="HBUserOrderForm.Email.$error">
+                            <ng-message when="required" class="errors">
+                                Հաճախորդի Էլ․հասցեն լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group" >
+            <label class="tab_title col-sm-6" for="identificationPerOrder">Հաստատում <span class="redStyle">*</span></label>
+            <div class="col-sm-5">
+                <div class="row">
+                    <select name="identificationPerOrder" id="identificationPerOrder" data-ng-model="order.HBUser.IdentificationPerOrder" class="form-control">
+                        <option value="false" >Սկզբնական նույնականացման հիման վրա </option>
+                        <option value="true">Յուրաքանչյուր գործարքի հաստատմամբ</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-6">
+                <div class="checkbox checkbox-warning">
+                    <input type="checkbox" id="allowDataEntry" value="option2" ng-change="changeAllowDataEntry(order.HBUser.AllowDataEntry)" ng-model="order.HBUser.AllowDataEntry" aria-label="Single checkbox One" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                    <label for="allowDataEntry"> <span ng-if="$root.SessionProperties.CustomerType!=6">Գործարքների մուտքագրում</span> <span ng-if="$root.SessionProperties.CustomerType==6">Գործարքների իրականացում</span> </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-7">
+                <div class="checkbox checkbox-warning">
+                    <input type="checkbox" id="PassChangeReq" value="option2" ng-model="order.HBUser.PassChangeReq" aria-label="Single checkbox One" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                    <label for="PassChangeReq">Առաջարկել գաղտնաբառի փոփոխություն</label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group" ng-init="getProducts()">
+            <div class="col-sm-7">
+                <div class="checkbox checkbox-warning">
+                    <input type="checkbox" id="limitedAccess" value="option2" ng-model="order.HBUser.LimitedAccess" aria-label="Single checkbox One" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                    <label for="limitedAccess">Սահմանափակել հասանելիությունը բացառությամբ</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group " ng-show="order.HBUser.LimitedAccess">
+            <div class="col-sm-5" style="margin-right:15px">
+                <table>
+                    <tr>
+                        <td>
+                            <table style="background-color:white">
+                                <thead>
+                                    <tr class="top" style="height:35px">
+                                        <th style="text-align:center">Պրոդուկտի տեսակ</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="scroll-div">
+                                <table class="table table-condensed table-hover" style="background-color:white;border-color:#A6A6B1">
+                                    <tbody>
+                                        <tr class="productType" id="{{p.key}}" ng-show="allProducts[p.key].length>0" ng-repeat="p in productTypes" ng-class="{'selected':$index == selectedRowProductType}" ng-click="setClickedRowProductType($index)">
+                                            <td style="text-align:left" >
+                                                <label>{{::p.description}}</label>
+                                                <span style="float:right;cursor:pointer" class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-7" style="margin-left:-35px">
+                <table>
+                    <tr>
+                        <td>
+                            <table>
+                                <thead>
+                                    <tr class="top" style="height:35px">
+                                        <th style="text-align:center">Պրոդուկտ</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="scroll-div">
+                                <table class="table table-condensed table-hover" style="background-color:white">
+                                    <tbody>
+                                        <tr>
+                                            <th>
+
+                                                <div ng-show="currentProductKey!=undefined && currentProductKey!=-1 && allProducts[currentProductKey].length != 0 " class="checkbox checkbox-success" style="text-align:left;">
+                                                    <input ng-change="checkAllProducts()" type="checkbox" ng-model="allProducts[currentProductKey].isCheckedAllProducts" class="styled" value="option2" aria-label="Single checkbox One">
+                                                    <label>ընտրել բոլորը</label>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr ng-if="currentProductKey==0" ng-repeat="p in allProducts[0]">
+                                            <td style="text-align:center">
+                                                <div class="checkbox checkbox-success" style="text-align:left">
+                                                    <input  type="checkbox" ng-model="p.IsActive" class="styled" value="option2" aria-label="Single checkbox One">
+                                                    <label for="chkAccount">{{::p.LoanTypeDescription}} &nbsp; ({{::p.StartCapitalString}} &nbsp; {{::p.Currency}} ,&nbsp; {{ ::p.InterestRate * 100|number:2 }} % )</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="currentProductKey==1" ng-repeat="p in allProducts[currentProductKey]">
+                                            <td style="text-align:center">
+                                                <div class="checkbox checkbox-success" style="text-align:left">
+                                                    <input  type="checkbox" ng-model="p.IsActive" class="styled" value="option2" aria-label="Single checkbox One">
+                                                    <label for="chkAccount">{{::p.TypeDescription}} &nbsp;({{::p.StartCapitalString}} &nbsp; {{::p.Currency}}) </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="currentProductKey==2" ng-repeat="p in allProducts[currentProductKey]">
+                                            <td style="text-align:center">
+                                                <div class="checkbox checkbox-success" style="text-align:left">
+                                                    <input  type="checkbox" ng-model="p.IsActive" class="styled" value="option2" aria-label="Single checkbox One">
+                                                    <label for="chkAccount">{{::p.ProductId}} &nbsp; ({{::p.StartCapitalString}} &nbsp;{{ ::p.Currency}}, &nbsp; {{::p.InterestRate *100 | number:2}}%)</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="currentProductKey==3" ng-repeat="p in allProducts[currentProductKey]">
+                                            <td style="text-align:center">
+                                                <div class="checkbox checkbox-success" style="text-align:left">
+                                                    <input type="checkbox"  ng-model="p.IsActive" class="styled" value="option2" aria-label="Single checkbox One">
+                                                    <label for="chkAccount">{{::p.DepositAccount.AccountDescription}} &nbsp; ({{ ::p.BalanceString }} &nbsp; {{ ::p.Currency }})</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="currentProductKey==4" ng-repeat="p in allProducts[currentProductKey]">
+                                            <td style="text-align:center">
+                                                <div class="checkbox checkbox-success" style="text-align:left">
+                                                    <input type="checkbox" ng-model="p.IsActive" class="styled" value="option2" aria-label="Single checkbox One">
+                                                    <label for="chkAccount">{{::p.CardAccount.AccountNumber}} &nbsp;({{::p.BalanceString}} &nbsp;{{::p.Currency}})</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="currentProductKey==5" ng-repeat="p in allProducts[currentProductKey]">
+                                            <td style="text-align:center">
+                                                <div class="checkbox checkbox-success" style="text-align:left">
+                                                    <input type="checkbox" ng-model="p.IsActive" class="styled" value="option2" aria-label="Single checkbox One">
+                                                    <label for="chkAccount">{{::p.AccountNumber}} {{::p.AccountDescription}} ({{::p.BalanceString}}{{::p.Currency}}) {{::p.AccountNumber}}</label>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="currentProductKey==6" ng-repeat="p in allProducts[currentProductKey]">
+                                            <td style="text-align:center">
+                                                <div class="checkbox checkbox-success" style="text-align:left">
+                                                    <input type="checkbox" ng-model="p.IsActive" class="styled" value="option2" aria-label="Single checkbox One">
+                                                    <label for="">
+                                                        <span class="tab_text">Համար`</span> {{ ::p.Number }}
+                                                        <br /><span ng-if="p.Type==1 || p.Type==2 || p.Type==100" class="tab_text"> {{p.Type!=100?'Ստացող`':'SWIFT կոդ`'}} </span><span ng-if="p.Type==100"> {{::p.ReceiverBankSwiftCode}}</span> <span ng-if="p.Type==1 || p.Type==2">{{ ::p.CreditAccount}}</span>
+                                                        <span ng-if="p.Type!=1 && p.Type!=2 && p.Type!=100" class="tab_text">Բաժանորդ`</span> <span ng-if="p.Type!=1 && p.Type!=2">{{ ::p.AbonentNumber}}</span>
+                                                        <br /><span ng-if="p.Type==100" class="tab_text">SWIFT քաղվածքի հաշիվ`</span><span ng-if="p.Type==100"> {{::p.PeriodicTransferAccountNumber}}</span>
+                                                        <br /><span ng-if="p.Amount!=0" class="tab_text">Գումար`</span><span ng-if="p.Amount!=0">{{::p.AmountString}} {{::p.Currency}}</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="currentProductKey==7" ng-repeat="p in allProducts[currentProductKey]">
+                                            <td style="text-align:center">
+                                                <div class="checkbox checkbox-success" style="text-align:left">
+                                                    <input type="checkbox" ng-model="p.IsActive" class="styled" value="option2" aria-label="Single checkbox One">
+                                                    <label for="chkAccount">{{::p.TypeDescription}}({{::p.AmountString}} {{::p.Currency}} )</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="currentProductKey==8" ng-repeat="p in allProducts[currentProductKey]">
+                                            <td style="text-align:center">
+                                                <div class="checkbox checkbox-success" style="text-align:left">
+                                                    <input type="checkbox" ng-model="p.IsActive" class="styled" value="option2" aria-label="Single checkbox One">
+                                                    <br /> Պայմ. գումար`{{ ::paidFactoring.StartCapitalString}} {{::paidFactoring.Currency}}
+                                                    <span><br />Հաշվեհամար՝{{::paidFactoring.LoanAccount.AccountNumber}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="currentProductKey==9" ng-repeat="p in allProducts[currentProductKey]">
+                                            <td style="text-align:center">
+                                                <div class="checkbox checkbox-success" style="text-align:left">
+                                                    <input type="checkbox" ng-model="p.IsActive" class="styled" value="option2" aria-label="Single checkbox One">
+                                                    <label for="chkAccount">{{::p.TypeDescription}} &nbsp;({{::p.StartCapitalString}} &nbsp; {{::p.Currency}}) </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="currentProductKey==10" ng-repeat="p in allProducts[currentProductKey]">
+                                            <td style="text-align:center">
+                                                <div class="checkbox checkbox-success" style="text-align:left">
+                                                    <input type="checkbox" ng-model="p.IsActive" class="styled" value="option2" aria-label="Single checkbox One">
+                                                    <label for="chkAccount">{{::p.TypeDescription}}({{ ::p.StartCapital | number:2 }} {{::p.Currency }})</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+

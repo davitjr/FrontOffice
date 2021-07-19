@@ -1,0 +1,209 @@
+﻿
+<style type="text/css">
+    #serviceProvidedOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+<div id="serviceProvidedOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="FeeForServiceProvidedOrderCtrl" name="serviceProvidedOrderForm" id="serviceProvidedOrderForm" ng-init="getAuthorizedCustomerNumber();getFeeAccounts()"
+      role="form" class="form-horizontal" style="min-width:500px;" novalidate prevent-enter-submit labels-required>
+
+    <div id="serviceProvidedFeeOrder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li ng-if="order.Type == 72" class="root-menu-item-3 " ng-click="serviceProvidedOrderForm.$setSubmitted();serviceProvidedOrderForm.$valid && getFeeForServiceProvidedOrderDetails();">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Հանձնարարական</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="serviceProvidedOrderForm.$setSubmitted();order.OnlySaveAndApprove = false;serviceProvidedOrderForm.$valid && saveServiceProvidedOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li ng-if="$root.SessionProperties.AdvancedOptions['withCashRegister']=='1'&& $root.SessionProperties.AdvancedOptions['canSendToCashier']=='1'" class="root-menu-item-4 " ng-click="serviceProvidedOrderForm.$setSubmitted();order.OnlySaveAndApprove = true;serviceProvidedOrderForm.$valid && saveServiceProvidedOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ուղարկել դրամարկղ</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('serviceProvidedFeeOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-7">
+            <h6><span style="color:#5EB4FF" class="glyphicon glyphicon-info-sign"></span> Բոլոր դաշտերը անհրաժեշտ է մուտքագրել UNICODE-ով</h6>
+            <div style="max-width:530px">
+                <errors></errors>
+            </div>
+
+            <div class="form-group ">
+                <label class="tab_title col-sm-5 control-label"> Համար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-8 multiple_columns">
+                            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title" id="number" name="number" ng-init="generateNewOrderNumber();" data-ng-model="order.OrderNumber" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="paymentOrderForm.$submitted || paymentOrderForm.number.$dirty"
+                                     for="paymentOrderForm.number.$error">
+                            <ng-message when="required" class="errors">
+                                Համար դաշտը լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-8 multiple_columns">
+                            <input disabled="disabled" type="date" ng-model="order.RegistrationDate" name="registrationDate" class="tab_title form-control unstyled" style="text-align:left" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" form-group">
+                <label class="tab_title col-sm-5" for="ServiceType">Տեսակ</label>
+                <loading-control scopevariable="serviceProvidedTypes"></loading-control>
+
+                <div ng-show="serviceProvidedTypes" class="col-sm-6" data-ng-init="getServiceProvidedTypes()">
+                    <div class="row">
+                        <select data-ng-model="order.ServiceType" name="ServiceType" id="ServiceType" class="form-control" required ng-change="setOrderDescription()"
+                                data-ng-options="k as v for (k,v) in serviceProvidedTypes">
+                            <option value="" hidden>Ընտրեք տեսակը...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="serviceProvidedOrderForm.$submitted || serviceProvidedOrderForm.ServiceType.$dirty"
+                                     for="serviceProvidedOrderForm.ServiceType.$error">
+                            <ng-message when="required" class="errors">
+                                Տեսակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <paymentaccount accounts="feeAccounts"
+                            accountselectname="feeAccount"
+                            forinputcheckbox="$root.SessionProperties.IsNonCustomerService==true?false:true"
+                            account="order.DebitAccount"
+                            onlyamd="true"
+                            check="checkForDebitAccount"
+                            nameforaccount="'Դեբետագրվող հաշիվ'"
+                            nameforcurrency="'Դեբետագրվող արժույթ'">
+            </paymentaccount>
+
+
+
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <ng-messages ng-if="serviceProvidedOrderForm.$submitted || ChequeBookOrderForm.feeAccount.$dirty"
+                             for="serviceProvidedOrderForm.feeAccount.$error">
+                    <ng-message when="required" class="errors">
+                        <span ng-if="checkForDebitAccount==0">Հաշիվը ընտրված չէ</span>
+                        <span ng-if="checkForDebitAccount==1">Արժույթը ընտրված չէ</span>
+                    </ng-message>
+                </ng-messages>
+            </div>
+            <div ng-if="order.ServiceType == 918 || order.ServiceType == 920 " class="form-group">
+                <label class="tab_title col-sm-5 " for="TaxAccountProvision">
+                    Հարկային հաշվի տրամադրում
+                    <span class="redStyle" data-original-title="" title="">*</span>
+                </label>
+                <div class="col-sm-2 ">
+                    <div class="row">
+                        <select data-ng-model="order.TaxAccountProvision" name="TaxAccountProvision" id="TaxAccountProvision" class=" form-control" required>
+                            <option value="" hidden>Ընտրեք</option>
+                            <option value="false">Ոչ</option>
+                            <option value="true">Այո</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="serviceProvidedOrderForm.$submitted || serviceProvidedOrderForm.TaxAccountProvision.$dirty"
+                                     for="serviceProvidedOrderForm.TaxAccountProvision.$error">
+                            <ng-message when="required" class="errors">
+                                Հարկային հաշվի տրամադրում դաշտը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div ng-if="order.Type == 72 && (order.ServiceType == 207 || order.ServiceType == 603 || order.ServiceType == 604 || order.ServiceType == 601 || order.ServiceType == 607 || order.ServiceType == 608 || order.ServiceType == 609 || order.ServiceType == 612 || order.ServiceType == 613) " class="form-group">
+                <label class="tab_title col-sm-5 " for="rezidence">Ռեզիդենտություն</label>
+                <div class="col-sm-6 ">
+                    <div class="row">
+                        <select data-ng-model="order.CustomerResidence" name="Residence" id="Residence" class=" form-control" required>
+                            <option value="" hidden>Ընտրեք</option>
+                            <option value="1">Ռեզիդենտ</option>
+                            <option value="2">Ոչ ռեզիդենտ</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="serviceProvidedOrderForm.$submitted || serviceProvidedOrderForm.Residence.$dirty"
+                                     for="serviceProvidedOrderForm.Residence.$error">
+                            <ng-message when="required" class="errors">
+                                Ռեզիդենտությունը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="Amount">Գումար AMD</label>
+                <div class="col-sm-6 row ">
+                    <div class="col-sm-12 multiple_columns">
+                        <input type="text" id="amount" fcsa-number ng-model="order.Amount" name="amount" required min="0" class="form-control tab_title" />
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="serviceProvidedOrderForm.$submitted || serviceProvidedOrderForm.amount.$dirty"
+                                     for="serviceProvidedOrderForm.amount.$error">
+                            <ng-message when="required" class="errors">
+                                Գումարը լրացված չէ
+                            </ng-message>
+                            <ng-message when="min" class="errors">
+                                Գումարը պետք է լինի դրական
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="Description">Նկարագրություն</label>
+                <div class="col-sm-6 ">
+                    <div class="row">
+                        <textarea rows="4" type="text" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" name="description" ng-model="order.Description" class="form-control" required></textarea>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="serviceProvidedOrderForm.$submitted || serviceProvidedOrderForm.description.$dirty"
+                                     for="serviceProvidedOrderForm.description.$error">
+                            <ng-message when="required" class="errors">
+                                Նկարագրությունը լրացված չէ
+                            </ng-message>
+
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="col-sm-5" ng-if="!periodic">
+            <customerdebts ng-if="checkForDebitAccount==0" showonlystrictdebts="true"></customerdebts>
+            <noncashopperson formname="serviceProvidedOrderForm" ng-if="checkForDebitAccount==0" opperson="order.OPPerson" accountnumber="order.DebitAccount.AccountNumber"></noncashopperson>
+            <cashopperson formname="serviceProvidedOrderForm" ng-if="checkForDebitAccount==1 && $root.SessionProperties.IsNonCustomerService" opperson="order.OPPerson" nonauthorizedcustomer="true"></cashopperson>
+            <cashopperson formname="serviceProvidedOrderForm" ng-if="checkForDebitAccount==1 && !$root.SessionProperties.IsNonCustomerService" opperson="order.OPPerson"></cashopperson>
+        </div>
+    </div>
+
+
+
+</form>

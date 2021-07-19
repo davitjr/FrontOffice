@@ -1,0 +1,125 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div ng-controller="PaidAccreditiveCtrl" id="paidAccreditiveDetails" data-ng-init="getPaidAccreditive(productId)">
+    <loading></loading>
+    <div ng-show="!loading" class="product-details bhoechie-tab-content" style="min-width:800px;margin-left:10px;">
+        <div class="product-detail-row" ng-if="paidAccreditive.CreditCode!=''">
+            <div class="product-detail-cell product-detail-lable">Կոդ</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{paidAccreditive.CreditCode}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{paidAccreditive.StartDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{paidAccreditive.EndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{paidAccreditive.StartCapitalString}} {{paidAccreditive.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տոկոսադրույք</div>
+            <div class="product-detail-cell product-detail-value">{{paidAccreditive.InterestRate * 100 }}%</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մնացորդ</div>
+            <div class="product-detail-cell product-detail-value">{{paidAccreditive.CurrentCapitalString}} {{paidAccreditive.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կուտակված (չվճարված) տոկոսագումար</div>
+            <div class="product-detail-cell product-detail-value">{{paidAccreditive.CurrentRateValueString}} {{paidAccreditive.Currency}}</div>
+        </div>
+    </div>
+    <div class="bhoechie-tab-container" style="max-height:80%;">
+        <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+            <div class="list-group">
+                <div class="list-group-item text-center active">Լրացուցիչ</div>
+                <div class="list-group-item text-center"><span>Մոնիթորինգի եզրակացություն</span></div>
+            </div>
+        </div>
+        <div class="bhoechie-tab" style="width: calc(100% - 140px); display: inline-block;">
+            <div class="bhoechie-tab-content active">
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ընդհանուր պարտք</div>
+                    <div class="product-detail-cell product-detail-value">{{(paidAccreditive.CurrentCapital+paidAccreditive.PenaltyRate+paidAccreditive.OutCapital+paidAccreditive.CurrentRateValue+paidAccreditive.JudgmentRate+paidAccreditive.CurrentFee).toFixed(0) | number:2}} {{paidAccreditive.Currency}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp; որից տոկոս տուգանք</div>
+                    <div class="product-detail-cell product-detail-value">{{( paidAccreditive.PenaltyRate + paidAccreditive.CurrentRateValue + paidAccreditive.JudgmentRate +  paidAccreditive.CurrentFee).toFixed(0) | number:2}} <span ng-if="paidAccreditive.Currency!='AMD'">({{((paidAccreditive.PenaltyRate + paidAccreditive.CurrentRateValue + paidAccreditive.JudgmentRate +  paidAccreditive.CurrentFee) * kurs).toFixed(2) | number:2}} AMD)</span></div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ժամկետանց մաս</div>
+                    <div class="product-detail-cell product-detail-value">{{(paidAccreditive.OverdueCapital+paidAccreditive.InpaiedRestOfRate+paidAccreditive.PenaltyRate+paidAccreditive.JudgmentRate+paidAccreditive.OverdueAmount).toFixed(0) | number:2}} {{paidAccreditive.Currency}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;որից տոկոս տուգանք</div>
+                    <div class="product-detail-cell product-detail-value">{{(paidAccreditive.InpaiedRestOfRate+paidAccreditive.PenaltyRate+paidAccreditive.OverdueAmount).toFixed(0) | number:2}} <span ng-if="paidAccreditive.Currency!='AMD'">({{((paidAccreditive.InpaiedRestOfRate+paidAccreditive.PenaltyRate+paidAccreditive.OverdueAmount) * kurs).toFixed(2) | number:2}} AMD)</span></div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Պետ տուրքի փոխանցումից կուտակված տուժանք</div>
+                    <div class="product-detail-cell product-detail-value">{{(paidAccreditive.JudgmentRate).toFixed(0) | number:2}} <span ng-if="paidAccreditive.Currency!='AMD'">({{((paidAccreditive.JudgmentRate) * kurs).toFixed(2) | number:2}} AMD)</span></div>
+                </div>
+                <br />
+                <div class="product-detail-row" ng-if="paidAccreditive.Quality!=0 && paidAccreditive.Quality!=1">
+                    <div class="product-detail-cell product-detail-lable">Որից ժամկետանց</div>
+                    <div class="product-detail-cell product-detail-value">{{paidAccreditive.InpaiedRestOfRateString}} {{paidAccreditive.Currency}}</div>
+                </div>
+                <div class="product-detail-row" ng-if="paidAccreditive.Quality!=0 && paidAccreditive.Quality!=1">
+                    <div class="product-detail-cell product-detail-lable">Տուգանային տոկոս</div>
+                    <div class="product-detail-cell product-detail-value">{{paidAccreditive.PenaltyRateString}} {{paidAccreditive.Currency}}</div>
+                </div>
+                <div class="product-detail-row" ng-if="paidAccreditive.Quality!=0 && paidAccreditive.Quality!=1">
+                    <div class="product-detail-cell product-detail-lable">Որից ժամկետանց</div>
+                    <div class="product-detail-cell product-detail-value">{{paidAccreditive.PenaltyAddString}} {{paidAccreditive.Currency}}</div>
+                </div>
+                <div class="product-detail-row" ng-if="paidAccreditive.Quality!=0 && paidAccreditive.Quality!=1">
+                    <div class="product-detail-cell product-detail-lable">Տոկոսագումարի հաշվարկի օր</div>
+                    <div class="product-detail-cell product-detail-value">{{paidAccreditive.DayOfRateCalculationString}}</div>
+                </div>
+                <div class="product-detail-row" ng-if="paidAccreditive.OverdueLoanDateForClassification!=null">
+                    <div class="product-detail-cell product-detail-lable redStyle">Ժամկետանցի օր դասակարգման համար</div>
+                    <div class="product-detail-cell product-detail-value redStyle">{{paidAccreditive.OverdueLoanDateForClassification | mydate | date: 'dd/MM/yyyy'}}</div>
+                </div>
+                <div class="product-detail-row" ng-if="paidAccreditive.OverdueLoanDateForClassification!=null">
+                    <div class="product-detail-cell product-detail-lable redStyle">Ժամկետանցի օրեր դասակարգման համար</div>
+                    <div class="product-detail-cell product-detail-value redStyle">{{paidAccreditive.DayOfRateCalculation | datediff : paidAccreditive.OverdueLoanDateForClassification}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="bhoechie-tab-content ">
+            <loanmonitoring ng-if="paidAccreditive" loan="paidAccreditive"></loanmonitoring>
+        </div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    $("#paidAccreditiveDetails div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('#paidAccreditiveDetails div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#paidAccreditiveDetails div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#paidAccreditiveDetails div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+
+
+    $("#loanDetailsContainer").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+
+</script>

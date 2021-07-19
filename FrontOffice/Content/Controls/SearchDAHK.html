@@ -1,0 +1,144 @@
+﻿<div>
+    <style>
+        .modal-content {
+            width: 760px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+
+        .nonUnicodeText {
+            font-family: 'Arial Armenian';
+            font-size: 15px;
+        }
+
+        .resultRow {
+            font-size: 10pt;
+            color: black;
+            font-weight: normal;
+        }
+
+        .resultRowAddInf {
+            font-size: 9pt;
+        }
+
+        .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .tableHeader {
+            font-size: 9pt;
+            height: 25px;
+        }
+
+       .freedahk {
+            font-style:italic;
+        }
+    </style>
+    
+    <div id="searchDAHK">
+        <div class="col-sm-12 popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+            <div style="margin-top:-10px">ԴԱՀԿ արգելանքի որոնում</div>
+            <img src="/Content/images/close_pop.png " ng-click="closeSearchDAHKModal()" style="margin-top:-10px;" alt="">
+        </div>
+        <div class="row rowWithFullWidth">
+            <div class="col-md-3">
+                <div class="form-group-search">
+                    Հաճախորդի համար
+                </div>
+                <div class="form-group-search">
+                    <input type="text" maxlength="12" ng-model="findCustomerNumber" id="findCustomerNumber" name="customerNumberFind" class="form-control " onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group-search">
+                    Փաստաթուղթ
+                </div>
+                <div class="form-group-search">
+                    <input type="text" ng-model="findDocumentNumber" id="findDocumentNumber" name="documentNumberFind" class="form-control " />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group-search">
+                    &nbsp;
+                </div>
+                <div class="form-group-search">
+                    <button type="button" class="btn btn-primary" ng-click="findDAHK();" title="Որոնել"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                </div>
+               
+            </div>
+            <div class="col-md-6 rowWithFullWidth">
+                <div class="checkbox">
+                    <label for="FreeAttaches">
+                        <input type="checkbox" ng-model="showFreeAttaches" name="MatchCase" />
+                        Ներառել նաև ազատվածները
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin:5px; margin-bottom:0px; margin-top:0px; ">
+            <div class="div-table-content " style="max-height:250px; min-height:250px;border: gray 1px solid; overflow-x:scroll; ">
+                <table class="table table-condensed table-hover" style="background-color:white; min-width:2500px;margin-top:0px!important;">
+                    
+                    <thead>
+                        <tr class="product-container-header">
+                            <td style="width:110px;">Ստացման ա/թ</td>
+                            <td style="width:140px;text-align:center;">Վարույթ</td>
+                            <td style="width:200px;text-align:left;">Անուն</td>
+                            <td style="width:150px;">Փաստաթուղթ</td>
+                            <td style="width:130px;text-align:center;">Կարգավիճակ</td>
+                            <td style="width:120px;">Ազատման ա/թ</td>
+                            <td>Հասցե</td>
+                            <td style="width:200px;">Գումար1</td>
+                            <td style="width:200px;">Գումար2</td>
+                            <td style="width:200px;">Գումար3</td>
+                            <td>Բաժին</td>
+                            <td>Հարկադիր կատարող</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="dahkList.length!=0" ng-repeat="dahk in filteredDahkList" style="font-size:9pt; cursor:pointer;" ng-class="{'freedahk': dahk.FreeAttachDate != '' }" ng-click="setClickedRow($index)">
+                            <td style="width:110px;">{{::dahk.AttachDate}}</td>
+                            <td style="width:140px;">{{::dahk.InquestNumber}}</td>
+                            <td>{{::dahk.DebtorName}}</td>
+                            <td style="width:200px;">{{::dahk.DebtorPassport}}</td>
+                            <td style="width:140px;text-align:center;">{{::dahk.DebtorType}}</td>
+                            <td style="width:120px;">{{::dahk.FreeAttachDate}}</td>
+                            <td>{{::dahk.DebtorAddress}}</td>
+                            <td style="width:200px;">{{::dahk.BblockSum1 | number:2}} {{::dahk.BblockCur1}}</td>
+                            <td style="width:200px;">{{::dahk.BblockSum2 | number:2}} {{::dahk.BblockCur2}}</td>
+                            <td style="width:200px;">{{::dahk.BblockSum3 | number:2}} {{::dahk.BblockCur3}}</td>
+                            <td>{{::dahk.Branch}}</td>
+                            <td>{{::dahk.DecisionOwner}}</td>
+
+                        </tr>
+                        <tr ng-if="dahkList.length==0">
+                            <td colspan="12" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="margin-left:12px;">
+            Ընդամենը` {{totalRows}}
+        </div>
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                    ng-model="currentPage"
+                    total-items="totalRows"
+                    items-per-page="numPerPage"
+                    max-size="maxSize"
+                    boundary-links="true"
+                    previous-text="‹"
+                    next-text="›"
+                    first-text="«"
+                    last-text="»">
+        </div>
+
+    </div>
+
+
+
+</div>

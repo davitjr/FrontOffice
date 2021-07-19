@@ -1,0 +1,178 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #chequeBookReceiveOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+
+<div id="chequeReceiveLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="ChequeBookReceiveOrderCtrl" name="ChequeBookReceiveOrderForm" style="min-width:580px" id="chequeBookReceiveOrderForm" role="form" class="form-horizontal" prevent-enter-submit novalidate labels-required>
+    <div id="receivecheque_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="ChequeBookReceiveOrderForm.$setSubmitted();ChequeBookReceiveOrderForm.$valid && getChequeBookApplication();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Դիմում</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="ChequeBookReceiveOrderForm.$setSubmitted();ChequeBookReceiveOrderForm.$valid && saveChequeBookReceiveOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('receivecheque')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div style="max-width:540px;">
+            <errors></errors>
+        </div>
+        <div class="form-group">
+            <label class="tab_title col-sm-5" for="RegistrationDate">Մուտքագրման ա/թ</label>
+            <div class="col-sm-6 row ">
+                <div class="row multiple_columns col-sm-8">
+                    <input type="date" disabled="disabled" class="form-control tab_title unstyled" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" style="text-align:left;" required>
+                </div>
+            </div>
+        </div>
+
+        <paymentaccount data-ng-init="getCurrentAccounts()"
+                        accounts="currentAccounts"
+                        accountselectname="Account"
+                        account="order.ChequeBookAccount"
+                        labels-required
+                        check="0"
+                        nameforaccount="'Հաշվեհամար'"
+                        formname="ChequeBookReceiveOrderForm">
+        </paymentaccount>
+        <div class="row">
+            <div class="col-sm-5"></div>
+            <ng-messages ng-if="ChequeBookReceiveOrderForm.$submitted || ChequeBookReceiveOrderForm.Account.$dirty"
+                         for="ChequeBookReceiveOrderForm.Account.$error">
+                <ng-message when="required" class="errors">
+                    Հաշիվը ընտրված չէ
+                </ng-message>
+            </ng-messages>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-5" for="pageNumberStart"> Էջի սկիզբ</label>
+            <div class="col-sm-6">
+                <div class="row">
+
+                    <input type="number" class="form-control" name="pageNumberStart" ng-model="order.pageNumberStart" required />
+
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="ChequeBookReceiveOrderForm.$submitted || ChequeBookReceiveOrderForm.pageNumberStart.$dirty"
+                                 for="ChequeBookReceiveOrderForm.pageNumberStart.$error">
+                        <ng-message when="required" class="errors">
+                            Էջի սկիզբը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-5" for="pageNumberEnd"> Էջի վերջ</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="number" class="form-control" name="pageNumberEnd" ng-model="order.pageNumberEnd" required />
+
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="ChequeBookReceiveOrderForm.$submitted || ChequeBookReceiveOrderForm.pageNumberEnd.$dirty"
+                                 for="ChequeBookReceiveOrderForm.pageNumberEnd.$error">
+                        <ng-message when="required" class="errors">
+                            Էջի վերջը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+
+        </div>
+        <div ng-if="cashType==17">
+            <paymentaccount accounts="feeAccounts"
+                            accountselectname="FeeAccount"
+                            account="order.FeeAccount"
+                            labels-required
+                            check="0"
+                            nameforaccount="'Միջնորդավճարի հաշիվ'">
+            </paymentaccount>
+            <div class="col-sm-5"></div>
+            <div class="row">
+
+                <ng-messages class="errors" ng-if="ChequeBookReceiveOrderForm.$submitted || order.FeeAccount.$dirty" for="ChequeBookReceiveOrderForm.FeeAccount.$error">
+                    <ng-message when="required" class="errors">
+                        Ընտրեք միջնորդավճարի գանձման հաշիվը
+                    </ng-message>
+
+                </ng-messages>
+            </div>
+        </div>
+        <div class="form-group" hidden>
+            <label class="tab_title col-sm-5 " for="feeAccount">Միջնորդավճարի գանձում</label>
+            <div class="col-sm-6 ">
+                <div class="row">
+                    <select name="Fee" id="Fee" class=" form-control" required>
+                        <option value="17">Անկանխիկ</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="tab_title col-sm-5" for="FeeAmount"> Միջնորդավճար</label>
+            <div class="col-sm-6 row">
+                <div class="col-sm-10 multiple_columns" ng-init="getChequeBookReceiveServiceFee()" disabled>
+                    <input type="text" min="0" disabled onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' class="form-control tab_title" name="FeeAmount" ng-model="order.FeeAmount" fcsa-number required />
+                </div>
+                <h5 class="col-sm-1 " style="margin-left:8px;color:#6d6d6d">AMD</h5>
+                <div class="row">
+                    <ng-messages style="margin-left:11px" ng-if="ChequeBookReceiveOrderForm.$submitted || ChequeBookReceiveOrderForm.FeeAmount.$dirty"
+                                 for="ChequeBookReceiveOrderForm.FeeAmount.$error">
+                        <ng-message when="required" class="errors">
+                            Միջնորդավճարը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="tab_title col-sm-5" for="CostPrice"> Ինքնարժեք</label>
+            <div class="col-sm-6 row">
+                <div class="col-sm-10 multiple_columns">
+                    <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' class="form-control tab_title" name="CostPrice" ng-model="order.CostPrice" fcsa-number="{ min: 0.1 }" required />
+                </div>
+                <h5 class="col-sm-1 " style="margin-left:8px;color:#6d6d6d">AMD</h5>
+                <div class="row">
+                    <ng-messages style="margin-left:11px" ng-if="ChequeBookReceiveOrderForm.$submitted || ChequeBookReceiveOrderForm.CostPrice.$dirty"
+                                 for="ChequeBookReceiveOrderForm.CostPrice.$error">
+                        <ng-message when="required" class="errors">
+                            Ինքնարժեքը ընտրված չէ
+                        </ng-message>
+                        <ng-message when="fcsaNumber" class="errors">
+                            Գումարը պետք է մեծ լինի 0 դրամից
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="warnings.length>0" class="panel panel-warning" data-ng-init="setOrderPerson()">
+            <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span> Ուշադրություն</div>
+            <div class="panel-body">
+                <div ng-repeat="war in warnings">
+                    {{$index+1}}.{{::war}}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

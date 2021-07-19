@@ -1,0 +1,93 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #CardReOpenOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    .form-group input, .form-group select {
+        height: 34px;
+    }
+
+    #addInf {
+        min-height: 60px;
+        overflow: hidden;
+    }
+</style>
+<div id="CardReOpenLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="CardReOpenOrderCtrl" name="CardReOpenOrderForm" id="CardReOpenOrderForm" role="form" style="min-width:650px;" novalidate class="form-horizontal" ng-init="GetCardReOpenReason();getAuthorizedCustomerNumber()" prevent-enter-submit>
+    <div id="CardReOpen_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="CardReOpenOrderForm.$setSubmitted();saveCardReOpenOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('CardReOpen')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div style="max-width:530px">
+            <errors></errors>
+        </div>
+
+
+
+        <div class="col-sm-11">
+
+            <div class=" form-group">
+                <label class="tab_title col-sm-5 " for="ReopenReason">Վերաբացման պատճառ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select data-ng-model="order.ReopenReason" name="ReopenReason" id="ReopenReason" class="form-control" required
+                                data-ng-options="k as v for (k,v) in TypeOfReasons"
+                                ng-change="Actions()">
+
+                            <option selected="selected" value="" hidden>Ընտրեք</option>
+                        </select>
+                    </div>
+                    <ng-messages ng-if="CardReOpenOrderForm.$submitted || CardReOpenOrderForm.ReopenReason.$dirty"
+                                 for="CardReOpenOrderForm.ReopenReason.$error">
+                        <ng-message when="required" class="errors">
+                            Պատճառը  նշված չէ:
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+
+            <div class=" form-group" id="divCheckbox" style="display: none;">
+                <label class="tab_title col-sm-5 " for="ReopenDescription">Նկարագրություն </label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" class="form-control tab_title" style="text-align: left;" id="ReopenDescription" name="ReopenDescription" ng-model="order.ReopenDescription" required>
+                    </div>
+                    <ng-messages ng-if="CardReOpenOrderForm.$submitted || CardReOpenOrderForm.ReopenDescription.$dirty"
+                                 for="CardReOpenOrderForm.ReopenDescription.$error">
+                        <ng-message when="required" class="errors">
+                            Նկարագրությունը լրացված չէ:
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</form>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,209 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #cardRegistrationOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+    .form-group input, .form-group select {
+        height: 34px;
+    }
+    #addInf{
+        min-height: 60px;
+        overflow: hidden;
+    }
+
+</style>
+<div id="cardRegistrationLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="CardRegistrationOrderCtrl" name="CardRegistrationOrderForm" id="CardRegistrationOrderForm" role="form" style="min-width:650px;" novalidate class="form-horizontal" labels-required>
+    <div id="cardregistration_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="CardRegistrationOrderForm.$setSubmitted();CardRegistrationOrderForm.$valid  && saveCardRegistrationOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('cardregistration')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+    @*<div class="col-sm-12">
+            <a style="color:red">
+                {{alert}}
+            </a>
+        </div>*@
+
+    <div class="col-sm-12">
+
+
+
+        <div ng-show="card" class="form-group " style=" padding-left:10px">
+            <div class="col-sm-12" style="max-width:530px">
+                <div class="row-no-margin">
+                    <section ng-if="warnings.length>0" class=" panel panel-warning">
+                        <header class="panel-heading">
+                            <span class="panel-title" style=" font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                        </header>
+                        <div class="panel-body">
+                            <div ng-repeat="war in warnings">
+                                {{$index+1}}.{{::war}}
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class=" form-group">
+            <label class="tab_title col-sm-4" for="RegistrationDate">Մուտքագրման ա/թ</label>
+            <div class="col-sm-6 row">
+                <div class="multiple_columns col-sm-8 ">
+                    <input disabled="disabled" type="date" class="form-control tab_title unstyled" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-4 " for="card">Քարտի համար</label>
+            <div class="col-sm-6" data-ng-init="getCardsForRegistration()">
+                <div class="row" >
+                    <loading-control scopevariable="cards"></loading-control>
+                    <select ng-show="cards" data-ng-model="card" ng-change="setOrderCardDetails();getAccountListForCardRegistration();getOverdraftAccountsForCardRegistration();getCardRegistrationWarnings()" name="card" id="card" class="form-control" required
+                            data-ng-options="k as k.CardNumber + ' ' +k.CardTypeDescription + ' ' + k.Currency for k in cards">
+                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label class="tab_title col-sm-4" for="currency">Քարտի տեսակ</label>
+            <div class="col-sm-6" ng-show="card">
+                <div class="row">
+                    <label ng-model="card.Currency" class="tab_title">
+                        <img ng-if="card.CardSystem==3" src="~/Content/Images/Amex_icon.png" height="20" width="20" align="left" style="margin-right:3px" />
+                        <img ng-if="card.CardSystem==4" src="~/Content/Images/Visa_icon.png" height="20" width="20" align="left" style="margin-right:3px" />
+                        <img ng-if="card.CardSystem==5" src="~/Content/Images/MC_icon.png" height="20" width="20" align="left" style="margin-right:3px" />
+                        <img ng-if="card.CardSystem==9" src="~/Content/Images/arca.png" height="20" width="20" align="left" style="margin-right:3px" />
+                        {{card.CardTypeDescription}}, {{card.Currency}}, {{(card.SupplementaryType==1)?"Հիմնական":(card.SupplementaryType==2)?"Կից":"Լրացուցիչ"}}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label class="tab_title col-sm-4" for="currency">Քարտապան</label>
+            <div class="col-sm-6" ng-show="card">
+                <div class="row">
+                    <label class="tab_title">
+                        {{card.CardHolderName}} {{card.CardHolderLastName}}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-show="card.SupplementaryType == 2 || card.SupplementaryType == 3">
+            <label class="tab_title col-sm-4">Հիմնական քարտ</label>
+            <div class="col-sm-6" ng-show="card">
+                <div class="row">
+                    <label class="tab_title" ng-model="card.MainCardNumber">
+                        {{card.MainCardNumber}}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label class="tab_title col-sm-4" for="currency">Քարտի վերջ</label>
+            <div class="col-sm-6" ng-show="card">
+                <div class="row">
+                    <label class="tab_title">
+                        {{card.ExpiryDate}}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group" ng-show="card.SupplementaryType == 1" ng-init="isNewAccount = 2">
+            <label class="tab_title col-sm-6" ng-show="card">Քարտային հաշիվ</label>
+            <div class="col-sm-6" ng-show="card">
+                <div class="row">
+                    <div class="input-group col-sm-12" style="display:inline-flex">
+                        <span class="input-group-addon " style="display: inline-block;padding-right: 20px;padding-top: 10px;">
+                            <input type="checkbox" aria-label="..." ng-true-value="1" ng-false-value="2" ng-model="isNewAccount" ng-change="card.account=null">
+                        </span>
+                        <select ng-disabled="isNewAccount != 2" data-ng-model="card.account" name="account" id="account" class="form-control" ng-required="isNewAccount == 2 && card.SupplementaryType == 1"
+                                data-ng-options="k as k.AccountNumber for k in card.accounts">
+                            <option value="" hidden="hidden">{{isNewAccount == 1?'Բացել նոր հաշիվ':'Ընտրեք...'}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="CardRegistrationOrderForm.$submitted "
+                                 for="CardRegistrationOrderForm.account.$error">
+                        <ng-message when="required" class="errors">
+                            Քարտային հաշիվը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-show="card.SupplementaryType == 1" ng-init="isNewOverdraftAccount = 2">
+            <label class="tab_title col-sm-6" ng-show="card">Գերածախսի հաշիվ</label>
+            <div class="col-sm-6" ng-show="card">
+                <div class="row">
+                    <div class="input-group col-sm-12" style="display:inline-flex">
+                        <span class="input-group-addon " style="display: inline-block;padding-right: 20px;padding-top: 10px;">
+                            <input type="checkbox" aria-label="..." ng-true-value="1" ng-false-value="2" ng-model="isNewOverdraftAccount" ng-change="card.overdraftAccount = null">
+                        </span>
+                        <select ng-disabled="isNewOverdraftAccount != 2" data-ng-model="card.overdraftAccount" name="overdraftAccount" id="overdraftAccount" class="form-control" ng-required="isNewOverdraftAccount == 2 && card.SupplementaryType == 1"
+                                data-ng-options="k as k.AccountNumber for k in card.overdraftAccounts">
+                            <option value="" hidden="hidden">{{isNewOverdraftAccount == 1?'Բացել նոր հաշիվ':'Ընտրեք...'}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="CardRegistrationOrderForm.$submitted "
+                                 for="CardRegistrationOrderForm.overdraftAccount.$error">
+                        <ng-message when="required" class="errors">
+                            Գերածախսի հաշիվը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label  class="tab_title col-sm-4" for="addInf">Լրացուցիչ <br> նկարագրություն</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <textarea ng-keydown="checkHeight($event)" rows="2" type="text" name="addInf" id="addInf" ng-model="order.AddInf" class="form-control"></textarea>
+                </div>
+             
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+

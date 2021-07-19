@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    h4 {
+        color: #247d46;
+    }
+</style>
+<body>
+    <div ng-controller="UtilityPaymentSearchCtrl" ng-init="clearLocalStorage()" class="col-md-8" style="margin-left:20px;">
+        <div class="table_title" style="text-align:center">Ընտրեք կոմունալ վճարման տեսակը</div>
+        <div style="padding-left: 5px; padding-top:10px;">
+            <div class="row">
+                <div class="container">
+                    <div class="table">
+                        <div class="row form-group">
+                            <div class="col-sm-1"><a ui-sref="searchUtilityPayment({ utilityType : 3 })"><img class="media-object" src="~/Content/Images/hec_ic.png" height="40" width="40"></a></div>
+                            <div class="col-sm-3"><a ui-sref="searchUtilityPayment({ utilityType : 3 })"><h4>էլեկտրական ցանցեր</h4></a></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-1"><a ui-sref="searchUtilityPayment({ utilityType : 4 })"><img class="media-object" src="~/Content/Images/ic_gazprom.png" height="40" width="40"></a></div>
+                            <div class="col-sm-3"><a ui-sref="searchUtilityPayment({ utilityType : 4 })"><h4>Գազպրոմ Հայաստան</h4></a></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-1"><a ui-sref="searchUtilityPayment({ utilityType : 6 })"><img class="media-object" src="~/Content/Images/ic_yerJur.png" height="40" width="40"></a></div>
+                            <div class="col-sm-3"><a ui-sref="searchUtilityPayment({ utilityType : 6 })"><h4>Երևան ջուր</h4></a></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-1"><a ui-sref="searchUtilityPayment({ utilityType : 5 })"><img class="media-object" src="~/Content/Images/armWater_ic.png" height="40" width="40"></a></div>
+                            <div class="col-sm-3"><a ui-sref="searchUtilityPayment({ utilityType : 5 })"><h4>Հայջրմուղկոյուղի</h4></a></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-1"><a ui-sref="searchUtilityPayment({ utilityType : 7 })"><img class="media-object" src="~/Content/Images/beeline_ic.png" height="40" width="40"></a></div>
+                            <div class="col-sm-3"><a ui-sref="searchUtilityPayment({ utilityType : 7 })"><h4>Բիլայն</h4></a></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-1"><a ui-sref="searchUtilityPayment({ utilityType : 8 })"><img class="media-object" src="~/Content/Images/vivacell-mts_ic.png" height="40" width="40"></a></div>
+                            <div class="col-sm-3"><a ui-sref="searchUtilityPayment({ utilityType : 8 })"><h4>ՄՏՍ ՀԱՅԱՍՏԱՆ</h4></a></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-1"><a ui-sref="searchUtilityPayment({ utilityType : 10 })"><img class="media-object" src="~/Content/Images/orange.png" height="40" width="40"></a></div>
+                            <div class="col-sm-3"><a ui-sref="searchUtilityPayment({ utilityType : 10 })"><h4>Օրանժ Արմենիա</h4></a></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-1"><a ui-sref="searchUtilityPayment({ utilityType : 11 })"><img class="media-object" src="~/Content/Images/ucom_ic.png" height="40" width="40"></a></div>
+                            <div class="col-sm-3"><a ui-sref="searchUtilityPayment({ utilityType : 11 })"><h4>UCom</h4></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

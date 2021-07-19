@@ -1,0 +1,141 @@
+﻿@{
+    Layout = null;
+}
+
+<style>
+
+    .select{
+        width:195px !important;
+    }
+
+</style>
+
+
+<div id="HBDocumentsTransactionError" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="CustomerArrestsInfoCtrl" ng-init="getArrestTypes();getArrestsReasonTypes();initFieldsValues();showArrestsReasons = true;" style="width:600px;" name="HBDocumentsTransactionErrorForm" id="HBDocumentsTransactionErrorForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+    <div id="newaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="HBDocumentsTransactionErrorForm.$setSubmitted();HBDocumentsTransactionErrorForm.$valid && setLoanArrest();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('AddRemoveLoanBan')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div>
+        <div class="col-sm-12" style="margin-top:20px;">
+            <div class="form-group">
+                <label class="tab_title col-sm-5">Արգելքի տեսակ</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <select ng-model='newLoanArrest.TypeID' id='banType' class="form-control select-font" style='font-family:"Arial Armenian" !important;height: 33px;' disabled>
+                            <option value="">Ընտրեք արգելքի տեսակը</option>
+                            <option ng-repeat='x in arrestTypes' value='{{ x.ID }}' style='font-family:"Arial Armenian" !important;'>{{ x.Description }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5">ՊԿ</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <input type="text" class="form-control" id="SetNumber" disabled="disabled" name="SetNumber" ng-model="newLoanArrest.SetNumber" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5">Ամսաթիվ</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <input type="text" name="startDate" disabled="disabled" class="form-control" id="startDate" title="Ամսաթիվ" ng-model="newLoanArrest.RegistrationDate" style="width : 100%; height: 33px;" readonly />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="showArrestsReasons">
+                <label class="tab_title col-sm-5">Արգելանքի պատճառ</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <select ng-model='newLoanArrest.ArrestReasonID' id='banType' class="form-control select-font" style='font-family:"Arial Armenian"!important;height: 33px;'>
+                            <option value="">Ընտրեք արգելանքի պատճառը</option>
+                            <option ng-repeat='x in arrestsReasonTypes' value='{{ x.ID }}' style='font-family:"Arial Armenian"!important;'>{{ x.Description }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5">Նկարագրություն</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <textarea type="text" class="tab_title form-control unstyled" id="ErrorDescription" name="ErrorDescription" ng-model="newLoanArrest.Description" style="text-align:left;width:300px;height:100px;font-family:'webly_semibold' !important"></textarea>
+                    </div>
+                </div>
+            </div>
+            @*<div class="form-group">
+                <div class="col-sm-6 row" style="margin-left:69%">
+                    <div class="col-sm-10 multiple_columns">
+                        <button type="button" class="btn btn-primary" ng-click="setLoanArrest()" style="height:33px;"> Հաստատել</button>
+                    </div>
+                </div>
+            </div>
+            <br />*@
+        </div>
+    </div>
+</form>
+
+
+@*<form ng-controller="CustomerArrestsInfoCtrl" style="width: 800px; height:auto">
+
+    <table style="background-color:darkseagreen; margin-top:10px; width:80%; margin-left:10%; align-self:center">
+
+        <tbody>
+            <tr>
+                <td class="table_td col-sm-1 caption">Արգելքի տեսակ</td>
+                <td class="table_td col-sm-1">
+                    <select ng-init="getArrestTypes()" data-toggle="tooltip"
+                            data-trigger="hover" data-placement="top" ng-model="loanArrest.arrestType"
+                            name="banType" id="banType" class="form-control select"
+                            ng-options="item for item in arrestTypes"></select>
+                </td>
+
+                <td class="table_td col-sm-1 caption">ՊԿ</td>
+                <td class="table_td col-sm-1"><input type="text" ng-model="loanArrest.setNumber" /></td>
+
+                <td class="table_td col-sm-1 caption">Ամսաթիվ</td>
+                <td class="table_td col-sm-1"><input type="date" ng-model="loanArrest.setDate" /></td>
+            </tr>
+            <tr>
+                <td class="table_td col-sm-1 caption">Արգելանքի պատճառ</td>
+                <td class="table_td col-sm-1">
+                    <select ng-init="getArrestsReasonTypes()" data-toggle="tooltip"
+                            data-trigger="hover" data-placement="top" ng-model="loanArrest.reasonType"
+                            name="DocumentType" id="DocumentType" class="form-control select"
+                            ng-options="item for item in arrestsReasonTypes"></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="table_td col-sm-1 caption">Նկարագրություն</td>
+                <td class="table_td col-sm-1"><textarea rows="10" cols="50" ng-model="loanArrest.description"></textarea></td>
+            </tr>
+            <tr>
+                <td class="table_td col-sm-1 caption"><button type="button" ng-click="setLoanArrest()">Հաստատել</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    </br>
+
+
+
+
+
+</form>*@

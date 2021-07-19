@@ -1,0 +1,72 @@
+﻿<script type="text/javascript">
+    $("#hbApplicationContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<style>
+    #hbApplicationHeader span:hover {
+        text-decoration: underline;
+    }
+    #hbApplicationHeader span {
+        text-decoration: none;
+    } 
+</style>
+
+<div id="AllHbApplication" ng-controller="HBApplicationCtrl" data-ng-init="getHBApplication();getUserFilialCode();isCustomerConnectedToOurBank();getCustomerFilialCode();getFilialList();" >
+    <div class="product-container"  ng-show="(hideBlank != 'true' && !hbApplication) || (hbApplication)">
+        <div class="header-title" id="hbApplicationHeader">
+            <span  ng-click="openHBApplicationDetails()"  style="color:black;cursor:pointer">Հեռահար բանկինգ</span>
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div ng-if="!hbApplication">
+                    <i class="add-new-product tipB" 
+                       ng-if="canAccessToOtherBranchesHB == '1' 
+                       || $root.SessionProperties.CustomerType != 6  && customerFilialCode == userFilialCode 
+                       || $root.SessionProperties.CustomerType == 6  " ng-controller="PopUpCtrl" ng-click="openWindow('/HBApplicationOrder/PersonalHBApplicationOrder','Հեռահար բանկինգ ծառայության մուտքագրում','newhbapplication',callbackgetHBApplication)" data-original-title="Նոր Հեռահար բանկինգ"></i>
+        
+                </div>
+            </div>
+            <div>
+
+            </div>
+            <div class="product-content-table custom-scroll" id="hbApplicationContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="hbApplication" ng-class="{'selected':$index == selectedRow}" ng-dblclick="openHBApplicationDetails();" style="cursor: pointer;" data-ng-init="getRequests()">
+                            <td class="col-sm-3" id="hbApplicationRow_{{$index}}">
+                                <span class="tab_text" ng-show="hbApplication.ID">Համար`</span> <span ng-show="hbApplication.ID">{{ hbApplication.ID }}<br /> </span>
+                                <span class="tab_text" ng-show="hbApplication.ContractDate">Պայմանագրի ա/թ` </span> <span class="tab_title" ng-show="hbApplication.ContractDate">{{ ::hbApplication.ContractDateString }} <br /></span>
+
+                                <span class="tab_text" ng-show="hbApplication.QualityDescription">Կարգավիճակ`</span> <span class="tab_title" ng-bind="hbApplication.PermissionType === 1 ? hbApplication.QualityDescription : hbApplication.QualityDescription + '(Սահմանափակ հասանելիությամբ)'"><br /></span>
+                                <br /><span class="tab_text" ng-show="hbApplication.FilialCode">Տրամադրող մասնաճյուղ` </span> <span class="tab_title" ng-show="hbApplication.FilialCode">{{ ::filialList[hbApplication.FilialCode]}}</span>
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="contextHBApplication" id="contextMenu" ng-if="(canAccessToOtherBranchesHB == '1' || hbApplication.FilialCode == userFilialCode || (hbApplication.FilialCode != userFilialCode && isCustomerConnectedToOurBank == false))">
+                                <div id="contextMenu"></div>
+                            </td>
+                        </tr>
+                        <tr ng-if="hbApplication==''">
+                            <td colspan="3" style="text-align:center">Առկա չԷ հեռահար բանկինգ</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul id="contextHBApplication" class="dropdown-menu">
+                    <li ng-if="hasRequests && (canAccessToOtherBranchesHB == '1' || hbApplication.FilialCode==userFilialCode)"><a href="" ng-controller="PopUpCtrl" ng-click="openWindow('Customer/GetPendingRequests','ՀԲ ծառայության ակտիվացում','pendingRequests');">Ծառայությունների ակտիվացում</a></li>
+                    <li ng-if="hasRequests && (canAccessToOtherBranchesHB == '1' || hbApplication.FilialCode==userFilialCode)"><a href="" ng-controller="PopUpCtrl" ng-click="openWindow('HBActivationOrder/HBActivationRejectionPendingRequests','ՀԲ ծառայության ակտիվացումից հրաժարում','pendingRequestsForRejection',callbackgetHBApplication);">Ծառայությունների ակտիվացումից հրաժարում</a></li>
+                    <li ng-if="(hbApplication.Quality==5 || hbApplication.Quality==3)&& (hbApplication.FilialCode==userFilialCode || canAccessToOtherBranchesHB == '1' )"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-controller="PopUpCtrl" ng-click="params={hbApplication : hbApplication};openWindow('/HBApplicationQualityChangeOrder/PersonalHBApplicationQualityChangeOrder','Հեռահար բանկինգի պայմանագրի դադարեցում','hbapplicationqualitychange')">Դադարեցնել</a></li>
+                    <li ng-if="hbApplication.Quality==6 && (hbApplication.FilialCode==userFilialCode || $root.SessionProperties.CustomerType == 6 || canAccessToOtherBranchesHB == '1')"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-controller="PopUpCtrl" ng-click="params={hbApplication : hbApplication};openWindow('/HBApplicationQualityChangeOrder/PersonalHBApplicationQualityChangeOrder','Հեռահար բանկինգի պայմանագրի վերականգնում','hbapplicationqualitychange')">Վերականգնել</a></li>
+                    <li ng-if="hbApplication.Quality==5 && hbApplication.PermissionType==2"><a style="color: black;text-decoration:none!important; cursor:pointer" ng-controller="PopUpCtrl" ng-click="params={hbApplication : hbApplication};openWindow('/HBApplicationFullPermissionsGrantingOrder/HBApplicationFullPermissionsGrantingOrder','ՀԲ պայմանագրի ամբողջական հասանելիությունների տրամադրում','hbapplicationfullpermissionsgranting')">Ամբողջական հասանելիությունների տրամադրում</a></li>
+                    <li><a style="color: black;text-decoration:none!important ;" ui-sref="hbapplicationdetails({ hbApplication : hbApplication,hbGroupIds:hbGroupIds})">Մանրամասն դիտարկում</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

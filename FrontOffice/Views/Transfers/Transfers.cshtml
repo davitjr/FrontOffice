@@ -1,0 +1,488 @@
+﻿<style type="text/css">
+    .product-container {
+        width: 950px;
+    }
+</style>
+
+<div id="sendSTAKResponseConfirmLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<form name="TransfersForm" ng-controller="TransfersCtrl" id="Transfers" data-ng-init="getUserFilial() " ng-submit="TransfersForm.$valid && getTransfers()">
+    <sessionproperties ng-if="$root.SessionProperties.AdvancedOptions==undefined"></sessionproperties>
+
+    <div style="max-width:630px">
+        <errors></errors>
+    </div>
+
+    <div id="accountdetails_menu" class="menu-bar dialog-menu light-green details-menu">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5">
+                <span id="h-menu-item-5" onclick="return false;">
+                    <img id="h-menu-icon-5" class="h-menu-icon printButton">Փաստաթղթեր
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-5.1" ng-click="printPaidTransfers()" data-permission-selector="">
+                        <span>Վճարված փոխանցումներ</span>
+                    </li>
+                    <li id="v-menuItem-5.2" ng-click="printBankMailTransfers()" data-permission-selector="">
+                        <span>Վճարման հանձնարարագրերի ամփոփ հաշվետվություն</span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+
+    <div class="product-details bhoechie-tab-content" style="min-width:730px;margin-left:10px;">
+        <div class="row" style="padding-bottom: 10px; width: 950px">
+            <div class="col-sm-12 ">
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Սկիզբ
+                    </div>
+                    <input type="date" ng-model="filter.DateFrom" name="DateFrom" class="form-control" ng-change="getTransferSessions()"
+                           required>
+                    <ng-messages ng-if="TransfersForm.$submitted || TransfersForm.DateFrom.$dirty"
+                                 for="TransfersForm.DateFrom.$error">
+                        <ng-message when="required" class="errors">
+                            Նշեք ա/թ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+                <div class="col-sm-3  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Վերջ
+                    </div>
+                    <input type="date" ng-model="filter.DateTo" name="DateTo" class="form-control" ng-change="getTransferSessions()"
+                           required>
+                    <ng-messages ng-if="TransfersForm.$submitted || TransfersForm.DateTo.$dirty"
+                                 for="TransfersForm.DateTo.$error">
+                        <ng-message when="required" class="errors">
+                            Նշեք ա/թ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+                <div class="col-sm-2" style="  padding-right: 0px; padding-left: 0px;">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ուղարկված/ստացված
+                    </div>
+                    <div data-ng-init="getSendOrReceived()">
+                        <loading-control scopevariable="sendOrReceived"></loading-control>
+
+                        <select data-ng-model="filter.SendOrReceived" name="SendOrReceived" id="SendOrReceived" class="form-control" style="  padding-right: 0px; padding-left: 0px;">
+                            <option ng-repeat="k in ::sendOrReceived" value="{{k.id}}">{{k.name}}</option>
+                            <option value="1" ng-if="$rootScope.FromReceived==undefined" hidden="hidden" style="margin-left:25px">Ուղարկված</option>
+                            <option value="0" ng-if="filter.SendOrReceived=='0'" hidden="hidden" style="margin-left:25px">Ստացված</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Կարգավիճակի տեսակ
+                    </div>
+                    <div data-ng-init="getQualities()">
+                        <loading-control scopevariable="qualities"></loading-control>
+
+                        <select data-ng-model="filter.Quality" name="Quality" id="Quality" class="form-control">
+                            <option ng-repeat="k in ::qualities" value="{{k.id}}">{{k.name}}</option>
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2" style="  padding-right: 0px; padding-left: 15px;">
+                    <div class="product-detail-cell product-detail-lable">
+                        Երկիր
+                    </div>
+
+                    <div data-ng-init="getCountries()">
+                        <loading-control scopevariable="countries"></loading-control>
+                        <select ng-show="countries" data-ng-model="filter.Country" class="form-control" data-ng-options="k as v for (k,v) in ::countries" id="Country" name="Country" style="  padding-right: 0px; padding-left: 0px;">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+
+                    </div>
+                </div>
+                <br />
+                <div class="col-sm-2  " style="padding-top: 22px;">
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row" style="padding-bottom: 10px; width: 950px">
+            <div class="col-sm-12  ">
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Տեսակ
+                    </div>
+                    <div data-ng-init="getTransferTypes()">
+                        <loading-control scopevariable="transferTypes"></loading-control>
+                        <select data-ng-model="filter.TransferGroup" name="TransferGroup" id="TransferGroup" class="form-control" ng-change="getTransferSessions()">
+                            <option value="" hidden="hidden" style="margin-left:25px">Բոլորը</option>
+                            <option value="3" hidden="hidden" style="margin-left:25px">Միջազգային</option>
+                            <option ng-repeat="k in ::transferTypes" value="{{k.id}}">{{k.name}}</option>
+                        </select>
+
+                    </div>
+                </div>
+
+
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Համակարգ
+                    </div>
+                    <div data-ng-init="getTransferSystems()">
+                        <loading-control scopevariable="transferSystems"></loading-control>
+                        <select ng-show="transferSystems" data-ng-model="filter.TransferSystem" class="form-control" data-ng-options="k as v for (k,v) in ::transferSystems" id="TransferSystem" name="TransferSystem">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Կարգավիճակ
+                    </div>
+                    <div data-ng-init="getStatuses()">
+                        <loading-control scopevariable="statuses"></loading-control>
+                        <select data-ng-model="filter.Status" name="Status" id="Status" class="form-control">
+                            <option ng-repeat="k in ::statuses" value="{{k.id}}">{{k.name}}</option>
+                            <option value="2" hidden="hidden" style="margin-left:25px">Չձևակերպված</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Բանկ / Հաճախորդ
+                    </div>
+                    <div>
+
+                        <select data-ng-model="filter.TransferType" class="form-control">
+                            <option value="0" style="margin-left:25px">Բոլորը</option>
+                            <option value="103" style="margin-left:25px">Հաճախորդի փոխանցում</option>
+                            <option value="202" style="margin-left:25px">Բանկային փոխանցում</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Փ/Թ համար
+                    </div>
+                    <div>
+                        <input type="text" ng-model="filter.DocumentNumber" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Սեանս
+                    </div>
+                    <div>
+                        @*<input type="text" ng-model="filter.Session" class="form-control" />*@
+
+                        @*<select data-ng-model="filter.Session" class="form-control" data-ng-options="k as v for (k,v) in sessions" id="transferSessions" name="transferSessions">
+                                <option value="" style="margin-left:25px">Բոլորը</option>
+                            </select>*@
+
+
+                        <select data-ng-model="filter.Session" name="Status" id="Status" class="form-control">
+                            <option ng-repeat="k in ::sessions" value="{{k.Key}}">{{k.Value}}</option>
+                        </select>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+        <div class="row" style="padding-bottom: 10px; width: 950px">
+            <div class="col-sm-12  ">
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Գումար
+                    </div>
+                    <div>
+                        <input type="text" data-ng-model="filter.Amount" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' fcsa-number />
+                    </div>
+                </div>
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Արժույթ
+                    </div>
+                    <div data-ng-init="getCurrencies()">
+                        <loading-control scopevariable="currencies"></loading-control>
+                        <select ng-show="currencies" data-ng-model="filter.Currency" class="form-control" data-ng-options="k as v for (k,v) in ::currencies" id="Currency" name="Currency">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Մասնաճյուղ
+                    </div>
+                    <div data-ng-init="getFilialList()">
+                        <loading-control scopevariable="filialList"></loading-control>
+                        <select ng-show="filialList" data-ng-model="filter.Filial" class="form-control" data-ng-options="k as v for (k,v) in ::filialList" id="Filial" name="Filial">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Մուտքագրող
+                    </div>
+                    <div data-ng-init="getRegisterBy()">
+                        <loading-control scopevariable="registerBy"></loading-control>
+
+                        <select data-ng-model="filter.IsCallTranasfer" name="IsCallTranasfer" id="IsCallTranasfer" class="form-control">
+                            <option ng-repeat="k in ::registerBy" value="{{k.id}}">{{k.name}}</option>
+                            <option value="0" ng-if="filter.IsCallTranasfer=='0'" hidden="hidden" style="margin-left:25px">Ոչ Call Center</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Վճարված/Չվճարված
+                    </div>
+
+                    <div>
+                        <select data-ng-model="filter.IsPayed" class="form-control">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                            <option value="1" style="margin-left:25px">Վճարված</option>
+                            <option value="2" style="margin-left:25px">Չվճարված</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-1  ">
+                    <div class="product-detail-cell product-detail-lable">
+
+                    </div>
+                    <input type="checkbox" ng-model="filter.Deleted" title="Հեռացվածներ">
+                </div>
+                <div ng-if="TransfersForm.$submitted && filter.DateFrom>filter.DateTo" class="col-md-9  errors">Ժամկետի սկիզբը պետք է փոքր լինի վերջից</div>
+            </div>
+        </div>
+        <div class="row" style="  width: 950px">
+            <div class="col-sm-12  ">
+
+
+
+
+
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Աշխատակցի ՊԿ
+                    </div>
+                    <div class="input-group">
+                        <input type="text" style="width:111px" class="form-control" id="setnumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="setnumber" ng-model="filter.RegisteredUserID">
+                        <div class="input-group-btn" style="display:inline-block;">
+                            <button type="button" title="ՊԿ-ի որոնում" class="btn btn-primary searchButton" ng-click="searchCashiers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ստացող
+                    </div>
+                    <div>
+                        <input type="text" class="form-control" id="Receiver" name="Receiver" ng-model="filter.Receiver">
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Աղբյուր
+                    </div>
+                    <div data-ng-init="getSourceTypes()">
+                        <select data-ng-model="filter.IsHBTransfer" ng-if="setHBFilter == 'true'? filter.IsHBTransfer = '2':filter.IsHBTransfer" name="IsHBTransfer" id="IsHBTransfer" class="form-control">
+                            <option value="" hidden="hidden" style="margin-left:25px">Բոլորը</option>
+                            <option ng-repeat="k in ::sourceTypes" value="{{k.id}}">{{k.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Փոխանցման փուլ
+                    </div>
+                    <div data-ng-init="getTransferRequestStepTypes()">
+                        <select data-ng-model="filter.TransferRequestStep" class="form-control" data-ng-options="k as v for (k,v) in ::transferRequestStepTypes" id="TransferRequestStep" name="TransferRequestStep">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Կարգավիճակ
+                    </div>
+                    <div data-ng-init="getTransferRequestStatusTypes()">
+                        <select data-ng-model="filter.TransferRequestStatus" class="form-control" data-ng-options="k as v for (k,v) in ::transferRequestStatusTypes" id="TransferRequestStatus" name="TransferRequestStatus">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Մուտքագրող
+                    </div>
+                    <div>
+                        <select data-ng-model="filter.RegisteredBy" class="form-control">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                            <option value="1" style="margin-left:25px">Call Center</option>
+                            <option value="2" style="margin-left:25px">Հաշվապահություն</option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-12  " style="margin-top:1rem;">
+                    <div class="col-sm-4">
+                        <div style='margin-left:1.85rem;color:#245775'>
+                            Swift փոխանցման ունիկալ համար
+                        </div>
+
+                        <div>
+                            <input type="text" ng-model="filter.UETR" class="form-control" style="margin-left:1.80rem;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <loading></loading>
+
+    <div ng-if="showCount" style="color: red; font-size: 16px; padding-left: 15px;">Ուշադրություն ցուցադրված են {{transfersCount}} փոխանցումներից {{transfersShow}}-ը</div>
+
+    <div class="product-container" style="min-width:730px;margin-left:10px">
+
+        <div>
+
+            <div class="row" style="padding:10px">
+                <div class="col-sm-2 " style="text-align: left; font-size: 16px; font-weight:600">Փոխանցումներ  </div>
+                <div class="col-sm-3 " style="text-align: right; font-size: 16px; padding-right:0">ընդամենը գումար՝ </div>
+                <div class="col-sm-2" style="text-align: left; font-size: 16px; font-weight: 600;"> {{TotalAmount  | number :2}}</div>
+                <div class="col-sm-5" style="text-align: right; font-size: 16px">  քանակ՝ <span style=" font-weight: 600"> {{transfersShow}}</span></div>
+
+
+            </div>
+
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="col-sm-5">Փոխանցում </div>
+                <div class="col-sm-2" ng-if="isCallCenter==1" style="padding-left:0">Մուտքագրող ՊԿ </div>
+                <div class="col-sm-2" style="text-align: left">Գումար</div>
+                <div ng-if="isCallCenter!=1" class="col-sm-5" style="text-align:left; padding-left:70px">Ձևակերպման ա/թ</div>
+                <div ng-if="isCallCenter==1" class="col-sm-3" style="text-align:left; padding-left:0">Ձևակերպման ա/թ</div>
+            </div>
+            <div class="product-content-table custom-scroll" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="transfer in transfers" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" style="max-height:200px">
+                            <td class="col-sm-5">
+                                <div>
+                                    <span style="font-weight:600">{{::transfer.TransferGroupDescription}}</span>
+                                    <span ng-if="transfer.TransferGroup==3" style="font-weight:600">{{::transfer.TransferSystemDescription}}</span>
+                                    <br />
+                                    Մասնաճյուղ`  {{ ::transfer.FilialCode }}
+                                    <br /><span>Փաստաթղթի համար` </span>{{::transfer.DocumentNumber }}
+                                    <br /> Ա/թ`  {{ ::transfer.RegistrationDateString }}
+                                </div>
+                            </td>
+                            <td class="col-sm-2" ng-if="isCallCenter==1">
+                                <div>
+                                    <span ng-if="transfer.CallRegSetNumber !=0 "> {{::transfer.CallRegSetNumber }} </span>
+
+                                </div>
+                            </td>
+                            <td ng-class="isCallCenter==1 ?'col-sm-2':'col-sm-3'">
+                                <div>
+                                    <span> {{::transfer.Amount | number :2}} {{::transfer.Currency}}</span>
+                                    <br /><span ng-if="  transfer.TransferGroup == 3 && transfer.InstantMoneyTransfer == 1 " style="font-weight:600">Միջնորդավճար</span>
+                                    <br /><span ng-if="  transfer.TransferGroup == 3 && transfer.InstantMoneyTransfer == 1  ">ACBA` {{::transfer.FeeAcba | number:2}} {{::transfer.SendOrReceived==0? transfer.Currency : 'AMD'}}</span>
+                                    <br /><span ng-if="  transfer.TransferGroup == 3 && transfer.InstantMoneyTransfer == 1 && transfer.FeeInCurrency!=0">Հաճախորդից` {{::transfer.FeeInCurrency | number:2}} {{::transfer.Currency}}</span>
+
+                                </div>
+                            </td>
+                            <td ng-clas="isCallCenter==1 ?'col-sm-2':'col-sm-3'">
+                                <span ng-if="transfer.ConfirmationDate!=undefined && transfer.ConfirmationDate!=null"> {{ ::transfer.ConfirmationDateString }}</span>
+                                <span ng-if="(transfer.Verified!= 0 && transfer.Verified!=1) || transfer.AmlCheck!= 0  ||( transfer.VerifiedAml!= 0 && transfer.VerifiedAml!= 1 )"> <br />Համընկնում</span>
+                                <span style="font-style:italic " ng-if="transfer.Verified!= 0 && transfer.Verified!=1"> <br /> {{::transfer.VerifiedString}} </span>
+                                <span style="font-style:italic " ng-if="transfer.AmlCheck!= 0 "> <br /> {{::transfer.AmlCheckString}} </span>
+                                <span style="font-style:italic " ng-if="transfer.VerifiedAml!= 0 && transfer.VerifiedAml!= 1"> <br /> {{::transfer.VerifiedAmlString}} </span>
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="contextOrders" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div ng-if="transfers.length==0" style="color: red; font-size: 16px; text-align: center;">Նշված պայմաններով փոխանցումներ հայտնաբերված չեն</div>
+
+            </div>
+        </div>
+    </div>
+    <ul id="contextOrders" class="dropdown-menu">
+        <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-controller="TransfersCtrl" class="my_button" ng-if="ShowTransfer" ng-click="showModalOrder()">Դիտարկում</a></li>
+        <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-controller="TransfersCtrl" class="my_button" ng-if="selectedTransfer.SendOrReceived==1 || (selectedTransfer.TransferGroup==3 && selectedTransfer.TransferSystem ==1 ) || (selectedTransfer.SendOrReceived == 0 && selectedTransfer.TransferSystem == 23)" ng-click="printTransfer()">Տպել</a></li>
+        <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-controller="TransfersCtrl" class="my_button" ng-if="selectedTransfer!=null && selectedTransfer!=undefined &&  selectedTransfer.DocflowConfirmationId!=0" ng-click="showApproveTransfer()">Հաստատել</a></li>
+        <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="CanPay && isCustomer && CanPayCash && selectedTransfer.HBSourceType != 13" ng-controller="PopUpCtrl" class="my_button" ng-click="params={orderType:84,checkForDebitAccount:1,checkForReciverAccount:1,transfer: selectedTransfer, forInputCheckbox:true, operations:operations};openWindowWithTemplate('paymentorder','Փոխանցման կանխիկ վճարում','paymentorder')">Վճարել կանխիկ</a></li>
+        <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="CanPay && (isCustomer || isCallCenter ==1) && selectedTransfer.HBSourceType != 13" ng-controller="PopUpCtrl" class="my_button" ng-click="params={orderType:85,checkForDebitAccount:1,checkForReciverAccount:0,transfer: selectedTransfer, forInputCheckbox:true, operations:operations};openWindowWithTemplate('paymentorder','Փոխանցման անկանխիկ վճարում','paymentorder')">Վճարել անկանխիկ</a></li>
+        <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="CanPay &&  (isCustomer || isCallCenter==1) && selectedTransfer.HBSourceType != 13" ng-controller="PopUpCtrl" class="my_button" ng-click="params={orderType:81,checkForDebitAccount:1,checkForReciverAccount:1,nonauthorizedcustomer:false, transfer: selectedTransfer, forInputCheckbox:true, operations:operations};openWindowWithTemplate('currencyexchangeorder','Փոխարկում','exchangeorder')">Վճարել փոխարկումով</a></li>
+        <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="selectedTransfer.TransferSystem != 23 && (selectedTransfer.FilialCode == Filial || (isCallCenter==1 && CanPay ))  && selectedTransfer.Verified != undefined && selectedTransfer.Verified!= 0 && selectedTransfer.Verified!=1" class="my_button" ng-click="showTransferCriminalCheckResults(selectedTransfer)">Դիտարկել կասկածելիության պատճառը</a></li>
+        <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="selectedTransfer.TransferSystem != 23 && selectedTransfer.FilialCode == Filial && selectedTransfer.SendOrReceived==1 && ( selectedTransfer.ConfirmationDate==null || selectedTransfer.ConfirmationDate==undefined) && selectedTransfer.Deleted != 1 " class="my_button" ng-click="confirmTransfer()">Ձևակերպել</a></li>
+        <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="selectedTransfer.TransferSystem == 23 && selectedTransfer.FilialCode == Filial && selectedTransfer.SendOrReceived==1 && ( selectedTransfer.ConfirmationDate==null || selectedTransfer.ConfirmationDate==undefined) && selectedTransfer.Deleted != 1 " class="my_button" ng-click="confirmTransfer()">Հաստատել</a></li>
+        <li>
+            <a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="(($root.SessionProperties.IsChiefAcc == true && isCustomer  && selectedTransfer.FilialCode == Filial) || ($root.SessionProperties.IsCalledFromHB == true &&
+               ($root.SessionProperties.AdvancedOptions['isOnlineAccChief']=='1'|| $root.SessionProperties.AdvancedOptions['isOnlineAcc']=='1')))  && selectedTransfer!=null && selectedTransfer!=undefined && (selectedTransfer.ConfirmationDate==null || selectedTransfer.ConfirmationDate==undefined) && selectedTransfer.Deleted != 1" class="my_button" ng-click="deleteTransfer()">Հեռացնել</a>
+        </li>
+        <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="selectedTransfer.IsCallCenter == 1 && isCallCenter==1     && selectedTransfer!=null && selectedTransfer!=undefined && (selectedTransfer.ConfirmationDate==null || selectedTransfer.ConfirmationDate==undefined) && selectedTransfer.Deleted != 1" class="my_button" ng-click="TransferDeleteReason()">Հեռացնել</a></li>
+        <li>
+            <a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="selectedTransfer.TransferSystem == 23 && selectedTransfer.ConfirmationDate != null && selectedTransfer.SendOrReceived==1 && selectedTransfer.Quality != 3 && selectedTransfer.Quality != 4" class="my_button" ng-controller="PopUpCtrl"
+               ng-click="params={URN:selectedTransfer.Code, sendOrReceived: selectedTransfer.SendOrReceived,cancellationCustomerNumber: selectedTransfer.CustomerNumber, transferId: selectedTransfer.Id, MTOAgentCode: selectedTransfer.MTOAgentCode}; openWindow('/RemittanceCancellationOrder/RemittanceCancellationOrder','Չեղարկել','newRemittanceCancellationOrder')">Չեղարկել</a>
+        </li>
+        <li>
+            <a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="selectedTransfer.TransferSystem == 23 && selectedTransfer.ConfirmationDate != null && selectedTransfer.SendOrReceived==1 &&  selectedTransfer.Quality != 3 && selectedTransfer.Quality != 4" class="my_button" ng-controller="PopUpCtrl"
+               ng-click="params={URN:selectedTransfer.Code, sendOrReceived: selectedTransfer.SendOrReceived,cancellationCustomerNumber: selectedTransfer.CustomerNumber, transferId: selectedTransfer.Id, MTOAgentCode: selectedTransfer.MTOAgentCode}; openWindow('/RemittanceAmendmentOrder/RemittanceAmendmentOrder','Փոփոխել ստացողին','newRemittanceAmendmentOrder')">Փոփոխել ստացողին</a>
+        </li>
+        <li>
+            <a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="selectedTransfer.TransferSystem == 23 && selectedTransfer.RemittanceChangeHistory != null" class="my_button" ng-controller="PopUpCtrl"
+               ng-click="params={transferHistory:selectedTransfer.RemittanceChangeHistory}; openWindow('/Transfers/TransferHistory','Դիտել փոխանցման պատմությունը','transferHistory')">Դիտել փոխանցման պատմությունը</a>
+        </li>
+        <li>
+            <a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="selectedTransfer.TransferSystem == 23 && selectedTransfer.ConfirmationDate != null && selectedTransfer.Quality != 3 && selectedTransfer.Quality != 4 && selectedTransfer.SendOrReceived == 1" class="my_button" ng-controller="PopUpCtrl"
+               ng-click="sendSTAKResponseConfirm(selectedTransfer.AddTableUnicNumber)">Ուղարկել SMS ծանուցում</a>
+        </li>
+    </ul>
+
+</form>

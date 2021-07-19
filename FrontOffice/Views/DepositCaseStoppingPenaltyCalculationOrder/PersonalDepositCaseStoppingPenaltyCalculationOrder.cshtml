@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+}
+
+<div id="DepositCaseStoppingPenaltyCalculationOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="DepositCaseStoppingPenaltyCalculationOrderCtrl" style="min-width:650px;" id="DepositCaseStoppingPenaltyCalculationOrder" name="DepositCaseStoppingPenaltyCalculationOrder" role="form" novalidate class="form-horizontal" prevent-enter-submit>
+
+    <div id="cardDataChangeOrder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="DepositCaseStoppingPenaltyCalculationOrder.$setSubmitted();DepositCaseStoppingPenaltyCalculationOrder.$valid && saveDepositCaseStoppingPenaltyCalculationOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('depositCaseStoppingPenaltyCalculationOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-12">
+            <div style="max-width:520px;min-width:520px;">
+                <errors></errors>
+            </div>
+            <div class="form-group ">
+                <label class="tab_title col-sm-5 " for="DateOfStoppingPenaltyCalculation">Տույժի դադարեցման ա/թ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="date" style="text-align:left" disabled="disabled" class="form-control tab_title" id="DateOfStoppingPenaltyCalculation" name="DateOfStoppingPenaltyCalculation" ng-model="order.DateOfStoppingPenaltyCalculation" required>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DepositCaseStoppingPenaltyCalculationOrder.$submitted || DepositCaseStoppingPenaltyCalculationOrder.DateOfStoppingPenaltyCalculation.$dirty"
+                                     for="DepositCaseStoppingPenaltyCalculationOrder.DateOfStoppingPenaltyCalculation.$error">
+                            <ng-message when="required" class="errors">
+                                Տույժի դադարեցման ա/թ-ն նշված չէ
+                            </ng-message>
+                            <ng-message when="date" class="errors">
+                                Տույժի դադարեցման ա/թ-ն սխալ է նշված
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="ChangingReason">Փոփոխության կատարման հիմք</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <textarea rows="2" onkeypress="return isArmenianUnicode(event.keyCode)"
+                                  onpaste="return CheckPasteText(event)" ng-model="order.ChangingReason"
+                                  name="ChangingReason" id="ChangingReason" required class="form-control" style="text-align:left"></textarea>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DepositCaseStoppingPenaltyCalculationOrder.$submitted || DepositCaseStoppingPenaltyCalculationOrder.ChangingReason.$dirty"
+                                     for="DepositCaseStoppingPenaltyCalculationOrder.ChangingReason.$error">
+                            <ng-message when="required" class="errors">
+                                Փոփոխության կատարման հիմքը լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="tab_title col-sm-5 " for="DocumentDate">Փաստաթղթի ա/թ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="date" style="text-align:left" class="form-control tab_title" id="DocumentDate" name="DocumentDate" ng-model="order.DocumentDate" required>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="DepositCaseStoppingPenaltyCalculationOrder.$submitted || DepositCaseStoppingPenaltyCalculationOrder.DocumentDate.$dirty"
+                                     for="DepositCaseStoppingPenaltyCalculationOrder.DocumentDate.$error">
+                            <ng-message when="required" class="errors">
+                                Փաստաթղթի ա/թ-ն նշված չէ
+                            </ng-message>
+                            <ng-message when="date" class="errors">
+                                Փաստաթղթի ա/թ-ն սխալ է նշված
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+</form>
+
+
+
+
+
+
+
+
+
+
+

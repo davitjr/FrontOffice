@@ -1,0 +1,298 @@
+﻿@{
+    Layout = null;
+}
+
+<style>
+
+   #customerInfo {
+    width: 350px;
+    max-height: 350px;
+    height:auto;
+  }
+
+  .tooltip {
+
+    padding:0;
+    color: white;
+    border-radius: 0px;
+    box-shadow:none;
+    background: white;
+    border:none;
+  }
+
+   
+    #personalTransferByCallForm {
+        min-width:850px;
+    }
+    
+</style>
+
+
+<div id="load" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<form class="form-horizontal" ng-controller="TransferCallsCtrl"  name="PersonalTransferByCallForm" id="personalTransferByCallForm" novalidate>
+    <div id="newtransfercall_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="PersonalTransferByCallForm.$setSubmitted();PersonalTransferByCallForm.$valid && saveTransferCall();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newtransfercall')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div >
+        <errors></errors>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="col-sm-6 tab_title">Գրանցման ա/թ</label>
+                <div class="col-sm-6 row">
+                    <div class=" col-sm-10 multiple_columns">
+                        <input type="date" ng-model="transferCall.callTime" class="form-control unstyled" readonly>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-6 tab_title">Քարտի համար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="input-group">
+                            <input type="text" ng-model="transferCall.cardNumber" class="form-control" id="cardNumber" name="cardNumber" onkeypress="return event.keyCode != 13;" ng-change="getContractsForTransfersCall(3)" ng-model-options="{updateOn: 'blur'}" data-update-model-on-enter-key-pressed>
+                            <div class="input-group-btn" style="display:block;">
+                                <button type="button" class="btn btn-default searchButton" ng-click="searchCards()" title="Քարտի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row additionalInfoLabel" ng-if="transferCall.cardNumber != null">
+                        Գաղտնաբառ` <b>{{transferCall.contract.MotherName}}</b>
+                        <br/>
+                        Վերջ` <b>{{transferCall.contract.CardValidationDateString}}</b>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-6 tab_title">Հաշիվ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="input-group">
+                            <input type="text" ng-model="transferCall.accountNumber" class="form-control" id="accountNumber" name="accountNumber" required onkeypress="return event.keyCode != 13;" ng-change="getContractsForTransfersCall(2)" ng-model-options="{updateOn: 'blur'}" data-update-model-on-enter-key-pressed>
+                            <div class="input-group-btn" style="display:block;">
+                                <button type="button" class="btn btn-default searchButton" ng-click="searchAccounts()" title="Հաշվի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row additionalInfoLabel" ng-if="transferCall.accountNumber != null ">
+                        Արժույթ` <b>{{transferCall.contract.Currency}}</b>
+                    </div>
+                    <div class="row">
+                        <div ng-show="(PersonalTransferByCallForm.$submitted || PersonalTransferByCallForm.accountNumber.$dirty) && PersonalTransferByCallForm.accountNumber.$error.required" class="errors">
+                            Հաշիվը լրացված չէ
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-6 tab_title">Հաճախորդ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="input-group">
+                            <input type="text" ng-model="transferCall.customerNumber" class="form-control" id="customerNumber" name="customerNumber" required onkeypress="return event.keyCode != 13;" ng-change="getContractsForTransfersCall(1); getCustomer(transferCall.customerNumber)" ng-model-options="{updateOn: 'blur'}" data-update-model-on-enter-key-pressed>
+                            <div class="input-group-btn" style="display:block;">
+                                <button type="button" class="btn btn-default searchButton" ng-click="searchCustomers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div ng-messages="(PersonalTransferByCallForm.$submitted || PersonalTransferByCallForm.customerNumber.$dirty) && PersonalTransferByCallForm.customerNumber.$error" class="errors">
+                            <ng-message when="required" class="errors"> Հաճախորդը լրացված չէ </ng-message>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-6 tab_title">Հեռախոսահամար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" ng-model="transferCall.contactPhone" class="form-control" id="contactPhone" name="contactPhone" required>
+                    </div>
+                    <div class="row">
+                        <div ng-messages="(PersonalTransferByCallForm.$submitted || PersonalTransferByCallForm.contactPhone.$dirty) && PersonalTransferByCallForm.contactPhone.$error" class="errors">
+                            <ng-message when="required" class="errors">Հեռախոսահամարը լրացված չէ</ng-message>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" >
+                <label class="col-sm-6 tab_title">Համաձայնագիր</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div ng-if="transferContracts.length==0"><input type="text" class="form-control"></div>
+                        <select ng-show="transferContracts.length!=0" data-ng-model="transferCall.contract" class="form-control" data-ng-options="t.AccountDescription  + ' ' + t.AccountNumber + ' ' +t.Currency +' '+t.ContractFilialCode+' '+t.CardNumber+' '+t.RelatedOfficeNumber+' '+t.CardType+' '+t.StartCapitalString for t in transferContracts" id="contract" name="contract" required ng-change="getContractDetails();getClientTransferAmount()">
+                            <option value="" hidden="hidden" style="margin-left:25px">-Ընտրեք-</option>
+                        </select>
+                    </div>
+                    <div class="row additionalInfoLabel">
+                        <span ng-show="transferContracts.length!=0">Գաղտնաբառ` <b>{{transferCall.contract.ContractPassword}}</b></span>
+                    </div>
+                    <div class="row additionalInfoLabel">
+                        <div ng-if="transferCall.contract.CreditLineQuality ==11 || transferCall.contract.CreditLineQuality ==12"> <span class="errors">Վարկային գիծը/գերածախսը դուրս գրված է: </span></div>
+                    </div>
+                    <div class="row">
+                        <div ng-messages="(PersonalTransferByCallForm.$submitted || PersonalTransferByCallForm.contract.$dirty) && PersonalTransferByCallForm.contract.$error" class="errors">
+                            <ng-message when="required" class="errors">Համաձայնագիրը լրացված չէ</ng-message>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-6 tab_title">Համակարգ</label>
+                <div class="col-sm-6" data-ng-init="getTransferTypes(1)">
+                    <div class="row">
+                        <select data-ng-model="transferCall.transferSystem" class="form-control" data-ng-options="k as v for (k,v) in transferTypes" id="transferSystem" name="transferSystem" required ng-change="getTransferSystemCurrency()">
+                            <option value="" hidden="hidden" style="margin-left:25px">-Ընտրեք-</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div ng-messages="(PersonalTransferByCallForm.$submitted || PersonalTransferByCallForm.transferSystem.$dirty) && PersonalTransferByCallForm.transferSystem.$error" class="errors">
+                            <ng-message when="required" class="errors">Համակարգը լրացված չէ</ng-message>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-6 tab_title">Հսկիչ համար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" ng-model="transferCall.code" class="form-control" id="code" name="code" required ng-enter="">
+
+                    </div>
+                    <div class="row additionalInfoLabel">
+                        <span style="color: green;">Նիշերի քանակ` <b>{{transferCall.code != null ? transferCall.code.length : 0 }} </b></span>
+                    </div>
+                    <div class="row">
+                        <div ng-messages="(PersonalTransferByCallForm.$submitted || PersonalTransferByCallForm.code.$dirty) && PersonalTransferByCallForm.code.$error" class="errors">
+                            <ng-message when="required" class="errors">Հսկիչ համարը լրացված չէ</ng-message>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-6 tab_title">Գումար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-6 multiple_columns">
+                            <input type="text" ng-model="transferCall.amount" class="form-control tab_title" id="amount" name="amount" required ng-enter="" ng-change="getClientTransferAmount()" fcsa-number>
+                        </div>
+                        <div class="col-sm-6 " style="padding-left:0px; padding-right:0px;">
+                            <select data-ng-model="transferCall.currency" class="form-control" data-ng-options="k as v for (k,v) in currencies" ng-disabled="disableCurrency"style="font-weight: bold;" id="currency" name="currency" required ng-change="getClientTransferAmount()">
+                                <option value="" hidden="hidden" style="margin-left:25px">-Ընտրեք-</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div ng-messages="(PersonalTransferByCallForm.$submitted || PersonalTransferByCallForm.amount.$dirty) && PersonalTransferByCallForm.amount.$error" class="errors">
+                            <ng-message when="required" class="errors">Գումարը լրացված չէ</ng-message>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div ng-messages="(PersonalTransferByCallForm.$submitted || PersonalTransferByCallForm.currency.$dirty) && PersonalTransferByCallForm.currency.$error" class="errors">
+                            <ng-message when="required" class="errors">Արժույթը լրացված չէ</ng-message>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-if="transferCall.rateBuy!=0 || transferCall.rateSell!=0 || transferCall.clientTransferAmount != null" style="margin-left:10px;margin-bottom:55px;">
+                <div class="panel panel-success">
+                    <div class="panel-heading" style="font-size:11pt;padding:2px 2px;"><span class="glyphicon glyphicon-info-sign" style="margin-left:10px;"></span></div>
+                    <div class="panel-body">
+                        <div class="row" ng-show="transferCall.rateBuy!=0">
+                            <div class="col-sm-6 amountLabelDescription">
+                                Առքի փոխարժեք`
+                            </div>
+                            <div class="col-sm-6 amountLabel">
+                                {{transferCall.rateBuy }}
+                            </div>
+                        </div>
+                        <div class="row" ng-show="transferCall.rateSell!=0">
+                            <div class="col-sm-6 amountLabelDescription">
+                                Վաճառքի փոխարժեք`
+                            </div>
+                            <div class="col-sm-6 amountLabel">
+                                {{transferCall.rateSell}}
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="transferCall.clientTransferAmount != null">
+                            <div class="col-sm-6 amountLabelDescription">
+                                Փոխանցվող գումար`
+                            </div>
+                            <div class="col-sm-6 amountLabel">
+                                {{transferCall.clientTransferAmount != null ? transferCall.clientTransferAmount : (0 | number : 2)}} {{transferCall.contract.Currency}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <br />
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group" id="customerInfo" style="margin-left:20px;">
+                <div ng-if="transferCall.customerNumber.length==12">
+                    <customerinfoold customernumber="transferCall.customerNumber"> </customerinfoold>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row" ng-if="transferCall.customerNumber.length==12 && customerDahk.length!=0" style="margin-left:20px; margin-right:30px;max-width:350px">
+                    <div class=" panel panel-warning">
+                        <div class="panel-heading" style="padding:2px 2px;"><span class="glyphicon glyphicon-warning-sign" style="margin-left:20px;"></span> Արգելանք</div>
+                        <div class="panel-body">
+                            <div ng-if="customerDahk.length!=0"> <span class="errors">{{customerDahk}}</span></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="customerDocumentWarnings.length>0" >
+                <div class="row" ng-if="transferCall.customerNumber.length==12" style="margin-left:20px; margin-right:30px;max-width:350px">
+                    <div class=" panel panel-warning">
+                        <div class="panel-heading" style="padding:2px 2px;"><span class="glyphicon glyphicon-warning-sign" style="margin-left:20px;"></span> Ուշադրություն</div>
+                        <div class="panel-body">
+                            <div ng-repeat="war in customerDocumentWarnings">
+                                {{$index+1}}.{{::war}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+ 
+        </div>
+    </div>
+   
+
+       
+</form>
+   
+
+

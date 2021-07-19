@@ -1,0 +1,244 @@
+﻿<style>
+
+    #loanEquipmentsResult table, #loanEquipmentsResult tr, #loanEquipmentsResult td{
+        padding-left: 0px !important;
+        font-size: 11px !important;
+        height: auto;
+    }
+
+    #loanEquipmentsResult table, #loanEquipmentsResult th, #loanEquipmentsResult td{
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    #loanEquipmentsResult table{
+        border-collapse: collapse;
+    }
+    #equipmentHeaders td {
+        font-size: 13px !important;
+    }
+</style>
+<form name="loanEquipmentsForm" ng-if="$root.SessionProperties.OperationDate!=undefined" id="LoanEquipmentsForm" ng-init="initLoanEquipmentsSearchParams();initLoanEquipmentsContentScroll()" ng-controller="LoanEquipmentsCtrl" novalidate style="margin-top:15px">
+    <errors></errors>
+    <div class="product-details bhoechie-tab-content" style="min-width:1400px;margin-left:10px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Հաճախորդի համար
+                    </div>
+                    <div class="input-group">
+                        <input type="text" ng-model="searchParams.CustomerNumber" style="width:163px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" class="form-control">
+                        <div class="input-group-btn" style="display:inline-block;">
+                            <button type="button" title="Հաճախորդի որոնոմ" class="btn btn-primary searchButton" ng-click="searchCustomers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Մասնաճյուղ
+                    </div>
+                    <div data-ng-init="getFilialList()">
+                        <loading-control scopevariable="filialList"></loading-control>
+                        <select ng-show="filialList" ng-model="searchParams.FilialCode" class="form-control"
+                                data-ng-options="k as v for (k,v) in filialList" id="FilialCode" name="FilialCode">
+                            <option value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-2 ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Գրավի նկարագրություն
+                    </div>
+                    <input type="text" ng-model="searchParams.EquipmentDescription" name="EquipmentDescription" id="EquipmentDescription" class="form-control" style="max-width:350px !important;">
+                </div>
+
+                <div class="col-sm-4  ">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="product-detail-cell product-detail-lable">
+                                Վաճառքի գին
+                            </div>
+                            <div class="col-sm-5" style="padding-left:0px;width:47%;">
+                                <input type="text" ng-model="searchParams.EquipmentSalePriceFrom" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' name="EquipmentSalePriceFrom" id="EquipmentSalePriceFrom" class="form-control" fcsa-number>
+                            </div>
+                            <div class="col-sm-1" style="width:5px; padding:0px;">_</div>
+                            <div class="col-sm-6" style="padding-right:0px;width:48%;">
+                                <input type="text" ng-model="searchParams.EquipmentSalePriceTo" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' name="EquipmentSalePriceTo" id="EquipmentSalePriceTo" class="form-control" fcsa-number>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Վաճառքի փուլեր
+                    </div>
+                    <div>
+                        <select data-ng-model="searchParams.SaleStage" class="form-control">
+                            <option value="1" style="margin-left:25px">Աճուրդում վաճառված (այլ)</option>
+                            <option value="2" style="margin-left:25px">Բանկի կողմից գնված</option>
+                            <option value="3" style="margin-left:25px">Բանկի կողմից վաճառված</option>
+                            <option value="0" style="margin-left:25px" selected="selected">Բոլորը</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 ">
+
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Վարկային հաշիվ
+                    </div>
+                    <input type="text" ng-model="searchParams.LoanFullNumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="LoanFullNumber" id="LoanFullNumber" class="form-control">
+                </div>
+
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Գրավի կարգավիճակ
+                    </div>
+                    <div>
+                        <select data-ng-model="searchParams.EquipmentQuality" class="form-control" >
+                            <option value="1" style="margin-left:25px">Գործող</option>
+                            <option value="2" style="margin-left:25px">Փակված</option>
+                            <option value="0" style="margin-left:25px" selected="selected">Բոլորը</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="product-detail-cell product-detail-lable">
+                        Գրավի հասցե
+                    </div>
+                    <input type="text" ng-model="searchParams.EquipmentAddress" name="EquipmentAddress" id="EquipmentAddress" class="form-control" style="max-width:350px !important;">
+                </div>
+
+                <div class="col-sm-4  ">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="product-detail-cell product-detail-lable">
+                                Ընթացիկ աճուրդի վերջ
+                            </div>
+                            <div class="col-sm-5" style="padding-left:0px;width:47%;">
+                                <input type="date" ng-model="searchParams.AuctionEndDateFrom" name="AuctionEndDateFrom" id="AuctionEndDateFrom" class="form-control">
+                            </div>
+                            <div class="col-sm-1" style="width:5px; padding:0px;">_</div>
+                            <div class="col-sm-6" style="padding-right:0px;width:48%;">
+                                <input type="date" ng-model="searchParams.AuctionEndDateTo" name="AuctionEndDateTo" id="AuctionEndDateTo" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 10px;">
+            <div class="col-sm-10">
+                <div class="col-sm-2">
+                    <button type="button" ng-click="getSearchedLoanEquipments();getSumsOfEquipmentPrices()" class="btn btn-primary" style="width:130px;"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" ng-click="saledEquipmentsReport()" class="btn btn-primary" style="width:130px;">Հաշվետվություն</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br />
+    <div class="product-container col-sm-12" style=" min-width:1400px;margin-left:10px;margin-top:-5px;padding:0px">
+        <div ng-if="showCount" style="color: red; font-size: 16px; padding-left: 15px;" class="ng-binding ng-scope">Ուշադրություն ցուցադրված են {{equipmentsCount}} գրավներից {{loanEquipments.length}}-ը</div>
+        <div class="header-title">
+            Իրացման գործընթացում գտնվող գույքեր
+        </div>
+        <div id="equipmentHeaders" class="product-container-header" style="height:60px;min-width:1400px;">
+            <table>
+                <tr>
+                    <td align="center" class="col-sm-1" style="width:2.1%;padding-left: 2px !important;">Գրավի N</td>
+                    <td align="center" class="col-sm-1" style="width:3.9%;padding-left: 5px !important;">Հաճախորդի N</td>
+                    <td align="center" class="col-sm-1" style="width:7.2%">Հաճախորդի անվանում</td>
+                    <td align="center" class="col-sm-1" style="width:1.9%; white-space:nowrap;padding-left: 10px !important;">Մ/Ճ</td>
+                    <td align="center" class="col-sm-1" style="width:4.8%">Վարկային հաշիվ</td>
+                    <td align="center" class="col-sm-1" style="width:10.7%">Գրավի նկարագրություն</td>
+                    <td align="center" class="col-sm-1" style="width:9.5%">Գրավի հասցե</td>
+                    <td align="center" class="col-sm-1" style="width:4.5%;padding-left: 0px !important;">Մեկնար-կային գին</td>
+                    <td align="center" class="col-sm-1" style="width:7.25%;padding-left: 7px !important;">Աճուրդի կազմակերպիչ</td>
+                    <td align="center" class="col-sm-1" style="width:4.2%;padding-left: 5px !important;">Գնման գնի սահմ․</td>
+                    <td align="center" class="col-sm-1" style="width:3%;padding-left: 2px !important;">Ընթացիկ աճուրդի վերջ</td>
+                    <td align="center" class="col-sm-1" style="width:5%">Վաճառքի գին</td>
+                    <td align="center" class="col-sm-1" style="width:5%;padding-left: 3px !important;">Բանկ փոխանցված գումար</td>
+                    <td align="center" class="col-sm-1" style="width:1.3%;">&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+        <div id="loanEquipmentsContent" class="product-content-table custom-scroll" style="height:450px;min-width:1400px;">
+            <table id="loanEquipmentsResult" class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tr ng-repeat="loanEquipment in loanEquipments" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow(loanEquipment)" ng-style="setColor(loanEquipment)" style="max-height:200px;height:30px;">
+                    <td class="col-sm-1" style="width:2.1%;"><span style="padding-left:5px;">{{loanEquipment.EquipmentID}}</span></td>
+                    <td class="col-sm-1" style="width:3.9%"><span style="padding-left:2px;">{{loanEquipment.CustomerNumber}}</span></td>
+                    <td class="col-sm-1" style="width:7.2%"><span style="padding-left:2px;word-wrap:break-word;">{{loanEquipment.CustomerName}}</span></td>
+                    <td class="col-sm-1" style="width:1.9%"><span style="padding-left:5px;">{{loanEquipment.FilialCode}}</span></td>
+                    <td class="col-sm-1" style="width:4.8%"><span style="padding-left:2px;">{{loanEquipment.LoanFullNumber}}</span></td>
+                    <td class="col-sm-1" style="width:10.7%"><span style="padding-left:5px;">{{loanEquipment.EquipmentDescription}}</span></td>
+                    <td class="col-sm-1" style="width:9.5%"><span style="padding-left:5px;">{{loanEquipment.EquipmentAddress}}</span></td>
+                    <td class="col-sm-1" align="right" style="width:4.5%"><span style="padding-left:5px;">{{loanEquipment.EquipmentPriceString}}</span></td>
+                    <td class="col-sm-1" style="width:7.25%"><span style="padding-left:2px;">{{loanEquipment.AuctionOrganizer}}</span></td>
+                    <td class="col-sm-1" align="right" style="width:4.2%"><span style="padding-left:5px;">{{loanEquipment.PriceLimitByTheBankString}}</span></td>
+                    <td class="col-sm-1" align="right" style="width:3%"><span style="padding-left:2px;">{{loanEquipment.AuctionEndDate | mydate | date: 'dd/MM/yyyy'}}</span></td>
+                    <td class="col-sm-1" align="right" style="width:5%"><span style="padding-left:5px;">{{loanEquipment.EquipmentSalePriceString}}</span></td>
+                    <td class="col-sm-1" align="right" style="width:5%"><span style="padding-left:5px;">{{loanEquipment.BankTransferredMoneyString}}</span></td>
+                    <td style="width:1.3%;" class="col-sm-1 click_toggle" id="contextMenu" context="context"><div id="contextMenu"></div> </td>
+                </tr>
+            </table>
+            <div ng-if="loanEquipments.length==0" style="color:red;font-size:16px;text-align:center;">Տվյալները բացակայում են</div>
+        </div>
+       <div ng-if="loanEquipments.length>0" >
+           <table>
+               <tr>
+                   <td class="col-sm-1" style="width:2.1%; font-size: 11px !important;"><strong>Ընդամենը</strong></td>
+                   <td class="col-sm-1" style="width:3.9%;">&nbsp;</td>
+                   <td class="col-sm-1" style="width:7.2%;">&nbsp;</td>
+                   <td class="col-sm-1" style="width:1.9%;">&nbsp;</td>
+                   <td class="col-sm-1" style="width:4.8%;">&nbsp;</td>
+                   <td class="col-sm-1" style="width:10.7%;">&nbsp;</td>
+                   <td class="col-sm-1" style="width:9.5%;">&nbsp;</td>
+                   <td class="col-sm-1" align="right" style="width:4.5%;font-size: 11px !important;height: auto;padding-left:0px; padding-right:7px;"><span><strong>{{sums.SumOfEquipmentPriceString}}</strong></span></td>
+                   <td class="col-sm-1" style="width:7.25%;">&nbsp;</td>
+                   <td class="col-sm-1" align="right" style="width:4.2%;font-size: 11px !important;height: auto;padding-left:0px; padding-right:5px;"><span><strong>{{sums.SumOfPriceLimitByTheBankString}}</strong></span></td>
+                   <td class="col-sm-1" align="right" style="width:3%;">&nbsp;</td>
+                   <td class="col-sm-1" align="right" style="width:5%;font-size: 11px !important;height: auto;padding-left:0px; padding-right:7px;"><span><strong>{{sums.SumOfEquipmentSalePriceString}}</strong></span></td>
+                   <td class="col-sm-1" align="right" style="width:5%;font-size: 11px !important;height: auto;padding-left:0px; padding-right:5px;"><span><strong>{{sums.SumOfBankTransferedMoneyString}}</strong></span></td>
+                   <td class="col-sm-1" style="width:1.3%;">&nbsp;</td>
+               </tr>
+           </table>
+       </div>
+    </div>
+
+    <ul id="context" class="dropdown-menu">
+        <li>
+            <a style="color: #4a8a2b;text-decoration:none!important;" class="my_button"
+               ng-controller="PopUpCtrl" ng-if="showEquipment" ng-click="params={equipmentID:selectedEquipmentID};openWindow('/LoanEquipments/LoanEquipmentDetails','Գրավի մանրամասն դիտարկում','loanEquipmentDetails')">Դիտարկել գրավը</a>
+        </li>
+        <li>
+            <a style="color: #4a8a2b;text-decoration:none!important;" class="my_button"
+               ng-controller="PopUpCtrl" ng-if="canClose" ng-click="params={equipmentID:selectedEquipmentID};openWindow('/LoanEquipments/EquipmentClosing','Գրավի փակում','equipmentclosing')">Փակել գրավը</a>
+        </li>
+        <li>
+            <a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="addRestriction" class="my_button" ng-click="params={equipmentID:selectedEquipmentID};changeCreditProductMatureRestriction()">Ավելացնել սահմանափակում</a>
+        </li>
+        <li>
+            <a style="color: #4a8a2b;text-decoration:none!important ;" ng-if="removeRestriction" class="my_button" ng-click="params={equipmentID:selectedEquipmentID};changeCreditProductMatureRestriction()">Հեռացնել սահմանափակումը</a>
+        </li>
+    </ul>
+
+</form>

@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+
+<style type="text/css">
+    #status.glyphicon{
+        font-size:25px;
+    }
+</style>
+
+<div class="product-container" style="width:100%;margin:0" ng-controller="LoanMonitoringConclusionCtrl" id="loanMonitorings" ng-init="getLoanMonitorings(loan.ProductId)" >
+    <div class="header-title">
+        <i class="add-new-product tipB" ng-if="canAddLoanMonitoringConclusion=='1'"  ng-controller="PopUpCtrl" ng-click="params={loanProductId:loan.ProductId,monitoringId:0};openWindow('/LoanMonitoringConclusion/AddLoanMonitoring','Մոնիթորինգի եզրակացության մուտքագրում','newloanmonitoring')" data-original-title="Մոնիթորինգի մուտքագրում"></i>
+        Մոնիթորինգի եզրակացություններ
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="product-container-header" style="height:44px;">
+            <div style="text-align:center" class="col-sm-2">Մոնիթորինգի ա/թ</div>
+            <div style="text-align:center" class="col-sm-3">Եզրակացություն</div>
+            <div style="text-align:center" class="col-sm-3">Հիմնական գործոններ</div>
+            <div style="text-align:center" class="col-sm-3">Մուտքագրում</div>
+        </div>
+        <div class="product-content-table-full_height custom-scroll" id="loanMonitorings" style="min-height:100px;float:left;">
+            <div ng-if="loanMonitorings==undefined">
+                <loading></loading>
+            </div>
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody>
+                    <tr ng-repeat="loanMonitoring in loanMonitorings" ng-class="{'selected':$index==selectedRow}" ng-click="setClickedRow($index,loanMonitoring,loan.ProductId)">
+                        <td class="col-lg-2">{{::loanMonitoring.MonitoringDate | mydate | date: 'dd/MM/yyyy'}} <br /><span id="status" class="glyphicon greenStyle  glyphicon-ok" style="margin-left:30%;" title="Հաստատված" ng-if="loanMonitoring.Status==2"></span></td>
+                        <td class="col-sm-3">{{::loanMonitoring.ConclusionDescription}}</td>
+                        <td class="col-sm-3">{{::loanMonitoring.MonitoringFactorsDescription}}</td>
+                        <td class="col-sm-2">{{::loanMonitoring.RegistrationDate | mydate | date: 'dd/MM/yyyy'}}<br /> {{::loanMonitoring.MonitoringSetNumberDescription }}</td>
+                        <td class="col-sm-1 click_toggle" context="contextMonitoring" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <ul id="contextMonitoring" class="dropdown-menu">
+            <li><a style="color: black;text-decoration:none!important ;cursor:pointer" ng-if="selectedConclusion.Status==1 && selectedConclusion.IsConclusionChanger==true && canAddLoanMonitoringConclusion=='1'" ng-controller="PopUpCtrl" ng-click="params={monitoringId:selectedConclusion.MonitoringId,loanProductId:loanProductId,isUpdate:true};openWindow('/LoanMonitoringConclusion/AddLoanMonitoring','Մոնիթորինգի եզրակացության մուտքագրում','newloanmonitoring')">Խմբագրել</a></li>
+            <li><a style="color: black;text-decoration:none!important ;cursor:pointer" ng-if="selectedConclusion.Status==1 && selectedConclusion.IsConclusionChanger==true && canDeleteLoanMonitoringConclusion=='1'" ng-click="deleteLoanMonitoring()">Հեռացնել</a></li>
+            <li><a style="color: black;text-decoration:none!important ;cursor:pointer" ng-controller="PopUpCtrl" ng-click="params={monitoringId:selectedConclusion.MonitoringId,loanProductId:loanProductId};openWindow('/LoanMonitoringConclusion/LoanMonitoringConclusionDetails','Մոնիթորինգի եզրակացության դիտարկում','LoanMonitoringConclusionDetails')">Մանրամասն դիտարկում</a></li>
+        </ul>
+    </div>
+
+
+
+</div>

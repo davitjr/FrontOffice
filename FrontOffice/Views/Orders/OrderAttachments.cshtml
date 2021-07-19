@@ -1,0 +1,20 @@
+﻿@{
+    Layout = null;
+}
+
+<div ng-if="orderid" ng-controller="OrderCtrl" ng-init="getOrderAttachmentsInfo(orderid)">
+            <div ng-if="attachments!=undefined && attachments.length!=0" class="panel-group col-sm-7">
+                <div class="line_height my_text1" >Կցված փաստաթղթեր</div>
+                <div class="well" style="margin-bottom:0px;" >
+                        <div ng-repeat="att in attachments">
+                            <div class="my_label" style="padding:0" >
+                                <a style="cursor:pointer" ng-click="getOrderAttachment(att.Id,att.FileExtension)">
+                                    <img ng-if="att.FileExtension=='pdf'" align="left" ng-src="~/Content/Images/pdf.png" height="30" width="25" />
+                                    <img ng-if="att.FileExtension !='pdf'" align="left" ng-src="~/Content/Images/jpg.png" height="30" width="25" />
+                                    {{$parent.$index+1}}.{{$index+1}} {{::att.FileName}}
+                                </a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+</div>

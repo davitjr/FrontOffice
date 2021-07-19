@@ -1,0 +1,196 @@
+﻿<div>
+    <style type="text/css">
+        .modal-content {
+            width: 1200px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+
+
+
+        .resultRow {
+            font-size: 10pt;
+            color: black;
+            font-weight: normal;
+        }
+
+        .resultRowAddInf {
+            font-size: 9pt;
+        }
+
+        .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .tableHeader {
+            font-size: 9pt;
+            height: 25px;
+        }
+
+        #remittanceFeeInformation .product-container-header > th {
+            font-weight: inherit;
+        }
+
+        #remittanceFeeInformation .div-table-content {
+            margin-top: -7px;
+            border-color: #CFDAD0 !important;
+        }
+
+
+        #remittanceFeeInformation .popup_wrapper_top {
+            margin-top: -10px !important;
+        }
+    </style>
+
+        <div id="searchRemittanceLoad" class="overlay hidden">
+            <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+        </div>
+        <div id="remittanceFeeInformation">
+
+
+            <div class="col-sm-12 popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+                <div style="margin-top:-10px">Միջնորդավճարի հարցում</div>
+                <img src="/Content/images/close_pop.png " ng-click="closeRemittanceFeeInquiryModal()" style="margin-top:-10px;" alt="">
+            </div>
+
+            <div style="max-width:1000px">
+                <errors></errors>
+            </div>
+
+            <div class="col-sm-12" style="padding:0;margin-bottom:15px">
+             
+                  
+                <div class="col-sm-3" style="display:inline-block; " >
+                    <loading-control scopevariable="MTOList"></loading-control>
+                    <label class="tab_title">Փոխանցման համակարգ<span class="redStyle">*</span></label>
+                    <div data-ng-init="getMTOList();">
+                        <select data-ng-model="searchParams.MTOAgentCode" class="form-control" data-ng-options="k as v for (k,v) in MTOList" 
+                                id="MTOAgentCode" name="MTOAgentCode" ng-change="getPayoutDeliveryCodes();getSendingCurrencies();getCountries();" required>
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք․․․</option>
+                        </select>
+                    </div>
+                </div>
+               
+
+             
+                <div class="col-sm-3" style="display:inline-block; ">
+
+                    <label class="tab_title">Փոխանցման ստացման տեսակ<span class="redStyle">*</span></label>
+                    <div>
+                        <select data-ng-model="searchParams.PayoutDeliveryCode" class="form-control" data-ng-options="k as v for (k,v) in payoutDeliveryCodes" id="PayoutDeliveryCode" name="PayoutDeliveryCode" required>
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք․․․</option>
+                        </select>
+
+                    </div>
+                </div>
+  
+
+
+                <div class="col-sm-3" style="display:inline-block; ">
+                    <label class="tab_title">Փոխանցման գումար<span class="redStyle">*</span></label>
+                    <div>
+                        <input type="text" ng-model="searchParams.PrincipalAmount" name="PrincipalAmount" class="form-control  " />
+                    </div>
+                </div>
+
+                <div class="col-sm-3" style="display:inline-block; ">
+                    <label class="tab_title">Փոխանցման արժույթ<span class="redStyle">*</span></label>
+                    <div>
+                  
+                        <select data-ng-model="searchParams.CurrencyCode" class="form-control" data-ng-options="k as v for (k,v) in currencies" id="CurrencyCode" name="CurrencyCode" required>
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք․․․</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-3" style="display:inline-block; ">
+                    <label class="tab_title">Ստացողի երկիր<span class="redStyle">*</span></label>
+                    <div>
+                        <select data-ng-model="searchParams.BeneficiaryCountryCode" class="form-control" data-ng-options="k as v for (k,v) in countries" id="BeneficiaryCountryCode" name="BeneficiaryCountryCode" required>
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք․․․</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-3" style="display:inline-block; ">
+                    <label class="tab_title">Promo կոդ</label>
+                    <div>
+                        <input type="text" ng-model="searchParams.PromotionCode" name="PromotionCode" class="form-control  " />
+                    </div>
+                </div>
+
+
+                <div class="col-sm-2">
+                    <label class="tab_title"></label>
+                    <div style="margin-top:5px">
+                        <button type="button" class="btn btn-primary" ng-click="btnFindClick();" title="Հաշվարկել"><span class="glyphicon glyphicon-search"></span>&nbsp;Հաշվարկել</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class=" col-sm-12 div-table-content " style="max-height:400px; min-height:200px;overflow:scroll;   margin-bottom:0px; margin-top:0px; ">
+                <table class="table table-condensed table-hover" style="margin-bottom:0; table-layout:initial!important">
+
+                    <thead>
+
+                        <tr class="product-container-header" style="position:static">
+
+                            <th style="text-align:center;">Փոխանցման միջնորդավճար</th>
+                            <th style="text-align:center;">Փոխանցման միջնորդավճար AMD</th>
+                            <th style="text-align:center;">ԿԲ փոխարժեք</th>
+                            <th style="text-align:center;">Ուղարկողի միջնորդավճար</th>
+                            <th style="text-align:center;">Ուղարկողի միջնորդավճարի արժույթ</th>
+                        </tr>
+                    </thead>
+
+
+
+                    <tbody>
+                        <tr ng-if="feeData.RemittanceFee!= undefined" style="font-size:8pt; cursor:pointer;" ng-class="{'selected':$index == selectedRow} " ng-dblclick="selectFee()">
+                            <td style="text-align:center;">
+                                {{ feeData.RemittanceFee }}
+                            </td>
+                            <td style="text-align:center;">
+                                {{ feeData.AMDFee }}
+                            </td>
+                            <td style="text-align:center;">
+                                {{ feeData.SettlementExchangeRate }}
+                            </td>
+                            <td style="text-align:center;">
+                                {{ feeData.SendingFee }}
+                            </td>
+                            <td style="text-align:center;">
+                                {{ feeData.SendingFeeCurrencyCode}}
+                            </td>
+                          
+                        </tr>
+
+                        <tr ng-if="feeData.RemittanceFee == undefined" style="text-align: center">
+                            <td colspan="13" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                        </tr>
+                    </tbody>
+
+
+                </table>
+
+            </div>
+
+            <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                 ng-model="currentPage"
+                 items-per-page="numPerPage"
+                 total-items="totalRows"
+                 max-size="maxSize"
+                 boundary-links="true"
+                 previous-text="‹"
+                 next-text="›"
+                 first-text="«"
+                 last-text="»">
+            </div>
+        </div>
+
+</div>

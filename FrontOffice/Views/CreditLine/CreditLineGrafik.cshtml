@@ -1,0 +1,65 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    #tbl table, #tbl th, #tbl td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    #tbl table {
+        border-collapse: collapse;
+    }
+
+        #tbl table .top td {
+            font-size: 12px;
+        }
+
+        #tbl table tr {
+            height: 7px;
+        }
+
+    #tbl .form-horizontal {
+        margin-top: -22px;
+    }
+</style>
+<form style="max-width:1000px" id="creditLineGrafik" ng-controller="CreditLineCtrl" ng-init="getCreditLineGrafik()"
+      role="form" class="form-horizontal" novalidate>
+    <div id="loanGrafik_menu" class="menu-bar dialog-menu light-green">
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-12" id="tbl">
+            <table border="1" width="100">
+                <tr class="product-container-header">
+                    <td rowspan="2" style="text-align:center;width:7%;">N</td>
+                    <td colspan="2" style="text-align:center">Մարման ժամանակահատված</td>
+                    <td colspan="3" style="text-align:center">Գումար</td>
+                    <td rowspan="2" style="text-align:center">Ժամկետանցի նշան</td>
+                </tr>
+                <tr class="product-container-header">
+                    <td style="text-align:center">Սկիզբ</td>
+                    <td style="text-align:center">Վերջ</td>
+                    <td style="text-align:center">Մարման ենթակա</td>
+                    <td style="text-align:center">Մարված</td>
+                    <td style="text-align:center">Պլանային մարման</td>
+                </tr>
+                <tr ng-repeat="rep in ::creditlinegrafik">
+                    <td style="text-align:right">{{::$index}}&nbsp;&nbsp;&nbsp;</td>
+                    <td style="text-align:center" class="col-sm-2">{{::rep.StartDateToString}}</td>
+                    <td style="text-align:center" class="col-sm-1">{{::rep.EndDateToString}}</td>
+                    <td style="text-align:right">{{::rep.AmountToString}}&nbsp;&nbsp;&nbsp;</td>
+                    <td style="text-align:right"> {{::rep.MaturedAmountToString}}&nbsp;&nbsp;&nbsp;</td>
+                    <td style="text-align:right">{{::rep.PlannedAmountToString}}&nbsp;&nbsp;&nbsp;</td>
+                    <td style="text-align:center"><span ng-show="rep.OverdueSign==1" class="glyphicon glyphicon-ok greenStyle "></span></td>
+                </tr>
+            </table>
+
+
+        </div>
+
+    </div>
+
+
+</form>

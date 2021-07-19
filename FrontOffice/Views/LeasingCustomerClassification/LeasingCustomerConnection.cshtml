@@ -1,0 +1,41 @@
+﻿<style type="text/css">
+    *[tabindex]:focus {
+        outline: 3px green solid !important;
+    }
+</style> 
+
+<form style=" overflow-y: hidden;  overflow-x: hidden;  width:500px" name="leasingCustomerConnectionForm" ng-controller="LeasingCustomerClassificationCtrl" id="leasingCustomerConnectionForm">
+
+    <div style=" padding-top: 10px">
+        <div class="row">
+            <div class=" col-sm-4">
+                <div align="left" class="panel-heading" style=" padding-left:15px">Հաճախորդ   N1</div>
+            </div>
+            <div class=" col-sm-3">
+                <div class="input-group">
+                    <input tabindex="1"  type="text" maxlength="12" style="width:280px" id="group" ng-model="SelectedCustomerNumberN1" />
+                </div>
+            </div> 
+        </div>
+
+        <div class="row" style=" padding-bottom:15px ; padding-top: 10px">
+            <div class="col-sm-4">
+                <div align="left" class="panel-heading" style=" padding-left:15px">Հաճախորդ  N2</div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    @*<input type="text" maxlength="12" ng-change="CustomerConnectionResult()" style="width:280px" id="group" ng-model="CustomerN2" /> ng-change="CustomerConnectionResult()"*@
+                    <input tabindex="2" type="number" onKeyPress="if(this.value.length==12) return false;" style="width:280px" id="group" ng-model="CustomerN2" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-left:10px;  padding-bottom:15px">
+            <a tabindex="3" id="recievedCoreBank" style=" width: 33px" ng-click="printCustomerConnectionData()" ng-keypress="keyPressPrintCustomerConnectionData($event)">
+                <img src="~/Content/Images/excel.ico"  title="Տպել" width="40" />
+            </a>
+        </div>
+    </div>
+
+</form>
+

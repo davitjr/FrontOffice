@@ -1,0 +1,137 @@
+﻿
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+    #HBDocumentArCaBalanceForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #HBDocumentArCaBalanceForm {
+        min-width: 600px;
+    }
+
+    .redStyle {
+        visibility: hidden;
+    }
+    .label{
+        font-weight:normal;
+    }
+    .maximize-dialog {
+        display: none;
+    }
+    .arca_fileds_width {
+        width: 150px !important;
+    }
+</style>
+<div id="HBDocumentArCaBalance" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="HBDocumentsCtrl" ng-init="initHBArCaBalance();" name="HBDocumentArCaBalanceForm" id="HBDocumentArCaBalanceForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required style="width:650px;">
+    <div id="transferArmDetails_menu" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="initHBArCaBalance();">
+                <span><img src="~/Content/Images/refresh-icon.png" />Թարմացնել</span>
+            </li>
+
+        </ul>
+    </div>
+    <div>
+        <div class="col-sm-11" style="margin-top:20px;">
+            <div class="col-sm-12">
+                <div class=" form-group">
+                    <label class="tab_title col-sm-5 " for="RegistrationDate">Քարտի համար</label>
+                    <div class="col-sm-6 row">
+                        <div class="multiple_columns col-sm-8 ">
+                            <input disabled="disabled" type="text" class="form-control tab_title unstyled arca_fileds_width" style="text-align: left;" id="CardNumber" name="CardNumber" ng-model="CardNumber" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" form-group">
+                    <label class="tab_title col-sm-5 " for="RegistrationDate">Արժույթ</label>
+                    <div class="col-sm-6 row">
+                        <div class="multiple_columns col-sm-8 ">
+                            <input disabled="disabled" type="text" class="form-control tab_title unstyled arca_fileds_width" style="text-align: left;" id="Currency" name="Currency" ng-model="details.Currency">
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" form-group">
+                    <label class="tab_title col-sm-5 " for="RegistrationDate" style="font-weight:bold !important">Մնացորդ ArCa-ում</label>
+                    <div class="col-sm-6 row">
+                        <div class="multiple_columns col-sm-8 ">
+                            <input disabled="disabled" type="text" class="form-control tab_title unstyled arca_fileds_width" style="text-align: right !important;font-weight:bold" id="ArcaBalanceAmount" name="ArcaBalanceAmount" ng-model="details.Amount" fcsa-number>
+                        </div>
+                    </div>
+                </div>
+                <div class=" form-group">
+                    <label class="tab_title col-sm-5 " for="RegistrationDate">Որից</label>
+                </div>
+
+                <div class=" form-group">
+                    <label class="tab_title col-sm-5 " for="RegistrationDate" style="font-weight:bold !important">Վարկային գծի չօգտագործված մաս</label>
+                    <div class="col-sm-6 row">
+                        <div class="multiple_columns col-sm-8 ">
+                            <input disabled="disabled" type="text" class="form-control tab_title unstyled arca_fileds_width" style="text-align: right !important;" id="AvailableExceedLimit" name="AvailableExceedLimit" ng-model="details.AvailableExceedLimit" fcsa-number>
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" form-group">
+                    <label class="tab_title col-sm-5 " for="RegistrationDate" style="font-weight:bold !important">Սեփական միջոցներ</label>
+                    <div class="col-sm-6 row">
+                        <div class="multiple_columns col-sm-8 ">
+                            <input disabled="disabled" type="text" class="form-control tab_title unstyled arca_fileds_width" style="text-align: right !important;" id="OwnFunds" name="OwnFunds" ng-model="details.OwnFunds" fcsa-number>
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" form-group">
+                    <label class="tab_title col-sm-5 " for="RegistrationDate">Պատասխանի կոդ</label>
+                    <div class="col-sm-6 row">
+                        <div class="multiple_columns col-sm-8 ">
+                            <input disabled="disabled" type="text" class="form-control tab_title unstyled arca_fileds_width" style="text-align: right !important;color:green;" id="ResponseCode" name="ResponseCode" ng-model="details.ResponseCode" >
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" form-group">
+                    <label class="tab_title col-sm-5 " for="RegistrationDate">Պատասխանի նկարագրություն</label>
+                    <div class="col-sm-6 row">
+                        <div class="multiple_columns col-sm-8 ">
+                            <input disabled="disabled" type="text" class="form-control tab_title unstyled arca_fileds_width" style="text-align: right;" id="Responsedescription" name="Responsedescription" ng-model="details.ResponseDescription">
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class=" form-group">
+                    <div class="multiple_columns col-md-12 ">
+                        <button type="button" class="buttonClass" style="height:31px;" ng-click="initHBArCaBalance()">Թարմացնել</button>
+                        <button type="button" class="buttonClass" style="height:31px;width:100px;" ng-controller="PopUpCtrl" ng-click="CloseBPDialog('HBDocumentArCaBalanceForm')">Փակել</button>
+                    </div>
+                </div>*@
+
+            </div>
+
+            <br />
+
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+

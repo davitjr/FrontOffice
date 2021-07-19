@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div id="Loader" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div style="max-width:630px">
+    <errors></errors>
+</div>
+<div ng-controller="DepositaryAccountCtrl" data-ng-init="getDepositaryAccountById(ProductId)" id="DepositaryAccountDetails">
+
+
+    <div class="product-details bhoechie-tab-content" style="min-width: 810px;margin-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Արժեթղթերի հաշիվը հաշվառող անձի անվանում</div>
+            <div class="product-detail-cell product-detail-value">{{depositaryAccount.Description}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Արժեթղթերի հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{depositaryAccount.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{depositaryAccount.RegistrationDateToString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտը ներկայացնողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">{{depositaryAccount.SetNumber}}  &nbsp;&nbsp;<span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:depositaryAccount.SetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span></div>
+        </div>
+    </div>
+    <br />
+</div>
+

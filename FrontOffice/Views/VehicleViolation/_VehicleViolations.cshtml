@@ -1,0 +1,130 @@
+﻿@{
+    Layout = null;
+}
+<form name="VehicleViolationForm" ng-app="app" ng-controller="VehicleViolationCtrl" class="form-horizontal" ng-submit="VehicleViolationForm.$valid && getViolations(searchType)" novalidate>
+    <div class="product-details bhoechie-tab-content" style="min-width:800px;margin-left:10px;margin-top:10px;">
+        <div>
+            <div class="col-sm-12" style="margin-bottom:10px;">
+                <div class="row">
+                    <label><input style="width:initial;margin-top:-2px" type="radio" value="2" name="searchType" ng-model="searchType"> Տույժի տվյալներ</label>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-7">
+
+                        <div class="product-detail-cell product-detail-lable">
+                            Որոշման համար
+                        </div>
+                        <input type="text" ng-model="violationNumber" name="violationNumber" style=" width: 145px" class="form-control tab_title"
+                               ng-disabled="searchType != 2" ng-required="searchType == 2" />
+                        <div class="row">
+                            <ng-messages ng-if="VehicleViolationForm.$submitted "
+                                         for="VehicleViolationForm.violationNumber.$error">
+                                <ng-message when="required" class="errors">
+                                    Որոշման համարը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12" style="margin-bottom:10px;" >
+                <div class="row">
+                    <label><input style="width:initial;margin-top:-2px" type="radio" value="1" name="searchType" ng-model="searchType"> Տրանսպորտային միջոցի տվյալներ</label>
+                </div>
+                <div class="row">
+                    <div class="">
+                        <div class="col-sm-4">
+                            <div class="product-detail-cell product-detail-lable">
+                                Պետական համարանիշ
+                            </div>
+                            <input type="text" ng-model="vehicleNumber" name="vehicleNumber" style=" width: 145px" class="form-control tab_title"
+                                   ng-disabled="searchType != 1" ng-required="searchType == 1" />
+                            <div class="row">
+                                <ng-messages ng-if="VehicleViolationForm.$submitted "
+                                             for="VehicleViolationForm.vehicleNumber.$error">
+                                    <ng-message when="required" class="errors">
+                                        Պետական համարանիշը լրացված չէ
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+
+
+
+
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="product-detail-cell product-detail-lable">
+                                Տեխնիկական անձնագիր
+                            </div>
+                            <input type="text" ng-model="vehiclePassportNumber" name="vehiclePassportNumber" style=" width: 145px" class="form-control tab_title"
+                                   ng-disabled="searchType != 1" ng-required="searchType == 1" />
+                            <div class="row">
+                                <ng-messages ng-if="VehicleViolationForm.$submitted "
+                                             for="VehicleViolationForm.vehiclePassportNumber.$error">
+                                    <ng-message when="required" class="errors">
+                                        Տեխնիկական անձնագիրը լրացված չէ
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+        <br />
+        <div style="margin-right:10px;">
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+        </div>
+    </div>
+    <br />
+
+    <div class="product-container" style="min-width:800px;margin-left:10px;margin-top:10px;">
+        <div class="header-title">
+            Տուգանքների պատմություն
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="col-sm-8">Որոշում</div>
+                <div class="col-sm-4">Գումար</div>
+            </div>
+            <div class="product-content-table-full_height custom-scroll">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="violation in vehicleViolations" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,violation)" style="max-height:200px">
+                            <td>
+                                <span class="my_label" style="font-size:13px">Որոշման համար` </span>{{ ::violation.ViolationNumber }}
+                                <br /><span class="my_label" style="font-size:13px">Ա/թ` </span>{{ ::violation.ViolationDate | mydate | date: 'dd/MM/yyyy' }}
+                                <br />{{::violation.VehicleModel}}
+                                <br /><span class="my_label" style="font-size:13px">ՏՄ անձնագիր` </span>{{ ::violation.VehiclePassport }}
+                                <br /> <span class="my_label" style="font-size:13px">ՏՄ համար` </span>{{ ::violation.VehicleNumber }}
+
+
+                            </td>
+                            <td class="col-sm-6" style="text-align:right;">
+                               <span class="my_label" style="font-size:13px">Տուգանքի գումար` </span><span class="product-detail-value" style="font-weight:bold;">{{ ::violation.FineAmount  | number:2 }} AMD</span>
+                                <br /><span class="my_label" style="font-size:13px">Տույժի գումար` </span><span class="product-detail-value" style="font-weight:bold;">{{ ::violation.PenaltyAmount | number:2 }} AMD</span>
+                                <br /><span class="my_label" style="font-size:13px">Ընդամենը պարտք` </span><span class="product-detail-value" style="font-weight:bold;">{{ ::violation.PayableAmount | number:2 }} AMD</span>
+                                <br /><span class="my_label" style="font-size:13px">Պարտքի մնացորդ` </span><span class="product-detail-value" style="font-weight:bold;">{{ ::violation.RequestedAmount | number:2 }} AMD</span>
+                                <br /><span class="my_label" style="font-size:13px">Մարված գումար` </span><span class="product-detail-value" style="font-weight:bold;">{{ ::violation.PayedAmount | number:2 }} AMD</span>
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="contextViolations" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div ng-if="vehicleViolations.length==0" style="color:red;font-size:16px;text-align:center;">Տվյալները բացակայում են</div>
+
+            </div>
+        </div>
+    </div>
+    <ul id="contextViolations" class="dropdown-menu" >
+        <li ng-if="nonauthorizedcustomer!='false' || $root.SessionProperties.CustomerType == 6">
+            <a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountBudgetPayment:1,checkForFeeAccount:1,orderType:56,IsPoliceViloation:true,PoliceResponseDetails:selectedViolation,nonauthorizedcustomer:$root.SessionProperties.IsNonCustomerService};openWindowWithTemplate('budgetorder','Փոխանցում բյուջե','budgetpaymentorder')">Վճարել կանխիկ</a>
+        </li>
+        <li ng-if="nonauthorizedcustomer=='false'"><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={DebitAccountNumber: selectedAccountNumber,checkForDebitAccountBudgetPayment:0,checkForFeeAccount:0,orderType:1,IsPoliceViloation:true,PoliceResponseDetails:selectedViolation};openWindowWithTemplate('budgetorder','Փոխանցում բյուջե','budgetpaymentorder')">Վճարել անկանխիկ</a></li>
+    </ul>
+</form>

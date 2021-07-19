@@ -1,0 +1,238 @@
+﻿<form  class="form-horizontal col-sm-12" style="max-width: 815px; padding: 0" ng-controller="ReceivedFastTransferPaymentOrderCtrl" ng-init="getReceivedFastTransferPaymentOrder(selectedOrderId);">
+    <loading-control style="margin-left:20em" scopevariable="order"></loading-control>
+    <div id="receivedFastTransferOrders_menu" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 " ng-if="orderDetails.Quality!=undefined && orderDetails.Quality == 0" ng-controller="PopUpCtrl" ng-click="params={changeOrder:orderDetails};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հաստատել</span>
+            </li>
+            <li class="root-menu-item-5 " ng-if="orderDetails.Quality!=undefined && orderDetails.Quality ==30 " ng-controller="PopUpCtrl" ng-click="params={removableorder:orderDetails};openWindow('/RemovalOrder/RemovalOrder','Հեռացման հայտ','removalOrder',callbackgetPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հեռացման հայտ</span>
+            </li>
+
+            <li class="root-menu-item-5 " ng-if="orderDetails.Quality!=undefined && orderDetails.Quality !=31 && orderDetails.Quality !=30 && orderDetails.Quality !=32 && orderDetails.Quality !=40 && orderDetails.Quality !=41 && orderDetails.Quality !=6 && orderDetails.Quality !=50" ng-controller="PopUpCtrl" ng-click="params={removableorder:orderDetails};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+            </li>
+        </ul>
+    </div>
+    <div class="product-details bhoechie-tab-content" style="min-width:550px;padding-left:10px; max-width: 600px;">
+        <div style="clear:both;font-weight:bold;" class="redStyle" ng-if="orderDetails.SubType == 23 && orderDetails.ARUSSuccess == 0">Չի կատարվել STAK համակարգի կողմից հետևյալ պատճառով՝</div>
+        <div style="clear:both;font-weight:bold;" class="redStyle" ng-if="orderDetails.SubType == 23 && orderDetails.ARUSSuccess == 0">{{orderDetails.ARUSErrorMessage}}</div>
+
+        <div style="clear:both;font-weight:bold;color:green;" ng-if="orderDetails.SubType == 23 && orderDetails.ARUSSuccess == 1">Կատարվել է STAK համակարգի կողմից </div>
+        <br />
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.OperationDateString}}</div>
+        </div>
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման համակարգ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.TransferSystemDescription}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման համակարգի օպերատոր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.MTOAgentName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Amount | number:2}} {{orderDetails.Currency}}</div>
+        </div>
+
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ուղարկողի անուն ազգանուն</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Sender}}</div>
+        </div>
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Code}}</div>
+        </div>
+  
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի անվանում</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Receiver}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ստացողի անձնագիր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.ReceiverPassport  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի ծննդյան ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryBirthDateString  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի սեռ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiarySexName  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի ռեզիդենտություն</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryResidencyName  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի երկիր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryCountryName  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի մարզ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryStateName  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի քաղաք</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryCityName  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի փոստային կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryZipCode  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի հասցե</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryAddressName  || "-"}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի էլ․հասցե</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryEMailName  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի հեռախոսահամար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.ReceiverPhone  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի բջջային հեռախոսահամար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryMobileNo  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryDocumentTypeName  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի համար</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryIssueIDNo  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի տրման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryIssueDateString  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի ավարտման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryExpirationDateString  || "-"}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի թողարկման երկիր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryIssueCountryName  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի փաստաթղթի թողարկման քաղաք</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryIssueCityName  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի զբաղվածություն</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryOccupationName  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի ծննդավայր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryBirthPlaceName  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Ստացողի ֆիսկալ կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.BeneficiaryFiscalCode  || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործարքի նկարագրություն</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Description || "-"}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Երկիր</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.CountryName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Միջնորդավճար հաճախորդից</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Fee | number:2}} {{orderDetails.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.SubType == 23">
+            <div class="product-detail-cell product-detail-lable">Միջնորդավճար ACBA</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.FeeAcba | number:2}} {{orderDetails.Currency}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="orderDetails.TransferAdditionalData!=undefined">
+            <div id="receiverLivingPlace" class="product-detail-cell product-detail-lable">Գումար ստացող</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.TransferAdditionalData.ReceiverLivingPlaceDescription}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.TransferAdditionalData!=undefined">
+            <div class="product-detail-cell product-detail-lable">Գումար ուղարկող</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.TransferAdditionalData.SenderLivingPlaceDescription}}</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="orderDetails.TransferAdditionalData!=undefined">
+            <div class="product-detail-cell product-detail-lable">Գումարի բնույթը</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.TransferAdditionalData.TransferAmountTypeDescription}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.TransferAdditionalData!=undefined">
+            <div class="product-detail-cell product-detail-lable">Գումարի փոխանցման նպատակները</div>
+            <div class="product-detail-cell product-detail-value">
+                <div ng-repeat="p in orderDetails.TransferAdditionalData.TransferAmountPurposes ">
+                    {{::p.Description}}-{{::p.Amount| number:2}} {{::orderDetails.Currency}},<span ng-if="p.PurposeCode==11">նշում-{{::p.AddInfo}}</span> {{$last ? '' : ', '}}
+                </div>
+            </div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="orderDetails.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{orderDetails.QualityDescription}}</div>
+            <div ng-if="orderDetails.Quality==31" class="product-detail-cell product-detail-value redStyle">{{orderDetails.QualityDescription}}</div>
+            <div ng-if="orderDetails.Quality!=31 && orderDetails.Quality!=30" class="product-detail-cell product-detail-value">{{orderDetails.QualityDescription}}</div>
+        </div>
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+    <br /><br />
+    <orderattachments orderid="selectedOrderId"></orderattachments>
+</form>
+ 
+

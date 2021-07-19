@@ -1,0 +1,197 @@
+﻿@{
+    //Layout = "~/Views/Shared/_LayoutNew.cshtml";
+    Layout = null;
+}
+<style>
+
+    /*#viewLoanRequest_content {
+        max-height:90% !important;
+            width: 100% !important
+    }
+        #viewLoanRequest_content * {
+            max-height: 100% !important;
+        }*/
+
+    .table_td {
+        border: none !important;
+        border-style: hidden;
+        padding: 3px;
+        vertical-align: top;
+    }
+
+    .select, input[type="date"] {
+        width: 171px;
+    }
+
+    input[type="text"], input[type="date"] {
+        height: 34px;
+    }
+
+    .caption {
+        color: #076938;
+        font-weight: bold;
+    }
+
+    table {
+        margin: 10px 0px 10px 0px;
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    .containercs {
+        width: 1800px;
+        height: 763px;
+        margin: 0px 0px 30px 0px;
+    }
+
+    button[type=button]:disabled {
+        background-color: #bfbfbf;
+    }
+
+    table thead th {
+        text-align: center;
+    }
+
+    .info-class{
+        color:blue;
+    }
+
+    .warning-class{
+        color:red;
+    }
+
+    .noArrests-class{
+        color:green;
+    }
+
+  
+</style>
+
+<link href="~/Content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+
+<div style="margin-left:15px;margin-top:5px" class="container" >
+    <form ng-controller="CustomerArrestsInfoCtrl" class="form-horizontal" name="customerArrestsInfoForm" id="customerArrestsInfo" role="form"  ng-init="getCustomerArrestsInfos();">
+        @*<div class="col-md-11">
+            <div class="col-sm-2" style="margin-left:-19px;">
+                <div class="product-detail-cell product-detail-lable">
+                    Հաճախորդի համար
+                </div>
+                <div>
+                    <div class="input-group">
+                        <input type="text" style="width:122px" class="form-control" id="CustomerNumber" disabled="disabled" name="CustomerNumber" ng-model="personData.CustomerNumber" readonly>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <div class="col-sm-10">
+                <div class="product-detail-cell product-detail-lable">
+                    Անուն Ազգանուն Հայրանուն
+                </div>
+                <div>
+                    <div class="input-group">
+                        <input type="text" style="width:400px;font-family:'Arial Armenian'" class="form-control" id="Name" disabled="disabled" name="Name" ng-model="personData.FullName" readonly>
+
+                    </div>
+                </div>
+            </div>
+        </div>*@
+        <div class="product-container" style="width:750px !important;height:500px !important">
+            <div class="header-title">
+                Տեղեկություն հաճախորդի մասին (Արգելքներ)
+                @*<div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>*@
+            </div>
+            <div class="product-collapsable-section">
+                <div class="product-container-header">
+                    <div class="include-closed-products">
+                        Քանակ` {{totalRows}}
+                    </div>
+                    <div style="margin-left:720px;">
+                        <i  context="contextActions" class="add-new-product" id="contextMenu" @*ng-click="showMenuList($event)"   add-new-product   click_toggle*@>
+                            <div id="contextMenu" style="width:10px;"></div>
+                        </i>
+
+                    </div>
+                </div>
+                
+                <br />
+
+                <div class="product-content-table custom-scroll" id="employeeWorkList" style="height:418px;margin-top:-20px">
+                    <div ng-if="loanArrest==undefined">
+                        <loading></loading>
+                    </div>
+                    <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                        <tbody>
+                            <tr ng-if="loanArrest.length!=0" ng-repeat="info in loanArrest" style="cursor: pointer;" ng-class="{'selected':info == selectedRow}" ng-click="selectRow(info)">
+                                <td class="col-sm-7" style="font-family:'Arial Armenian'">
+                                    <span class="tab_text">Հերթական համար` </span> <span style="font-weight: bold;">{{ $index + 1 }}</span>
+
+                                    <br />
+                                    <span class="tab_text">Պատճառ` </span> <span>{{ info.ArrestReasonDescription }}</span>
+                                    <br />
+                                    <span class="tab_text">Նկարագրություն` </span> {{ info.Description }}
+                                    <br />
+                                    <span class="tab_text" style="float:left">Տեսակ` </span> <p ng-class="info.TypeID == 0? 'noArrests-class':(info.TypeID == 2 || info.TypeID == 1? 'warning-class':'info-class')"> {{ info.TypeDescription }}</p>
+                                    <br />
+                                    <span class="tab_text">Մուտքագրման ա/թ` </span> {{ info.RegistrationDate | date: 'dd/MM/yyyy' }}
+
+                                </td>
+                                <td class="col-sm-4" style="font-family:'Arial Armenian'!important;">
+
+
+                                    <span class="tab_text">Մուտքագրող` </span> {{ info.SetPerson }}
+                                    <br />
+                                </td>
+
+
+                                @*<td class="col-sm-1 click_toggle" context="contextActionDelete">
+                                    <div id="contextMenu" style="width:10px;margin-left: 17px;"></div>
+                                </td>*@
+
+                            </tr>
+                            <tr ng-if="loanArrest.length==0">
+                                <td colspan="3" style="text-align:center">Առկա չեն տեղեկություններ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @*<div uib-pagination style="margin-left:10px;margin-top:5px;"
+                 ng-model="currentPage"
+                 items-per-page="numPerPage"
+                 total-items="totalRows"
+                 max-size="maxSize"
+                 boundary-links="true"
+                 previous-text="‹"
+                 next-text="›"
+                 first-text="«"
+                 last-text="»">
+            </div>*@
+
+
+        </div>
+        @*<ul id="contextActionDelete" class="dropdown-menu">
+           
+            <li class="root-menu-item-2 ">
+                <a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={Id : arrestId};openWindow('/CustomerArrestsInfo/AddRemoveLoanBan','Հանել արգելքը','AddRemoveLoanBan')">Հանել արգելքը</a>
+            </li>
+            
+        </ul>*@
+        <ul id="contextActions" class="dropdown-menu">
+            <li class="root-menu-item-2" ng-if="setNumberInfo.IsChief == true || setNumberInfo.CenterEmploye == true">
+                <a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="checkWhichButtonclicked(1);params={Id : arrestId};">Դնել արգելք</a>
+            </li>
+            <li class="root-menu-item-2 ">
+                <a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="checkWhichButtonclicked(2);params={Id : arrestId};">Մուտքագրել ինֆորմացիա</a>
+            </li>
+            <li class="root-menu-item-2 " ng-if="setNumberInfo.IsChief == true || setNumberInfo.CenterEmploye == true">
+                <a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="checkWhichButtonclicked(3);params={Id : arrestId};">Հանել արգելքը</a>
+            </li>
+        </ul>
+    </form>
+</div>
+
+
+

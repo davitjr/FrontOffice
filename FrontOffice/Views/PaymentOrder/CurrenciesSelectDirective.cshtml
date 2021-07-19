@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null;
+}
+
+
+<style>
+    .select2 > .select2-choice.ui-select-match {
+        /* Because of the inclusion of Bootstrap */
+        height: 29px;
+    }
+
+    .selectize-control > .selectize-dropdown {
+        top: 36px;
+    }
+
+    .ui-select-choices-row:hover {
+        background-color: #007acc;
+        color: white;
+    }
+
+    .ui-select-choices-row {
+        margin-top: 0px;
+    }
+</style>
+
+<style>
+
+    .accountDetails {
+        position: relative; /*so children div can use 100% height and not go over */
+        height: 20px; /*make whatever you want */
+    }
+
+        .accountDetails .cell {
+            height: 20px;
+            display: inline-block;
+            margin-right: 30px; /* will make that spacing you wanted */
+        }
+</style>
+
+<ui-select ng-if="check==1" ng-required="required" ng-model="currencie" theme="selectize" style="width:180px;" on-select="setAccount(currencie)" ng-show="curencies">
+        <ui-select-match placeholder="Ընտրեք արժույթը..."><span style="margin-left:0px">{{$select.selected.Currency}}</span>  </ui-select-match>
+        <ui-select-choices repeat="ac in curencies " style="width:180px;margin-top:3px">
+            <div class="accountDetails">
+                <div class="cell" style="width:100px;" ng-bind-html="ac.Currency "></div>
+                <script> $.each($(".ui-select-search"), function (k, v) { $(v).prop('disabled', true) })    </script>
+            </div>
+        </ui-select-choices>
+</ui-select>
+
+
+
+
+
+
+
+
+
+

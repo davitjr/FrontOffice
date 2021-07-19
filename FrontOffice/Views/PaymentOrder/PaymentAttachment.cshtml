@@ -1,0 +1,31 @@
+﻿<div flow-init="{singleFile:true}"
+         flow-files-submitted="$flow.upload()"
+         flow-files-added="convertfile($files, $event, $flow)"
+         flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+         flow-file-success="$file.msg = $message"
+         flow-name="obj.flow">
+        <div class="thumbnail ng-hide" ng-show="!$flow.files.length" style="margin-bottom:5px">
+            <img src="~/Content/Images/blog-no-image.png" style="max-width:200px;max-height:150px;min-height:150px;min-width:150px;" />
+
+        </div>
+        <div class="thumbnail" ng-show="$flow.files.length" style="margin-bottom:5px">
+            <img flow-img="$flow.files[0]" style="max-width:200px;max-height:150px;min-height:150px;min-width:150px;" ng-if="$flow.files[0].getExtension() != 'pdf' " />
+
+            <img src="~/Content/Images/pdf.png" style="max-width:200px;max-height:150px;" ng-if="$flow.files[0].getExtension() == 'pdf' " />
+            <div class="additionalInfoLabel">
+                Ֆայլի անվանում` <b>{{$flow.files[0].name}}</b>
+            </div>
+            <div ng-if="$flow.files[0].size > 307200" style="color:red;">
+                <span class="glyphicon glyphicon-warning-sign "> Կցված փոխանցման հանձնարարականի չափը մեծ է 300kb-ից:</span> 
+
+            </div>
+        </div>
+        <div>
+            <span class="btn btn-sm btn-primary ng-hide" ng-show="!$flow.files.length" flow-btn=""><span class="glyphicon glyphicon-upload"></span>&nbsp;Կցել ֆայլ<input type="file" style="visibility: hidden; position: absolute;"></span>
+            <span class="btn btn-sm btn-info" ng-show="$flow.files.length" flow-btn=""><span class="glyphicon glyphicon-refresh"></span>&nbsp;Փոխել ֆայլը<input type="file" style="visibility: hidden; position: absolute;"></span>
+            <span class="btn btn-sm btn-danger" ng-show="$flow.files.length" ng-click="$flow.cancel();removeFile();">
+                <span class="glyphicon glyphicon-trash"></span>&nbsp;
+                Հեռացնել
+            </span>
+        </div>
+    </div>

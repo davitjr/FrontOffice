@@ -1,0 +1,187 @@
+﻿@{
+    Layout = null;
+}
+
+<div id="notificationConfigurationLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form style="width:650px;" ng-controller="productNotificationConfigurationsOrderCtrl" ng-init="getCustomerMainData()" prevent-enter-submit name="productNotificationConfigurationsOrderForm" id="productNotificationConfigurationsOrderForm" role="form" ng-submit="productNotificationConfigurationsOrderForm.$valid && saveProductNotificationConfigurationsOrder()" novalidate class="form-horizontal" labels-required>
+    <div id="closeaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li  ng-if="operationType!=3"  class="root-menu-item-5 " ng-click="productNotificationConfigurationsOrderForm.$setSubmitted(); productNotificationConfigurationsOrderForm.$valid && printProductNotificationContract()">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Դիմում</span>
+            </li>
+            
+            <li class="root-menu-item-4" ng-click="productNotificationConfigurationsOrderForm.$setSubmitted();productNotificationConfigurationsOrderForm.$valid && saveProductNotificationsConfigurationsOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5" onclick="CloseBPDialog('productNotificationConfigurationsOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div style="max-width:480px">
+            <errors></errors>
+        </div>
+
+
+        <div style="margin-left:10px;margin-right:10px;">
+            <div class="form-group">
+                <label class="tab_title col-sm-6" for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-8 multiple_columns">
+
+                        <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-init="getProductNotificationInformationTypes()">
+                <label class="tab_title col-sm-6" for="Email">Տեղեկատվության տեսակը </label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select convert-to-number ng-disabled="true" data-ng-model="order.configuration.InformationType" name="InformationType" id="InformationType" class="form-control"
+                                data-ng-options="k as v for (k,v)  in informationTypes" required>
+                            <option value="" hidden>Ընտրեք տեղեկատվության տեսակը ...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="productNotificationConfigurationsOrderForm.$submitted || productNotificationConfigurationsOrderForm.InformationType.$dirty"
+                                     for="productNotificationConfigurationsOrderForm.InformationType.$error">
+                            <ng-message when="required" class="errors">
+                                Տեղեկատվության տեսակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group" ng-init="getProductNotificationOptionTypes()">
+                <label class="tab_title col-sm-6" for="notifOption">Տրամադրման եղանակը  </label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select convert-to-number ng-disabled="operationType==3" data-ng-model="order.configuration.NotificationOption" name="option" id="option" class="form-control"
+                                data-ng-options="k as v for (k,v)  in optionTypes" required>
+                            <option value="" hidden>Ընտրեք տրամադրման եղանակը ...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="productNotificationConfigurationsOrderForm.$submitted || productNotificationConfigurationsOrderForm.option.$dirty"
+                                     for="productNotificationConfigurationsOrderForm.option.$error">
+                            <ng-message when="required" class="errors">
+                                Տրամադրման եղանակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group" ng-if="customerMainData && order.configuration.NotificationOption==2">
+                <label class="tab_title col-sm-6" for="Email">Էլ․ հասցե  </label>
+                <div class="col-sm-5">
+                    <div class="row">
+                        <select ng-disabled="order.configuration.AllComunications==true" chosen="" multiple="" name="Email" id="communctaionsIds" data-ng-model="order.configuration.CommunicationIds" class="chosen-select col-sm-12" data-placeholder="Ընտրեք Էլ․ հասցե ..."
+                                data-ng-options="item.id as item.email.emailAddress for item  in customerMainData.Emails"></select>
+                    </div>
+                    <div class="row">
+                        <input ng-disabled="operationType==3" name="allComunications" ng-model="order.configuration.AllComunications" ng-change="changeAllCommunications()" type="checkbox" /> Ընտրել բոլորը
+                    </div>
+                    <div style="color:red" class="row" ng-if="operationType!=3 && productNotificationConfigurationsOrderForm.$submitted && order.configuration.NotificationOption==2 && (order.configuration.CommunicationIds==undefined || order.configuration.CommunicationIds.length==0) && order.configuration.AllComunications!=true">
+                        <span ng-show="customerMainData.Emails.length>0">Հաճախորդի Էլ․հասցեն լրացված չէ</span>
+                        <span ng-show="customerMainData.Emails.length==0">Հաճախորդի անձնական տվյալներում գրանցված չէ Էլ․հասցե </span>
+                        @*<ng-messages ng-if="productNotificationConfigurationsOrderForm.$submitted || productNotificationConfigurationsOrderForm.Email.$dirty"
+                                         for="productNotificationConfigurationsOrderForm.Email.$error">
+                                <ng-message when="required" class="errors">
+                                    <span ng-show="customerMainData.Emails.length>0">Հաճախորդի Էլ․հասցեն լրացված չէ</span>
+                                    <span ng-show="customerMainData.Emails.length==0">Հաճախորդի անձնական տվյալներում գրանցված չէ Էլ․հասցե </span>
+                                </ng-message>
+                            </ng-messages>*@
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="customerMainData && order.configuration.NotificationOption==5">
+                <label class="tab_title col-sm-6" for="Phone">Հեռախոսահամար  </label>
+                <div class="col-sm-5">
+                    <div class="row">
+                        <select chosen="" multiple="" name="Phone" id="communctaionsIds" data-ng-model="order.configuration.CommunicationIds" class="chosen-select col-sm-12" data-placeholder="Ընտրեք հեռախոսահամար ..."
+                                data-ng-options="item.id as item.phone.countryCode+item.phone.areaCode+item.phone.phoneNumber for item  in customerMainData.Phones"></select>
+                    </div>
+                    <div class="row">
+                        <input ng-disabled="operationType==3" ng-model="order.configuration.AllComunications" ng-change="changeAllCommunications()" type="checkbox" /> Ընտրել բոլորը
+                    </div>
+
+                    <div style="color:red" class="row" ng-if="operationType!=3 &&  productNotificationConfigurationsOrderForm.$submitted &&  order.configuration.NotificationOption==5 && (order.configuration.CommunicationIds==undefined || order.configuration.CommunicationIds.length==0) && order.configuration.AllComunications!=true">
+                        <span ng-show="customerMainData.Phones.length>0">Հաճախորդի հեռախոսահամարրը լրացված չէ</span>
+                        <span ng-show="customerMainData.Phones.length==0">Հաճախորդի անձնական տվյալներում գրանցված չեն հեռախոսահամարներ </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-init="getProductNotificationFrequencyTypes()">
+                <label class="tab_title col-sm-6" for="frequency">Տրամադրման հաճախականությունը  </label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select convert-to-number ng-disabled="operationType==3" data-ng-model="order.configuration.NotificationFrequency" name="frequency" id="frequency" class="form-control"
+                                data-ng-options="k as v for (k,v) in frequencyTypes" required>
+                            <option value="" hidden>Ընտրեք տրամադրման հաճախականությունը ...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="productNotificationConfigurationsOrderForm.$submitted || productNotificationConfigurationsOrderForm.frequency.$dirty"
+                                     for="productNotificationConfigurationsOrderForm.frequency.$error">
+                            <ng-message when="required" class="errors">
+                                Տրամադրման հաճախականությունը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-init="getProductNotificationLanguageTypes()">
+                <label class="tab_title col-sm-6" for="Email">Լեզուն  </label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select convert-to-number ng-disabled="operationType==3" data-ng-model="order.configuration.Language" name="language" id="language" class="form-control"
+                                data-ng-options="k as v for (k,v)  in languageTypes" required>
+                            <option value="" hidden>Ընտրեք Լեզուն ...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="productNotificationConfigurationsOrderForm.$submitted || productNotificationConfigurationsOrderForm.language.$dirty"
+                                     for="productNotificationConfigurationsOrderForm.language.$error">
+                            <ng-message when="required" class="errors">
+                                Տրամադրման Լեզուն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

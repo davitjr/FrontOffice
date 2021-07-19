@@ -1,0 +1,109 @@
+﻿@{
+    Layout = null;
+}
+<div id="InsuranceOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="CustomersNotesCtrl" name="CustomerNewNoteForm" id="CustomerNewNoteForm" role="form" style="min-width:700px;" novalidate class="form-horizontal" labels-required>
+    <div id="newaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="CustomerNewNoteForm.$setSubmitted();CustomerNewNoteForm.$valid && savePersonNote(selectedNote.CustomerNumber,true)">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('customernewnote')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+
+    <div>
+        <div class="col-sm-12">
+            <div style="max-width:530px">
+                <errors></errors>
+            </div>
+
+            <div class="col-sm-12">
+                <div class=" form-group">
+                    <label class="tab_title col-sm-5 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                    <div class="col-sm-6 row">
+                        <div class="multiple_columns col-sm-8 ">
+                            <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="RegistrationDate" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="tab_title col-sm-5" for="Quality">Կարգավիճակ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <select data-ng-model="PersonNote.Quality" name="Quality" ng-disabled="disableQuality" id="Quality" class="form-control" required>
+                                <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                                <option value="1" ng-if="disableQuality" style="margin-left:25px">Ընթացիկ</option>
+                                <option value="2" ng-if="!disableQuality" style="margin-left:25px">Փակված</option>
+                                <option value="3" ng-if="!disableQuality" style="margin-left:25px">Հրաժարված</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="CustomerNewNoteForm.$submitted || CustomerNewNoteForm.Quality.$dirty"
+                                         for="CustomerNewNoteForm.Quality.$error">
+                                <ng-message when="required" class="errors">
+                                    Կարգավիճակ ընտրված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" >
+                    <label class="tab_title col-sm-5 control-label" for="description">Նկարագրություն</label>
+                    <div class="col-sm-6 ">
+                        <div class="row">
+                            <textarea rows="4" style="text-align:left" ng-disabled="selectedNote != undefined" required onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="PersonNote.Note" name="Note" id="Note" class="form-control tab_title"></textarea>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="CustomerNewNoteForm.$submitted || CustomerNewNoteForm.Note.$dirty"
+                                         for="CustomerNewNoteForm.Note.$error">
+                                <ng-message when="required" class="errors">
+                                    Նկարագրությունը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="PersonNote.Quality==3">
+                    <label class="tab_title col-sm-5 control-label" for="ReasonDescription">Հրաժարման պատճառ</label>
+                    <div class="col-sm-6 ">
+                        <div class="row">
+                            <textarea rows="3" style="text-align:left" required onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="PersonNote.ReasonDescription" name="ReasonDescription" id="ReasonDescription" class="form-control tab_title"></textarea>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="CustomerNewNoteForm.$submitted || CustomerNewNoteForm.ReasonDescription.$dirty"
+                                         for="CustomerNewNoteForm.ReasonDescription.$error">
+                                <ng-message when="required" class="errors">
+                                    Հրաժարման պատճառ լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+

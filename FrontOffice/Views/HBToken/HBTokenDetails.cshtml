@@ -1,0 +1,60 @@
+﻿@{
+    Layout = null;
+}
+<div ng-controller="HBTokenCtrl" data-ng-init="getHBToken();" id="hbTokenDetails">
+    <div id="hbTokenndetails_menu" class="menu-bar dialog-menu light-green details-menu" style="min-width:810px;">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-2 "  ng-controller="PopUpCtrl" ng-click="params={hbBoken:hbBoken}; openWindow('HBToken/EditHBtokenView','Թոքենի Խմբագրում','edithbToken',callbackedithbToken)">
+                    <span id="h-menu-item-2"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">Խմբագրել</span>
+             </li>
+        </ul>
+    </div>
+    <div class="product-details bhoechie-tab-content" style="min-width:810px;margin-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Token-Ի համար</div>
+            <div class="product-detail-cell product-detail-value">{{hbToken.TokenNumber}}</div>
+        </div>
+    
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Օրական սահմանաչափ</div>
+            <div class="product-detail-cell product-detail-value">{{hbToken.DayLimit}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործարքի սահմանաչափ</div>
+            <div class="product-detail-cell product-detail-value">{{hbToken.TransLimit}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Token-ի տեսակը</div>
+            <div class="product-detail-cell product-detail-value">{{hbToken.TokenTypeDescription}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">{{hbToken.QualityDescription}}</div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#hbTokenDetails div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('#hbTokenDetails div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#hbTokenDetails div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#hbTokenDetails div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+
+    $("#hbTokenDetailsContainer").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>

@@ -1,0 +1,73 @@
+﻿<style>
+    #CardTariff table, #CardTariff th, #CardTariff td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    .closed {
+        color: red;
+    }
+</style>
+<div ng-controller="CardTariffContractCtrl" style="width:800px;margin-left:15px;margin-right:15px;">
+    <br />
+    <div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Աշխ. ծրագրի համար</div>
+            <div class="product-detail-cell product-detail-value">{{::cardTariffContract.TariffID}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Անվանում</div>
+            <div class="product-detail-cell product-detail-value">{{::cardTariffContract.Description}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հասցե</div>
+            <div class="product-detail-cell product-detail-value">{{::cardTariffContract.Address}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{::cardTariffContract.StartDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջ</div>
+            <div class="product-detail-cell product-detail-value" ng-class="cardTariffContract.EndDateString == null ? '' : 'closed'">{{::CardTariffContract.EndDateString == null ? '-' : CardTariffContract.EndDateString }}</div>
+        </div>
+    </div>
+    <table id="CardTariff">
+        <thead>
+            <tr class="product-container-header">
+                <td rowspan="2" class="text-center col-xs-2">Քարտ</td>
+                <td rowspan="2" class="text-center col-xs-1">Արժ.</td>
+                <td colspan="3" class="text-center col-xs-3">Կանխիկացում</td>
+                <td colspan="2" class="text-center col-xs-2">Տոկոսադրույք</td>
+                <td rowspan="2" class="text-center col-xs-1">Ոչ տոկոսային ժ-ն</td>
+
+            </tr>
+            <tr class="product-container-header">
+                <td class="text-center col-xs-1">ACBA</td>
+                <td class="text-center col-xs-1">այլ բանկեր</td>
+                <td class="text-center col-xs-1">արտերկիր</td>
+                <td class="text-center col-xs-1">Դրական %</td>
+                <td class="text-center col-xs-1">Բացաս. %</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="CardTariff in ::cardTariffContract.CardTariffs">
+                <td class="col-xs-2">
+                    <img ng-if="CardTariff.CardSystem==3" src="~/Content/Images/Amex_icon.png" height="20" width="20" align="left" style="margin-right:5px;margin-top:3px;" />
+                    <img ng-if="CardTariff.CardSystem==4" src="~/Content/Images/Visa_icon.png" height="20" width="20" align="left" style="margin-right:5px;margin-top:3px;" />
+                    <img ng-if="CardTariff.CardSystem==5" src="~/Content/Images/MC_icon.png" height="20" width="20" align="left" style="margin-right:5px;margin-top:3px;" />
+                    <img ng-if="CardTariff.CardSystem==9" src="~/Content/Images/arca.png" height="20" width="20" align="left" style="margin-right:5px;margin-top:3px;" />
+                    <span>{{::CardTariff.CardTypeDescription}}</span>
+                </td>
+                <td class="text-center col-xs-2">{{::CardTariff.Currency}}</td>
+                <td class="text-center col-xs-2">{{::CardTariff.CashRateOur*100  | number:2}} %</td>
+                <td class="text-center col-xs-2">{{::CardTariff.CashRateOther *100 | number:2}} %</td>
+                <td class="text-center col-xs-2">{{::CardTariff.CashRateInternational*100 | number:2}} %</td>
+                <td class="text-center col-xs-2">{{::CardTariff.PositiveRate*100 | number:2}} %</td>
+                <td class="text-center col-xs-2">{{::CardTariff.NegativeRate*100 | number:2}} %</td>
+                <td class="text-center col-xs-2">{{::CardTariff.GracePeriod== 0 ? '-' : CardTariff.GracePeriod }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+</div>

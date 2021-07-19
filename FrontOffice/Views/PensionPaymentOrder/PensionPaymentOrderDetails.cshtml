@@ -1,0 +1,60 @@
+﻿@{
+    Layout = null;
+}
+
+    <form style="width:500px" ng-controller="PensionPaymentOrderCtrl" data-ng-init="getPensionPaymentOrderDetails(selectedOrderId)">
+        <loading-control scopevariable="pensionPaymentOrder.Id"></loading-control>
+
+        <div ng-if="pensionPaymentOrder.Quality!=undefined && pensionPaymentOrder.Quality !=31 && pensionPaymentOrder.Quality !=30 && pensionPaymentOrder.Quality !=32
+                            && pensionPaymentOrder.Quality !=40 && pensionPaymentOrder.Quality !=41 && pensionPaymentOrder.Quality !=6 && pensionPaymentOrder.Quality !=50"
+             ng-show="pensionPaymentOrder" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0">
+            <ul id="menu" class="dialog-menu">
+                <li class="root-menu-item-5 " ng-controller="PopUpCtrl" ng-click="params={removableorder:pensionPaymentOrder};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder')">
+                    <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+                </li>
+            </ul>
+        </div>
+
+
+        <div ng-show="pensionPaymentOrder" class="product-details bhoechie-tab-content" style="min-width:500px;padding-left:10px">
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+                <div class="product-detail-cell product-detail-value">{{pensionPaymentOrder.Id}}</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+                <div class="product-detail-cell product-detail-value">{{pensionPaymentOrder.RegistrationDateString}}</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+                <div class="product-detail-cell product-detail-value">{{pensionPaymentOrder.OperationDateToString}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Արժույթ</div>
+                <div class="product-detail-cell product-detail-value">{{pensionPaymentOrder.Currency}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">կենսաթոշակի հերթական համար</div>
+                <div class="product-detail-cell product-detail-value">{{pensionPaymentOrder.PensionPaymentId}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Ամսաթիվ</div>
+                <div class="product-detail-cell product-detail-value">{{pensionPaymentOrder.DateGetString}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Տոկոս</div>
+                <div class="product-detail-cell product-detail-value">{{pensionPaymentOrder.Year}} / {{pensionPaymentOrder.Mounth}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Գումար</div>
+                <div class="product-detail-cell product-detail-value">{{pensionPaymentOrder.AmountString}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Նկարագրության</div>
+                <div class="product-detail-cell product-detail-value">{{pensionPaymentOrder.Description}}</div>
+            </div>
+        </div>
+        <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+    </form>

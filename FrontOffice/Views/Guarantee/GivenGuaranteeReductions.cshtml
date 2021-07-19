@@ -1,0 +1,52 @@
+﻿@{
+    Layout = null;
+}
+<div ng-controller="GuaranteeCtrl" ng-init="getGivenGuaranteeReductions(productid)">
+    <div class="product-container" style="width:90%">
+        <div class="header-title">
+            Նվազեցում
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+
+            </div>
+            <div class="product-content-table-full_height custom-scroll" id="givenGuaranteeReductionContent" style="min-height:100px;">
+                <div ng-if="provisions==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="givenGuaranteeReduction in givenGuaranteeReductions" ng-class="{'selected':$index == selectedRow}" style="max-height:200px">
+                            <td class="text-left col-sm-12">
+                                <div style="margin-left: 5pt;">
+                                    <div>
+                                        <span class="my_label" style="font-size:13px">Նվազեցման ա/թ` </span>{{::givenGuaranteeReduction.ReductionDate | mydate | date: 'dd/MM/yyyy'}}
+                                    </div>
+                                    <div>
+                                        <span class="my_label" style="font-size:13px">Նվազեցվեղ գումար՝ </span>{{ ::givenGuaranteeReduction.ReductionAmount | number:2 }}
+                                    </div>
+                                    <div>
+                                        <span class="my_label" style="font-size:13px">Գրության համար՝ </span>{{ ::givenGuaranteeReduction.ReasonNumber }}
+                                    </div>
+                                    <div>
+                                        <span class="my_label" style="font-size:13px">Գրության տրման ա/թ՝ </span>{{ ::givenGuaranteeReduction.ReasonDate | mydate | date: 'dd/MM/yyyy' }}
+                                    </div>
+                                    <div>
+                                        <span class="my_label" style="font-size:13px">Կարգավիճակ՝ </span>{{ ::givenGuaranteeReduction.QualityDescription }}
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                        <tr ng-if="provisions.length==0 ">
+                            <td colspan="3" style="text-align:center;">
+                                Տվյալները բացակայում են
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

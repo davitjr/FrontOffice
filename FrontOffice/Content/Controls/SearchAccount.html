@@ -1,0 +1,185 @@
+﻿<div>
+    <style>
+        .modal-content {
+            width: 800px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+        
+        .closedAccount {
+            color: red;
+        }
+
+        .resultRow
+        {
+            font-size:10pt;
+            color:black;
+            font-weight:normal;
+        }
+
+       .resultRowAddInf
+        {
+            font-size:9pt;
+        }
+
+       .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+       .tableHeader{
+           font-size:9pt;
+           height:25px;
+
+       }
+    </style>
+
+    <style>
+        #searchAccount .product-container-header  > th {
+            font-weight:inherit
+        }
+        #searchAccount .div-table-content  {
+            margin-top:-5px!important;
+            border-color:#CFDAD0!important
+        }  
+    </style>
+
+    <div id="searchAccount">
+        <div class="col-sm-10 popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+            <div style="margin-top:-10px">Հաշվի որոնում</div>
+            <img src="/Content/images/close_pop.png " ng-click="closeSearchAccountsModal()" style="margin-top:-10px;" alt="">
+        </div>
+        <div class="row">
+
+
+            <div class="col-md-6 ">
+                <div class="col-md-3 form-group-search">
+                    Հաշվեհամար
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <input type="text" maxlength="15" ng-model="searchParams.accountNumber" name="accountNumber" class="form-control tab_title" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' />
+                </div>
+                <div class="col-md-3 form-group-search">
+                    Հաճախորդ
+                </div>
+                <div class="col-md-7 form-group-search">
+                    <div class="input-group">
+                        <input type="text" style="text-align:right" maxlength="12" ng-model="searchParams.customerNumber" name="customerNumber" class="form-control tab_title nonUnicodeText" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' />
+                        <div class="input-group-btn ">
+                            <button type="button" class="btn btn-default searchButton " ng-click="searchCustomers()" title="Հաճախորդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-3 form-group-search">
+                    Մասնաճյուղ
+                </div>
+                <div class="col-md-7 form-group-search" data-ng-init="getFilialList()">
+                    <select data-ng-model="searchParams.filialCode" name="filialCode" id="filialCode" class="form-control"
+                            data-ng-options="k as v for (k,v) in filialList" required>
+                        <option selected="selected" value="">Ընտրեք մասնաճյուղը...</option>
+                    </select>
+                </div>
+                <div class="col-md-3 form-group-search">
+                    Արժույթ
+                </div>
+                <div class="col-md-7" data-ng-init="getCurrencies()">
+                    <select ng-show="currencies" data-ng-model="searchParams.currency" name="currency" id="currency" class="form-control" required
+                            data-ng-options="k as v for (k,v) in currencies">
+                        <option selected="selected" value="" style="margin-left:25px">Ընտրեք արժույթը...</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+        <div class="row rowWithFullWidth">
+            <div class="col-md-6 checkbox ">
+                <label for="ClosedAccounts">
+                    <input type="checkbox" ng-model="searchParams.includeClosedAccounts" name="ClosedAccounts" />
+                    Ներառել փակված հաշիվները
+                </label>
+            </div>
+        </div>
+        <div style="margin:5px">
+            <button type="button" class="btn btn-primary" ng-click="btnFindClick();" title="Որոնել հաշիվը"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+        </div>
+        <div style="overflow:auto; margin:5px; margin-bottom:0; margin-top:0; ">
+            <table class="table table-condensed" style="margin-bottom:0;">
+                <thead>
+                    <tr class="product-container-header">
+                        <th class="col-sm-2" style="text-align:center;">Հաշվեհամար</th>
+                        <th class="col-sm-1" style="text-align:left;">Արժույթ</th>
+                        <th class="col-sm-3" style="text-align:center;">Տեսակ</th>
+                        <th class="col-sm-2" style="text-align:center;">Հաճախորդ</th>
+                        <th class="col-sm-4" style="text-align:center;">Նկարագրություն</th>
+
+                        <!--<th class="col-sm-1" style="text-align:center;">Փակման ա/թ.</th>-->
+
+                    </tr>
+                </thead>
+            </table>
+            <div class="div-table-content " style="max-height:200px; min-height:200px;border: gray 1px solid; ">
+                <table class="table table-condensed table-hover" style="background-color:white">
+                    <tbody>
+                        <tr ng-if="accountsList.length!=0" ng-repeat="account in filteredAccounts" style="cursor:pointer;" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" ng-dblclick="selectAccount()">
+                            <td>
+                                <div ng-class="{'closedAccount': account.CloseDate != null }">
+                                    <div class="row resultRow">
+                                        <div class="col-sm-2 " style="text-align:left">
+                                            {{ ::account.AccountNumber }}
+                                        </div>
+                                        <div class="col-sm-1 " style="text-align:center">
+                                            {{ ::account.Currency }}
+                                        </div>
+                                        <div class="col-sm-3 " style="text-align:center">
+                                            {{ ::account.AccountTypeDescription }}
+                                        </div>
+
+                                        <div class="col-sm-2 " style="text-align:right">
+                                            {{ ::account.CustomerNumber }}
+                                        </div>
+                                        <div class="col-sm-4 " style="text-align:left">
+                                            {{ ::account.Description }}
+                                        </div>
+                                    </div>
+                                    <div class="row resultRow resultRowAddInf">
+                                        <div class="col-sm-6 " ng-if="account.AccountType==13"> Ավանդի համար` {{::account.ProductNumber  }} </div>
+                                        <div class="col-sm-6 " ng-if="account.AccountType==11"> Քարտի համար` {{::account.ProductNumber  }}</div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="accountsList.length==0 && hasaccounts==false">
+                            <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="margin-left:12px;">
+            Ընդամենը` {{totalRows}}
+        </div>
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                    ng-model="currentPage"
+                    total-items="totalRows"
+                    max-size="maxSize"
+                    items-per-page="numPerPage"
+                    boundary-links="true"
+                    previous-text="‹"
+                    next-text="›"
+                    first-text="«"
+                    num-pages="numPages"
+                    last-text="»">
+        </div>
+
+    </div>
+
+    
+</div>
+
+

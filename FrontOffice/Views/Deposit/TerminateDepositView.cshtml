@@ -1,0 +1,129 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+    #TerminateDepositForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+    
+    #TerminateDepositForm .chosen-container-multi {
+        border-radius: 4px;
+    }
+
+    #TerminateDepositForm .chosen-choices {
+        border-radius: 4px;
+    }
+
+    #TerminateDepositForm .chosen-container {
+        position: fixed;
+        z-index: 99;
+        height: 35px;
+    }
+    #TerminateDepositForm .form-group {
+        margin-left:15px;
+    }
+</style>
+<form ng-controller="DepositCtrl" name="TerminateDepositForm" id="TerminateDepositForm" role="form" style="min-width:550px;" novalidate class="form-horizontal" labels-required prevent-enter-submit>
+    <div id="newreference_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-3 " ng-click="depositCloseApplication(closedDeposit.DepositNumber);">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Դիմում</span>
+            </li>
+            <li class="root-menu-item-6" ng-click="TerminateDepositForm.$setSubmitted();TerminateDepositForm.$valid && terminateDeposit()">
+                <span id="h-menu-item-6"><img id="h-menu-icon-6" class="h-menu-icon printButton">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5" onclick="CloseBPDialog('terminatedeposit')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+        <div class="col-sm-12">
+            <div class="form-group " style="margin-left: 0 !important">
+                <div class="col-sm-12" style="max-width:530px">
+                    <div class="row-no-margin">
+
+
+                        <section class="panel panel-warning">
+                            <header class="panel-heading">
+                                <span class="panel-title" style="font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                            </header>
+                            <div class="panel-body">
+                                <span>Ավանդի դադարեցման դեպքում կդադարեցվեն նաև տվյալ ավանդի գծով առկա բոլոր գործող պարբերական փոխանցումները </span>
+                            </div>
+                        </section>
+
+                        <section ng-show="customerDocumentWarnings.length>0" class="panel panel-warning">
+                            <header class="panel-heading">
+                                <span class="panel-title" style="font-size: 14px;color:red;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Ուշադրություն</span>
+                            </header>
+                            <div class="panel-body">
+                                <div ng-repeat="war in customerDocumentWarnings">
+                                    {{$index+1}}.{{::war}}
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5 ">Ավանդի համար</label>
+                <div class="col-sm-6">
+                    <label class="tab_title">{{closedDeposit.DepositNumber}}</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5 ">Մնացորդ</label>
+                <div class="col-sm-6">
+                    <label class="tab_title">{{closedDeposit.BalanceString}} {{closedDeposit.Currency}}</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5 ">Կուտակված տոկոսագումար</label>
+                <div class="col-sm-6">
+                    <label class="tab_title">{{closedDeposit.CurrentRateValueString}} {{closedDeposit.Currency}}</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5 ">Դադարեցման տոկոսագումար</label>
+                <div class="col-sm-6">
+                    <label class="tab_title">{{closedDeposit.CancelRateValueString}} {{closedDeposit.Currency}}</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="ClosingReasonType">Փակման պատճառ</label>
+                <loading-control scopevariable="depositClosingReasonTypes"></loading-control>
+
+                <div ng-show="depositClosingReasonTypes" class="col-sm-6" data-ng-init="getDepositClosingReasonTypes()">
+                    <div class="row">
+
+                        <select data-ng-model="closedDeposit.ClosingReasonType" name="ClosingReasonType" id="ClosingReasonType" class="form-control" required
+                                data-ng-options="k as v for (k,v) in ::depositClosingReasonTypes">
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="TerminateDepositForm.$submitted || TerminateDepositForm.ClosingReasonType.$dirty"
+                                     for="TerminateDepositForm.ClosingReasonType.$error">
+                            <ng-message when="required" class="errors">
+                                Պատճառն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+</form>
+
+
+
+
+

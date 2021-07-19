@@ -1,0 +1,57 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #ClassifiedLoanActionPreOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+
+<div id="classifiedLoanActionLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="ClassifiedLoanActionOrdersCtrl" name="ClassifiedLoanActionPreOrderForm" style="min-width:590px" id="ClassifiedLoanActionOrderForm" role="form" class="form-horizontal" prevent-enter-submit novalidate labels-required>
+    <div id="receivecheque_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="ClassifiedLoanActionPreOrderForm.$setSubmitted();ClassifiedLoanActionPreOrderForm.$valid && saveClassifiedLoanActionPreOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " ng-click="closeDialog()">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div class="col-sm-12" style="padding-left:10px">
+        <div class="form-group">
+            <label class="tab_title col-sm-7" for="RegistrationDate">Մուտքագրման ա/թ</label>
+            <div class="col-sm-5 row ">
+                <div class="row multiple_columns col-sm-8">
+                    <input type="date" disabled="disabled" class="form-control tab_title unstyled" id="RegistrationDate" name="RegistrationDate" ng-model="order.RegistrationDate" style="text-align:left;" required>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group" ng-init="initPreOrder(@ViewBag.preOrderType)">
+            <label class="tab_title col-sm-7">
+                @if (@ViewBag.preOrderType == 2)
+                {
+                    @("Հետբերման ենթակա վարկերի քանակ`")
+                }
+                else
+                {
+                    @("Դուրսգրման ենթակա վարկերի քանակ`")
+                }
+            </label>
+            <div class="col-sm-5 row ">
+                <div class="row multiple_columns col-sm-8">
+                    <label>{{loans.length}}</label>
+
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+</form>

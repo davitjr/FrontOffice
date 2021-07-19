@@ -1,0 +1,262 @@
+﻿<style type="text/css">
+    #transferApproveForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #transferApproveForm {
+        margin-right: 15px;
+    }
+</style>
+
+
+
+
+<form style="width:550px" class="form-horizontal col-sm-12" ng-controller="TransfersCtrl" name="transferApproveForm" ng-init=" getCorrespondentBankAccounts(selectedTransferId)" novalidate>
+    <div class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="transferApproveOrder.SubType=1;approveTransfer();" style="padding-right:0">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Հաստատել</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="showRejectTransfer();" style="padding-right:0">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Չեղարկել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('TransferApprove')" style="padding-right:0">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div class="col-sm-12" style="padding:0;padding-left:5px;">
+
+
+        @*<div class="form-group " style="padding-right: 10px; margin-bottom: 0">
+            <label class="tab_title col-sm-5" for="IntermediaryBank">Չեղարկման պատճառ</label>
+
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="text" ng-model="transferApproveOrder.Description" ng-enter="" name="Description" class="tab_title form-control" style="text-align:left" />
+                </div>
+
+            </div>
+        </div>*@
+
+
+        <div class="form-group" style="padding-right: 10px; margin-top: 10px;">
+            <label class="col-sm-5 tab_title">Թղթակից բանկի հաշիվ </label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <select data-ng-model="corAcc" class="form-control" data-ng-options="t.CodeAccount  + '      ' + t.BankName + '      ' +t.Currency +'      '+t.SwiftCode for t in correspondentBankAccounts" id="contract" name="contract">
+                        <option value="" hidden="hidden" style="margin-left:25px">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" style="padding-right: 10px;" ng-if="transfer.MT==202 || transfer.MT==103">
+            <label class="col-sm-5 tab_title">Value date </label>
+            <div class="col-sm-6">
+                <div class="row" ng-init="setCurrentDate()">
+                    <input type="date" ng-model="$parent.ValueDate" name="ValueDate" class="form-control" required>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group" style="padding-right: 10px;" ng-if="transfer.Currency == 'RUR' && transfer.MT==103">
+            <label class="col-sm-5 tab_title">UIP </label>
+            <div class="col-sm-6">
+                <div class="row" >
+                    <input type="text" ng-model="transferApproveOrder.UIP" name="UIP" maxlength="25" class="form-control" required>
+                </div>
+            </div>
+        </div>
+
+
+        <div ng-if="transfer.MT == 103 && transfer.Currency == 'RUR'">
+            <div class="form-group" style="padding-right: 10px;">
+                <label class="col-sm-5 tab_title" style="margin-top: -5px;">Գործարքի տեսակը 26Т</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" name="TransactionType26" ng-model="$parent.TransactionType26" ng-keyup="checkSwitcher()" ng-init="$parent.switch=true" maxlength="3" required />
+                        <span ng-if="$parent.switch" style="color:green">&#10004;</span>
+                        <span ng-if="!$parent.switch" style="color:red">&#10006;</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" style="padding-right: 10px;">
+                <label class="col-sm-5 tab_title" style="margin-top: -9px;">Հաշվետվողականության կոդ 77В</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <textarea rows="3" cols="35" name="AccountAbility77B" ng-model="$parent.AccountAbility77B"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-success" style=" margin-bottom: 10px;" ng-if="transfer.Currency!='RUR' || transfer.MT==202">
+            <div class="panel-heading">Ստացող</div>
+            <div class="panel-body" style="padding-bottom: 5px; padding-top: 5px;padding-right: 15px;">
+
+                <div class="form-group " style="padding-right: 10px;">
+                    <label class="tab_title col-sm-5" for="ReceiverBankSwift">Բանկի SWIFT կոդ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="input-group col-sm-10">
+                                <input type="text" ng-model="transfer.ReceiverBankSwift" name="ReceiverBankSwift" ng-blur="ReceiverBankSwiftChange()" ng-enter="" class="tab_title form-control" style="text-align:left" />
+                                <div class="input-group-btn" style="display:block;">
+                                    <button type="button" class="btn btn-default searchButton" ng-click="searchSwiftCodes(2)" title="SWIFT կոդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group " style="padding-right: 10px;" ng-if="transfer.Currency=='USD' && transfer.Country=='840'">
+                    <label class="tab_title col-sm-5" for="FedwireRoutingCode">Բանկի Fedwire Routing կոդ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <input type="text" ng-model="transfer.FedwireRoutingCode" name="FedwireRoutingCode" ng-blur="ReceiverBankSwiftChange()" ng-enter="" class="tab_title form-control" style="text-align:left" />
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group " style="padding-right: 10px;">
+                    <label class="tab_title col-sm-5" for="ReceiverBank">Բանկի տվյալներ</label>
+
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <textarea rows="2" ng-model="transfer.ReceiverBank" ng-enter="" name="ReceiverBank" class="tab_title form-control" style="text-align:left"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group " style="padding-right: 10px; margin-bottom: 0">
+                    <label class="tab_title col-sm-5" for="ReceiverBankAddInf">Բանկի լրացուցիչ տվյալներ</label>
+
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <textarea rows="2" ng-enter="" ng-model=" transfer.ReceiverBankAddInf" maxlength="210" name="ReceiverBankAddInf" class="tab_title form-control" style="text-align:left"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group " style="padding-right: 10px;"  >@*ng-if="transfer.Currency!='RUR' && (transfer.FedwireRoutingCode== undefined || transfer.FedwireRoutingCode== null )">*@
+                    <label class="tab_title col-sm-5" for="AccountInIntermediaryBank">Բանկի հաշիվ միջնորդ բանկում </label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <input type="text" ng-model="transferApproveOrder.AccountInIntermediaryBank" ng-disabled="transfer.Currency == 'RUR' || transfer.FedwireRoutingCode!= undefined || transfer.FedwireRoutingCode!= null " name="AccountInIntermediaryBank" maxlength="34"   class="tab_title form-control" style="text-align:left" />
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group " style="padding-right: 10px; margin-bottom: 10px; margin-top :10px" ng-if=" transfer.MT==202">
+                    <label class="tab_title col-sm-5" for="ReceiverSwift">Ստացողի SWIFT</label>
+
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="input-group col-sm-10">
+                                <input type="text" ng-model="transfer.ReceiverSwift" name="ReceiverSwift" ng-enter="" class="tab_title form-control" style="text-align:left" />
+                                <div class="input-group-btn" style="display:block;">
+                                    <button type="button" class="btn btn-default searchButton" ng-click="searchSwiftCodes(3)" title="SWIFT կոդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group " style="padding-right: 10px; margin-bottom: 10px" ng-if=" transfer.MT==202">
+                    <label class="tab_title col-sm-5" for="ReceiverAccount">Ստացողի հաշիվ</label>
+
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <input type="text" ng-model="transfer.ReceiverAccount" name="ReceiverAccount" ng-enter="" class="tab_title form-control" style="text-align:left" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group " style="padding-right: 10px; margin-bottom: 10px" ng-if=" transfer.MT==202">
+                    <label class="tab_title col-sm-5" for="Receiver">Ստացողի անվանում</label>
+
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <textarea rows="2" ng-enter="" ng-model="transfer.Receiver" name="Receiver" class="tab_title form-control" style="text-align:left"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-success" style=" margin-bottom: 10px;" ng-if="transfer.Currency!='RUR' || transfer.MT==202">
+            <div class="panel-heading">Միջնորդ բանկ </div>
+            <div class="panel-body" style="padding-bottom: 5px; padding-top: 5px;padding-right: 15px;">
+                <div class="form-group " style="padding-right: 10px;">
+                    <label class="tab_title col-sm-5" for="IntermediaryBankSwift">SWIFT կոդ</label>
+
+                    <div class="col-sm-6">
+                        <div class="row">
+
+                            <div class="input-group col-sm-10">
+                                <input type="text" ng-model="transfer.IntermediaryBankSwift" ng-enter="" maxlength="11" name="IntermediaryBankSwift" class="tab_title form-control" ng-blur="intermediaryBankSwiftChange()" style="text-align:left" />
+                                <div class="input-group-btn" style="display:block;">
+                                    <button type="button" class="btn btn-default searchButton" ng-click="searchSwiftCodes(1)" title="SWIFT կոդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group " style="padding-right: 10px; margin-bottom: 10px">
+                    <label class="tab_title col-sm-5" for="IntermediaryBank">Բանկի տվյալներ</label>
+
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <textarea rows="2" ng-enter="" ng-model="transfer.IntermediaryBank" name="IntermediaryBank" class="tab_title form-control" style="text-align:left"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="form-group " style="padding-right: 10px; margin-bottom: 10px" ng-if="transfer.Currency=='RUR' ">
+            <label class="tab_title col-sm-5" for="IntermediaryBank">VO Կոդ</label>
+
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="text" ng-model="transfer.VOCode" ng-enter="" name="VOCode" class="tab_title form-control" style="text-align:left" maxlength="5" />
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="form-group " style="padding-right: 10px; margin-bottom: 10px" ng-if="transfer.MT==202">
+            <label class="tab_title col-sm-5" for="IntermediaryBank">Վճարման մանրամասներ</label>
+
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="text" ng-model="transfer.DescriptionForPayment" ng-enter="" name="DescriptionForPayment" class="tab_title form-control" style="text-align:left" />
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</form>
+ 
+

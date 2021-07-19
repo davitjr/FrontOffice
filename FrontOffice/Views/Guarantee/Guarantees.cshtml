@@ -1,0 +1,76 @@
+﻿<style>
+    .blueBold {
+        font-weight: bold;
+        color: blue;
+    }
+</style>
+<script type="text/javascript">
+    $("#guarantiesContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div class="product-container" ng-controller="GuaranteeCtrl" data-ng-init="$root.SessionProperties.CustomerType != 6 && getGuarantees()" ng-show="(hideBlank!='true' && guarantees.length==0) || (guarantees.length!=0 && guarantees.length!=undefined)">
+    <div class="header-title">
+        <a ui-sref="guarantees" style="color:black;">Երաշխիքներ</a> 
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="product-container-header">
+            <div class="include-closed-products">
+                <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-guaranties" data-ng-model="filter" ng-true-value="2" ng-false-value="1" ng-change="QualityFilter()">
+                <label for="include-closed-guaranties" name="include-closed-guaranties-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+            </div>
+        </div>
+        <div class="product-content-table custom-scroll" id="guarantiesContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+            <div ng-if="guarantees==undefined">
+                <loading></loading>
+            </div>
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody>
+                    <tr ng-repeat="guarantee in guarantees" style="cursor: pointer;" ng-if="filter==1 && guarantees.length!=0" ng-class="{'selected':$index==selectedRow}" ng-click="setClickedRow($index,guarantee)" ng-dblclick="selectedGuaranteeIsAccessible && openGuaranteeDetails();">
+                        <td class="col-sm-3">
+                            <span style="font-weight:bold;" ng-class="{'blueBold':guarantee.Quality==10  }">{{ ::guarantee.QualityDescription }}</span>
+                            <span ng-if="guarantee.CreditCode!=''" style="color:brown;"><br />Կոդ` {{::guarantee.CreditCode}}</span>
+                            <br />Վերջ` {{::guarantee.EndDate | mydate | date: 'dd/MM/yyyy'}}
+                        </td>
+                        <td class="col-sm-2" style="text-align:right;">
+                            {{ ::guarantee.StartCapitalString }} {{ ::guarantee.Currency }}
+                            <br />{{guarantee.InterestRate}}%
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="contextGuarantees" id="contextMenu"><div id="contextMenu"></div> </td>
+
+                    </tr>
+                    <tr ng-if="filter==1 && guarantees.length==0 ">
+                        <td colspan="3" style="text-align:center;">
+                            Առկա չեն գործող երաշխիքներ
+                        </td>
+                    </tr>
+                    <tr ng-if="filter!=1"><td style="color:red; border-width:3px" colspan="3">Փակված երաշխիքներ </td></tr>
+                    <tr ng-repeat="guarantee in closingGuarantees" ng-if="closingGuarantees.length!=0" ng-class="{'selected':$index==selectedRowClose}" ng-click="setClickedRowClose($index)" ng-dblclick="selectedGuaranteeIsAccessible && openGuaranteeDetails();">
+                        <td class="col-sm-3">
+                            {{ ::guarantee.QualityDescription }}
+                            <br /> Վերջ` {{::guarantee.EndDate | mydate | date: 'dd/MM/yyyy'}}
+
+                        </td>
+                        <td class="col-sm-2" style="text-align:right;">{{ ::guarantee.StartCapitalString }} {{ ::guarantee.Currency }}</td>
+                        <td class="col-sm-1 click_toggle" context="contextGuarantees" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <ul id="contextGuarantees" class="dropdown-menu">
+                <li ng-if="selectedGuaranteeIsAccessible"><a style="color: black;text-decoration:none!important ;" ui-sref="guaranteeDetails({ productId : selectedProductId,closedGuarantee:selectedClosedGuarantee })">Մանրամասն դիտարկում</a></li>
+                @*<li ng-if="$root.SessionProperties.SourceType == 2 && selectedGuarantee.Quality==10"><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={product:selectedGuarantee,orderType:109};openWindow('/LoanProductActivationOrder/PersonalLoanProductActivationOrder','Երաշխիքի ակտիվացում','newLoanProductActivation')">Երաշխիքի ակտիվացում</a></li>*@   
+            </ul>
+        </div>
+
+    </div>
+
+</div>

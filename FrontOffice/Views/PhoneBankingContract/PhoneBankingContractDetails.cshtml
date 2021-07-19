@@ -1,0 +1,127 @@
+﻿@{
+    Layout = null;
+}
+<div ng-controller="PhoneBankingContractCtrl" id="phonebankingcontractdetails">
+    <div id="depositdetails_menu" class="menu-bar dialog-menu light-green details-menu" style="min-width:810px;">
+        <ul id="menu" class="dialog-menu">
+
+
+            <li class="root-menu-item-2 " ng-if="phoneBankingContract.ApplicationStatus == 5 || phoneBankingContract.ApplicationStatus == 2" ng-controller="PopUpCtrl" ng-click="params={contract: phoneBankingContract};openWindow('/PhoneBankingContractClosingOrder/PhoneBankingContractClosingOrder','Հեռախոսային Բանկինգի պայմանագրի դադարեցում','newphonebankingcontractclosingorder')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">Դադարեցում</span>
+            </li>
+
+            <li class="root-menu-item-2 " ng-if="phoneBankingContract.ApplicationStatus == 5" ng-controller="PopUpCtrl" ng-click="params={phoneBankingContractForEdit: phoneBankingContract};openWindow('/PhoneBankingContract/PhoneBankingContractOrder','Հեռախոսային Բանկինգի պայմանագրի խմբագրում','newphonebankingcontractorder')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="editButton h-menu-icon">Խմբագրում</span>
+            </li>
+
+
+            <li class="root-menu-item-6 ">
+                <span id="h-menu-item-6" onclick="return false;">
+                    <img id="h-menu-icon-6" class="h-menu-icon printButton">Փաստաթղթեր
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-6.1" class=" " data-permission-selector="" ng-click="getPhoneBankingContractPDF()">
+                        <span>Հեռախոսային բանկինգի պայմանագիր</span>
+                    </li>
+                    <li id="v-menuItem-6.1" class="last" data-permission-selector="" ng-click="getPhoneBankingContractClosingPDF()">
+                        <span>Դադարեցման դիմում</span>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+    <div class="product-details bhoechie-tab-content" style="min-width:810px;margin-left:10px;" id="phoneBankingContractDetailsContainer">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">{{phoneBankingContract.StatusDescription}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="deposit.MainDepositNumber!=0">
+            <div class="product-detail-cell product-detail-lable">Համար</div>
+            <div class="product-detail-cell product-detail-value">{{phoneBankingContract.Id}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պայմանագրի համար</div>
+            <div class="product-detail-cell product-detail-value">{{phoneBankingContract.ContractNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պայմանագրի ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{phoneBankingContract.ContractDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{phoneBankingContract.ApplicationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրող</div>
+            <div class="product-detail-cell product-detail-value">{{phoneBankingContract.SetID}} <span ng-show="phoneBankingContract.SetName"></span>({{phoneBankingContract.SetName}}) </div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հեռախոսահամար</div>
+            <div class="product-detail-cell product-detail-value">{{phoneBankingContract.Phone.phone.countryCode + phoneBankingContract.Phone.phone.areaCode + phoneBankingContract.Phone.phone.phoneNumber}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Էլ․փոստ</div>
+            <div class="product-detail-cell product-detail-value">{{phoneBankingContract.Email.email.emailAddress}}</div>
+        </div>
+
+
+
+        <div class="product-detail-row" style="color: #3c763d;background-color: #d9edf7; border-color: #d9edf7; ">
+            <div class="product-detail-cell product-detail-lable">
+                Գործարքի սահմանաչափ
+            </div>
+            <div class="product-detail-cell product-detail-value">
+
+            </div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ներբանկային (փոխանցում սեփական <br /> հաշիվների միջև)</div>
+            <div class="product-detail-cell product-detail-value">{{phoneBankingContract.OneTransactionLimitToOwnAccountToString}} AMD </div>
+        </div>
+      
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ներբանկային (փոխանցում այլ <br /> հաճախորդի հաշվին)</div>
+            <div class="product-detail-cell product-detail-value">{{phoneBankingContract.OneTransactionLimitToAnothersAccountToString}} AMD</div>
+        </div>
+
+
+
+        <div class="product-detail-row" style="color: #3c763d;background-color: #d9edf7; border-color: #d9edf7; ">
+            <div class="product-detail-cell product-detail-lable">
+                Օրական սահմանաչափ
+            </div>
+            <div class="product-detail-cell product-detail-value">
+
+            </div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ներբանկային (փոխանցում սեփական <br /> հաշիվների միջև)</div>
+            <div class="product-detail-cell product-detail-value">{{phoneBankingContract.DayLimitToOwnAccountToString}} AMD </div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ներբանկային (փոխանցում այլ <br /> հաճախորդի հաշվին)</div>
+            <div class="product-detail-cell product-detail-value">{{phoneBankingContract.DayLimitToAnothersAccountToString}} AMD </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $("#phonebankingcontractdetails div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('#phonebankingcontractdetails div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#phonebankingcontractdetails div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#phonebankingcontractdetails div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+
+</script>

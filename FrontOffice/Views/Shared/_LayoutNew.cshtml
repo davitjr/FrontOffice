@@ -1,0 +1,1507 @@
+﻿<!DOCTYPE html>
+<html ng-app="FrontOffice" ng-strict-di>
+<head>
+
+    <title>ACBA Bank</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/Content/Angular/mainangular")
+    <script src="~/Scripts/angular-ui-router.min.js"></script>
+    <script src="~/Scripts/angular-modal-service.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Scripts/chosen_v1.0.0/chosen.min.css" rel="stylesheet" />
+    <script src="~/Scripts/chosen_v1.0.0/chosen.jquery.js"></script>
+    <link rel="image-src" src="~/Scripts/chosen_v1.0.0/chosen-sprite.png" />
+    <script src="~/Scripts/angular-chosen-master/angular-chosen-master/chosen.js"></script>
+    <script src="~/Scripts/angular-messages.min.js"></script>
+    <script src="~/Scripts/jquery.nicescroll.min.js"></script>
+    <script src="~/Scripts/jquery.carouFredSel-6.2.1-packed.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
+
+    <script src="~/Scripts/angular-breadcrumb.min.js"></script>
+    <script src="~/Scripts/numeral/numeral.min.js"></script>
+    <script src="~/Scripts/jquery-dialogextend 2.0.4.js"></script>
+    <script src="~/Scripts/angular-animate.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <script src="~/Scripts/fcsaNumber.js"></script>
+    <!-- concatenated flow.js + ng-flow libraries -->
+    <script src="~/Scripts/ng-flow-2.6.1/ng-flow-standalone.min.js"></script>
+
+
+    <link href="~/Content/newTheme/css/expandDiv.css" rel="stylesheet" />
+    <!-- Icons -->
+    <link href="~/Content/newTheme/css/font-awesome.css" rel="stylesheet">
+    <link href="~/Content/newTheme/css/icons.css" rel="stylesheet">
+    <link href="~/Content/newTheme/css/animate.css" rel="stylesheet">
+    <link href="~/Content/newTheme/css/style.css" rel="stylesheet">
+
+    <link href="~/Content/newTheme/css/jquery.mCustomScrollbar.css" rel="stylesheet">
+    <!-- Plugins stylesheets (all plugin custom css) -->
+    <link href="~/Content/newTheme/css/plugins.css" rel="stylesheet">
+    <!-- Main stylesheets (template main css file) -->
+    <link href="~/Content/newTheme/css/main.css" rel="stylesheet">
+
+    <link href="~/Content/newTheme/css/menu-style.css" rel="stylesheet">
+
+    <!--Notification -->
+    <link href="~/Content/newTheme/css/notes.css" rel="stylesheet">
+    <!-- Windows8 touch icon ( http://www.buildmypinnedsite.com/ )-->
+    <meta name="msapplication-TileColor" content="#3399cc">
+
+    @Styles.Render("~/Content/themes/base/css")
+
+    <script src="~/Content/newTheme/js/notes.js"></script>
+
+    <script src="~/Content/newTheme/js/jquery.mousewheel.min.js"></script>
+    <script src="~/Content/newTheme/js/jquery.mCustomScrollbar.js"></script>
+
+    <script src="~/Content/newTheme/js/script.js"></script>
+    <!-- Handle responsive view functions -->
+    <script src="~/Content/newTheme/js/jRespond.min.js"></script>
+    <!-- Custom scroll for sidebars,tables and etc. -->
+
+    <script src="~/Content/newTheme/plugins/core/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/newTheme/plugins/core/slimscroll/jquery.slimscroll.horizontal.min.js"></script>
+
+    <script src="~/Content/newTheme/js/libs/date.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+
+    <script src="~/Scripts/xlsx/xlsx.core.min.js"></script>
+    <script src="~/Scripts/xlsx/xlsx.full.min.js"></script>
+
+
+    <script type="text/javascript">
+
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' }
+        }
+
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+
+        $(document).mouseup(function (e) {
+            var container = $("#applicationMainMenu");
+            if (!container.is(e.target) // if the target of the click isn't the container...
+                && container.has(e.target).length === 0) // ... nor a descendant of the container
+            {
+                container.hide('slide', { direction: "up" }, 500);
+                document.querySelector(".overlay").classList.add("display-none");
+            }
+        });
+
+    </script>
+
+
+    <style type="text/css">
+        .jqstooltip {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            visibility: hidden;
+            background: rgb(0, 0, 0) transparent;
+            background-color: rgba(0,0,0,0.6);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+            color: white;
+            font: 10px arial, san serif;
+            text-align: left;
+            white-space: nowrap;
+            padding: 5px;
+            border: 1px solid white;
+            z-index: 10000;
+        }
+
+        .jqsfield {
+            color: white;
+            font: 10px arial, san serif;
+            text-align: left;
+        }
+
+        #arrow-down {
+            margin-left: 0px;
+        }
+
+        #menu li {
+            padding-right: 1px;
+        }
+
+        #cssmenu ul li > a {
+            padding-left: 4px;
+            padding-right: 1px;
+        }
+
+        #menu ul a {
+            padding: 8px;
+        }
+    </style>
+</head>
+
+<body class="fixed-header fixed-left-sidebar fixed-right-sidebar pace-done">
+    <sessionproperties id="sessionpropertie"></sessionproperties>
+    <div id="Loader" class="overlayLoading hidden">
+        <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+    </div>
+    <div id="header" class="page-navbar header-fixed">
+        <!-- .no-collapse -->
+        <div id="navbar-no-collapse" class="navbar-no-collapse">
+            <!-- top left nav -->
+            <ul class="nav navbar-nav">
+                <li class="navbar-item-right-border" onclick="SlideApplicationAreas()">
+                    <a id="applicationAreaWrapper tipB" data-original-title="Հիմնական մենյու">
+                        <i class="fa fa-bars"></i>
+                        <span class="sr-only">Հիմնական մենյու</span>
+                    </a>
+                </li>
+                <li class="navbar-item-right-border">
+                    <a class="personalData tipB navbar-item-clicked" data-original-title="Հաճախորդի տվյալներ" onclick="ShowHideSidebarItem('#CustomerData');">
+                        <i class="fa fa-user"></i>
+                        <span class="sr-only">Հաճախորդի տվյալներ</span>
+                    </a>
+                </li>
+                <li>
+                    <img class="logo" src="~/Content/newTheme/Images/logo-white.png">
+                    <span class="menubar-title">ACBA BANKING SOFTWARE</span>
+                </li>
+                <li style="margin-left:20px;background-color:white;visibility:hidden" id="forTest">
+                    <span class="menubar-title" style="color:red">Ուշադրություն տեստային տարբերակ &nbsp;</span>
+                </li>
+            </ul>
+            <!-- / top left nav -->
+            <!-- top right nav -->
+            <ul class="nav navbar-nav navbar-right">
+                <li class="navbar-item-left-border navbar-item-right-border" ng-controller="PopUpCtrl" ng-click="openWindow('/ExchangeRate/ExchangeRates','Փոխարժեքներ','exchangerates')">
+                    <a id="exchageRateBar" class="tipB button-default show-notifications js-show-notifications" title="" data-original-title="Փոխարժեքներ">
+                        <i class="fa fa-exchange"></i>
+                    </a>
+                </li>
+
+                <li class="navbar-item-left-border navbar-item-right-border">
+                    <a id="notificationNavBar" ng-controller="OrderCtrl" ng-click="setNotConfirmOrderFromLayout()" class="tipB button-default show-notifications js-show-notifications" onclick="ShowNotifications(this)" title="" data-original-title="{{$root.notificationCount!=0?'Հաղորդագրություններ':'Նոր հաղորդագրություններ առկա չեն'}}">
+                        <i class="fa fa-bell"></i>
+                        <span ng-show="$root.notificationCount" class="notifications-count js-count" data-count="{{$root.notificationCount}}">{{$root.notificationCount}}</span>
+                    </a>
+                </li>
+                <li>
+                    <span class="menubar-title" style="font-weight: normal;line-height:0px !important">Գործառնական օր՝</span><br />
+                    <span class="menubar-title" style="font-weight: normal;line-height:0px !important">{{ ::$root.SessionProperties.OperationDate | date: 'dd/MM/yyyy' }} &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                </li>
+                <li>
+
+                    <a id="notificationNavBar" class="tipB button-default show-notifications js-show-notifications" onclick="ShowHideRightSidebar(this)" title="" data-original-title="Գրառումներ">
+                        <i class="fa fa-pencil"></i>
+                        <span ng-show="$root.personNoteCount" style="background-color: #0f57d6 !important" class="notifications-count js-count" data-count="{{$root.personNoteCount}}">{{$root.personNoteCount}}</span>
+                    </a>
+
+                </li>
+                @*<li class="dropdown navbar-item-left-border">
+                        <a class="tipB"  data-toggle="dropdown" data-original-title="Կարգավորումներ">
+                            <i class="fa fa-cog"></i>
+                            <span class="sr-only">Կարգավորումներ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="nav-help-icon"  class="tipB navbar-item-left-border" title="" data-original-title="Ուղեցույցներ">
+                            <i class="fa fa-question" style="font-size: 23px;"></i>
+                            <span class="sr-only">Ուղեցույցներ</span>
+                        </a>
+                    </li>*@
+                <li>
+                    <a id="nav-logout-item" class="tipB user-icon" style="background-image: url({{$root.userPicture!=undefined?$root.userPicture:'/Content/newTheme/Images/bluemanmxxl.png'}});background-size:cover" title="" data-original-title="Դուրս գալ համակարգից" onclick="ShowLogoutContainer()">
+                    </a>
+                </li>
+            </ul>
+            <!-- / top right nav -->
+
+
+        </div>
+        <!-- / collapse -->
+    </div>
+    <div id="applicationMainMenu" class="application-area-wrapper application-nav-menu area-nav-menu" style="display:none; top:50px !important;">
+        <div class="full-screen-nav-content" style="display:inline-block;">
+            <div class="row-no-margin">
+                <ul class="menu full-screen-nav-boxes operation-menu">
+
+                    <li id="products" class="operation-menu-item">
+                        <a>
+                            <i class="fa fa-product-hunt"></i>
+                            Պրոդուկտներ
+                        </a>
+                    </li>
+                    <li id="nonCashOperations" class="operation-menu-item">
+                        <a class="nonCashOperations">
+                            <i class="fa fa-credit-card"></i>
+                            Անկանխիկ գործարքներ
+                        </a>
+                    </li>
+                    <li ng-show="$root.SessionProperties.SourceType == 2" id="cashOperations" class="operation-menu-item">
+                        <a class="cashOperations">
+                            <i class="fa fa-money"></i>
+                            Կանխիկ գործարքներ
+                        </a>
+                    </li>
+
+                    <li id="exchangeOperations" class="operation-menu-item">
+                        <a class="cashOperations">
+                            <i class="fa fa-exchange"></i>
+                            Փոխարկում
+                        </a>
+                    </li>
+                    <li id="utilityPayments" class="operation-menu-item">
+                        <a onclick="sessionStorage.removeItem('utilityPayment')">
+                            <i class="fa fa-home"></i>
+                            Կոմունալ վճարում
+                        </a>
+                    </li>
+                    <li id="provisionloans" class="operation-menu-item">
+                        <a onclick="SlideApplicationAreas();" ng-controller="LoginCtrl" ng-click="redirectToLoanManagementSystemCollateral()">
+                            <i class="fa fa-file"></i>
+                            Գրավներ
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="SlideApplicationAreas()" ng-controller="LoginCtrl" ng-click="redirectToLoanManagementSystem()">
+                            <i class="fa fa-credit-card"></i>
+                            Վարկային դիմումներ
+                        </a>
+                    </li>
+
+                    <li ng-if="$root.SessionProperties.CustomerType == 6">
+                        <a onclick="SlideApplicationAreas()" href="#!/loanApplications">
+                            <i class="fa fa-credit-card"></i>
+                            Արագ օվերդրաֆտի դիմումներ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row-no-margin">
+                <ul class="menu full-screen-nav-boxes operation-menu">
+                    <li id="vehicleViolation" class="operation-menu-item">
+                        <a onclick="SlideApplicationAreas();" href="#!/vehicleViolations">
+                            <i class="fa fa-history"></i>
+                            ՃՈ փոխանցում
+                        </a>
+                    </li>
+                    <li ng-if="$root.SessionProperties.SourceType == 2" id="transfers" class="operation-menu-item">
+                        <a onclick="SlideApplicationAreas();" href="#!/transfers">
+                            <i class="fa fa-file"></i>
+                            Փոխանցումների ցանկ
+                        </a>
+                    </li>
+                    <li ng-if="$root.SessionProperties.SourceType == 2" id="transfers" class="operation-menu-item">
+                        <a onclick="SlideApplicationAreas();" href="#!/receivedbankmailtransfers">
+                            <i class="fa fa-file"></i>
+                            Ստացված Bank Mail փոխանցումներ
+                        </a>
+                    </li>
+                    <li ng-if="$root.SessionProperties.SourceType == 2" id="transfersByCall" class="operation-menu-item">
+                        <a onclick="SlideApplicationAreas();" href="#!/transfersByCall">
+                            <i class="fa fa-file"></i>
+                            Հեռախոսազանգով փոխանցումների ցանկ
+                        </a>
+                    </li>
+                    <li id="application" class="operation-menu-item">
+                        <a>
+                            <i class="fa fa-pencil-square-o"></i>
+                            Հայտեր
+                        </a>
+                    </li>
+                    <li ng-if="$root.SessionProperties.SourceType == 2" id="credentials" class="operation-menu-item">
+                        <a onclick="SlideApplicationAreas();" href="#!/credentials">
+                            <i class="fa fa-file"></i>
+                            Լիազորագրեր
+                        </a>
+                    </li>
+                    <li id="customersNotestials" class="operation-menu-item">
+                        <a onclick="SlideApplicationAreas();" href="#!/customersNotes">
+                            <i class="fa fa-pencil-square-o"></i>
+                            Գրառումներ
+                        </a>
+                    </li>
+                    <li id="customerArrests" class="operation-menu-item">
+                        <a onclick="SlideApplicationAreas();" href="#!/customerArrestsInfo" style="background-color:rgb(193,60,86) !important">
+                            <i class="fa fa-ban"></i>
+                            Տեղեկություն հաճախորդի մասին (Արգելքներ)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row-no-margin">
+                <ul class="menu full-screen-nav-boxes operation-menu">
+                    <li id="operationHistory" class="operation-menu-item">
+                        <a onclick="SlideApplicationAreas();" href="#!/Orders">
+                            <i class="fa fa-history"></i>
+                            Գործարքների պատմություն
+                        </a>
+                    </li>
+                    <li id="document" class="operation-menu-item">
+                        <a>
+                            <i class="fa fa-print"></i>
+                            Փաստաթղթեր
+                        </a>
+                    </li>
+                    <li id="allDahkDetails">
+                        <a onclick="SlideApplicationAreas()" href="#!/AllDahkDetails">
+                            <i class="fa fa-credit-card"></i>
+                            ԴԱՀԿ
+                        </a>
+                    </li>
+                    <li id="exchangeRates" class="operation-menu-item">
+                        <a onclick="SlideApplicationAreas();" ng-controller="PopUpCtrl" ng-click="openWindow('ExchangeRate/ExchangeRates','Փոխարժեքներ','exchangerates')">
+                            <i class="fa fa-dollar"></i>
+                            Փոխարժեքներ
+                        </a>
+                    </li>
+                    <li id="calculators" class="operation-menu-item">
+                        <a onclick="SlideApplicationAreas();" href="https://www.acba.am/hy/calculators" target="_blank">
+                            <i class="fa fa-money"></i>
+                            Հաշվիչներ
+                        </a>
+                    </li>
+
+                    <li id="customersNotestials" class="operation-menu-item">
+                        <a onclick="SlideApplicationAreas();" href="#!/employeeWorks">
+                            <i class="fa fa-pencil-square-o"></i>
+                            Աշխատանքներ
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <div id="subItems">
+                <div id="productsDiv" class="content full-screen-nav-content">
+                    <ul class="full-screen-nav-boxes">
+                        <li>
+                            <a onclick="SlideApplicationAreas()" href="#!/allProducts">
+                                <i class="fa fa-product-hunt"></i>
+                                Բոլոր պրոդուկտներ
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ui-sref="currentAccounts">
+                                <i class="fa fa-product-hunt"></i>
+                                Ընթացիկ հաշիվներ
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ui-sref="currentTransitAccounts">
+                                <i class="fa fa-product-hunt"></i>
+                                Հաճախորդի տարանցիկ հաշիվներ
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ui-sref="cards">
+                                <i class="fa fa-credit-card"></i>
+                                Քարտեր
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ui-sref="deposits">
+                                <i class="fa fa-money"></i>
+                                Ավանդներ
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ui-sref="loans">
+                                <i class="fa fa-product-hunt"></i>
+                                Վարկեր
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas();" ui-sref="periodicTransfers">
+                                <i class="fa fa-money"></i>
+                                Պարբերական փոխանցումներ
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas();" ui-sref="creditlines">
+                                <i class="fa fa-money"></i>
+                                Ընթացիկ հաշվի վարկային գծեր
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ui-sref="depositcases">
+                                <i class="fa fa-credit-card"></i>
+                                Պահատուփեր
+                            </a>
+                        </li>
+                        <li ng-show="$root.SessionProperties.CustomerType != 6">
+                            <a onclick="SlideApplicationAreas()" ui-sref="guarantees">
+                                <i class="fa fa-credit-card"></i>
+                                Երաշխիքներ
+                            </a>
+                        </li>
+                        <li ng-show="$root.SessionProperties.CustomerType != 6">
+                            <a onclick="SlideApplicationAreas()" ui-sref="accreditives">
+                                <i class="fa fa-credit-card"></i>
+                                Ակրեդիտիվներ
+                            </a>
+                        </li>
+                        <li ng-show="$root.SessionProperties.CustomerType != 6">
+                            <a onclick="SlideApplicationAreas()" ui-sref="paidGuarantees">
+                                <i class="fa fa-money"></i>
+                                Վճարված երաշխիքներ
+                            </a>
+                        </li>
+                        <li ng-show="$root.SessionProperties.CustomerType != 6">
+                            <a onclick="SlideApplicationAreas()" ui-sref="paidAccreditives">
+                                <i class="fa fa-credit-card"></i>
+                                Վճարված ակրեդիտիվներ
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ui-sref="factorings">
+                                <i class="fa fa-credit-card"></i>
+                                Ֆակտորինգներ
+                            </a>
+                        </li>
+                        <li ng-show="$root.SessionProperties.CustomerType != 6">
+                            <a onclick="SlideApplicationAreas()" ui-sref="paidFactorings">
+                                <i class="fa fa-credit-card"></i>
+                                Վճարված ֆակտորինգներ
+                            </a>
+                        </li>
+
+                        <li ng-show="$root.SessionProperties.CustomerType != 6">
+                            <a onclick="SlideApplicationAreas();" ui-sref="cardtariffcontracts">
+                                <i class="fa fa-money"></i>
+                                Աշխատավարձային ծրագրեր
+                            </a>
+                        </li>
+
+                        <li ng-show="$root.SessionProperties.CustomerType != 6">
+                            <a onclick="SlideApplicationAreas();" ui-sref="customerposlocations">
+                                <i class="fa fa-money"></i>
+                                Վճարային քարտերի սպասարկում
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas();" ui-sref="insurances">
+                                <i class="fa fa-money"></i>
+                                Ապահովագրություն
+                            </a>
+                        </li>
+
+
+                        <li ng-if="$root.SessionProperties.CustomerType == 6">
+                            <a onclick="SlideApplicationAreas()" ui-sref="pensionapplications">
+                                <i class="fa fa-product-hunt"></i>
+                                Կենսաթոշակի դիմում-համաձայնագրեր
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.CustomerType == 6">
+                            <a onclick="SlideApplicationAreas()" ui-sref="transferCallContracts">
+                                <i class="fa fa-product-hunt"></i>
+                                Հեռախոսազանգով փոխանցման համաձայնագիր
+                            </a>
+                        </li>
+
+                        <li>
+                            <a onclick="SlideApplicationAreas();" ui-sref="overdue">
+                                <i class="fa fa-money"></i>
+                                Ժամկետանց պատմություն
+                            </a>
+                        </li>
+
+                        <li>
+                            <a onclick="SlideApplicationAreas();" ui-sref="hbapplication">
+                                <i class="fa fa-money"></i>
+                                Հեռահար բանկինգ
+                            </a>
+                        </li>
+
+                        <li>
+                            <a onclick="SlideApplicationAreas();" ui-sref="bonds">
+                                <i class="fa fa-money"></i>
+                                Պարտատոմսեր
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas();" ui-sref="depositaryAccount">
+                                <i class="fa fa-money"></i>
+                                Արժեթղթերի հաշիվ
+                            </a>
+                        </li>
+                        <li >
+                            <a onclick="SlideApplicationAreas();" ui-sref="pensionPaymentOrder">
+                                <i class="fa fa-money"></i>
+                                Կենսաթոշակի/նպաստի գումար
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div id="exchangeOperationsDiv" class="content full-screen-nav-content">
+                    <ul class="full-screen-nav-boxes">
+                        <li id="exchange" class="operation-menu-item" ng-if="$root.SessionProperties.SourceType == 2">
+                            <a onclick="SlideApplicationAreas();" ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:1,checkForReciverAccount:1,checkForFeeAccount:1,orderType:53,forInputCheckbox:true};openWindow('CurrencyExchangeOrder/PersonalCurrencyExchangeOrder','Փոխարկում','exchangeorder')">
+                                <i class="fa fa-exchange"></i>
+                                Փոխարկում
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.SourceType == 6" id="exchange" class="operation-menu-item">
+                            <a onclick="SlideApplicationAreas();" ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:2,forInputCheckbox:true};openWindow('CurrencyExchangeOrder/PersonalCurrencyExchangeOrder','Փոխարկում','exchangeorder')">
+                                <i class="fa fa-exchange"></i>
+                                Փոխարկում
+                            </a>
+                        </li>
+                        <li id="exchangeInBank" class="operation-menu-item">
+                            <a onclick="SlideApplicationAreas();" ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:1,forBankTransfers:true,orderType:65};openWindow('CurrencyExchangeOrder/PersonalCurrencyExchangeOrder','Փոխարկում Բանկի այլ հաշվեհամարին','exchangeorder')">
+                                <i class="fa fa-exchange"></i>
+                                Փոխարկում Բանկի այլ հաշվեհամարին
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="cashOperationsDiv" class="content full-screen-nav-content">
+                    <ul class="full-screen-nav-boxes">
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:51};openWindowWithTemplate('paymentorder','Կանխիկ մուտք հաշվին','paymentorder')">
+                                <i class="fa fa-product-hunt"></i>
+                                Մուտք հաշվին
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:95};openWindowWithTemplate('paymentorder','Կանխիկ մուտք հաշվին ռեեստրով','paymentorder')">
+                                <i class="fa fa-product-hunt"></i>
+                                Մուտք հաշվին ռեեստրով
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:1,checkForFeeAccount:0,orderType:52};openWindowWithTemplate('paymentorder','Կանխիկ ելք հաշվից','paymentorder')">
+                                <i class="fa fa-money"></i>
+                                Ելք հաշվից
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Մուտք տարանցիկ հաշվին
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:1,checkForFeeAccount:0,orderType:133};openWindowWithTemplate('paymentorder','Ելք տարանցիկ հաշվից','paymentorder')">
+                                <i class="fa fa-money"></i>
+                                Ելք տարանցիկ հաշվից
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas();" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:1,checkForReciverAccount:1,forTransitTransfers:true,orderType:80};openWindow('CurrencyExchangeOrder/PersonalCurrencyExchangeOrder','Տարանցիկ հաշվին մուտք փոխարկումով','exchangeorder')">
+                                <i class="fa fa-exchange"></i>
+                                Տարանցիկ հաշվին մուտք փոխարկումով
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.CustomerType == 6">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountTransferArmPayment:1,checkForFeeAccount:1,orderType:56};openWindowWithTemplate('transferarmpaymentorder','Փոխանցում ՀՀ տարածքում','transferarmpaymentorder')">
+                                <i class="fa fa-money"></i>
+                                Փոխանցում ՀՀ տարածքում
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.CustomerType == 6">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountBudgetPayment:1,checkForFeeAccount:1,orderType:56};openWindowWithTemplate('budgetorder','Փոխանցում բյուջե','budgetpaymentorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Փոխանցում բյուջե
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={interBankTransfer:true,checkForDebitAccountTransferArmPayment:1,checkForFeeAccount:0,orderType:1,interBankTransferCash:true};openWindowWithTemplate('transferarmpaymentorder','Միջմասնաճյուղային փոխանցում','transferarmpaymentorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Միջմասնաճյուղային փոխանցում
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.CustomerType == 6">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountInternationalPayment:1,checkForFeeAccount:1};openWindowWithTemplate('internationalorder','Միջազգային փոխանցում','internationalpaymentorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Միջազգային փոխանցում
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.CustomerType == 6">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1};openWindowWithTemplate('fasttransferorder','Փոխանցում արագ համակարգերով','fasttransferpaymentorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Փոխանցում արագ համակարգերով
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.CustomerType == 6 && $root.SessionProperties.IsTestVersion == true">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1};openWindowWithTemplate('arusfasttransferorder','Փոխանցում STAK համակարգով','arusfasttransferorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Փոխանցում STAK համակարգով
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.CustomerType == 6">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1, isCallTransfer:0};openWindowWithTemplate('receivedfasttransferorder','Արագ համակարգերով ստացված փոխանցումներ','receivedfasttransferpaymentorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Ստացված արագ փոխանցումներ
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.CustomerType == 6 && $root.SessionProperties.IsTestVersion == true" >
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1, isCallTransfer:0, isCustomer:true};openWindowWithTemplate('receivedfasttransferarusorder','Արագ համակարգերով ստացված փոխանցումներ STAK համակարգով','receivedfasttransferarusorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Ստացված արագ փոխանցումներ STAK համակարգով
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.CustomerType == 6">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1, isCallTransfer:1};openWindowWithTemplate('receivedfasttransferorder','Հեռախոսազանգով ստացված փոխանցումներ','receivedfasttransferpaymentorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Հեռախոսազանգով ստացված արագ փոխանցումներ
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.CustomerType == 6">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1, isCallTransfer:1, isCustomer:true};openWindowWithTemplate('receivedfasttransferarusorder','Հեռախոսազանգով ստացված փոխանցումներ STAK համակարգով','receivedfasttransferarusorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Հեռախոսազանգով ստացված փոխանցումներ STAK համակարգով
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="openWindowWithTemplate('cashpospaymentorder','Կանխիկացում POS տերմինալով','cashpospaymentorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Կանխիկացում POS տերմինալով
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div id="nonCashOperationsDiv" class="content full-screen-nav-content">
+                    <ul class="full-screen-nav-boxes">
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,orderType:1};openWindowWithTemplate('paymentorder','Փոխանցում սեփական հաշիվների միջև','paymentorder')">
+                                <i class="fa fa-product-hunt"></i>
+                                Փոխանցում սեփական հաշիվների միջև
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={forBankTransfers:true,checkForDebitAccount:0,checkForReciverAccount:0,orderType:1};openWindowWithTemplate('paymentorder','Փոխանցում Բանկի այլ հաշվեհամարին','paymentorder')">
+                                <i class="fa fa-product-hunt"></i>Փոխանցում Բանկի այլ հաշվեհամարին
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.SourceType == 2">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountTransferArmPayment:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('transferarmpaymentorder','Փոխանցում ՀՀ տարածքում','transferarmpaymentorder')">
+                                <i class="fa fa-money"></i>
+                                Փոխանցում ՀՀ տարածքում
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.SourceType == 2">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountBudgetPayment:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('budgetorder','Փոխանցում բյուջե','budgetpaymentorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Փոխանցում Բյուջե
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.SourceType == 2">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={interBankTransfer:true,checkForDebitAccountTransferArmPayment:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('transferarmpaymentorder','Միջմասնաճյուղային փոխանցում','transferarmpaymentorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Միջմասնաճյուղային փոխանցում
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.SourceType == 2">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountInternationalPayment:0,checkForFeeAccount:0};openWindowWithTemplate('internationalorder','Միջազգային փոխանցում','internationalpaymentorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Միջազգային փոխանցում
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.SourceType == 2 && $root.SessionProperties.CustomerType == 6">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:0,checkForFeeAccount:0};openWindowWithTemplate('fasttransferorder','Փոխանցում արագ համակարգերով','fasttransferpaymentorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Փոխանցում արագ համակարգերով
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.SourceType == 2 && $root.SessionProperties.CustomerType == 6  && $root.SessionProperties.IsTestVersion == true">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:0,checkForFeeAccount:0};openWindowWithTemplate('arusfasttransferorder','Փոխանցում STAK համակարգով','arusfasttransferorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Փոխանցում STAK համակարգով
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.SourceType == 2">
+                            <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:1,checkForFeeAccount:0,orderType:122};openWindowWithTemplate('paymentorder','Աշխատավարձային ծրագրով փոխանցումներ','paymentorder')">
+                                <i class="fa fa-credit-card"></i>
+                                Աշխատավարձային ծրագրով փոխանցումներ
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div id="utilityPaymentsDiv" class="content full-screen-nav-content">
+                    <ul class="full-screen-nav-boxes">
+
+
+                        <li ui-sref-active="active">
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 16 })">
+                                <i class="fa fa-credit-card"></i>
+                                Կոմունալի քարտ
+                            </a>
+                        </li>
+
+                        <li ui-sref-active="active">
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 12 })">
+                                <i class="fa fa-credit-card"></i>
+                                Ընդհանուր որոնում հեռախոսով
+                            </a>
+                        </li>
+
+                        <li>
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 3 })">
+                                <i class="fa fa-product-hunt"></i>
+                                Էլեկտրական ցանցեր
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 4 })">
+                                <i class="fa fa-product-hunt"></i>
+                                Գազպրոմ Հայաստան
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 6 })">
+                                <i class="fa fa-money"></i>
+                                Վեոլիա Ջուր
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 7 })">
+                                <i class="fa fa-credit-card"></i>
+                                Բիլայն
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 17 })">
+                                <i class="fa fa-credit-card"></i>
+                                Բիլայն Ինտերնետ
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 8 })">
+                                <i class="fa fa-money"></i>
+                                ՄՏՍ ՀԱՅԱՍՏԱՆ
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 10 })">
+                                <i class="fa fa-credit-card"></i>
+                                Ucom բջջային
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 11 })">
+                                <i class="fa fa-credit-card"></i>
+                                Ucom
+                            </a>
+                        </li>
+
+                        <li>
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 13 })">
+                                <i class="fa fa-credit-card"></i>
+                                Հեռախոսավարձի վճարում
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 9,})">
+                                <i class="fa fa-credit-card"></i>
+                                Աղբահանության վճարում
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 14})">
+                                <i class="fa fa-credit-card"></i>
+                                ՋՕԸ-ների վճարում
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas(); sessionStorage.removeItem('utilityPayment');" ui-sref="searchUtilityPayment({ utilityType : 15,isreestr:'true' })">
+                                <i class="fa fa-credit-card"></i>
+                                ՋՕԸ-ների վճարում ռեեստրով
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="applicationDiv" class="content full-screen-nav-content">
+                    <ul class="full-screen-nav-boxes">
+                        <li>
+                            <a onclick="SlideApplicationAreas();" ng-controller="PopUpCtrl" ng-click="openWindow('ReferenceOrder/PersonalReferenceOrder','Տեղեկանքի ստացման հայտ','newreference')">
+                                <i class="fa fa-product-hunt"></i>
+                                Տեղեկանքի ստացման հայտ
+                            </a>
+                        </li>
+                        @*<li>
+                                <a onclick="SlideApplicationAreas();" ng-controller="PopUpCtrl" ng-click="openWindow('/ChequeBookOrder/PersonalChequeBookOrder','Չեկային գրքույկի պատվիրման հայտ','newcheque')">
+                                    <i class="fa fa-product-hunt"></i>
+                                    Չեկային գրքույկի պատվիրման հայտ
+                                </a>
+                            </li>*@
+                        <li ng-if="$root.SessionProperties.SourceType == 2">
+                            <a onclick="SlideApplicationAreas();" ng-controller="PopUpCtrl" ng-click="openWindow('/ChequeBookReceiveOrder/PersonalChequeBookReceiveOrder','Չեկային գրքույկի ստացման հայտ','receivecheque')">
+                                <i class="fa fa-product-hunt"></i>
+                                Չեկային գրքույկի ստացման հայտ
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.SourceType != 2">
+                            <a onclick="SlideApplicationAreas();" ng-controller="PopUpCtrl" ng-click="openWindow('CashOrder/PersonalCashOrder',' Գումարի ստացման և փոխանցման հայտ','cashorder')">
+                                <i class="fa fa-money"></i>
+                                Գումարի ստացման և փոխանցման հայտ
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.SourceType != 2">
+                            <a onclick="SlideApplicationAreas();" ng-controller="PopUpCtrl" ng-click="openWindow('StatmentByEmailOrder/PersonalStatmentByEmailOrder','Քաղվածքների էլեկտրոնային ստացման հայտ','statmentbyemailorder')">
+                                <i class="fa fa-mail-forward"></i>
+                                Քաղվածքների էլեկտրոնային ստացման հայտ
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="SlideApplicationAreas();" ng-controller="PopUpCtrl" ng-click="openWindow('SwiftCopyOrder/PersonalSwiftCopyOrder','SWIFT հաղորդագրության պատճենի ստացման հայտ','swiftcopyorder')">
+                                <i class="fa fa-credit-card"></i>
+                                SWIFT հաղորդագրության պատճենի ստացման հայտ
+                            </a>
+                        </li>
+                        <li ng-if="$root.SessionProperties.SourceType == 2">
+                            <a onclick="SlideApplicationAreas();" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0};openWindow('FeeForServiceProvidedOrder/FeeForServiceProvidedOrder','Մատուցվող ծառայությունների միջնորդավճարի գանձման հայտ','serviceProvidedFeeOrder')">
+                                <i class="fa fa-credit-card"></i>
+                                Այլ հայտեր
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div id="documentDiv" class="content full-screen-nav-content" ng-controller="PrintDocumentsCtrl">
+                    <ul class="full-screen-nav-boxes">
+                        <li ng-if="$root.SessionProperties.CustomerType != 6">
+                            <a ng-click="getCustomerSignature()">
+                                <i class="fa fa-product-hunt"></i>
+                                ՍՏՈՐԱԳՐՈՒԹՅԱՆ ՆՄՈՒՇԻ ՔԱՐՏ
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="getCustomerAllProducts(1)">
+                                <i class="fa fa-money"></i>
+                                Հաճախորդի պրոդուկտներ (գործող)
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="getCustomerAllProducts(0)">
+                                <i class="fa fa-credit-card"></i>
+                                Հաճախորդի պրոդուկտներ (մարված)
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="getCustomerDocuments()">
+                                <i class="fa fa-credit-card"></i>
+                                Հաճախորդի փաստաթղթեր
+                            </a>
+                        </li>
+                        <li ng-show="$root.SessionProperties.CustomerType == 6">
+                            <a ng-click="getUnderageCustomerAgreement()">
+                                <i class="fa fa-credit-card"></i>
+                                Անչափահասի սպասարկման համաձայնագիր
+                            </a>
+                        </li>
+
+                        <li ng-show="$root.SessionProperties.CustomerType != 6">
+                            <a href="" onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="openWindowWithTemplate('customermergeapplicationform','Հաճախորդների միավորման դիմում','customermergeapplicationform')">
+                                <i class="fa fa-credit-card"></i>
+                                Հաճախորդների միավորման դիմում
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wrapper" style="height:calc(100% - 50px);">
+
+        <div class="left-sidebar">
+            <div id="CustomerData" class="customer-data-sidebar custom-scroll sidebar-item">
+                <customerinfo></customerinfo>
+            </div>
+        </div>
+
+        <div class="content-container" style="width:calc(100% - 340px); height: 100%;margin-top:50px;float:left;">
+            <div id="ContentMenuBar" class="menu-bar dialog-menu light-green" style="margin-bottom:0px;">
+                <div id="ContentMenuBar" class="menu-bar dialog-menu light-green">
+                    <ul id="menu" class="dialog-menu">
+                        <li class="root-menu-item-2 " data-permission-selector="" id="menuCustomerDebts" style="display:none;" onclick="CollapseDebtsContainer()">
+                            <span id="h-menu-item-2"><img id="customerDebtsIcon" class="h-menu-icon h-menu-customer-debt customerDebtsButtonActive">Պարտավորություններ</span>
+                        </li>
+
+                        <li id="cssmenu" class="root-menu-item-8 " data-permission-selector="">
+                            <span id="h-menu-item-8" onclick="return false;">
+                                Պրոդուկտներ
+                                <img id="arrow-down" class="arrowButton">
+                            </span>
+                            <ul>
+                                <li class="root-menu-item-3 " data-permission-selector="">
+                                    <a id="h-menu-item-3" ui-sref="allProducts">Բոլոր պրոդուկտներ</a>
+                                </li>
+                                <li class="root-menu-item-4 " data-permission-selector="">
+                                    <a id="h-menu-item-4" ui-sref="currentAccounts">Ընթացիկ հաշիվներ</a>
+                                </li>
+                                <li class="root-menu-item-4 " data-permission-selector="">
+                                    <a id="h-menu-item-4" ui-sref="currentTransitAccounts">Տարանցիկ հաշիվներ</a>
+                                </li>
+                                <li class="root-menu-item-5 " data-permission-selector="">
+                                    <a id="h-menu-item-5" ui-sref="cards">Քարտեր</a>
+                                </li>
+                                <li class="root-menu-item-6 " data-permission-selector="">
+                                    <a id="h-menu-item-6" ui-sref="deposits">Ավանդներ</a>
+                                </li>
+                                <li class="root-menu-item-7 " data-permission-selector="">
+                                    <a id="h-menu-item-7" ui-sref="loans">Վարկեր</a>
+                                </li>
+                                <li class="root-menu-item-7 " data-permission-selector="">
+                                    <a id="h-menu-item-7" ui-sref="periodicTransfers">Պարբերական փոխանցումներ</a>
+                                </li>
+                                <li data-permission-selector="">
+                                    <a href="" id="h-menu-item-7" ng-click="getCustomerAllProducts(1)" ng-controller="PrintDocumentsCtrl">Տպել պրոդուկտները (Գործող)</a>
+                                </li>
+                                <li data-permission-selector="">
+                                    <a href="" id="h-menu-item-7" ng-click="getCustomerAllProducts(0)" ng-controller="PrintDocumentsCtrl">Տպել պրոդուկտները (Փակված)</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li id="cssmenu" class="root-menu-item-8 " data-permission-selector="">
+                            <span id="h-menu-item-8" onclick="return false;">
+                                Անկանխիկ գործարքներ
+                                <img id="arrow-down" class="arrowButton">
+                            </span>
+                            <ul>
+                                <li>
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,orderType:1};openWindowWithTemplate('paymentorder','Փոխանցում սեփական հաշիվների միջև','paymentorder')">
+
+                                        Փոխանցում սեփական հաշիվների միջև
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={forBankTransfers:true,checkForDebitAccount:0,checkForReciverAccount:0,orderType:1};openWindowWithTemplate('paymentorder','Փոխանցում Բանկի այլ հաշվեհամարին','paymentorder')">
+                                        Փոխանցում Բանկի այլ հաշվեհամարին
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.SourceType == 2">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountTransferArmPayment:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('transferarmpaymentorder','Փոխանցում ՀՀ տարածքում','transferarmpaymentorder')">
+
+                                        Փոխանցում ՀՀ տարածքում
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.SourceType == 2">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountBudgetPayment:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('budgetorder','Փոխանցում բյուջե','budgetpaymentorder')">
+
+                                        Փոխանցում Բյուջե
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.SourceType == 2">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={interBankTransfer:true,checkForDebitAccountTransferArmPayment:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('transferarmpaymentorder','Միջմասնաճյուղային փոխանցում','transferarmpaymentorder')">
+
+                                        Միջմասնաճյուղային փոխանցում
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.SourceType == 2">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountInternationalPayment:0,checkForFeeAccount:0};openWindowWithTemplate('internationalorder','Միջազգային փոխանցում','internationalpaymentorder')">
+
+                                        Միջազգային փոխանցում
+                                    </a>
+                                </li>
+
+                                <li ng-if="$root.SessionProperties.SourceType == 2 && $root.SessionProperties.CustomerType == 6">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:0,checkForFeeAccount:0};openWindowWithTemplate('fasttransferorder','Փոխանցում արագ համակարգերով','fasttransferpaymentorder')">
+                                        Փոխանցում արագ համակարգերով
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.SourceType == 2 && $root.SessionProperties.CustomerType == 6  && $root.SessionProperties.IsTestVersion == true">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:0,checkForFeeAccount:0};openWindowWithTemplate('arusfasttransferorder','Փոխանցում STAK համակարգով','arusfasttransferorder')">
+                                        Փոխանցում STAK համակարգով  
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.SourceType == 2">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:1,checkForFeeAccount:0,orderType:122};openWindowWithTemplate('paymentorder','Աշխատավարձային ծրագրով փոխանցումներ','paymentorder')">
+                                        Աշխատավարձային ծրագրով փոխանցումներ
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li id="cssmenu" class="root-menu-item-8 " data-permission-selector="" ng-if="$root.SessionProperties.SourceType == 2">
+                            <span id="h-menu-item-8" onclick="return false;">
+                                Կանխիկ գործարքներ
+                                <img id="arrow-down" class="arrowButton">
+                            </span>
+                            <ul>
+                                <li>
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:51};openWindowWithTemplate('paymentorder','Կանխիկ մուտք հաշվին','paymentorder')">
+                                        Մուտք հաշվին
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:95};openWindowWithTemplate('paymentorder','Կանխիկ մուտք հաշվին ռեեստրով','paymentorder')">
+                                        Մուտք հաշվին ռեեստրով
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:1,checkForFeeAccount:0,orderType:52};openWindowWithTemplate('paymentorder','Կանխիկ ելք հաշվից','paymentorder')">
+                                        Ելք հաշվից
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="openWindowWithTemplate('transitpaymentorder','Մուտք տարանցիկ հաշվին','transitpaymentorder')">
+                                        Մուտք տարանցիկ հաշվին
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:1,checkForFeeAccount:0,orderType:133};openWindowWithTemplate('paymentorder','Ելք տարանցիկ հաշվից','paymentorder')">
+                                        Ելք տարանցիկ հաշվից
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:1,checkForReciverAccount:1,forTransitTransfers:true,orderType:80};openWindow('CurrencyExchangeOrder/PersonalCurrencyExchangeOrder','Տարանցիկ հաշվին մուտք փոխարկումով','exchangeorder')">
+                                        Տարանցիկ հաշվին մուտք փոխարկումով
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.CustomerType == 6">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountTransferArmPayment:1,checkForFeeAccount:1,orderType:56};openWindowWithTemplate('transferarmpaymentorder','Փոխանցում ՀՀ տարածքում','transferarmpaymentorder')">
+
+                                        Փոխանցում ՀՀ տարածքում
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.CustomerType == 6">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountBudgetPayment:1,checkForFeeAccount:1,orderType:56};openWindowWithTemplate('budgetorder','Փոխանցում բյուջե','budgetpaymentorder')">
+
+                                        Փոխանցում բյուջե
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={interBankTransfer:true,checkForDebitAccountTransferArmPayment:1,checkForFeeAccount:0,orderType:1,interBankTransferCash:true};openWindowWithTemplate('transferarmpaymentorder','Միջմասնաճյուղային փոխանցում','transferarmpaymentorder')">
+                                        Միջմասնաճյուղային փոխանցում
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.CustomerType == 6">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountInternationalPayment:1,checkForFeeAccount:1};openWindowWithTemplate('internationalorder','Միջազգային փոխանցում','internationalpaymentorder')">
+                                        Միջազգային փոխանցում
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.CustomerType == 6">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1};openWindowWithTemplate('fasttransferorder','Փոխանցում արագ համակարգերով','fasttransferpaymentorder')">
+
+                                        Փոխանցում արագ համակարգերով
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.CustomerType == 6 && $root.SessionProperties.IsTestVersion == true">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1};openWindowWithTemplate('arusfasttransferorder','Փոխանցում STAK համակարգով','arusfasttransferorder')">
+
+                                        Փոխանցում STAK համակարգով 
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.CustomerType == 6">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1, isCallTransfer:0};openWindowWithTemplate('receivedfasttransferorder','Արագ համակարգերով ստացված փոխանցումներ','receivedfasttransferpaymentorder')">
+
+                                        Ստացված արագ փոխանցումներ
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.CustomerType == 6  && $root.SessionProperties.IsTestVersion == true">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1, isCallTransfer:0, isCustomer:true};openWindowWithTemplate('receivedfasttransferarusorder','Արագ համակարգերով ստացված փոխանցումներ STAK համակարգով','receivedfasttransferarusorder')">
+
+                                        Ստացված արագ փոխանցումներ STAK համակարգով 
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.CustomerType == 6">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1, isCallTransfer:1};openWindowWithTemplate('receivedfasttransferorder','Հեռախոսազանգով ստացված փոխանցումներ','receivedfasttransferpaymentorder')">
+
+                                        Հեռախոսազանգով ստացված արագ փոխանցումներ
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.CustomerType == 6  && $root.SessionProperties.IsTestVersion == true">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1, isCallTransfer:1, isCustomer:true};openWindowWithTemplate('receivedfasttransferarusorder','Հեռախոսազանգով ստացված փոխանցումներ STAK համակարգով','receivedfasttransferarusorder')">
+
+                                        Հեռախոսազանգով ստացված արագ փոխանցումներ STAK համակարգով
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="openWindowWithTemplate('cashpospaymentorder','Կանխիկացում POS տերմինալով','cashpospaymentorder')">
+
+                                        Կանխիկացում POS տերմինալով
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li id="cssmenu" class="root-menu-item-8 " data-permission-selector="">
+                            <span id="h-menu-item-8" onclick="return false;">
+                                Փոխարկում
+                                <img id="arrow-down" class="arrowButton">
+                            </span>
+                            <ul>
+                                @*style="pointer-events: none;cursor: default;"*@
+                                <li ng-if="$root.SessionProperties.SourceType == 2">
+                                    <a href="" ng-controller="PopUpCtrl" ng-class="{'my_disable':disabelButton==true}" ng-click="params={checkForDebitAccount:1,checkForReciverAccount:1,checkForFeeAccount:1,orderType:53,forInputCheckbox:true};openWindow('CurrencyExchangeOrder/PersonalCurrencyExchangeOrder','Փոխարկում','exchangeorder')">
+                                        Փոխարկում
+                                    </a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.SourceType == 6">
+                                    <a href="" ng-controller="PopUpCtrl" ng-class="{'my_disable':disabelButton==true}" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:2,forInputCheckbox:true};openWindow('CurrencyExchangeOrder/PersonalCurrencyExchangeOrder','Փոխարկում','exchangeorder')">
+                                        Փոխարկում
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" ng-controller="PopUpCtrl" ng-class="{'my_disable':disabelButton==true}" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:1,forBankTransfers:true,orderType:65};openWindow('CurrencyExchangeOrder/PersonalCurrencyExchangeOrder','Փոխարկում Բանկի այլ հաշվեհամարին','exchangeorder')">
+                                        Փոխարկում Բանկի այլ հաշվեհամարին
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li id="cssmenu" class="root-menu-item-8 " data-permission-selector="">
+                            <span id="h-menu-item-8" onclick="return false;">
+                                Կոմունալ վճարում
+                                <img id="arrow-down" class="arrowButton">
+                            </span>
+                            <ul>
+                                <li>
+                                    <a href="" onclick="sessionStorage.removeItem('utilityPayment')" ui-sref="searchUtilityPayment({ utilityType : 16 })">
+
+                                        Կոմունալի քարտ
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="" onclick="sessionStorage.removeItem('utilityPayment')" ui-sref="searchUtilityPayment({ utilityType : 12 })">
+
+                                        Ընդհանուր որոնում հեռախոսով
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="" onclick="sessionStorage.removeItem('utilityPayment')" ui-sref="searchUtilityPayment({ utilityType : 3 })">
+
+                                        Էլեկտրական ցանցեր
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" onclick="sessionStorage.removeItem('utilityPayment')" ui-sref="searchUtilityPayment({ utilityType : 4 })">
+
+                                        Գազպրոմ Հայաստան
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" onclick="sessionStorage.removeItem('utilityPayment')" ui-sref="searchUtilityPayment({ utilityType : 6 })">
+
+                                        Վեոլիա Ջուր
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="" onclick="sessionStorage.removeItem('utilityPayment')" ui-sref="searchUtilityPayment({ utilityType : 7 })">
+
+                                        Բիլայն
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" onclick="sessionStorage.removeItem('utilityPayment')" ui-sref="searchUtilityPayment({ utilityType : 17 })">
+
+                                        Բիլայն Ինտերնետ
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" onclick="sessionStorage.removeItem('utilityPayment')" ui-sref="searchUtilityPayment({ utilityType : 8 })">
+
+                                        ՄՏՍ ՀԱՅԱՍՏԱՆ
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" onclick="sessionStorage.removeItem('utilityPayment')" ui-sref="searchUtilityPayment({ utilityType : 10 })">
+                                        Ucom բջջային
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" onclick="sessionStorage.removeItem('utilityPayment')" ui-sref="searchUtilityPayment({ utilityType : 11 })">
+                                        Ucom
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="" onclick="sessionStorage.removeItem('utilityPayment')" ui-sref="searchUtilityPayment({ utilityType : 13 })">
+                                        Հեռախոսավարձի վճարում
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" onclick="sessionStorage.removeItem('utilityPayment')" ui-sref="searchUtilityPayment({ utilityType : 9,})">
+                                        Աղբահանության վճարում
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" onclick="sessionStorage.removeItem('utilityPayment'); sessionStorage.removeItem('COWaterdetail'); sessionStorage.removeItem('debtListDate');" ui-sref="searchUtilityPayment({ utilityType : 14})">
+                                        ՋՕԸ-ների վճարում
+                                    </a>
+                                </li>
+                                <li>
+                                    <a onclick="sessionStorage.removeItem('utilityPayment'); sessionStorage.removeItem('COWaterdetail'); sessionStorage.removeItem('debtListDate');" ui-sref="searchUtilityPayment({ utilityType : 15,isreestr:'true' })">
+                                        ՋՕԸ-ների վճարում ռեեստրով
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="cssmenu" class="root-menu-item-8 " data-permission-selector="">
+                            <span id="h-menu-item-8" onclick="return false;">
+                                Այլ
+                                <img id="arrow-down" class="arrowButton">
+                            </span>
+                            <ul>
+                                <li data-permission-selector="">
+                                    <a href="" ng-controller="PopUpCtrl" ng-click="openWindow('/ServicePaymentNoteOrder/GetCustomerServicePaymentNotes','Սպասարկման վարձի գանձման նշումներ','servicePaymentNotes')">Սպասարկման վարձի գանձման նշումներ</a>
+                                </li>
+                                <li data-permission-selector="">
+                                    <a href="" ng-controller="PrintDocumentsCtrl" id="h-menu-item-7" ng-click="getSentSMSMessages()">Հաճախորդին ուղարկված SMS-ների ցանկ</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li id="cssmenu" class="root-menu-item-8 " data-permission-selector="">
+                            <span id="h-menu-item-8" onclick="return false;">
+                                ԴԱՀԿ
+                                <img id="arrow-down" class="arrowButton">
+                            </span>
+                            <ul>
+                                <li>
+                                    <a href="" ng-controller="DAHKCtrl" ng-click="searchDAHK()">ԴԱՀԿ արգելանքի որոնում</a>
+                                </li>
+                                <li>
+                                    <a ng-controller="PopUpCtrl" ng-click="openWindowWithTemplate('dahkblockages','Արգելանքներ և ազատումներ','dahkblockages')" href="">Արգելանքներ և ազատումներ</a>
+                                </li>
+                                <li>
+                                    <a ng-controller="PopUpCtrl" ng-click="openWindowWithTemplate('dahkcollections','Բռնագանձումներ','dahkcollections')" href="">Բռնագանձումներ</a>
+                                </li>
+                                <li>
+                                    <a ng-controller="PopUpCtrl" ng-click="openWindowWithTemplate('dahkemployers','Գործատուի հաշիվներ','dahkemployers')" href="">Գործատուի հաշիվներ</a>
+                                </li>
+                                <li>
+                                    <a ng-controller="PopUpCtrl" ng-click="openWindowWithTemplate('dahkamountstotal','Արգելանք ընդամենը','dahkamountstotal')" href="">Արգելանք ընդամենը</a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.AdvancedOptions['isOnlineAcc'] == '1'">
+                                    <a ng-controller="PopUpCtrl" ng-click="openWindowWithTemplate('amountavailabilitysetting','Հաշվին հասանելի գումարների կարգավորում','amountavailabilitysetting')" href="">Հաշվին հասանելի գումարների կարգավորում</a>
+                                </li>
+                                <li ng-if="$root.SessionProperties.AdvancedOptions['isOnlineAcc'] == '1'">
+                                    <a ng-controller="PopUpCtrl" ng-click="openWindowWithTemplate('blockingavailableamount','Հաշվին հասանելի գումարների արգելադրում','blockingavailableamount')" href="">Հաշվին հասանելի գումարների արգելադրում</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div id="right-menu">
+                        <div class="end-service-session tipB" style="padding-right: 2px!important;" ng-controller="LoginCtrl" ng-click="exitToCustomer()" data-original-title="Ավարտել սպասարկումը" id="exitToCustomer">Ավարտել</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="page-content-wrapper global-content" style="height: calc(100% - 75px);">
+                <customerdebts></customerdebts>
+
+                <div class="page-body" ui-view="">
+                    @RenderBody()
+                </div>
+            </div>
+            <div class="invisible-minimized-items-container">
+
+            </div>
+
+            <div class="minimized-dialog-container">
+                <div class="overflow-button fa fa-ellipsis-h" onclick="ShowHiddenDialogs()"></div>
+            </div>
+            <div class="footer" style="height:40px; padding-top:5px">
+                <hr>
+                <div style="display:inline-block; max-width: calc(100% - 220px);padding-bottom: 10px; padding-left:8px;">
+                    <p class="pull-left">
+                        <div>
+                            <div class="text-truncate" style="margin-right:10px;"><text>©</text>2016 | «ԱԿԲԱ ԲԱՆԿ» ԲԲԸ | Բոլոր իրավունքները պաշտպանված են:</div>
+                        </div>
+                    </p>
+                </div>
+                <div style="display:inline-block; float:right; min-width: 220px; padding-left:5px; padding-right:8px;">
+                    <p class="pull-right">
+                        <img id="footer-logo" src="~/Content/newTheme/Images/acba-logo.png" />
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <onecustomernotes></onecustomernotes>
+
+
+    </div>
+
+
+
+    <div class="overlay display-none">
+
+    </div>
+    <div id="LogoutContainer" hidden ng-controller="CasherCtrl" ng-init="getUserDescription();getCasherDepartment();getCurrentUserPicture()">
+        <div class="top-container">
+            <div class="logo-container">
+                <div class="picture-container">
+                    <img class="big-man" ng-if="userPicture" ng-src="{{$root.userPicture!=undefined?$root.userPicture:'/Content/newTheme/Images/bluemanmxxl.png'}}" id="photo-id" />
+                </div>
+            </div>
+            <div class="user-data">
+                <div style="padding-bottom: 8px;">
+                    <div class="details" style="font-weight:bold;">{{::userDescription}}</div>
+                    <div class="details" style="font-weight:bold;"></div>
+                </div>
+                <div style="padding-bottom: 8px;">
+                    <div class="details">{{::casherDepartment.value}}</div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="button-container">
+            <div class="logout-button"> <a ng-click="logout()">Դուրս գալ</a></div>
+
+            <script>
+                $("#exit").click(function (e) {
+                    e.preventDefault();
+                    $.ajax({ type: "POST", data: {}, dataType: "json", url: "../Login/LogOut" })
+                        .then(function (data) {
+                            window.location = data.redirectUrl;
+                        }, function (error) {
+                            console.log(error);
+                        });
+                });
+
+                window.alert = function () { };
+            </script>
+
+        </div>
+    </div>
+
+
+    <notificationpanel></notificationpanel>
+
+
+
+    <script type="text/javascript">
+        (function ($) {
+            $(window).on('load', function () {
+
+
+                $("#SearchPanel").mCustomScrollbar({
+
+                    theme: "rounded-dark",
+                    scrollButtons: {
+                        scrollAmount: 300,
+                        enable: true
+                    },
+                    mouseWheel: {
+                        scrollAmount: 300
+                    }
+                });
+                $("#rightSidebar").mCustomScrollbar({
+                    theme: "rounded-dark",
+                    scrollButtons: {
+                        scrollAmount: 300,
+                        enable: true
+                    },
+                    mouseWheel: {
+                        scrollAmount: 300
+                    }
+                });
+                $(".left-sidebar").mCustomScrollbar({
+                    theme: "rounded-dark",
+                    scrollButtons: {
+                        scrollAmount: 300,
+                        enable: true
+                    },
+                    mouseWheel: {
+                        scrollAmount: 300
+                    }
+                });
+                $(".page-content-wrapper").mCustomScrollbar({
+                    theme: "rounded-dark",
+                    scrollButtons: {
+                        scrollAmount: 300,
+                        enable: true
+                    },
+                    mouseWheel: {
+                        scrollAmount: 300
+                    }
+                });
+            });
+        })(jQuery);
+    </script>
+    <script type="text/javascript">
+
+
+
+        (function () {
+
+
+
+            // Append a close trigger for each block
+            $('#subItems .content').append('<span class="my_close close"></span>');
+            // Show window
+            function showContent(elem) {
+                hideContent();
+                var divId = "#" + elem.attr('id') + "Div";
+                $(divId).addClass('expanded');
+                elem.addClass('cover');
+            }
+            // Reset all
+            function hideContent() {
+                $('#subItems .content').removeClass('expanded');
+                $('.menu li').removeClass('cover');
+            }
+
+            // When a li is clicked, show its content window and position it above all
+            $('.menu li').click(function () {
+                showContent($(this));
+            });
+            // When tabbing, show its content window using ENTER key
+            $('.menu li').keypress(function (e) {
+                if (e.keyCode == 13) {
+                    showContent($(this));
+                }
+            });
+
+            // When right upper close element is clicked  - reset all
+            $('#subItems .close').click(function (e) {
+                e.stopPropagation();
+                hideContent();
+            });
+            // Also, when ESC key is pressed - reset all
+            $(document).keyup(function (e) {
+                if (e.keyCode == 27) {
+                    hideContent();
+                }
+            });
+
+        })();
+    </script>
+
+    <script type="text/javascript">
+        //------------- Bootstrap tooltips -------------//
+        $("[data-toggle=tooltip]").tooltip({ container: 'body' });
+        $(".tip").tooltip({ placement: 'top', container: 'body' });
+        $(".tipR").tooltip({ placement: 'right', container: 'body' });
+        $(".tipB").tooltip({ placement: 'bottom', container: 'body' });
+        $(".tipL").tooltip({ placement: 'left', container: 'body' });
+        //------------- Bootstrap popovers -------------//
+        $("[data-toggle=popover]").popover();
+    </script>
+
+    <script>
+        $(document).mouseup(function (e) {
+            var container = $("#NotificationPanel");
+
+            if (!container.is(e.target)
+                && container.has(e.target).length === 0) {
+                container.removeClass("hide-notificationPanel");
+                $("#notificationNavBar").removeClass("navbar-item-clicked");
+
+            }
+        });
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,317 @@
+﻿
+@{
+    Layout = null;
+}
+<style>
+    .redStyle {
+        color: red !important
+    }
+</style>
+
+
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<div ng-controller="PaidFactoringCtrl" data-ng-init="getPaidFactoring(productId)" id="paidFactoringDetails">
+
+
+    <div id="factoring_details_menu" class="menu-bar dialog-menu light-green details-menu">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-3 " ng-if="$root.SessionProperties.SourceType == 2  && (paidFactoring.Quality==10)" ng-controller="PopUpCtrl" ng-click="params={product:paidFactoring,orderType:152};openWindow('/LoanProductActivationOrder/PersonalLoanProductActivationOrder','Վճարված ֆակտորինգի ակտիվացում','newLoanProductActivation')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-2" class="applicationButton h-menu-icon">Ակտիվացնել</span>
+            </li>
+            <li class="root-menu-item-3 " ng-if="$root.SessionProperties.SourceType == 2 && paidFactoring.Quality!=10 && paidFactoring.Quality!=40" ng-controller="PopUpCtrl" ng-click="openWindow('/MatureOrder/PersonalMatureOrder','Վարկի մարում','newMature')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="cashInButton h-menu-icon">Վարկի մարում</span>
+            </li>
+            <li class="root-menu-item-5 " ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-if="paidFactoring.Quality<10 && isOnlineAcc==true" ng-click="params={productId:paidFactoring.ProductId,actionType:2,includingSurcharge:0,productType:paidFactoring.ProductType};openWindow('/ClassifiedLoanActionOrder/PersonalClassifiedLoanActionOrder','Վճարված ֆակտորինգի դուրսգրում','newClassifiedLoanActionOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">Դուրս գրել</span>
+            </li>
+            <li class="root-menu-item-5 " ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-if="paidFactoring.Quality==11 && isOnlineAcc==true" ng-click="params={productId:paidFactoring.ProductId,actionType:1,includingSurcharge:0,productType:paidFactoring.ProductType};openWindow('/ClassifiedLoanActionOrder/PersonalClassifiedLoanActionOrder','Վճարված ֆակտորինգի հետբերում','newClassifiedLoanActionOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">Հետ բերել </span>
+            </li>
+            <li class="root-menu-item-5 " ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-if="paidFactoring.Quality==11 && isOnlineAcc==true" ng-click="params={productId:paidFactoring.ProductId,actionType:3,includingSurcharge:0,productType:paidFactoring.ProductType};openWindow('/ClassifiedLoanActionOrder/PersonalClassifiedLoanActionOrder','Արտաբալանսից հանում','newClassifiedLoanActionOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">Հանել արտաբալանսից </span>
+            </li>
+
+            <li class="root-menu-item-3 " ng-if=" ($root.SessionProperties.AdvancedOptions['isOnlineAccChief']=='1' || $root.SessionProperties.AdvancedOptions['isOnlineAcc']=='1'  ) && paidFactoring.Quality != 10" ng-controller="PopUpCtrl" ng-click="params={productId:productId,loanType:33};openWindow('/CreditCommitmentForgivenessOrder/Index','Ներում','newMature')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon" src="~/Content/Images/help.png" style="height: 30px;width:36px;margin-top: 6px;" />Ներումներ</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div class="product-details bhoechie-tab-content" style="min-width:800px;margin-left:10px;">
+
+
+
+
+        <div style="display:table-row-group; box-shadow: 0 0 3px 4px #d6d3d3; background-color: white;">
+            <div class="product-detail-row">
+                <span style="margin-left: 5px;font-weight: bold;color: #504e4a;font-size: 15px;">Հիմնական</span>
+                <div class="product-detail-cell product-detail-value">&nbsp;</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Սահմանաչափի հաճախորդի համար</div>
+                <div class="product-detail-cell product-detail-value">
+                    {{paidFactoring.FactoringCustomerNumber}}
+                    <button type="button" ng-controller="PopUpCtrl" ng-click="params={customerNumber:paidFactoring.FactoringCustomerNumber}; openWindow('/Customer/CustomerDetails','Հաճախորդի տվյալներ','customerdetails')">
+                        <span class="fa fa-info-circle" data-toggle="tooltip" data-original-title="Հաճախորդի տվյալներ"></span>
+                    </button>
+
+
+                </div>
+            </div>
+            <div class="product-detail-row" ng-if="paidFactoring.CreditCode!=''">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Կոդ</div>
+                <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{paidFactoring.CreditCode}} </div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Տեսակ</div>
+                <div class="product-detail-cell product-detail-value">{{paidFactoring.ProductTypeDescription}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Կարգավիճակ</div>
+                <div class="product-detail-cell product-detail-value" style="font-weight:bold;" ng-style="{ color: paidFactoring.Quality==5 ||  paidFactoring.Quality==11 || paidFactoring.Quality==12 || paidFactoring.Quality==2 ? 'red' : '' }">{{paidFactoring.QualityDescription}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Սկիզբ</div>
+                <div class="product-detail-cell product-detail-value">{{paidFactoring.StartDate | mydate | date: 'dd/MM/yyyy'}}</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Վերջ</div>
+                <div class="product-detail-cell product-detail-value">{{paidFactoring.EndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Գումար</div>
+                <div class="product-detail-cell product-detail-value">{{paidFactoring.StartCapitalString}} {{paidFactoring.Currency}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Մնացորդ</div>
+                <div class="product-detail-cell product-detail-value">{{paidFactoring.CurrentCapitalString}} {{paidFactoring.Currency}}</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Չվճարված գումար</div>
+                <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{paidFactoring.AmountNotPaid | number:2}} {{paidFactoring.Currency}}</div>
+            </div>
+
+
+            <div ng-if="paidFactoring.Quality==40" class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Փակման ա/թ</div>
+                <div class="product-detail-cell product-detail-value">{{paidFactoring.DayOfRateCalculation | mydate | date: 'dd/MM/yyyy'}}</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Վարկային հաշիվ</div>
+                <div class="product-detail-cell product-detail-value">{{paidFactoring.LoanAccount.AccountNumber}} {{paidFactoring.LoanAccount.Currency}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Ընթացիկ հաշիվ և մնացորդ</div>
+                <div class="product-detail-cell product-detail-value">{{paidFactoring.ConnectAccount.AccountNumber}} &nbsp;<b>{{paidFactoring.ConnectAccount.AvailableBalance | number:2 }} {{paidFactoring.ConnectAccount.Currency}}</b></div>
+            </div>
+            <div class="product-detail-row" ng-if="paidFactoring.OverdueLoanDateForClassification!=null">
+                <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Ժամկետանցի օր դասակարգման համար</div>
+                <div class="product-detail-cell product-detail-value redStyle">{{paidFactoring.OverdueLoanDateForClassification | mydate | date: 'dd/MM/yyyy'}}</div>
+            </div>
+            <div class="product-detail-row" ng-if="paidFactoring.OverdueLoanDateForClassification!=null">
+                <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Ժամկետանցի օրեր դասակարգման համար</div>
+                <div class="product-detail-cell product-detail-value redStyle">{{paidFactoring.DayOfRateCalculation | datediff : paidFactoring.OverdueLoanDateForClassification}}</div>
+            </div>
+
+        </div>
+        <br />
+        <div style="display:table-row-group; box-shadow: 0 0 3px 4px #d6d3d3; background-color: white;">
+            <div class="product-detail-row">
+                <span style="margin-left: 5px;font-weight: bold;color: #504e4a;font-size: 15px;">Տոկոսադրույք/Տոկոսագումարներ</span>
+                <div class="product-detail-cell product-detail-value">&nbsp;</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Տոկոսադրույք</div>
+                <div class="product-detail-cell product-detail-value">{{paidFactoring.InterestRate * 100 }}%</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված) տոկոսագումար</div>
+                <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{paidFactoring.CurrentRateValue | number:2}} {{paidFactoring.Currency}}</div>
+            </div>
+
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (վճարված) տոկոսագումար</div>
+                <div class="product-detail-cell product-detail-value">{{paidFactoring.MaturedCurrentRateValue | number:2}} {{paidFactoring.Currency}}</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված + վճարված) տոկոսագումար</div>
+                <div class="product-detail-cell product-detail-value">{{(paidFactoring.MaturedCurrentRateValue+paidFactoring.CurrentRateValue) | number:2}} {{paidFactoring.Currency}}</div>
+            </div>
+
+
+
+
+            <div class="product-detail-row" ng-if="loan.Quality!=0 && loan.Quality!=1">
+                <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված) տուգանային տոկոս</div>
+                <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;">{{paidFactoring.PenaltyRate | number:2}} {{paidFactoring.Currency}}</div>
+            </div>
+
+            <div class="product-detail-row" ng-if="paidFactoring.Quality!=0 && paidFactoring.Quality!=1">
+                <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Որից՝</div>
+                <div class="product-detail-cell product-detail-value redStyle">&nbsp;</div>
+            </div>
+
+            <div class="product-detail-row" ng-if="paidFactoring.Quality!=0 && paidFactoring.Quality!=1">
+                <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված) տուժանք</div>
+                <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;">{{paidFactoring.PenaltyAdd | number:2}} {{paidFactoring.Currency}}</div>
+            </div>
+
+            <div class="product-detail-row" ng-if="paidFactoring.Quality!=0 && paidFactoring.Quality!=1">
+                <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (վճարված) տուժանք</div>
+                <div class="product-detail-cell product-detail-value redStyle">{{paidFactoring.MaturedPenaltyRate | number:2}} {{paidFactoring.Currency}}</div>
+            </div>
+            <div class="product-detail-row" ng-if="paidFactoring.Quality!=0 && paidFactoring.Quality!=1">
+                <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված + վճարված) տուժանք</div>
+                <div class="product-detail-cell product-detail-value redStyle">{{(paidFactoring.MaturedPenaltyRate+loan.PenaltyRate)  |number:2}} {{paidFactoring.Currency}}</div>
+            </div>
+        </div>
+
+        <br />
+
+
+        <div style="display:table-row-group; box-shadow: 0 0 3px 4px #d6d3d3; background-color: white;" ng-if="paidFactoring.JudgmentRate>0">
+
+            <div class="product-detail-row">
+                <span style="margin-left: 5px;font-weight: bold;color: #504e4a;font-size: 15px;">Պետ. տուրքի փոխանցումից հետո տուժանք</span>
+                <div class="product-detail-cell product-detail-value">&nbsp;</div>
+            </div>
+
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված) տուժանք</div>
+                <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;">{{paidFactoring.JudgmentRate | number:2}} {{paidFactoring.Currency}}</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (վճարված) տուժանք</div>
+                <div class="product-detail-cell product-detail-value redStyle">{{paidFactoring.MaturedJudgmentPenaltyRate | number:2}} {{paidFactoring.Currency}}</div>
+            </div>
+
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված + վճարված) տուժանք</div>
+                <div class="product-detail-cell product-detail-value redStyle">{{loan.TotalJudgmentPenaltyRate | number:2}} {{paidFactoring.Currency}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Տուժանքի հաշվարկի սկիզբ</div>
+                <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;">{{paidFactoring.JudgmentStartDate | mydate | date: 'dd/MM/yyyy'}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Տուժանքի հաշվարկի վերջ</div>
+                <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;">{{paidFactoring.JudgmentEndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="bhoechie-tab-container" style="max-height:90%;" id="periodicTransferDetailsContainer">
+        <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+            <div class="list-group">
+                <div class="list-group-item text-center active">Լրացուցիչ </div>
+                <div class="list-group-item text-center"><span>Մոնիթորինգի եզրակացություն</span></div>
+            </div>
+        </div>
+
+        <div class="bhoechie-tab " style="width: calc(100% - 140px); display: inline-block;">
+            <div class="bhoechie-tab-content active">
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ընդհանուր պարտք</div>
+                    <div class="product-detail-cell product-detail-value">{{(paidFactoring.CurrentCapital+paidFactoring.PenaltyRate+paidFactoring.OutCapital+paidFactoring.CurrentRateValue+paidFactoring.JudgmentRate+paidFactoring.CurrentFee) | number:2}} {{paidFactoring.Currency}}</div>
+                </div>
+                <div class="product-detail-row">
+
+                    <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp; որից տոկոս տուգանք</div>
+                    <div class="product-detail-cell product-detail-value">
+                        {{( paidFactoring.PenaltyRate + paidFactoring.CurrentRateValue + paidFactoring.JudgmentRate +  paidFactoring.CurrentFee) | number:2}}
+                        <span ng-if="paidFactoring.Currency!='AMD'">({{((paidFactoring.PenaltyRate + paidFactoring.CurrentRateValue + paidFactoring.JudgmentRate +  paidFactoring.CurrentFee) * kurs).toFixed(2)}} AMD)</span>
+                    </div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ժամկետանց մաս</div>
+                    <div class="product-detail-cell product-detail-value">{{(paidFactoring.OverdueCapital+paidFactoring.InpaiedRestOfRate+paidFactoring.PenaltyRate+paidFactoring.JudgmentRate+paidFactoring.OverdueAmount) | number:2}} {{paidFactoring.Currency}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;որից տոկոս տուգանք</div>
+                    <div class="product-detail-cell product-detail-value">
+                        {{(paidFactoring.InpaiedRestOfRate+paidFactoring.PenaltyRate+paidFactoring.OverdueAmount) | number:2}}
+                        <span ng-if="paidFactoring.Currency!='AMD'">({{((paidFactoring.InpaiedRestOfRate+paidFactoring.PenaltyRate+paidFactoring.OverdueAmount) * kurs).toFixed(2)}} AMD)</span>
+                    </div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;Պետ տուրքի փոխանցումից կուտակված տուժանք</div>
+                    <div class="product-detail-cell product-detail-value">
+                        {{(paidFactoring.JudgmentRate) | number:2}}
+                        <span ng-if="paidFactoring.Currency!='AMD'">({{((paidFactoring.JudgmentRate) * kurs).toFixed(2)}} AMD)</span>
+                    </div>
+                </div>
+
+                <div ng-if="paidFactoring.Quality!=0 && paidFactoring.Quality!=1" class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Որից ժամկետանց</div>
+                    <div class="product-detail-cell product-detail-value">{{paidFactoring.InpaiedRestOfRateString}} {{paidFactoring.Currency}}</div>
+                </div>
+
+                <div ng-if="paidFactoring.Quality!=0 && paidFactoring.Quality!=1" class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Տուգանային տոկոս</div>
+                    <div class="product-detail-cell product-detail-value">{{paidFactoring.PenaltyRateString}} {{paidFactoring.Currency}}</div>
+                </div>
+
+                <div ng-if="paidFactoring.Quality!=0 && paidFactoring.Quality!=1" class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Որից ժամկետանց</div>
+                    <div class="product-detail-cell product-detail-value">{{paidFactoring.PenaltyAddString}} {{paidFactoring.Currency}}</div>
+                </div>
+
+                <div ng-if="paidFactoring.Quality!=0 && paidFactoring.Quality!=1" class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Տոկոսագումարի հաշվարկի օր</div>
+                    <div class="product-detail-cell product-detail-value">{{paidFactoring.DayOfRateCalculationString}}</div>
+                </div>
+
+            </div>
+            <div class="bhoechie-tab-content ">
+                <loanmonitoring ng-if="paidFactoring" loan="paidFactoring"></loanmonitoring>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#paidFactoringDetails div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('#paidFactoringDetails div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#paidFactoringDetails div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#paidFactoringDetails div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+
+
+    $("#loanDetailsContainer").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+
+</script>

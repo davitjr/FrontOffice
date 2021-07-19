@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+}
+<div id="cardServiceFeeGrafikDataChangeOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form role="form" id="tbl" class="form-horizontal" ng-controller="CardCtrl" ng-if="productid" ng-init="getCardServiceFeeGrafik()" style="width:520px;height:auto;max-height:620px;">
+    <div id="cardServiceFeeGrafikDataChangeOrder_menu" class="menu-bar dialog-menu light-green" ng-if="$root.SessionProperties.IsChiefAcc == true">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-show="change!=true && hascardServiceFeeGrafik" ng-click="$parent.change=true">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="closeAccountButton  h-menu-icon">Փոփոխել</span>
+            </li>
+            <li class="root-menu-item-4 " ng-if="!hascardServiceFeeGrafik && setNewGrafik!=true" ng-click="$parent.$parent.setNewGrafik=true;setNewCardServiceFeeGrafik()">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="closeAccountButton  h-menu-icon">Նոր գրաֆիկ</span>
+            </li>
+            <li class="root-menu-item-4 " ng-if="$parent.change==true || $parent.setNewGrafik==true" ng-controller="CardServiceFeeGrafikDataChangeOrderCtrl" ng-click="cardServiceFeeGrafik.length>0 && saveCardServiceFeeGrafikDataChangeOrder(cardServiceFeeGrafik,cardnumber,productid);">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('cardServiceFeegrafik')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+      <div class="product-container" style="min-width:500px;margin-bottom:15px;">
+          <div class="header-title">
+              Քարտի համար` {{::cardnumber}}
+
+          </div>
+        <div ng-show="cardServiceFeeGrafik!=null && cardServiceFeeGrafik!=undefined" class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="col-sm-4">Վճարման ամսաթիվ</div>
+                <div class="col-sm-5">Միջնորդավճար</div>
+                <div class="col-sm-3">Արժույթ</div>
+            </div>
+            <div class="product-content-table custom-scroll" >
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="g in cardServiceFeeGrafik">
+                            <td style="text-align:center" colspan="1">{{::g.PeriodEnd | mydate | date: 'dd/MM/yyyy'}}
+                            <td style="text-align:center" colspan="1">
+                                <input ng-if="change || setNewGrafik" type="text" style="text-align:left" class="form-control tab_title" id="FieldValue" name="FieldValue" ng-model="g.ServiceFee">
+                                <span ng-if="change!=true && setNewGrafik!=true">{{::g.ServiceFee|number:2}}&nbsp;&nbsp;</span>
+                            </td>
+                            <td style="text-align:center" colspan="1">{{::g.Currency}}&nbsp;&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

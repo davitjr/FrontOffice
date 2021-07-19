@@ -1,0 +1,96 @@
+﻿<form ng-controller="UtilityPaymentSearchCtrl" ng-init="getReestrUtilityPaymentOrder(selectedOrderId)" style="min-width:750px">
+    <loading-control class="col-sm-12" style="left:300px;height:60px;width:100px" scopevariable="utilityTypeDescription"></loading-control>
+    <div ng-show="utilityTypeDescription" class="menu-bar dialog-menu light-green"
+         style="margin-left:-3px;margin-top:0px;">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-if="order.Type==117 || order.Type==118" ng-init="$parent.ordertype=order.Type">
+                <span id="h-menu-item-4" onclick="return false;">
+                    <img id="h-menu-icon-4" class="printButton h-menu-icon">&nbsp;
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-3.1" data-permission-selector="" ng-click="getUtilityPaymentOrderDetails(true,true)">
+                        <span>2 օրինակ</span>
+                    </li>
+                    <li id="v-menuItem-3.2" class="last" data-permission-selector="" ng-click="getUtilityPaymentOrderDetails(true)">
+                        <span>4 օրինակ</span>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li ng-if="order.Quality!=undefined && order.Quality ==30" class="root-menu-item-5 " ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հեռացման հայտ','removalOrder',callbackgetUtilityPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">&nbsp;Հեռացման հայտ</span>
+            </li>
+            <li ng-if="order.Quality!=undefined && order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6" class="root-menu-item-5 " ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetUtilityPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">&nbsp;Հրաժարման հայտ</span>
+            </li>
+        </ul>
+    </div>
+    <div ng-show="utilityTypeDescription" class="product-details bhoechie-tab-content" style="padding-left:10px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործարքի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործարքի ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{utilityTypeDescription}} ծառայության դիմաց վճարում</div>
+        </div>
+        <div ng-if="order.Type!=60" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ելքագրվող (դեբետ) հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{order.DebitAccount.AccountNumber}}  {{order.DebitAccount.Currency}} {{order.DebitAccount.AccountTypeDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{order.AmountString}} {{order.Currency}}</div>
+        </div>
+        
+
+        <div class="product-detail-row" >
+            <div class="product-detail-cell product-detail-lable">Ռեեստրի տվյալներ՝</div>
+            <div class="product-detail-cell product-detail-value"><div  data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ռեեստրի տվյալներ"><button ng-controller="PopUpCtrl" ng-click="params={COWaterReestrDetails:order.COWaterReestrDetails,}; openWindow('/UtilityPayment/UtilityReestrDetails','Կոմունալ ռեեստրի տվյալներ','utilityreestrDetails')" style="padding-left: 9px;padding-right: 9px;" type="button" class="btn btn-default" aria-label="Justify"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button></div></div>
+        </div>
+        
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կատարող՝</div>
+        </div>
+        <div class="product-detail-row">
+            <div ng-if="order.OPPerson.PersonLastName==undefined || order.OPPerson.PersonLastName==''" class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Անվանում</div>
+            <div ng-if="order.OPPerson.PersonLastName!=undefined && order.OPPerson.PersonLastName!=''" class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Անուն,Ազգանուն</div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonName}} {{order.OPPerson.PersonLastName}}</div>
+        </div>
+        <div ng-if="order.OPPerson.PersonDocument!='' && order.OPPerson.PersonDocument!=undefined" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Անձնագիր</div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonDocument}}</div>
+        </div>
+        <div ng-if="order.OPPerson.PersonSocialNumber!='' && order.OPPerson.PersonSocialNumber!=undefined" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;ՀԾՀ</div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonSocialNumber || "-"}}</div>
+        </div>
+        <div ng-if="order.OPPerson.PersonNoSocialNumber!='' && order.OPPerson.PersonNoSocialNumber!=undefined" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;ՀԾՀ-ից հրաժարվելու տեղեկանք</div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.PersonNoSocialNumber}}</div>
+        </div>
+        <div ng-if="order.OPPerson.CustomerNumber!=''" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;Հաճախորդի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.OPPerson.CustomerNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{ order.QualityDescription }}</div>
+            <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{ order.QualityDescription }}</div>
+            <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{ order.QualityDescription }}</div>
+        </div>
+        <div ng-if="order.Quality==31" ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մերժման պատճառ`</div>
+            <div class="product-detail-cell product-detail-value"><span class="redStyle">{{ rejectHistory.ReasonDescription }}</span></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell my_text1">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,74 @@
+﻿
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+    #HBDocumentsTransactionErrorForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #HBDocumentsTransactionErrorForm {
+        min-width: 600px;
+    }
+    .maximize-dialog {
+        display: none;
+    }
+
+    .minimize-dialog {
+        display: none;
+    }
+</style>
+<div id="HBDocumentsTransactionError" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="HBDocumentsCtrl" ng-init="initErrorFields();" name="HBDocumentsTransactionErrorForm" id="HBDocumentsTransactionErrorForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+    @*<div id="hbTransactionError_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('hbTransactionError')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>*@
+    <div>
+        @*<div style="max-width:560px">
+            <errors></errors>
+        </div>*@
+        <div class="col-sm-11" style="margin-top:20px;">
+            <div class="form-group">
+                <label class="tab_title col-sm-5">Ամսաթիվ</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-11 multiple_columns">
+                        <input type="text" disabled="disabled" class="tab_title form-control unstyled" id="ErrorDate" name="ErrorDate" ng-model="errorDate" style="text-align:left">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5">Նկարագրություն</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <textarea type="text" disabled="disabled" class="tab_title form-control unstyled" id="ErrorDescription" name="ErrorDescription" ng-model="errorDescription" style="text-align:left;width:300px;height:100px;font-family:'Arial Armenian'"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+

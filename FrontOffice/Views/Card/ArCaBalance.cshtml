@@ -1,0 +1,43 @@
+﻿<style>
+    .modal-content
+    {
+        width :250px;
+        height:170px;
+        margin-top:300px;
+    }
+    .redStyle {color: red;}
+    .greenStyle {color: #0D4E26;}
+</style>
+    <div ng-controller="CardCtrl" data-ng-init="getArCaBalance(selectedCard)">
+    <div class="popup_wrapper_top">
+        <div>
+            ArCa մնացորդ
+        </div>
+        <img ng-if="text" src="/Content/images/close_pop.png " ng-click="closemodal()">
+    </div>
+    <br /> <loading-control scopevariable="text"></loading-control>
+    <div ng-show="text">
+        <div ng-if="text=='0'" class="my_text1" style="text-align:center">
+            Տվյալ պահին հասանելի չէ
+            <br /><br />
+            <div class="col-sm-12">
+
+                <div class="col-sm-3"> </div>
+                <button style="width:90px" class="col-sm-5 my_save_button" ng-click="closemodal()">OK</button>
+
+            </div>
+        </div>
+        <div ng-if="text!='0'" class="my_text1" style="text-align:center;margin-top:-20px">
+            {{::cardNumber}}<br />
+            քարտի մնացորդը ըստ ArCa-ի <div ng-class="{redStyle: text<'0',  greenStyle : text>'0' }"> {{::text}} {{::selectedCardCurrency}}</div>
+
+            <br /><br />
+            <div class=" col-sm-12">
+                <div class=" col-sm-3"> </div>
+                <button style="width:90px;margin-top:-28px" class="col-sm-5 my_save_button" ng-click="closemodal()">OK</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+

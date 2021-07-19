@@ -1,0 +1,63 @@
+@meda(max-width:1272px) {
+	
+}
+
+@media(max-width:1114px) {
+	.header {position:fixed;top:0;left:0;right:0;z-index:99;}
+	.header_logo {display:none;}
+	.header_left_item_texts {display:none;}
+	.header_right_item_circle_desc {display:none;}
+	.header_left_item_prof_drop {padding-right:15px;}
+	.header_right {padding-top:24px;}
+	.header_right_item:nth-last-of-type(3) {margin-right:13px;}
+	.page_content_left_menu {position:fixed;left:-257px;top:60px;z-index:999;float:none;box-sizing:content-box;}
+	.page_content_left_menu_selected {left:0;}
+	.page_top_panel {margin-top:60px;}
+	.page_content_left_menu_inner {overflow-y:auto;height:calc(100% - 100px);}
+	.page_content_left_menu_item_hide_item a {padding-left:18px;}
+	.page_right_content {width:100%;}
+	.page_top_panel_search_wrap  {display:none;}
+	.left_menu_bottom_ban {display:none;}
+	.page_content_left_menu_item {margin:0;}
+}
+
+@media(max-width:1040px) {
+	.footer_bottom_left {float:none;}
+	.footer_bottom_left:after { content: "."; display: block;clear: both;visibility: hidden;line-height: 0;height: 0;}
+	.footer_bottom_shares {float:left;margin-top:10px;}
+}
+
+@media(max-width:715px) {
+	.page_top_panel_item {display:none;}
+	.page_top_panel {display:none;}
+	.page_bradcramp {margin-top:84px;}
+	.page_content_left_menu_inner_search form input {width:100%;}
+} 
+
+
+@media(max-width:609px) {
+	.header_right {display:none;}
+	.page_content_left_menu {width:100%;left:-100%;}
+	.page_content_left_menu_inner{width:100%;}
+	.page_content_left_menu_selected {left:0;}
+}
+
+@media(max-width:509px) {
+	.sub_inner input {margin-left:0;}
+}
+
+@media(max-width:415px) {
+	.page_right_content_inner .form_1 textarea {max-width:100%;padding-left:0;}
+	.page_right_content_inner .form_1 input {max-width:100%;padding-left:0;}
+	.page_right_content_inner .form_1 select {max-width:100%;padding-left:0;}
+}
+
+@media(min-width:1115px) {
+	.header_logo_mini {display:none;}
+	.menu_toggle_wrapper{display:none;}
+	.page_content_left_menu_inner_search {display:none;}
+}
+
+@media(min-width:610px) {
+	.mobile_user_items {display:none;}
+}

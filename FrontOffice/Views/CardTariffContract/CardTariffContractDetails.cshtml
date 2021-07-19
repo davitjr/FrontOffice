@@ -1,0 +1,88 @@
+﻿@{
+    Layout = null;
+}
+<div id="load" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div ng-controller="CardTariffContractCtrl" data-ng-init="getCardTariffContract(tariffID);" id="CardTariffContractDetails">
+    <div id="carddetails_menu" class="menu-bar dialog-menu light-green details-menu" style="width:900px;">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-2 " ng-controller="PopUpCtrl" ng-click="params={cardTariffContract:contract};openWindow('/CardTariffContract/CardTariffs','Քարտի աշխատավարձային ծրագիր','CardTariffContract')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="transferAdditionalDataBtn h-menu-icon">Սակագներ</span>
+            </li>
+            <li class="root-menu-item-2 "  ng-click="printCardTarifContract(contract.TariffID)">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="transferAdditionalDataBtn h-menu-icon">Տպել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>    </div>
+    <div class="product-details bhoechie-tab-content" style="width:900px;margin-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Աշխ․ ծրագրի համար</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{contract.TariffID}} </div>
+        </div>  
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրանցման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{contract.StartDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Աշխ․ ծրագրի հիմք</div>
+            <div class="product-detail-cell product-detail-value">{{contract.ReasonDescription}}</div>
+        </div>  
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Անվանում</div>
+            <div class="product-detail-cell product-detail-value">{{contract.Description}}</div>
+        </div>  
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հասցե</div>
+            <div class="product-detail-cell product-detail-value">{{contract.Address}}</div>
+        </div>
+       
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մասնաճյուղ</div>
+            <div class="product-detail-cell product-detail-value">{{contract.FilialCode}}</div>
+        </div>  
+        
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաշվեհամար</div>
+            <div class="product-detail-cell product-detail-value">{{contract.AccountNumber}}</div>
+        </div>  
+
+        <div class="product-detail-row" ng-init="contract.Quality!=0 && getActiveCardsCount(tariffID)" ng-show="contract.Quality!=0">
+            <div class="product-detail-cell product-detail-lable">Գործող քարտերի քանակ</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{activeCardsCount}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">{{contract.QualityDescription}}</div>   
+        </div>
+        <div ng-if="contract.Quality==0" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Դադարեցման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{contract.EndDateString}}</div>
+        </div> 
+</div>
+
+
+</div>
+
+<script type="text/javascript">
+    $("#CardTariffContractDetails div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('#cardDetails div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#cardDetails div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#cardDetails div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+    //$("#cardDetailsContainer").mCustomScrollbar({
+    //    theme: "rounded-dark",
+    //    scrollButtons: {
+    //        scrollAmount: 200,
+    //        enable: true
+    //    },
+    //    mouseWheel: {
+    //        scrollAmount: 200
+    //    }
+    //});
+</script>

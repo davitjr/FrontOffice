@@ -1,0 +1,89 @@
+﻿@{
+    Layout = null;
+}
+<form style="width:620px" ng-controller="ReplacedCardAccountRegOrderCtrl" ng-init="getReplacedCardAccountRegOrder(selectedOrderId,type)">
+    <loading-control scopevariable="order.Id"></loading-control>
+    <div id="transitPaymentOrder_menu" class="menu-bar dialog-menu light-green " style="margin-left:-5px;margin-top:0" ng-if="order.Quality!=undefined && order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6">
+        <ul id="menu" class="dialog-menu">
+
+            <li class="root-menu-item-5 " ng-if="order.Quality!=undefined && order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('/RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetTransitPaymentOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+            </li>
+
+        </ul>
+    </div>
+    <div class="product-details bhoechie-tab-content" style="min-width:620px;padding-left:10px">
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+            <div class="product-detail-cell product-detail-value">{{order.OperationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Card.CardNumber}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">
+                <img ng-if="order.Card.CardSystem==3" src="~/Content/Images/Amex_icon.png" height="20" width="20" align="left" style="margin-right:3px" />
+                <img ng-if="order.Card.CardSystem==4" src="~/Content/Images/Visa_icon.png" height="20" width="20" align="left" style="margin-right:3px" />
+                <img ng-if="order.Card.CardSystem==5" src="~/Content/Images/MC_icon.png" height="20" width="20" align="left" style="margin-right:3px" />
+                <img ng-if="order.Card.CardSystem==9" src="~/Content/Images/arca.png" height="20" width="20" align="left" style="margin-right:3px" />
+                {{order.Card.CardTypeDescription}}, {{order.Currency}}, {{(order.Card.SupplementaryType==1)?"Հիմնական":(order.Card.SupplementaryType==2)?"Կից":"Լրացուցիչ"}}
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտապան</div>
+            <div class="product-detail-cell product-detail-value">{{cardHolderData}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտի վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{order.Card.EndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable" ng-show="order.Card.SupplementaryType==1">Քարտային հաշիվ</div>
+            <div class="product-detail-cell product-detail-value" ng-if="order.CardAccount != null">{{order.CardAccount.AccountNumber}}</div>
+            <div class="product-detail-cell product-detail-value" ng-if="order.CardAccount == null">Բացել նոր հաշիվ</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable" ng-show="order.Card.SupplementaryType==1">Գերածախսի հաշիվ</div>
+            <div class="product-detail-cell product-detail-value" ng-if="order.OverdraftAccount != null">{{order.OverdraftAccount.AccountNumber}}</div>
+            <div class="product-detail-cell product-detail-value" ng-if="order.OverdraftAccount == null">Բացել նոր հաշիվ</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="order.AddInf">
+            <div class="product-detail-cell product-detail-lable">Լրացուցիչ նկ.</div>
+            <div class="product-detail-cell product-detail-value">{{order.AddInf}}</div>
+        </div>
+
+        <orderoppersondetails opperson="order.OPPerson" ng-show="order.OPPerson"></orderoppersondetails>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{order.QualityDescription}}</div>
+        </div>
+
+        <div ng-if="order.Quality==31" class="">
+            <div ng-controller="OrderCtrl" ng-init="getOrderRejectHistory(selectedOrderId)" class="" style="clear:both;color:#6F6A6A;font-weight:bold">Մերժման պատճառ`</div>
+            <div class="redStyle">&nbsp;&nbsp;&nbsp;{{ rejectHistory.ReasonDescription }}</div>
+        </div>
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+
+</form>

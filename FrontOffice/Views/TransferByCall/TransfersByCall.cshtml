@@ -1,0 +1,175 @@
+﻿<style  type="text/css">
+    .product-container
+    {
+        width:750px;
+    }
+</style>
+<div id="loadMain" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div style="margin-left:15px;margin-top:5px" ng-controller="TransferCallsCtrl" id="TransferCalls" data-ng-init="getTransferCalls();getUserFilial()" class="container">
+    <form class="form  ">
+        <sessionproperties ng-if="$root.SessionProperties.AdvancedOptions==undefined"></sessionproperties>
+        <div class="col-sm-12" style="padding:0;margin-bottom:5px">
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Սկիզբ</label>
+                <div>
+                    <input type="date" ng-model="filter.startDate" style="width: 155px;" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Վերջ</label>
+                <div>
+                    <input type="date" ng-model="filter.endDate" style="width:155px" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Հաճախորդ</label>
+                <div>
+                    <input type="text" ng-model="filter.customerNumber" style="width: 155px" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Քարտ</label>
+                <div>
+                    <input type="text" ng-model="filter.cardNumber" style="width: 155px" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Կարգավիճակ</label>
+                <div data-ng-init="getTransferCallQuality()">
+                    <loading-control scopevariable="transferQuality"></loading-control>
+                    <select ng-show="transferQuality" data-ng-model="filter.quality" class="form-control"
+                            data-ng-options="k as v for (k,v) in transferQuality" style="width: 155px">
+                        <option value="" style="margin-left:25px">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-sm-12" style="padding:0;display:inline-block">
+            <div class="col-sm-2">
+                <label class="tab_title">Համակարգ</label>
+                <div data-ng-init="getTransferTypes(0)">
+                    <loading-control scopevariable="transferTypes"></loading-control>
+                    <select ng-show="transferTypes" data-ng-model="filter.transferSystem" class="form-control"
+                            data-ng-options="k as v for (k,v) in transferTypes" style="width: 155px">
+                        <option value="" style="margin-left:25px">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Գումար</label>
+                <div>
+                    <input type="number" ng-model="filter.Amount" style="width: 155px" class="form-control tab_title">
+                </div>
+            </div>
+
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="col-sm-2 tab_title">Արժույթ</label>
+                <loading-control scopevariable="currencies"></loading-control>
+                <div data-ng-init="getCurrencies()">
+                    <select ng-show="currencies" data-ng-model="filter.currency" class="form-control"
+                            data-ng-options="k as v for (k,v) in currencies" style="width: 155px">
+                        <option value="" style="margin-left:25px">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Գրանցողի ՊԿ</label>
+                <div>
+                    <input type="number" ng-model="filter.registrationSetNumber" style="width: 155px" class="form-control tab_title">
+                </div>
+            </div>
+
+            <div class="col-sm-3" style="display:inline-block">
+                <label class="tab_title">Մուտքագրման աղբյուր</label>
+                <div>
+                    <select data-ng-model="filter.registeredBy" class="form-control" style="width: 155px">
+                        <option value="" style="margin-left:25px">-Ընտրեք-</option>
+                        <option value="1" style="margin-left:25px">Call Center</option>
+                        <option value="2" style="margin-left:25px">Հաշվապահություն</option>
+                    </select>
+                </div>
+                <div class="col-sm-10" style="float:right;padding-top:8px">
+                    <button type="button" class="btn-sm btn-primary" ng-click="getTransferCalls()"><span class="glyphicon glyphicon-search"></span> Որոնել</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="product-container">
+        <div class="header-title">
+            Հեռախոսազանգով փոխանցումներ
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="include-closed-products">
+                    Քանակ` {{transfersCount | number:0}}
+                </div>
+                <div ng-controller="PopUpCtrl" ng-click="openWindow('/TransferByCall/PersonalTransferByCall','Հեռախոսազանգով փոխանցում','newtransfercall')" ng-if="!isCustomer">
+                    <i class="add-new-product tipB" data-original-title="Նոր փոխանցում"></i>
+                </div>
+            </div>
+            <div class="product-content-table custom-scroll" id="transferList">
+                <div ng-if="transfers==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="transfers.length!=0" ng-repeat="transfer in transfers" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+                            <td class="col-sm-8">
+                                <img ng-src="~/Content/Images/TransferLogo/{{::transfer.TransferSystem}}.png" height="30" width="100" align="left" style="margin-right:3px" />
+                                {{ ::transfer.TransferSystemDescription }}
+                                <br /><span class="tab_text">Համար` </span> {{ ::transfer.Id }}
+                                <span class="tab_text">Ամսաթիվ` </span> {{ ::transfer.RegistrationDateString }}
+                                <span class="tab_text">ՊԿ` </span> {{ ::transfer.RegistrationSetNumber}}
+                            </td>
+                            <td class="col-sm-2" style="text-align:right;">{{ ::transfer.Amount | number:2 }} {{ ::transfer.Currency }}</td>
+                            <td class="col-sm-1 click_toggle" context="contextTransfer" id="contextMenu"><div id="contextMenu"></div> </td>
+
+                        </tr>
+                        <tr ng-if="transfers.length==0">
+                            <td colspan="3" style="text-align:center">Առկա չեն փոխանցումներ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <ul id="contextTransfer" class="dropdown-menu">
+            <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="openWindow('/TransferByCall/TransferByCallDetails','Մանրամասն դիտարկում','transferDetails')">Մանրամասն դիտարկում</a></li>
+            <li ng-if="isCallCenter=='1' &&  currentTransfer.Quality== 0 && currentTransfer.RegisteredBy==1 "><a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1, isCallTransfer:1,transferByCall:currentTransfer};openWindowWithTemplate('receivedfasttransferorder','Հեռախոսազանգով փոխանցում','receivedfasttransferpaymentorder')">Հաստատել </a></li>
+            @*<li ng-if="CanPay"><a style="color: black;text-decoration:none!important ;" class="my_button" ng-click="SendForPay()">ՈՒղարկել վճարման</a></li>*@
+            <li ng-if="isCallCenter!='1' &&  currentTransfer.Quality== 0 && currentTransfer.RegisteredBy!=1 && CanPay"><a style="color: black;text-decoration:none!important ;" class="my_button" ng-click="SendForPayOrDelete(4)">ՈՒղարկել վճարման</a></li>
+            <li ng-if="isCallCenter!='1' &&  currentTransfer.Quality== 0 && currentTransfer.RegisteredBy!=1 && CanPay"><a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccountFastPayment:1,checkForFeeAccount:1, isCallTransfer:1,transferByCall:currentTransfer};openWindowWithTemplate('receivedfasttransferorder','Հեռախոսազանգով փոխանցում','receivedfasttransferpaymentorder')">Խմբագրել </a></li>
+            <li ng-if="isCallCenter!='1' &&  currentTransfer.Quality== 0 && currentTransfer.RegisteredBy!=1 && CanPay"><a style="color: black;text-decoration:none!important ;" class="my_button" ng-click=" SendForPayOrDelete(2)">Հեռացնել</a></li>
+        </ul>
+    </div>
+</div>
+          
+       
+<script>
+    (function ($) {
+        $(window).on('load',function () {
+
+            $("#transferList").mCustomScrollbar({
+                theme: "rounded-dark",
+                scrollButtons: {
+                    scrollAmount: 200,
+                    enable: true
+                },
+                mouseWheel: {
+                    scrollAmount: 200
+                }
+            });
+
+        });
+    })(jQuery);
+</script>

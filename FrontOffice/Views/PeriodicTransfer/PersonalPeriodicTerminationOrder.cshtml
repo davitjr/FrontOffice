@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+
+    <form  ng-controller="PeriodicTransferCtrl" style="min-width:550px;"  >
+
+        <div id="periodicTermination_menu" class="menu-bar dialog-menu light-green">
+            <ul id="menu" class="dialog-menu">
+                <li class="root-menu-item-4 " ng-click="getPeriodicTransferClosingDetails(periodic.ProductId);">
+                    <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Դադարեցման դիմում</span>
+                </li>
+                <li class="root-menu-item-6 " ng-click="savePeriodicTerminationOrder();">
+                    <span id="h-menu-item-6"><img id="h-menu-icon-6" class="submitButton h-menu-icon">Պահպանել</span>
+                </li>
+                <li class="root-menu-item-5 " onclick="CloseBPDialog('periodicTermination')">
+                    <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+                </li>
+            </ul>
+            <div id="right-menu" style="display:none;">
+            </div>
+        </div>
+        <errors></errors>
+             <div class="col-md-11 ">
+                    <div class="col-sm-5 my_label">Պարբերականի համար</div><div class="col-sm-7 my_text1">{{periodic.Number}}</div>
+                    <div class="col-sm-5 my_label line_height" style="clear:both">Տեսակ</div><div class="col-sm-7 my_text1 line_height"> {{periodic.TypeDescription}}</div>
+                    <div class="col-sm-5 my_label line_height" style="clear:both">Դեբետ</div><div class="col-sm-7 my_text1 line_height"> {{periodic.PeriodicTransferAccountNumber}}</div>
+                    <div class="col-sm-5 my_label line_height" style="clear:both">Սկիզբ</div><div class="col-sm-7 my_text1 line_height"> {{periodic.StartDateString}}</div>
+                    <div ng-if="periodic.DurationType==2" class="col-sm-5 my_label line_height" style="clear:both">Վերջ</div><div ng-if="periodic.DurationType==2" class="col-sm-7 my_text1 line_height"> {{periodic.EndDateString}}</div>
+                    <div ng-if="periodic.DurationType==1" class="col-sm-5 my_label line_height" style="clear:both">Վերջ</div><div ng-if="periodic.DurationType==1" class="col-sm-7 my_text1 line_height"> {{periodic.DurationTypeDescription}}</div>
+                    <div class="col-sm-5 my_label line_height" style="clear:both">Գումար</div><div class="col-sm-7 my_text1 line_height" ng-if="periodic.ChargeType!=0">{{periodic.ChargeTypeDescription}} <span ng-if="periodic.Type==4">({{periodic.AmountSubTypeByPurposeDescription}})</span> </div>
+                    <div class="col-sm-7 my_text1 line_height" ng-if="periodic.ChargeType==0">{{periodic.AmountString}} {{periodic.Currency}} <span ng-if="periodic.Type==4">({{periodic.AmountSubTypeByPurposeDescription}})</span></div>
+                    <p class="text-left"></p>
+                 <br />
+              </div>
+           
+    </form>
+

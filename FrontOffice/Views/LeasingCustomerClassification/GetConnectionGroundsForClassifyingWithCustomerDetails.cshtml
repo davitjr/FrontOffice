@@ -1,0 +1,60 @@
+﻿
+
+
+<form style="width:550px" ng-controller="LeasingCustomerClassificationCtrl" ng-init="GetConnectionGroundsForClassifyingWithCustomerByID();" id="getConnectionGroundsForClassifyingWithCustomerDetailsForm">
+
+      
+    <div class="product-details bhoechie-tab-content" style="min-width:550px;padding-left:10px">
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրանցման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{classifyingWithCustomerByID.RegistrationDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գրանցող ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">{{classifyingWithCustomerByID.SetNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխ. հաճախորդի համար</div>
+            <div class="product-detail-cell product-detail-value">{{classifyingWithCustomerByID.CustomerNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Զեկուցագրի համար</div>
+            <div class="product-detail-cell product-detail-value">{{classifyingWithCustomerByID.ReportNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Զեկուցագրի  ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{classifyingWithCustomerByID.ReportDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">{{classifyingWithCustomerByID.Status}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակող ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">{{classifyingWithCustomerByID.ClosedSetNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{classifyingWithCustomerByID.ClosingDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման զեկուցագրի համար</div>
+            <div class="product-detail-cell product-detail-value">{{classifyingWithCustomerByID.ClosingReporNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման զեկուցագրի  ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{classifyingWithCustomerByID.ClosingReportDateString}}</div>
+        </div>
+       
+    </div>
+
+    <div class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable"><transferattachments id="selectedTransferId"></transferattachments></div>
+    </div>
+
+</form>
+
+
+
+

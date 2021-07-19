@@ -1,0 +1,69 @@
+﻿<style>
+    #summary tr {
+        height: auto;
+        max-width: 100%;
+    }
+</style>
+<form name="CardStatementSessionForm" id="CardStatementSessionForm" ng-controller="CardStatementSessionCtrl" ng-init="getCardStatementSessions();getStatementSessionQualityTypes()" novalidate style="margin-top:15px">
+    <div id="cardStatementSessionLoad" class="overlay hidden">
+        <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+    </div>
+    <div class="col-sm-6" style="padding:0px">
+        <div class="product-container col-sm-12" style="min-width:710px;margin-top:-5px;padding:0px">
+            <div class="header-title">
+                {{cardStatementSessionsText}}
+                <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+            </div>
+            <div ng-if="actionType == 2" id="cardstatementsessionreport_menu" class="menu-bar dialog-menu light-green">
+                <div id="menu" class="dialog-menu root-menu-item-4 " ng-controller="PopUpCtrl" ng-click="params={SessionNumber:currentStatementSession.SessionNumber,statementStartDate:currentStatementSession.StatementStartDate,statementEndDate:currentStatementSession.StatementEndDate, actionType: actionType};openWindow('/CardStatementSession/CardStatementSessionReport','Քաղվածքների ցուցակ','cardstatementsessionreport')">
+                    <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Հաշվետվություն</span>
+                </div>
+            </div>
+            <div class="product-collapsable-section">
+                <div class="product-container-header" style="height:25px">
+                    <div class="col-sm-12">
+                        <div class="col-sm-2" style="text-align:center">Համար</div>
+                        <div class="col-sm-2" style="text-align:center">Ա/թ</div>
+                        <div class="col-sm-2" style="text-align:center">Սկիզբ</div>
+                        <div class="col-sm-2" style="text-align:center">Վերջ</div>
+                        <div class="col-sm-4" style="text-align:center">Կարգավիճակ</div>
+                    </div>
+                    <div ng-if="actionType != 2" ng-controller="PopUpCtrl" ng-click="params={actionType:actionType}; openWindow('/CardStatementSession/AddCardStatementSession','Քաղվածքների նոր սեսիա','addCardStatementSession')">
+                        <i class="add-new-product tipB" style="margin-top:3px" data-original-title="Մուտքագրում"></i>
+                    </div>
+                </div>
+                <div id="cardStatementSessionContent" class="product-content-table custom-scroll" style="height:600px">
+                    <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                        <tbody>
+                            <tr ng-repeat="cardStatementSession in cardStatementSessions" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" style="max-height:200px">
+                                <td>
+                                    <div>
+                                        <span class="col-sm-2" style="text-align:center">{{ ::cardStatementSession.SessionNumber}}</span>
+                                        <span class="col-sm-2" style="text-align:center">{{ ::cardStatementSession.RegistrationDate | mydate | date: 'dd/MM/yyyy' }} </span>
+                                        <span class="col-sm-2" style="text-align:center">{{ ::cardStatementSession.StatementStartDate | mydate | date: 'dd/MM/yyyy' }} </span>
+                                        <span class="col-sm-2" style="text-align:center">{{ ::cardStatementSession.StatementEndDate | mydate | date: 'dd/MM/yyyy' }} </span>
+                                        <span class="col-sm-4" style="text-align:center">{{ statementSessionQualityTypes[cardStatementSession.Quality]}}</span>
+                                    </div>
+
+                                    <div ng-if="cardStatementSession.ScheduleString!= null && cardStatementSession.Quality == 2" colspan="6" style="margin-left:20px; margin-top:10px; color:#ff0100">
+                                        Պլանավորում՝ {{ cardStatementSession.ScheduleString }}
+                                    </div>
+                                </td>
+                                <td class="col-sm-1 click_toggle" context="context" id="contextMenu"><div id="contextMenu"></div> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="cardStatementSessions.length==0" style="color:red;font-size:16px;text-align:center;">Նշված ժամանակահատվածում գործարքները բացակայում են</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul id="context" class="dropdown-menu">
+        <li ng-if="currentStatementSession.Quality==1 && actionType != 2"><a style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" class="my_button" ng-click="params={SessionNumber:currentStatementSession.SessionNumber};openWindow('/CardStatementSession/StartCardStatementSession','Քաղվածքների ստեղծում','startcardstatementsession')">Սկսել քաղվածքների ստեղծումը</a></li>
+        <li><a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl" ng-click="params={SessionNumber:currentStatementSession.SessionNumber,statementSessionQualityTypes:statementSessionQualityTypes}; openWindow('/CardStatementSession/CardStatementSessionDetails','Մանրամասն դիտարկում ','cardstatementsessiondetails')">Դիտարկել</a></li>
+        <li ng-if="currentStatementSession.Quality==2 && actionType != 2"><a style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" class="my_button" ng-click="deleteCardStatementSessionSchedule(currentStatementSession.SessionNumber)">Հեռացնել պլանավորումը</a></li>
+        <li ng-if="(currentStatementSession.Quality==1 || currentStatementSession.Quality==2)  && actionType != 2"><a style="color: black;text-decoration:none!important ;" class="my_button" ng-click="deleteCardStatementSession()">Հեռացնել սեսիան</a></li>
+        <li><a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl" ng-click="params={SessionNumber:currentStatementSession.SessionNumber,statementStartDate:currentStatementSession.StatementStartDate,statementEndDate:currentStatementSession.StatementEndDate, actionType: actionType};openWindow('/CardStatementSession/CardStatementSessionReport','Քաղվածքների ցուցակ','cardstatementsessionreport')">Քաղվածքների ցուցակ</a></li>
+        <li><a style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" class="my_button" ng-click="params={SessionNumber:currentStatementSession.SessionNumber};openWindow('/CardStatementSession/CardStatementSessionHistory','Սեսիայի պատմություն',cardstatementsessionhistory)">Սեսիայի պատմություն</a></li>
+    </ul>
+</form>

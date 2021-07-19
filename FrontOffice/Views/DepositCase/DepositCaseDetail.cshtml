@@ -1,0 +1,111 @@
+﻿@{
+    Layout = null;
+}
+<div ng-controller="DepositCaseCtrl" id="depositCaseDetails" data-ng-init="getDepositCase(productId);getFilialList();getUserFilialCode()">
+    <loading-control scopevariable="filialList"></loading-control>
+    <div id="depositCasedetails_menu"  class="menu-bar dialog-menu light-green details-menu" style="min-width:800px;">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-2 " ng-if="userFilialCode==22041 || userFilialCode==22006 || userFilialCode==22046" ng-click="getDepositCaseContract(depositcase.ProductId)">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="h-menu-icon printButton">Տպել պայմանագիր</span>
+            </li>
+            <li class="root-menu-item-2 " ng-if="depositcase.Quality==5 && isOnlineAcc==true" ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-click="params={productId:depositcase.ProductId}; openWindow('/DepositCaseStoppingPenaltyCalculationOrder/PersonalDepositCaseStoppingPenaltyCalculationOrder','Դադարեցնել տույժի հաշվեգրում','depositCaseStoppingPenaltyCalculationOrder')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">Դադարեցնել տույժի հաշվեգրումը</span>
+            </li>
+        </ul>
+    </div>
+    <div ng-show="filialList" class="product-details bhoechie-tab-content" style="min-width:800px;margin-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պահատուփի համար</div>
+            <div class="product-detail-cell product-detail-value">{{depositcase.CaseNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մասնաճյուղ</div>
+            <div class="product-detail-cell product-detail-value">{{filialList[depositcase.FilialCode]}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{depositcase.StartDate|mydate|date:'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{depositcase.EndDate|mydate|date:'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ավտոմատ երկարաձգում</div>
+            <div class="product-detail-cell product-detail-value">{{depositcase.RecontractPossibility==true?'Այո':'Ոչ'}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value" ng-style="{ color: depositcase.Quality==5 ? 'red' : '' }">{{depositcase.QualityDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Համատեղ</div>
+            <div class="product-detail-cell product-detail-value">{{depositcase.ContractType==0?'Ոչ':'Այո'}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="depositcase.ContractType!=0">
+            <div class="product-detail-cell product-detail-lable">Պայմանագրի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{depositcase.ContractType==1?'Միաժամանակյա':'Ոչ միաժամանակյա'}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="depositcase.ContractType!=0" ng-repeat="jointCustomers in depositcase.JointCustomers">
+            <div class="product-detail-cell product-detail-lable" ng-if="$index==0">Համատեղ հաճախորդներ`</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="$index!=0">&nbsp;</div>
+            <div class="product-detail-cell product-detail-value">{{::jointCustomers.key}}
+                <span style="color: #337AB7; cursor:pointer;" title="Հաճախորդի տվյալներ" ng-controller="PopUpCtrl" ng-click="params={customerNumber:jointCustomers.key}; openWindow('/Customer/CustomerDetails','Հաճախորդի տվյալներ','customerdetails')" class="glyphicon glyphicon-info-sign"></span>
+            </div>
+        </div>
+        <div ng-if="depositcase.Quality==5" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տուգանք</div>
+            <div class="product-detail-cell product-detail-value">{{depositcase.PenaltyAmount|number:2}} AMD</div>
+        </div>
+        <div ng-if="depositcase.Quality==40" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{depositcase.ClosingDate|mydate|date:'dd/MM/yyyy'}}</div>
+        </div>
+        <div ng-if="depositcase.ServicingSetNumber!=0" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սպասարկող ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">{{depositcase.ServicingUserDescrition}}  {{depositcase.ServicingSetNumber}}
+                <span style="color: #337AB7; cursor:pointer;" title="Սպասարկողի ՊԿ" ng-controller="PopUpCtrl" ng-click="params={setNumber:depositcase.ServicingSetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>
+            </div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="depositcase.ChangingReason!=null">
+            <div class="product-detail-cell product-detail-lable">Փոփոխման հիմք</div>
+            <div class="product-detail-cell product-detail-value">{{depositcase.ChangingReason}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="depositcase.DocumentDate!=null">
+            <div class="product-detail-cell product-detail-lable">Փաստաթղթի ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{depositcase.DocumentDate |mydate|date:'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="depositcase.DateOfStoppingPenaltyCalculation!=null">
+            <div class="product-detail-cell product-detail-lable">Տույժի դադարեցման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{depositcase.DateOfStoppingPenaltyCalculation |mydate|date:'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div ng-if="depositcase.ChangeSetNumber!=null" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տուժանքի դադարեցնողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">
+                 {{depositcase.ChangeSetNumber}}
+                <span style="color: #337AB7; cursor:pointer;" title="Տուժանքի դադարեցնողի ՊԿ" ng-controller="PopUpCtrl" ng-click="params={setNumber:depositcase.ChangeSetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $("#depositCasedetails_menu div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('#depositCasedetails_menu div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#depositCasedetails_menu div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#depositCasedetails_menu div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+</script>

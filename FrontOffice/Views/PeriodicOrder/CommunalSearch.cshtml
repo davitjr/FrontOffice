@@ -1,0 +1,120 @@
+﻿<style type="text/css">
+    #periodicUtilityForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #periodicUtilityForm {
+        min-width:600px;
+    }
+</style>
+<form name="periodicUtilityForm" id="periodicUtilityForm" role="form" class="form-horizontal" novalidate>
+    <errors></errors>
+    <div ng-if="periodic==3">
+
+        <div class="form-group col-sm-11" ng-if="periodicorder.UtilityPaymentOrder.Description">
+
+            <section class="panel panel-primary">
+                <header class="panel-heading">
+                    <span class="panel-title" style="font-size: 14px;">{{periodicorder.UtilityPaymentOrder.Description}} </span>
+                </header>
+                <div class="panel-body">
+                    <div class="product-detail-row" ng-if="periodicorder.UtilityPaymentOrder.CommunalType==3 || periodicorder.UtilityPaymentOrder.CommunalType==4 || periodicorder.UtilityPaymentOrder.CommunalType==5 || periodicorder.UtilityPaymentOrder.CommunalType==6
+                      || periodicorder.UtilityPaymentOrder.CommunalType==11 || periodicorder.UtilityPaymentOrder.CommunalType==9">
+                        <div class="product-detail-cell product-detail-lable">Բաժանորդի քարտի համարը `</div>
+                        <div class="product-detail-cell product-detail-value" style="text-align:left;">{{periodicorder.UtilityPaymentOrder.Code}}</div>
+
+                    </div>
+                    <div class="product-detail-row" ng-if="periodicorder.UtilityPaymentOrder.CommunalType==7 || periodicorder.UtilityPaymentOrder.CommunalType==8  || periodicorder.UtilityPaymentOrder.CommunalType==10">
+                        <div class="product-detail-cell product-detail-lable">Հեռախոսահամար `</div>
+                        <div class="product-detail-cell product-detail-value" style="text-align:left;">{{periodicorder.UtilityPaymentOrder.Code}}</div>
+                    </div>
+                    <div class="product-detail-row" ng-if="periodicorder.UtilityPaymentOrder.CommunalType==17">
+                        <div class="product-detail-cell product-detail-lable">Պայմ․ `</div>
+                        <div class="product-detail-cell product-detail-value" style="text-align:left;">{{periodicorder.UtilityPaymentOrder.Code}}</div>
+                    </div>
+                    <div class="product-detail-row" ng-if="periodicorder.UtilityPaymentOrder.CommunalType==3 || periodicorder.UtilityPaymentOrder.CommunalType==4
+                     || periodicorder.UtilityPaymentOrder.CommunalType==5 || periodicorder.UtilityPaymentOrder.CommunalType==6
+                     || periodicorder.UtilityPaymentOrder.CommunalType==11 || periodicorder.UtilityPaymentOrder.CommunalType==9">
+                        <div class="product-detail-cell product-detail-lable">Բաժանորդ `</div>
+                        <div class="product-detail-cell product-detail-value" style="text-align:left;">{{periodicorder.PeriodicDescription}}</div>
+                    </div>
+                    <div class="product-detail-row" ng-if="periodicorder.UtilityPaymentOrder.CommunalType==3 || periodicorder.UtilityPaymentOrder.CommunalType==4 ||
+                      periodicorder.UtilityPaymentOrder.CommunalType==5 || periodicorder.UtilityPaymentOrder.CommunalType==6 ">
+                        <div class="product-detail-cell product-detail-lable">Հասցե `</div>
+                        <div class="product-detail-cell product-detail-value" style="text-align:left;">{{address}}</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <div class="form-group ">
+            <label class="tab_title col-sm-5 control-label"> Համար</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-8 multiple_columns">
+                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title" id="number" name="number" ng-init="generateNewOrderNumber()" data-ng-model="periodicorder.OrderNumber" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="periodicUtilityForm.$submitted || periodicUtilityForm.number.$dirty"
+                                 for="periodicUtilityForm.number.$error">
+                        <ng-message when="required" class="errors">
+                            Համար դաշտը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-5">Կոմունալի տեսակը</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="input-group col-sm-10">
+                        <input disabled="disabled" name="search" ng-model="periodicorder.UtilityPaymentOrder.Description" type="text" class="tab_title form-control" required />
+                        <div class="input-group-btn" style="display:block;">
+                            <button type="button" class="btn btn-default searchButton" onclick="sessionStorage.removeItem('utilityPayment')" ng-click="params = { periodic: 2 };searchcommunal()" title="Կոմունալի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="periodicUtilityForm.$submitted || periodicUtilityForm.search.$dirty"
+                                 for="periodicUtilityForm.search.$error">
+                        <ng-message when="required" class="errors">
+                            Կատարեք որոնում
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="periodicorder.UtilityPaymentOrder.CommunalType==4">
+            <label class="tab_title col-sm-5">Ընտրեք ենթատեսակը</label>
+            <div class="col-sm-6" ng-init="getPeriodicsSubTypes();periodicorder.ServicePaymentType=-1">
+                <div class="row">
+                    <select class="form-control" required data-ng-model="periodicorder.ServicePaymentType" name="periodicssubtypes"
+                            data-ng-options="k as v for (k,v) in periodicssubtypes">
+                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք ենթատեսակը...</option>
+                    </select>
+                </div>
+                <div class="row errors" ng-if="periodicUtilityForm.$submitted && periodicorder.ServicePaymentType==-1">
+                    Ընտրեք ենթատեսակը
+                </div>
+            </div>
+        </div>
+        <paymentaccount accountselectname="debitAccount"
+                        accounts="debitAccounts"
+                        account="periodicorder.UtilityPaymentOrder.DebitAccount"
+                        check="0"
+                        nameforaccount="'Ելքագրվող (դեբետ) հաշիվ'"
+                        nameforcurrency=""
+                        data-ng-init="getAccountsForOrder()">
+        </paymentaccount>
+        <div class="row">
+            <div class="col-sm-5"></div>
+            <ng-messages class="errors" ng-if="periodicUtilityForm.$submitted && periodicorder.UtilityPaymentOrder.DebitAccount==undefined">
+                Հաշիվը ընտրված չէ
+            </ng-messages>
+        </div>
+    </div>  
+</form>

@@ -1,0 +1,119 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div ng-controller="AccreditiveCtrl" id="accreditiveDetails" data-ng-init="getAccreditive(productId)">
+    <loading></loading>
+    <div id="loandetails_menu" class="menu-bar dialog-menu light-green details-menu">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-3 " ng-if="$root.SessionProperties.SourceType == 2  && accreditive.Quality==10" ng-controller="PopUpCtrl" ng-click="params={product:accreditive,orderType:110};openWindow('/LoanProductActivationOrder/PersonalLoanProductActivationOrder','Ակրեդիտիվի ակտիվացում','newLoanProductActivation')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-2" class="applicationButton h-menu-icon">Ակտիվացնել</span>
+            </li>
+            <li class="root-menu-item-3 " ng-if="$root.SessionProperties.SourceType == 2 && accreditive && accreditive.Quality!=40 && accreditive.Quality!=10" ng-click="saveAccreditiveTerminationOrder(productId)">
+                <span id="h-menu-item-5" onclick="return false;">
+                    <img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Դադարեցում
+                </span>
+            </li>
+            <li class="root-menu-item-5 " ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-if="accreditive.Quality<10 && isOnlineAcc==true" ng-click="params={productId:accreditive.ProductId,actionType:2,productType:accreditive.ProductType};openWindow('/ClassifiedLoanActionOrder/PersonalClassifiedLoanActionOrder','Ակրեդիտիվի դուրսգրում','newClassifiedLoanActionOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">Դուրս գրել</span>
+            </li>
+            <li class="root-menu-item-5 " ng-class="{'my_disable':disabelButton==true}" ng-controller="PopUpCtrl" ng-if="accreditive.Quality==11 && isOnlineAcc==true" ng-click="params={productId:accreditive.ProductId,actionType:1,productType:accreditive.ProductType};openWindow('/ClassifiedLoanActionOrder/PersonalClassifiedLoanActionOrder','Ակրեդիտիվի հետբերում','newClassifiedLoanActionOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">Հետ բերել </span>
+            </li>
+        </ul>
+
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div ng-show="!loading" class="product-details bhoechie-tab-content" style="min-width:800px;margin-left:10px;">
+        <div class="product-detail-row" ng-if="accreditive.CreditCode!=''">
+            <div class="product-detail-cell product-detail-lable">Կոդ</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{accreditive.CreditCode}}<span style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" ng-click="params={creditCode:accreditive.CreditCode,loanCurrency:accreditive.Currency};openWindow('/Loan/CreditCodeAccountDetails','Հաշվեհամարներ','creditCodeAccountDetails');" class="glyphicon glyphicon-info-sign" /></div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;" ng-style="{ color: accreditive.Quality==5 ||  accreditive.Quality==11 || accreditive.Quality==12 || accreditive.Quality==2 ? 'red' : '' }">{{accreditive.QualityDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{accreditive.StartDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{accreditive.EndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պայմանագրային գումար</div>
+            <div class="product-detail-cell product-detail-value">{{accreditive.StartCapitalString}} {{accreditive.Currency}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կցված հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{accreditive.ConnectAccount.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կոմիսիոն վճարի տոկոսադրույք</div>
+            <div class="product-detail-cell product-detail-value">{{accreditive.InterestRate * 100 }}%</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կոմիսիոն վճարի գանձում</div>
+            <div class="product-detail-cell product-detail-value">{{percentCummulation[accreditive.PercentCummulation]}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջին հաշվարկի օր</div>
+            <div class="product-detail-cell product-detail-value">{{accreditive.DayOfRateCalculation | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Բենեֆեցիար</div>
+            <div class="product-detail-cell product-detail-value">{{accreditive.Benefeciar}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մնացորդ</div>
+            <div class="product-detail-cell product-detail-value">{{accreditive.CurrentCapitalString}} {{accreditive.Currency}}</div>
+        </div>
+        <div ng-if="accreditive.Quality==40" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{accreditive.DayOfRateCalculation | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        
+    </div>
+    <div class="bhoechie-tab-container" style="max-height:80%;" id="loanDetailsContainer">
+        <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+            <div class="list-group">
+                <div class="list-group-item active text-center"><span>Մոնիթորինգի եզրակացություն</span></div>
+            </div>
+        </div>
+        <div class="bhoechie-tab" style="width: calc(100% - 140px); display: inline-block;">
+            <div class="bhoechie-tab-content active ">
+                <loanmonitoring ng-if="accreditive" loan="accreditive"></loanmonitoring>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#accreditiveDetails div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('#accreditiveDetails div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#accreditiveDetails div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#accreditiveDetails div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+
+
+    $("#loanDetailsContainer").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+
+</script>

@@ -1,0 +1,40 @@
+﻿
+<form style="width:550px" ng-controller="LeasingCustomerClassificationCtrl" ng-init="GetCustomerClassificationHistoryByID(); ">
+
+
+    <div class="product-details bhoechie-tab-content" style="min-width:550px;padding-left:10px">
+
+         
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Դասակարգման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{classificationHistory.ClassificationDateString}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Դաս</div>
+            <div class="product-detail-cell product-detail-value">{{classificationHistory.RiskClassName}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{classificationHistory.ClassificationType}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաշիվ/Հղման համար</div>
+            <div class="product-detail-cell product-detail-value">{{classificationHistory.AccountOrLink}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխ. անձ</div>
+            <div class="product-detail-cell product-detail-value">{{classificationHistory.SubstitutePersonNumber}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վարկառու</div>
+            <div class="product-detail-cell product-detail-value">{{classificationHistory.BorrowerNumber}}</div>
+        </div>
+    </div>
+
+     
+
+</form>
+
+
+
+

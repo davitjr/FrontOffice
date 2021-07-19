@@ -1,0 +1,99 @@
+﻿
+@{
+    Layout = null;
+}
+<style>
+    #employersDetails {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: 600px;
+    }
+
+
+    #employersTable td, th {
+        border: 1px solid #cecece;
+        width: 100px;
+        font-size: 12px;
+    }
+
+    #employersTable top th {
+        font-size: 12px;
+    }
+
+    #tbl table .top td {
+        font-size: 12px;
+    }
+
+
+</style>
+
+<div id="employersDetails" ng-controller="DAHKCtrl" ng-init="getDahkDetails();">
+
+    <div class="form-group col-sm-3" style="margin-top:10px;margin-left:10px;">
+        <div class="row">
+            <label class="product-detail-lable " for="inquestCodeFiltered">Վարույթի կոդ</label>
+        </div>
+        <div class="row">
+            <div class="">
+                <select data-ng-model="inquestCodeFiltered" name="inquestCodeFiltered" id="inquestCodeFiltered" class="form-control"
+                        data-ng-options="dahkDet.InquestCode for dahkDet in dahkBlockages | unique:'InquestCode'" ng-change="inquestCodeValueChange(filterClosed)">
+                    <option value="" style="margin-left:25px">Ընտրեք...</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="product-container" style="width:auto;min-width:590px">
+        <div class="include-closed-products">
+            <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-employer-accounts" data-ng-model="filterClosed" ng-true-value="2" ng-false-value="1" ng-change="QualityFilterEmployers()">
+            <label for="include-closed-employer-accounts" name="include-closed-card-employer-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել նաև փակվածները</label>
+        </div>
+        <div class="header-title">
+            Գործատուի հաշիվներ
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+
+        <div class="product-collapsable-section ">
+            <div id="employersTable" class="product-content-table " style="min-height:100px;padding:0px;margin:5px;">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <thead class="product-container-header">
+                        <tr>
+                            <td style="text-align:center;width:70px;">Հաճախորդ</td>
+                            <td style="text-align:center;width:80px;">Հաղորդագր. N</td>
+                            <td style="text-align:center;width:70px;">Վարույթի կոդ</td>
+                            <td style="text-align:center">Գործատուի հաշվեհամար</td>
+                            <td ng-if="filterClosed==2" style="text-align:center">Փակման ա/թ</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="employer in dahkEmployers " class="">
+                            <td style="text-align:center">{{::employer.CustomerNumber}}</td>
+                            <td style="text-align:center">{{::employer.RequestNumber}}</td>
+                            <td style="text-align:center">{{::employer.InquestCode}}</td>
+                            <td style="text-align:center">{{::employer.AccountNumber}}</td>
+
+                            <td ng-if="filterClosed==2" style="text-align:center;color:red;">{{::employer.ClosingDate | mydate | date: 'dd/MM/yyyy HH:mm'}}</td>
+                        </tr>
+                        <tr ng-if="dahkEmployers.length==0 && filterClosed==2">
+                            <td colspan="5" style="text-align:center">Տվյալներ առկա չեն</td>
+                        </tr>
+                        <tr ng-if="dahkEmployers.length==0 && filterClosed==1">
+                            <td colspan="4" style="text-align:center">Տվյալներ առկա չեն</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#employersTable").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>

@@ -1,0 +1,133 @@
+﻿<form style="width:550px" ng-controller="ReceivedBankMailTransfersCtrl" ng-init="getTransfer(selectedTransferId);">
+
+    <div ng-show="!periodic" id="transferarmpaymentorder_menu" class="menu-bar dialog-menu light-green">
+        <ul ng-if="!periodic" id="menu" class="dialog-menu">
+            <li ng-if="order.Type != 86" class="root-menu-item-3 " ng-click="printTransfer(selectedTransferId)">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Հանձնարարական</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div class="product-details bhoechie-tab-content" style="min-width:550px;padding-left:10px">
+ 
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Համար</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.ID}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարդացման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DateGetString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">ԿԲ ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DateTransString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DateTransferString}}</div>
+        </div>
+         
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ֆայլ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.Ident}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Դեբետ հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.AccDebetCB}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կրեդիտ հաշիվ ձևակերպման համար</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.AccCredit}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կրեդիտ հաշիվ ֆայլից</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.AccDebet}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="transfer.CardNumber!=null && transfer.CardNumber!=undefined && transfer.CardNumber!=''">
+            <div class="product-detail-cell product-detail-lable">Քարտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.CardNumber}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="transfer.CardNumber!=null && transfer.CardNumber!=undefined && transfer.CardNumber!=''" >
+            <div class="product-detail-cell product-detail-lable">Քարտի մասնաճյուղ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.CardFilial}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Նկարագրություն</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DescrDebetCB}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Նկարագրություն մեր բազայից</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DescrCredit}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Նկարագրություն ֆայլից</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DescrDebet}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման նպատակ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.DescrPoxancym}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.Amount | number:2}} {{transfer.Valuta}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տրանզակցիայի համար</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.TransactionsGroupNumber}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.VerifiedString">
+            <div class="product-detail-cell product-detail-lable">Համընկնում</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.VerifiedString}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.AMLCheckString=!''">
+            <div class="product-detail-cell product-detail-lable">AML ստուգում</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.AMLCheckString}}</div>
+        </div>
+ 
+        <div class="product-detail-row" ng-if="transfer.CheckSetNumber!=0">
+            <div class="product-detail-cell product-detail-lable">AML հաստատող</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.CheckSetNumber}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="transfer.CheckDateString!=''">
+            <div class="product-detail-cell product-detail-lable">AML հաստատման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.CheckDateString}}</div>
+        </div>
+ 
+        <div class="product-detail-row"  >
+            <div class="product-detail-cell product-detail-lable">Նկարագրությունների ստուգում</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.FileForBranch}}</div>
+        </div>
+        
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">DAHK-ի ստուգման արդյունք</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.UserCodeString}}</div>
+        </div>
+
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Չպարզված փոխանցում</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.UnknownTransferString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ձևակերպել ավտոմատ ռեժիմով թե ոչ</div>
+            <div class="product-detail-cell product-detail-value">{{transfer.NotAutomatTransString}}</div>
+        </div>
+    </div>
+
+    <div class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable"><transferattachments id="selectedTransferId"></transferattachments></div>
+    </div>
+
+</form>
+ 
+

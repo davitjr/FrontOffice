@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+    #HBDocumentTransactionRejectForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #HBDocumentTransactionRejectForm {
+        min-width: 600px;
+    }
+    .maximize-dialog {
+        display: none;
+    }
+
+    .minimize-dialog {
+        display: none;
+    }
+</style>
+<div id="HBDocumentTransactionRejectForm" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="HBDocumentsCtrl" ng-init="initTransactionRejectFields();" name="HBDocumentTransactionRejectForm" @*ng-submit="confirmRejectClick();"*@ id="HBDocumentTransactionRejectForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required style="width:650px;">
+
+    <div>
+        <div class="col-sm-11" style="margin-top:20px;">
+            <div class="form-group">
+                <label class="tab_title col-sm-5">Մերժման պատճառը</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <select style="width:380px;" data-toggle="tooltip"
+                                data-trigger="hover" data-placement="top" title="Մերժման պատճառ" ng-model="rejectReason"
+                                name="rejectReason" id="rejectReason" class="form-control select-font select_style"
+                                data-ng-options="k as v for (k,v) in rejectTypes">
+                            <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="HBDocumentTransactionRejectForm.$submitted || rejectReason.$dirty"
+                                     for="rejectReason.$error">
+                            <ng-message when="required" class="errors">
+                                Մերժման պատճառը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns" style="margin-left:520px">
+                        <button type="button" class="buttonClass" style="height:31px;" ng-click="confirmRejectClick();">Հաստատել</button>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,20 @@
+﻿<div class="form-group " ng-if="additionalDetails.length>0">
+
+    <div class="col-sm-12" style="max-width:500px">
+        <div class="row-no-margin">
+
+            <section class="panel panel-info" style="border-color: rgba(236, 159, 16, 0.17) !important;">
+                <header class="panel-heading" style="background-color: rgba(236, 159, 16, 0.17)">
+                    <span class="panel-title" style="font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Դեբետ հաշվի նշումներ</span>
+                </header>
+                <div ng-repeat="additionalDetail in additionalDetails" class="panel-body">
+                    <div class="row-no-margin col-sm-12">
+                        <span class="tab_title">{{$index+1}}.{{::additionalDetail.AdditionTypeDescription}}`</span><br />
+                       <span class="tab_title" style="font-family: inherit !important;">{{::additionalDetail.AdditionValue}}</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,96 @@
+﻿
+@{
+    Layout = null;
+}
+<style type="text/css">
+
+    .custInfo
+    {
+        font-size:11pt;
+    }
+
+   #non_cash_opperson .chosen-container {
+    max-width: 350px !important;
+    min-width:350px !important;
+}
+</style>
+
+<div class="panel panel-success" id="non_cash_opperson">
+    <div class="panel-heading">Գործարք կատարող անձ<span class='redStyle'>*</span></div>
+    <div class="panel-body">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div>
+
+                    <select ng-if="accountType!=21" chosen data-ng-model="$parent.opperson" ng-change="getCustomerDocumentWarnings(opperson.CustomerNumber)" name="Persons" id="Persons" class="form-control" required style="max-width:100%;"
+                            data-ng-options="a.CustomerNumber+' '+a.PersonName+' '+a.PersonLastName+' '+a.PersonDocument  for a in persons" data-placeholder="Ընտրեք գործարք կատարողին...">
+                        <option value=""></option>
+                    </select>
+
+                    @*<select data-ng-model="opperson" class="form-control " name="Persons" id="Persons" style="max-width:100%;"
+                    data-ng-options="a.CustomerNumber+' '+a.PersonName+' '+a.PersonLastName+' '+a.PersonDocument  for a in persons" ng-change="getCustomerDocumentWarnings(opperson.CustomerNumber)" required>
+                <option value="" hidden>Ընտրեք գործարք կատարողին...</option>
+            </select>*@
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="formname.$submitted || formname.Persons.$dirty"
+                                 for="formname.Persons.$error">
+                        <ng-message when="required" style="padding-left:20px;" class="errors">
+                            Ընտրեք գործարք կատարողին
+                        </ng-message>
+                    </ng-messages>
+                </div>
+                <br />
+                <div class="form-group " ng-if="accountType==21 && ordertype==52">
+                    @*Զեկուցագիր  Թիվ Դ - 05/2-28*@
+                    <label class="tab_title col-sm-3" for="amount">Հաճախորդ</label>
+                    <div class="col-sm-9">
+                        <div class="row-no-margin input-group">
+                            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title" id="number" ng-minlength="0 || 12" maxlength="12" ng-change="changeCustomerNumber()" ng-enter="opperson.CustomerNumber.length == 12 && getCustomer(opperson.CustomerNumber)" name="number" data-ng-model="opperson.CustomerNumber">
+                            <div class="input-group-btn" style="width:auto">
+                                <button type="button" ng-disabled="opperson.CustomerNumber.length!=12" class="btn btn-primary" ng-click="getCustomer(opperson.CustomerNumber)" title="Լրացնել տվյալները"><span class="glyphicon glyphicon-plus"></span></button>
+                                <button type="button" class="btn btn-primary searchButton" ng-click="searchCustomers()" title="Հաճախորդի որոնում"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+
+                            </div>
+                        </div>
+                        <ng-messages ng-if="formname.$submitted || formname.number.$dirty"
+                                     for="formname.number.$error">
+                            <ng-message when="minlength" class="errors">
+                                Մուտքագրեք ամբողջ համարը(12 նիշ)
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+                <div style="font-size:14px;margin-left: 5px;" class="row additionalInfoLabel custInfo">
+                    <div style="clear:both;font-family:'webly_light'" class="col-sm-4">Անուն</div><div class="col-sm-8"><b style="font-family:'webly_semibold'">{{opperson.PersonName}}</b></div>
+                    <div style="clear:both;font-family:'webly_light'" class="col-sm-4">Ազգանուն</div><div class="col-sm-8"><b style="font-family:'webly_semibold'">{{opperson.PersonLastName}}</b></div>
+                    <div style="clear:both;font-family:'webly_light'" class="col-sm-4">Անձնագիր</div><div class="col-sm-8" style="padding-right:0;"> <b style="font-family:'webly_semibold'">{{opperson.PersonDocument}}</b></div>
+                    <div style="clear:both;font-family:'webly_light'" class="col-sm-4">ՀԾՀ</div><div class="col-sm-8"> <b style="font-family:'webly_semibold'">{{opperson.PersonSocialNumber || "-"}}</b></div>
+                    <div style="clear:both;font-family:'webly_light'" class="col-sm-4" ng-if="opperson.PersonNoSocialNumber!='' && opperson.PersonNoSocialNumber!=undefined"> ՀԾՀ-ից հրաժարվելու տեղեկանք</div><div class="col-sm-8" ng-if="opperson.PersonNoSocialNumber!='' && opperson.PersonNoSocialNumber!=undefined"> <b style="font-family:'webly_semibold'">{{opperson.PersonNoSocialNumber}}</b></div>
+                    <div ng-if="convertation || armbudget">
+                        <div style="clear:both;font-family:'webly_light'" class="col-sm-4">Հասցե</div><div class="col-sm-8"> <b style="font-family:'webly_semibold'">{{opperson.PersonAddress}}</b></div>
+                        <div style="clear:both;font-family:'webly_light'" class="col-sm-4">Հեռախոս</div><div class="col-sm-8"> <b style="font-family:'webly_semibold'">{{opperson.PersonPhone}}</b></div>
+                        <div ng-if="armbudget && (opperson.PersonEmail!='' && opperson.PersonEmail!=undefined)" style="clear:both;font-family:'webly_light'" class="col-sm-4">Էլ. հասցե</div><div ng-if="armbudget && (opperson.PersonEmail!='' || opperson.PersonEmail!=undefined)" class="col-sm-8"> <b style="font-family:'webly_semibold'">{{opperson.PersonEmail}}</b></div>
+                    </div>
+                    <div ng-if="convertation">
+                        <div style="clear:both;font-family:'webly_light'" class="col-sm-4">Ծննդյան ա/թ</div><div class="col-sm-8"> <b style="font-family:'webly_semibold'">{{opperson.BirthString | mydate | date: 'dd/MM/yyyy'}}</b></div>
+                        <div style="clear:both;font-family:'webly_light'" class="col-sm-4">Ռեզիդենտություն</div><div class="col-sm-8"> <b style="font-family:'webly_semibold'"><span ng-if="opperson.PersonResidence==1">Ռեզիդենտ</span><span ng-if="opperson.PersonResidence==2">Ոչ ռեզիդենտ</span></b></div>
+                    </div>
+
+                    <div ng-if="armbudget" style="clear:both;font-family:'webly_light'" class="col-sm-4">Կարգավիճակ</div><div ng-if="armbudget" class="col-sm-8"><b style="font-family:'webly_semibold'"><span ng-if="opperson.PersonResidence==1">Ֆիզիկական-ռեզիդենտ</span><span ng-if="opperson.PersonResidence==2">Ֆիզիկական-ոչ ռեզիդենտ</span></b></div>
+                </div>
+
+                <div ng-show="warnings.length>0" class="panel panel-warning">
+                    <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span> Ուշադրություն</div>
+                    <div class="panel-body">
+                        <div ng-repeat="war in warnings">
+                            {{$index+1}}.{{::war}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+

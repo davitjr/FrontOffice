@@ -1,0 +1,236 @@
+﻿<style type="text/css">
+    .tree-node {
+        border: 1px solid #dae2ea;
+        background: #f8faff;
+        color: #7c9eb2;
+    }
+</style>
+
+<link href="~/Content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+
+
+
+<div class="product-container" style="width:78%" ng-controller="ProvisionCtrl" data-ng-init="getCustomerProvisions()">
+    <div class="header-title">
+        Գրավներ
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="product-container-header">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <select ng-show="currencies" ng-init="getCurrencies()" ng-change="qualityFilter()" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ արժույթի" data-ng-model="filter.currency" style="max-width:80px;height:30px" name="Currency" id="Currency" class="form-control"
+                    data-ng-options="k as v for (k,v) in currencies">
+                <option value=""></option>
+            </select>
+            &nbsp;&nbsp;&nbsp;
+            <select ng-init="getProvisionTypes()" ng-change="qualityFilter()" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ գրավի տեսակի" data-ng-model="filter.provisionType" style="max-width:80px;height:30px;min-width:321px" name="provisionType" id="provisionType" class="form-control"
+                    data-ng-options="k as v for (k,v) in provisionTypes">
+                <option value="">Ընտրեք</option>
+            </select>
+
+            <select ng-model="filter.provisionQuality" ng-change="qualityFilter()" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ կարգավիճակի" style="max-width:120px;height:30px;" name="provisionQuality" id="provisionQuality" class="form-control">
+                <option value="1" selected="selected">Գործող</option>
+                <option value="2">Փակված</option>
+            </select>
+        </div>
+        <div class="tree-node tree-node-content" ng-if="customerProvisions.length==0" ui-tree-node>
+            <div colspan="3" style="text-align:center">Առկա չեն գրավներ</div>
+        </div>
+
+        <div style="height:600px;overflow-y:scroll" ui-tree data-empty-placeholder-enabled="false" ng-if="customerProvisions.length>0">
+            <ol ui-tree-nodes="" ng-model="customerProvisions">
+                <li>
+                    <table style="background-color:#e4e4e4;color:#6d6d6d">
+                        <tr>
+                            <td class="col-sm-4">
+                                <div>
+                                    Գրավի Տեսակ
+                                </div>
+
+                            </td>
+
+                            <td class="col-sm-3" style="width:28%">
+                                <div>
+                                    Գումար
+                                </div>
+
+                            </td>
+
+                            <td class="col-sm-2">
+                                <div>
+                                    Սկիզբ
+                                </div>
+
+                            </td>
+
+                            <td class="col-sm-2">
+                                <div>
+                                    Վերջ
+                                </div>
+
+                            </td>
+
+                            <td class="col-sm-4">
+                                <div>
+                                    Նկարագրություն
+                                </div>
+
+                            </td>
+
+                            <td class="col-sm-2" style="width:21%">
+                                <div>
+                                    Կարգավիճակ
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+                <li style="margin-bottom:10px;border:2px solid #A6A6B1" ng-repeat="provision in customerProvisions" data-collapsed="true" ui-tree-node>
+                    <div class="tree-node tree-node-content">
+                        <table style="">
+                            <tr>
+                                <td class="col-sm-1" style="width:4%">
+                                    <a style="cursor:pointer" ng-if="provision.Loans.length > 0" data-nodrag ng-click="toggle()" callrestservice(this)>
+                                        <span class="glyphicon" ng-class="{'glyphicon-plus': collapsed,'glyphicon-minus': !collapsed}"></span>
+                                    </a>{{::credential.CredentialTypeDescription}}
+                                </td>
+                                <td class="col-sm-3">
+                                    <div class="my_label line_height" style="word-wrap:break-word">
+                                        {{::provision.TypeDescription}}
+                                    </div>
+                                </td>
+
+                                <td class="col-sm-3" style="width:28%">
+                                    <div class="my_label line_height">
+                                        {{::provision.Amount | number:2}} {{::provision.Currency}}
+                                    </div>
+                                </td>
+
+                                <td class="col-sm-2">
+                                    <div class="my_label line_height">
+                                        {{::provision.ActivateDate | mydate | date: 'dd/MM/yyyy'}}
+                                    </div>
+                                </td>
+
+                                <td class="col-sm-2">
+                                    <div class="my_label line_height">
+                                        {{::provision.ClosingDate | mydate | date: 'dd/MM/yyyy'}}
+                                    </div>
+                                </td>
+
+                                <td class="col-sm-4">
+                                    <div class="my_label line_height" style="word-wrap:break-word">
+                                        {{::provision.Description}}
+                                    </div>
+                                </td>
+
+                                <td class="col-sm-2" style="width:21%">
+                                    <div class="my_label line_height">
+                                        {{::provision.QualityDescription}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-if="provision.ClosingReason!=undefined" style="color:red"><td colspan="10" style="padding-left:35px">{{::provision.ClosingReason}}</td></tr>
+                        </table>
+                    </div>
+                    <ol ui-tree-nodes="" ng-class="{hidden: collapsed}" ng-model="provision.Loans">
+                        <li>
+                            <table style="background-color:#e4e4e4;color:#6d6d6d">
+                                <tr>
+                                    <td class="col-sm-3">
+                                        <div>
+                                            Անուն,Ազգանուն
+                                        </div>
+                                    </td>
+
+
+                                    <td class="col-sm-2" style="width:20%">
+                                        <div>
+                                            Վարկային հաշիվ
+                                        </div>
+                                    </td>
+
+                                    <td class="col-sm-2" style="width:19%">
+                                        <div>
+                                            Կարգավիճակ
+                                        </div>
+                                    </td>
+
+                                    <td class="col-sm-3">
+                                        <div>
+                                            Տեսակ
+                                        </div>
+                                    </td>
+
+
+                                    <td class="col-sm-2" style="text-align:right;width:16%">
+                                        <div>
+                                            Գումար
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </li>
+                        <li ng-repeat="loan in provision.Loans" data-collapsed="true" ui-tree-node>
+                            <div class="tree-node tree-node-content" style="background-color: #EDF7E4">
+                                <table>
+                                    <tr>
+                                        <td class="col-sm-3">
+                                            <div class="my_label line_height" style="word-wrap:break-word" ng-if="provision.Type==14">
+                                                {{::loan.LoanCustomerDescription}}
+                                                <div class="btn-group" style="margin-left:5px" ng-if="hideBlank!='true'">
+                                                    <button type="button" class="btn btn-default" style="height:30px;background-color:#edf7e4" aria-label="Justify" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Քաղվածքի ստացում"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="top:-4px !important"></span></button>
+                                                    <ul class="dropdown-menu">
+                                                        <li ><a href="" ng-controller="PopUpCtrl" ng-click="params={productId:loan.LoanAccount, productType:1, informationType:1,customernumber:loan.LoanCustomerNumber};openWindow('/Provision/ProvisionLoanNotificationConfigurations','Քաղվածքի ստացման դիմում','provisionLoanStatement')">Քաղվածքի ստացման դիմում</a></li>
+                                                        <li ><a href="" ng-controller="PopUpCtrl" ng-click="params={selectedAccount:loan.LoanAccount, productId:loan.ProductId};openWindow('/Provision/ProvisionLoanStatement','Քաղվածք','provisionLoanStatement')">Քաղվածք</a></li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-sm-2">
+                                            <div class="my_label line_height">
+                                                {{::loan.LoanAccount}}
+                                            </div>
+                                        </td>
+
+                                        <td class="col-sm-2" style="width:23%">
+                                            <div class="my_label line_height">
+                                                {{::loan.LoanQualityDescription}}
+                                            </div>
+                                        </td>
+
+                                        <td class="col-sm-3">
+                                            <div class="my_label line_height" style="word-wrap:break-word">
+                                                {{::loan.LoanTypeDescription}}
+                                            </div>
+                                        </td>
+
+
+                                        <td class="col-sm-2" style="text-align:right;width:19%">
+                                            <div class="my_label line_height" style="text-align:right">
+                                                {{::loan.StartCapital | number:2}} {{::loan.Currency}}
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+
+                            </div>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $("[data-toggle=tooltip]").tooltip({
+        placement: $(this).data("placement") || 'bottom'
+    });
+</script>

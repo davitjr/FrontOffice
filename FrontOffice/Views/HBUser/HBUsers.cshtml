@@ -1,0 +1,64 @@
+﻿@{
+    Layout = null;
+} 
+<div ng-controller="HBUserCtrl"> 
+    
+    <div class="product-content-table custom-scroll" id="hbusersContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }" ng-init="getHBUsers()">
+        <div ng-if="hbusers==undefined">
+            <loading></loading>
+        </div>
+
+        <div class="product-container" style="width:90%;">
+            <div class="header-title">
+                ՀԲ օգտագործողներ
+                <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+            </div>
+            <div class="product-collapsable-section">
+                <div class="product-container-header">
+                       <span style="text-align:center;width:20px;margin-right:20px;margin-left:10px">Հաճ. համար </span>
+                            <span style="text-align:center;width:25px;margin-right:20px">Օգտ. անուն</span>
+                            <span style="text-align:center;width:25px;margin-right:20px">Բլոկավորման կ/վ</span>
+                            <span style="text-align:center;width:10px;">Մուտքագրման իրավունք</span>
+                     
+                </div>
+                <div class="product-content-table-full_height custom-scroll" id="hbUsersContent" style="min-height:100px;">
+                    <div ng-if="hbusers==undefined">
+                        <loading></loading>
+                    </div>
+                     
+                    <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                        <tbody>
+                            <tr ng-repeat="hbuser in hbusers" ng-class="{'selected':$index == selectedRow}" ng-dblclick="hbuserdetails();" ng-click="setClickedRow($index,hbuser)" style="max-height:200px">
+                                <td style="text-align:left">{{::hbuser.CustomerNumber}}</td>
+                                <td style="text-align: left">{{::hbuser.UserName}}</td>
+                                <td style="text-align:center">{{hbuser.IsBlocked ? 'Բլոկավորված' : 'Ոչ բլոկավորված'}}</td>
+                                <td style="text-align:center">{{hbuser.AllowDataEntry ? 'Առկա է'  : 'Առկա չէ'}}</td>
+                                <td ng-if="filter==1"  class="col-sm-1 click_toggle" context="contextHBOpenedUsers" id="contextMenu"><div id="contextMenu"></div> </td>
+                                <td ng-if="filter==2"  class="col-sm-1 click_toggle" context="contextHBClosedUsers" id="contextMenu"><div id="contextMenu"></div> </td>
+                            </tr>
+                            <tr ng-if="hbusers.length==0 ">
+                                <td colspan="3" style="text-align:center;">
+                                    Տվյալները բացակայում են
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ul id="contextHBOpenedUsers" class="dropdown-menu">
+                        <li><a style="color: black;text-decoration:none!important ;" ui-sref="hbuserdetails({selectedhbuserid : hbuser.ID})">Մանրամասն դիտարկում</a></li>
+                    </ul>
+                    <ul id="contextHBClosedUsers" class="dropdown-menu">
+                        <li><a style="color: black;text-decoration:none!important ;" ui-sref="hbuserdetails({selectedhbuserid : hbuser.ID})">Մանրամասն դիտարկում</a></li>
+                    </ul>
+                    <br />
+                </div>
+            </div>
+        </div>
+
+    </div>
+            
+</div>
+ 
+
+
+
+

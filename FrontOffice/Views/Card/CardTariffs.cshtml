@@ -1,0 +1,125 @@
+﻿<div ng-controller="CardCtrl" ng-if="productid" ng-init="getCardTariff(productid);getCardUSSDServiceTariff(productid)" id="cardTariffDetails">
+
+    <div id="cardTariff_menu" class="menu-bar dialog-menu light-green details-menu" style="margin-top:0px;margin-left:0px;" ng-show="$root.SessionProperties.IsChiefAcc == true || $root.SessionProperties.AdvancedOptions.tmpIsCardDepartment=='1' || $root.SessionProperties.AdvancedOptions['canChangeCardSMSTariff']=='1'">
+        <ul id="menu" class="dialog-menu">
+
+            <li class="root-menu-item-4 " ng-if="change!=true" ng-click="$parent.change=true">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="closeAccountButton  h-menu-icon">Փոփոխել</span>
+            </li>
+            <li class="root-menu-item-5 " ng-if="change==true " ng-click="$parent.change=false">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div class="product-details" style="margin-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կանխիկացման % ACBA</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardTariffs.CashRateOur*100|number:2}}  %
+                <span ng-if="change" ng-controller="PopUpCtrl" ng-click="params={productid:productid,fieldValue:(cardTariffs.CashRateOur*100).toFixed(2),fieldType:10,valueType:'%'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կանխիկացման % այլ</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardTariffs.CashRateOther*100|number:2}}  %
+                <span ng-if="change" ng-controller="PopUpCtrl" ng-click="params={productid:productid,fieldValue:(cardTariffs.CashRateOther*100).toFixed(2),fieldType:11,valueType:'%'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կանխիկացման % միջազգային</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardTariffs.CashRateInternational*100|number:2}} %
+                <span ng-if="change" ng-controller="PopUpCtrl" ng-click=" params={productid:productid,fieldValue:(cardTariffs.CashRateInternational*100).toFixed(2),fieldType:12,valueType:'%'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+
+            </div>
+        </div>
+        <br />
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կանխիկացման նվազագույն գանձվող գումար տեղական</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardTariffs.MinFeeLocal|number:2}} AMD
+                <span ng-if="change" ng-controller="PopUpCtrl" ng-click=" params={productid:productid,fieldValue:cardTariffs.MinFeeLocal,fieldType:13,valueType:'AMD'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կանխիկացման նվազագույն գանձվող գումար միջազգային</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardTariffs.MinFeeInternational|number:2}} AMD
+                <span ng-if="change" ng-controller="PopUpCtrl" ng-click=" params={productid:productid,fieldValue:cardTariffs.MinFeeInternational,fieldType:14,valueType:'AMD'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <br />
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կանխիկ մուտքի % ACBA</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardTariffs.CashInFeeRateOur*100|number:2}} %
+                <span ng-if="change" ng-controller="PopUpCtrl" ng-click=" params={productid:productid,fieldValue:(cardTariffs.CashInFeeRateOur*100).toFixed(2),fieldType:15,valueType:'%'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կանխիկ մուտքի % այլ</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardTariffs.CashInFeeRateOther*100|number:2}} %
+                <span ng-if="change" ng-controller="PopUpCtrl" ng-click=" params={productid:productid,fieldValue:(cardTariffs.CashInFeeRateOther*100).toFixed(2),fieldType:16,valueType:'%'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <br />
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">SMS միջն/վճար</div>
+            <div class="product-detail-cell product-detail-value">{{(cardTariffs.SMSFeeFromCustomer)|number:2}} AMD </div>
+        </div>
+
+        <div class="product-detail-row" ng-if="$root.SessionProperties.AdvancedOptions['canChangeCardSMSTariff']=='1'">
+            <div class="product-detail-cell product-detail-lable">SMS միջն/վճար գանձման եղանակ</div>
+            <div class="product-detail-cell product-detail-value" ng-if="cardTariffs.SMSFeeFromCustomer!=0">Հաճախորդից <span ng-if="change" ng-controller="PopUpCtrl" ng-click="params={productid:productid,fieldValue:(cardTariffs.SMSFeeFromCustomer + cardTariffs.SMSFeeFromBank).toFixed(2),fieldType:20,valueType:'AMD'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span></div>
+            <div class="product-detail-cell product-detail-value" ng-if="cardTariffs.SMSFeeFromBank!=0">Բանկից <span ng-if="change" ng-controller="PopUpCtrl" ng-click="params={productid:productid,fieldValue:(cardTariffs.SMSFeeFromCustomer + cardTariffs.SMSFeeFromBank).toFixed(2),fieldType:21,valueType:'AMD'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span></div>
+
+        </div>
+
+        <br />
+        @*<div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Հաճախորդից</div>
+                <div class="product-detail-cell product-detail-value">{{cardTariffs.SMSFeeFromCustomer|number:2}} AMD</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Բանկից</div>
+                <div class="product-detail-cell product-detail-value">{{cardTariffs.SMSFeeFromBank|number:2}} AMD </div>
+            </div>*@
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">USSD միջն/վճար</div>
+            <div class="product-detail-cell product-detail-value">{{USSDFeeFromClient |number:2}} AMD </div>
+        </div>
+        @*<div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Հաճախորդից</div>
+                <div class="product-detail-cell product-detail-value">{{USSDFeeFromClient|number:2}} AMD</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Բանկից</div>
+                <div class="product-detail-cell product-detail-value">{{USSDFeeFromBank|number:2}} AMD </div>
+            </div>*@
+
+        <br />
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտից քարտ փոխանցում` ATM </div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardTariffs.CardToCardFeeOur*100|number:2}} %
+                <span ng-if="change" ng-controller="PopUpCtrl" ng-click=" params={productid:productid,fieldValue:(cardTariffs.CardToCardFeeOur*100).toFixed(2),fieldType:17,valueType:'%'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Քարտից քարտ փոխանցում` www.arca.am</div>
+            <div class="product-detail-cell product-detail-value">
+                {{cardTariffs.CardToCardFeeOther*100|number:2}} %
+                <span ng-if="change" ng-controller="PopUpCtrl" ng-click=" params={productid:productid,fieldValue:(cardTariffs.CardToCardFeeOther*100).toFixed(2),fieldType:18,valueType:'%'};openWindow('/CardDataChangeOrder/PersonalCardDataChangeOrder','Քարտի տվյալների փոփոխում','cardDataChangeOrder')" title="Խմբագրել" class="glyphicon glyphicon-pencil" style="left: 10pt; color: #337AB7"></span>
+            </div>
+        </div>
+    </div>
+</div>

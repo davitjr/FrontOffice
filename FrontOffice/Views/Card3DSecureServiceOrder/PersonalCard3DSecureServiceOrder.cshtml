@@ -1,0 +1,114 @@
+﻿@{
+    Layout = null;
+}
+<div id="card3DSecureOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form style="width:650px;" ng-controller="card3DSecureServiceOrderOrderCtrl" ng-init="getCustomerMainData();getActionTypes()" prevent-enter-submit name="card3DSecureOrderForm" id="card3DSecureOrderForm" role="form" ng-submit="card3DSecureOrderForm.$valid && saveCard3DSecureServiceOrder()" novalidate class="form-horizontal" labels-required>
+    <div id="closeaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+           
+            <li class="root-menu-item-5 " ng-controller="CardCtrl" ng-click="card3DSecureOrderForm.$setSubmitted();card3DSecureOrderForm.$valid && getCardApplicationDetails((order.Card3DSecureService.ActionType==1)?18:19,order.Card3DSecureService.CardNumber)"> 
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Դիմում</span>
+            </li>
+            
+            <li class="root-menu-item-4" ng-click="card3DSecureOrderForm.$setSubmitted();card3DSecureOrderForm.$valid && saveCard3DSecureServiceOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5" onclick="CloseBPDialog('card3DSecureOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div style="max-width:480px">
+            <errors></errors>
+        </div>
+
+
+        <div style="margin-left:10px;margin-right:10px;">
+            <div class="form-group">
+                <label class="tab_title col-sm-6" for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-8 multiple_columns">
+                        <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-6" for="CustomerNumber">Հաճախորդի համար</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-8 multiple_columns">
+
+                        <input disabled="disabled" type="text" class="form-control tab_title unstyled" style="text-align: left;" id="CustomerNumber" name="CustomerNumber" ng-model="order.Card3DSecureService.CustomerNumber">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-6" for="CustomerNumber">Քարտի համար</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-8 multiple_columns">
+                        <input disabled="disabled" type="text" class="form-control tab_title unstyled" style="text-align: left;" id="CardNumber" name="CardNumber" ng-model="order.Card3DSecureService.CardNumber">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="customerMainData">
+                <label class="tab_title col-sm-6" for="Email">Էլ.հասցե <span class="redStyle">*</span></label>
+                <div class="col-sm-5">
+                    <div class="row">
+                        <select  class="form-control chosen-select col-sm-12" ng-disabled="order.Card3DSecureService.ActionType==2 || order.Card3DSecureService.ActionType==3 "   name="CommunicationEmailID" id="CommunicationEmailID" data-ng-model="order.Card3DSecureService.Email"  data-placeholder="Ընտրեք Էլ․ հասցե ..."
+                                data-ng-options="item.email.emailAddress  as item.email.emailAddress for item  in customerMainData.Emails">
+                              <option value="" hidden>Ընտրեք Էլ․հասցե ...</option>
+                        </select>
+                    </div>
+                    @*<div class="row">
+                        <ng-messages ng-if="card3DSecureOrderForm.$submitted || card3DSecureOrderForm.CommunicationEmailID.$dirty"
+                                     for="card3DSecureOrderForm.CommunicationEmailID.$error">
+                            <ng-message when="required" class="errors">
+                                Հաճախորդի Էլ․հասցեն լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>*@
+                </div>
+            </div>
+
+            <div class=" form-group">
+                <label class="tab_title col-sm-6" for="ActionType">Գործողության տեսակ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select ng-change="changeActionType()"  data-ng-model="order.Card3DSecureService.ActionType" name="ActionType" id="ActionType" class="form-control" required
+                                data-ng-options="k as v for (k,v) in actionTypes">
+                            <option selected="selected" value="" hidden>Ընտրեք</option>
+                        </select>
+                        <ng-messages ng-if="card3DSecureOrderForm.$submitted || card3DSecureOrderForm.ActionType.$dirty"
+                                     for="card3DSecureOrderForm.ActionType.$error">
+                            <ng-message when="required" class="errors">
+                                Գործողությունը  նշված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

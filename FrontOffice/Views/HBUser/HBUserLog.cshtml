@@ -1,0 +1,60 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #HBUserLogForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+
+<div id="hbUserLogLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<br />
+<form ng-controller="HBUserCtrl" ng-init="getHBUserLog()" name="HBUserLogForm" style="max-width:600px" id="HBUserLogForm" role="form" class="form-horizontal" prevent-enter-submit novalidate labels-required>
+    <div class="col-sm-12" style="padding-left:10px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաջողված մուտքերի քանակ</div>
+            <div class="product-detail-cell product-detail-value" style="padding-left:20px">{{editUser.LogonInformation.GoodLogons}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Չհաջողված մուտքերի փորձերի քանակ</div>
+            <div class="product-detail-cell product-detail-value" style="padding-left:20px">{{editUser.LogonInformation.BadLogons}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="editUser.LogonInformation.LastGoodLogonDateString!='01/01/01 00:00'">
+            <div class="product-detail-cell product-detail-lable">Վերջին հաջողված մուտքի ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value" style="padding-left:20px">{{editUser.LogonInformation.LastGoodLogonDateString}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="editUser.LogonInformation.LastBadLogonDateString!='01/01/01 00:00'">
+            <div class="product-detail-cell product-detail-lable">Վերջին չհաջողված մուտքի փորձի ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value" style="padding-left:20px">{{editUser.LogonInformation.LastBadLogonDateString}}</div>
+        </div> 
+        <br />
+        <div ng-if="hbUserLog.length == 0" style="text-align:center">
+            Տվյալները բացակայում են
+            <br /><br />
+        </div>
+        <table ng-if="hbUserLog.length != 0"class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;padding-left:10px">
+            <thead style="background-color:#e4e4e4;color:#6d6d6d">
+                <tr>
+                    <th class="col-sm-9">Գործողության տեսակ : Արդյունք</th>
+                    <th class="col-sm-3">&nbsp;Օր/ժամ</th> 
+                </tr>
+            </thead>
+            <tbody> 
+                <tr ng-repeat="log in hbUserLog">
+                    <td style="padding-left:10px" class="col-sm-9">
+                        <span >{{log.Description}} </span> 
+                        <br /> 
+                    </td>
+                    <td style="padding-left:10px"class="col-sm-3">
+                        <span>{{ log.TimeStampString  }}</span>
+                        <br />
+                    </td>
+                 </tr>
+            </tbody>
+        </table>
+         
+    </div>
+</form>
+

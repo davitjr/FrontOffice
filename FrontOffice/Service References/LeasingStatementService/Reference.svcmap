@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ec6a007a-28b3-45fe-9a2a-6e3cff94685c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://webc021:85/LeasingStatementService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="LeasingStatementService.wsdl" MetadataType="Wsdl" ID="8f2f84a4-9295-4930-b4b7-91902c3dac2a" SourceId="1" SourceUrl="http://webc021:85/LeasingStatementService.svc?wsdl" />
+    <MetadataFile FileName="LeasingStatementService.disco" MetadataType="Disco" ID="285351c9-7224-41a9-8c51-eac232b0293e" SourceId="1" SourceUrl="http://webc021:85/LeasingStatementService.svc?disco" />
+    <MetadataFile FileName="LeasingStatementService.xsd" MetadataType="Schema" ID="5ae81595-13fd-493c-ac5d-5522571370c4" SourceId="1" SourceUrl="http://webc021:85/LeasingStatementService.svc?xsd=xsd4" />
+    <MetadataFile FileName="LeasingStatementService1.xsd" MetadataType="Schema" ID="2190fd53-e204-407c-8720-54f9e0ec2e37" SourceId="1" SourceUrl="http://webc021:85/LeasingStatementService.svc?xsd=xsd3" />
+    <MetadataFile FileName="LeasingStatementService2.xsd" MetadataType="Schema" ID="b1f35a21-260d-48b0-b54a-d4cace1b8282" SourceId="1" SourceUrl="http://webc021:85/LeasingStatementService.svc?xsd=xsd2" />
+    <MetadataFile FileName="LeasingStatementService3.xsd" MetadataType="Schema" ID="29cbb4d5-ffac-4367-91b7-671f9aafb47c" SourceId="1" SourceUrl="http://webc021:85/LeasingStatementService.svc?xsd=xsd1" />
+    <MetadataFile FileName="LeasingStatementService4.xsd" MetadataType="Schema" ID="5277eca5-68b1-4851-b8ed-15390005b353" SourceId="1" SourceUrl="http://webc021:85/LeasingStatementService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

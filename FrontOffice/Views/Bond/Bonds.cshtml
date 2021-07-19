@@ -1,0 +1,99 @@
+﻿
+<style>
+    .redBold {
+        font-weight: bold;
+        color: red;
+    }
+
+    .blueBold {
+        font-weight: bold;
+        color: blue;
+    }
+</style>
+
+<script type="text/javascript">
+    $("#bondsContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div ng-controller="BondCtrl" >
+    <div class="product-container" id="bonds" data-ng-init="getBonds()" ng-show="(hideBlank!='true' && bondsList.length==0) || (bondsList.length!=0 && bondsList.length!=undefined)">
+        <div class="header-title">
+            <a ui-sref="bonds" style="color:black;">
+                Պարտատոմսեր
+            </a>
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header" style="height: 33px;">
+               
+
+                <div>
+                    &nbsp;&nbsp;<label class="css-label">Կարգավիճակ</label>
+                    <select ng-show="qualities" data-ng-init="getBondQualityTypes()" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ կարգավիճակի"
+                            data-ng-model="QualityFilter"
+                            style="max-width:175px;height:32px" name="QualityFilter" id="QualityFilter" class="form-control" @*ng-change="getBonds()"*@
+                            data-ng-options="k as v for (k,v) in qualities">
+                        <option value="100">Բացված</option>
+                    </select>
+                    &nbsp;&nbsp;&nbsp;
+                    <i class="add-new-product " data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Նոր պարտատոմս" ng-controller="PopUpCtrl" ng-click="openWindow('/BondOrder/BondOrder','Նոր պարտատոմսի մուտքագրում','newbondorder')"></i>
+                </div>
+            </div>            
+            <div class="product-content-table custom-scroll" id="bondsContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <div ng-if="bondsList==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+
+                        <tr ng-repeat="oneBond in bondsList | bondQualityFilter:QualityFilter" ng-if="filter.Quality!=40 && bondsList.length!=0"
+                            ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,oneBond);"
+							
+                            style="max-height:200px;cursor:pointer;" ng-dblclick="openBondDetails();">
+                            <td>
+                                <span class="tab_text">ԱՄՏԾ` </span> {{ ::oneBond.ISIN }}
+                                <br /><span class="tab_text">Քանակ` </span> {{ ::oneBond.BondCount }}
+                                <br /><span class="tab_text">Տոկոսադրույք` </span> {{ ::oneBond.InterestRateValueToString}} %
+                                <br /><span style="font-weight:bold;" ng-class="{ 'redBold':oneBond.Quality==40,'blueBold':oneBond.Quality==10}">{{ ::oneBond.QualityDescription }}</span>
+                            </td>
+                            <td style="text-align:right;">{{ ::oneBond.TotalPriceToString }}  {{::oneBond.Currency}}</td>
+                            <td class="col-sm-1 click_toggle" context="contextBonds" id="contextMenu"><div id="contextMenu"></div> </td>                            
+                        </tr>
+                        
+                        <tr ng-if="filter.Quality!=40 && (bondsList == undefined || bondsList.length==0) ">
+                            <td colspan="3" style="text-align:center;">
+                                Առկա չեն պարտատոմսեր
+                            </td>
+                        </tr>
+
+
+                      
+
+                    </tbody>
+                </table>
+            </div>
+            <ul id="contextBonds" class="dropdown-menu">
+                <li><a style="color: black;text-decoration:none!important ;" ui-sref="BondDetails({ProductId: currentBond.ID, bondFilterType: 0})">Մանրամասն դիտարկում</a></li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+<script>
+    $("[data-toggle=tooltip]").tooltip({
+        placement: $(this).data("placement") || 'bottom'
+    });
+</script>
+
+
+
+

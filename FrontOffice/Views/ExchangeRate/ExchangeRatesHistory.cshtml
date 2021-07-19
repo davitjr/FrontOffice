@@ -1,0 +1,126 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    #Rateshistory.table-wrapper {
+        overflow-x: scroll;
+        overflow-y: visible;
+        width: 900px;
+    }
+
+
+    #Rateshistory td,#Rateshistory th {
+        border: 1px solid #cecece;
+        width: 100px;
+    }
+
+   #Rateshistory .top th {
+        font-size: 12px;
+    }
+</style>
+<form ng-show="false">
+    <div class="menu-bar dialog-menu light-green">
+    </div>
+    <div>
+    </div>
+</form>
+<div class="table-wrapper" id="Rateshistory" ng-controller="RateCtrl">
+    <div class="product-container" style="width:auto;min-width:900px">
+        <div class="header-title">
+            Առք/Վաճառքի և ԿԲ-ի փոխարժեքներ
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-11 ">
+                
+                
+                <div class="col-sm-2" ng-init="searchParams.Currency=sourceCurrency">
+                    <div class="product-detail-cell product-detail-lable">
+                        Արժույթ
+                    </div>
+                    <div>
+                        <input type="text" disabled data-ng-model="searchParams.Currency" class="form-control" />
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Պատմություն սկսած
+                    </div>
+                    <div>
+                        <input type="date" data-ng-model="searchParams.StartDate" class="form-control" ng-blur="GetExchangeRatesHistory()" />
+
+                    </div>
+                </div>
+                <div class="col-sm-3" ng-init="getFilialList()">
+                    <div class="product-detail-cell product-detail-lable">
+                        Մասնաճյուղ
+                    </div>
+                    <div>
+                        <select data-ng-model="searchParams.FilialCode" name="FilialCode" id="FilialCode" class="form-control"
+                                data-ng-options="k as v for (k,v) in ::filialList" ng-change="GetExchangeRatesHistory()">
+                            <option selected="selected" value="" hidden>Բոլորը</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-sm-3" >
+                    <input type="checkbox" class="checkbox-inline" id="cbrate" ng-model="cbrate" ng-true-value="true" ng-false-value="false" ng-click="GetCBExchangeRatesHistory()">
+                    <label class="tab_title" style="font-size:14px" ng-click="GetCBExchangeRatesHistory()">
+                        ԿԲ փոխարժեք
+                    </label>
+                </div>
+
+            </div>
+        </div>
+        <br />
+        <div class="product-collapsable-section " style="height:auto;width:1100px;font-size:13px;text-align:center;">
+            <div class="product-content-table custom-scroll col-sm-12 " ng-class="{'product-content-table-full_height' : hideBlank!='true' }" style="max-height:450px; min-height:100px;padding:0px">
+                <table ng-show="!cbrate" class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr>
+                            <td class="col-sm-1 " style="text-align:center;background-color: #35a982;font-size: 12px;">Ա/թ</td>
+                            <td class="col-sm-1 " style="text-align:center;background-color: #35a982;font-size: 12px;">Առք կանխիկ</td>
+                            <td class="col-sm-1 " style="text-align:center;background-color: #35a982;font-size: 12px;">Վաճառք կանխիկ</td>
+                            <td class="col-sm-1 " style="text-align:center;background-color: #35a982;font-size: 12px;">Առք անկանխիկ</td>
+                            <td class="col-sm-1 " style="text-align:center;background-color: #35a982;font-size: 12px;">Վաճառք անկանխիկ</td>
+                            <td class="col-sm-1 " style="text-align:center;background-color: #35a982;font-size: 12px;">Առք քարտային</td>
+                            <td class="col-sm-1 " style="text-align:center;background-color: #35a982;font-size: 12px;">Վաճառք քարտային</td>
+                            <td class="col-sm-1 " style="text-align:center;background-color: #35a982;font-size: 12px;">Առք քրոս</td>
+                            <td class="col-sm-1 " style="text-align:center;background-color: #35a982;font-size: 12px;">Վաճառք քրոս</td>
+                            <td class="col-sm-1 " style="text-align:center;background-color: #35a982;font-size: 12px;">Առք ACBA Transfer</td>
+                            <td class="col-sm-1 " style="text-align:center;background-color: #35a982;font-size: 12px;">Վաճառք ACBA Transfer</td>
+                        </tr>
+                        <tr ng-repeat="rates in exchangeRatesHistory">
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.RegistrationDate | mydatetime}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.BuyRateCash| number:2}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.SaleRateCash| number:2}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.BuyRate | number:2}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.SaleRate| number:2}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.BuyRateATM| number:2}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.SaleRateATM | number:2}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.BuyRateCross| number:2}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.SaleRateCross| number:2}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.BuyRateTransfer | number:2}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.SaleRateTransfer| number:2}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <table ng-show="cbrate" class="table table-condensed table-hover col-sm-4" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr>
+                            <td class="col-sm-1 " style="text-align:center;background-color: #35a982;font-size: 12px;">Ա/թ</td>
+                            <td class="col-sm-1 " style="text-align:center;background-color: #35a982;font-size: 12px;">Փոխարժեք</td>
+                        </tr>
+                        <tr ng-repeat="rates in cbExchangeRatesHistory">
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.RegistrationDate | mydatetime}}</td>
+                            <td class="col-sm-1 " style="text-align:center;font-size: 11px;">{{::rates.RateCB| number:2}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

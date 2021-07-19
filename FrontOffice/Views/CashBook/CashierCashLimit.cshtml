@@ -1,0 +1,66 @@
+﻿
+<div id="CashierCashLimitLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form id="CashierCashLimit" ng-controller="CashBookCtrl" style="width:750px;overflow-x:hidden" name="CashierCashLimit" role="form" class="form-horizontal" data-ng-init="initCashierCashLimit()" labels-required>
+    <div id="CashierCashLimit_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-if="$root.SessionProperties.AdvancedOptions.isOnlineAcc == '1' && onlyDetails != true" ng-click="CashierCashLimit.$setSubmitted();CashierCashLimit.$valid && saveCashierCashLimits();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " ng-if="$root.SessionProperties.AdvancedOptions.isOnlineAcc== '1' && onlyDetails != true" onclick="CloseBPDialog('CashierCashLimit')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+            <li class="root-menu-item-5" ng-if="$root.SessionProperties.AdvancedOptions.isOnlineAcc== '1' && onlyDetails != true "  ng-click="generateCashierCashDefaultLimits(CorrespondentSetNumber,RegisteredUserID)">
+                <span id="h-menu-item-3" class="glyphicon  glyphicon-cd" style="top:-5px !important;font-size:1.5em"></span><span>Ստանդարտ սահմանաչափեր</span>
+            </li>
+        </ul>
+    </div>
+    <div ng-init="generateNewOrderNumber()">
+        <div style="max-width:600px;margin-left:5px">
+            <errors></errors>
+        </div>
+        <div class="form-group col-sm-12" style="padding-left:20px">
+            <section class="panel panel-success">
+                <div class="panel-body">
+                    <div class="form-group col-sm-12" style="margin-left:-60px;" ng-if="($root.SessionProperties.IsChiefAcc == true || $root.SessionProperties.AdvancedOptions.isHeadCashBook == '1'|| $root.SessionProperties.AdvancedOptions.isOnlineAcc == '1' || $root.SessionProperties.AdvancedOptions.CanChangeCashBookCashLimitSetNumber == '1' )&& onlyDetails != true">
+
+                        <usersetnumber  generatedeafaultlimits="generateCashierCashDefaultLimits(RegisteredUserID,RegisteredUserID)"   ngblur="checkCashierFilialCode(RegisteredUserID)" setnumber="$parent.RegisteredUserID" formname="CashierCashLimit" labelname="ՊԿ" ></usersetnumber>
+
+                    </div>
+                    <div class="form-group col-sm-12" style="margin-left:-60px;" ng-if="$root.SessionProperties.IsChiefAcc != true && $root.SessionProperties.AdvancedOptions.isHeadCashBook != '1'&& $root.SessionProperties.AdvancedOptions.isOnlineAcc != '1' && $root.SessionProperties.AdvancedOptions.CanChangeCashBookCashLimitSetNumber != '1' || onlyDetails == true ">
+                        <usersetnumber disabled="true"   setnumber="RegisteredUserID" formname="CashierCashLimit" labelname="ՊԿ"></usersetnumber>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+        <div  data-ng-init="getUserCurrentCashLimits()"></div>
+        <div class="form-group col-sm-12" style="padding-left:20px" >
+            <section class="panel panel-success">
+                <header class="panel-heading">
+                    <span class="panel-title" style="font-size:14px;">Գումարի սահմանաչափ</span>
+                </header>
+                <div   class="panel-body" style="padding-left:30px">
+                    <div class="form-group col-sm-6"  ng-repeat="cashierCashLimit in cashierCashLimits" ng-init="tabIndex = 0" style="margin-bottom: 20px !important">
+                        <div class="row">
+                            <div class="input-group col-sm-9">
+                                <input type="text" ng-disabled="onlyDetails || ($root.SessionProperties.AdvancedOptions.isOnlineAcc!= '1')" data-ng-model="cashierCashLimit.Amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' class="form-control tab_title" fcsa-number>
+                                <span class="input-group-addon">{{::cashierCashLimit.Currency}}</span>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <ng-messages ng-if="CashierCashLimit.$submitted || CashierCashLimit.amount_$index.$dirty"
+                                         for="CashierCashLimit.amount_{{$index}}.$error">
+                                <ng-message when="fcsaNumber" class="errors">
+                                    Գումարը սխալ է լրացված
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</form>
+

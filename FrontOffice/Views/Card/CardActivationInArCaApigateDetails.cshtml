@@ -1,0 +1,7 @@
+﻿<form ng-controller="CardCtrl" ng-init="getCardActivationInArCaApigateDetail(selectdedApigateId)">
+    <div ng-show="apigateDetails" class="product-details bhoechie-tab-content" style="padding:30px;padding-top:10px;">
+        <div class="product-detail-row" ng-repeat="apigateDetail in apigateDetails">
+            <div class="product-detail-cell product-detail-lable">{{::apigateDetail.StatusDescription}}`</div><div class="product-detail-cell product-detail-value"> {{::apigateDetail.ChangeDate | mydatetime}}</div>
+        </div>
+    </div>
+</form>

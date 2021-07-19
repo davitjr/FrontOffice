@@ -1,0 +1,24 @@
+﻿<style>
+#error .bp-dialog-title {
+        background-color:red;
+    }
+</style>
+<div id="err" style="max-width:500px;">
+    <span class="my_text1" style="text-align:center;font-size:17px;font-family:'Arial Armenian', Sylfaen;">{{text}}</span>
+    <br />
+    <div ng-if="showError==true" style="text-align:left">
+        <font color="red" data-ng-repeat="err in error">
+            <span style="color:red;font-family:Sylfaen ,'Arial Armenian';font-size:15px" ng-click="setFocusToTextBox(err.Code)">
+                {{::err.Description}}<br />
+            </span>
+
+        </font>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div>
+        <div class="col-sm-5"></div>
+        <button ng-controller="ErrorCtrl" ng-click="scrollToDiv(dialogId,divId)" class=" btn btn-sm btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;OK</button>
+    </div>
+</div>

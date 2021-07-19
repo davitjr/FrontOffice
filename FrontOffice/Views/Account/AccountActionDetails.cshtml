@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = null;
+}
+<style>
+    #tbl table, #tbl th, #tbl td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+            height: 35px;
+    }
+
+    #tbl table {
+        border-collapse: collapse;
+    }
+
+        #tbl table .top td {
+            font-size: 12px;
+        }
+
+        #tbl table tr {
+            height: 7px;
+        }
+
+    #tbl .form-horizontal {
+        margin-top: -22px;
+    }
+</style>
+<form style="max-width:900px" 
+      role="form" class="form-horizontal" novalidate>
+    <div id="loanGrafik_menu" >
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-12" id="tbl">
+            <table cellspacing="0" cellpadding="0" border="0" >
+                <tr class="product-container-header">
+                    <td style="text-align:center">ՊԿ</td>
+                    <td style="text-align:center">Ամսաթիվ</td>
+                    <td style="text-align:center">Գործողություն</td>
+                </tr>
+                <tr ng-repeat="accountOpeningClosingDetail in accountOpeningClosingDetails">
+                    <td style="text-align:center">{{::accountOpeningClosingDetail.UserDescription}}&nbsp;({{::accountOpeningClosingDetail.ActionSetNumber}})<span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:accountOpeningClosingDetail.ActionSetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" class="glyphicon glyphicon-info-sign"></span></td>
+                    <td style="text-align:center">{{::accountOpeningClosingDetail.ActionDate | mydate | date: 'dd/MM/yyyy'}}&nbsp;&nbsp; </td>
+                    <td style="text-align:center">{{::accountOpeningClosingDetail.ActionDescription}}&nbsp;&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</form>

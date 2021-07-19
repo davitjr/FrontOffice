@@ -1,0 +1,77 @@
+﻿<style type="text/css">
+    #pinRegOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #pinRegOrderForm .panel-heading {
+        background-color: #f3cd9f !important;
+    }
+
+    #pinRegOrderForm .scrollbar1 {
+        overflow: auto;
+    }
+</style>
+<div id="pinRegOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="PINRegenerationCtrl" name="pinRegOrderForm" id="PINRegenerationOrder" ng-init="getCard(productId)" role="form" style="min-width:550px" class="form-horizontal" novalidate>
+    <div id="pinregorder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="pinRegOrderForm.$setSubmitted();pinRegOrderForm.$valid && savePINRegOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('pinreg')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+    <div class="scrollbar1">
+        <div class="col-sm-10">
+            <div class=" form-group">
+                <label class="tab_title col-sm-6 " for="CardAccount">Քարտի համար</label>
+                <div class="col-sm-6 ">
+                    <div class="multiple_columns col-sm-14 ">
+                        <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="CardNumber" name="CardNumber" ng-model="card.CardNumber">
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class="tab_title col-sm-6 " for="CardType">Քարտի տեսակ և արժույթ</label>
+                <div class="col-sm-6">
+                    <div class="multiple_columns col-sm-14">
+                        <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="CardType" name="CardType" value="{{card.CardType+' '+card.Currency}}">
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class="tab_title col-sm-6 " for="ValidationDate">Քարտի գործողության ժամկետ</label>
+                <div class="col-sm-6">
+                    <div class="multiple_columns col-sm-14">
+                        <input type="date" disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="ValidationDate" name="ValidationDate" ng-model="card.ValidationDate">
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group" ng-init="GetCardHolderData(productId, PINRegenerationOrder.CardHolderName)">
+                <label class="tab_title col-sm-6 " for="FirstNameEng">Անուն(անգլերեն)</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12 ">
+                        <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="name" name="name" ng-model="name">
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group" ng-init="GetCardHolderData(productId, PINRegenerationOrder.CardHolderLastName)">
+                <label class="tab_title col-sm-6 " for="FirstNameEng">Ազգանուն(անգլերեն)</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12 ">
+                        <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="lastName" name="lastName" ng-model="lastName">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

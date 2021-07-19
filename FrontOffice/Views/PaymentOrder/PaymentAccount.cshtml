@@ -1,0 +1,85 @@
+﻿<style>
+    .accountSelect optgroup[label] {
+        color: #5EB4FF!important;
+        font-size: 11px!important;
+        /*font-style: italic!important;*/
+        font-family:Arial Unicode,'Arian AMU', Tahoma, Segoe UI, Arial Armenian !important;
+    }
+
+    .accountSelect option {
+        color:#585D5E !important;
+        font-family:monospace,'Arial Unicode' !important;
+        font-style:initial  !important;
+        font-size: 14px!important;
+    }
+</style>
+
+ 
+<div class="form-group">
+    <div ng-if="checkForFeeAccount">
+        <div ng-init="check=0"></div>
+    </div>
+    <label ng-if="check==0" class="tab_title col-sm-5 control-label CardAndCurrencyAccountsStyles"> {{nameforaccount}}<span ng-show="isrequire!=false" class='redStyle'>*</span>{{tooltipdescription!=null && tooltipdescription !='' ? ' ' :''}}<span ng-if="tooltipdescription!=null && tooltipdescription !=''" ng-init="tooltipClass();" class="tipB glyphicon glyphicon-info-sign" data-original-title={{tooltipdescription}} style="color:#5EB4FF"></span> </label>
+    <label ng-if="check==1" class="tab_title col-sm-5 control-label"> {{nameforcurrency}}<span ng-show="isrequire!=false" class='redStyle'>*</span>{{tooltipdescription!=null && tooltipdescription !='' ? ' ' :''}}<span ng-if="tooltipdescription!=null && tooltipdescription !=''" ng-init="tooltipClass();" class="tipB glyphicon glyphicon-info-sign" data-original-title={{tooltipdescription}} style="color:#5EB4FF"></span> </label>
+    <div class="col-sm-6" id="paymentAccountContent">
+        <div ng-if="check==0 && showloading!=false">
+            <loading-control scopevariable="accounts"></loading-control>
+        </div>
+        <div class="row">
+            <div class="input-group" ng-show="forinputcheckbox==true && accounts" style="display:inline-flex" ng-init="text='Անկանխիկ'">
+                
+                <span id="FeeForPayment" class="input-group-addon" ng-click="!disable && (check==0?check=1:check=0)" style="display: inline-block;padding-right: 20px;padding-top: 10px;" ng-disabled="disable" title="" data-placement="left" data-toggle="tooltip" data-original-title="{{text}}">
+                    <input type="checkbox" aria-label="..." ng-model="check" ng-change="check==0?check=1:check=0;check==0?text='Անկանխիկ':text='Կանխիկ'" ng-disabled="disable" ng-true-value="1" ng-false-value="0">
+                </span>
+                 <select id="{{firstSelect}}" style="" ng-show="accounts" ng-if="check==0 && forinputcheckbox==true" ng-disabled="disable" ng-model="orderAccount" class="form-control accountSelect" name="{{accountselectname}}"
+                        ng-options="getAccountDesc(a) group by a.AccountTypeDescription for a in accounts" ng-change="setAccount(orderAccount,firstSelect);" ng-blur="setAccountText($event)" ng-required="forinputcheckbox && (isrequire==undefined || isrequire==true)">
+                    <option value="" ng-hide="showoptionsfirstitem!=true" class="">{{showoptionsfirstitem!=true?defaultText:'Ընտրեք...'}}</option>
+
+                </select>
+                <select ng-show="currenciesAccount" ng-if="check==1 && forinputcheckbox==true" data-ng-model="currencie" ng-disabled="disable" name="{{accountselectname}}" class="form-control" ng-required="forinputcheckbox && (isrequire==undefined || isrequire==true)"
+                        data-ng-options="a.Currency for a  in currenciesAccount" ng-change="setCurrency(currencie)" style="min-width:218px;">
+                    <option value="" ng-if="onlyamd!=true" hidden="hidden" style="margin-left:25px">Ընտրեք արժույթը...</option>
+                    <option value="" ng-if="onlyamd==true" hidden="hidden" style="margin-left:25px">{{currenciesAccount[0]}}</option>
+                </select>
+            </div>
+            <div ng-show="forinputcheckbox!=true">
+ 
+                <select id="{{secondSelect}}" ng-show="accounts || showloading==false" ng-if="check==0 && forinputcheckbox!=true && showforats!=true" ng-disabled="disable" ng-model="orderAccount" class="form-control accountSelect" name="{{accountselectname}}"
+                        ng-options="getAccountDesc(a) group by a.AccountTypeDescription for a in accounts" ng-change="setAccount(orderAccount,secondSelect)" ng-blur="setAccountText($event)" ng-required="!forinputcheckbox && (isrequire==undefined || isrequire==true)">
+                    <option value="" ng-hide="showoptionsfirstitem!=true" class="">{{showoptionsfirstitem!=true?defaultText:'Ընտրեք...'}}</option>
+
+                    @*<option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>*@
+                </select>
+
+
+                <select ng-show="currenciesAccount" ng-if="check==1 && forinputcheckbox!=true  && showforats!=true" data-ng-model="currencie" ng-disabled="disable" name="{{accountselectname}}" class="form-control" ng-required="!forinputcheckbox && (isrequire==undefined || isrequire==true)"
+                        data-ng-options="a.Currency for a  in currenciesAccount" ng-change="setCurrency(currencie)" style="min-width:218px;">
+                    <option value="" ng-if="onlyamd!=true" hidden="hidden" style="margin-left:25px">Ընտրեք արժույթը...</option>
+                    <option value="" ng-if="onlyamd==true" hidden="hidden" style="margin-left:25px">{{currenciesAccount[0]}}</option>
+                </select>
+
+            </div>
+            <div ng-show="forinputcheckbox!=true && showforats==true">
+
+                <select id="{{secondSelect}}" ng-show="accounts || showloading==false" ng-if="showforats" ng-disabled="disable" ng-model="orderAccount" class="form-control accountSelect" name="{{accountselectname}}"
+                        ng-options="getAccountDesc(a) group by a.AccountTypeDescription for a in accounts" ng-change="setAccount(orderAccount,secondSelect)" ng-blur="setAccountText($event)" ng-required="!forinputcheckbox && (isrequire==undefined || isrequire==true)">
+                    <option value="" ng-hide="showoptionsfirstitem!=true" class="">{{showoptionsfirstitem!=true?defaultText:'Ընտրեք...'}}</option>
+
+                    @*<option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>*@
+                </select>
+
+
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('span').tooltip();
+</script>
+
+
+
+

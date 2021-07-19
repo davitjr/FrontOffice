@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+
+<div ng-controller="CreditLineCtrl" ng-if="cardnumber" ng-init="getClosedCreditLines(cardnumber)">
+    <div class="row">
+        <div class="product-container" style="width:95%;">
+            <div class="header-title">
+                Փակված վարկային գծեր
+                <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+            </div>
+            <div class="product-collapsable-section">
+                <div class="product-container-header">
+                    <div style="text-align:center" class="col-sm-2">Սկիզբ</div>
+                    <div style="text-align:center" class="col-sm-2">Վերջ</div>
+                    <div style="text-align:center" class="col-sm-1">Արժ</div>
+                    <div style="text-align:center" class="col-sm-2">Գումար</div>
+                    <div style="text-align:center" class="col-sm-2">Տոկոսադրույք</div>
+                    <div style="text-align:center" class="col-sm-3">Փակման ա/թ</div>
+                </div>
+                <div class="product-content-table-full_height custom-scroll" id="closedCreditLinesContent" style="min-height:100px;">
+                    <div ng-if="closedCreditLines==undefined">
+                        <loading></loading>
+                    </div>
+                    <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                        <tbody ng-repeat="creditLine in closedCreditLines" style="background-color: white;">
+                            <tr>
+                                <td style="text-align:left" colspan="6">{{::creditLine.TypeDescription}}</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center" class="col-sm-2">{{::creditLine.StartDate | mydate | date: 'dd/MM/yyyy'}}</td>
+                                <td style="text-align:center" class="col-sm-2">{{::creditLine.EndDate | mydate | date: 'dd/MM/yyyy'}}</td>
+                                <td style="text-align:center">{{::creditLine.Currency}}</td>
+                                <td style="text-align:right">{{::creditLine.StartCapital |number:2}}&nbsp;</td>
+                                <td style="text-align:center"> {{::creditLine.InterestRate*100 |number:2}} %</td>
+                                <td style="text-align:center">{{::creditLine.ClosingDate | mydate | date: 'dd/MM/yyyy'}}</td>
+                            </tr>
+                            <tr ng-if="closedCreditLines.length==0 " style="background-color: white;">
+                                <td colspan="6" style="text-align: center;">
+                                    Տվյալները բացակայում են
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+﻿
+
+
+
+<script type="text/javascript">
+    $("#pensionApplicationsContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div class="product-container" ng-controller="PensionApplicationCtrl" id="PensionApplications" data-ng-init="$root.SessionProperties.CustomerType == 6 && getPensionApplicationHistory()" ng-show="(hideBlank!='true' && pensionApplicationHistorys.length==0) || (pensionApplicationHistorys.length!=0 && pensionApplicationHistorys.length!=undefined)">
+    <div class="header-title">
+        <a ui-sref="pensionapplications" style="color:black;">Կենսաթոշակի դիմում-համաձայնագրեր</a>
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="include-closed-products">
+            <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-pension-applications" data-ng-model="filter" ng-true-value="2" ng-false-value="1" ng-change="QualityFilter()">
+            <label for="include-closed-pension-applications" name="include-closed-pension-applications-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+        </div>
+        <div class="product-container-header" ng-if="$root.SessionProperties.SourceType == 2 && $root.SessionProperties.CustomerType == 6">
+            <i class="add-new-product " data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Կենսաթոշակ ստանալու դիմումի մուտքագրում" ng-show="$root.SessionProperties.SourceType == 2" ng-controller="PopUpCtrl" ng-click="params={orderType:89};openWindow('PensionApplicationOrder/PensionApplicationOrder','Կենսաթոշակ ստանալու դիմումի մուտքագրում','newPensionAppliactionOrder')"></i>
+        </div>
+        <div class="product-content-table custom-scroll" id="pensionApplicationsContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+            <div ng-if="pensionApplicationHistorys==undefined">
+                <loading></loading>
+            </div>
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody ng-if="filter==1">
+                    <tr ng-repeat="pensionApplicationHistory in pensionApplicationHistorys" ng-if="pensionApplicationHistorys.length!=0 " style="cursor: pointer;" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,pensionApplicationHistory)">
+
+                        <td class="col-md-4">
+                            <span class="tab_text">Հերթ. համար`</span> {{ ::pensionApplicationHistory.ContractId}}
+                            <br /><span class="tab_text">Պայմ. համար`</span> {{ ::pensionApplicationHistory.ContractNumber}}
+                            <br /><span class="tab_text">Գր. ա/թ` </span> <span class="tab_title">{{ ::pensionApplicationHistory.RegistrationDate | mydate | date: 'dd/MM/yyyy'}}</span>
+                        </td>
+                        <td class="col-sm-6">
+                            <span class="tab_text" ng-if="pensionApplicationHistory.Account.ProductNumber!=null">Քարտի`</span> <span ng-if="pensionApplicationHistory.Account.ProductNumber!=null">{{ ::pensionApplicationHistory.Account.ProductNumber}} <br /></span>
+                            <span class="tab_text" ng-if="pensionApplicationHistory.Account!=null">Հաշիվ`</span> <span ng-if="pensionApplicationHistory.Account!=null">{{ ::pensionApplicationHistory.Account.AccountNumber}}<br /></span>
+                            <span class="tab_text" ng-if="pensionApplicationHistory.ContractDate!=null">Սկիզբ`</span> <span ng-if="pensionApplicationHistory.ContractDate!=null" class="tab_title">{{ ::pensionApplicationHistory.ContractDate | mydate | date: 'dd/MM/yyyy' }}<br /></span>
+                            <span class="tab_text" ng-if="pensionApplicationHistory.DateOfNormalEnd!=null">Վերջ`</span> <span ng-if="pensionApplicationHistory.DateOfNormalEnd!=null" class="tab_title">{{ ::pensionApplicationHistory.DateOfNormalEnd | mydate | date: 'dd/MM/yyyy' }} <br /></span>
+                            <span class="tab_text">Կարգավիճակ`</span> <span style="font-weight:bold;color:blue;">{{ ::pensionApplicationHistory.QualityDescription}}</span>
+                            <br /><span class="tab_text">ՊԿ`</span> {{ ::pensionApplicationHistory.SetNumber}} ({{ ::pensionApplicationHistory.UserDescription}})
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="contextHistory" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+                    <tr ng-if="pensionApplicationHistorys.length==0 ">
+                        <td colspan="3" style="text-align:center;">
+                            Առկա չեն կենսաթոշակ ստանալու դիմում-համաձայնագրեր
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="filter!=1">
+                    <tr ng-repeat="pensionApplicationHistory in closedpensionApplicationHistorys" ng-if="closedpensionApplicationHistorys.length!=0 " style="cursor: pointer;" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,pensionApplicationHistory)">
+
+                        <td class="col-md-4">
+                            <span class="tab_text">Հերթ. համար`</span> {{ ::pensionApplicationHistory.ContractId}}
+                            <br /><span class="tab_text">Պայմ. համար`</span> {{ ::pensionApplicationHistory.ContractNumber}}
+                            <br /><span class="tab_text">Գր. ա/թ` </span> <span class="tab_title">{{ ::pensionApplicationHistory.RegistrationDate | mydate | date: 'dd/MM/yyyy'}}</span>
+                        </td>
+                        <td class="col-sm-6">
+                            <span class="tab_text" ng-if="pensionApplicationHistory.Account.ProductNumber!=null">Քարտի`</span> <span ng-if="pensionApplicationHistory.Account.ProductNumber!=null">{{ ::pensionApplicationHistory.Account.ProductNumber}} <br /></span>
+                            <span class="tab_text" ng-if="pensionApplicationHistory.Account!=null">Հաշիվ`</span> <span ng-if="pensionApplicationHistory.Account!=null">{{ ::pensionApplicationHistory.Account.AccountNumber}}<br /></span>
+                            <span class="tab_text" ng-if="pensionApplicationHistory.ContractDate!=null">Սկիզբ`</span> <span ng-if="pensionApplicationHistory.ContractDate!=null" class="tab_title">{{ ::pensionApplicationHistory.ContractDate | mydate | date: 'dd/MM/yyyy' }}<br /></span>
+                            <span class="tab_text" ng-if="pensionApplicationHistory.DateOfNormalEnd!=null">Վերջ`</span> <span ng-if="pensionApplicationHistory.DateOfNormalEnd!=null" class="tab_title">{{ ::pensionApplicationHistory.DateOfNormalEnd | mydate | date: 'dd/MM/yyyy' }} <br /></span>
+                            <span class="tab_text">Կարգավիճակ`</span> <span>{{ ::pensionApplicationHistory.QualityDescription}}</span>
+                            <br /><span class="tab_text">ՊԿ`</span> {{ ::pensionApplicationHistory.SetNumber}} ({{ ::pensionApplicationHistory.UserDescription}})
+                        </td>
+                        <td class="col-sm-1 click_toggle" context="contextHistory" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+                    <tr ng-if="closedpensionApplicationHistorys.length==0 ">
+                        <td colspan="3" style="text-align:center;">
+                            Առկա չեն կենսաթոշակ ստանալու դիմում-համաձայնագրեր
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul id="contextHistory" class="dropdown-menu">
+                <li ng-if="pensionApplication.Quality==10" ng-controller="PopUpCtrl" ng-click="params={orderType:91,pensionapplication:pensionApplication};openWindow('PensionApplicationOrder/PensionApplicationOrder','Կենսաթոշակ ստանալու դիմումի մուտքագրում','newPensionAppliactionOrder')"><a style="text-decoration:none!important;cursor:pointer">Ակտիվացնել</a></li>
+                <li ng-if="pensionApplication.Quality==0 || pensionApplication.Quality==41" ng-controller="PopUpCtrl" ng-click="params={orderType:94,pensionapplication:pensionApplication};openWindow('PensionApplicationOrder/PensionApplicationOrder','Կենսաթոշակի պայմանագրի վերագրանցում','newPensionAppliactionOrder')"><a style="text-decoration:none!important;cursor:pointer">Վերագրանցել</a></li>
+                <li ng-if="pensionApplication.Quality==0 || (pensionApplication.Quality==41 && $root.SessionProperties.IsChiefAcc)" ng-controller="PopUpCtrl" ng-click="params={orderType:93,pensionapplication:pensionApplication};openWindow('PensionApplicationOrder/PensionApplicationTerminationOrder','Կենսաթոշակի պայմանագրի դադարեցում','newPensionAppliactionTerminationOrder')"><a style="text-decoration:none!important;cursor:pointer">Դադարեցնել</a></li>
+                <li ng-click="PensionApplicationRemovalOrder()"><a style="text-decoration:none!important;cursor:pointer">Հեռացնել</a></li>
+                <li ng-if="pensionApplication.Quality!=10" ng-click="accountNoticeForm(pensionApplication.Account.AccountNumber)"><a style="text-decoration:none!important;cursor:pointer">Հաշվի ծանուցման թերթիկ</a></li>
+                @*<li ng-if="$root.SessionProperties.IsTestVersion != true" ng-click="pensionCloseApplicationContract(pensionApplication.ContractId)"><a style="text-decoration:none!important;cursor:pointer">Կենսաթոշակի դիմում-համաձայնագիր</a></li>*@
+            </ul>
+        </div>
+
+    </div>
+
+</div>

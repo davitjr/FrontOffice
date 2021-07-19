@@ -1,0 +1,71 @@
+﻿@{
+    Layout = null;
+}
+
+<form ng-controller="LoanApplicationCtrl" name="LoanApplicationTerminationForm" id="LoanApplicationTerminationForm" role="form" style="min-width:700px;" novalidate class="form-horizontal" labels-required>
+    <div id="newaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="LoanApplicationTerminationForm.$setSubmitted();LoanApplicationTerminationForm.$valid && saveLoanApplicationQualityChangeOrder(162,loanApplication.ProductId)">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('loanApplicationTerminationOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Փակել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+
+    <div>
+        <div class="col-sm-12">
+            <div style="max-width:530px">
+                <errors></errors>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                    <div class="col-sm-6 row">
+                        <div class="multiple_columns col-sm-8 ">
+                            <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.RegistrationDate" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+
+                    <label class="tab_title col-sm-5" for="OtherDescription">Հրաժարման պատճառ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <textarea rows="2" onkeypress="return isArmenianUnicode(event.keyCode)"
+                                      onpaste="return CheckPasteText(event)" ng-model="order.Description"
+                                      name="OtherDescription" id="OtherDescription" required class="form-control" style="text-align:left"></textarea>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="LoanApplicationTerminationForm.$submitted || EmployeeWorkForm.LoanApplicationTerminationForm.$dirty"
+                                         for="LoanApplicationTerminationForm.OtherDescription.$error">
+                                <ng-message when="required" class="errors">
+                                    Հրաժարման պատճառը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+

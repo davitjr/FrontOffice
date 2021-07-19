@@ -1,0 +1,64 @@
+﻿<form style="width:500px" ng-controller="DepositCtrl" ng-init="getDepositTerminateOrder(selectedOrderId)">
+    <loading-control style="margin-left:20em" scopevariable="order"></loading-control>
+    <div ng-if="(order.Quality!=undefined && order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && order.Quality !=50 && $root.SessionProperties.IsCalledFromHB != true)|| ((order.Quality == 3 || order.Quality == 20) && $root.SessionProperties.IsCalledFromHB == true)" id="depositTerminationOrderDetails_menu" class="menu-bar dialog-menu light-green details-menu" style="margin-left:0;margin-top:0">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 " ng-if="order.Quality !=31 && order.Quality !=30 && order.Quality !=32 && order.Quality !=40 && order.Quality !=41 && order.Quality !=6 && order.Quality !=50 && $root.SessionProperties.IsCalledFromHB != true" type="button" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('RemovalOrder/RemovalOrder','Հրաժարման հայտ','removalOrder',callbackgetCreditLineTerminationOrder)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon closeAccountButton">Հրաժարման հայտ</span>
+            </li>
+            <li class="root-menu-item-3 " ng-if="order.Quality!=undefined &&  (order.Quality == 3 || order.Quality == 20) && $root.SessionProperties.IsCalledFromHB == true" ng-controller="HBDocumentsCtrl"
+                ng-click="reestrTransactionTerminationConfirmation(order.Id, order.Quality, order.DebitAccount.AccountNumber,order.FilialCode,order.Type);">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon" src="~/Content/Images/confirm.png" style="height: 30px;width:36px;margin-top: 6px;">Կատարել</span>
+            </li>
+        </ul>
+    </div> 
+    <div class="product-details bhoechie-tab-content" style="min-width:500px;margin-right:10px">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ավանդի համար</div>
+            <div class="product-detail-cell product-detail-value">{{order.DepositNumber}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ավանդի սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{deposit.StartDateToString}} </div>
+
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պայմանագրային գումար</div>
+            <div class="product-detail-cell product-detail-value">{{deposit.StartCapital}} {{deposit.Currency}} </div>
+
+        </div>
+
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ավանդի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{deposit.DepositTypeDescription}} </div>
+
+        </div>       
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փակման պատճառ</div>
+            <div class="product-detail-cell product-detail-value">{{order.ClosingReasonTypeDescription}} </div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{order.QualityDescription}}</div>
+            <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{order.QualityDescription}}</div>
+        </div>
+
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px" ng-if="$root.SessionProperties.IsCalledFromHB != true">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+</form>
+
+

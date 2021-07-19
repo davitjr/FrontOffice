@@ -1,0 +1,67 @@
+﻿@{
+    Layout = null;
+}
+<div   ng-init="getGoodsDetails(loan.ProductId)">
+
+    <div ng-if="goodsDetails.length!=0" class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable">Խանութի անվանում</div>
+        <div class="product-detail-cell product-detail-value">{{goodsDetails[0].ShopName}}</div>
+    </div>
+    <div ng-if="goodsDetails.length!=0" class="product-detail-row">
+        <div class="product-detail-cell product-detail-lable">Ապրանքների ընդհանուր արժեք</div>
+        <div class="product-detail-cell product-detail-value">{{goodsDetails[0].TotalGoodAmount|number:2}} AMD</div>
+    </div>
+
+    <div class="product-container" style="width:100%;margin-left:0">
+        <div class="header-title">
+            Ապրանքի տվյալներ
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+            </div>
+            <div class="product-content-table-full_height custom-scroll" id="goodsContent" style="min-height:100px;">
+                <div ng-if="goodsDetails==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    
+                    <tbody>
+                        
+                        <tr ng-repeat="goods in goodsDetails" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" style="max-height:200px">
+                            <td class="text-left col-sm-7">
+                                <div>
+                                    <span class="my_label" style="font-size:13px">Անվանում՝ </span>{{ ::goods.GoodName }}
+                                </div>
+                                <div>
+                                    <span class="my_label" style="font-size:13px">Գտնվելու վայր՝ </span>{{::goods.GoodAddress}}
+                                </div>
+                            </td>
+                            <td class="text-left col-sm-5">
+                                <div>
+                                    <span class="my_label" style="font-size:13px">Արժեք` </span>{{::goods.GoodAmount|number:2}} AMD
+                                </div>
+                                <div>
+                                    <span class="my_label" style="font-size:13px">Կանխավճար՝ </span>{{ ::goods.GoodPrepaid|number:2 }} AMD
+                                </div>
+                                <div>
+                                    <span class="my_label" style="font-size:13px">Կանխիկի գին՝ </span>{{::goods.CashPrice|number:2}} AMD
+                                </div>
+                                <div>
+                                    <span class="my_label" style="font-size:13px">Քանակ՝ </span>{{::goods.GoodCount}}
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr ng-if="goodsDetails.length==0 ">
+                            <td colspan="2" style="text-align:center;">
+                                Տվյալները բացակայում են
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+</div>

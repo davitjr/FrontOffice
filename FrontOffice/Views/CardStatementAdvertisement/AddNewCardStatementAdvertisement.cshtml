@@ -1,0 +1,124 @@
+﻿@{
+    Layout = null;
+}
+<form ng-controller="AllCardsAdvertisementsCtrl" name="addNewAdvertisement" id="addNewAdvertisement" role="form" sstyle="max-width:800px;" class="form-horizontal" novalidate>
+    <div id="cardStatementAdvertisementLoad" class="overlay hidden">
+        <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+    </div>
+    <div id="addAdvertisement_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="addNewAdvertisement.$setSubmitted();addNewAdvertisement.$valid ? save() : showValidationMessage(); ">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('addNewAdvertisement')"> 
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div>
+        <div class="col-sm-11">
+            <div style="max-width:530px;margin-left:5px">
+                <errors></errors>
+            </div>
+            <div class="col-sm-12">
+                <a style="color:red">
+                    {{alert}}
+                </a>
+            </div>
+
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="cardSystem">Քարտի համակարգ</label>
+                <div class="col-sm-5" data-ng-init="getCardSystemTypes()">
+                    <loading-control scopevariable="cardSystemTypes"></loading-control>
+                    <select ng-show="cardSystemTypes"
+                            data-ng-model="newAdvertisements.cardSystem" class="form-control" name="cardSystem"
+                            ng-change="getAllCardTypes(newAdvertisements.cardSystem)"
+                            data-ng-options="k as v for (k,v) in cardSystemTypes" required>
+                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                    </select>
+                    <ng-messages class="col-sm-11" ng-if="addNewAdvertisement.$submitted || addNewAdvertisement.cardSystem.$dirty"
+                                 for="addNewAdvertisement.cardSystem.$error">
+                        <ng-message when="required" class="errors">
+                            Համակարգը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="cardType">Քարտի տեսակ</label>
+
+                <div class="col-sm-5">
+                    <select data-ng-model="newAdvertisements.cardType"
+                            data-ng-options="k as v for (k,v) in openCardTypes"
+                            class="form-control" name="cardType" required>
+                        <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                    </select>
+
+                    <ng-messages class="col-sm-11" ng-if="addNewAdvertisement.$submitted || addNewAdvertisement.cardType.$dirty"
+                                 for="addNewAdvertisement.cardType.$error">
+                        <ng-message when="required" class="errors">
+                            Քարտի տեսակը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <br />
+            <div class="product-container-header" style="height:30px;min-width:800px;">
+                <div class="col-sm-12">
+                    <div class="col-sm-3" style="text-align:center">Դիրք I</div>
+                    <div class="col-sm-3" style="text-align:center">Դիրք II</div>
+                    <div class="col-sm-3" style="text-align:center">Դիրք III</div>
+                    <div class="col-sm-3" style="text-align:center">Դիրք IV</div>
+                </div>
+            </div>
+            <div class="product-details bhoechie-tab-content" style="min-width:800px;padding-left:10px;">
+                <div>
+                    <div ng-repeat="adv in newAdvertisements.OneCardAdvertisements">
+                        <div class="col-sm-3">
+                            <input type="text" placeholder="URL" ng-model="newAdvertisements.OneCardAdvertisements[$index].URL" />
+                            <div>
+                                @*<input type="text" name="fileName" placeholder="Ֆայլի անուն" ng-model="newAdvertisements.OneCardAdvertisements[$index].Files[0].Name" />*@
+                                <label class="tab_title col-sm-5">Ֆայլ</label>
+                                <div flow-init="{singleFile:true}"
+                                     flow-files-submitted="$flow.upload()"
+                                     flow-files-added="convertfile($files, $event, $flow, $index)"
+                                     flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+                                     flow-file-success="$file.msg = $message"
+                                     flow-name="obj.flow">
+                                    <div class="thumbnail ng-hide" ng-show="!$flow.files.length" style="margin-bottom:5px">
+                                        <img src="~/Content/Images/blog-no-image.png" style="max-width:150px;max-height:150px;min-height:150px;min-width:150px;" />
+                                    </div>
+                                    <div class="thumbnail" ng-show="$flow.files.length" style="margin-bottom:5px">
+                                        <img flow-img="$flow.files[0]" style="max-width:150px;max-height:150px;min-height:150px;min-width:150px;" ng-if="$flow.files[0].getExtension() != 'pdf' " />
+                                        <img src="~/Content/Images/pdf.png" style="max-width:150px;max-height:150px;" ng-if="$flow.files[0].getExtension() == 'pdf' " />
+                                        <div class="additionalInfoLabel">
+                                            Ֆայլի անվանում` <b>{{$flow.files[0].name}}</b>                                            
+                                        </div>
+
+                                        <div ng-if="$flow.files[0].size > 307200" style="color:red;">
+                                            <span class="glyphicon glyphicon-warning-sign "> Կցված ֆայլի չափը մեծ է 300kb-ից:</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="btn btn-sm btn-primary ng-hide" ng-show="!$flow.files.length" flow-btn="" style="min-width:110.78px;"><span class="glyphicon glyphicon-upload"></span>&nbsp;Կցել ֆայլ<input type="file" style="visibility: hidden; position: absolute;"></span>
+                                        <span class="btn btn-sm btn-info" ng-show="$flow.files.length" flow-btn=""><span class="glyphicon glyphicon-refresh"></span>&nbsp;Փոխել ֆայլը<input type="file" style="visibility: hidden; position: absolute;"></span>
+                                        <span class="btn btn-sm btn-danger" ng-show="$flow.files.length" ng-click="$flow.cancel();removeFile();" style="min-width:110.78px;" >
+                                            <span class="glyphicon glyphicon-trash"></span>&nbsp;
+                                            Հեռացնել
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+

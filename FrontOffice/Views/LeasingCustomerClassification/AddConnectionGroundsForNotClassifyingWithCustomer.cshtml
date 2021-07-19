@@ -1,0 +1,62 @@
+﻿<style type="text/css">
+    *[tabindex]:focus {
+        outline: 3px green solid !important;
+    }
+</style>
+
+<form style=" overflow-y: hidden;  overflow-x: hidden;  width:500px" data-ng-init="GetInterconnectedPersonNumber()" ng-controller="LeasingCustomerClassificationCtrl" id="addConnectionGroundsForNotClassifyingWithCustomerForm">
+
+     
+    <div class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li tabindex="4" ng-click="AddConnectionGroundsForNotClassifyingWithCustomer() " ng-keypress="keyPressAddConnectionGroundsForNotClassifyingWithCustomer($event)" style="padding-right:0">
+                <span><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ավելացնել</span> 
+            </li>
+            <li tabindex="5" ng-controller="PopUpCtrl" ng-click="CloseBPDialog('addConnectionGroundsForNotClassifyingWithCustomerForm')" ng-keypress="keyPressCloseBPDialogAddConnectionGroundsForNotClassifyingWithCustomer($event)" style="padding-right:0">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <div>
+        <div class="row" style="padding-bottom:20px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Փոխկապակցված հաճախորդի համար </div>
+            </div>
+            <div class="col-sm-2">
+                <div>
+                    <select tabindex="1" ng-show="interconnectedPersonNumber" ng-model="interconnectedPerson" name="" id="">
+                        <option ng-repeat="item in interconnectedPersonNumber" value="{{item.key}}">{{item.value}}</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style=" padding-bottom:15px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Զեկուցագրի համարը </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <input tabindex="2" type="text" style="width:280px" id="group" ng-model="repNumber">
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style=" padding-bottom:15px">
+            <div class="col-sm-3">
+                <div align="left" class="panel-heading">Զեկուցագրի ա/թ </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <input tabindex="3" type="date" ng-model="date" name="Date" style="height:30px;  width:auto" required>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+

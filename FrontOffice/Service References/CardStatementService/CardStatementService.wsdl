@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CardStatementService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ICardStatementService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://wcf01-test:85/CardStatementService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://wcf01-test:85/CardStatementService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://wcf01-test:85/CardStatementService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/CardStatementManagement" />
+      <xsd:import schemaLocation="http://wcf01-test:85/CardStatementService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://wcf01-test:85/CardStatementService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ICardStatementService_GetCardStatementSessions_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardStatementSessions" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetCardStatementSessions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardStatementSessionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_CreateCardStatementSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateCardStatementSession" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_CreateCardStatementSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateCardStatementSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_DeleteCardStatementSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCardStatementSession" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_DeleteCardStatementSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCardStatementSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_SetCurrentUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetCurrentUser" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_SetCurrentUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetCurrentUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetStatementSessionQualityTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStatementSessionQualityTypes" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetStatementSessionQualityTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStatementSessionQualityTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetCardSessionDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardSessionDetails" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetCardSessionDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardSessionDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetSatementHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSatementHistory" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetSatementHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSatementHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_StartCardStatementSessionSubscription_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartCardStatementSessionSubscription" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_StartCardStatementSessionSubscription_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartCardStatementSessionSubscriptionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_ChangeStatementSessionStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeStatementSessionStatus" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_ChangeStatementSessionStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeStatementSessionStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_DeleteCardStatementSessionSchedule_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCardStatementSessionSchedule" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_DeleteCardStatementSessionSchedule_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCardStatementSessionScheduleResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetOneCardAdvertisements_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOneCardAdvertisements" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetOneCardAdvertisements_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOneCardAdvertisementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetAllCardsAdvertisements_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllCardsAdvertisements" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetAllCardsAdvertisements_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllCardsAdvertisementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetAdvertisementFiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdvertisementFiles" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetAdvertisementFiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdvertisementFilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetAdvertisementFileByID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdvertisementFileByID" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_GetAdvertisementFileByID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdvertisementFileByIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_UpdateAdvertisementWithNewFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAdvertisementWithNewFile" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_UpdateAdvertisementWithNewFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAdvertisementWithNewFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_InsertAdvertisement_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertAdvertisement" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_InsertAdvertisement_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertAdvertisementResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_DeactivateAdvertisement_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateAdvertisement" />
+  </wsdl:message>
+  <wsdl:message name="ICardStatementService_DeactivateAdvertisement_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateAdvertisementResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ICardStatementService">
+    <wsdl:operation name="GetCardStatementSessions">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/GetCardStatementSessions" message="tns:ICardStatementService_GetCardStatementSessions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/GetCardStatementSessionsResponse" message="tns:ICardStatementService_GetCardStatementSessions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateCardStatementSession">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/CreateCardStatementSession" message="tns:ICardStatementService_CreateCardStatementSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/CreateCardStatementSessionResponse" message="tns:ICardStatementService_CreateCardStatementSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCardStatementSession">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/DeleteCardStatementSession" message="tns:ICardStatementService_DeleteCardStatementSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/DeleteCardStatementSessionResponse" message="tns:ICardStatementService_DeleteCardStatementSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCurrentUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/SetCurrentUser" message="tns:ICardStatementService_SetCurrentUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/SetCurrentUserResponse" message="tns:ICardStatementService_SetCurrentUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatementSessionQualityTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/GetStatementSessionQualityTypes" message="tns:ICardStatementService_GetStatementSessionQualityTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/GetStatementSessionQualityTypesResponse" message="tns:ICardStatementService_GetStatementSessionQualityTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCardSessionDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/GetCardSessionDetails" message="tns:ICardStatementService_GetCardSessionDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/GetCardSessionDetailsResponse" message="tns:ICardStatementService_GetCardSessionDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSatementHistory">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/GetSatementHistory" message="tns:ICardStatementService_GetSatementHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/GetSatementHistoryResponse" message="tns:ICardStatementService_GetSatementHistory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StartCardStatementSessionSubscription">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/StartCardStatementSessionSubscription" message="tns:ICardStatementService_StartCardStatementSessionSubscription_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/StartCardStatementSessionSubscriptionResponse" message="tns:ICardStatementService_StartCardStatementSessionSubscription_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeStatementSessionStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/ChangeStatementSessionStatus" message="tns:ICardStatementService_ChangeStatementSessionStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/ChangeStatementSessionStatusResponse" message="tns:ICardStatementService_ChangeStatementSessionStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCardStatementSessionSchedule">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/DeleteCardStatementSessionSchedule" message="tns:ICardStatementService_DeleteCardStatementSessionSchedule_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/DeleteCardStatementSessionScheduleResponse" message="tns:ICardStatementService_DeleteCardStatementSessionSchedule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOneCardAdvertisements">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/GetOneCardAdvertisements" message="tns:ICardStatementService_GetOneCardAdvertisements_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/GetOneCardAdvertisementsResponse" message="tns:ICardStatementService_GetOneCardAdvertisements_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllCardsAdvertisements">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/GetAllCardsAdvertisements" message="tns:ICardStatementService_GetAllCardsAdvertisements_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/GetAllCardsAdvertisementsResponse" message="tns:ICardStatementService_GetAllCardsAdvertisements_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAdvertisementFiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/GetAdvertisementFiles" message="tns:ICardStatementService_GetAdvertisementFiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/GetAdvertisementFilesResponse" message="tns:ICardStatementService_GetAdvertisementFiles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAdvertisementFileByID">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/GetAdvertisementFileByID" message="tns:ICardStatementService_GetAdvertisementFileByID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/GetAdvertisementFileByIDResponse" message="tns:ICardStatementService_GetAdvertisementFileByID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAdvertisementWithNewFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/UpdateAdvertisementWithNewFile" message="tns:ICardStatementService_UpdateAdvertisementWithNewFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/UpdateAdvertisementWithNewFileResponse" message="tns:ICardStatementService_UpdateAdvertisementWithNewFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertAdvertisement">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/InsertAdvertisement" message="tns:ICardStatementService_InsertAdvertisement_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/InsertAdvertisementResponse" message="tns:ICardStatementService_InsertAdvertisement_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateAdvertisement">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICardStatementService/DeactivateAdvertisement" message="tns:ICardStatementService_DeactivateAdvertisement_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICardStatementService/DeactivateAdvertisementResponse" message="tns:ICardStatementService_DeactivateAdvertisement_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ICardStatementService" type="tns:ICardStatementService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ICardStatementService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="GetCardStatementSessions">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/GetCardStatementSessions" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateCardStatementSession">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/CreateCardStatementSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCardStatementSession">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/DeleteCardStatementSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCurrentUser">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/SetCurrentUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatementSessionQualityTypes">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/GetStatementSessionQualityTypes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCardSessionDetails">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/GetCardSessionDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSatementHistory">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/GetSatementHistory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartCardStatementSessionSubscription">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/StartCardStatementSessionSubscription" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeStatementSessionStatus">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/ChangeStatementSessionStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCardStatementSessionSchedule">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/DeleteCardStatementSessionSchedule" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOneCardAdvertisements">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/GetOneCardAdvertisements" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllCardsAdvertisements">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/GetAllCardsAdvertisements" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAdvertisementFiles">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/GetAdvertisementFiles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAdvertisementFileByID">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/GetAdvertisementFileByID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAdvertisementWithNewFile">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/UpdateAdvertisementWithNewFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertAdvertisement">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/InsertAdvertisement" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateAdvertisement">
+      <soap12:operation soapAction="http://tempuri.org/ICardStatementService/DeactivateAdvertisement" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CardStatementService">
+    <wsdl:port name="NetTcpBinding_ICardStatementService" binding="tns:NetTcpBinding_ICardStatementService">
+      <soap12:address location="net.tcp://wcf1001-t.acbaca.local:8080/CardStatementService.svc/CardStatementService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://wcf1001-t.acbaca.local:8080/CardStatementService.svc/CardStatementService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>ACBAOperationtest@acbaca.local</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

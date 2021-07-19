@@ -1,0 +1,63 @@
+﻿
+<style type="text/css">
+    #overdueData {
+        max-width: 700px;
+        width: 700px;
+    }
+</style>
+<form ng-show="false">
+    <div class="menu-bar dialog-menu light-green">
+    </div>
+    <div>
+    </div>
+</form>
+<div ng-controller="OverdueCtrl" id="overdueData" class="product-container">
+    <div ng-init="(productId && getCurrentProductOverdueDetails(productId)) || (!productId && getOverdueDetails())"></div>
+    <div class="header-title">
+        Ժամկետանց պատմություն
+        <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+    </div>
+    <div class="product-collapsable-section">
+        <div class="product-container-header">
+            <div class="col-sm-5">Վարկ</div>
+            <div class="col-sm-7">Ժամկետանցի մանրամասներ</div>
+        </div>
+        <div class="product-content-table custom-scroll" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+            <loading></loading>
+
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody>
+                    <tr ng-if="overduedetails.length!=0" ng-repeat="overdue in overduedetails" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRowLoan(overdue,$index)">
+                        <td class="col-sm-5">
+                            {{::overdue.ProductTypeDescription}}
+                            <br /><span class="my_label">Մայր գումար` </span><span> {{ ::overdue.StartCapitalString }} {{::overdue.Currency}}</span>
+                            <br /><span class="my_label">Սկիզբ` </span> <span>{{::overdue.ProductStartDateToString }}</span>
+                            <br /> <span class="my_label">Վերջ`</span> <span>{{ ::overdue.ProductEndDateToString }}</span>
+                        </td>
+                        <td class="col-sm-5">
+                            <span class="my_label">Սկիզբ` </span> <span>{{::overdue.StartDateToString }}</span>
+                            <br /><span class="my_label">Վերջ` </span> <span>{{ ::overdue.EndDateToString }}</span>
+                            <br /><span class="my_label">Օրեր՝ </span><span>{{ overdue.EndDateToString =='-' ? '-' : overdue.OverdueDaysCount }}</span>
+                            <br /><span class="my_label">Գումար`</span> <span style="color:#990000">{{ ::overdue.AmountString }} {{::overdue.Currency}}</span>
+                            <br /><span class="my_label">Տոկոսագումար` </span> <span style="color:#990000">{{ ::overdue.RateAmountString }} {{::overdue.Currency}}</span>
+                            <br /><span ng-if="overdue.Checked==true" class="glyphicon glyphicon-ok"></span>
+                        </td>
+
+                        <td class="col-sm-2">
+                        </td>
+                        <td ng-show=" $root.SessionProperties.AdvancedOptions.BtnUpdateLoanOverdue== '1' " class="col-sm-1 click_toggle" context="contextLoan" id="contextMenu"><div id="contextMenu"></div> </td>
+                    </tr>
+                    <tr ng-if="overduedetails.length==0">
+                        <td colspan="6" style="text-align:center">Առկա չէ</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <ul id="contextLoan" class="dropdown-menu">
+            <li ng-show="productId!=0 " ng-controller="PopUpCtrl" name="BtnUpdateLoanOverdue" id="BtnUpdateLoanOverdue" ng-click="params={productId:productId,startDate:startDate};openWindow('/Overdue/LoanOverdueUpdate','Ժամկետանցի ուղղում','loanOverdueUpdate')"><a style="color: black;text-decoration:none!important;cursor:pointer">Ուղղման հայտ {{$root.SessionProperties.isEncashmentDepartment}}</a></li>
+        </ul>
+
+    </div>
+
+</div>

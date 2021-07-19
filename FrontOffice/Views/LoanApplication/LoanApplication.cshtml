@@ -1,0 +1,341 @@
+﻿
+@{
+    Layout = null;
+}
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+    #loanApplicationForm {
+        min-width: 800px;
+    }
+</style>
+
+<div id="loanApplicationLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="LoanApplicationCtrl" name="LoanApplicationForm" id="loanApplicationForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+    <div id="newloan_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="LoanApplicationForm.$setSubmitted();LoanApplicationForm.$valid && saveLoanApplication();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newloan')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div style="max-width:560px">
+            <errors></errors>
+        </div>
+
+        <div class="col-sm-11">
+            <div class="form-group">
+
+                <label class="tab_title col-sm-5 " for="LoanType">Վարկի տեսակ</label>
+                <div class="col-sm-6" data-ng-init="GetLoanTypesForLoanApplication('loan');loanApplication.LoanType='5'">
+                    <div class="row">
+                        <select data-ng-model="loanApplication.LoanType" name="LoanType" id="LoanType" class="form-control"
+                                data-ng-options="k as v for (k,v) in loanTypes" required>
+                            @*<option hidden>Ընտրեք...</option>*@
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="LoanApplicationForm.$submitted || LoanApplicationForm.LoanType.$dirty"
+                                     for="LoanApplicationForm.LoanType.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք վարկի տեսակ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="ApplicationDate">Դիմելու ամսաթիվ</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <input type="date" class="tab_title form-control unstyled" id="ApplicationDate" name="ApplicationDate" data-ng-model="loanApplication.ApplicationDate" style="text-align:left" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 control-label" for="amount">Դիմումի գումար</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <input type="text" ng-model="loanApplication.Amount" name="amount" required min="0" class="form-control tab_title" fcsa-number />
+                        <ng-messages ng-if="LoanApplicationForm.$submitted || LoanApplicationForm.amount.$dirty"
+                                     for="LoanApplicationForm.amount.$error">
+                            <ng-message when="required" class="errors">
+                                Գումարը լրացված չէ
+                            </ng-message>
+                            <ng-message when="min" class="errors">
+                                Գումարը պետք է լինի դրական
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                    <h5 class="col-sm-1" style="padding:0">{{loanApplication.Currency}}</h5>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="loanApplicationCurrency">Դիմումի արժույթ</label>
+                <div class="col-sm-6" data-ng-init="getCurrencies()">
+                    <div class="row">
+                        <select data-ng-model="loanApplication.Currency" name="Currency" id="Currency"
+                                class="form-control" required
+                                data-ng-options="k as v for (k,v) in currencies">
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք արժույթը...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="LoanApplicationForm.$submitted || LoanApplicationForm.Currency.$dirty"
+                                     for="LoanApplicationForm.Currency.$error">
+                            <ng-message when="required" class="errors">
+                                Արժույթը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 control-label" for="duration">Վարկի տևողություն (ամիս)</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <input type="text" ng-model="loanApplication.Duration" name="duration" required min="0" class="form-control tab_title" fcsa-number />
+                        <ng-messages ng-if="LoanApplicationForm.$submitted || LoanApplicationForm.duration.$dirty"
+                                     for="LoanApplicationForm.duration.$error">
+                            <ng-message when="required" class="errors">
+                                Վարկի տևողությունը լրացված չէ
+                            </ng-message>
+                            <ng-message when="min" class="errors">
+                                Վարկի տևողությունը պետք է լինի դրական
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 control-label" for="duration">Միայն տոկոսների մարում (ամիս)</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <input type="text" ng-model="loanApplication.Duration" name="duration" required min="0" class="form-control tab_title" fcsa-number />
+                        <ng-messages ng-if="LoanApplicationForm.$submitted || LoanApplicationForm.duration.$dirty"
+                                     for="LoanApplicationForm.duration.$error">
+                            <ng-message when="required" class="errors">
+                                Միայն տոկոսների մարման ժամանակահատվածը լրացված չէ
+                            </ng-message>
+                            <ng-message when="min" class="errors">
+                                Միայն տոկոսների մարման ժամանակահատվածը պետք է լինի դրական
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="loanApplicationCurrency">Ակցիա</label>
+                <div class="col-sm-6" data-ng-init="getLoanActions">
+                    <div class="row">
+                        <select data-ng-model="loanApplication.Action" name="Action" id="Action"
+                                class="form-control" required
+                                data-ng-options="k as v for (k,v) in currencies">
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք ակցիան...</option>
+                        </select>
+                    </div>
+                    @*<div class="row">
+                        <ng-messages ng-if="LoanApplicationForm.$submitted || LoanApplicationForm.Currency.$dirty"
+                                     for="LoanApplicationForm.Action.$error">
+                            <ng-message when="required" class="errors">
+                                Ակցիան ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>*@
+
+
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="AnalyseType">Ֆին/տնտես վերլուծություն</label>
+                <div class="col-sm-6" data-ng-init="getAnalyseTypes()">
+                    <div class="row">
+                        <select data-ng-model="loanApplication.AnalyseType" name="AnalyseType" id="AnalyseType" class="form-control"
+                                data-ng-options="k as v for (k,v) in analyseTypes" required>
+                            <option value="" hidden>Ընտրեք...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="LoanApplicationForm.$submitted || LoanApplicationForm.AnalyseType.$dirty"
+                                     for="LoanApplicationForm.AnalyseType.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք վերլուծության տեսակը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="Country">Օգտագործման երկիր</label>
+                <div class="col-sm-6" data-ng-init="getCountries()">
+                    <div class="row">
+                        <select data-ng-model="loanApplication.LoanUseCountry" name="LoanUseCountry" id="LoanUseCountry" ng-change="getRegions()" class="form-control"
+                                data-ng-options="a.id as a.desc for a in countries| orderBy:'desc'" required>
+                            <option value="" hidden>Ընտրեք...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="LoanApplicationForm.$submitted || LoanApplicationForm.LoanUseCountry.$dirty"
+                                     for="LoanApplicationForm.LoanUseCountry.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք օգտագործման երկիրը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="Region">Օգտագործման մարզ</label>
+                <div class="col-sm-6" @*data-ng-init="getRegions()"*@>
+                    <div class="row">
+                        <select data-ng-model="loanApplication.Loan.LoanUseRegion" name="Region" id="Region" ng-change="getArmenianPlaces()" class="form-control"
+                                data-ng-options="k as v for (k,v) in regions" required>
+                            <option value="" hidden>Ընտրեք...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="LoanApplicationForm.$submitted || LoanApplicationForm.Region.$dirty"
+                                     for="LoanApplicationForm.Region.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք օգտագործման մարզը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="Locality">Օգտագործման շրջան</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select data-ng-model="loanApplication.Loan.LoanUseLocality" name="Place" id="Place" class="form-control"
+                                data-ng-options="a.id as a.desc for a in places| orderBy:'desc'" required>
+                            <option value="" hidden>Ընտրեք...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="LoanApplicationForm.$submitted || LoanApplicationForm.Place.$dirty"
+                                     for="LoanApplicationForm.Place.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք օգտագործման շրջանը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                <label class="tab_title col-sm-5 control-label" for="purpose">Վարկի նպատակ</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <input type="text" ng-model="loanApplication.Duration" name="duration" required class="form-control tab_title" />
+                        <ng-messages ng-if="LoanApplicationForm.$submitted || LoanApplicationForm.purpose.$dirty"
+                                     for="LoanApplicationForm.purpose.$error">
+                            <ng-message when="required" class="errors">
+                                Վարկի նպատակը լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>*@
+
+            <purpose description="loanApplication.Purpose"
+                              labeldescription="'Վարկի նպատակ'"
+                              formname="LoanApplicationForm">
+            </purpose>
+
+            <div class="form-group " style="padding-right: 10px;">
+                <label class="tab_title col-sm-5" for="Refused">Հաճախորդը հրաժարվել է վարկից</label>
+
+                <div class="col-sm-1 row">
+                    <input type="checkbox" ng-model="loanApplication.Loan.Refused" style="width:18px" name="Refused" />
+                </div>
+            </div>
+
+            <div class="form-group " style="padding-right: 10px;">
+                <label class="tab_title col-sm-5" for="SalaryByBank">Աշխատավարձը փոխանցվում է ԱԿԲԱ բանկ</label>
+
+                <div class="col-sm-1 row">
+                    <input type="checkbox" ng-model="loanApplication.SalaryByBank" style="width:18px" name="SalaryByBank" />
+                </div>
+            </div>
+
+            <div class="form-group " style="padding-right: 10px;">
+                <label class="tab_title col-sm-5" for="Provision">Վարկը ապահովված է գրավով</label>
+
+                <div class="col-sm-1 row">
+                    <input type="checkbox" ng-model="loanApplication.Loan.Provision" style="width:18px" name="Provision" />
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="ContractSalary">Աշխատավարձային ծրագրի համար</label>
+                <div class="col-sm-6" data-ng-init="getContractSalaryTypes()">
+                    <div class="row">
+                        <select data-ng-model="loanApplication.ContractSalary" name="ContractSalary" id="ContractSalary" class="form-control"
+                                data-ng-options="k as v for (k,v) in contractSalaries">
+                            <option value="" hidden>Ընտրեք...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="LoanApplicationForm.$submitted || LoanApplicationForm.ContractSalary.$dirty"
+                                     for="LoanApplicationForm.ContractSalary.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք աշխատավարձային ծրագիրը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+        </div>
+    </div>
+
+
+
+
+</form>
+
+
+
+
+
+

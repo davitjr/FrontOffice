@@ -1,0 +1,125 @@
+﻿<style type="text/css">
+    .redStyle {
+        color: red;
+    }
+
+    .greenStyle {
+        color: green;
+    }
+
+    .hb_filter_style{
+        width:95%;
+        margin-left:1% !important;
+    }
+
+    .hb_form_style{
+        max-width:790px;
+    }
+
+    .hb_table_style{
+        width:90%;
+        margin-left:5% !important;
+    }
+    .hb_button_style {
+        margin-left: 43% !important;
+    }
+</style>
+
+
+<form id="accountFreezeHistoryDetails"  name="FreezeHistoryForm" ng-if="accountnumber" ng-class="$root.SessionProperties.IsCalledFromHB == true? 'hb_form_style':''" ng-controller="AccountFreezeCtrl" data-ng-init="getAccountFreezeHistory(accountnumber)" ng-open="FreezeHistoryForm.$setSubmitted()" ng-submit="FreezeHistoryForm.$valid && getAccountFreezeHistory(accountnumber)" novalidate>
+           
+                <div class="row" ng-class="$root.SessionProperties.IsCalledFromHB == true? 'hb_filter_style':''">
+                        <div style="clear:both" class="col-xs-6">
+                            <span class=" product-detail-lable">Տեսակ</span>
+                            <div data-ng-init="getAccountFreezeReasonsTypes('forHistory')">
+                                <loading-control scopevariable="freezeReasonsTypes"></loading-control>
+                                <select ng-show="freezeReasonsTypes" data-ng-model="FreezeType" name="FreezeType" id="FreezeType" class="form-control"
+                                        data-ng-options="k as v for (k,v) in ::freezeReasonsTypes">
+                                    <option selected="selected" value="">Բոլորը</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <span class=" product-detail-lable">Կարգավիճակ</span>
+                            <div data-ng-init="getAccountFreezeStatuses()">
+                                <loading-control scopevariable="freezeStatuses"></loading-control>
+                                <select ng-show="freezeStatuses" data-ng-model="FreezeStatus" name="FreezeStatus" id="FreezeStatus" class="form-control"
+                                        data-ng-options="k as v for (k,v) in ::freezeStatuses">
+                                    <option selected="selected" value="" hidden>Բոլորը</option>
+                                </select>
+                                <br />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <br>
+                            <button type="submit" class="btn btn-primary" ng-class="$root.SessionProperties.IsCalledFromHB == true? 'hb_button_style':''"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                        </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div ng-if=" FreezeHistoryForm.$submitted && FreezeHistoryForm.$valid">
+                      
+
+                            <div class="product-container" style="width:90%;" ng-class="$root.SessionProperties.IsCalledFromHB == true? 'hb_table_style':''">
+                                <div class="header-title">
+                                    Պատմություն
+                                    <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+                                </div>
+                                <div class="product-collapsable-section">
+                                    <div class="product-container-header">
+                                        <div ng-if="$root.SessionProperties.SourceType == 2" ng-controller="PopUpCtrl" ng-click="params={accountnumber:accountnumber,accounttype:accounttype};openWindowWithTemplate('accountfreezeorder','Հաշվի սառեցման հայտ','accountfreezeorder')">
+                                            <i class="add-new-product tipB" data-original-title="Նոր գրություն"></i>
+                                        </div>
+                                    </div>
+                                    <div class="product-content-table-full_height custom-scroll" id="freezeHistoryContent" style="min-height:100px;">
+                                        <div ng-if="freezeHistory==undefined">
+                                            <loading></loading>
+                                        </div>
+                                        <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                                            <tbody>
+                                                <tr ng-repeat="freeze in freezeHistory" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" style="max-height:200px">
+                                                    <td class="text-left col-sm-11">
+                                                        <div style="margin-left: 5pt;">
+                                                            <span>{{::freeze.ReasonDescription}}</span>
+                                                            <br />
+                                                            <div ng-if="$root.SessionProperties.IsCalledFromHB == true">
+                                                                <span class="my_label" style="font-size:13px">Հաշիվ` </span>{{ ::freeze.AccountNumber }}
+                                                            </div>
+                                                            <div ng-if="freeze.FreezeDate!=null">
+                                                                <span class="my_label" style="font-size:13px">Հաշվի սառեցման ամսաթիվ` </span>{{ ::freeze.FreezeDate| mydate | date: 'dd/MM/yyyy'}}
+                                                            </div>
+                                                            <div ng-if="freeze.AmountFreezeDate!=null">
+                                                                <span class="my_label" style="font-size:13px">Գումարի սառեցման ամսաթիվ` </span>{{ ::freeze.AmountFreezeDate| mydate | date: 'dd/MM/yyyy' }}
+                                                            </div>
+                                                            <div ng-if="freeze.FreezeAmount!=0">
+                                                                <span class="my_label" style="font-size:13px">Սառեցված գումար` </span>{{ ::freeze.FreezeAmount|number:2 }}
+                                                            </div>
+                                                            <div ng-if="freeze.UnfreezeDate!=null">
+                                                                <span class="my_label redStyle" style="font-size:13px;">Ապասառեցման ամսաթիվ` {{ ::freeze.UnfreezeDate | mydate | date: 'dd/MM/yyyy' }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="col-sm-1 click_toggle" context="contextFreezes" id="contextMenu"><div id="contextMenu"></div> </td>
+                                                </tr>
+                                                <tr ng-if="freezeHistory.length==0 ">
+                                                    <td colspan="3" style="text-align:center;">
+                                                        Տվյալները բացակայում են
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                     
+                                </div>
+                            </div>
+                       
+            <br />
+            <loading></loading>
+            <ul id="contextFreezes" class="dropdown-menu">
+                <li><a style="color: black;text-decoration:none!important ;" href="" ng-controller="PopUpCtrl" class="my_button" ng-click="params={freezeid: selectedFreezeId};openWindowWithTemplate('accountfreezedetails','Հաշվի սառեցման մանրամասներ','accountfreezedetails')">Դիտարկում</a></li>
+                <li><a style="color: black;text-decoration:none!important ;" href="" ng-controller="PopUpCtrl" class="my_button" ng-click="params={accountnumber:accountnumber,selectedFreezeId: selectedFreezeId,selectedFreezeReasonId: selectedFreezeReasonId}; openWindowWithTemplate('accountunfreezeorder','Հաշվի ապասառեցման հայտ','accountunfreezeorder')">Ապասառեցնել</a></li>
+            </ul>
+</form>

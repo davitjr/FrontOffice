@@ -1,0 +1,166 @@
+﻿
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+    #HBDocumentsTransactionErrorForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #HBDocumentsTransactionErrorForm {
+        min-width: 600px;
+    }
+
+    .maximize-dialog {
+        display: none;
+    }
+
+    .minimize-dialog {
+        display: none;
+    }
+</style>
+<div id="HBDocumentsTransactionError" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="HBDocumentsCtrl" ng-init="initErrorFields();" name="HBDocumentsTransactionErrorForm" id="HBDocumentsTransactionErrorForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+    <div id="hbTransactionError_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('hbTransactionError')">
+                <div class="form-group">
+                    <label class="tab_title col-sm-5">Հաղորդագրության համար</label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-10 multiple_columns">
+                            <input type="number" class="tab_title form-control unstyled" id="MessageNumber" name="MessageNumber" ng-model="MessageNumber" style="text-align:left">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('hbTransactionError')">
+                <div class="form-group">
+                    <label class="tab_title col-sm-5">Կարգավիճակ</label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-10 multiple_columns">
+                            <select @*ng-init="getSourceTypes()"*@ style="height: 31px;" data-toggle="tooltip"
+                                    data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ աղբյուրի" ng-model="searchParams.SourceType"
+                                    name="sourceType" id="sourceType" class="form-control select-font"
+                                    data-ng-options="k as v for (k,v) in sourceTypes" ng-change="updateSourceTypeField();">
+                                <option value="">Ընտրեք տեսակը</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('hbTransactionError')">
+                <div class="form-group">
+                    <label class="tab_title col-sm-5">Հաշիվ</label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-10 multiple_columns">
+                            <input type="number" class="tab_title form-control unstyled" id="AccountNumber" name="AccountNumber" ng-model="AccountNumber" style="text-align:left">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('hbTransactionError')">
+                <div class="form-group">
+                    <label class="tab_title col-sm-5">Քարտի համար</label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-10 multiple_columns">
+                            <input type="number" class="tab_title form-control unstyled" id="CardNumber" name="CardNumber" ng-model="CardNumber" style="text-align:left">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('hbTransactionError')">
+                <div class="form-group">
+                    <label class="tab_title col-sm-5">Տեսակ</label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-10 multiple_columns">
+                            <select @*ng-init="getSourceTypes()"*@ style="height: 31px;" data-toggle="tooltip"
+                                    data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ աղբյուրի" ng-model="searchParams.SourceType"
+                                    name="sourceType" id="sourceType" class="form-control select-font"
+                                    data-ng-options="k as v for (k,v) in sourceTypes" ng-change="updateSourceTypeField();">
+                                <option value="">Ընտրեք տեսակը</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('hbTransactionError')">
+                <button type="button" class="buttonClass" ng-click="getSearchedHBDocuments()" style="height:31px;">Սահմանափակում</button>
+            </li>
+        </ul>
+            <div id="right-menu" style="display:none;">
+            </div>
+        </div>
+    <div>
+        @*<div style="max-width:560px">
+                <errors></errors>
+            </div>*@
+        <div class="col-sm-11" style="margin-top:20px;">
+            <table class="table-hover table-condensed" style="height:50%;display:block;">
+                <thead class="product-container-header">
+                    <tr>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 6%;">Հաշիվ</th>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 7%;">Մուտքագրման ա/թ</th>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 7%;">Պատճառ</th>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 10%;">Հաշվի սառեցման օրը</th>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 10%;">Գումարի սառեցման օրը</th>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 5%;">Սառեցված գումար</th>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 7%;">Պ/Կ</th>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 8%;">Նկարագրություն</th>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 4%;">Փակման ա/թ</th>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 7.5%;">Փակ․ Պ/Կ</th>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 7.5%;">Փակման պատճառ</th>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 7.5%;">Փակման պատճառի նկարագրություն</th>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 7.5%;">Սառեցման օրը ըստ գրության</th>
+                        <th class="tableCaption" style="font-size:14px;text-align: center;width: 7.5%;">ԴԱՀԿ գրության համար</th>
+                        @*<th hidden>Դիմումի կարգավիճակի id</th>
+                    <td class="tablecssForOnlineCommittee_50"></td>*@
+                    </tr>
+                </thead>
+                <tbody class="custom-scroll" style="display:block;overflow:auto;height:300px;">
+                    <tr ng-if="hbMessages.length!=0" ng-repeat="message in hbMessages" ng-class="{'selected':message == selectedRow}" style="cursor: pointer;text-align:center" @*ng-mousemove="openAccountDetails($event,document.TransactionCode)" ng-mouseleave="closeAccountDetails()"*@ ng-click="showCustomerInfoDetails(document.TransactionCode);openAccountDetails(document.TransactionCode);selectRow(document)">
+                        <td class="tabletd" style="width: 6%;">{{ ::message.AccountNumber }}</td>
+                        <td class="tabletd" style="width: 7%;">{{ ::message.MessageDate | date: 'dd/MM/yyyy' }}</td>
+                        <td class="tabletd" style="width: 7%;">{{ ::message.Reason }}</td>
+                        <td class="tabletd" style="font-family:'Arial Armenian' !important;text-align:left;width: 10%;">{{ ::message.AccountFreezingDate | date: 'dd/MM/yyyy' }}</td>
+                        <td class="tabletd" style="width: 10%;">{{ ::message.MoneyFreezingDate | date: 'dd/MM/yyyy' }}</td>
+                        <td class="tabletd" style="width: 5%;">{{ ::message.FreezedMoney | currency : value ="" }}</td>
+                        <td class="tabletd" style="text-align:right;width: 7%;">{{ ::message.SetNumber }}</td>
+                        <td class="tabletd" style="width: 8%;font-family:'Arial Armenian' !important;">{{ ::message.Description }}</td>
+                        <td class="tabletd" style="width: 4%;">{{ ::message.ClosingDate | date: 'dd/MM/yyyy' }}</td>
+                        <td class="tabletd" style="width: 7.5%;">{{ ::message.ClosingSetNumber }}</td>
+                        <td class="tabletd" style="width: 10%;font-family:'Arial Armenian' !important;text-align:left">{{ ::message.ClosingReason }}</td>
+                        <td class="tabletd" style="width: 9%;text-align:right;font-family:'Arial Armenian' !important;">{{ ::message.ClosingReasonDescription }}</td>
+                        <td class="tabletd" style="width: 10%;text-align:left">{{ ::message.FreezingDateAccordingToRecord | date: 'dd/MM/yyyy' }}</td>
+                        <td class="tabletd" style="width: 10%;text-align:left">{{ ::message.DAHKLetterNumber }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <div class="form-group">
+                <label class="tab_title col-sm-5">Տեսակ</label>
+                <div class="col-sm-6 row">
+                    <button type="button" class="buttonClass" ng-click="getSearchedHBDocuments()" style="height:31px;">Նկարագրություն</button>
+                    <button type="button" class="buttonClass" ng-click="getSearchedHBDocuments()" style="height:31px;">Խմբագրել</button>
+                    <button type="button" class="buttonClass" ng-click="getSearchedHBDocuments()" style="height:31px;">Փակել գրությունը</button>
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+

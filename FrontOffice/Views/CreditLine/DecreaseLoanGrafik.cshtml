@@ -1,0 +1,53 @@
+﻿<style>
+    #tbl table, th, td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    #tbl table {
+        border-collapse: collapse;
+    }
+
+        #tbl table .top td {
+            font-size: 12px;
+        }
+
+        #tbl table tr {
+            height: 7px;
+        }
+
+    #tbl .form-horizontal {
+        margin-top: -22px;
+    }
+</style>
+<div id="load" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div class=" col-md-11">
+    <br />
+    <div>
+        <form role="form" id="tbl" class="form-horizontal" ng-controller="CreditLineCtrl" ng-init="getDecreaseLoanGrafik(creditline)" style="width:850px;">
+            <table border="1" id="DecreaseLoanGrafikContent">
+                <tr class="product-container-header">
+                    <td  style="text-align:center" >Ա/թ</td>
+                    <td  style="text-align:center" >Նվազեցվող գումար</td>
+                    <td style="text-align:center">Մնացորդ</td>
+                </tr>
+                <tr ng-repeat="grafik in ::decreaseLoanGrafik">
+                    <td style="text-align:center">{{::grafik.RepaymentDateTostring}}</td>
+                    <td style="text-align:right">{{::grafik.TotalRepaymentToString}}&nbsp;&nbsp;&nbsp;</td>
+                    <td style="text-align:right">{{::grafik.RestCapitalToString}}&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr style="text-align: -webkit-right; margin-bottom:15px;" ng-if="decreaseLoanGrafik">
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white" >
+                        Ընդամենը`
+                    </td>
+                    <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                        {{sum1.toFixed(2)| currency:''}}&nbsp;&nbsp;&nbsp;
+                    </td>
+                </tr>
+            </table>
+            <br />
+        </form>
+    </div>
+</div>

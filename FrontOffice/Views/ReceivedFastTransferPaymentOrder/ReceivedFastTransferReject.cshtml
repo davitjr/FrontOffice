@@ -1,0 +1,56 @@
+﻿
+
+<style type="text/css">
+    #transferApproveForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #transferApproveForm {
+        margin-right: 15px;
+    }
+</style>
+
+
+
+<form style="width:550px; padding:0" class="form-horizontal col-sm-12" ng-controller="ReceivedFastTransferPaymentOrderCtrl" name="receivedFastTransferRejectForm" novalidate>
+    <div class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="order.Type=145;  RejectReceivedFastTransfer() " style="padding-right:0">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Մերժել</span>
+            </li>
+
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div class="col-sm-12" style="padding:0;padding-left:5px;">
+        <div style="max-width:600px">
+            <errors></errors>
+        </div>
+        <div class="form-group " style="padding-left: 30px; ">
+            <div class="product-detail-cell product-detail-lable">
+                Մերժման պատճառ
+            </div>
+
+        </div>
+
+        <div class="row " style="margin-left:5px">
+            <div class="col-sm-12" style="padding:0;padding-left:5px;">
+
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-md-7 col-sm-7" align="left" style="margin:0;"  ng-init="getCallTransferRejectionReasons()">
+                        <select ng-model="changeOrder.ReasonType" data-ng-options="k as v for (k,v) in callTransferRejectionReasons" style=" width:100%"></select>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 10px;" ng-if="changeOrder.ReasonType==99">
+                    <div class="col-md-7 col-sm-7">
+                        <input type="text" maxlength="300" ng-model="changeOrder.ReasonTypeDescription" ng-enter="" name="Description" class="tab_title form-control" style="text-align:left;max-width: 100%;width: 100%;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+ 
+

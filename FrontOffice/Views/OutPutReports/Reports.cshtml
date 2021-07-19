@@ -1,0 +1,538 @@
+﻿<style>
+
+.tContainer {
+    width: 65%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    height: 8rem;
+    transform: translate(0px,-80px);
+    margin-left: 2%;
+}
+
+.tContainer > div {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+}
+/* .tContainer> div> input{
+    box-sizing: border-box;
+    border: 1px solid lightgrey;
+    height: 35px;
+    padding-left: 10px;  
+} */     
+label {
+    color: #245775;
+    font-weight: normal;
+}
+</style>
+
+
+<form name="ReportsForm" ng-controller="OutPutReportsCtrl" id="AllReports" data-ng-init="GetUserFilialCode()" novalidate>
+    <div class="product-details bhoechie-tab-content" style="min-width:730px;margin-left:10px;">
+        <div class="row">
+            <div class="col-sm-12 ">
+
+                <div class="col-sm-6  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Տեսակ
+                    </div>
+                    <div data-ng-init="getPrintReportTypes()">
+                        <loading-control scopevariable="printReportTypes"></loading-control>
+                        <select ng-show="printReportTypes" data-ng-model="searchParams.ReportType" ng-change="showSearchParamByReportType(searchParams.ReportType)" name="ReportType" id="ReportType" class="form-control"
+                                data-ng-options="k as v for (k,v) in printReportTypes">
+                            <option selected="selected" value="" hidden>Ընտրեք տեսակը...</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+
+                    <br />
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Կատարել <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" style="left:inherit!important">
+                        <li><a href="" ng-show="showPDF" ng-click="printReport(1)">PDF</a></li>
+                        <li><a href="" ng-click="printReport(2)">Excel</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" ng-show="showPeriodicTransfersType" style="padding-top: 15px">
+            <div class="col-sm-12 ">
+
+                <div class="col-sm-6  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Պարբերական փոխանցման տեսակ
+                    </div>
+                    <select data-ng-model="periodicTransferType" name="periodicTransferType" id="periodicTransferType" class="form-control" ng-change="showPeriodicTransfer()">
+                        <option value="0" selected="selected">Ընտրեք․․․</option>
+                        <option value="1">Ժամկետի ավարտի հետևանքով դադարեցված պարբերական հանձնարարականներ</option>
+                        <option value="2">Չկատարված պարբերական հանձնարարականներ</option>
+                        <option value="3">Պ/Փ հանձնարարականների քանակներ առ այսօր</option>
+                        <option value="4">Ընտրված միջակայքում մուտքագրված Պ/Փ հանձնարարականներ​</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="showClosedDepositType" style="padding-top: 15px">
+            <div class="col-sm-12 ">
+
+                <div class="col-sm-6  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ավանդի տեսակ
+                    </div>
+                    <select data-ng-model="searchParams.closedDepositReportType" name="DepositsReportType" id="DepositsReportType" class="form-control">
+                        <option value="1" selected="selected">Ավարտվող ավանդներ</option>
+                        <option value="2">Երկարաձգվող ավանդներ</option>
+                        <option value="3">Փոփոխվող տոկոս. երկար. ավանդներ</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="showSSTReportTypes" style="padding-top: 15px;">
+            <div class="col-md-12">
+                <div class="col-sm-6">
+                    <div class="product-detail-cell product-detail-lable">
+                        Հաշվետվության տեսակ
+                    </div>
+                    <div>
+                        <select data-ng-model="searchParams.SSTReportType" class="form-control" id="SSTReportType" name="SSTReportType" ng-change="showSSTerminalParams()" required>
+                            <option selected="selected" value="" style="margin-left:25px">Ընտրեք...</option>
+                            <option value="1">ՆԱՏԿ համակարգում գրանցված գործարքներ</option>
+                            <option value="2">Բանկում գրանցված գործարքներ</option>
+                            <option value="3">ՆԱՏԿ համակարգում գրանցված գործարքներ, որոնք բացակայում են Բանկում գրանցված գործարքների ցանկում</option>
+                            <option value="4">Վերաուղարկման ենթակա գործարքներ</option>
+                            <option value="5">ՆԱՏԿ համակարգում գրանցված թերի կատարված գործարքներ</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row" ng-if="showAparikReportTypes" style="padding-top: 15px;">
+            <div class="col-md-12">
+                <div class="col-sm-6">
+                    <div class="product-detail-cell product-detail-lable">
+                        Հաշվետվության տեսակ
+                    </div>
+                    <div>
+                        <select data-ng-model="searchParams.AparikReportType" class="form-control" id="AparikReportType" name="AparikReportType" ng-change="showAparikReportParams()" required>
+                            <option selected="selected" value="" style="margin-left:25px">Ընտրեք...</option>
+                            <option value="1">Հաստատված "Ապառիկ Տեղում" հայտեր</option>
+                            <option value="2">"Ապառիկ Տեղում" տրամադրված ֆակտորինգներ</option>
+                            <option value="3">Ընթացիկ և դուրսգրված "Ապառիկ Տեղում" վճարված ֆակտորինգներ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 15px;">
+            <div class="col-sm-12 ">
+                <div class="col-sm-3  " ng-if="showStartDate">
+                    <div class="product-detail-cell product-detail-lable">
+                        Սկիզբ
+                    </div>
+                    <input type="date" ng-model="searchParams.StartDate" name="DateFrom" class="form-control">
+
+                </div>
+                <div class="col-sm-3  " ng-if="showEndDate">
+                    <div class="product-detail-cell product-detail-lable">
+                        Վերջ
+                    </div>
+                    <input type="date" ng-model="searchParams.EndDate" name="DateTo" class="form-control">
+                </div>
+
+                <div class="col-sm-3  " ng-if="showDate">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ամսաթիվ
+                    </div>
+                    <input type="date" ng-model="searchParams.Date" name="DateTo" class="form-control">
+                </div>
+
+                <div class="col-sm-3  " ng-if="showCalculationDate">
+                    <div class="product-detail-cell product-detail-lable">
+                        Հաշվարկման օր
+                    </div>
+                    <input type="date" ng-model="searchParams.calculationDate" name="CalculationDate" class="form-control">
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm-3" ng-if="showFilialCode && ($root.SessionProperties.AdvancedOptions['isOnlineAccChief'] == '1' || $root.SessionProperties.AdvancedOptions['isOnlineAcc'] == '1'||$root.SessionProperties.AdvancedOptions['isCardDepartment'] == '1')">
+            <div class="product-detail-cell product-detail-lable">
+                Մասնաճյուղ
+            </div>
+            <div data-ng-init="getFilialList()">
+                <loading-control scopevariable="FilialList"></loading-control>
+                <select ng-show="FilialList" ng-model="searchParams.filialCode" class="form-control"
+                        data-ng-options="k as v for (k,v) in FilialList" id="FilialCode" name="FilialCode">
+                    <option value="" style="margin-left:25px">Բոլորը</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-3  " ng-if="showCardNumber">
+            <div class="product-detail-cell product-detail-lable">
+                Քարտի համար
+            </div>
+            <input type="text" ng-model="searchParams.cardNumber" name="DateFrom" class="form-control">
+
+        </div>
+        <div class="col-sm-3" ng-if="showFilialList" style="padding-top: 15px;">
+            <div class="product-detail-cell product-detail-lable">
+                Մասնաճյուղ
+            </div>
+            <div data-ng-init="getFilialList()">
+                <loading-control scopevariable="FilialList"></loading-control>
+                <select ng-show="FilialList" ng-model="searchParams.filialCode" class="form-control"
+                        data-ng-options="k as v for (k,v) in FilialList" id="FilialCode" name="FilialCode">
+                    <option value="" style="margin-left:25px">Բոլորը</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 15px;">
+            <div class="col-md-12 ">
+                <div class="col-sm-4  " ng-if="showDepositType">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ավանդատեսակ
+                    </div>
+                    <div data-ng-init="getDepositTypes()">
+                        <loading-control scopevariable="depositTypes"></loading-control>
+                        <select ng-show="depositTypes" data-ng-model="searchParams.DepositType" name="DepositType" id="DepositType" class="form-control"
+                                data-ng-options="k as v for (k,v) in depositTypes">
+                            <option selected="selected" value="">Բոլորը</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-sm-4  " ng-if="showCurrency">
+                    <div class="product-detail-cell product-detail-lable">
+                        Արժույթ
+                    </div>
+                    <div data-ng-init="getCurrencies()">
+                        <loading-control scopevariable="currencies"></loading-control>
+                        <select ng-show="currencies" data-ng-model="searchParams.Currency" name="Currency" id="Currency" class="form-control"
+                                data-ng-options="k as v for (k,v) in currencies">
+                            <option selected="selected" value="">Բոլորը</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-4  " ng-if="showDateType">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ամսաթվի տեսակ
+                    </div>
+                    <div>
+                        <select data-ng-model="searchParams.dateType" name="dateType" id="dateType" class="form-control">
+                            <option selected="selected" value="1">Ըստ տրամադրման ամսաթվի</option>
+                            <option value="2">Ըստ ակտավորման ամսաթվի</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4  " ng-if="showUserID">
+                    <div class="product-detail-cell product-detail-lable">
+                        Աշխատակցի համար
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <input type="text" style="width:122px" class="form-control" id="setnumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="setnumber" ng-model="searchParams.UserID">
+                            <div class="input-group-btn" style="display:inline-block;">
+                                <button type="button" title="ՊԿ-ի որոնում" class="btn btn-primary searchButton" ng-click="searchCashiers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 15px;">
+            <div class="col-sm-12 ">
+                <div class="col-sm-4  " ng-if="showCard">
+                    <div class="product-detail-cell product-detail-lable">
+                        Քարտային համակարգ
+                    </div>
+                    <div data-ng-init="getCardSystemTypes()">
+                        <loading-control scopevariable="cardSystemTypes"></loading-control>
+                        <select data-ng-model="searchParams.cardSystemType" class="form-control" name="cardSystemType"
+                                ng-change="getCardTypes(searchParams.cardSystemType)"
+                                data-ng-options="k as v for (k,v) in cardSystemTypes" required>
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-sm-4  " ng-if="showCard">
+                    <div class="product-detail-cell product-detail-lable">
+                        Քարտի տեսակ
+                    </div>
+                    <div>
+                        <select data-ng-model="searchParams.cardType"
+                                data-ng-options="k as v for (k,v) in cardTypes"
+                                class="form-control" name="cardType" required>
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-4  " ng-if="showRelatedOfficeNumber">
+                    <div class="product-detail-cell product-detail-lable">
+                        Աշխ․ծրագիր
+                    </div>
+                    <input type="text" ng-model="searchParams.relatedOfficeNumber" style="width:122px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control">
+                </div>
+
+
+
+            </div>
+        </div>
+
+        @*<div class="row" style="padding-top: 15px;">
+            <div class="col-sm-12 " style="padding-top: 25px">
+                <div class="col-sm-4  " ng-if="showOnlyYerevanFilials" style="padding-top:18px">
+                    <div class="product-detail-cell product-detail-lable">
+                        <label class="checkbox-inline"><input type="checkbox" value=""ng-model="searchParams.onlyYerevanFilials">Երևանի մասնաճյուղեր </label>
+                    </div>
+                </div>
+                <div class="col-sm-4  " ng-if="showFilialCode">
+                    <div class="product-detail-cell product-detail-lable">
+                        Մասնաճյուղ
+                    </div>
+
+                    <div data-ng-init="getFilialList()">
+                        <loading-control scopevariable="filialList"></loading-control>
+                        <select data-ng-model="searchParams.filialCode" class="form-control" data-ng-options="k as v for (k,v) in filialList" id="FilialCode" name="FilialCode" required>
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>*@
+
+        <div class="row" style="padding-top: 15px;">
+            <div class="col-sm-12 ">
+
+                <div class="col-sm-4  " ng-if="showActiveType">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ակտիվի տեսակ
+                    </div>
+                    <div>
+                        <select data-ng-model="searchParams.activeType" name="activeType" id="activeType" class="form-control" ng-change="getLoanTypes()">
+                            <option value="0">Վարկեր,գրավներ և ֆակտորինգ</option>
+                            <option value="1">Վարկային գծեր</option>
+                            <option value="2">Գյուղատնտեսական վարկային գծեր</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-4  " ng-if="showQuality">
+                    <div class="product-detail-cell product-detail-lable">
+                        Կարգավիճակ
+                    </div>
+
+                    <div>
+                        <select data-ng-model="searchParams.quality" name="quality" id="quality" class="form-control">
+                            <option value="1">Գործող</option>
+                            <option value="2">Պայմանագիր</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-4  " ng-if="showLoanType">
+                    <div class="product-detail-cell product-detail-lable">
+                        Վարկի տեսակ
+                    </div>
+
+                    <div data-ng-init="getLoanTypes()">
+                        <loading-control scopevariable="loanTypes"></loading-control>
+                        <select data-ng-model="searchParams.loanType" class="form-control" data-ng-options="k as v for (k,v) in loanTypes" id="LoanType" name="loanType" required>
+                            <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-6  " ng-if="showTypeOfCashJurnal">
+                    <div class="product-detail-cell product-detail-lable">
+                        Տեսակ
+                    </div>
+                    <div>
+                        <select data-ng-model="searchParams.cashJurnalType" name="activeType" id="activeType" class="form-control">
+                            <option value="0">Դրամարկղի օրվա շրջանառություն</option>
+                            <option value="1">Դրամարկղի մատյան մուտքի</option>
+                            <option value="2">Դրամարկղի մատյան ելքի</option>
+                            <option value="3">Արտարժ. դրամարկղի մատյան մուտքի</option>
+                            <option value="4">Արտարժ. դրամարկղի մատյան ելքի​</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6" ng-if="showOnlyInkasDepartment">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ստորաբաժանում
+                    </div>
+                    <div>
+                        <select data-ng-model="searchParams.onlyInkasDepartment" name="activeType" id="activeType" class="form-control">
+                            <option value="1">Կանխիկ դրամաշրջանառության բաժին</option>
+                            <option value="0">Կանխիկ դրամաշրջանառության բաժին բացառած</option>
+                            <option value="2">Ամբողջ մասնաճյուղ</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row" ng-show="showOBPStarts">
+            <div class="col-md-12 ">
+                <div class="col-sm-10  " ng-init="searchParams.OBP_Starts=3">
+                    <input type="checkbox" ng-model="searchParams.OBP_Starts" ng-true-value="'1'" ng-false-value="'3'">
+                    Ներառե՞լ Bank Mail և ներբանկային Պ/Փ հանձնարարականները
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" ng-show="showDailyBalance">
+            <div class="col-sm-12 ">
+
+                <div class="col-sm-6  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ըստ հին հաշվային պլանի
+                    </div>
+                    <input type="checkbox" ng-model="searchParams.byOldPlan" />
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="row" style="padding-top: 15px;">
+            <div class="col-md-12 " ng-if="showSSTparams">
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Գործարքի տեսակ
+                    </div>
+                    <div data-ng-init="getSSTOperationTypes()">
+                        <select data-ng-model="searchParams.SSTOperationType" class="form-control" data-ng-options="k as v for (k,v) in SSTOperationTypes" id="SSTOperationType" name="SSTOperationType">
+                            <option selected="selected" value="" style="margin-left:25px">Բոլորը</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Գործարքի Կարգավիճակ
+                    </div>
+                    <div>
+                        <select data-ng-model="searchParams.SSTOperationStatus" name="SSTOperationStatus" id="SSTOperationStatus" class="form-control">
+                            <option selected="selected" value="" style="margin-left:25px">Բոլորը</option>
+                            <option value="3">Ստացված, բայց չկատարված</option>
+                            <option value="30">Կատարված</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Տերմինալի համար
+                    </div>
+                    <div data-ng-init="getSSTerminals()">
+                        <select data-ng-model="searchParams.SSTerminalId" class="form-control">
+                            <option selected="selected" value="" style="margin-left:25px">Բոլորը</option>
+                            <option ng-repeat="(key, value) in SSTerminals" value="{{key}}">{{key}} {{value}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Գործարքի համար
+                    </div>
+                    <div>
+                        <input type="text" ng-model="searchParams.authId" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6" style="margin-top: -25px" ng-if="showHBApplicationReportType">
+            <div class="product-detail-cell product-detail-lable">
+                Ենթատեսակ
+            </div>
+            <div data-ng-init="getHBApplicationReportType()">
+                <loading-control scopevariable="HBApplicationReportType"></loading-control>
+                <select data-ng-model="searchParams.HBApplicationReportType" name="HBApplicationReportType" id="HBApplicationReportType" class="form-control"
+                        data-ng-options="k as v for (k,v) in HBApplicationReportType">
+                    <option selected="selected" value="" hidden>Ընտրեք տեսակը...</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top:15px">
+            <div class="col-sm-12">
+                <div class="col-sm-3" ng-if="showShopList">
+                    <div class="product-detail-cell product-detail-lable">
+                        Խանութի իրավաբանական անձ <br>
+                    </div>
+                    <div data-ng-init="getShopList()">
+                        <input type="text" ng-model="search.ShopLegalName" class="form-control"><br>
+                        <loading-control scopevariable="shopList"></loading-control>
+                        <select ng-if="shopList" data-ng-model="searchParams.selectedShop" name="ShopLegal" id="ShopLegal" class="form-control fc-scroller" multiple>
+                            <option value="" selected="selected">Բոլորը</option>
+                            <option ng-repeat="shop in shopList| unique:'IdentityID' | filter:search:strict" value="{{shop.IdentityID}}">{{shop.ShopLegalName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4" ng-if="showShopList">
+                    <div class="product-detail-cell product-detail-lable">
+                        Խանութի անվանում <br>
+                    </div>
+                    <div data-ng-init="shopList">
+                        <input type="text" ng-model="searchShopName" class="form-control">
+                        <loading-control scopevariable="shopList"></loading-control>
+                        <select ng-if="shopList" data-ng-model="searchParams.selectedShopID" name="ShopName" id="ShopName" class="form-control fc-scroller" multiple>
+                            <option ng-repeat="shop in shopList | filter:searchShopName:strict" ng-if="searchParams.selectedShop == undefined || searchParams.selectedShop == '' || (searchParams.selectedShop.indexOf(shop.IdentityID.toString()) > -1)" value="{{shop.ShopID}}">{{shop.ShopName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4" ng-if="showfundType">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ֆոնդի տեսակ
+                    </div>
+                    <div>
+                        <select data-ng-model="searchParams.fundType" name="fundType" id="fundType" class="form-control">
+                            <option value="" selected="selected">Բոլորը</option>
+                            <option value="1">Ստանդարտ</option>
+                            <option value="2">Էներգոկրեդիտ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Տերմինալների հաշվետվություններ-->
+
+        <div class='tContainer' ng-if='showTerminalId'>
+            <div>
+                <label for='transaction_date'>Գործարքի ա/թ</label>
+                <input type='date' class='form-control' ng-model='searchParams.Date' name='transaction_date' id='transaction_date' required />
+            </div>
+
+            <div>
+                <label for='terminalId'>Տերմինալի համար</label>
+                <input type='text' class='form-control' ng-model='searchParams.terminalId' name='terminalId' id='terminalId' required />
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+

@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #LoanDeleteReasonForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    .form-group input, .form-group select {
+        height: 34px;
+    }
+
+    #addInf {
+        min-height: 60px;
+        overflow: hidden;
+    }
+</style>
+<div id="DeleteReasonLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="LoanCtrl" name="LoanDeleteReasonForm" id="LoanDeleteReasonForm" role="form" style="min-width:650px;" novalidate class="form-horizontal" ng-init="getTypeOfLoanDelete()" prevent-enter-submit>
+    <div id="LoanDelete_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="LoanDeleteReasonForm.$setSubmitted();LoanDeleteReasonForm.$valid ? saveLoanDeleteReason():showValidationMessage();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('DeleteReason')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        @*<div style="max-width:530px">
+            <errors></errors>
+        </div>*@
+        <div class="col-sm-11">
+            <div class=" form-group">
+                <label class="tab_title col-sm-5 " for="DeleteReason">Հեռացման պատճառ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <select data-ng-model="order.DeleteReasonType" name="DeleteReasonType" id="DeleteReasonType" class="form-control" required
+                                data-ng-options="k as v for (k,v) in TypeOfReasons">
+                            <option selected="selected" value="" hidden>Ընտրեք</option>
+                        </select>
+                    </div>                    
+                    <ng-messages ng-if="LoanDeleteReasonForm.$submitted || LoanDeleteReasonForm.DeleteReasonType.$dirty"
+                                 for="LoanDeleteReasonForm.DeleteReasonType.$error">
+                        <ng-message when="required" class="errors">
+                            Հեռացման պատճառը նշված չէ:
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>           
+        </div>
+    </div>
+</form>

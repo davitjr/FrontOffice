@@ -1,0 +1,34 @@
+﻿
+@{
+    Layout = null;
+}
+
+<form role="form" class="form-horizontal" ng-controller="CardMembershipRewardsCtrl" ng-init="getCardMembershipRewardsStatusHistory(cardnumber)" style="width:700px;">
+    <div class="product-container" style="min-width:670px;margin-bottom:15px;">
+        <div class="header-title">
+            Քարտի համար` {{cardnumber}}
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="col-sm-3">MR համար</div>
+                <div class="col-sm-3">Կարգավիճակ</div>
+                <div class="col-sm-4">Ամսաթիվ</div>
+                <div class="col-sm-2">ՊԿ</div>
+            </div>
+            <div class="product-content-table custom-scroll" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="mr in ::cardMRHistory">
+                            <td style="text-align:center">{{::mr.Id}}</td>
+                            <td style="text-align:center">{{::mr.StatusDescription}}</td>
+                            <td style="text-align:center">{{::mr.ChangeDateToString}}</td>
+                            <td style="text-align:center">{{::mr.ChangeSetNumber}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+            </div>
+        </div>
+    </div>
+</form>

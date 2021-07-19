@@ -1,0 +1,122 @@
+﻿<script type="text/javascript">
+
+    $("#loandetails div.bhoechie-tab-container div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+  
+        e.preventDefault();
+        $(this).siblings('#loan_details div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#loandetails_div div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#loandetails_div div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+
+
+</script>
+
+
+<div style="margin-left:15px;margin-top:5px" ng-controller="CreditHereAndNowCtrl" ng-init="setSearchParameters()" id="CreditHereAndNow" class="container">
+    <form class="CreditHereAndNowForm">
+        <div class="col-sm-7" style="padding:0;margin-bottom:5px">
+            <div class="col-sm-3  ">
+                <div class="product-detail-cell product-detail-lable">
+                    Ամսաթիվ
+                </div>
+                <div>
+                    <input type="date" ng-model="searchParams.DateFrom" style="width: 155px;" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-sm-3  ">
+                <div class="product-detail-cell product-detail-lable">
+                    Կարգավիճակ
+                </div>
+                <div>
+                    <select data-ng-model="searchParams.QualityFilter" class="form-control" style="width: 155px" >
+                        <option value="4" style="margin-left:25px">Պայմանագիր</option>
+                        <option value="5" style="margin-left:25px">Գործող</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-2  ">
+                <div class="product-detail-cell product-detail-lable">
+                    &nbsp;
+                </div>
+                <div>
+                    <button type="button" class="btn-sm btn-primary" ng-click="getSearchedCreditsHereAndNow()"><span class="glyphicon glyphicon-search"></span> Որոնել</button>
+                </div>
+            </div>
+        </div>
+        <br /><br />
+
+    </form>
+
+    <div class="product-container"  style="width:600px">
+        <div class="header-title">
+            Ապառիկ տեղում տեսակի վարկեր
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="include-closed-products">
+                    Քանակ` {{totalRows}}
+                </div>
+            </div>
+            <div class="product-content-table custom-scroll" id="creditsHereAndNow">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <thead>
+                        <tr ng-if="creditsHereAndNow.length!=0" style="cursor: pointer;" ng-class="{'selected':$index == selectedRow}">
+                            <td class="col-sm-1">
+                                <input style="margin:10px!important" type="checkbox" ng-if="searchParams.QualityFilter==4"
+                                       class="checkbox-inline" ng-model="isCheckedAllCredits" ng-change="checkSelectedCredits(isCheckedAllCredits)">
+                            </td>
+                            <td class="col-sm-2" align="center">Հաճախորդի համար</td>
+                            <td class="col-sm-2" align="center">Վարկի ունիկալ համար</td>
+                            <td class="col-sm-2" align="center"><strong>Գումար&nbsp;&nbsp;(ՀՀ դրամ)</strong></td>
+                            <td class="col-sm-1 click_toggle" context="contextCreditActions" id="contextMenu"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="creditsHereAndNow.length!=0" ng-repeat="credit in creditsHereAndNow" style="cursor: pointer;" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow(credit)">
+                            <td class="col-sm-1"><input type="checkbox" ng-if="searchParams.QualityFilter==4" style="margin:10px!important" class="checkbox-inline" ng-true-value="true" ng-false-value="false" ng-model="credit.isChecked"></td>
+                            <td class="col-sm-2">{{::credit.CustomerNumber}}</td>
+                            <td class="col-sm-2">{{::credit.ProductId}}</td>
+                            <td class="col-sm-2" align="right" ><strong>{{::credit.StartCapital | number : 2}}&nbsp;&nbsp;</strong></td>
+                            <td class="col-sm-1 click_toggle" context="contextCreditActions" id="contextMenu"><div  id="contextMenu"></div> </td>
+                        </tr>
+                        <tr ng-if="creditsHereAndNow.length==0">
+                            <td colspan="3" style="text-align:center">Առկա չեն ապառիկ տեղում տեսակի վարկեր</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <loading-control style="margin-left:20em" scopevariable="creditsHereAndNow"></loading-control>
+
+            </div>
+        </div>
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                    ng-model="currentPage"
+                    items-per-page="numPerPage"
+                    total-items="totalRows"
+                    max-size="maxSize"
+                    boundary-links="true"
+                    previous-text="‹"
+                    next-text="›"
+                    first-text="«"
+                    last-text="»">
+        </div>
+        <ul id="contextCreditActions" class="dropdown-menu"  > 
+            <li><a href="" ng-if="false"style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={selectedCredit:selectedCreditHereAndNow}; openWindow('//','','')">Ձևավորել ակտիվացման հայտ</a></li>
+            <li><a href=""   ng-controller="PopUpCtrl" ng-click="params={productId:selectedCreditHereAndNow.ProductId,isCreditHereAndNow:true}; openWindow('/Loan/LoanDetailsForCurrentCustomer/'+selectedCreditHereAndNow.ProductId,'Վարկի մանրամասներ','loanDetails_div');">Մանրամասն դիտարկում</a></li>
+
+        </ul>
+        <br />
+        <div style="margin:20px">
+            <button type="button" ng-if="creditsHereAndNow.length>0"  class="btn-sm btn-primary" ng-controller="PopUpCtrl" ng-click="creditsHereAndNow.length>0 && setCurrentCredits() && openWindow('/CreditHereAndNow/CreditHereAndNowActivationOrders','Նշված ապառիկ տեղում վարկերի ակտիվացման հայտերի ձևավորում','CreditHereAndNowActivationOrders')"
+                    style="height:30px" tooltip="Ձևավորել ակտիվացման հայտ">
+                Ձևավորել ակտիվացման հայտ նշված վարկերի համար
+                <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true" style="top:-4px !important"></span>
+            </button>
+            <br />
+        </div>
+    </div>
+</div>

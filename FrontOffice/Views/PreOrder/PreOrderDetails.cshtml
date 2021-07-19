@@ -1,0 +1,130 @@
+﻿<div style="margin-left:15px;margin-top:5px" ng-controller="PreOrderCtrl" ng-init="setSearchParameters()" id="AllPreOrders" class="container">
+    <form class="PreOrderForm">
+        <div class="col-sm-7" style="padding:0;margin-bottom:5px">
+            <div class="col-sm-3">
+                <div class="product-detail-cell product-detail-lable">
+                    Սկիզբ
+                </div>
+                <div>
+                    <input type="date" ng-model="searchParams.DateFrom" name="DateFrom" style="width: 155px;" class="form-control" required>
+                    <ng-messages ng-if="PreOrderForm.$submitted || PreOrderForm.DateFrom.$dirty" for="PreOrderForm.DateFrom.$error">
+                        <ng-message when="required" class="errors">
+                            Նշեք ա/թ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="product-detail-cell product-detail-lable">
+                    Վերջ
+                </div>
+                <div>
+                    <input type="date" ng-model="searchParams.DateTo" name="DateTo" style="width: 155px;" class="form-control" required>
+                    <ng-messages ng-if="PreOrderForm.$submitted || PreOrderForm.DateTo.$dirty" for="PreOrderForm.DateTo.$error">
+                        <ng-message when="required" class="errors">
+                            Նշեք ա/թ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="product-detail-cell product-detail-lable">
+                    Կարգավիճակ
+                </div>
+                <div>
+                    <select data-ng-model="searchParams.Quality" class="form-control" style="width: 155px">
+                        <option value="0" style="margin-left:25px">--Բոլորը--</option>
+                        <option value="30" style="margin-left:25px">Կատարված</option>
+                        <option value="3" style="margin-left:25px">Ձևավորված չկատարված</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="product-detail-cell product-detail-lable">
+                    Հաճախորդի համար
+                </div>
+                <div>
+                    <input type="text" ng-model="searchParams.CustomerNumber" name="CustomerNumberS" style="width: 155px;" class="form-control" >                     
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="product-detail-cell product-detail-lable">
+                    Վարկի ունիկալ համար
+                </div>
+                <div>
+                    <input type="text" ng-model="searchParams.AppID" name="AppIDS" style="width: 155px;" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-3" ng-if="searchParams.Type!=1">
+                <div class="product-detail-cell product-detail-lable">
+                    Տեսակ
+                </div>
+                <div>
+                    <select data-ng-model="searchParams.Type" class="form-control" style="width: 155px" >
+                        <option value="2" style="margin-left:25px">Հետբերված հայտեր</option> 
+                        <option value="3" style="margin-left:25px">Դուրսգրված հայտեր</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <br />
+                <div>
+                    <button type="submit" class="btn-sm btn-primary" ng-click="getSearchedPreOrderDetails()"><span class="glyphicon glyphicon-search"></span> Որոնել</button>
+                </div>
+                <div ng-if="PreOrderForm.$submitted && searchParams.DateFrom>searchParams.DateTo" class="col-md-9  errors">Ժամկետի սկիզբը պետք է փոքր լինի վերջից</div>
+            </div>
+        </div>
+    </form>
+    <loading></loading>
+
+    <div class="product-container" style="width:600px; ">
+        <div class="header-title">
+            Հայտերի ձևավորման պատմություն
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="include-closed-products">
+                    Քանակ` {{totalRows}}
+                </div>
+            </div>
+            <div class="product-content-table custom-scroll"  >
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <thead ng-if="totalRows!=0">
+                        <tr ng-if="preOrderDetails.length!=0" style="cursor: pointer;" ng-class="{'selected':$index == selectedRow}">
+                            <td class="col-sm-2"align="center">Հաճախորդի համար</td>
+                            <td class="col-sm-2"align="center">Վարկի ունիկալ համար</td>
+                            <td class="col-sm-2"align="center"><strong>Գումար&nbsp;&nbsp;(ՀՀ դրամ)</strong></td>
+                            <td class="col-sm-2"align="center">Կարգավիճակ</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="preOrder in preOrderDetails" style="max-height:200px">
+                            <td class="col-sm-2" align="center">{{::preOrder.CustomerNumber}}</td>
+                            <td class="col-sm-2" align="center">{{::preOrder.AppID}}</td>
+                            <td class="col-sm-2"align="right"><strong>{{::preOrder.Amount | number : 2}}&nbsp;&nbsp; </strong></td>
+                            <td class="col-sm-2" align="center">{{::preOrder.QualityDescription}}</td>
+                        </tr>
+                        <tr ng-if="totalRows==0">
+                            <td colspan="3" style="text-align:center">Առկա չեն ձևավորված հայտեր</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+        ng-model="currentPage"
+        items-per-page="numPerPage"
+        total-items="totalRows"
+        max-size="maxSize"
+        boundary-links="true"
+        previous-text="‹"
+        next-text="›"
+        first-text="«"
+        last-text="»">
+        </div>
+    </div>
+
+</div> 

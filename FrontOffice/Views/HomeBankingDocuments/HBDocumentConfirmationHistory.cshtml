@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+    #HBDocumentsConfirmationHistoryForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #HBDocumentsConfirmationHistoryForm {
+        min-width: 600px;
+    }
+    .redStyle{
+        visibility: hidden;
+    }
+    .maximize-dialog {
+        display: none;
+    }
+    table td{
+        border:none;
+    }
+
+</style>
+<div id="HBDocumentsTransactionError" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="HBDocumentsCtrl" ng-init="initConfirmationHistoryFields();" name="HBDocumentsConfirmationHistoryForm" id="HBDocumentsConfirmationHistoryForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required style="width:650px;">
+
+    <div>
+        <div class="col-sm-11" style="margin-top:20px;">
+            <div class="form-group" style="margin-left:2px;">
+                <usersetnumber setnumber="order.Insurance.InvolvingSetNumber" formname="HBDocumentsConfirmationHistoryForm" labelname="ՊԿ"></usersetnumber>
+            </div>
+
+            <div class="form-group">
+                <table class="table-hover" style="width:647px;">
+                    <thead class="product-container-header">
+                        <tr>
+                            <th class="tableCaption" style="font-size:14px;text-align: center;width: 8%;">Ամսաթիվ</th>
+                            <th class="tableCaption" style="font-size:14px;text-align: center;width: 9%;">Նկարագրություն</th>
+                            <th class="tableCaption" style="font-size:14px;text-align: center;width:3%">ՊԿ</th>
+                            <th class="tableCaption" style="font-size:14px;text-align: center;width: 7%;">Username</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="histories.length == 0" ng-show="noOperation">
+                            <td colspan="4" style="text-align:center">Գործարքներ առկա չեն</td>
+                        </tr>
+                        <tr ng-if="histories.length!=0" ng-repeat="history in histories" ng-class="{'selected':history == selectedRow}" style="cursor: pointer;text-align:center">
+                            <td class="tabletd" style="width: 8%;text-align:left">{{ ::history.TransactionDate | date: 'dd/MM/yyyy hh:mm:ss tt' }}</td>
+                            <td class="tabletd" style="width: 9%;font-family:'Arial Armenian';text-align:left">{{ ::history.Description }}</td>
+                            <td class="tabletd" style="width: 3%;text-align:right">{{ ::history.SetNumber }}</td>
+                            <td class="tabletd" style="width: 7%;text-align:left">{{ ::history.CustomerUsername }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <br />
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+

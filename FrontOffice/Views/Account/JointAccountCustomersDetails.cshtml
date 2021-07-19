@@ -1,0 +1,41 @@
+﻿<div class="col-md-12" ng-controller="AccountCtrl" style="min-width:500px;" ng-init="getAccountJointCustomers(accountNumber)">
+    <div class="product-container" style="min-width:500px">
+        <div class="header-title">
+            Հաշվի մասնաբաժիններ
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="col-sm-4">Հաճախորդի համար</div>
+                <div class="col-sm-5">Անուն Ազգանուն</div>
+                <div class="col-sm-3">Բաժնեմաս</div>
+            </div>
+            <div class="product-content-table custom-scroll" ng-class="{'product-content-table-full_height' : hideBlank!='true' }" style="min-height:100px">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="JointPerson in ::JointPersons">
+                            <td class="text-center">
+                                {{::JointPerson.CustomerNumber}}
+
+                                <script type="text/javascript">
+                                    $('[data-toggle="tooltip"]').tooltip({
+                                        placement: 'left'
+                                    });
+                                </script>
+                                <button type="button" style="float:right" ng-controller="CustomerCtrl" ng-click="getAttachmentDocumentList(JointPerson.CustomerNumber,true,true,true);">
+                                    <span class="fa fa-print" data-toggle="tooltip" data-original-title="Կցված փաստաթղթեր"></span>
+                                </button>
+                                <button type="button" ng-controller="PopUpCtrl" style="float:right" ng-click="params={customerNumber:JointPerson.CustomerNumber}; openWindow('/Customer/CustomerDetails','Հաճախորդի տվյալներ','customerdetails')">
+                                    <span class="fa fa-info-circle" data-toggle="tooltip" data-original-title="Հաճախորդի տվյալներ"></span>
+                                </button>
+
+                            </td>
+                            <td class="text-center">{{::JointPerson.CustomerName}}</td>
+                            <td class="text-center">{{::JointPerson.Part  * 100}}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,111 @@
+﻿
+@{
+    Layout = null;
+}
+
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+
+<div ng-controller="FactoringCtrl" id="factoringdetails" data-ng-init="getFactoring(productId)">
+    <loading></loading>
+    <div id="factoring_details_menu" class="menu-bar dialog-menu light-green details-menu">
+        <ul id="menu" class="dialog-menu">
+
+            <li class="root-menu-item-3 " ng-if="$root.SessionProperties.SourceType == 2  && (factoring.Quality==10 && (factoring.Type==31 || factoring.Type==42 || factoring.Type==56))" ng-controller="PopUpCtrl" ng-click="params={product:factoring,orderType:111};openWindow('/LoanProductActivationOrder/PersonalLoanProductActivationOrder','Ֆակտորինգի ակտիվացում','newLoanProductActivation')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-2" class="applicationButton h-menu-icon">Ակտիվացնել</span>
+            </li>
+            <li class="root-menu-item-3 " ng-controller="PopUpCtrl" ng-if="$root.SessionProperties.AdvancedOptions['isOnlineAccChief']=='1' || $root.SessionProperties.AdvancedOptions['isOnlineAcc']=='1'" ng-click="params={productId:factoring.ProductId,loanType:factoring.Type};openWindow('/CreditCommitmentForgivenessOrder/Index','Ներում','newMature')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon" src="~/Content/Images/help.png" style="height: 30px;width:36px;margin-top: 6px;" />Ներումներ</span>
+            </li>
+            <li class="root-menu-item-5 " ng-if="$root.SessionProperties.SourceType == 2 && factoring.Quality!=40 && (factoring.Type==31 || factoring.Type==42 || factoring.Type==56) && factoring.Quality!=10" ng-controller="PopUpCtrl" ng-click="saveFactoringTerminationOrder(productId)">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="closeAccountButton h-menu-icon">Դադարեցնել</span>
+            </li>
+        </ul>
+
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div ng-show="!loading" class="product-details bhoechie-tab-content" style="min-width:800px;margin-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{factoring.StartDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{factoring.EndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գումար</div>
+            <div class="product-detail-cell product-detail-value">{{factoring.StartCapital |number:2 }} {{factoring.Currency}}</div>
+        </div>
+        @*<div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Տոկոսադրույք</div>
+                <div class="product-detail-cell product-detail-value">{{factoring.InterestRate * 100 }}%</div>
+            </div>*@
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{factoring.TypeDescription}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value">{{factoring.QualityDescription}}</div>
+        </div>
+        <div ng-if="factoring.Type==32 || factoring.Type==43" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ֆակտորինգի տեսակ ըստ գործունեության</div>
+            <div class="product-detail-cell product-detail-value">{{factoring.FactoringTypeDescription}}</div>
+        </div>
+        <div ng-if="factoring.Type==32 || factoring.Type==43" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ֆակտորինգի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{factoring.FactoringRegresTypeDescription}}</div>
+        </div>
+        <div ng-if="factoring.Type==32 || factoring.Type==43" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Ֆակտորինգի արժույթ</div>
+            <div class="product-detail-cell product-detail-value">{{factoring.FactoringCurrency}}</div>
+        </div>
+        <div ng-if="factoring.Type==32 || factoring.Type==43" class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Միջնորդավճար</div>
+            <div class="product-detail-cell product-detail-value">{{factoring.CommissionPercent * 100}}%</div>
+        </div>
+
+    </div>
+    <div class="bhoechie-tab-container" style="max-height:80%;" id="loanDetailsContainer">
+        <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+            <div class="list-group">
+                <div class="list-group-item active text-center"><span>Մոնիթորինգի եզրակացություն</span></div>
+            </div>
+        </div>
+        <div class="bhoechie-tab" style="width: calc(100% - 140px); display: inline-block;">
+            <div class="bhoechie-tab-content active">
+                <loanmonitoring ng-if="factoring" loan="factoring"></loanmonitoring>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#factoringdetails div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('#factoringdetails div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#factoringdetails div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#factoringdetails div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+
+
+    $("#loanDetailsContainer").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+
+</script>

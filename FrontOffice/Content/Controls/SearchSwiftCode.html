@@ -1,0 +1,137 @@
+﻿<div>
+    <style>
+        .modal-content {
+            width: 760px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+
+
+
+        .resultRow {
+            font-size: 10pt;
+            color: black;
+            font-weight: normal;
+        }
+
+        .resultRowAddInf {
+            font-size: 9pt;
+        }
+
+        .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .tableHeader {
+            font-size: 9pt;
+            height: 25px;
+        }
+
+        #serachSwiftCode .product-container-header > th {
+            font-weight: inherit;
+        }
+
+        #serachSwiftCode .div-table-content {
+            margin-top: -7px;
+            border-color: #CFDAD0 !important;
+        }
+
+
+        #serachSwiftCode .popup_wrapper_top {
+            margin-top: -10px !important;
+        }
+    </style>
+    <div id="serachSwiftCode">
+        <div class="col-sm-12 popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+            <div style="margin-top:-10px">SWIFT ԿՈԴԻ ՈՐՈՆՈՒՄ </div>
+            <img src="/Content/images/close_pop.png " ng-click="closeSearchSwiftCodesModal()" style="margin-top:-10px;" alt="">
+        </div>
+
+
+        <div class="col-sm-12" style="padding:0;margin-bottom:15px">
+            <div class="col-sm-3" style="display:inline-block; padding:5px">
+                <label class="tab_title">SWIFT կոդ</label>
+                <div>
+                    <input type="text" maxlength="11" ng-model="searchParams.SwiftCode" name="SwiftCode" class="form-control  " />
+                </div>
+            </div>
+            <div class="col-sm-3" style="display:inline-block; padding:5px">
+                <label class="tab_title">Քաղաք</label>
+                <div>
+                    <input type="text" ng-model="searchParams.City" name="City" class="form-control  " />
+                </div>
+            </div>
+            <div class="col-sm-6" style="display:inline-block; padding:5px">
+                <label class="tab_title">Բանկ</label>
+                <div>
+                    <input type="text" style="max-width :370px" ng-model="searchParams.BankName" name="BankName" class="form-control  " />
+                </div>
+            </div>
+        </div>
+
+
+        <div style="margin:5px">
+            <button type="button" class="btn btn-primary" ng-click="btnFindClick();" title="Որոնել"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+        </div>
+        <div style="overflow:auto; margin:5px; margin-bottom:0px; margin-top:0px; ">
+            <table class="table table-condensed" style="margin-bottom:0;">
+                <thead>
+                    <tr class="product-container-header">
+                        <th class="col-sm-3" style="text-align:center;">SWIFT կոդ</th>
+                        <th class="col-sm-3" style="text-align:center;">Քաղաք</th>
+                        <th class="col-sm-6" style="text-align:center;">Բանկ</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="div-table-content " style="max-height:200px; min-height:200px;border: gray 1px solid; ">
+                <table class="table table-condensed table-hover" style="background-color:white">
+                    <tbody>
+                        <tr ng-if="swiftCodesList.length!=0" ng-repeat="swiftCode in filteredSwiftCodes" style="font-size:9pt; cursor:pointer;" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)" ng-dblclick="selectSwiftCode()">
+                            <td>
+
+                                <div class="col-sm-3 ">
+                                    {{ ::swiftCode.SwiftCode }}
+                                </div>
+                                <div class="col-sm-3 ">
+                                    {{ ::swiftCode.City }}
+                                </div>
+                                <div class="col-sm-6 ">
+                                    {{ ::swiftCode.BankName }}
+                                </div>
+
+
+                            </td>
+                        </tr>
+                        <tr ng-if="swiftCodesList.length==0">
+                            <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="margin-left:12px;">
+            Ընդամենը` {{totalRows}}
+        </div>
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                    ng-model="currentPage"
+                    items-per-page="numPerPage"
+                    total-items="totalRows"
+                    max-size="maxSize"
+                    boundary-links="true"
+                    previous-text="‹"
+                    next-text="›"
+                    first-text="«"
+                    last-text="»">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

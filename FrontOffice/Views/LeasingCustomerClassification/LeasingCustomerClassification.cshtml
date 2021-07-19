@@ -1,0 +1,421 @@
+﻿
+@*@{
+    ViewBag.Title = "LeasingCustomerClassification";
+    Layout = null;
+}*@
+ 
+
+<style>
+    .selectedRow {
+        background-color: #cfdad0;
+    }
+
+    .tableFixHead thead th {
+        position: sticky;
+        top: 0;
+    }
+
+    .tableFixHead {
+        max-height: 75vh;
+        overflow: auto;
+        margin: 0 0.5%;
+        background-color: #fff;
+    }
+
+        .tableFixHead th {
+            background-color: #CFDAD0;
+        }
+
+
+    .accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        /*padding: 10px;*/
+        /*width: 100%;*/
+        border: none;
+        text-align: center;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+        margin-left: 5px;
+    }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+    .next {
+        padding: 0 18px;
+        display: block;
+        background-color: white;
+        overflow: hidden;
+        height: 225px;
+        transition: 1s;
+        width: 50%;
+        overflow: auto;
+    }
+</style>
+
+
+<form name="LeasingCustomerClassificationForm" ng-init="setLeasingCustomerSearch()" @*ng-init="GetPermission()"*@ ng-controller="LeasingCustomerClassificationCtrl" id="LeasingCustomerClassification">
+    <div class="row" style=" width:70%; margin-left: 5px ; margin-top: 20px ; margin-bottom: 25px ; min-width:600px">
+        <div class="col-sm-2">
+            <div class="input-group" style="display:block">
+                <input type="text" ng-change="mod =  customerNumber == ''" ng-model="customerNumber" maxlength="12" class="form-control ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength" id="EmployerCustomerNumber" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" />
+                <div class="input-group-btn" style="display:block;">
+                    <button type="button" class="btn btn-primary searchButton" ng-click="searchCustomers()" title="Հաճախորդի որոնում">
+                        <span class="glyphicon glyphicon-search greenStyle"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2" style="margin-left: 3%;">
+            <input type="button" ng-click=" LoadAllData();" ng-disabled="mod" value="Որոնել" name="Search" style="width:71%" class="form-control">
+        </div>
+    </div>
+
+    <div class="row" style=" width:70%; margin-left: 5px ; margin-top: 10px ; margin-bottom: 15px">
+
+        <div class="col-sm-2">
+            <input type="text" value="{{customerInfo.LeasingCustomerNumber}}" name="fname" style="width:100%" disabled class="form-control">
+        </div>
+
+        <div class="col-sm-3">
+            <input type="text" value="{{customerInfo.CustomerNumber}}" name="CustomerNumber" style="width:100%" disabled class="form-control">
+        </div>
+
+        <div class="col-sm-3">
+            <input type="text" value="{{customerInfo.CustomerFullName}}" name="FullName" style="width:100%" disabled class="form-control">
+        </div>
+
+        <div class="col-sm-3">
+            <input type="text" value="{{customerInfo.InfoDocument}}" name="fname" style="width:100%" disabled class="form-control">
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div align="center" class="accordion"><h4>Հաճախորդի սուբյեկտիվ դասակարգման հիմքեր</h4> </div>
+            <div class="next " style="width:100% ; padding-left: 0px; padding-right:0px ">
+                <table class="aaa table table-condensed table-hover tableFixHead" style="background-color:white;  margin-top:0px !important;">
+                    <thead class="product-container-header">
+                        <tr>
+
+                            <th style="text-align:center">Գրանցման ա/թ</th>
+                            <th style=" text-align:center">Տեսակը</th>
+                            <th style=" text-align:center">Դասակարգման ա/թ </th>
+                            <th style=" text-align:center">Ժ/անց օրեր</th>
+                            <th style=" text-align:center">Հիմք</th>
+                            <th style=" text-align:center">Կարգավիճակ</th>
+
+                        </tr>
+                    </thead>
+                    <tbody style=" padding-right:18px">
+
+                        <tr data-ng-repeat="item in subjectiveClassificationGrounds" ng-class="{'selectedRow':$index==gridSelectedRow.selectedRow1}" ng-click="SelectedRow('selectedRow1',$index);">
+
+                            <td style="text-align:center">{{item.RegistrationDateString}} </td>
+                            <td style="text-align:center"> {{item.ClassificationType}}</td>
+                            <td style="text-align:center">{{item.ClassificationDateString}}</td>
+                            <td style="text-align:center">{{item.OverdueDays}}</td>
+                            <td style="text-align:center">{{item.Description}}</td>
+                            <td style="text-align:center">{{item.Status}}</td>
+
+                        <tr ng-if="subjectiveClassificationGrounds.length==0">
+                            <td colspan="6" style="text-align:center">Տվյալներ առկա չեն</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-4 col-lg-3" style="padding-top: 15px;">
+
+            <div class=" col-lg-2 ">
+                <input type="checkbox" ng-disabled="mod" ng-model="isActive1" ng-change="GetCustomerSubjectiveClassificationGrounds()" ng-true-value="1" ng-false-value="0"> Գործող
+            </div>
+            <div class=" col-lg-2" ng-if="$root.SessionProperties.AdvancedOptions['addLeasingCustomerSubjectiveClassification']=='1'">
+                <a href="javascript:" class="btn" ng-click="AddCustomerSubjectiveClassificationGroundsView();" ng-disabled="mod" @*ng-show="PermissionForCustomerClassification.cmdAdd.valueOfPermission"*@>
+                    <img src="/Content/Images/Add_for_Classification.png" title="Ավելացնել" width="40" />
+                </a>
+            </div>
+            <div class=" col-lg-2" ng-if="$root.SessionProperties.AdvancedOptions['editLeasingCustomerSubjectiveClassification']=='1'">
+                <a href="javascript:" class="btn" ng-click="EditCustomerSubjectiveClassificationGroundsView();" ng-disabled="mod" @*ng-show="PermissionForCustomerClassification.cmdEdit.valueOfPermission"*@>
+                    <img src="~/Content/Images/edit.png" title="Խմբագրել" width="40" />
+                </a>
+            </div>
+            <div class=" col-lg-2">
+                <a href="javascript:" class="btn" ng-click="SubjectiveClassificationDetailsView()" ng-disabled="mod">
+                    <img src="/Content/Images/details.png" title="Դիտարկել" width="40" />
+                </a>
+            </div>
+            <div class=" col-lg-2" ng-if="$root.SessionProperties.AdvancedOptions['closeLeasingCustomerSubjectiveClassification']=='1'">
+                <a href="javascript:" class="btn" ng-click="CloseCustomerSubjectiveClassificationGrounds()" ng-disabled="mod" @*ng-show="PermissionForCustomerClassification.cmdClose.valueOfPermission"*@>
+                    <img src="/Content/Images/Delete_for_Classification.png" title="Հեռացնել" width="40" />
+                </a>
+            </div>
+        </div>
+
+    </div>             
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div align="center" class="accordion"><h4>Հաճախորդի հետ փոխկապակցված անձանց չդասակարգելու հիմքեր</h4> </div>
+            <div class="next " style="width:100% ; padding-left:0px;padding-right:0px ">
+                <table class="aaa table table-condensed table-hover tableFixHead" style="background-color:white;  margin-top:0px !important;">
+                    <thead class="product-container-header">
+                        <tr>
+
+                            <th style="text-align:center">Գրանցման ա/թ</th>
+                            <th style=" text-align:center">Հաճախորդի համարը</th>
+                            <th style=" text-align:center">Զեկուցագրի համարը</th>
+                            <th style=" text-align:center">Զեկուցագրի ա/թ </th>
+                            <th style=" text-align:center">Կարգավիճակ</th>
+
+                        </tr>
+                    </thead>
+                    <tbody style=" padding-right:18px">
+
+                        <tr data-ng-repeat="item in notClassificationGrounds" ng-class="{'selectedRow':$index==gridSelectedRow.selectedRow2}" ng-click=" SelectedRow('selectedRow2',$index);">
+
+                            <td style="text-align:center">{{item.RegistrationDateString}} </td>
+                            <td style="text-align:center"> {{item.CustomerNumber}}</td>
+                            <td style="text-align:center">{{item.ReportNumber}}</td>
+                            <td style="text-align:center">{{item.ReportDateString}}</td>
+                            <td style="text-align:center">{{item.Status}}</td>
+
+                        <tr ng-if="notClassificationGrounds.length==0">
+                            <td colspan="5" style="text-align:center">Տվյալներ առկա չեն</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-4  col-lg-2  " style="padding-top: 15px;">
+
+            <div class=" col-lg-3 ">
+                <input type="checkbox" ng-disabled="mod" ng-model="isActive2" ng-change="GetConnectionGroundsForNotClassifyingWithCustomer()" ng-true-value="1" ng-false-value="0"> Գործող
+            </div>
+            <div class=" col-lg-3" ng-if="$root.SessionProperties.AdvancedOptions['addLeasingLinkedCustomerNotClassifying']=='1'">
+                <a href="javascript:" class="btn" ng-click="AddConnectionGroundsForNotClassifyingWithCustomerView();" ng-disabled="mod" @*ng-show="PermissionForCustomerClassification.cmdAddLP.valueOfPermission"*@>
+                    <img src="/Content/Images/Add_for_Classification.png" title="Ավելացնել" width="40" />
+                </a>
+            </div>
+            <div class=" col-lg-3">
+                <a href="javascript:" class="btn" ng-click="NotClassifyingWithCustomerDetailsView();" ng-disabled="mod">
+                    <img src="/Content/Images/details.png" title="Դիտարկել" width="40" />
+                </a>
+            </div>
+            <div class=" col-lg-3" ng-if="$root.SessionProperties.AdvancedOptions['closeLeasingLinkedCustomerNotClassifying']=='1'">
+                <a href="javascript:" class="btn" ng-click="CloseConnectionGroundsForNotClassifyingWithCustomerView();" ng-disabled="mod" @*ng-show="PermissionForCustomerClassification.cmdCloseLP.valueOfPermission"*@>
+                    <img src="/Content/Images/Delete_for_Classification.png" title="Հեռացնել" width="40" />
+                </a>
+            </div>
+        </div>
+
+    </div>           
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div align="center" class="accordion"><h4>Հաճախորդի հետ փոխկապակցված անձանց դասակարգելու հիմքեր</h4> </div>
+            <div class="next " style="width:100% ; padding-left:0px;padding-right:0px ">
+                <table class="aaa table table-condensed table-hover tableFixHead" style="background-color:white;  margin-top:0px !important;">
+                    <thead class="product-container-header">
+                        <tr>
+
+                            <th style="text-align:center">Գրանցման ա/թ</th>
+                            <th style=" text-align:center">Հաճախորդի համարը</th>
+                            <th style=" text-align:center">Զեկուցագրի համարը</th>
+                            <th style=" text-align:center">Զեկուցագրի ա/թ </th>
+                            <th style=" text-align:center">Կարգավիճակ</th>
+
+                        </tr>
+                    </thead>
+                    <tbody style=" padding-right:18px">
+
+                        <tr data-ng-repeat="item in classificationGrounds" ng-class="{'selectedRow':$index==gridSelectedRow.selectedRow3}" ng-click=" SelectedRow('selectedRow3',$index);">
+
+
+                            <td style="text-align:center">{{item.RegistrationDateString}} </td>
+                            <td style="text-align:center"> {{item.CustomerNumber}}</td>
+                            <td style="text-align:center">{{item.ReportNumber}}</td>
+                            <td style="text-align:center">{{item.ReportDateString}}</td>
+                            <td style="text-align:center">{{item.Status}}</td>
+
+                        <tr ng-if="classificationGrounds.length==0">
+                            <td colspan="5" style="text-align:center">Տվյալներ առկա չեն</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-4  col-lg-2  " style="padding-top: 15px;">
+
+            <div class=" col-lg-3 ">
+                <input type="checkbox" ng-disabled="mod" ng-model="isActive3" ng-change="GetConnectionGroundsForClassifyingWithCustomer()" ng-true-value="1" ng-false-value="0"> Գործող
+            </div>
+            <div class=" col-lg-3" ng-if="$root.SessionProperties.AdvancedOptions['addLeasingLinkedCustomerClassification']=='1'">
+                <a href="javascript:" class="btn" ng-click="AddConnectionGroundsForClassifyingWithCustomerView();" ng-disabled="mod" @*ng-show="PermissionForCustomerClassification.cmdAddClass.valueOfPermission"*@>
+                    <img src="/Content/Images/Add_for_Classification.png" title="Ավելացնել" width="40" />
+                </a>
+            </div>
+            <div class=" col-lg-3">
+                <a href="javascript:" class="btn" ng-click="GetConnectionGroundsForClassifyingWithCustomerByIDView()" ng-disabled="mod">
+                    <img src="/Content/Images/details.png" title="Դիտարկել" width="40" />
+                </a>
+            </div>
+            <div class=" col-lg-3" ng-if="$root.SessionProperties.AdvancedOptions['closeLeasingLinkedCustomerClassification']=='1'">
+                <a href="javascript:" class="btn" ng-click="CloseConnectionGroundsForClassifyingWithCustomerView()" ng-disabled="mod">
+                    <img src="/Content/Images/Delete_for_Classification.png" title="Հեռացնել" width="40" />
+                </a>
+            </div>
+        </div>
+
+    </div>            
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div align="center" class="accordion"><h4>ՀԱՃԱԽՈՐԴԻ ԴԱՍԱԿԱՐԳՄԱՆ ՊԱՏՄՈՒԹՅՈՒՆ</h4> </div>
+            <div class="next " style="width:100% ; padding-left: 0px;padding-right:0px  ">
+                <table class="aaa table table-condensed table-hover tableFixHead" style="background-color:white;  margin-top:0px !important;">
+                    <thead class="product-container-header">
+                        <tr>
+
+                            <th style="text-align:center">Դասակարգման ա/թ</th>
+                            <th style=" text-align:center">Դաս</th>
+                            <th style=" text-align:center">Տեսակը</th>
+                            <th style=" text-align:center">Հաշիվ/հղման համար</th>
+                            <th style=" text-align:center">Փոխ. անձ</th>
+                            <th style=" text-align:center">Լիզինգառու</th>
+
+                        </tr>
+                    </thead>
+                    <tbody style=" padding-right:18px">
+
+                        <tr data-ng-repeat="item in classificationHistory" ng-class="{'selectedRow':$index==gridSelectedRow.selectedRow4}" ng-click=" SelectedRow('selectedRow4',$index);">
+
+                            <td style="text-align:center">{{item.ClassificationDateString}} </td>
+                            <td style="text-align:center">{{item.RiskClassName}}</td>
+                            <td style="text-align:center">{{item.ClassificationType}}</td>
+                            <td style="text-align:center">{{item.AccountOrLink}}</td>
+                            <td style="text-align:center">{{item.SubstitutePersonNumber}}</td>
+                            <td style="text-align:center">{{item.BorrowerNumber}}</td>
+
+                        <tr ng-if="classificationHistory.length==0">
+                            <td colspan="6" style="text-align:center">Տվյալներ առկա չեն</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+        <div class="col-sm-4" style="padding-top: 15px;">
+            <div class="col-lg-3">
+                <input type="date" ng-disabled="mod" ng-model="date" ng-blur="GetCustomerClassificationHistory()" name="Date" style="height:30px;  width:130px;  margin-top:10px" required>
+            </div>
+            @*<div class=" col-lg-2 ">
+                <a href="javascript:" class="btn" ng-click="CustomerClassificationHistoryByIDView()" ng-disabled="mod">
+                    <img src="/Content/Images/details.png" title="Դիտարկել" width="40" style=" margin-left :15px" />
+                </a>
+            </div>*@
+            <div class=" col-lg-3 ">
+                <a href="javascript:" class="btn" ng-click="CustomercConnectionView();" ng-disabled="mod">
+                    <img src="/Content/Images/People-Connection.png" title="Կապը հաճախորդների միջև" width="55" />
+                </a>
+            </div>
+        </div>
+
+    </div>               
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div align="center" class="accordion"> <h4>Հաճախորդի լիզինգը անհուսալի դասով չդասակարգելու հիմքեր</h4> </div>
+            <div class="next " style="width:100% ; padding-left: 0px;padding-right:0px  ">
+                <table class="aaa table table-condensed table-hover tableFixHead" style="background-color:white;  margin-top:0px !important;">
+                    <thead class="product-container-header">
+                        <tr>
+
+                            <th style="text-align:center">Գրանցման ա/թ </th>
+                            <th style=" text-align:center">Զեկուցագրի համարը</th>
+                            <th style=" text-align:center">Զեկուցագրի ա/թ </th>
+                            <th style=" text-align:center">Նկարագրություն</th>
+                            <th style=" text-align:center">Հաշվեհամարը</th>
+
+                        </tr>
+                    </thead>
+                    <tbody style=" padding-right:18px">
+
+                        <tr data-ng-repeat="itam in notClassifyingCustomerLoan" ng-class="{'selectedRow':$index==gridSelectedRow.selectedRow5}" ng-click=" SelectedRow('selectedRow5',$index);">
+
+                            <td style="text-align:center">{{itam.RegistrationDateString}} </td>
+                            <td style="text-align:center">{{itam.ReportNumber}}</td>
+                            <td style="text-align:center">{{itam.ReportDateString}}</td>
+                            <td style="text-align:center">{{itam.Description}}</td>
+                            <td style="text-align:center">{{itam.Account}}</td>
+
+                        <tr ng-if="notClassifyingCustomerLoan.length==0">
+                            <td colspan="5" style="text-align:center">Տվյալներ առկա չեն</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-4  col-lg-2  " style="padding-top: 15px;">
+
+            <div class=" col-lg-3 ">
+                <input type="checkbox" ng-disabled="mod" ng-model="isActive5" ng-change="GetGroundsForNotClassifyingCustomerLoan()" ng-true-value="1" ng-false-value="0"> Գործող
+            </div>
+
+            <div class=" col-lg-3" ng-if="$root.SessionProperties.AdvancedOptions['addLeasingLoanNotClassifying']=='1'">
+                <a href="javascript:" class="btn" ng-click="AddGroundsForNotClassifyingCustomerLoanView()" ng-disabled="mod">
+                    <img src="/Content/Images/Add_for_Classification.png" title="Ավելացնել" width="40" />
+                </a>
+            </div>
+
+            <div class=" col-lg-3">
+                <a href="javascript:" class="btn" ng-click="GetGroundsForNotClassifyingCustomerLoanByIDView()" ng-disabled="mod">
+                    <img src="/Content/Images/details.png" title="Դիտարկել" width="40" />
+                </a>
+            </div>
+
+            <div class=" col-lg-3" ng-if="$root.SessionProperties.AdvancedOptions['closeLeasingLoanNotClassifying']=='1'">
+                <a href="javascript:" class="btn" ng-click="CloseGroundsForNotClassifyingCustomerLoanView()" ng-disabled="mod">
+                    <img src="/Content/Images/Delete_for_Classification.png" title="Հեռացնել" width="40" ng-click="" />
+                </a>
+            </div>
+        </div>
+
+    </div>               
+
+</form>
+ 
+<script>
+
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            //this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            var delay = ' 2s';
+            if (panel.style.height === "0px") {
+                panel.style.height = "225px";
+            } else {
+                panel.style.height = "0px";
+            }
+        });
+    }
+</script>
+

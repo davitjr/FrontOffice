@@ -1,0 +1,33 @@
+﻿
+
+
+<style>
+    .inUse{
+    background-color: #a21122;
+    color: white;
+}
+.caseMap{
+    border: 1px solid black;
+    width:40px;
+    text-align:center;
+    font-size:13px;
+}
+</style>
+<div class=" col-sm-12">
+    <br />
+
+    <div>
+        <form role="form" class="form-horizontal" ng-controller="DepositCaseOrderCtrl" ng-init="getDepositCaseMap(caseSide)" style="min-width:700px;cursor:pointer">
+
+
+            <div style="float:left;" ng-repeat="map in ::depositCaseMap | groupBy:'Column' | toArray:true | orderBy:min">
+                <div ng-repeat="casemap in map | orderBy:'CaseNumber'" ng-dblclick="setCaseNumber(casemap.CaseNumber)">
+
+                    <div style="height:{{::casemap.Height}}" class="caseMap" ng-class="{inUse:casemap.InUse}" ng-style="myStyle" ng-mouseover="myStyle={fontWeight:'bold'}" ng-mouseleave="myStyle={fontWeight:'normal'}">{{::casemap.CaseNumber}}</div>
+                </div>
+            </div>
+            <div style="min-height:700px">&nbsp;</div>
+        </form>
+       
+    </div>
+</div>

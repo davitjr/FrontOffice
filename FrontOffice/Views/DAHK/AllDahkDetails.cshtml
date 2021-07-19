@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+
+        .table-wrapper {
+            max-width: 890px!important;
+    }
+</style>
+<form name="DahkDetailsForm" ng-app="app" ng-controller="DAHKCtrl" id="DahkDetailsForm" data-ng-init="nonauthorizedcustomer != 'true' && getAuthorizedCustomerNumber();" ng-submit="DahkDetailsForm.$valid && getAllDahkDetails()" novalidate>
+    <div class="product-details bhoechie-tab-content" style="min-width:910px;margin-left:10px;margin-top:5px;">
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="col-sm-3">
+                    <div class="product-detail-cell product-detail-lable">
+                        Հաճախորդի համար
+                    </div>
+                    <div class="input-group">
+                        <input type="text" ng-model="findCustomerNumber" style="width:150px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' maxlength="12" class="form-control">
+                        <div class="input-group-btn" style="display:inline-block;">
+                            <button type="button" title="Հաճախորդի որոնոմ" class="btn btn-primary searchButton" ng-click="searchCustomers()"><span class="glyphicon glyphicon-search greenStyle"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        &nbsp;
+                    </div>
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                </div>
+            </div>
+        </div>
+        <loading></loading>
+        <br />
+        <div class="row">
+            <dahkblockages  hide-blank="true"></dahkblockages>
+        </div>
+        <div class="row">
+            <dahkcollections hide-blank="true"></dahkcollections>
+        </div>
+        <div class="row">
+            <dahkemployers hide-blank="true"></dahkemployers>
+        </div>
+        <div class="row">
+            <dahkamountstotal hide-blank="true"></dahkamountstotal>
+        </div>
+    </div>
+</form>

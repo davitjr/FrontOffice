@@ -1,0 +1,179 @@
+﻿<div>
+    <style>
+        .modal-content {
+            width: 1000px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+
+
+
+        .resultRow {
+            font-size: 10pt;
+            color: black;
+            font-weight: normal;
+        }
+
+        .resultRowAddInf {
+            font-size: 9pt;
+        }
+
+        .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .tableHeader {
+            font-size: 9pt;
+            height: 25px;
+        }
+
+        #serachTrBankMail .product-container-header > th {
+            font-weight: inherit;
+        }
+
+        #serachTrBankMail .div-table-content {
+            margin-top: -7px;
+            border-color: #CFDAD0 !important;
+        }
+
+
+        #serachTrBankMail .popup_wrapper_top {
+            margin-top: -10px !important;
+        }
+    </style>
+    <div id="serachTrBankMail">
+        <div class="col-sm-12 popup_wrapper_top" style="height:35px; margin-bottom:10px;">
+            <div ng-if="transfergroup!=4" style="margin-top:-10px">Bank Mail-ով փոխանցումների որոնում</div>
+            <div ng-if="transfergroup==4" style="margin-top:-10px">Միջ մասն. փոխանցումների որոնում</div>
+            <img src="/Content/images/close_pop.png " ng-click="closeTransfersBankMailModal()" style="margin-top:-10px;" alt="">
+        </div>
+
+        <div class="col-sm-12" style="display:inline-block">
+            <div>
+                <select data-ng-model="searchParams.IsArchive" class="form-control" style="width: 155px">
+                    <option value="0" style="margin-left:25px">Ընթացիկ</option>
+                    <option value="1" style="margin-left:25px">Արխիվ</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-12" style="padding:0;margin-bottom:15px">
+            <div class="col-sm-2" style="display:inline-block; padding:5px">
+                <label class="tab_title">Ամսաթիվ</label>
+                <div>
+                    <input type="date" ng-model="searchParams.DateOfTransfer" name="DateOfTransfer" class="form-control  " />
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block; padding:5px">
+                <label class="tab_title">Փոխանցողի հաշիվ</label>
+                <div class="input-group">
+                    <input type="text" style="max-width: 370px" ng-model="searchParams.SenderAccount" name="SenderAccount" class="form-control  " />
+                </div>
+            </div>
+            <div ng-if="transfergroup!=4" class="col-sm-2" style="display:inline-block; padding:5px">
+                <label class="tab_title">Ստացողի  հաշիվ</label>
+                <div>
+                    <input type="text" ng-model="searchParams.ReceiverAccount" name="ReceiverAccount" class="form-control  " />
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block; padding:5px">
+                <label class="tab_title">Ստացող</label>
+                <div>
+                    <input type="text" style="max-width :370px" ng-model="searchParams.ReceiverName" name="ReceiverName" class="form-control  " />
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block; padding:5px">
+                <label class="tab_title">Գումար</label>
+                <div>
+                    <input type="text" style="max-width :370px" ng-model="searchParams.Amount" name="Amount" class="form-control  " />
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block; padding:5px">
+                <label class="tab_title">Նկարագրություն</label>
+                <div>
+                    <input type="text" style="max-width :370px" ng-model="searchParams.DescriptionForPayment" name="Description" class="form-control  " />
+                </div>
+            </div>
+
+        </div>
+
+
+        <div style="margin:5px">
+            <button type="button" class="btn btn-primary" ng-click="btnFindClick();" title="Որոնել"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+        </div>
+
+
+
+        <div style="overflow:auto; margin:5px; margin-bottom:0px; margin-top:0px; ">
+            <table class="table table-condensed" style="margin-bottom:0;">
+                <thead>
+                    <tr class="product-container-header">
+                        <th class="col-sm-1" style="text-align:center;">Փոխանցման ամսաթիվ</th>
+                        <th class="col-sm-2" style="text-align:center;">Փոխանցողի  հաշիվ</th>
+                        <th ng-show="transfergroup!=4" class="col-sm-2" style="text-align:center;">Ստացողի  հաշիվ</th>
+                        <th class="col-sm-1" style="text-align:center;">Գումար</th>
+                        <th class="col-sm-3" style="">Ստացող</th>
+                        <th ng-class="{'col-sm-3':transfergroup!=4,'col-sm-5':transfergroup==4}" style="">Փոխանցման նկարագրություն</th>
+
+
+
+                    </tr>
+                </thead>
+            </table>
+            <div class="div-table-content " style="max-height:200px; min-height:200px;border: grey 1px solid;  ">
+                <table class="table table-condensed table-hover" style="background-color:white">
+                    <tbody>
+                        <tr ng-if="transfersBankMailList.length!=0" ng-repeat="transfer in transfersBankMailList" style="font-size:8pt; cursor:pointer;" ng-class="{'selected':$index == selectedRow} " ng-click="setClickedRow($index)" ng-dblclick="selectTransferBankMail()">
+                            <td>
+
+                                <div class="col-sm-1">
+                                    {{ ::transfer.DateOfTransfer | mydate | date: 'dd/MM/yyyy' }}
+                                </div>
+                                <div class="col-sm-2 ">
+                                    {{ ::transfer.SenderAccount }}
+                                </div>
+                                <div ng-show="transfergroup!=4" class="col-sm-2 ">
+                                    {{ ::transfer.ReceiverAccount }}
+                                </div>
+                                <div class="col-sm-1 ">
+                                    {{ ::transfer.Amount | number:2 }}
+                                </div>
+                                <div class="col-sm-3 ">
+                                    {{ ::transfer.ReceiverName}}
+                                </div>
+                                <div ng-class="{'col-sm-3':transfergroup!=4,'col-sm-5':transfergroup==4}">
+                                    {{ ::transfer.DescriptionForPayment.substring(0,25) }}
+                                </div>
+
+
+                            </td>
+                        </tr>
+                        <tr ng-if="transfersBankMailList.length==0">
+                            <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+        <div style="margin-left:12px;">
+            Ընդամենը` {{totalRows}}
+        </div>
+        <div uib-pagination style="margin-left:10px;margin-top:5px;"
+                    ng-model="currentPage"
+                    total-items="totalRows"
+                    items-per-page="numPerPage"
+                    max-size="maxSize"
+                    boundary-links="true"
+                    previous-text="‹"
+                    next-text="›"
+                    first-text="«"
+                    last-text="»">
+        </div>
+    </div>
+</div>

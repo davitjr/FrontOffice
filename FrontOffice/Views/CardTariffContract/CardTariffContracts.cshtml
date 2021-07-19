@@ -1,0 +1,106 @@
+﻿
+@{
+    Layout = null;
+}
+<style>
+    #cardTariffContracts {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: 850px;
+    }
+
+        #cardTariffContracts td, th {
+            border: 1px solid #cecece;
+            font-size: 13px;
+        }
+
+        #cardTariffContracts top th {
+            font-size: 12px;
+        }
+
+    #contractTable table .top td {
+        font-size: 12px;
+    }
+
+    .redBackground {
+        background-color: rosybrown;
+    }
+</style>
+
+<div style="min-height:300px" id="cardTariffContracts" ng-controller="CardTariffContractCtrl" data-ng-init="getCardTariffContracts()">
+    <div class="product-details bhoechie-tab-content" style="margin-left:10px;">
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործատու`</div>
+            <div class="product-detail-cell product-detail-value"><span ng-show="organisationCustomerNumber!=0">{{organisationCustomerNumber}}</span> <span ng-show="organisationCustomerNumber==0">բացակայում է</span> </div> 
+            <div style="margin-left:5px;" ng-show="organisationCustomerNumber!=0">
+                <button type="button" ng-controller="PopUpCtrl" ng-click="params={customerNumber:organisationCustomerNumber}; openWindow('/Customer/CustomerDetails','Գործատուի տվյալներ','customerdetails')">
+                    <span class="fa fa-info-circle" data-toggle="tooltip" data-original-title="Գործատուի տվյալներ"></span>
+                </button>
+                <button type="button" ng-controller="PopUpCtrl" ng-click="getCardTariffContractAttachment(organisationCustomerNumber,true,true)">
+                    <span class="fa fa-print" data-toggle="tooltip" data-original-title="Աշխատավարձային ծրագրերի պայմանագրեր,հրամաններ"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="product-container" style="width:auto;min-width:840px">
+        <div class="header-title">
+            Համագործակցության (աշխատավարձային) ծրագրեր
+        </div>
+
+        <div class="product-collapsable-section " style="margin-bottom:15px;">
+
+            <div id="contractTable" class="product-content-table custom-scroll">
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <thead class="product-container-header">
+                        <tr>
+                            <td style="text-align:center;" class="col-sm-1">Համար</td>
+                            <td style="text-align:center;" class="col-sm-5">Անվանում</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="contract in cardTariffContracts">
+                            <td style="text-align:left;" class="col-sm-1">
+                                {{::contract.TariffID}}
+                                <button type="button" ng-controller="PopUpCtrl" style="float:right" ng-click="openCardTariffs(contract.TariffID)">
+                                    <span class="fa fa-info-circle" data-toggle="tooltip" data-original-title="Սակագներ"></span>
+                                </button>
+                            </td>
+                            <td style="text-align:center;" class="col-sm-5">
+                                {{::contract.Description}}
+                                <script type="text/javascript">
+                                    $('[data-toggle="tooltip"]').tooltip({
+                                        placement: 'left'
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                        <tr ng-show="cardTariffContracts.length==0">
+                            <td colspan="2" style="text-align:center">Տվյալներ առկա չեն</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $("#personsTable").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+
+
+
+
+
+

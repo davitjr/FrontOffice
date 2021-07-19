@@ -1,0 +1,117 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #transferCallContractLoad .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+<div id="transferCallContractLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="TransferCallContractOrderCtrl" name="TransferCallContractOrderForm" id="TransferCallContractOrderForm" role="form" style="min-width:700px;" novalidate class="form-horizontal" labels-required>
+    <div id="newaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-3 " ng-click="TransferCallContractOrderForm.$setSubmitted();TransferCallContractOrderForm.$valid && transferCallContractPrint(order.TransferCallContractDetails)">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Համաձայնագիր</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="TransferCallContractOrderForm.$setSubmitted();TransferCallContractOrderForm.$valid && saveTransferCallContractOrder()">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newTransferCallContractOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+
+    <div class="col-sm-10">
+
+        <div class=" form-group">
+            <label class="tab_title col-sm-5 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+            <div class="col-sm-6 row">
+                <div class="multiple_columns col-sm-8 ">
+                    <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="order.OperationDate" required>
+                </div>
+            </div>
+        </div>
+
+        <div class=" form-group" >
+            <label class="tab_title col-sm-5 " for="ContractNumber">Համար</label>
+            <div class="col-sm-6 row">
+                <div class="multiple_columns col-sm-8 ">
+                    <input type="number" class="form-control tab_title unstyled" disabled="disabled" style="text-align: left;" id="ContractNumber" name="ContractNumber" ng-model="order.TransferCallContractDetails.ContractNumber">
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group ">
+            <label class="tab_title col-sm-5" for="ReceiverAccount">Գաղտնաբառ</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="text" ng-model="order.TransferCallContractDetails.ContractPassword" class="form-control tab_title" id="ContractPassword" name="ContractPassword" style="text-align:right" required />
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="TransferCallContractOrderForm.$submitted || TransferCallContractOrderForm.ContractPassword.$dirty"
+                                 for="TransferCallContractOrderForm.ContractPassword.$error">
+                        <ng-message when="required" class="errors">
+                            Մուտքագրեք գաղտնաբառը
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+
+        <div class=" form-group">
+            <label class="tab_title col-sm-5 " for="RegistrationDate">Կնքման ա/թ</label>
+            <div class="col-sm-6 row">
+                <div class="multiple_columns col-sm-8 ">
+                    <input type="date" class="form-control tab_title unstyled" style="text-align: left;" id="ContractDate" name="ContractDate" ng-model="order.TransferCallContractDetails.ContractDate" required>
+                </div>
+            </div>
+        </div>
+
+        <usersetnumber setnumber="order.TransferCallContractDetails.InvolvingSetNumber" formname="TransferCallContractOrderForm" labelname="Ներգրավող ՊԿ"></usersetnumber>
+
+        <div class="form-group">
+            <label class="tab_title col-sm-5 " for="account">Հաշիվ</label>
+            <loading-control scopevariable="accounts"></loading-control>
+            <div ng-show="accounts" class="col-sm-6 " data-ng-init="getAccountsForOrder()">
+                <div class="row">
+                    <select data-ng-model="order.TransferCallContractDetails.Account" name="Account" id="Account" class=" form-control"
+                            data-ng-options="a.AccountNumber+' '+a.Currency group by a.AccountTypeDescription for a in accounts" required>
+                        <option value="" hidden>Ընտրեք հաշվեհամարը...</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="TransferCallContractOrderForm.$submitted || TransferCallContractOrderForm.Account.$dirty"
+                                 for="TransferCallContractOrderForm.Account.$error">
+                        <ng-message when="required" class="errors">
+                            Ընտրեք հաշիվը
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+       </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+

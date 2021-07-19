@@ -1,0 +1,59 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    .my_image_carousel1 {
+        height: 200px !important;
+    }
+
+    .my_image_carousel2 {
+        height: 500px !important;
+    }
+</style>
+<form ng-show="false">
+    <div class="menu-bar dialog-menu light-green">
+    </div>
+    <div>
+    </div>
+</form>
+<form ng-controller="IamgeCarouselCtrl" name="IamgeCarouselForm" id="iamgeCarouselForm" role="form">
+    <div class="modal-header">
+        <button ng-show="slides.length>0 && croppMode==false" class="btn btn-sm btn-success" ng-click="DownloadIamge()"><span class="glyphicon glyphicon-download"></span>&nbsp;Ներբեռնել</button>
+        <button ng-show="slides.length>0 && croppMode==false && isCustomerDetailsCall!=true" class="btn btn-sm btn-success" ng-click="CropIamge()"><span class="glyphicon glyphicon glyphicon-scissors"></span>&nbsp;Կտրել</button>
+
+        <button ng-show="slides.length>0 && croppMode==true" class="btn btn-sm btn-success" ng-click="DownloadCroppedIamge()"><span class="glyphicon glyphicon-download"></span>&nbsp;Ներբեռնել</button>
+        <button ng-show="slides.length>0 && croppMode==true" class="btn btn-sm btn-success" ng-controller="CustomerCtrl" ng-click="saveCustomerPhoto(cropper.croppedImage,'png')"><span class="glyphicon glyphicon glyphicon-paperclip"></span>&nbsp;Կցել հաճախորդին</button>
+        <button ng-show="slides.length>0 && croppMode==true" class="btn btn-sm btn-success" ng-click="CancelCropIamge()"><span class="glyphicon glyphicon-remove-circle"></span>&nbsp;Հրաժարվել</button>
+
+        <div ng-if="slides.length==0" class="row my_text1" style="text-align:center">Ցուցադրման ենթակա տվյալներ առկա չեն</div>
+    </div>
+
+    <div id="ImageCarousel" class="carousel slide" data-ride="carousel" data-interval="false" style="min-height:500px;min-width:900px">
+
+        <ol class="carousel-indicators " ng-show="croppMode==false">
+            <li ng-repeat="slide in slides" data-slide-to="{{$index}}" id="{{$index}}_slide" ng-class="{'active':$index == 0,'':$index>0 }" style="background-color:#669966"></li>
+        </ol>
+
+        <div class="carousel-inner" role="listbox" style="text-align:-webkit-center">
+            <div ng-class="{'item active':$index == 0,'item':$index>0 }" id="{{$index}}_div_slide" ng-repeat="slide in slides">
+                <img ng-show="croppMode==false" ng-src="{{slide.image}}" ng-class="{'my_image_carousel1':slide.extension == 2,'my_image_carousel2':slide.extension != 2 }">
+                <span ng-if="slide.image && slide.extension != 2" ng-init="setZoom($index)"></span>
+            </div>
+            <canvas ng-show="croppMode==true" width="500" height="500" id="canvas" image-cropper image="cropper.sourceImage" cropped-image="cropper.croppedImage" keep-aspect="false" touch-radius="30" crop-area-bounds="bounds"></canvas>
+            @*<div ng-show="croppMode==true">Cropped Image (Left: {{bounds.left}} Right: {{bounds.right}} Top: {{bounds.top}} Bottom: {{bounds.bottom}})</div>
+                <div ng-show="croppMode==true && cropper.croppedImage!=null"><img ng-src="{{cropper.croppedImage}}" /></div>*@
+        </div>
+
+        <div ng-show="slides.length>1 && croppMode==false">
+            <a class="left carousel-control" role="button" ng-click="setPrevImage(slides.length)" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" style="top:50% !important" aria-hidden="true" ng-click="croppMode=false"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" role="button" ng-click="setNextImage(slides.length)" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" style="top:50% !important" aria-hidden="true" ng-click="croppMode=false"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+    </div>
+</form>

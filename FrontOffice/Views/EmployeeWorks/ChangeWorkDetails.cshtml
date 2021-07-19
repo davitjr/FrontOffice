@@ -1,0 +1,169 @@
+﻿@{
+    Layout = null;
+}
+<div id="employeeWorkLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="EmployeeWorksCtrl" name="WorkRejectionForm" id="WorkRejectionForm" role="form" style="min-width:500px;" novalidate class="form-horizontal" labels-required>
+    <div id="newaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-if="isReject" ng-click="WorkRejectionForm.$setSubmitted();WorkRejectionForm.$valid && chancgeWorkQuality(40,true)">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+
+            <li class="root-menu-item-4 " ng-if="isReject!=true" ng-click="WorkRejectionForm.$setSubmitted();WorkRejectionForm.$valid && saveEmployeeWork(true,true)">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('changeworkdetails')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-12">
+            <div style="max-width:530px">
+                <errors></errors>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group" ng-if="isReject">
+                    <label class="tab_title col-sm-5" for="ClosingDescription">Հրաժարման պատճառ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <textarea rows="2" onkeypress="return isArmenianUnicode(event.keyCode)"
+                                      onpaste="return CheckPasteText(event)" ng-model="employeeWork.ClosingDescription"
+                                      name="ClosingDescription" id="ClosingDescription" required class="form-control" style="text-align:left"></textarea>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="WorkRejectionForm.$submitted || WorkRejectionForm.ClosingDescription.$dirty"
+                                         for="WorkRejectionForm.ClosingDescription.$error">
+                                <ng-message when="required" class="errors">
+                                    Հրաժարման պատճառը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="isReject!=true" ng-init="getTypeOfEmployeeWorks();employeeWork.Type=employeeWork.Type.toString()">
+                    <label class="tab_title col-sm-5" for="Type">Տեսակ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <select data-ng-model="employeeWork.Type" name="Type" id="Type" class="form-control" required
+                                    data-ng-options="k as v for (k,v) in typeOfEmployeeWorks">
+                                <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք տեսակը...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="WorkRejectionForm.$submitted || WorkRejectionForm.Type.$dirty"
+                                         for="WorkRejectionForm.Type.$error">
+                                <ng-message when="required" class="errors">
+                                    Տեսակը ընտրված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="isReject!=true" ng-init="getTypeOfEmployeeWorkImportances();employeeWork.Importance=employeeWork.Importance.toString()">
+                    <label class="tab_title col-sm-5" for="Importance">Կարևորություն</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <select data-ng-model="employeeWork.Importance" name="Importance" id="Importance" class="form-control" required
+                                    data-ng-options="k as v for (k,v) in typeOfEmployeeWorkImportances">
+                                <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք կարևորություն...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="WorkRejectionForm.$submitted || WorkRejectionForm.Importance.$dirty"
+                                         for="WorkRejectionForm.Importance.$error">
+                                <ng-message when="required" class="errors">
+                                    Կարևորությունը ընտրված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="isReject!=true">
+                    <label class="tab_title col-sm-5 " for="EndDate">Կատարման վերջնաժամկետ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <input type="date" class="form-control tab_title" style="text-align: left;" id="EndDate" name="EndDate" ng-model="employeeWork.EndDate" required>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="WorkRejectionForm.$submitted || WorkRejectionForm.EndDate.$dirty"
+                                         for="WorkRejectionForm.EndDate.$error">
+                                <ng-message when="required" class="errors">
+                                    Կատարման վերջնաժամկետը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="form-group" ng-if="isReject!=true" ng-init="getTypeOfEmployeeWorkDescriptions();employeeWork.DescriptionType=employeeWork.DescriptionType.toString()">
+                    <label class="tab_title col-sm-5" for="DescriptionType">Նկարագրություն</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <select data-ng-model="employeeWork.DescriptionType" name="DescriptionType" id="DescriptionType" class="form-control" required
+                                    data-ng-options="k as v for (k,v) in typeOfEmployeeWorkDescriptions" ng-change="employeeWork.OtherDescription=null">
+                                <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք նկարագրությունը...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="WorkRejectionForm.$submitted || WorkRejectionForm.DescriptionType.$dirty"
+                                         for="WorkRejectionForm.DescriptionType.$error">
+                                <ng-message when="required" class="errors">
+                                    Նկարագրությունը ընտրված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group" ng-if="employeeWork.DescriptionType==9 && isReject!=true">
+
+                    <label class="tab_title col-sm-5" for="OtherDescription">Այլ նկարագրություն<span class="redStyle">*</span></label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <textarea rows="2" onkeypress="return isArmenianUnicode(event.keyCode)"
+                                      onpaste="return CheckPasteText(event)" ng-model="employeeWork.OtherDescription"
+                                      name="OtherDescription" id="OtherDescription" required class="form-control" style="text-align:left"></textarea>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="WorkRejectionForm.$submitted || WorkRejectionForm.OtherDescription.$dirty"
+                                         for="WorkRejectionForm.OtherDescription.$error">
+                                <ng-message when="required" class="errors">
+                                    Այլ նկարագրությունը լրացված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+

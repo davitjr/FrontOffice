@@ -1,0 +1,371 @@
+﻿<div>
+    <style>
+        .modal-content {
+            min-width: 950px;
+            max-height: 740px;
+            width: 1050px;
+        }
+
+        .form-group-search {
+            margin-bottom: 5px;
+        }
+
+        .nonUnicodeText {
+            font-family:serif,
+            font-size: 13px;
+            padding:0;
+        }
+
+        .resultRow {
+            font-size: 10pt;
+            color: black;
+            font-weight: normal;
+        }
+
+        .resultRowAddInf {
+            font-size: 9pt;
+        }
+
+        .rowWithFullWidth {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .tableHeader {
+            font-size: 9pt;
+            height: 25px;
+        }
+
+        #serachLeasingCustomer .product-container-header > th {
+            font-weight: inherit;
+        }
+
+        #serachLeasingCustomer .div-table-content {
+            margin-top: -7px;
+            border-color: #CFDAD0 !important;
+        }
+
+
+        #serachLeasingCustomer .popup_wrapper_top {
+            margin-top: -10px !important;
+        }
+
+        .leasingHeader {
+            color:black!important;
+            background-color:white!important;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 30px;
+            padding-left: 5px;
+            border-color:#D0CCCC!important;
+            border-width:1px;
+            border-style: solid;
+            margin-bottom:-6px;
+
+        }
+
+
+            .errorLeasingHeader {
+            color:#A94442;
+            background-color:white!important;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 30px;
+            padding-left: 5px;
+            border-color:red;
+            border-width:1px;
+            border-style: solid;
+            margin-bottom:-6px;
+
+        }
+
+         .dropdown-info {
+            position: absolute !important; top: 100% !important; left: 0 !important;z-index: 1000 !important;display: none !important;min-width: 160px !important; padding: 5px 0 !important;margin: 2px 0 0 !important;font-size: 14px !important; text-align: left !important; list-style: none !important;
+        }
+        .dropdown-menu {
+            position: absolute !important;
+            top: 133px !important;
+            right: 40px !important;
+            width: 100px;
+            left: inherit !important;
+        }
+        .col-sm-1.click_toggle{
+            position: relative;
+        }
+
+
+    </style>
+
+
+
+
+    <div id="serachLeasingCustomer" style=" width:1050px!important;">
+
+        <div class="col-sm-12 popup_wrapper_top" style="height:25px; margin-bottom:4px;">
+            <div style="margin-top:-8px">Լիզինգի հաճախորդի որոնում</div>
+            <img src="/Content/images/close_pop.png " ng-click="closeSearchLeasingCustomersModal()" style="margin-top:-14px;margin-right:-10px" alt="">
+        </div>
+
+
+        <div class="" style="padding-left:12px;padding-right:13px;padding-top:22px">
+            <section class="panel panel-success">
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4 ">
+
+                            <div class="col-md-4 form-group-search">
+                                Հաճ.համար
+                            </div>
+                            <div class="col-md-8 form-group-search">
+                                <input type="text" maxlength="12" ng-model="oneSearchedLeasingCustomer.customerNumber" name="name" class="form-control tab_title " style="height:25px" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' />
+                            </div>
+                            <div class="col-md-4 form-group-search">
+                                ՀՀՎՀ
+                            </div>
+                            <div class="col-md-8 form-group-search">
+                                <input type="text" ng-model="oneSearchedLeasingCustomer.taxCode" name="taxCode" class="form-control  nonUnicodeText" style="height:25px" />
+                            </div>
+
+                        </div>
+                        <div class="col-md-4 ">
+
+                            <div class="col-md-4 form-group-search">
+                                Անուն
+                            </div>
+                            <div class="col-md-8 form-group-search">
+                                <input type="text" ng-model="oneSearchedLeasingCustomer.name" name="name" class="form-control" style="height:25px"  />
+                            </div>
+
+                            <div class="col-md-4 form-group-search">
+                                Անվանում
+                            </div>
+                            <div class="col-md-8 form-group-search">
+                                <input type="text" ng-model="oneSearchedLeasingCustomer.organizationName" name="organizationName" class="form-control  nonUnicodeText" style="height:25px" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 ">
+                            <div class="col-md-4 form-group-search">
+                                Ազգանուն
+                            </div>
+                            <div class="col-md-8 form-group-search">
+                                <input type="text" ng-model="oneSearchedLeasingCustomer.lastName" name="lastName" class="form-control  nonUnicodeText" style="height:25px" />
+                            </div>
+
+                            <div class="col-md-4 form-group-search">
+                                Անձնագիր
+                            </div>
+                            <div class="col-md-8 form-group-search">
+                                <input type="text" ng-model="oneSearchedLeasingCustomer.passportNumber" name="passportNumber" class="form-control  nonUnicodeText" style="height:25px" />
+                            </div>
+                        </div>
+                    </div>
+                    <div style="">
+                        <button type="button" class="btn btn-primary" ng-click="btnFindLeasingClick();" title="Որոնել հաճախորդին" style="padding:2px 4px"><span class="glyphicon glyphicon-search"></span>&nbsp;Որոնել</button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <div class="" style="padding-left:13px;padding-right:13px;margin-top:10px">
+            <section class="panel panel-success" style="border-color:white">
+                <!--<header class="panel-heading">
+                    <span class="panel-title" style="font-size:14px;">&nbsp;ՀաՃախորդներ</span>
+                </header>-->
+                <div class="panel-body">
+                    <div style="overflow:auto;margin-top:-5px;margin-left:-5px ">
+                        <div ng-class="(isCustomerSelected==true || isCustomerSelected==undefined)?'leasingHeader':'errorLeasingHeader'"   style="line-height: 20px;font-size: 13px;">
+                            <span ng-if="isCustomerSelected==true || isCustomerSelected==undefined"> ՀաՃախորդներ</span>
+                            <span ng-if="isCustomerSelected==false">ՀաՃախորդը ընտրված չէ</span>
+                        </div>
+                        <table class="table table-condensed" style="margin-bottom:0;border:none">
+                            <thead>
+                                <tr class="product-container-header" style="font-size:8pt;height:20px;">
+                                    <th class="col-sm-2" style="text-align:center;">Հաճ.համար</th>
+                                    <th class="col-sm-1" style="text-align:center;">Անուն,Ազգանուն</th>
+                                    <th class="col-sm-5" style="text-align:center;">Անվանում</th>
+                                    <th class="col-sm-1" style="text-align:center;">ՀՀՎՀ</th>
+                                    <th class="col-sm-2" style="text-align:center;">Անձնագիր</th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <div id="customersDiv" class="div-table-content " style="max-height:100px; min-height:100px;border: gray 1px solid; ">
+                            <table class="table table-condensed table-hover" style="background-color:white">
+                                <tbody>
+                                    <tr ng-if="leasingCustomersList.length!=0" ng-repeat="leasingCustomer in leasingCustomersList" style="font-size:9pt; cursor:pointer;height:20px;" ng-class="{'selected':$index == selectedCustomerRow}" ng-click="setClickedCustomer($index)">
+                                        <td class="col-sm-12">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-2 nonUnicodeText">
+                                                    {{::leasingCustomer.CustomerNumber}}
+                                                </div>
+                                                <div class="col-sm-3 nonUnicodeText">
+                                                    {{::leasingCustomer.Name}} &nbsp; {{::leasingCustomer.LastName}}
+                                                </div>
+                                                <div class="col-sm-3 nonUnicodeText">
+                                                    {{::leasingCustomer.OrganizationName}}
+                                                </div>
+                                                <div class="col-sm-2 nonUnicodeText" style="text-align:right">
+                                                    {{::leasingCustomer.TaxCode}}
+                                                </div>
+
+                                                <div class="col-sm-2 nonUnicodeText" style="text-align:right">
+                                                    {{::leasingCustomer.PassportNumber}}
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="leasingCustomersList.length==0">
+                                        <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <div class="" style="padding-left:13px;padding-right:13px; position: relative">
+            <section class="panel panel-success" style="border-color:white">
+                <div class="panel-body">
+                    <div style="overflow:auto;margin-top:-5px;margin-left:-5px ">
+                        <div ng-class="(isLoanSelected==true || isLoanSelected==undefined)?'leasingHeader':'errorLeasingHeader'" style="line-height: 20px;font-size: 13px;">
+                            <span ng-if="isLoanSelected==true || isLoanSelected==undefined"> Վարկեր</span>
+                            <span ng-if="isLoanSelected==false">Վարկը ընտրված չէ</span>
+                        </div>
+
+                       
+                       <div class="div-table-content " style="max-height:120px; min-height:120px;border: gray 1px solid;margin-top:5px; overflow: hidden; ">
+                            <table class="table table-condensed table-hover" style="background-color:white">
+                                <thead>
+                                    <tr class="product-container-header" style="font-size:8pt;height:20px; display: table; table-layout: fixed;">
+                                        <th class="col-sm-1" style="text-align:center;">Պայմ.համար</th>
+                                        <th class="col-sm-2" style="text-align:center;">Պայմ.գումար</th>
+                                        <th class="col-sm-1" style="text-align:center;">Արժույթ</th>
+                                        <th class="col-sm-2" style="text-align:center;">Սկիզբ</th>
+                                        <th class="col-sm-2" style="text-align:center;">Վերջ</th>
+                                        <th class="col-sm-1" style="text-align:center;width:90px!important">Մարման ա/թ</th>
+                                        <th class="col-sm-2" style="text-align:center;">Ժ/անց ա/թ</th>
+                                        <th class="col-sm-1" style="text-align:center;width:110px!important">Կարգավիճակ</th>
+                                        <th class="col-sm-1">  </th>
+                                    </tr>
+                                </thead>
+                                <tbody style=" overflow-y:scroll;overflow-x:hidden;display:block; height: 85px;">
+                                    <tr ng-repeat="customerLoan in leasingCustomerLoans" style="font-size:9pt; cursor:pointer;height:20px; text-align: center; " ng-class="{'selected':$index == selectedLeasingLoanRow}" ng-click="setClickedLoan($index)" ng-dblclick="selectLeasingLoan()">
+                                        <td class=" nonUnicodeText col-sm-1">{{::customerLoan.GeneralNumber}}</td>
+                                        <td class=" nonUnicodeText col-sm-2"> {{::customerLoan.StartCapital |number:2 }}</td>
+                                        <td class=" nonUnicodeText col-sm-1" style="text-align:left;">  {{::customerLoan.Currency}}</td>
+                                        <td class=" nonUnicodeText col-sm-2" style="text-align:center;"> {{::customerLoan.StartDate | mydate | date: 'dd/MM/yyyy'  }}</td>
+                                        <td class=" nonUnicodeText col-sm-2" style="text-align:center;">{{::customerLoan.EndDate | mydate | date: 'dd/MM/yyyy' }}</td>
+                                        <td class=" nonUnicodeText col-sm-1" style="text-align:center;width:90px!important"> {{::customerLoan.NextRepaymentDate | mydate | date: 'dd/MM/yyyy' }}</td>
+                                        <td class=" nonUnicodeText col-sm-2" style="text-align:center;"> {{::customerLoan.OverdueLoanDate | mydate | date: 'dd/MM/yyyy' }}</td>
+                                        <td class=" nonUnicodeText col-sm-1" style="text-align:center;width:110px!important">  {{::customerLoan.QualityDescription}}</td>
+
+
+                                        <td class="col-sm-1 click_toggle" context="contextLeasingDetails" id="contextMenu">
+                                            <div id="contextMenu"></div>
+
+                                        </td>
+
+                                    </tr>
+                                    <tr ng-if="leasingCustomerLoans.length==0">
+                                        <td colspan="5" style="text-align:center">Ցուցադրման ենթակա տվյալներ չկան</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             <ul id="contextLeasingDetails" class="dropdown-menu">
+                <li class=" root-menu-item-3"><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={loanFullNumber:loanFullN,dateOfBeginning:beginningDate,leasingContractNumber:contractNum}; openWindow('/Leasing/LeasingDetailedInformation','Մանրամասն տվյալներ','LeasingDetailedInfoForm');">Մանրամասն</a></li>
+                <li class=" root-menu-item-3"><a href="" style="color: black;text-decoration:none!important ;" ng-click="check()">Լիզինգի գրաֆիկ</a></li>
+            </ul>
+
+        </div>
+
+
+        <div class="" style="padding-left:15px;padding-right:19px;margin-bottom:10px;">
+            <section class="panel panel-success">
+                <div class="panel-body">
+                    <div class="col-sm-5 row">
+                        <div class="product-detail-row">
+                            <div class="product-detail-cell product-detail-lable">Կանխավճար</div>
+                            <div class="product-detail-cell product-detail-value" style="text-align: right;">{{advanceAmount| number:2}} </div>
+                        </div>
+                        <div class="product-detail-row">
+                            <div class="product-detail-cell product-detail-lable">Միջնորդավճար</div>
+                            <div class="product-detail-cell product-detail-value" style="text-align: right;">{{feeAmount| number:2}} </div>
+                        </div>
+                        <div class="product-detail-row">
+                            <div class="product-detail-cell product-detail-lable">Լիզինգի վճարում</div>
+                            <div class="product-detail-cell product-detail-value" style="text-align: right;">{{leasingPayment |number:2}}</div>
+                        </div>
+                        <div class="product-detail-row" ng-if="$root.SessionProperties.AdvancedOptions['showLeasingInsurancePayment']=='1'">
+                            <div class="product-detail-cell product-detail-lable">Ապահովագրավճար</div>
+                            <div class="product-detail-cell product-detail-value" style="text-align: right;">{{insurancePayments |number:2}} </div>
+                        </div>
+                        <div class="product-detail-row">
+                            <div class="product-detail-cell product-detail-lable">Այլ պարտավորություններ</div>
+                            <div class="product-detail-cell product-detail-value" style="text-align: right;">{{otherPayments |number:2}} </div>
+                        </div>
+
+                        <div class="product-detail-row">
+                            <div class="product-detail-cell product-detail-lable">Ընդամենը՝</div>
+                            <div class="product-detail-cell product-detail-value" style="font-weight:bold;text-align: right;">{{totalAmount |number:2}} </div>
+                        </div>
+                    </div>
+                        <div class="col-sm-7 row">
+                            <div class="col-sm-6">
+                                <label style="font-weight:normal;margin-left:5px">Նկաագրություն</label>
+                                <div class="row-no-margin" style="min-width:260px;height:73px">
+                                    <textarea class="form-control" readonly="readonly" disabled="disabled" style="text-align:left;height:65px;font-size:9pt;"> {{description}} </textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label style="font-weight:normal;margin-left:30px">Լրացուցիչ նկաագրություն</label>
+                                <div class="row-no-margin" style="min-width:260px;margin-left:26px!important">
+                                    <textarea class="form-control" style="text-align:left;height:65px;font-size:9pt;" data-ng-model="addDescription"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 row">
+                            <div style="">
+                                <button type="button" class="btn btn-primary" ng-click="selectLeasingLoan();" style="padding:2px 4px;margin-top:2px">&nbsp;Հաստատել</button>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2 row">
+                            <div style="">
+                                <button type="button" class="btn btn-default" ng-click="closeSearchLeasingCustomersModal();" style="padding:2px 4px;margin-top:2px">&nbsp;Հրաժարվել</button>
+                            </div>
+                        </div>
+
+                    </div>
+               </section>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

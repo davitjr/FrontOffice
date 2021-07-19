@@ -1,0 +1,41 @@
+﻿
+@{
+    Layout = null;
+}
+<form ng-show="false">
+    <div class="menu-bar dialog-menu light-green">
+    </div>
+    <div>
+    </div>
+</form>
+<form style="width:600px;" ng-controller="ClaimCtrl" ng-show="problemLoanCalculationsDetail && tax" ng-init="getTax(tax.ClaimNumber,tax.EventNumber);getProblemLoanCalculationsDetail(tax.ClaimNumber,tax.EventNumber)">
+
+    <div class="col-sm-6 product-detail-lable">Փոխանցման ա/թ</div>
+    <div class="col-sm-6 product-detail-lable">{{tax.TransferRegistrationDate | mydate | date: 'dd/MM/yyyy'}}</div>
+    <div class="col-sm-6 product-detail-lable">Կարգավիճակ</div>
+    <div class="col-sm-6 product-detail-lable">{{tax.QualityDescription}}</div>
+    <div class="col-sm-6 product-detail-lable">Հաշվարկված գումար</div>
+    <div class="col-sm-6 product-detail-lable">{{tax.Amount | number:2}} AMD</div>
+    <div class="col-sm-6 product-detail-lable">Վարկի մնացորդ</div>
+    <div class="col-sm-6 product-detail-lable">{{problemLoanCalculationsDetail.CurrentCapital | number:2}} {{loan.Currency}}</div>
+    <div class="col-sm-6 product-detail-lable">Ժամկետանց գումար</div>
+    <div class="col-sm-6 product-detail-lable">{{problemLoanCalculationsDetail.OverdueCapital | number:2}} {{loan.Currency}}</div>
+    <div class="col-sm-6 product-detail-lable">Կուտակված տոկոս</div>
+    <div class="col-sm-6 product-detail-lable">{{problemLoanCalculationsDetail.CurrentRateValue | number:2}} {{loan.Currency}}</div>
+    <div class="col-sm-6 product-detail-lable">Ժամկետանց տոկոս</div>
+    <div class="col-sm-6 product-detail-lable">{{problemLoanCalculationsDetail.InpaiedRestOfRate | number:2}} {{loan.Currency}}</div>
+    <div class="col-sm-6 product-detail-lable">Տուգանային տոկոս</div>
+    <div class="col-sm-6 product-detail-lable">{{problemLoanCalculationsDetail.PenaltyRate | number:2}} {{loan.Currency}}</div>
+    <div class="col-sm-6 product-detail-lable">Տուժանք</div>
+    <div class="col-sm-6 product-detail-lable">{{problemLoanCalculationsDetail.PenaltyAdd | number:2 }} {{loan.Currency}}</div>
+    <div class="col-sm-6 product-detail-lable">Սպասարկման վճար</div>
+    <div class="col-sm-6 product-detail-lable">{{problemLoanCalculationsDetail.CurrentFee | number:2 }} {{loan.Currency}}</div>
+    <div class="col-sm-6 product-detail-lable">Տոկոսի հաշվարկի վերջին ա/թ</div>
+    <div class="col-sm-6 product-detail-lable">{{problemLoanCalculationsDetail.LastDateOfRateCalculation | mydate | date: 'dd/MM/yyyy'}}</div>
+    <div class="col-sm-6 product-detail-lable">Հաշվարկի փոխարժեք</div>
+    <div class="col-sm-6 product-detail-lable">{{problemLoanCalculationsDetail.Course | number:2}} {{loan.Currency}}</div>
+    <div class="col-sm-6 product-detail-lable">Ընդհանուր պարտք</div>
+    <div class="col-sm-6 product-detail-lable">{{problemLoanCalculationsDetail.DebtAmount | number:2}} {{loan.Currency}}</div>
+
+
+</form>

@@ -1,0 +1,208 @@
+﻿<style type="text/css">
+    #periodicDataChangeOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #periodicDataChangeOrderForm {
+        min-width: 500px;
+    }
+</style>
+<div id="periodicDataChangeOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="PeriodicTransferDataChangeOrderCtrl" name="periodicDataChangeOrderForm" id="periodicDataChangeOrderForm" role="form" style="min-width:650px;" novalidate class="form-horizontal" labels-required>
+    <div id="newaccount_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="periodicDataChangeOrderForm.$setSubmitted();periodicDataChangeOrderForm.$valid  && savePeriodicDataChangeOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('periodicDataChange')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+    <div class="col-sm-10">
+        <div class="form-group" ng-init="periodicorder.Amount=currentPeriodic.Amount">
+            <label class="tab_title col-sm-5" for="Amount">Ֆիքսված Գումար</label>
+            <div class="col-sm-6 row">
+                <div class="input-group col-sm-10">
+                    <span ng-if="periodicType !=1 && periodicType !=2" class="input-group-addon" style="width: 0;"><input type="checkbox" ng-model="periodicorder.ChargeType" name="amount" ng-change="periodicorder.Amount = periodicorder.ChargeType!=0 ? undefined : currentPeriodic.Amount;periodicorder.Fee=null" ng-true-value="0" ng-false-value="1"></span>
+                    <span ng-if="periodicType ==1 || periodicType == 2" class="input-group-addon" style="width: 0;"><input type="checkbox" ng-model="periodicorder.ChargeType" name="amount" ng-change="periodicorder.Amount = periodicorder.ChargeType!=0 ? undefined : currentPeriodic.Amount;periodicorder.Fee=null" ng-true-value="0" ng-false-value="2"></span>
+                    <input type="text" ng-disabled="periodicorder.ChargeType!=0" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' ng-model="periodicorder.Amount" name="amount" class="form-control tab_title" fcsa-number />
+                    <span class="input-group-addon" ng-disabled="periodicorder.ChargeType!=0" id="basic-addon2" style="width: 0;"> {{periodicorder.Currency!=undefind?periodicorder.Currency:'&nbsp;&nbsp;&nbsp;'}} </span>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="periodicDataChangeOrderForm.$submitted || periodicDataChangeOrderForm.amount.$dirty"
+                                 for="periodicDataChangeOrderForm.amount.$error">
+                        <ng-message when="required" class="errors">
+                            Գումար դաշտը լրացված չէ
+                        </ng-message>
+                        <ng-message when="fcsaNumber" class="errors">
+                            Գումարը սխալ է մուտքագրված
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="periodicType==1 || periodicType==2" ng-init="periodicorder.Currency=currentPeriodic.Currency">
+            <label class="tab_title col-sm-5" for="DepositCurrency">Արժույթը</label>
+            <div class="col-sm-6" data-ng-init="GetCurrencies()">
+                <div class="row">
+                    <select data-ng-model="periodicorder.Currency" name="Currency" id="Currency" class="form-control" required data-ng-options="k as v for (k,v) in currencies"></select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-init="periodicorder.ChargeType=currentPeriodic.ChargeType">
+            <label class="tab_title col-sm-5" ng-if="periodicType==1 || periodicType==2">Ամբողջ մնացորդը</label>
+            <div class="col-sm-6 row">
+                <label><input type="checkbox" ng-if="periodicType==1 || periodicType==2" ng-init="periodicorder.ChargeType!=0?periodicorder.Amount=0:periodicorder.Amount=currentPeriodic.Amount" ng-model="periodicorder.ChargeType" ng-change="periodicorder.Amount = periodicorder.ChargeType==2 ? undefined : currentPeriodic.Amount;getFee(periodic);periodicorder.MinAmountLevel=undefined;periodicorder.MaxAmountLevel=undefined;periodicorder.Fee=null;getPeriodicOrderFee()" ng-true-value="2" ng-false-value="0"></label>
+            </div>
+        </div>
+        <div class="form-group" ng-init="periodicorder.ChargeType=currentPeriodic.ChargeType">
+            <label class="tab_title col-sm-5" ng-if="periodicType!=1 && periodicType!=2">Ամբողջ պարտք</label>
+            <div class="col-sm-6 row">
+                <label><input type="checkbox" ng-if="periodicType!=1 && periodicType!=2" ng-init="periodicorder.ChargeType==1?periodicorder.Amount=0:periodicorder.Amount=currentPeriodic.Amount" ng-model="periodicorder.ChargeType" ng-change="periodicorder.Amount = periodicorder.ChargeType==1 ? undefined : currentPeriodic.Amount;getFee(periodic);periodicorder.MinAmountLevel=undefined;periodicorder.MaxAmountLevel=undefined;periodicorder.Fee=null;getPeriodicOrderFee()" ng-true-value="1" ng-false-value="0"></label>
+            </div>
+        </div>
+        <div class="form-group" ng-init="periodicorder.PartialPayment=currentPeriodic.PartialPaymentSign">
+            <label class="tab_title col-sm-5" ng-if="periodicType!=1 && periodicType!=2">Թույլատրել մասնակի վճարում</label>
+            <div class="col-sm-6 row">
+                <label><input type="checkbox" ng-if="periodicType!=1 && periodicType!=2" ng-model="periodicorder.PartialPayment" ng-true-value="1" ng-false-value="0"></label>
+            </div>
+        </div>
+        <div class="form-group" ng-if="periodicType!=100" ng-init="periodicorder.MinDebetAccountRest=currentPeriodic.MinDebetAccountRest">
+            <label class="tab_title col-sm-5">Թողնվող մնացորդը</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="text" fcsa-number onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' ng-model="periodicorder.MinDebetAccountRest" name="MinDebetAccountRest" style="text-align:right;" class="tab_title form-control" ng-pattern="/^\-?\d+((\.|\,)\d+)?$/" />
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="periodicDataChangeOrderForm.$submitted || periodicDataChangeOrderForm.MinDebetAccountRest.$dirty"
+                                 for="periodicDataChangeOrderForm.MinDebetAccountRest.$error">
+                        <ng-message when="fcsaNumber" class="errors">
+                            Գումարը սխալ է
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="periodicorder.ChargeType==2 && (periodicType==1 || periodicType==2)" ng-init="periodicorder.MinAmountLevel=currentPeriodic.MinAmountLevel">
+            <label class="tab_title col-sm-5">Նվազագույն գումար</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input ng-model="periodicorder.MinAmountLevel" name="MinAmountLevel" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' type="text" style="text-align:right;" class="tab_title form-control" fcsa-number />
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="periodicDataChangeOrderForm.$submitted || periodicDataChangeOrderForm.MinAmountLevel.$dirty"
+                                 for="periodicDataChangeOrderForm.MinAmountLevel.$error">
+                        <ng-message when="fcsaNumber" class="errors">
+                            Գումարը սխալ է
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="periodicorder.ChargeType==2" ng-init="periodicorder.MaxAmountLevel=currentPeriodic.MaxAmountLevel">
+            <label class="tab_title col-sm-5">Առավելագույն գումար</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' ng-model="periodicorder.MaxAmountLevel" name="MaxAmountLevel" type="text" style="text-align:right;" class="tab_title form-control" fcsa-number />
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="periodicDataChangeOrderForm.$submitted || periodicDataChangeOrderForm.MaxAmountLevel.$dirty"
+                                 for="periodicDataChangeOrderForm.MaxAmountLevel.$error">
+                        <ng-message when="fcsaNumber" class="errors">
+                            Գումարը սխալ է
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="periodicType!=1 && periodicType!=2 && periodicorder.ChargeType==1">
+            <label class="tab_title col-sm-5" ng-init="periodicorder.PayIfNoDebt=currentPeriodic.PayIfNoDebt.toString()">Վճարման տեսակ</label>
+            <div class="col-sm-6" data-ng-init="debtType()">
+                <div class="row">
+                    <select data-ng-model="periodicorder.PayIfNoDebt" class="form-control" name="PayIfNoDebt" required
+                            data-ng-options="k as v for (k,v) in debtTypes"></select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-init="periodicorder.CheckDaysCount=currentPeriodic.CheckDaysCount">
+            <label class="tab_title col-sm-5">Կատարման փորձի օրերի քանակ</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="number" required ng-model="periodicorder.CheckDaysCount" onkeypress='return event.charCode >= 48 && event.charCode <= 57' min="0" name="CheckDaysCount" style="text-align:right;" class="tab_title form-control" />
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="periodicDataChangeOrderForm.$submitted || periodicDataChangeOrderForm.CheckDaysCount.$dirty"
+                                 for="periodicDataChangeOrderForm.CheckDaysCount.$error">
+                        <ng-message when="required" class="errors">
+                            Ստուգման օրերի քանակը նշված չէ
+                        </ng-message>
+                        <ng-message when="min" class="errors">
+                            Ստուգման օրերի քանակը պետք է լինի դրական
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="tab_title col-sm-5">Պարբերականություն</label>
+            <div class="col-sm-6" data-ng-init="periodiclyType();periodicorder.Periodicity=currentPeriodic.Periodicity.toString()">
+                <div class="row">
+                    <select ng-disabled="periodicType!=1 && periodicType!=2" data-ng-model="periodicorder.Periodicity" class="form-control" name="periodicity" required
+                            data-ng-options="k as v for (k,v) in periodiclyTypes" ng-change="setCheckDaysCount()">
+                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք պարբերականությունը...</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="periodicDataChangeOrderForm.$submitted || periodicDataChangeOrderForm.periodicity.$dirty"
+                                 for="periodicDataChangeOrderForm.periodicity.$error">
+                        <ng-message when="required" class="errors">
+                            Պարբերականությունը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div ng-init="periodicorder.Description=currentPeriodic.Description">
+            <orderdescription operations="operations" disable="periodicType!=1 && periodicType!=2" description="periodicorder.Description" labeldescription="'Վճարման նպատակ'" formname="periodicOrderForm"></orderdescription>
+        </div>
+        <div class="form-group">
+            <label class="tab_title col-sm-5">Վերջ</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="date" name="LastOperationDate" id="LastOperationDate" ng-model="periodicorder.LastOperationDate" class="tab_title form-control" style="text-align:left" />
+                </div>
+                <div class="row">
+                    <ng-messages ng-if="periodicDataChangeOrderForm.$submitted || periodicDataChangeOrderForm.LastOperationDate.$dirty"
+                                 for="periodicDataChangeOrderForm.LastOperationDate.$error">
+                        <ng-message when="date" class="errors">
+                            Ամսաթիվը սխալ է
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

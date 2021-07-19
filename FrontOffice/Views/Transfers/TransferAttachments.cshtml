@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+ 
+<div ng-if="id" ng-controller="TransfersCtrl" ng-init="getTransferAttachmentInfo(id)">
+    {{hasAttachment}}
+    <div ng-if="attachment!= undefined && attachment.Id!= null" class="panel-group col-sm-12">
+        <div class="line_height my_text1">Կցված փաստաթղթեր</div>
+        <div class="well" style="margin-bottom:0px;">
+            <div>
+                <div class="my_label" style="padding:0">
+                    <a style="cursor:pointer" ng-click="getTransferAttachment(attachment.Id,attachment.FileExtension)">
+                        <img ng-if="attachment.FileExtension=='pdf'" align="left" ng-src="~/Content/Images/pdf.png" height="30" width="25" />
+                        <img ng-if="attachment.FileExtension !='pdf'" align="left" ng-src="~/Content/Images/jpg.png" height="30" width="25" />
+                        {{attachment.FileName}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

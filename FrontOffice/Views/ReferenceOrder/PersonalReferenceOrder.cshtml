@@ -1,0 +1,407 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    .chosen-container-multi .chosen-choices {
+        border-radius: 4px;
+    }
+
+    #referenceOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+<div id="referenceLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="ReferenceOrderCtrl" name="ReferenceOrderForm" id="referenceOrderForm" role="form" novalidate class="form-horizontal" labels-required ng-init="generateNewOrderNumber()" prevent-enter-submit>
+    <div id="newreference_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li ng-if="cashType == 14" class="root-menu-item-3 " ng-click="ReferenceOrderForm.$setSubmitted();ReferenceOrderForm.$valid && getReferenceOrderDetails()">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Հանձնարարական</span>
+            </li>
+            <li class="root-menu-item-6 " ng-click="ReferenceOrderForm.$setSubmitted();ReferenceOrderForm.$valid && referenceApplication()">
+                <span id="h-menu-item-6"><img id="h-menu-icon-6" class="h-menu-icon printButton">Դիմում</span>
+            </li>
+            <li class="root-menu-item-4 " ng-click="ReferenceOrderForm.$setSubmitted();reference.OnlySaveAndApprove = false; ReferenceOrderForm.$valid && saveReferenceOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li ng-if="$root.SessionProperties.AdvancedOptions['withCashRegister']=='1'&& $root.SessionProperties.AdvancedOptions['canSendToCashier']=='1'" class="root-menu-item-4 " ng-click="ReferenceOrderForm.$setSubmitted();reference.OnlySaveAndApprove = true; ReferenceOrderForm.$valid && saveReferenceOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ուղարկել դրամարկղ</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newreference')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+
+    <div>
+        <div style="max-width:560px">
+            <errors></errors>
+        </div>
+        <div class="col-sm-7">
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <input type="date" disabled="disabled" class="tab_title form-control unstyled" id="RegistrationDate" name="RegistrationDate" data-ng-model="reference.OperationDate" style="text-align:left" required>
+                    </div>
+                </div>
+
+            </div>
+           
+            <div class=" form-group" >
+                <label class="tab_title col-sm-5 " for="ReferenceReceiptType">
+                    Տեղեկանքի ստացման եղանակ<span class="redStyle">*</span>
+                </label>
+                <div class="col-sm-6" data-ng-init="getReferenceReceiptTypes()">
+                    <div class="row">
+                        <select data-ng-model="reference.ReferenceReceiptType" name="ReferenceReceiptType" id="ReferenceReceiptType" class="form-control"
+                                data-ng-options="k as v for (k,v) in ReferenceReceiptTypes" ng-change="changeFeeAmount()" required>
+                            <option value="" hidden>Ընտրեք տեսակը...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.ReferenceReceiptType.$dirty"
+                                     for="ReferenceOrderForm.ReferenceReceiptType.$error">
+                            <ng-message when="required" class="errors">
+                                Տեղեկանքի ստացման եղանակն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" form-group" ng-if="reference.ReferenceReceiptType == 3 ">
+                <label class="tab_title col-sm-5 " for="FullDeliveryAddress">
+                    Առաքման ամբողջական հասցե<span class="redStyle">*</span>
+                </label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <input type="text" class="tab_title form-control" id="DateFrom" name="DateFrom" ng-model="reference.FullDeliveryAddress" style="text-align:left" required>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.FullDeliveryAddress.$dirty"
+                                     for="ReferenceOrderForm.FullDeliveryAddress.$error">
+                            <ng-message when="required" class="errors">
+                                Առաքման ամբողջական հասցեն լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" form-group" ng-if="reference.ReferenceReceiptType == 3">
+                <label class="tab_title col-sm-5 " for="PassportDetails">
+                    Անձը հաստատող փաստաթուղթ<span class="redStyle">*</span>
+                </label>
+                <div class="col-sm-6" data-ng-init="getCustomerAllPassports()">
+                    <div class="row">
+                        <select data-ng-model="reference.PassportDetails" name="PassportDetails" id="PassportDetails" class="form-control"
+                                data-ng-options="k as v for (k,v) in customerAllPassports" required>
+                            <option value="" hidden>Ընտրեք Անձը հաստատող փաստաթուղթ...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.PassportDetails.$dirty"
+                                     for="ReferenceOrderForm.PassportDetails.$error">
+                            <ng-message when="required" class="errors">
+                                Անձը հաստատող փաստաթուղթն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class=" form-group" ng-if="reference.ReferenceReceiptType == 3">
+                <label class="tab_title col-sm-5 " for="PhoneNumber">
+                    Բջջային հեռախոսահամար<span class="redStyle">*</span>
+                </label>
+                <div class="col-sm-6" data-ng-init="getCustomerAllPhones()">
+                    <div class="row">
+                        <select data-ng-model="reference.PhoneNumber" name="PhoneNumber" id="PhoneNumber" class="form-control"
+                                data-ng-options="k as v for (k,v) in customerAllPhones" required>
+                            <option value="" hidden>Ընտրեք հեռախոսահամարը...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.PhoneNumber.$dirty"
+                                     for="ReferenceOrderForm.PhoneNumber.$error">
+                            <ng-message when="required" class="errors">
+                                Բջջային հեռախոսահամարն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class=" form-group">
+                <label class="tab_title col-sm-5" for="ReferenceType">Տեղեկանքի տեսակ</label>
+                <loading-control scopevariable="referenceTypes"></loading-control>
+
+                <div ng-show="referenceTypes" class="col-sm-6" data-ng-init="getReferenceTypes()">
+                    <div class="row">
+                        <select chosen multiple data-ng-model="reference.ReferenceTypes" name="ReferenceTypes" id="ReferenceTypes" class="form-control" required
+                                data-ng-options="referenceType.key as referenceType.value for referenceType in referenceTypes" data-placeholder="Ընտրեք տեսակը..." ng-change="showBlock(); getEmbassyList();onlyAm(); "></select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.ReferenceType.$dirty"
+                                     for="ReferenceOrderForm.ReferenceType.$error">
+                            <ng-message when="required" class="errors">
+                                Տեղեկանքի տեսակն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="reference.ReferenceTypes.indexOf(8) > -1" class="form-group">
+                <label class="tab_title col-sm-6">
+                    Այլ...
+                    <span class="redStyle">*</span>
+                </label>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-10 multiple_columns">
+                        <input type="text" class="form-control" id="otherType" name="otherType" data-ng-model="reference.OtherTypeDescription" required>
+                    </div>
+                    <div class="row col-sm-12">
+                        <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.otherType.$dirty"
+                                     for="ReferenceOrderForm.otherType.$error">
+                            <ng-message when="required" class="errors">
+                                Լրացրեք դաշտը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5">Այլ վավերապայմաններ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <textarea class="form-control" id="reference.Requisites" name="reference.Description" data-ng-model="reference.OtherRequisites"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="showBlock()">
+                <div class=" form-group">
+                    <label class="tab_title col-sm-5 " for="RegistrationDate">Շարժի սկզբնաժամկետ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <input type="date" class="tab_title form-control" id="DateFrom" name="DateFrom" ng-model="reference.DateFrom" style="text-align:left" required>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.DateFrom.$dirty"
+                                         for="ReferenceOrderForm.DateFrom.$error">
+                                <ng-message when="required" class="errors">
+                                    Ընտրեք շարժի սկզբնաժամկետ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+                <div class=" form-group">
+                    <label class="tab_title col-sm-5" for="RegistrationDate">Շարժի վերջնաժամկետ</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <input type="date" class="tab_title form-control" id="DateTo" name="DateTo" ng-model="reference.DateTo" style="text-align:left" required>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.DateTo.$dirty"
+                                         for="ReferenceOrderForm.DateTo.$error">
+                                <ng-message when="required" class="errors">
+                                    Ընտրեք շարժի վերջնաժամկետ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class="tab_title col-sm-5" for="Accounts">Հաշվեհամարները</label>
+                <loading-control scopevariable="accounts"></loading-control>
+                <div ng-show="accounts" class="my_title col-sm-6" data-ng-init="getAccounts()">
+                    <div class="row">
+                        <select chosen="" multiple="" name="Accounts" id="Accounts" data-ng-model="reference.Accounts" class="chosen-select col-sm-12" data-placeholder="Ընտրեք հաշվեհամարը..."
+                                data-ng-options="getAccountDesc(a) group by a.AccountTypeDescription for a in accounts" ng-required="accountsRequired()"></select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.Accounts.$dirty"
+                                     for="ReferenceOrderForm.Accounts.$error">
+                            <ng-message when="required" class="errors">
+                                Հաշվեհամարները ընտրված չեն
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            @*<div class="form-group">
+                    <label class="tab_title col-sm-6 " for="CreditLine">
+                        Տեղեկություն վարկային գծի վերաբերյալ
+                    </label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <input type="checkbox" class="form-control checkbox-inline" style="width:18px" id="CreditLine" name="CreditLine" data-ng-model="reference.IncludeCreditLine" ng-true-value="1" ng-false-value="0">
+                        </div>
+                        <div class="row" style="font-style: italic;">
+                            Միայն քարտային հաշվի դեպքում
+                        </div>
+                    </div>
+
+                </div>*@
+            <div class="row" ng-if="reference.ReferenceTypes != null" style="margin-bottom: 10px;">
+                <label class="tab_title col-sm-5 " for="ReferenceEmbassy">Ներկայացվելու է</label>
+                <loading-control scopevariable="embassyList"></loading-control>
+                <div ng-show="embassyList" class="col-sm-6">
+                    <div class="row">
+                        <select data-ng-model="reference.ReferenceEmbasy" name="ReferenceEmbasy" id="ReferenceEmbasy" class=" form-control"
+                                data-ng-options="a.id as a.desc for a in embassyList " required>
+                            <option value="" hidden>Ընտրեք վայրը...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.ReferenceEmbasy.$dirty"
+                                     for="ReferenceOrderForm.ReferenceEmbasy.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք տեղեկանքի ներկայացման վայրը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                    <div class="row" ng-if="reference.ReferenceEmbasy==27">
+                        <div>
+                            <textarea rows="2" class="form-control" id="ReferenceFor" name="ReferenceFor" data-ng-model="reference.ReferenceFor" style="margin-top: 10px;font-family:'Arial Armenian';resize:none" required></textarea>
+                        </div>
+                        <div>
+                            <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.ReferenceFor.$dirty"
+                                         for="ReferenceOrderForm.ReferenceFor.$error">
+                                <ng-message when="required" class="errors">
+                                    Մուտքագրեք ներկայացման վայրը
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class="tab_title col-sm-5 " for="ReferenceLanguage">Տեղեկանքի լեզու</label>
+                <loading-control scopevariable="languages"></loading-control>
+                <div ng-show="languages" class="col-sm-6" data-ng-init="getLanguages()">
+                    <div class="row">
+                        <select data-ng-model="reference.ReferenceLanguage" name="ReferenceLanguage" id="ReferenceLanguage" class="form-control"
+                                data-ng-options="k as v for (k,v) in languages" required ng-disabled="reference.ReferenceTypes == 9">
+                            <option value="" hidden>Ընտրեք լեզուն...</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.ReferenceLanguage.$dirty"
+                                     for="ReferenceOrderForm.ReferenceLanguage.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք տեղեկանքի լեզուն
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="tab_title col-sm-5" for="FilialList">Ստացման մ/ճ</label>
+                <loading-control scopevariable="filialList"></loading-control>
+                <div ng-show="filialList" class="col-sm-6" data-ng-init="getFilialList();getUserFilialCode()">
+                    <div class="row">
+                        <select data-ng-model="reference.ReferenceFilial" name="ReferenceFiliall" id="ReferenceFiliall" class="form-control"
+                                data-ng-options="filial.key as filial.value for  filial in filialList" required></select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.ReferenceFilial.$dirty"
+                                     for="ReferenceOrderForm.ReferenceFilial.$error">
+                            <ng-message when="required" class="errors">
+                                Ընտրեք մասնաճյուղը
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="feeAccount">Միջնորդավճարի գանձում</label>
+                <div class="col-sm-6 ">
+                    <div class="row">
+                        <select data-ng-model="cashType" name="Fee" id="Fee" class=" form-control" required>
+                            <option value="" hidden></option>
+                            <option value="15" selected="selected">Անկանխիկ</option>
+                            <option value="14" ng-if="$root.SessionProperties.SourceType == 2">Կանխիկ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="cashType==15">
+
+                @*<label class="tab_title col-sm-6 " for="feeAccount">Միջնորդավճարի գանձման հաշիվ</label>*@
+                @*<loading-control scopevariable="feeAccounts"></loading-control>*@
+                @*<div ng-show="feeAccounts" class="col-sm-6 " data-ng-init="getFeeAccounts()">
+                        <div class="row">
+                            <select data-ng-model="reference.FeeAccount" name="FeeAccount" id="FeeAccount" class=" form-control"
+                                    data-ng-options="a.AccountNumber+' '+a.Currency group by a.AccountTypeDescription for a in feeAccounts" ng-required="cashType==15">
+                                <option value="" hidden>Ընտրեք հաշվեհամարը...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.FeeAccount.$dirty"
+                                         for="ReferenceOrderForm.FeeAccount.$error">
+                                <ng-message when="required" class="errors">
+                                    Ընտրեք միջնորդավճարի գանձման հաշիվը
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>*@
+
+                <paymentaccount account="reference.FeeAccount"
+                                accounts="feeAccounts"
+                                accountselectname="feeAccount"
+                                check="cashType==15?0:1"
+                                data-ng-init="getFeeAccounts()"
+                                nameforaccount="'Միջնորդավճարի հաշիվ'"
+                                labels-required>
+                </paymentaccount>
+                <div class="row">
+                    <div class="col-sm-5"></div>
+                    <div class="row">
+                        <ng-messages ng-if="ReferenceOrderForm.$submitted || ReferenceOrderForm.feeAccount.$dirty"
+                                     for="ReferenceOrderForm.feeAccount.$error">
+                            <ng-message when="required" class="errors">
+                                Հաշիվը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-sm-11" style="text-align:right">
+                <div class="row ">
+                    <h5 style="font-weight:bold;">
+                        Միջնորդավճար` {{reference.FeeAmount}} AMD
+                    </h5>
+                    <input type="hidden" disabled="disabled" id="feeAmount" name="feeAmount" data-ng-model="reference.FeeAmount" class="tab_title form-control" required>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-sm-5">
+            <customerdebts showonlystrictdebts="true"></customerdebts>
+            <noncashopperson ng-if="cashType == 15" formname="ReferenceOrderForm" opperson="reference.OPPerson" accountnumber="reference.FeeAccount.AccountNumber"></noncashopperson>
+            <cashopperson ng-if="cashType == 14" formname="ReferenceOrderForm" opperson="reference.OPPerson"></cashopperson>
+        </div>
+    </div>
+
+</form>
+
+
+
+
+
