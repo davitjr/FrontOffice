@@ -1,4 +1,4 @@
-﻿app.controller("AccountStatementCtrl", ['$scope', 'accountService', '$location', '$filter', 'depositService', function ($scope, accountService, $location, $filter, depositService) {
+﻿app.controller("AccountStatementCtrl", ['$scope', 'accountService', '$location', '$filter', 'depositService', 'ReportingApiService', function ($scope, accountService, $location, $filter, depositService, ReportingApiService) {
 
     $scope.averageRest = 1;//տպելիս ներառել նաև միջին մնացորդը 1-չներառել, 2-ներառել
     $scope.currencyRegulation = 1;//տպելիս ներառել նաև կարգավորումները 1-չներառել, 2-ներառել 
@@ -43,14 +43,26 @@
     $scope.printAccountStatement = function (accountNumber, lang, exportFormat) {
          
         var Data = accountService.printAccountStatement(accountNumber, lang, $scope.dateFrom, $scope.dateTo, $scope.averageRest, $scope.currencyRegulation, $scope.payerData, $scope.additionalInformationByCB, exportFormat);
-
-        if (exportFormat == 'xls') {
-            ShowExcel(Data, 'AccountStatement');
-        }
-        else {
-            ShowPDF(Data);
-        }
-
+        Data.then(function (response) {
+            var format = 0;
+            if (exportFormat == 'xls') {
+                format = 2;
+            }
+            else {
+                format = 1;
+            }
+            var requestObj = { Parameters: response.data, ReportName: 152, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (exportFormat == 'xls') {
+                    ShowExcelReport(result, 'AccountStatement');
+                }
+                else {
+                    ShowPDFReport(result);
+                }
+            });
+        }, function () {
+            alert('Error printAccountStatement');
+        });
         
     };
 
@@ -68,13 +80,26 @@
     $scope.printAccountStatementNew = function (accountNumber, lang, exportFormat) {
 
         var Data = accountService.printAccountStatementNew(accountNumber, lang, $scope.dateFrom, $scope.dateTo, $scope.averageRest, $scope.currencyRegulation, $scope.payerData, $scope.additionalInformationByCB, exportFormat, $scope.includingExchangeRate);
-
-        if (exportFormat == 'xls') {
-            ShowExcel(Data, 'AccountStatement');
-        }
-        else {
-            ShowPDF(Data);
-        }
+        Data.then(function (response) {
+            var format = 0;
+            if (exportFormat == 'xls') {
+                format = 2;
+            }
+            else {
+                format = 1;
+            }
+            var requestObj = { Parameters: response.data, ReportName: 153, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (exportFormat == 'xls') {
+                    ShowExcelReport(result, 'AccountStatement');
+                }
+                else {
+                    ShowPDFReport(result);
+                }
+            });
+        }, function () {
+            alert('Error printAccountStatementNew');
+        });
 
 
     };
@@ -82,14 +107,26 @@
      $scope.printDepositStatement = function (appid,accountNumber, lang, exportFormat) {
          showloading();
          var Data = depositService.printDepositStatement(appid, accountNumber, lang, $scope.dateFrom, $scope.dateTo, $scope.averageRest, $scope.currencyRegulation, $scope.payerData, $scope.additionalInformationByCB, exportFormat, $scope.includingExchangeRate);
-
-        if (exportFormat == 'xls') {
-            ShowExcel(Data, 'DepositStatement');
-        }
-        else {
-            ShowPDF(Data);
-        }
-        
+         Data.then(function (response) {
+             var format = 0;
+             if (exportFormat == 'xls') {
+                 format = 2;
+             }
+             else {
+                 format = 1;
+             }
+             var requestObj = { Parameters: response.data, ReportName: 154, ReportExportFormat: format }
+             ReportingApiService.getReport(requestObj, function (result) {
+                 if (exportFormat == 'xls') {
+                     ShowExcelReport(result, 'DepositStatement');
+                 }
+                 else {
+                     ShowPDFReport(result);
+                 }
+             });
+         }, function () {
+             alert('Error printDepositStatement');
+         });
     };
 
     
@@ -97,6 +134,13 @@
     $scope.printMemorial = function (accountNumber, correct_mo) {
         
         var Data = accountService.printMemorial(accountNumber, $scope.dateFrom, $scope.dateTo, correct_mo);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 65, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error printMemorial');
+        });
     };
 }]);

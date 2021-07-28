@@ -418,7 +418,7 @@
         });
     }
     $scope.GetCardReceivingTypes = function () {
-        debugger;
+        
         var Data = infoService.GetCardReceivingTypes();
         Data.then(function (ref) {
             $scope.cardReceivingTypes = ref.data;

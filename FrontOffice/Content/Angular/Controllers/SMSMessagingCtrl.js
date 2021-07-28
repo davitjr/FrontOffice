@@ -1,4 +1,4 @@
-﻿app.controller('SMSMessagingCtrl', ['$scope', 'SMSMessagingService', 'casherService', '$filter', 'utilityService', 'dialogService', '$rootScope', 'infoService', '$uibModal', 'utilityService', '$confirm', function ($scope, SMSMessagingService, casherService, $filter, utilityService, dialogService, $rootScope, infoService, $uibModal, utilityService, $confirm) {
+﻿app.controller('SMSMessagingCtrl', ['$scope', 'SMSMessagingService', 'casherService', '$filter', 'utilityService', 'dialogService', '$rootScope', 'infoService', '$uibModal', '$confirm', 'ReportingApiService', function ($scope, SMSMessagingService, casherService, $filter, utilityService, dialogService, $rootScope, infoService, $uibModal, $confirm, ReportingApiService) {
     $rootScope.OpenMode = 6;
     $scope.searchParams = {
         RegistrationDate: null,
@@ -205,6 +205,13 @@
     $scope.SMSMessagingReport = function (id) {
         showloading();
         var Data = SMSMessagingService.SMSMessagingReport(id);
-        ShowExcel(Data, 'SMSMessagingReport');
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 89, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowExcelReport(result, 'SMSMessagingReport');
+            });
+        }, function () {
+            alert('Error SMSMessagingReport');
+        });
     };
 }]);

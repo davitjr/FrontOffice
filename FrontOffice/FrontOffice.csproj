@@ -262,6 +262,7 @@
     <Compile Include="Controllers\LeasingStatementSessionController.cs" />
     <Compile Include="Controllers\LoanDelayOrderController.cs" />
     <Compile Include="Controllers\LoanInterestRateConcessionController.cs" />
+    <Compile Include="Controllers\MRDataChangeOrderController.cs" />
     <Compile Include="Controllers\NonCreditLineCardReplaceOrderController.cs" />
     <Compile Include="Controllers\OperDayModeController.cs" />
     <Compile Include="Controllers\OperDayOptionsController.cs" />
@@ -309,6 +310,7 @@
     <Compile Include="Controllers\RemovalOrderController.cs" />
     <Compile Include="Controllers\RenewedCardAccountRegOrderController.cs" />
     <Compile Include="Controllers\ReplacedCardAccountRegOrderController.cs" />
+    <Compile Include="Controllers\SafekeepingItemController.cs" />
     <Compile Include="Controllers\SearchAccountsController.cs" />
     <Compile Include="Controllers\CreditLineController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
@@ -365,6 +367,7 @@
     <Compile Include="Controllers\UtilityPaymentController.cs" />
     <Compile Include="Controllers\VehicleViolationController.cs" />
     <Compile Include="Controllers\VirtualCardStatusChangeOrderController.cs" />
+    <Compile Include="Controllers\VisaAliasOrderController.cs" />
     <Compile Include="Controllers\XBUserGroupController.cs" />
     <Compile Include="CustomBinders\PlanningIndicatorDetailsBinder.cs" />
     <Compile Include="Filters\LoggingFilterAttribute.cs" />
@@ -491,7 +494,6 @@
     <Compile Include="Models\VisaAliasModels\UpdateAliasRequest.cs" />
     <Compile Include="Models\VisaAliasModels\VisaAliasHistory.cs" />
     <Compile Include="Models\VisaAliasModels\VisaAliasHistoryWithCard.cs" />
-    <Compile Include="Service\VisaAliasService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -564,6 +566,7 @@
     <Compile Include="Service\ProxyManager.cs" />
     <Compile Include="Service\ReportService.cs" />
     <Compile Include="Service\SMSMessagingService.cs" />
+    <Compile Include="Service\VisaAliasService.cs" />
     <Compile Include="Service\XBManagementService.cs" />
     <Compile Include="Service\XBService.cs">
       <SubType>Code</SubType>
@@ -609,7 +612,6 @@
     <Content Include="Content\Angular\Controllers\CardNotRenewOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\CardRegistrationOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\CardRenewOrderCtrl.js" />
-    <Content Include="Content\Angular\Controllers\CardReNewRePlaceOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\CardReOpenOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\CardServiceFeeGrafikDataChangeOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\CardStatementAdvertisementCtrl.js" />
@@ -687,6 +689,7 @@
     <Content Include="Content\Angular\Controllers\LoanEquipmentsCtrl.js" />
     <Content Include="Content\Angular\Controllers\LoanInterestRateConcessionCtrl.js" />
     <Content Include="Content\Angular\Controllers\LoanProductDataChangeOrderCtrl.js" />
+    <Content Include="Content\Angular\Controllers\MRDataChangeOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\NonCreditLineCardReplaceCtrl.js" />
     <Content Include="Content\Angular\Controllers\OperDayModeCtrl.js" />
     <Content Include="Content\Angular\Controllers\OperDayOptionsCtrl.js" />
@@ -702,6 +705,7 @@
     <Content Include="Content\Angular\Controllers\RemittanceCancellationOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\RenewedCardAccountRegOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\ReplacedCardAccountRegOrderCtrl.js" />
+    <Content Include="Content\Angular\Controllers\SafekeepingItemCtrl.js" />
     <Content Include="Content\Angular\Controllers\SwiftMessagesCtrl.js" />
     <Content Include="Content\Angular\Controllers\TokensDistributionCtrl.js" />
     <Content Include="Content\Angular\Controllers\HBTokenCtrl.js" />
@@ -797,7 +801,6 @@
     <Content Include="Content\Angular\Service\CardNotRenewOrderService.js" />
     <Content Include="Content\Angular\Service\CardRegistrationOrderService.js" />
     <Content Include="Content\Angular\Service\CardRenewOrderService.js" />
-    <Content Include="Content\Angular\Service\CardReNewRePlaceOrderService.js" />
     <Content Include="Content\Angular\Service\CardReOpenOrderService.js" />
     <Content Include="Content\Angular\Service\CardStatementAdvertisementService.js" />
     <Content Include="Content\Angular\Service\CardStatementSessionService.js" />
@@ -839,6 +842,7 @@
     <Content Include="Content\Angular\Service\LoanEquipmentsService.js" />
     <Content Include="Content\Angular\Service\LoanInterestRateConcessionService.js" />
     <Content Include="Content\Angular\Service\LoanProductDataChangeOrderService.js" />
+    <Content Include="Content\Angular\Service\MRDataChangeOrderService.js" />
     <Content Include="Content\Angular\Service\NonCreditLineCardReplaceService.js" />
     <Content Include="Content\Angular\Service\OperDayModeService.js" />
     <Content Include="Content\Angular\Service\OperDayOptionsService.js" />
@@ -855,6 +859,7 @@
     <Content Include="Content\Angular\Service\RenewedCardAccountRegOrderService.js" />
     <Content Include="Content\Angular\Service\ReplacedCardAccountRegOrderService.js" />
     <Content Include="Content\Angular\Service\ReportingApiService.js" />
+    <Content Include="Content\Angular\Service\SafekeepingItemService.js" />
     <Content Include="Content\Angular\Service\SwiftMessagesService.js" />
     <Content Include="Content\Angular\Service\TokensDistributionService.js" />
     <Content Include="Content\Angular\Service\HBTokenService.js" />
@@ -2900,76 +2905,6 @@
     <None Include="Service References\XBSInfo\XBInfoService8.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\XBS\ACBALibrary.ContactsChangingRiskDetails1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ACBALibrary.CustomerIdentificationAlgorithm.Models1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ACBALibrary1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\AcbaOnlineSecurityService.Helpers1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ACBAOperationService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\Arrays1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ARUSInfrastructure1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\CBDataService.PoliceViolations1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\CBDataService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBanking.UtilityPaymentsManagment1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBanking.XBManagement1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBanking1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBankingSecurityLibrary.PersonalAccountSecurity1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBankingSecurityLibrary.TokenOperations1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBankingSecurityLibrary1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBankingService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\InformationSecurityLibrary1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\SAPCRM1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\service1.wsdl" />
-    <None Include="Service References\XBS\service3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\service31.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\service32.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\System.Collections.Generic1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\System1.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\XBS\XBService.disco" />
     <None Include="Service References\XBS\configuration91.svcinfo" />
     <None Include="Service References\XBS\configuration.svcinfo" />
@@ -3013,6 +2948,7 @@
     <None Include="Service References\XBManagement\XBManagementService.disco" />
     <None Include="Service References\XBSInfo\XBInfoService2.disco" />
     <None Include="Service References\XBS\XBService1.disco" />
+    <None Include="Service References\XBS\XBService3.disco" />
     <Content Include="Views\Account\AccountDetails.cshtml" />
     <Content Include="Views\Account\Accounts.cshtml" />
     <Content Include="Views\Account\AccountStatement.cshtml" />
@@ -3901,6 +3837,7 @@
     <None Include="Service References\XBS\XBService29.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\XBS\XBService3.wsdl" />
     <None Include="Service References\XBS\XBService3.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -3961,10 +3898,73 @@
     <None Include="Service References\XBS\XBService6.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\XBS\XBService69.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\XBS\XBService7.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\XBS\XBService70.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService71.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService72.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService73.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService74.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService75.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService76.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService77.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService78.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService79.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\XBS\XBService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService80.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService81.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService82.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService83.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService84.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService85.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService86.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService87.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService88.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService89.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\XBS\XBService9.xsd">
@@ -3972,9 +3972,32 @@
     </None>
     <Content Include="Views\CardRenewOrder\CardRenewOrder.cshtml" />
     <Content Include="Views\CardRenewOrder\CardRenewOrderDetails.cshtml" />
+    <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrder.cshtml" />
+    <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrderDetails.cshtml" />
+    <None Include="Service References\XBS\XBService90.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService91.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\Card\CardRetainHistory.cshtml" />
+    <Content Include="Views\SafekeepingItem\SafekeepingItemDetails.cshtml" />
+    <Content Include="Views\SafekeepingItem\SafekeepingItems.cshtml" />
     <Content Include="Views\Card\VisaAlias.cshtml" />
     <Content Include="Views\Card\VisaAliasDataChange.cshtml" />
     <Content Include="Views\Card\VisaAliasOrderDetails.cshtml" />
+    <None Include="Service References\XBS\XBService92.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService93.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService94.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService95.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web References\ReportingRS1001\ReportExecution2005.wsdl" />
     <None Include="Web.SQL2016Profile.config">
       <SubType>Designer</SubType>

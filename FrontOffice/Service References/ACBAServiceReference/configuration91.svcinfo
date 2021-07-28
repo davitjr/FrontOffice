@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="Db1nbDZjZzosBWIUp8zsLvnMDu/VdIUpH/fJZuQwvPU=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="HvPBHpaabUElHrMZrafxhpq//+CDF08xaem+FpQsfpQ=">
   <bindingConfigurations>
-    <bindingConfiguration bindingType="netTcpBinding" name="IACBAOperationService2">
+    <bindingConfiguration bindingType="netTcpBinding" name="IACBAOperationService1">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IACBAOperationService2</serializedValue>
+          <serializedValue>IACBAOperationService1</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -829,7 +829,7 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="IACBAOperationService1" contract="ACBAServiceReference.IACBAOperationService" bindingType="netTcpBinding" address="net.tcp://webc021.acbaca.local:8080/OperationService.svc/AcbaOperation" bindingConfiguration="IACBAOperationService2">
+    <endpoint name="IACBAOperationService1" contract="ACBAServiceReference.IACBAOperationService" bindingType="netTcpBinding" address="net.tcp://webc021.acbaca.local:8080/OperationService.svc/AcbaOperation" bindingConfiguration="IACBAOperationService1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>net.tcp://webc021.acbaca.local:8080/OperationService.svc/AcbaOperation</serializedValue>
@@ -841,7 +841,7 @@
           <serializedValue>netTcpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IACBAOperationService2</serializedValue>
+          <serializedValue>IACBAOperationService1</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>ACBAServiceReference.IACBAOperationService</serializedValue>

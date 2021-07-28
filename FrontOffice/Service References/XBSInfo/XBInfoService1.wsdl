@@ -474,6 +474,12 @@
   <wsdl:message name="IXBInfoService_GetCurrentPhone_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCurrentPhoneResponse" />
   </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetCustomerEmailByCardNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerEmailByCardNumber" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetCustomerEmailByCardNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerEmailByCardNumberResponse" />
+  </wsdl:message>
   <wsdl:message name="IXBInfoService_SMSTypeAndValue_InputMessage">
     <wsdl:part name="parameters" element="tns:SMSTypeAndValue" />
   </wsdl:message>
@@ -491,6 +497,12 @@
   </wsdl:message>
   <wsdl:message name="IXBInfoService_IsCardOpen_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsCardOpenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetCommissionNonCollectionReasons_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCommissionNonCollectionReasons" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetCommissionNonCollectionReasons_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCommissionNonCollectionReasonsResponse" />
   </wsdl:message>
   <wsdl:message name="IXBInfoService_GetInsuranceTypes_InputMessage">
     <wsdl:part name="parameters" element="tns:GetInsuranceTypes" />
@@ -1801,6 +1813,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetCurrentPhone" message="tns:IXBInfoService_GetCurrentPhone_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetCurrentPhoneResponse" message="tns:IXBInfoService_GetCurrentPhone_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetCustomerEmailByCardNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetCustomerEmailByCardNumber" message="tns:IXBInfoService_GetCustomerEmailByCardNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetCustomerEmailByCardNumberResponse" message="tns:IXBInfoService_GetCustomerEmailByCardNumber_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="SMSTypeAndValue">
       <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/SMSTypeAndValue" message="tns:IXBInfoService_SMSTypeAndValue_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/SMSTypeAndValueResponse" message="tns:IXBInfoService_SMSTypeAndValue_OutputMessage" />
@@ -1812,6 +1828,10 @@
     <wsdl:operation name="IsCardOpen">
       <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/IsCardOpen" message="tns:IXBInfoService_IsCardOpen_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/IsCardOpenResponse" message="tns:IXBInfoService_IsCardOpen_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCommissionNonCollectionReasons">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetCommissionNonCollectionReasons" message="tns:IXBInfoService_GetCommissionNonCollectionReasons_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetCommissionNonCollectionReasonsResponse" message="tns:IXBInfoService_GetCommissionNonCollectionReasons_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetInsuranceTypes">
       <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetInsuranceTypes" message="tns:IXBInfoService_GetInsuranceTypes_InputMessage" />
@@ -3145,6 +3165,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetCustomerEmailByCardNumber">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetCustomerEmailByCardNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="SMSTypeAndValue">
       <soap12:operation soapAction="http://tempuri.org/IXBInfoService/SMSTypeAndValue" style="document" />
       <wsdl:input>
@@ -3165,6 +3194,15 @@
     </wsdl:operation>
     <wsdl:operation name="IsCardOpen">
       <soap12:operation soapAction="http://tempuri.org/IXBInfoService/IsCardOpen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCommissionNonCollectionReasons">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetCommissionNonCollectionReasons" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -4705,11 +4743,11 @@
   </wsdl:binding>
   <wsdl:service name="XBInfoService">
     <wsdl:port name="IExternalOperationInfoService" binding="tns:IExternalOperationInfoService">
-      <soap12:address location="net.tcp://ws0004706.acbaca.local/ExternalBankingService/XBInfoService.svc/ExternalOperationInfoService" />
+      <soap12:address location="net.tcp://ws0007903.acbaca.local/ExternalBankingService/XBInfoService.svc/ExternalOperationInfoService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://ws0004706.acbaca.local/ExternalBankingService/XBInfoService.svc/ExternalOperationInfoService</wsa10:Address>
+        <wsa10:Address>net.tcp://ws0007903.acbaca.local/ExternalBankingService/XBInfoService.svc/ExternalOperationInfoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>Davit.Jraghatspanyan@acbaca.local</Upn>
+          <Upn>Remi.Safary@acbaca.local</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

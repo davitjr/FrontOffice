@@ -72,7 +72,7 @@ namespace FrontOffice.Controllers
             return Json(XBService.GetCBKursForDate(Convert.ToDateTime(date), currency), JsonRequestBehavior.AllowGet);
         }
 
-        public void GetLoanGrafikApplication(string loanFullNumber, DateTime startDate)
+        public JsonResult GetLoanGrafikApplication(string loanFullNumber, DateTime startDate)
         {
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
 
@@ -83,12 +83,12 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "calculationStartDate", value: XBService.GetCurrentOperDay().Date.ToString("dd/MMM/yy"));
             parameters.Add(key: "Language_id", value: "0");
 
-            ReportService.GetLoanGrafikApplication(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
 
         //OLD VERSION
-        public void PrintLoanStatement(string accountNumber, string dateFrom, string dateTo)
+        public JsonResult PrintLoanStatement(string accountNumber, string dateFrom, string dateTo)
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -99,11 +99,11 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "end_date", value: Convert.ToDateTime(dateTo).ToString("dd/MMM/yy"));
             parameters.Add(key: "filial_code", value: currentUser.filialCode.ToString());
 
-            ReportService.LoanStatement(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
 
-        public void PrintLoanStatementNew(string accountNumber, string dateFrom, string dateTo, ulong productId, ushort lang, string exportFormat = "pdf")
+        public JsonResult PrintLoanStatementNew(string accountNumber, string dateFrom, string dateTo, ulong productId, ushort lang, string exportFormat = "pdf")
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -116,7 +116,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "lang_id", value: lang.ToString());
             parameters.Add(key: "Product_id", value: productId.ToString());
 
-            ReportService.LoanStatementNew(parameters, ReportService.GetExportFormatEnumeration(exportFormat));
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult LoanStatement()
@@ -190,14 +190,14 @@ namespace FrontOffice.Controllers
         {
             return View("GoodsDetails");
         }
-        public void PrintNotMaturedLoans()
+        public JsonResult PrintNotMaturedLoans()
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
             parameters.Add(key: "filialCode", value: "0");
             parameters.Add(key: "customerNumber", value: customerNumber.ToString());
 
-            ReportService.NotMaturedLoans(parameters, ExportFormat.PDF);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult LoanInterestRateChangeHistory()

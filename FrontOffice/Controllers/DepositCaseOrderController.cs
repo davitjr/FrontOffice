@@ -140,7 +140,7 @@ namespace FrontOffice.Controllers
         }
 
 
-        public void PrintOrder(xbs.DepositCaseOrder order)
+        public JsonResult PrintOrder(xbs.DepositCaseOrder order)
         {
             ulong customerNumber = 0;
             customerNumber = XBService.GetAuthorizedCustomerNumber();
@@ -188,7 +188,8 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "Quantity", value: "1");
             parameters.Add(key: "TransactionNumber", value: "0");
             parameters.Add(key: "RePrint", value: "0");
-            ReportService.GetPrixRasxOperations(parameters);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
     }
 }

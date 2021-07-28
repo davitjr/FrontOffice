@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="EQISO7AxHXbZ5hoJSLBc0GONejRXFLXpwMIp5y0f4Nk=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="gM8S9BM9z0NGPMrTQP73mdQ/Q6v62Uz58XWy7Db1M6U=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="netTcpBinding" name="IExternalOperationService2">
       <properties>
@@ -121,10 +121,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="IExternalOperationService1" contract="XBS.IXBService" bindingType="netTcpBinding" address="net.tcp://localhost/ExternalBankingService/XBService.svc/ExternalOperationService" bindingConfiguration="IExternalOperationService2">
+    <endpoint name="IExternalOperationService" contract="XBS.IXBService" bindingType="netTcpBinding" address="net.tcp://ws0004706.acbaca.local/ExternalBankingService/XBService.svc/ExternalOperationService" bindingConfiguration="IExternalOperationService2">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://localhost/ExternalBankingService/XBService.svc/ExternalOperationService</serializedValue>
+          <serializedValue>net.tcp://ws0004706.acbaca.local/ExternalBankingService/XBService.svc/ExternalOperationService</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -196,7 +196,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IExternalOperationService1</serializedValue>
+          <serializedValue>IExternalOperationService</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

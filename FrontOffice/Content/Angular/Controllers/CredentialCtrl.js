@@ -1,4 +1,4 @@
-﻿app.controller("CredentialCtrl", ['$scope', 'credentialService', 'credentialOrderService', '$location', '$confirm', 'dialogService', 'infoService', '$http', '$filter', 'paymentOrderService', 'feeForServiceProvidedOrderService', '$uibModal', 'customerService', 'casherService', function ($scope, credentialService, credentialOrderService, $location, $confirm, dialogService, infoService, $http, $filter, paymentOrderService, feeForServiceProvidedOrderService, $uibModal, customerService, casherService) {
+﻿app.controller("CredentialCtrl", ['$scope', 'credentialService', 'credentialOrderService', '$location', '$confirm', 'dialogService', 'infoService', '$http', '$filter', 'paymentOrderService', 'feeForServiceProvidedOrderService', '$uibModal', 'customerService', 'casherService', 'ReportingApiService', function ($scope, credentialService, credentialOrderService, $location, $confirm, dialogService, infoService, $http, $filter, paymentOrderService, feeForServiceProvidedOrderService, $uibModal, customerService, casherService, ReportingApiService) {
     $scope.filter = 1;
   
     $scope.QualityFilter = function () {
@@ -434,7 +434,14 @@
             isCopy = false;
 
         var Data = credentialService.getFeeForCredentialActivationOrderDetails($scope.order, isCopy);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getFeeForCredentialActivationOrderDetails');
+        });
 
     };
 

@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/InformationSecurityLibrary" />
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
-  <xs:import schemaLocation="" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/SAPCRM" />
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAccountSecurity" />
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.CustomerIdentificationAlgorithm.Models" />
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails" />
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/System" />
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/ACBAOperationService" />
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/CBDataService" />
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/CBDataService.PoliceViolations" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/InformationSecurityLibrary" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/SAPCRM" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAccountSecurity" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.CustomerIdentificationAlgorithm.Models" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/System" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/ACBAOperationService" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/CBDataService" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/CBDataService.PoliceViolations" />
   <xs:element name="AutorizeUser">
     <xs:complexType>
       <xs:sequence>
@@ -167,6 +167,22 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="CheckAnalyserPermissionsResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefineCustomerLinkType">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="documentNumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="customerType" type="xs:int" />
+        <xs:element minOccurs="0" name="socialNumber" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefineCustomerLinkTypeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DefineCustomerLinkTypeResult" type="xs:short" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1167,6 +1183,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetCustomerBirthDate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="customerNumber" type="xs:unsignedLong" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCustomerBirthDateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetCustomerBirthDateResult" nillable="true" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="InsertCustomer">
     <xs:complexType>
       <xs:sequence>
@@ -1231,6 +1261,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="GetCustomerDescriptionResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCustomerDescriptionEnglish">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="customerNumber" type="xs:unsignedLong" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCustomerDescriptionEnglishResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetCustomerDescriptionEnglishResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2953,22 +2997,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q177="http://schemas.datacontract.org/2004/07/ACBALibrary" minOccurs="0" name="GetIdentifiedCustomerResult" nillable="true" type="q177:Customer" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="DefineCustomerLinkType">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="documentNumber" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="customerType" type="xs:int" />
-        <xs:element minOccurs="0" name="socialNumber" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="DefineCustomerLinkTypeResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="DefineCustomerLinkTypeResult" type="xs:short" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

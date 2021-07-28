@@ -1,4 +1,14 @@
-﻿<div class="col-md-12" ng-controller="AccountCtrl" style="min-width:500px;" ng-init="getAccountJointCustomers(accountNumber)">
+﻿<div class="col-md-12" ng-controller="AccountCtrl" style="min-width: 500px;max-width: 600px;" ng-init="checkCustomerIsThirdPerson();getAccountJointCustomers(accountNumber);getThirdPersonCustomerNumber();">
+    <div id="paymentOrderDetails_menu" class="menu-bar dialog-menu light-green" ng-show="rightsTransferVisibility">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4" ng-click="printThirdPersonAccountRightsTransfer();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="printButton h-menu-icon">Հայտարարություն</span>
+            </li>
+            <li class="root-menu-item-3" ng-click="saveTransferThirdPersonAccountRights();">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon" src="~/Content/Images/confirm.png" style="height: 30px;width:36px;margin-top: 6px;">Իրավունքի փոխանցում</span>
+            </li>
+        </ul>
+    </div>
     <div class="product-container" style="min-width:500px">
         <div class="header-title">
             Հաշվի մասնաբաժիններ

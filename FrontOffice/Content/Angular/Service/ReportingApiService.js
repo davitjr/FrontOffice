@@ -16,7 +16,8 @@
             },
             error: function (xhr) {
                 alert('Տեղի ունեցավ սխալ');
-            }
+            },
+            timeout: 100000
         });
     };  
 

@@ -81,11 +81,12 @@ namespace FrontOffice.Controllers
             return Json(XBService.GetDepositJointCustomers(productId), JsonRequestBehavior.AllowGet);
         }
 
-        public void DepositRepaymentsGrafik(string productId)
+        public JsonResult DepositRepaymentsGrafik(string productId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "app_id", value: productId);
-            ReportService.DepositRepaymentsGrafik(parameters);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public void DepositCloseApplication(string depositNumber)
@@ -101,7 +102,7 @@ namespace FrontOffice.Controllers
             ContractService.DepositCloseApplication(parameters);
         }
 
-        public void GetDepositContract(string depositNumber)
+        public void GetDepositContract(string depositNumber, string confirmationPerson)
         {
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
             string guid = Utility.GetSessionId();
@@ -112,6 +113,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "depositNumber", value: depositNumber);
             parameters.Add(key: "filialCode", value: filialCode);
             parameters.Add(key: "HbDocID", value: "0");
+            parameters.Add(key: "confirmationPerson", value: confirmationPerson);
 
             ContractService.GetDepositContract(parameters);
         }
@@ -121,7 +123,7 @@ namespace FrontOffice.Controllers
             return Json(XBService.GetDepositSource(productId), JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintDepositStatement(long productId, string accountNumber, ushort lang, string dateFrom, string dateTo, ushort averageRest, ushort currencyRegulation, ushort payerData, ushort additionalInformationByCB, ushort includingExchangeRate, string exportFormat = "pdf")
+        public JsonResult PrintDepositStatement(long productId, string accountNumber, ushort lang, string dateFrom, string dateTo, ushort averageRest, ushort currencyRegulation, ushort payerData, ushort additionalInformationByCB, ushort includingExchangeRate, string exportFormat = "pdf")
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -139,14 +141,16 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "averageRest", value: averageRest.ToString());
             parameters.Add(key: "currencyRegulation", value: currencyRegulation.ToString());
             parameters.Add(key: "includingExchangeRate", value: includingExchangeRate.ToString());
-            ReportService.DepositStatement(parameters, ReportService.GetExportFormatEnumeration(exportFormat));
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void DepositRepaymentsDetailedGrafik(string productId, ExportFormat exportFormat = ExportFormat.PDF)
+        public JsonResult DepositRepaymentsDetailedGrafik(string productId, ExportFormat exportFormat = ExportFormat.PDF)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "app_id", value: productId);
-            ReportService.DepositRepaymentsDetailedGrafik(parameters, exportFormat);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
         
 

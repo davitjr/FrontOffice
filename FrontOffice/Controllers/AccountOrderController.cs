@@ -120,7 +120,7 @@ namespace FrontOffice.Controllers
             ContractService.GetAccountReOpenApplication(parameters);
         }
 
-        public void GetAccountReOpenOrderDetails(xbs.AccountReOpenOrder order, bool isCopy = false)
+        public JsonResult GetAccountReOpenOrderDetails(xbs.AccountReOpenOrder order, bool isCopy = false)
         {
            
             string guid = Utility.GetSessionId();
@@ -149,7 +149,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "reg_Date", value: order.OperationDate.Value.ToString("dd/MMM/yy"));
             parameters.Add(key: "f_cashin", value: isCopy ? "True" : "False");
 
-            ReportService.GetCashInPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
 
         }

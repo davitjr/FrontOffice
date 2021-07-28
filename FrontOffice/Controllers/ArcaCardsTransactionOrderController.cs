@@ -51,7 +51,7 @@ namespace FrontOffice.Controllers
         }
 
         [ActionAccessFilter(actionType = ActionType.ArcaCardsTransactionOrdersReport)]
-        public void GetArcaCardsTransactionOrdersReport(xbs.SearchOrders searchParams)
+        public JsonResult GetArcaCardsTransactionOrdersReport(xbs.SearchOrders searchParams)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
 
@@ -62,7 +62,8 @@ namespace FrontOffice.Controllers
             param.Add(key: "setNumber", value: searchParams.RegisteredUserID.ToString());
             param.Add(key: "customerNumber", value: searchParams.CustomerNumber.ToString());
             param.Add(key: "cardNumber", value: searchParams.CardNumber);
-            ReportService.GetArcaCardsTransactionsReport(param);
+
+            return Json(param, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetPreviousBlockUnblockOrderComment(string cardNumber)

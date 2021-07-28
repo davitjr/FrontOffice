@@ -149,7 +149,7 @@ namespace FrontOffice.Controllers
             ContractService.GetOnlineDeactivateRequestLegal(parameters);
         }
          
-        public void PrintOnlineContractPhysical(int filialCode,string contractNumber,DateTime contractDate)
+        public void PrintOnlineContractPhysical(int filialCode,string contractNumber,DateTime contractDate, string confirmationPerson)
         {
 
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
@@ -159,12 +159,12 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "FilialCode", value: filialCode.ToString());
             parameters.Add(key: "ContractNumber", value: contractNumber);
             parameters.Add(key: "ContractDate", value: contractDate.ToString("dd/MMM/yy"));
-
+            parameters.Add(key: "confirmationPerson", value: confirmationPerson);
 
             ContractService.GetOnlineContractPhysical(parameters);
         }
          
-        public void PrintOnlineContractLegal(int filialCode)
+        public void PrintOnlineContractLegal(int filialCode, string confirmationPerson)
         {
 
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
@@ -172,10 +172,11 @@ namespace FrontOffice.Controllers
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "CustomerNumber", value: customerNumber.ToString());
             parameters.Add(key: "FilialCode", value: filialCode.ToString());
+            parameters.Add(key: "confirmationPerson", value: confirmationPerson);
             ContractService.GetOnlineContractLegal(parameters);
         }
 
-        public void PrintOnlineAgreementPhysical(int filialCode)
+        public void PrintOnlineAgreementPhysical(int filialCode, string confirmationPerson)
         {
 
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
@@ -183,10 +184,11 @@ namespace FrontOffice.Controllers
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "CustomerNumber", value: customerNumber.ToString());
             parameters.Add(key: "FilialCode", value: filialCode.ToString());
+            parameters.Add(key: "confirmationPerson", value: confirmationPerson);
             ContractService.GetOnlineAgreementPhysical(parameters);
         }
 
-        public void PrintOnlineAgreementLegal(int filialCode)
+        public void PrintOnlineAgreementLegal(int filialCode, string confirmationPerson)
         {
 
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
@@ -194,6 +196,7 @@ namespace FrontOffice.Controllers
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "CustomerNumber", value: customerNumber.ToString());
             parameters.Add(key: "FilialCode", value: filialCode.ToString());
+            parameters.Add(key: "confirmationPerson", value: confirmationPerson);
             ContractService.GetOnlineAgreementLegal(parameters);
         }
     }

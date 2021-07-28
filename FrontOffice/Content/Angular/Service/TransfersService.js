@@ -150,7 +150,6 @@
         var response = $http({
             method: "post",
             url: "/Transfers/PrintTransfer",
-            responseType: 'arraybuffer',
             dataType: "json",
             params: {
                 transferID: transferID
@@ -165,8 +164,6 @@
         var response = $http({
             method: "post",
             url: "/Transfers/PrintPaidTransfers",
-
-            responseType: 'arraybuffer',
             dataType: "json",
             params: {
                 startDate: startDate,
@@ -184,8 +181,6 @@
         var response = $http({
             method: "post",
             url: "/Transfers/PrintBankMailTransfers",
-
-            responseType: 'arraybuffer',
             dataType: "json",
             params: {
                 startDate: startDate,

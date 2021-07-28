@@ -70,7 +70,7 @@ namespace FrontOffice.Controllers
         {
             return Json(XBService.GetCrossConvertationVariant(debitCurrency, creditCurrency));
         }
-        public void PrintInternationalPaymentOrder(xbs.InternationalPaymentOrder paymentOrder)
+        public JsonResult PrintInternationalPaymentOrder(xbs.InternationalPaymentOrder paymentOrder)
         {
 
 
@@ -163,7 +163,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "FileName", value: "InternationalTransferApplicationForm");
             parameters.Add(key: "AmountInDebetCurrency", value: AmountInDebetCurrency);
 
-            ReportService.GetInternationalTransferApplicationForm(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetOperationSystemAccountForFee(xbs.InternationalPaymentOrder orderForFee, short feeType)

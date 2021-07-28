@@ -36,7 +36,6 @@
         var response = $http({
             method: "post",
             url: "/ReceivedBankMailTransfers/PrintTransfer",
-            responseType: 'arraybuffer',
             params: {
                 Id: Id
             },

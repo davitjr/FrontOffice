@@ -1,4 +1,4 @@
-﻿app.controller("DepositCaseCtrl", ['$scope', 'depositCaseService', 'infoService', 'casherService', 'depositCaseOrderService', '$http', '$confirm', 'customerService', '$state', 'orderService', function ($scope, depositCaseService, infoService, casherService, depositCaseOrderService, $http, $confirm, customerService, $state, orderService) {
+﻿app.controller("DepositCaseCtrl", ['$scope', 'depositCaseService', 'infoService', 'casherService', 'depositCaseOrderService', '$http', '$confirm', 'customerService', '$state', 'orderService', 'ReportingApiService', function ($scope, depositCaseService, infoService, casherService, depositCaseOrderService, $http, $confirm, customerService, $state, orderService, ReportingApiService) {
 
     $scope.filter = 1;
 
@@ -167,8 +167,15 @@
                 Data.then(function (nmb) {
                     $scope.order.OrderNumber = nmb.data;
                      showloading();
-                     var Data = depositCaseOrderService.printOrder($scope.order);
-                     ShowPDF(Data);
+                    var Data = depositCaseOrderService.printOrder($scope.order);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 81, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error printOrder');
+                    });
                });
 
                });

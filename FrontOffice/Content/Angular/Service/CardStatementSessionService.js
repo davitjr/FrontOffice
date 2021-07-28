@@ -122,7 +122,6 @@
         var response = $http({
             method: "post",
             url: "/CardStatementSession/PrintCardSessionStatements",
-            responseType: 'arraybuffer',
             params: {
                 sessionID: sessionID,
                 statementSendStatus: statementSendStatus,
@@ -140,7 +139,6 @@
         var response = $http({
             method: "post",
             url: "/CardStatementSession/PrintLoanSessionStatements",
-            responseType: 'arraybuffer',
             params: {
                 sessionID: sessionID,
                 statementSendStatus: statementSendStatus,

@@ -27,8 +27,8 @@
             showloading();
             $scope.error = null;
             $scope.order.ProductID = productID;
-
-
+            $scope.order.isArmenia = $scope.Tuple.m_Item2;
+            $scope.order.MobilePhone = $scope.Tuple.m_Item1;
             var Data = PlasticCardSMSServiceOrderService.saveAndApprovePlasticCardSMSServiceOrder($scope.order);
             Data.then(function (res) {
                 if (validate($scope, res.data)) {
@@ -114,9 +114,9 @@
         var Data = PlasticCardSMSServiceOrderService.GetCurrentPhone(cardNumber);
         Data.then(function (res) {
             $scope.CurrentPhone = res.data;
-            $scope.isMainPhone = (!($scope.MobilePhones.find(phone => phone == ($scope.CurrentPhone.toString()) && ($scope.CurrentPhone))));
+            $scope.isMainPhone = (!($scope.MobilePhones.some(phone => phone.m_Item1 == ($scope.CurrentPhone.toString()) && ($scope.CurrentPhone))));
             if ($scope.MobilePhones.length == 1) {
-                $scope.order.MobilePhone = $scope.MobilePhones[0];
+                $scope.Tuple = $scope.MobilePhones[0];
                 $scope.IsDisableMobilePhone = true;
             }
         }, function () {
@@ -140,6 +140,16 @@
     //});
 
     $scope.Actions = function () {
+        if (lastAction == 2) {
+            $scope.MobilePhones = MobilePhonesReserve;
+            if ($scope.MobilePhones.length == 1) {
+                $scope.Tuple = $scope.MobilePhones[0];
+            }
+
+        }
+        if ($scope.MobilePhones.length > 1) {
+            $scope.IsDisableMobilePhone = false;
+        }
         if ($scope.order.OperationType == 3) {
             $scope.SMSTypeAndValue($scope.cardNumber);
         }
@@ -158,24 +168,19 @@
                     $scope.IsDisableSum = true;
                     $scope.IsDisableMobilePhone = true;
                     if (($scope.order.Card.MainCardNumber != "" && ($scope.order.Card.MainCardNumber != $scope.order.Card.CardNumber)) || ($scope.order.Card.CardType).includes('BUSINESS')) {
-                        $scope.MobilePhones = [""];
-                        $scope.order.MobilePhone = $scope.MobilePhones[0];
+                        $scope.Tuple = { m_Item1: "", m_Item2: "" };
                     }
                 }
                 else {
-                    if (lastAction == 2) {
-                        $scope.MobilePhones = MobilePhonesReserve;
-                        //$scope.order.MobilePhone = $scope.MobilePhones[0];
-                    }
                     $scope.order.SMSFilter = '';
                     $scope.IsDisableSmsType = false;
                     $scope.IsDisableSum = false;
-                    //$scope.IsDisableMobilePhone = false;
                     if ($scope.MobilePhones.length > 1) {
                         $scope.IsDisableMobilePhone = false;
                     }
                 }
         lastAction = $scope.order.OperationType;
+
     }, function () {
         alert('Error Actions');
     };

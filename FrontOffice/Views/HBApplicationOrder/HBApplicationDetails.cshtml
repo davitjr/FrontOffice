@@ -19,7 +19,7 @@
         <ul id="menu" class="dialog-menu">
             <li ng-if="isHBApplicationUpdated==true" ng-controller="PopUpCtrl" ng-click="saveHBApplicationOrder()">
                 <span><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել փոփոխությունները</span>
-            </li> 
+            </li>
             <li ng-if="$root.SessionProperties.CustomerType!=6 && (hbApplication.Quality==3 || hbApplication.Quality==5)" ng-click="printOnlineRequestLegal()">
                 <span><img id="h-menu-icon-4" class="applicationButton h-menu-icon">Տրամադրման դիմում</span>
             </li>
@@ -40,6 +40,15 @@
             </li>
             <li ng-if="$root.SessionProperties.CustomerType!=6 && (hbApplication.Quality==3 || hbApplication.Quality==5)" ng-click="printOnlineAgreementLegal()">
                 <span><img id="h-menu-icon-4" class="applicationButton h-menu-icon">Համաձայնագիր</span>
+            </li>
+            <li ng-if="hbApplication.Quality==3 || hbApplication.Quality==5">
+                <span>
+                    <select title="Ստորագրող անձ" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-ng-model="confirmationPerson" style="max-width:150px;height:30px" name="ConfirmationPerson" id="h-menu-item-5" ng-change="confirmationPersons(confirmationPerson)">
+                        <option value="1">մասնաճյուղի աշխատակից</option>
+                        <option value="2">կառավարիչ</option>
+                        <option value="3">կառավարչի տեղակալ</option>
+                    </select>
+                </span>
             </li>
         </ul>
     </div>

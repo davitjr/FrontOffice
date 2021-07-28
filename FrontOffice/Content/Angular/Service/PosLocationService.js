@@ -48,7 +48,6 @@
          var response = $http({
              method: "post",
              url: "/PosLocation/PrintPosStatement",
-             responseType: 'arraybuffer',
              params: {
                  accountNumber: accountNumber,
                  dateFrom: dateFrom,

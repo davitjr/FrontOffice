@@ -98,7 +98,6 @@
         var response = $http({
             method: "post",
             url: "/DepositCaseOrder/PrintOrder",
-            responseType: 'arraybuffer',
             data: JSON.stringify(order),
             dataType: "json",
         });

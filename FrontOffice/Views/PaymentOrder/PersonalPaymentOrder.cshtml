@@ -26,7 +26,7 @@
 <div id="paymentLoad" class="overlay hidden">
     <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
 </div>
-<form data-ng-init="!periodic || periodic==2?getFeeAccounts(1,2):''" style="min-width:650px" name="paymentOrderForm" id="paymentOrderForm" role="form" class="form-horizontal" novalidate prevent-enter-submit labels-required>
+<form data-ng-init="!periodic || periodic==2?getFeeAccounts(1,2):'';getRejectFeeTypes();" style="min-width:650px" name="paymentOrderForm" id="paymentOrderForm" role="form" class="form-horizontal" novalidate prevent-enter-submit labels-required>
     <div ng-show="!periodic" id="paymentorder_menu" class="menu-bar dialog-menu light-green">
         <ul ng-if="!periodic" id="menu" class="dialog-menu">
             <li class="root-menu-item-3 " ng-if="orderType != 83 && orderType!=122" ng-click="paymentOrderForm.$setSubmitted();paymentOrderForm.$valid ? getPersonalPaymentOrderDetails() : showValidationMessage();">
@@ -402,7 +402,10 @@
                 <label class="tab_title col-sm-5 " for="DescriptionForRejectFeeType">Չգանձման պատճառ <span class="redStyle">*</span> </label>
                 <div class="col-sm-6">
                     <div class="row">
-                        <textarea rows="3" required style="text-align:left" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="order.DescriptionForRejectFeeType" id="DescriptionForRejectFeeType" name="DescriptionForRejectFeeType" class="form-control tab_title"></textarea>
+                        <select data-ng-model="order.RejectFeeType" name="DescriptionForRejectFeeType" class="form-control"
+                                data-ng-options="k as v for (k,v) in rejectFeeTypes">
+                            <option value="" hidden="hidden" style="margin-left:25px">{{rejectFeeTypes[0]}}</option>
+                        </select>
                     </div>
                     <div class="row">
                         <ng-messages ng-if="paymentOrderForm.$submitted || paymentOrderForm.DescriptionForRejectFeeType.$dirty"

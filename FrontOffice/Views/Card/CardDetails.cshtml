@@ -11,8 +11,8 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 </head>
 
-<div ng-controller="CardCtrl" data-ng-init="getCard(productId); getCardApplicationTypes();getCardStatus(productId);getPlasticCard(productId);getCardUSSDService(productId);getCard3DSecureService(productId)" id="cardDetails">
-    <div id="carddetails_menu" class="menu-bar dialog-menu light-green details-menu">
+<div ng-controller="CardCtrl" data-ng-init="getCard(productId); getCardApplicationTypes();getCardStatus(productId);getPlasticCard(productId);getCardUSSDService(productId);getCard3DSecureService(productId);getUserFilialCode()" id="cardDetails">
+    <div id="carddetails_menu" class="menu-bar dialog-menu light-green details-menu" style="width:100%">
         <ul id="menu" class="dialog-menu">
             <li class="root-menu-item-4 " ng-if="card.ClosingDate==null">
                 <span id="h-menu-item-4" onclick="return false;">
@@ -207,6 +207,16 @@
                 </ul>
             </li>
 
+            <li class="root-menu-item-5 " ng-if="card.ClosingDate==null">
+                <span id="h-menu-item-5" onclick="return false;">
+                    <select title="Ստորագրող անձ" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-ng-model="confirmationPerson" style="max-width:150px;height:30px" name="ConfirmationPerson" id="h-menu-item-5" ng-change="confirmationPersons(confirmationPerson)">
+                        <option value="1" ng-show="confirmationPersonsFirstValueVisibility">մասնաճյուղի աշխատակից</option>
+                        <option value="2">կառավարիչ</option>
+                        <option value="3">կառավարչի տեղակալ</option>
+                    </select>
+                </span>
+            </li>
+
         </ul>
         <div id="right-menu" style="display:none;">
         </div>
@@ -292,7 +302,7 @@
             <div class="product-detail-cell product-detail-lable">Բլոկավորման պատճառ</div>
             <div class="product-detail-cell product-detail-value">{{AllReasonsForCardTransactionAction[order.ActionReasonId]}}</div>
         </div>
-        <div class="product-detail-row" ng-if="card" ng-init="getCardMotherName(card.ProductId)">
+        <div class="product-detail-row" ng-if="card && ($root.SessionProperties.CustomerType != 6 || UserFilialCode == 22000)" ng-init="getCardMotherName(card.ProductId)">
             <div class="product-detail-cell product-detail-lable">Գաղտնաբառ</div>
             <div class="product-detail-cell product-detail-value">{{cardMotherName==null?'Բացակայում է':cardMotherName}}</div>
         </div>
@@ -379,7 +389,7 @@
 
     </div>
     <creditlinedebt ng-if="card.CreditLine!=null && update==false" creditline="card.CreditLine" card="card"></creditlinedebt>
-    <div class="bhoechie-tab-container" style="max-height:80%;" id="cardDetailsContainer">
+    <div  class="bhoechie-tab-container" style="max-height:80%;" id="cardDetailsContainer">
         <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
             <div class="list-group">
                 <div class="list-group-item text-center active">Քաղվածք</div>
@@ -398,9 +408,10 @@
                 <div class="list-group-item text-center">Դասակարգում</div>
                 <div class="list-group-item text-center"><span>Կցված թոքեններ</span></div>
                 <div class="list-group-item text-center"><span>Առգրավման պատմություն</span></div>
-                <div class="list-group-item text-center" ng-click="GetVisaAliasHistory(card.CardNumber)"><span>Կցված բջջ. հեռ.ներ</span></div>
+                <div class="list-group-item text-center"  ng-show="card.CardSystem == 4 || card.CardSystem == 5"  ng-click="GetVisaAliasHistory(card.CardNumber)"><span>Կցված բջջ. հեռ.ներ</span></div>
 
             </div>
+          
         </div>
         <div class="bhoechie-tab" style="width: calc(100% - 140px); display: inline-block;">
             <div class="bhoechie-tab-content active" ng-if="card">
@@ -425,7 +436,7 @@
                 <cardservicefee ng-if="card" cardclosingdate="card.ClosingDate" cardnumber="card.CardNumber" relatedofficenumber="card.RelatedOfficeNumber" cardtype="card.Type" productid="card.ProductId"></cardservicefee>
             </div>
             <div class="bhoechie-tab-content" ng-show="card && (card.Type==20 || card.Type==41 || card.Type == 40|| card.Type == 23)  && card.MainCardNumber==''" style="padding-top:0px;">
-                <membershiprewards ng-if="card && (card.Type==20 || card.Type==41 || card.Type == 40|| card.Type == 23)  && card.MainCardNumber==''" cardtype="card.Type" cardnumber="card.CardNumber" productid="card.ProductId" closingdate="card.ClosingDate"></membershiprewards>
+                <membershiprewards ng-if="card && (card.Type==20 || card.Type==41 || card.Type == 40|| card.Type == 23)  && card.MainCardNumber==''" cardtype="card.Type" cardnumber="card.CardNumber" productid="card.ProductId" closingdate="card.ClosingDate" accountnumber="card.CardAccount.AccountNumber" currency="card.Currency"></membershiprewards>
             </div>
             <div class="bhoechie-tab-content" ng-show="card && (card.Type==23 || card.Type==34 || card.Type==50 || card.Type==40) && card.ClosingDate==null" style="padding-top:15px;">
                 <div class="product-detail-row" ng-if="card && (card.Type==23 || card.Type==34 || card.Type==50 || card.Type==40) && card.ClosingDate==null" ng-init="getCardCashbackAccount(card.ProductId)">

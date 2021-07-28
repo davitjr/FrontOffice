@@ -51,7 +51,7 @@ namespace FrontOffice.Controllers
             return Json(order, JsonRequestBehavior.AllowGet);
         }
 
-        public void GetFeeForServiceProvidedOrderDetails(xbs.FeeForServiceProvidedOrder paymentOrder, bool isCopy = false)
+        public JsonResult GetFeeForServiceProvidedOrderDetails(xbs.FeeForServiceProvidedOrder paymentOrder, bool isCopy = false)
         {
            
             string guid = Utility.GetSessionId();
@@ -82,7 +82,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "reg_Date", value: paymentOrder.OperationDate.Value.ToString("dd/MMM/yy"));
             parameters.Add(key: "f_cashin", value: isCopy ? "True" : "False");
 
-            ReportService.GetCashInPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
 
         }

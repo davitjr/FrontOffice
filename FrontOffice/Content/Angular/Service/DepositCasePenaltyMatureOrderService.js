@@ -27,7 +27,6 @@
         var response = $http({
             method: "post",
             url: "/DepositCasePenaltyMatureOrder/GetCashInPaymentOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(order),
             dataType: "json",
             params: {

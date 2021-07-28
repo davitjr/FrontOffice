@@ -1724,13 +1724,6 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="CardReOpenOrder">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">244</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="BillSplit">
         <xs:annotation>
           <xs:appinfo>
@@ -1766,10 +1759,10 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="VisaAlias">
+      <xs:enumeration value="ThirdPersonAccountRightsTransfer">
         <xs:annotation>
           <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">250</EnumerationValue>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">251</EnumerationValue>
           </xs:appinfo>
         </xs:annotation>
       </xs:enumeration>
@@ -3724,19 +3717,6 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="RenewedCardAccountRegOrder" nillable="true" type="tns:RenewedCardAccountRegOrder" />
-  <xs:complexType name="VisaAliasOrder">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Order">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Alias" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CardType" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ReasonTypeDescription" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="RecipientPrimaryAccountNumber" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="VisaAliasOrder" nillable="true" type="tns:VisaAliasOrder" />
   <xs:complexType name="CardlessCashoutOrder">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Order">
@@ -4019,9 +3999,7 @@
           <xs:element minOccurs="0" name="LinkPaymentDescription" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="LinkURL" nillable="true" type="xs:string" />
           <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="PaymentSourceType" type="q13:LinkPaymentSourceType" />
-          <xs:element minOccurs="0" name="Photo" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ShortId" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="UserId" type="xs:double" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -4170,34 +4148,17 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="AccountRemovingOrder" nillable="true" type="tns:AccountRemovingOrder" />
-  <xs:complexType name="CardReOpenOrder">
+  <xs:complexType name="ThirdPersonAccountRightsTransferOrder">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Order">
         <xs:sequence>
-          <xs:element minOccurs="0" name="CardNumber" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CardType" type="xs:unsignedByte" />
-          <xs:element minOccurs="0" name="CardTypeDescription" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Filial" type="xs:int" />
-          <xs:element minOccurs="0" name="MainCardNumber" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="OrderName" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ProductID" type="xs:unsignedLong" />
-          <xs:element minOccurs="0" name="ReopenDescription" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ReopenReason" type="xs:unsignedShort" />
-          <xs:element minOccurs="0" name="ReopenReasonString" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="SetNumber" type="xs:unsignedShort" />
+          <xs:element minOccurs="0" name="JointAccount" nillable="true" type="tns:Account" />
+          <xs:element minOccurs="0" name="ThirdPersonCustomerNumber" type="xs:unsignedLong" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="CardReOpenOrder" nillable="true" type="tns:CardReOpenOrder" />
-  <xs:complexType name="CardHolderAndCardType">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="CardHolderFirsName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CardHolderLastName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CardTypeDescription" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="CardHolderAndCardType" nillable="true" type="tns:CardHolderAndCardType" />
+  <xs:element name="ThirdPersonAccountRightsTransferOrder" nillable="true" type="tns:ThirdPersonAccountRightsTransferOrder" />
   <xs:complexType name="CancelDelayOrder">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Order">

@@ -65,7 +65,6 @@
        var response = $http({
            method: "post",
            url: "/CardTariffContract/PrintCardTarifContract",
-           responseType: 'arraybuffer',
            params: {
                tarifID: tarifID,
            }

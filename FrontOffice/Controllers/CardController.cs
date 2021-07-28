@@ -9,9 +9,8 @@ using System.Web.SessionState;
 using System.Web.UI;
 using FrontOffice.Models;
 using FrontOffice.ACBAServiceReference;
-using FrontOffice.Models.VisaAliasModels;
 using System.Threading.Tasks;
-using System.Net.Http;
+using FrontOffice.Models.VisaAliasModels;
 
 namespace FrontOffice.Controllers
 {
@@ -98,12 +97,17 @@ namespace FrontOffice.Controllers
         /// <param name="cardNumber">Քարտի համար</param>
         public JsonResult GetCardApplicationDetails(short applicationID, string cardNumber)
         {
+            ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
+            byte customerType = ACBAOperationService.GetCustomerType(customerNumber);
+
+            string value = XBService.GetCustomerEmailByCardNumber(cardNumber); ;
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "cardNumber", value: cardNumber);
             //3DSecure ակտիվացման միմումի համար
             if (applicationID == 18)
             {
-                parameters.Add(key: "email", value: "");
+                parameters.Add(key: "email", value: value);
             }
             return Json(parameters, JsonRequestBehavior.AllowGet);
         }
@@ -112,13 +116,13 @@ namespace FrontOffice.Controllers
 
 
         //[FrontLoggingFilterAttribute(ActionType =(int) ActionType.CardStatementPrint)]
-        public void PrintCardStatement(XBS.Card card, string dateFrom, string dateTo, int lang, string exportFormat = "pdf")
+        public JsonResult PrintCardStatement(XBS.Card card, string dateFrom, string dateTo, int lang, string exportFormat = "pdf")
         {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
             if (XBService.AccountAccessible(card.CardAccount.AccountNumber, currentUser.AccountGroup))
             {
-                Dictionary<string, string> parameters = new Dictionary<string, string>();
                 parameters.Add(key: "card", value: card.CardNumber);
                 parameters.Add(key: "start_date", value: Convert.ToDateTime(dateFrom).ToString("dd/MMM/yy"));
                 parameters.Add(key: "end_date", value: Convert.ToDateTime(dateTo).ToString("dd/MMM/yy"));
@@ -127,8 +131,9 @@ namespace FrontOffice.Controllers
                 string statementGuid = Guid.NewGuid().ToString().Replace("-", "");
 
                 parameters.Add(key: "guid", value: statementGuid);
-                ReportService.CardStatement(parameters, ReportService.GetExportFormatEnumeration(exportFormat));
             }
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetCardServiceFee(ulong productId)
@@ -148,10 +153,6 @@ namespace FrontOffice.Controllers
             return PartialView("CardPositiveRate");
         }
 
-        public ActionResult VisaAlias()
-        {
-            return PartialView("VisaAlias");
-        }
 
         /// <summary>
         /// Ստանում է քարտային դիմումների և պայմանագրերի տեսակները
@@ -253,17 +254,19 @@ namespace FrontOffice.Controllers
         /// ՊՔ պայմանագիր
         /// </summary>
         /// <param name="productId">Քարտի app_id</param>
-        public void GetCardContractDetails(ulong productId)
+        public void GetCardContractDetails(ulong productId, string confirmationPerson)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "appID", value: productId.ToString());
+            parameters.Add(key: "confirmationPerson", value: confirmationPerson);
             ContractService.GetCardContractDetails(parameters);
         }
 
-        public void GetCardContractDetailsForBusinessCards(ulong productId)
+        public void GetCardContractDetailsForBusinessCards(ulong productId, string confirmationPerson)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "appID", value: productId.ToString());
+            parameters.Add(key: "confirmationPerson", value: confirmationPerson);
             ContractService.GetCardContractDetailsForBusinessCards(parameters);
         }
 
@@ -379,16 +382,6 @@ namespace FrontOffice.Controllers
             return PartialView("VirtualCardHistory");
         }
 
-        public ActionResult VisaAliasDataChange()
-        {
-            return PartialView("VisaAliasDataChange");
-        }
-
-        public ActionResult VisaAliasOrderDetails()
-        {
-            return PartialView("VisaAliasOrderDetails");
-        }
-
         public JsonResult GetVirtualCards(ulong productID)
         {
             string jsonResult = Utility.DoPostRequestJson(Newtonsoft.Json.JsonConvert.SerializeObject(new { issuerCardRefId = productID }), "getCardInfo", "CtokenURL", null);
@@ -462,6 +455,38 @@ namespace FrontOffice.Controllers
             }
             return Json(result);
         }
+        public ActionResult Validate3DSecureEmailForPrint(string cardNumber)
+        {
+            xbs.ActionResult result = new xbs.ActionResult();
+            string email = XBService.GetCustomerEmailByCardNumber(cardNumber);
+            if (email is null)
+            {
+                xbs.ActionError error = new xbs.ActionError();
+                error.Code = 599;
+                error.Description = "Հաճախորդը չունի գրանցված հիմնական էլ․ հասցե";
+                result.Errors = new List<xbs.ActionError>();
+                result.ResultCode = xbs.ResultCode.ValidationError;
+                result.Errors.Add(error);
+                return Json(result);
+            }
+
+            return Json(result);
+        }
+
+        public ActionResult VisaAlias()
+        {
+            return PartialView("VisaAlias");
+        }
+
+        public ActionResult VisaAliasDataChange()
+        {
+            return PartialView("VisaAliasDataChange");
+        }
+
+        public ActionResult VisaAliasOrderDetails()
+        {
+            return PartialView("VisaAliasOrderDetails");
+        }
 
         public async Task<JsonResult> GetVisaAliasHistory(string CardNumber)
         {
@@ -480,6 +505,5 @@ namespace FrontOffice.Controllers
         {
             return Json(XBService.VisaAliasOrderDetails(orderId), JsonRequestBehavior.AllowGet);
         }
-
     }
 }

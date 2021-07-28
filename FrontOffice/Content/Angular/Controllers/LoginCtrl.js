@@ -484,5 +484,32 @@ app.controller('LoginCtrl', ['$scope', '$rootScope', 'loginService', '$location'
         }
 
 
+
+
+        $scope.redirectToLoanManagementSystemAcra = function () {
+            $scope.acraMonitoringMember = $scope.$root.SessionProperties.AdvancedOptions["acraMonitoringMember"];
+            if ($scope.acraMonitoringMember == "1"){
+                $.ajax({
+                    type: "POST", data: {}, dataType: "json", url: "/LoanApplication/RedirectLoanManagementSystemAcraMonitoring",
+                    success: function (data) {
+                        window.location = data.redirectUrl + "?customerNumber=" + data.customerNumber + "&authorizedUserSessionToken=" + data.authorizedUserSessionToken + "&authorisedCustomerSessionId=" + data.authorisedCustomerSessionId;
+                    },
+                    error: function (xhr, status, error) {
+                        if (xhr.status == 500) {
+                            ShowMessage("Նշված գործողությունը հասանելի չէ:", "error");
+                        }
+                        else if (xhr.status == 411) {
+                            ShowMessage("Աշխատանքային սեսիան ավարտված է: Անհրաժեշտ է վերագրանցվել(մուտք գործել) ծրագիր:", "error");
+                        }
+                        else {
+                            ShowMessage("Տեղի ունեցավ սխալ։", "error");
+                        }
+                    }
+                });
+            }
+            else
+                ShowMessage('Հասանելի չէ։', 'information');
+        }
+
     }]);
 

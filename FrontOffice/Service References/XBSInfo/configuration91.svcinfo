@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="k28zZyHMz/wwYixK4TaWrjS9RUSUTlitoL5Fwdxp8vs=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="D6NlXfDhcWeR6fkRUdbINir6f9lhI8XxkEdw0+Y33r8=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="netTcpBinding" name="IExternalOperationInfoService">
       <properties>
@@ -121,10 +121,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="IExternalOperationInfoService" contract="XBSInfo.IXBInfoService" bindingType="netTcpBinding" address="net.tcp://ws0004706.acbaca.local/ExternalBankingService/XBInfoService.svc/ExternalOperationInfoService" bindingConfiguration="IExternalOperationInfoService">
+    <endpoint name="IExternalOperationInfoService" contract="XBSInfo.IXBInfoService" bindingType="netTcpBinding" address="net.tcp://ws0007903.acbaca.local/ExternalBankingService/XBInfoService.svc/ExternalOperationInfoService" bindingConfiguration="IExternalOperationInfoService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://ws0004706.acbaca.local/ExternalBankingService/XBInfoService.svc/ExternalOperationInfoService</serializedValue>
+          <serializedValue>net.tcp://ws0007903.acbaca.local/ExternalBankingService/XBInfoService.svc/ExternalOperationInfoService</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -151,7 +151,7 @@
           <serializedValue>System.ServiceModel.Configuration.UserPrincipalNameElement</serializedValue>
         </property>
         <property path="/identity/userPrincipalName/value" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>Davit.Jraghatspanyan@acbaca.local</serializedValue>
+          <serializedValue>Remi.Safary@acbaca.local</serializedValue>
         </property>
         <property path="/identity/servicePrincipalName" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.ServicePrincipalNameElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.ServicePrincipalNameElement</serializedValue>

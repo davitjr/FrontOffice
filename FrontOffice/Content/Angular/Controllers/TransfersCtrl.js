@@ -1,4 +1,4 @@
-﻿app.controller("TransfersCtrl", ['$scope', 'transfersService', 'infoService', 'utilityService', 'customerService', '$uibModal', '$filter', '$confirm', 'dialogService', 'casherService', '$rootScope', '$http', 'dateFilter', 'fastTransferPaymentOrderService', function ($scope, transfersService, infoService, utilityService, customerService, $uibModal, $filter, $confirm, dialogService, casherService, $rootScope, $http, dateFilter, fastTransferPaymentOrderService) {
+﻿app.controller("TransfersCtrl", ['$scope', 'transfersService', 'infoService', 'utilityService', 'customerService', '$uibModal', '$filter', '$confirm', 'dialogService', 'casherService', '$rootScope', '$http', 'dateFilter', 'fastTransferPaymentOrderService', 'ReportingApiService', function ($scope, transfersService, infoService, utilityService, customerService, $uibModal, $filter, $confirm, dialogService, casherService, $rootScope, $http, dateFilter, fastTransferPaymentOrderService, ReportingApiService) {
 
     $rootScope.OpenMode = 3;
     $scope.transferApproveOrder = {};
@@ -363,8 +363,14 @@
                         $scope.fastTransferOrderDetails.SenderDateOfBirth = $filter('mydate')($scope.fastTransferOrderDetails.SenderDateOfBirth, "dd/MM/yyyy");
 
                         var Data = fastTransferPaymentOrderService.printSTAKSendMoneyPaymentOrder($scope.fastTransferOrderDetails);
-
-                        ShowPDF(Data);
+                        Data.then(function (response) {
+                            var requestObj = { Parameters: response.data, ReportName: 157, ReportExportFormat: 1 }
+                            ReportingApiService.getReport(requestObj, function (result) {
+                                ShowPDFReport(result);
+                            });
+                        }, function () {
+                            alert('Error printFastTransferPaymentOrder');
+                        });
 
                     }, function () {
                         alert('Error printTransfer');
@@ -375,8 +381,31 @@
         }
         else {
             var Data = transfersService.printTransfer($scope.selectedTransferId);
+            Data.then(function (response) {
+                var reportId = 0;
+                var result = angular.fromJson(response.data.result);
+                var transfer = angular.fromJson(response.data.transfer);
+                if (transfer.TransferGroup == 3 && transfer.SendOrReceived == 1) {
 
-            ShowPDF(Data);
+                    reportId = 76;
+                }
+                else {
+                    if (transfer.TransferGroup == 1 || transfer.TransferGroup == 4) {
+                        reportId = 63;
+                    }
+                    else {
+                        if (transfer.TransferGroup == 3 || transfer.TransferSystem == 1) {
+                            reportId = 109;
+                        }
+                    }
+                }
+                var requestObj = { Parameters: result, ReportName: reportId, ReportExportFormat: 1 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowPDFReport(result);
+                });
+            }, function () {
+                alert('Error printTransfer');
+            });
         }
 
     };
@@ -832,8 +861,14 @@
 
         showloading();
         var Data = transfersService.printPaidTransfers(startDate, endDate, transferSystem, filial);
-        //ShowPDF(Data);
-        ShowExcel(Data, 'SwiftTransferMessage');
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 113, ReportExportFormat: 2 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowExcelReport(result, 'SwiftTransferMessage');
+            });
+        }, function () {
+            alert('Error printPaidTransfers');
+        });
 
     };
 
@@ -866,8 +901,14 @@
 
         showloading();
         var Data = transfersService.printBankMailTransfers(startDate, endDate, receiverName, transferGroup, transferType, confirmationSetNumber, session, amount, confirmStatus, mainFilial);
-        //ShowPDF(Data);
-        ShowExcel(Data, 'BankMailTransfers');
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 114, ReportExportFormat: 2 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowExcelReport(result, 'BankMailTransfers');
+            });
+        }, function () {
+            alert('Error printBankMailTransfers');
+        });
 
     };
 

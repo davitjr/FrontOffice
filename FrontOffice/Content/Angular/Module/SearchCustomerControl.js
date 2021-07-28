@@ -72,7 +72,6 @@
             },
             controller: ['$scope', '$element', 'customerService', 'dialogService', 'dateFilter', function ($scope, $element, customerService, dialogService, dateFilter) {
                 $scope.setDisplayingFeatureForLeasing = function () {
-                    debugger;
                     $scope.leasingSearchNumber = sessionStorage.getItem("calledForLeasing");
                     if ($scope.leasingSearchNumber != undefined && $scope.leasingSearchNumber != null) {
                         $scope.leasingSearchNumber = true;

@@ -1,4 +1,4 @@
-﻿app.controller('InsuranceOrderCtrl', ['$scope', 'infoService', 'paymentOrderService', 'insuranceOrderService', '$http', 'customerService', '$filter', 'orderService', function ($scope, infoService, paymentOrderService, insuranceOrderService, $http, customerService, $filter, orderService) {
+﻿app.controller('InsuranceOrderCtrl', ['$scope', 'infoService', 'paymentOrderService', 'insuranceOrderService', '$http', 'customerService', '$filter', 'orderService', 'ReportingApiService', function ($scope, infoService, paymentOrderService, insuranceOrderService, $http, customerService, $filter, orderService, ReportingApiService) {
     $scope.order = {};
     $scope.order.RegistrationDate = new Date();
     $scope.order.OperationDate = $scope.$root.SessionProperties.OperationDate;
@@ -301,11 +301,26 @@
         var Data;
         if ($scope.order.Type == 107) {
             Data = insuranceOrderService.getPaymentOrderDetails($scope.order);
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 63, ReportExportFormat: 1 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowPDFReport(result);
+                });
+            }, function () {
+                alert('Error getPaymentOrderDetails');
+            });
         }
         else if ($scope.order.Type == 108) {
             Data = insuranceOrderService.getCashInPaymentOrderDetails($scope.order);
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowPDFReport(result);
+                });
+            }, function () {
+                alert('Error getCashInPaymentOrderDetails');
+            });
         }
-        ShowPDF(Data);
 
     };
 

@@ -112,7 +112,6 @@
         var response = $http({
             method: "post",
             url: "/CashBook/CashBookAccountStatementReport",
-            responseType: 'arraybuffer',
             data: JSON.stringify(cashBook),
             dataType: "json",
             params: {
@@ -127,7 +126,6 @@
         var response = $http({
             method: "post",
             url: "/CashBook/GetCashOutPaymentOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(order),
             dataType: "json",
             params: {
@@ -141,7 +139,6 @@
         var response = $http({
             method: "post",
             url: "/CashBook/GetCashInPaymentOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(order),
             dataType: "json",
             params: {
@@ -166,7 +163,6 @@
         var response = $http({
             method: "post",
             url: "/CashBook/GetPaymentOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(order),
             dataType: "json",
             params: {
@@ -267,7 +263,6 @@
         var response = $http({
             method: "post",
             url: "/CashBook/GetCashBookReport",
-            responseType: 'arraybuffer',
             dataType: "json",
             params: {
                 date: date
@@ -279,7 +274,6 @@
         var response = $http({
             method: "post",
             url: "/CashBook/GetCashBookTotalReport",
-            responseType: 'arraybuffer',
             dataType: "json",
             params: {
                 date: date

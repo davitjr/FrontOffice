@@ -1612,6 +1612,37 @@ app.config(['$stateProvider', function ($stateProvider) {
                 ncyBreadcrumb: {
                     label: '«Home Banking» համակարգով ստացված փոխանցումներ' // angular-breadcrumb's configuration
                 }
+            })
+        .state('safekeepingItems',
+            {
+                url: '/SafekeepingItems ',
+                templateUrl: '/SafekeepingItem/SafekeepingItems',
+                ncyBreadcrumb: {
+                    label: 'Պրոդուկտներ >> Ի պահ ընդունված գրավներ (ոսկի)' // angular-breadcrumb's configuration
+                }
+            })
+        .state('safekeepingItemDetails',
+            {
+                url: '/SafekeepingItemDetails ',
+                templateUrl: '/SafekeepingItem/SafekeepingItemDetails',
+                ncyBreadcrumb: {
+                    label: 'Պրոդուկտներ >> Ի պահ ընդունված գրավներ (ոսկի) >> Ի պահ ընդունված գրավի տվյալներ' // angular-breadcrumb's configuration
+                },
+                params: {
+                    productId: null
+                },
+                controller: [
+                    '$scope', '$stateParams', function ($scope, $stateParams) {
+                        // get the id
+                        if ($stateParams.productId == null) {
+                            $scope.productId = sessionStorage.getItem('safekeepingProductId');
+                        }
+                        else {
+                            $scope.productId = $stateParams.productId;
+                            sessionStorage.setItem('safekeepingProductId', $stateParams.productId);
+                        }
+                    }
+                ]
             });
     //.state('FTPRate',
     //{

@@ -44,11 +44,11 @@ namespace FrontOffice.Controllers
             return Json(XBService.GetCardClosingWarnings(productId), JsonRequestBehavior.AllowGet);
         }
 
-        public void GetCardClosingApplication(string cardNumber)
+        public JsonResult GetCardClosingApplication(string cardNumber)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "cardNumber", value: cardNumber);
-            ReportService.GetCardClosingApplication(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
     }
 }

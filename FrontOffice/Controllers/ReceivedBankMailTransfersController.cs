@@ -47,7 +47,7 @@ namespace FrontOffice.Controllers
             return Json(XBService.GetReceivedBankMailTransfer(transferID), JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintTransfer(ulong  Id)
+        public JsonResult PrintTransfer(ulong  Id)
         {
              
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -56,12 +56,10 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "archive", value: "0");
             parameters.Add(key: "transOK", value: "1");
             parameters.Add(key: "oneMessage", value: "1");
- 
+
             //parameters.Add(key: "FileName", value: "BankMail");
- 
 
-
-            ReportService.GetReceivedBankMailTransfer(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
  
 

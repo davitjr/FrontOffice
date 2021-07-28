@@ -240,8 +240,7 @@
             method: "POST",
             url: "/HomeBankingDocuments/PrintHomeBankingDocumentsReport",
             data: searchParams,
-            dataType: "json",
-            responseType: 'arraybuffer'
+            dataType: "json"
         });
         return response;
     };

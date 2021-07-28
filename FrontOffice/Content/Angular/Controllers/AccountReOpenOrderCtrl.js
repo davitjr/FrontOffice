@@ -1,5 +1,5 @@
 ﻿
-app.controller("AccountReOpenOrderCtrl", ['$scope', 'accountReOpenOrderService', 'infoService', 'dialogService', 'orderService', 'customerService', '$filter', 'paymentOrderService', '$http', function ($scope, accountReOpenOrderService, infoService, dialogService, orderService, customerService, $filter, paymentOrderService, $http) {
+app.controller("AccountReOpenOrderCtrl", ['$scope', 'accountReOpenOrderService', 'infoService', 'dialogService', 'orderService', 'customerService', '$filter', 'paymentOrderService', '$http', 'ReportingApiService', function ($scope, accountReOpenOrderService, infoService, dialogService, orderService, customerService, $filter, paymentOrderService, $http, ReportingApiService) {
     $scope.order = {};
     $scope.order.feeAccount = {};
     $scope.order.ReopenReasonDescription = "Հաշվի վերաբացում" + ($scope.account != null ? " " + $scope.account.AccountNumber : "");
@@ -226,7 +226,14 @@ app.controller("AccountReOpenOrderCtrl", ['$scope', 'accountReOpenOrderService',
         }
 
         var Data = accountReOpenOrderService.getAccountReOpenOrderOrderDetails($scope.order, isCopy);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getAccountReOpenOrderOrderDetails');
+        });
 
     };
 
@@ -267,8 +274,14 @@ app.controller("AccountReOpenOrderCtrl", ['$scope', 'accountReOpenOrderService',
                         $scope.orderForFee.ReceiverAccount.AccountNumber = result.data;
 
                         var Data = paymentOrderService.getCashInPaymentOrder($scope.orderForFee, isCopy);
-                        ShowPDF(Data);
-
+                        Data.then(function (response) {
+                            var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                            ReportingApiService.getReport(requestObj, function (result) {
+                                ShowPDFReport(result);
+                            });
+                        }, function () {
+                            alert('Error getCashInPaymentOrder');
+                        });
 
                     });
 
@@ -277,7 +290,14 @@ app.controller("AccountReOpenOrderCtrl", ['$scope', 'accountReOpenOrderService',
                     $scope.orderForFee.Currency = $scope.order.Fees[fee].Currency;
                     $scope.orderForFee.ReceiverAccount.AccountNumber = $scope.order.Fees[fee].CreditAccount.AccountNumber;
                     var Data = paymentOrderService.getCashInPaymentOrder($scope.orderForFee, isCopy);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getCashInPaymentOrder');
+                    });
                 }
             }
         }

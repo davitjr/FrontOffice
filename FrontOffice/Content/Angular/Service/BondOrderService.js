@@ -48,7 +48,6 @@
         var response = $http({
             method: "post",
             url: "/BondOrder/PrintBondCustomerCard",
-            responseType: 'arraybuffer',
             params: {
                 accountNumber: accountNumber,                
                 accountNumberForBond: accountNumberForBond

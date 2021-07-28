@@ -1,5 +1,5 @@
-﻿app.controller("ClassifiedLoanCtrl", ['$scope', 'infoService', 'classifiedLoanService',
-     function ($scope, infoService, classifiedLoanService) {
+﻿app.controller("ClassifiedLoanCtrl", ['$scope', 'infoService', 'classifiedLoanService','ReportingApiService',
+    function ($scope, infoService, classifiedLoanService, ReportingApiService) {
 
         $scope.searchParams = {};
         $scope.today = Date();
@@ -193,7 +193,14 @@
             else
                 filialcode = $scope.searchParams.FilialCode
             var Data = classifiedLoanService.storedCreditProductsByCustReport(filialcode,type);
-            ShowExcel(Data, 'StoredCreditProductsByCustReport'); 
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 121, ReportExportFormat: 2 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowExcelReport(result, 'StoredCreditProductsByCustReport');
+                });
+            }, function () {
+                alert('Error storedCreditProductsByCustReport');
+            });
         } 
         $scope.storedCreditProductReport = function (type) {
             var filialcode
@@ -202,7 +209,14 @@
             else
                 filialcode = $scope.searchParams.FilialCode
             var Data = classifiedLoanService.storedCreditProductReport(filialcode,type);
-            ShowExcel(Data, 'StoredCreditProductReport');
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 122, ReportExportFormat: 2 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowExcelReport(result, 'StoredCreditProductReport');
+                });
+            }, function () {
+                alert('Error storedCreditProductReport');
+            });
         } 
         $scope.reportOfLoansToOutBalance = function () {
             var filialcode
@@ -211,7 +225,14 @@
             else
                 filialcode = $scope.searchParams.FilialCode
             var Data = classifiedLoanService.reportOfLoansToOutBalance(filialcode);
-            ShowExcel(Data, 'ReportOfLoansToOutBalance');
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 123, ReportExportFormat: 2 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowExcelReport(result, 'ReportOfLoansToOutBalance');
+                });
+            }, function () {
+                alert('Error reportOfLoansToOutBalance');
+            });
         } 
         $scope.reportOfLoansReturningToOutBalance = function () {
             var filialcode
@@ -220,6 +241,13 @@
             else
                 filialcode = $scope.searchParams.FilialCode
             var Data = classifiedLoanService.reportOfLoansReturningToOutBalance(filialcode);
-            ShowExcel(Data, 'ReportOfLoansReturningToOutBalance');
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 124, ReportExportFormat: 2 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowExcelReport(result, 'ReportOfLoansReturningToOutBalance');
+                });
+            }, function () {
+                alert('Error reportOfLoansReturningToOutBalance');
+            });
         } 
     }]);

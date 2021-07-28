@@ -41,7 +41,7 @@ namespace FrontOffice.Controllers
             return Json(result);//must return error view
         }
 
-        public void GetCashInPaymentOrderDetails(xbs.TransitPaymentOrder order, bool isCopy = false)
+        public JsonResult GetCashInPaymentOrderDetails(xbs.TransitPaymentOrder order, bool isCopy = false)
         {
           
             order.Type = xbs.OrderType.TransitPaymentOrder;
@@ -105,11 +105,11 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "commissionAmount", value: cashInFeeAmount.ToString());
             parameters.Add(key: "commissionAccount", value: cashInFeeAccountNumber);
 
-            ReportService.GetCashInPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
 
-        public void GetCashInPaymentOrderDetailsForRATransfer(xbs.PaymentOrder order, xbs.TransitPaymentOrder transitPaymentOrder, bool isCopy = false)
+        public JsonResult GetCashInPaymentOrderDetailsForRATransfer(xbs.PaymentOrder order, xbs.TransitPaymentOrder transitPaymentOrder, bool isCopy = false)
         {
            
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -208,9 +208,9 @@ namespace FrontOffice.Controllers
 
             //parameters.Add(key: "police_code", value: order.PoliceResponseDetailsId.ToString());
 
-            ReportService.GetCashInPaymentOrderDetailsForRATransfer(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
-        public void GetCashInPaymentOrderDetailsForBudgetTransfer(xbs.BudgetPaymentOrder order, xbs.TransitPaymentOrder transitPaymentOrder, bool isCopy = false)
+        public JsonResult GetCashInPaymentOrderDetailsForBudgetTransfer(xbs.BudgetPaymentOrder order, xbs.TransitPaymentOrder transitPaymentOrder, bool isCopy = false)
         {
             ulong customerNumber = 0;
 
@@ -341,7 +341,8 @@ namespace FrontOffice.Controllers
             }
             parameters.Add(key: "set_number", value: user.userID.ToString());
             parameters.Add(key: "TransactionTime", value: order.RegistrationTime != null ? order.RegistrationTime : DateTime.Now.ToString("HH:mm"));
-            ReportService.GetCashInPaymentOrderDetailsForRATransfer(parameters);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetFee(xbs.TransitPaymentOrder transitPaymentOrder, int feeType)
@@ -357,7 +358,7 @@ namespace FrontOffice.Controllers
 
         }
 
-        public void GetCashInPaymentOrderDetailsForMatureOrder(xbs.TransitPaymentOrder order, xbs.MatureOrder matureOrder, bool isCopy = false)
+        public JsonResult GetCashInPaymentOrderDetailsForMatureOrder(xbs.TransitPaymentOrder order, xbs.MatureOrder matureOrder, bool isCopy = false)
         {
            
             order.Type = xbs.OrderType.TransitPaymentOrder;
@@ -420,10 +421,10 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "commissionAmount", value: cashInFeeAmount.ToString());
             parameters.Add(key: "commissionAccount", value: cashInFeeAccountNumber);
 
-            ReportService.GetCashInPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void GetPaymentOrderDetails(xbs.TransitPaymentOrder order, xbs.MatureOrder matureOrder, bool isCopy = false)
+        public JsonResult GetPaymentOrderDetails(xbs.TransitPaymentOrder order, xbs.MatureOrder matureOrder, bool isCopy = false)
         {
             ulong customerNumber = 0;
 
@@ -492,11 +493,12 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "cust_name", value: customerName);
             parameters.Add(key: "is_copy", value: isCopy ? "True" : "False");
             parameters.Add(key: "reciever_tax_code", value: receiverCustomer.CustomerType == 6 ? receiverCustomer.SocialNumber : receiverCustomer.TaxCode);
-            ReportService.GetPaymentOrder(parameters);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
 
-        public void GetPaymentOrderDetailsForBond(xbs.TransitPaymentOrder order, xbs.BondAmountChargeOrder bondOrder, bool isCopy = false)
+        public JsonResult GetPaymentOrderDetailsForBond(xbs.TransitPaymentOrder order, xbs.BondAmountChargeOrder bondOrder, bool isCopy = false)
         {
             xbs.Account receiverAccount = XBService.GetOperationSystemAccount(order, xbs.OrderAccountType.CreditAccount, order.Currency);
 
@@ -530,7 +532,7 @@ namespace FrontOffice.Controllers
 
 
 
-            ReportService.GetPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
 

@@ -1,4 +1,4 @@
-﻿app.controller('CardStatementSessionCtrl', ['$scope', 'cardStatementSessionService', 'casherService', '$filter', 'dialogService', '$rootScope', 'infoService', '$uibModal', 'utilityService', '$confirm', function ($scope, cardStatementSessionService, casherService, $filter, dialogService, $rootScope, infoService, $uibModal, utilityService, $confirm) {
+﻿app.controller('CardStatementSessionCtrl', ['$scope', 'cardStatementSessionService', 'casherService', '$filter', 'dialogService', '$rootScope', 'infoService', '$uibModal', 'utilityService', '$confirm', 'ReportingApiService', function ($scope, cardStatementSessionService, casherService, $filter, dialogService, $rootScope, infoService, $uibModal, utilityService, $confirm, ReportingApiService) {
     $rootScope.OpenMode = 10;
     $scope.searchParam = {};
     $scope.statementCreationStatus = 0;
@@ -223,13 +223,27 @@
         statementStartDate = $filter('mydate')(statementStartDate, "dd/MM/yyyy");
         statementEndDate = $filter('mydate')(statementEndDate, "dd/MM/yyyy");
         var Data = cardStatementSessionService.printCardSessionStatements(sessionID, ($scope.statementCreationStatus == null) ? 0 : $scope.statementCreationStatus, ($scope.statementSendStatus == null) ? 0 : $scope.statementSendStatus, statementStartDate, statementEndDate, actionType);
-        ShowExcel(Data, actionType == 1 ? "CardStatementSession" : "AccountStatementSession");
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 102, ReportExportFormat: 2 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowExcelReport(result, 'CardStatementSession');
+            });
+        }, function () {
+            alert('Error printCardSessionStatements');
+        });
 
     };
 
     $scope.printLoanSessionStatements = function (sessionID, startDate, endDate) {
         var Data = cardStatementSessionService.printLoanSessionStatements(($scope.sessionID == null) ? 0 : sessionID, ($scope.statementCreationStatus == null) ? 0 : $scope.statementCreationStatus, ($scope.statementSendStatus == null) ? 0 : $scope.statementSendStatus, $scope.statement.StartDate, $scope.statement.EndDate);
-        ShowExcel(Data, "LoanStatementSession");
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 155, ReportExportFormat: 2 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowExcelReport(result, "LoanStatementSession");
+            });
+        }, function () {
+            alert('Error getFeeForServiceProvidedOrderDetails');
+        });
     }
 
     $scope.deleteCardStatementSessionSchedule = function () {

@@ -4,11 +4,8 @@
         $scope.selectedAccountNumber = null;
         $scope.AccountNumber = null;
         $scope.isEdit = false;
+        $scope.confirmationPerson = '1';
 
-        $scope.order = {};
-        $scope.order.RegistrationDate = new Date();
-        $scope.order.OperationDate = $scope.$root.SessionProperties.OperationDate;
-        $scope.accountOpendate = new Date();
         $scope.currentOperDay = $scope.$root.SessionProperties.OperationDate.toString('dd/MM/yyyy');
 
         $scope.getCurrentAccounts = function () {
@@ -87,6 +84,7 @@
                 Data.then(function (acc) {
                     $scope.account = acc.data;
                     $scope.AccountNumber = acc.data.AccountNumber;
+                    $scope.accountOpendate = new Date(parseInt($scope.account.OpenDate.substr(6))).toString('dd/MM/yyyy');
                     $scope.params = { AccountNumber: acc.data.AccountNumber, account: acc.data };
                     $scope.loading = false;
                 }, function () {
@@ -191,7 +189,7 @@
                     return;
             }
             showloading();
-            var Data = accountService.getAccountOpenContract(accountNumbers);
+            var Data = accountService.getAccountOpenContract(accountNumbers, $scope.confirmationPerson);
             ShowPDF(Data);
         };
 
@@ -682,6 +680,9 @@
         };
 
         $scope.saveAccountRemovingOrder = function (accountNumber) {
+            $scope.order = {};
+            $scope.order.RegistrationDate = new Date();
+            $scope.order.OperationDate = $scope.$root.SessionProperties.OperationDate;
             $scope.order.RemovingAccount = {};
             $scope.order.RemovingAccount.AccountNumber = accountNumber;
             $scope.order.RemovingAccount.Currency = $scope.account.Currency;
@@ -708,6 +709,104 @@
                     });
                 });
 
+        };
+
+        $scope.initButtonsVisibility = function () {
+            var Data = accountService.getRightsTransferTransactionAvailability($scope.accountNumber);
+            Data.then(function (result) {
+                $scope.rightsTransferVisibility = result.data;
+            }, function () {
+                showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
+                alert('Error getRightsTransferTransactionAvailability');
+            });
+        };
+        $scope.getThirdPersonCustomerNumber = function () {
+            var Data = accountService.getCheckCustomerFreeFunds($scope.accountNumber);
+            Data.then(function (result) {
+                $scope.thirdPersonCustomerNumber = result.data;
+
+            }, function () {
+                hideloading();
+                showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
+                alert('Error getCheckCustomerFreeFunds');
+            });
+        };
+        $scope.printThirdPersonAccountRightsTransfer = function () {
+            showloading();
+            if ($scope.thirdPersonCustomerNumber != 0) {
+                var Data = accountService.getThirdPersonAccountRightsTransferReport($scope.accountNumber, $scope.thirdPersonCustomerNumber);
+                ShowPDF(Data);
+            }
+            else {
+                hideloading();
+                showMesageBoxDialog("Հաճախորդի ազատ միջոցները բավարար չեն", $scope, 'error');
+            }
+
+        };
+        $scope.saveTransferThirdPersonAccountRights = function () {
+            if ($scope.thirdPersonCustomerNumber == 0) {
+                showMesageBoxDialog("Հաճախորդի ազատ միջոցները բավարար չեն", $scope, 'error');
+            }
+            else {
+                $confirm({ title: 'Շարունակե՞լ', text: 'Փոխանցե՞լ իրավունքը' })
+                    .then(function () {
+                        showloading();
+                        $scope.order = {};
+                        $scope.order.JointAccount = {};
+                        $scope.order.JointAccount.AccountNumber = $scope.accountNumber;
+                        $scope.order.JointAccount.Currency = $scope.accountCurrency;
+                        $scope.order.ThirdPersonCustomerNumber = $scope.thirdPersonCustomerNumber;
+                        $scope.order.Type = 251;
+                        var Data = accountService.postTransferThirdPersonAccountRights($scope.order);
+                        Data.then(function (res) {
+                            if (res.data.Errors.length == 0) {
+                                hideloading();
+                                showMesageBoxDialog('Իրավունքը փոխանցված է', $scope, 'information');
+                                CloseBPDialog("JointAccountCustomersDetails");
+                                //$state.go('currentAccounts');
+                                var url = location.origin.toString();
+                                window.location.href = url + '#!/allProducts';
+                            }
+                            else {
+                                hideloading();
+                                showMesageBoxDialog(res.data.Errors[0].Description, $scope, 'error');
+                            }
+                        }, function () {
+                            showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
+                            alert('Error postTransferThirdPersonAccountRights');
+                            hideloading();
+                        });
+                    });
+            }
+
+        };
+        $scope.checkCustomerIsThirdPerson = function () {
+            var Data = accountService.getcheckCustomerIsThirdPerson($scope.accountNumber);
+            Data.then(function (result) {
+                $scope.rightsTransferVisibility = result.data;
+                if ($scope.rightsTransferVisibility == true) {
+                    $scope.initRightsTransferVisibility();
+                }
+            }, function () {
+                showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
+                alert('Error getRightsTransferVisibility');
+            });
+        };
+        $scope.initRightsTransferVisibility = function () {
+            var Data = accountService.getRightsTransferVisibility($scope.accountNumber);
+            Data.then(function (result) {
+                $scope.rightsTransferVisibility = result.data;
+                if ($scope.rightsTransferVisibility == true) {
+                    $scope.initButtonsVisibility();
+                }
+            }, function () {
+                showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
+                alert('Error getRightsTransferVisibility');
+            });
+        };
+
+        $scope.confirmationPersons = function (confirmationPerson) {
+            $scope.confirmationPerson = confirmationPerson;
         };
 
     }]);

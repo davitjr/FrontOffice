@@ -30,8 +30,15 @@
                         <option value=""></option>
                     </select>
 
-                    &nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn btn-default" style="height:30px"  title="Ավանդների ցանկ" ng-click="getListOfCustomerDeposits()" ng-controller="PrintDocumentsCtrl" ><span class="glyphicon glyphicon-print" style="top:-4px !important"></span></button>
+                    &nbsp;
+                    <select title="Ստորագրող անձ" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-ng-model="confirmationPerson" style="max-width:15%;height:30px" name="ConfirmationPerson" id="h-menu-item-5" ng-change="confirmationPersons(confirmationPerson)">
+                        <option value="1" ng-show="confirmationPersonsFirstValueVisibility">մասնաճյուղի աշխատակից</option>
+                        <option value="2">կառավարիչ</option>
+                        <option value="3">կառավարչի տեղակալ</option>
+                    </select>
+
+                    &nbsp;
+                    <button type="button" class="btn btn-default" style="height:30px" title="Ավանդների ցանկ" ng-click="getListOfCustomerDeposits()" ng-controller="PrintDocumentsCtrl"><span class="glyphicon glyphicon-print" style="top:-4px !important"></span></button>
 
                     <script>
                         $("[data-toggle=tooltip]").tooltip({
@@ -50,7 +57,7 @@
                 </div>
                 <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
                     <tbody>
-                        <tr ng-if="filter==1 && deposits.length!=0" ng-repeat="deposit in deposits | filter: { Currency: currency!=undefined?currency:'' }" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,deposit);selectedDepositIsAccessible  && hideBlank!='true' &&  getElementPosition($index);" ng-dblclick="selectedDepositIsAccessible && openDepositDetails();" style="cursor: pointer;">
+                        <tr ng-if="filter==1 && deposits.length!=0" ng-repeat="deposit in deposits | filter: { Currency: currency!=undefined?currency:'' }" ng-class="{'selected':$index == selectedRow}" ng-click="confirmationPersonInit(deposit, $index);setClickedRow($index,deposit);selectedDepositIsAccessible  && hideBlank!='true' &&  getElementPosition($index);" ng-dblclick="selectedDepositIsAccessible && openDepositDetails();" style="cursor: pointer;">
                             <td class="col-sm-3" id="depositRow_{{$index}}">
                                 {{ ::deposit.DepositTypeDescription }}
                                 <span ng-if="deposit.JointType != 0"><br />{{ ::deposit.DepositAccount.AccountDescription }}</span>
@@ -96,7 +103,7 @@
                     <li ng-if="selectedRow!=null && selectedDepositAllowAmountAddition == true "><a href="" style="color: black;text-decoration:none!important ;" ng-class="{'my_disable':disabelButton==true}"  ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:2,forInputCheckbox:true};openWindowWithTemplate('currencyexchangeorder','Փոխարկում','exchangeorder')">Փոխարկում</a></li>
                     <li ng-if="selectedRow!=null && selectedDepositAllowAmountAddition == true "><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('paymentorder','Փոխանցում սեփական հաշիվների միջև','paymentorder',callbackgetDeposits)">Փոխանցում հաշիվների միջև</a></li>
                     <li ng-if="selectedDepositIsAccessible"><a style="color: black;text-decoration:none!important ;" ui-sref="depositdetails({ productId : selectedProductId,deposit:selectedClosedDeposit })">Մանրամասն դիտարկում</a></li>
-                    <li ng-if="selectedDepositIsAccessible || ($root.SessionProperties.UserId==selectedDepositKeeperOpen)" style="cursor:pointer"><a style="color: black;text-decoration:none!important ;" ng-click="getDepositContract(selectedDepositDepositNumber)">Ավանդի պայմանագիր</a></li>
+                    <li ng-if="selectedDepositIsAccessible || ($root.SessionProperties.UserId==selectedDepositKeeperOpen)" style="cursor:pointer"><a style="color: black;text-decoration:none!important ;" ng-click="getDepositContract(selectedDepositDepositNumber, confirmationPerson)">Ավանդի պայմանագիր</a></li>
                 </ul>
             </div>
         </div>

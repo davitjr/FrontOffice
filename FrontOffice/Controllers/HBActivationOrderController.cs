@@ -52,7 +52,7 @@ namespace FrontOffice.Controllers
             return PartialView("HBActivationOrderDetails");
         }
 
-        public void PrintOrder(xbMng.HBActivationOrder order)
+        public JsonResult PrintOrder(xbMng.HBActivationOrder order)
         {
 
             xbMng.Account debitAccount = XBManagementService.GetOperationSystemAccount(order, FrontOffice.XBManagement.OrderAccountType.DebitAccount, order.Currency);
@@ -76,7 +76,8 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "TransactionNumber", value: "0");
             parameters.Add(key: "RePrint", value: "0");
             //îáÏ»ÝÇ ïñ³Ù³¹ñáõÙ, Ø³ñÛ³Ù Øá³¹»É, 100000180013, ïáÏ»ÝÇ Ñ³Ù³ñÁ `9638274654654654
-            ReportService.GetPrixRasxOperations(parameters);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
         
         [ActionAccessFilter(actionType = ActionType.HBApplicationOrderSave)]

@@ -7,6 +7,7 @@
     $scope.HBApplicationUpdate.Users = [];
     $scope.HBApplicationUpdate.Tokens = [];
     $scope.order.ApprovementSchema = {};   
+    $scope.confirmationPerson = '1';
 
     $scope.allowDataEntry=false;
 
@@ -204,23 +205,23 @@
     $scope.printOnlineContractPhysical = function (contractNumber, contractDate) {
         contractDate = $filter('mydate')(contractDate, "dd/MM/yyyy");
         showloading();
-        var Data = hbApplicationService.printOnlineContractPhysical($scope.userFilialCode, contractNumber, contractDate);
+        var Data = hbApplicationService.printOnlineContractPhysical($scope.userFilialCode, contractNumber, contractDate, $scope.confirmationPerson);
         ShowPDF(Data);
     };
      
     $scope.printOnlineContractLegal = function () {
         showloading();
-        var Data = hbApplicationService.printOnlineContractLegal($scope.userFilialCode);
+        var Data = hbApplicationService.printOnlineContractLegal($scope.userFilialCode, $scope.confirmationPerson);
         ShowPDF(Data);
     };
     $scope.printOnlineAgreementPhysical = function () {
         showloading();
-        var Data = hbApplicationService.printOnlineAgreementPhysical($scope.userFilialCode);
+        var Data = hbApplicationService.printOnlineAgreementPhysical($scope.userFilialCode, $scope.confirmationPerson);
         ShowPDF(Data);
     };
     $scope.printOnlineAgreementLegal = function () {
         showloading();
-        var Data = hbApplicationService.printOnlineAgreementLegal($scope.userFilialCode);
+        var Data = hbApplicationService.printOnlineAgreementLegal($scope.userFilialCode, $scope.confirmationPerson);
         ShowPDF(Data);
     };
     $scope.getEntryDataPermissionServiceFee = function () {
@@ -255,5 +256,9 @@
         }, function () {
             alert('Error isCustomerConnectedToOurBank');
         });
+    };
+
+    $scope.confirmationPersons = function (confirmationPerson) {
+        $scope.confirmationPerson = confirmationPerson;
     };
 }]);

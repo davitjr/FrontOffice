@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using FrontOffice.Models;
 using xbs = FrontOffice.XBS;
 using System.Web.SessionState;
+using Newtonsoft.Json;
 
 namespace FrontOffice.Controllers
 {
@@ -58,8 +59,9 @@ namespace FrontOffice.Controllers
             return Json(accounts, JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintBondCustomerCard(string accountNumber,string accountNumberForBond)
+        public JsonResult PrintBondCustomerCard(string accountNumber,string accountNumberForBond)
         {
+            Dictionary<string, string> obj = new Dictionary<string, string>();
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
             CustomerViewModel customer = new CustomerViewModel();
             customer.Get(customerNumber);
@@ -82,7 +84,10 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "isIndividual", value: "0");
             }
 
-            ReportService.BondCustomerCard(parameters, customer.CustomerType);
+            obj.Add("result", JsonConvert.SerializeObject(parameters));
+            obj.Add("customerType", JsonConvert.SerializeObject(customer.CustomerType));
+
+            return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
 

@@ -75,7 +75,7 @@ namespace FrontOffice.Controllers
 
 
         }
-        public void SaledEquipmentsReport(double customerNumber, int filialCode, double loanFullNumber, double? equipmentSalePriceFrom, double? equipmentSalePriceTo,DateTime? auctionEndDateFrom, DateTime? auctionEndDateTo, string equipmentDescription, string equipmentAddress, int equipmentQuality, int saleStage)
+        public JsonResult SaledEquipmentsReport(double customerNumber, int filialCode, double loanFullNumber, double? equipmentSalePriceFrom, double? equipmentSalePriceTo,DateTime? auctionEndDateFrom, DateTime? auctionEndDateTo, string equipmentDescription, string equipmentAddress, int equipmentQuality, int saleStage)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -90,7 +90,8 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "equipmentAddress", value: equipmentAddress);
             parameters.Add(key: "equipmentQuality", value: equipmentQuality.ToString());
             parameters.Add(key: "saleStage", value: saleStage.ToString());
-            ReportService.SaledEquipmentsReport(parameters, ExportFormat.Excel);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
     }

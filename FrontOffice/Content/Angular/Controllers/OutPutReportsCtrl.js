@@ -1,4 +1,4 @@
-﻿app.controller("OutPutReportsCtrl", ['$scope', 'outPutReportsService', 'dateFilter', 'infoService', '$uibModal', 'loanService', function ($scope, outPutReportsService, dateFilter, infoService, $uibModal, loanService) {
+﻿app.controller("OutPutReportsCtrl", ['$scope', 'outPutReportsService', 'dateFilter', 'infoService', '$uibModal', 'loanService', 'ReportingApiService', function ($scope, outPutReportsService, dateFilter, infoService, $uibModal, loanService, ReportingApiService) {
 
     $scope.$root.OpenMode = 8;
     $scope.$root.UserFilial = 0;
@@ -80,13 +80,15 @@
 
         ///////Տերմինալների հաշվետվություն   159/////
         $scope.showTerminalId = false;
-
+        $scope.showSafekeepingQuality = false;
 
         switch (reportType) {
             case "105":
                 $scope.showUserID = true;
                 $scope.showCurrency = true;
                 $scope.showDepositType = true;
+                $scope.showStartDate = true;
+                $scope.showEndDate = true;
                 break;
             case "106":
                 $scope.showUserID = true;
@@ -247,6 +249,31 @@
                     $scope.showPDF = false;
                     break;
                 }
+            case "164":
+                {
+                    $scope.GetUserFilialCode();                   
+                    $scope.showStartDate = true;
+                    $scope.showEndDate = true;
+                    $scope.showPDF = false;
+                    if ($scope.UserFilial == 22000) {
+                        $scope.showFilialList = true;
+                    }
+                    break;
+                }
+            case "165":
+                {
+                    $scope.GetUserFilialCode();
+                    $scope.showStartDate = true;
+                    $scope.showEndDate = true;
+                    $scope.showSafekeepingQuality = true;
+                    $scope.showPDF = false;
+                    if ($scope.UserFilial == 22000) {
+                        $scope.showFilialList = true;
+                    }
+                    $scope.searchParams.StartDate = null;
+                    $scope.searchParams.EndDate = null;
+                    break;
+                }
             default: break;
 
         }
@@ -274,12 +301,19 @@
         }
 
         var Data = outPutReportsService.currentAccountJournalReport(startDate, endDate, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'CurrentAccountJournalReport');
-        }
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 90, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'CurrentAccountJournalReport');
+                }
+            });
+        }, function () {
+            alert('Error currentAccountJournalReport');
+        });
     };
 
     $scope.transfersByCallReport = function (format) {
@@ -304,12 +338,19 @@
         }
 
         var Data = outPutReportsService.transfersByCallReport(startDate, endDate, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'transfersByCallReport');
-        }
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 117, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'transfersByCallReport');
+                }
+            });
+        }, function () {
+            alert('Error transfersByCallReport');
+        });
     };
 
     $scope.closedCurrentAccountJournalReport = function (format) {
@@ -333,12 +374,19 @@
         }
 
         var Data = outPutReportsService.closedCurrentAccountJournalReport(startDate, endDate, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'ClosedCurrentAccountJournalReport');
-        }
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 91, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'ClosedCurrentAccountJournalReport');
+                }
+            });
+        }, function () {
+            alert('Error closedCurrentAccountJournalReport');
+        });
     };
 
     $scope.reopenededCurrentAccountJournalReport = function (format) {
@@ -362,13 +410,19 @@
         }
 
         var Data = outPutReportsService.reopenededCurrentAccountJournalReport(startDate, endDate, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'ReopenededCurrentAccountJournalReport');
-        }
-
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 92, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'ReopenededCurrentAccountJournalReport');
+                }
+            });
+        }, function () {
+            alert('Error reopenededCurrentAccountJournalReport');
+        });
     };
 
     $scope.getPrintReportTypes = function () {
@@ -419,13 +473,20 @@
 
         //տվյալների ճիշտ լինելու դեպքում կատարել տվյալների ֆորմատ
 
-        let data = outPutReportsService.terminalReport(date, terminalId, format);
-        if (format == 1) {
-            ShowPDF(data);
-        }
-        else if (format == 2) {
-            ShowExcel(data, 'terminalReport');
-        }
+        let Data = outPutReportsService.terminalReport(date, terminalId, format);
+        Data.then(function (options) {
+            var requestObj = { Parameters: options.data, ReportName: 55, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'terminalReport');
+                }
+            });
+        }, function () {
+            alert('Error terminalReport');
+        });
     };
 
     $scope.printReport = function (format) {
@@ -523,6 +584,12 @@
             case "163":
                 $scope.printVDTransfersReport(format);
                 break;
+            case "164":
+                $scope.printPensionApplicationReport();
+                break; 
+            case "165":
+                $scope.printSafekeepingItemsReport();
+                break; 
             default:
                 showMesageBoxDialog('Ընտրեք հաշվետվության տեսակը', $scope, 'error');
                 break;
@@ -592,12 +659,19 @@
 
 
         var Data = outPutReportsService.depositsJournalReport(startDate, endDate, setNumber, currency, depositType, quality, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'DepositsJournalReport');
-        }
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 93, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'DepositsJournalReport');
+                }
+            });
+        }, function () {
+            alert('Error depositsJournalReport');
+        });
 
     };
 
@@ -631,12 +705,19 @@
             return;
         }
         var Data = outPutReportsService.intraTransactionsByPeriodReport(startDate, endDate, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'IntraTransactionsByPeriodReport');
-        }
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 95, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'IntraTransactionsByPeriodReport');
+                }
+            });
+        }, function () {
+            alert('Error intraTransactionsByPeriodReport');
+        });
 
     };
 
@@ -660,13 +741,19 @@
             return;
         }
         var Data = outPutReportsService.cashTransactionExceededReport(startDate, endDate, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'CashTransactionExceededReport');
-        }
-
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 97, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'CashTransactionExceededReport');
+                }
+            });
+        }, function () {
+            alert('Error cashTransactionExceededReport');
+        });
     };
 
 
@@ -681,13 +768,19 @@
             return;
         }
         var Data = outPutReportsService.cardsOverAccRestsReport(calculationDate, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'CardsOverAccRestsReport');
-        }
-
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 98, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'CardsOverAccRestsReport');
+                }
+            });
+        }, function () {
+            alert('Error cardsOverAccRestsReport');
+        });
     };
 
 
@@ -725,12 +818,19 @@
 
 
         var Data = outPutReportsService.givenCardsReport(startDate, endDate, dateType, cardSystemType, cardType, cardCurrency, relatedOfficeNumber, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'GivenCardsReport');
-        }
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 96, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'GivenCardsReport');
+                }
+            });
+        }, function () {
+            alert('Error givenCardsReport');
+        });
 
     };
 
@@ -763,26 +863,39 @@
             quality = $scope.searchParams.quality;
 
         var Data = outPutReportsService.printProvisionsReport(startDate, endDate, activeType, loanType, quality, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'PrintProvisionsReport');
-        }
-
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 101, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'PrintProvisionsReport');
+                }
+            });
+        }, function () {
+            alert('Error printProvisionsReport');
+        });
     };
 
 
     $scope.printNotMaturedLoans = function (format) {
         showloading();
         var Data = outPutReportsService.printNotMaturedLoans(format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'NotMaturedLoans');
-        }
-
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 100, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'NotMaturedLoans');
+                }
+            });
+        }, function () {
+            hideloading();
+            alert('Error printNotMaturedLoans');
+        });
     };
 
 
@@ -867,13 +980,34 @@
 
 
         var Data = outPutReportsService.printPeriodicTransferReport(startDate, endDate, format, obp_Starts, $scope.periodicTransferType);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'printPeriodicTransferReport');
-        }
-
+        Data.then(function (response) {
+            var reportId = 0;
+            switch ($scope.periodicTransferType) {
+                case "1":
+                    reportId = 103;
+                    break;
+                case "2":
+                    reportId = 104;
+                    break;
+                case "3":
+                    reportId = 105;
+                    break;
+                case "4":
+                    reportId = 106;
+                    break;
+            }
+            var requestObj = { Parameters: response.data, ReportName: reportId, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'printPeriodicTransferReport');
+                }
+            });
+        }, function () {
+            alert('Error printPeriodicTransferReport');
+        });
     };
 
 
@@ -894,13 +1028,19 @@
 
 
         var Data = outPutReportsService.printClosedDepositReport(startDate, endDate, format, reportType);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'printPeriodicTransferReport');
-        }
-
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 107, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'ClosedDepositReport');
+                }
+            });
+        }, function () {
+            alert('Error printClosedDepositReport');
+        });
 
     }
 
@@ -922,13 +1062,19 @@
 
 
         var Data = outPutReportsService.printDailyBalanceReport(startDate, endDate, format, byOldPlan);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'printPeriodicTransferReport');
-        }
-
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 108, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'DailyBalanceReport');
+                }
+            });
+        }, function () {
+            alert('Error printDailyBalanceReport');
+        });
 
     }
 
@@ -941,13 +1087,31 @@
             startDate = dateFilter($scope.searchParams.StartDate, 'yyyy/MM/dd');
 
         var Data = outPutReportsService.printCashJurnalReport(startDate, $scope.searchParams.cashJurnalType, $scope.searchParams.onlyInkasDepartment, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'printCashJurnalReport');
-        }
-
+        Data.then(function (response) {
+            var reportId = 0;
+            switch ($scope.searchParams.cashJurnalType) {
+                case "1":
+                    reportId = 108;
+                    break;
+                case "0":
+                    reportId = 110;
+                    break;
+                default:
+                    reportId = 111;
+                    break;
+            }
+            var requestObj = { Parameters: response.data, ReportName: reportId, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'printCashJurnalReport');
+                }
+            });
+        }, function () {
+            alert('Error printCashJurnalReport');
+        });
 
     }
 
@@ -959,24 +1123,32 @@
             startDate = dateFilter($scope.searchParams.StartDate, 'yyyy/MM/dd');
 
         var Data = outPutReportsService.cashTotalQuantityReport(startDate, $scope.searchParams.onlyInkasDepartment, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'printPeriodicTransferReport');
-        }
-
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 112, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'CashTotalQuantityReport');
+                }
+            });
+        }, function () {
+            alert('Error cashTotalQuantityReport');
+        });
     }
 
     $scope.hbActiveUsersReport = function (format) {
         showloading();
-        var Data = outPutReportsService.hbActiveUsersReport(format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'hbActiveUsersReport');
-        }
+        var requestObj = { Parameters: null, ReportName: 118, ReportExportFormat: format }
+        ReportingApiService.getReport(requestObj, function (result) {
+            if (format == 1) {
+                ShowPDFReport(result);
+            }
+            else if (format == 2) {
+                ShowExcelReport(result, 'hbActiveUsersReport');
+            }
+        });
     };
 
     $scope.showSSTerminalParams = function () {
@@ -1055,12 +1227,27 @@
         }
 
         var Data = outPutReportsService.printSSTOperationsReport(startDate, endDate, format, authId, SSTerminalId, SSTOperationType, SSTOperationStatus, SSTReportType);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'printSSTOperationsReport');
-        }
+        Data.then(function (options) {
+            var reportId = 0;
+            switch (SSTReportType) {
+                case "1": reportId = 50; break;
+                case "2": reportId = 51; break;
+                case "3": reportId = 52; break;
+                case "4": reportId = 53; break;
+                case "5": reportId = 54; break;
+            }
+            var requestObj = { Parameters: options.data, ReportName: reportId, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'printSSTOperationsReport');
+                }
+            });
+        }, function () {
+            alert('Error printSSTOperationsReport');
+        });
 
 
     }
@@ -1076,12 +1263,19 @@
             endDate = dateFilter($scope.searchParams.EndDate, 'yyyy/MM/dd');
 
         var Data = outPutReportsService.printEOGetClientResponsesReport(startDate, endDate, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'printEOGetClientResponsesReport');
-        }
+        Data.then(function (options) {
+            var requestObj = { Parameters: options.data, ReportName: 138, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'printEOGetClientResponsesReport');
+                }
+            });
+        }, function () {
+            alert('Error printEOGetClientResponsesReport');
+        });
     }
     $scope.forgivenessReport = function (format) {
         showloading();
@@ -1115,12 +1309,19 @@
         filialCode = $scope.searchParams.filialCode;
 
         var Data = outPutReportsService.forgivenessReport(startDate, endDate, filialCode, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'forgivenessReport');
-        }
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 139, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'forgivenessReport');
+                }
+            });
+        }, function () {
+            alert('Error forgivenessReport');
+        });
     };
 
     $scope.getFilialList = function () {
@@ -1172,12 +1373,19 @@
         filialCode = $scope.searchParams.filialCode;
 
         var Data = outPutReportsService.transactionReport(startDate, endDate, filialCode, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'OnlineBankingOrdersReport');
-        }
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 129, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'OnlineBankingOrdersReport');
+                }
+            });
+        }, function () {
+            alert('Error transactionReport');
+        });
 
     };
 
@@ -1217,7 +1425,20 @@
         filialCode = $scope.searchParams.filialCode;
 
         var Data = outPutReportsService.getHBApplicationReport(Date, filialCode, HBApplicationReportType);
-        ShowExcel(Data, 'getHBApplicationReport');
+        Data.then(function (options) {
+            var reportId = 0;
+            switch (HBApplicationReportType) {
+                case "1": reportId = 130; break;
+                case "2": reportId = 131; break;
+                case "3": reportId = 132; break;
+            }
+            var requestObj = { Parameters: options.data, ReportName: reportId, ReportExportFormat: 2 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowExcelReport(result, 'getHBApplicationReport');
+            });
+        }, function () {
+            alert('Error getHBApplicationReport');
+        });
 
     };
 
@@ -1253,12 +1474,19 @@
             filialCode = $scope.searchParams.filialCode;
 
         var Data = outPutReportsService.printHBApplicationsAndOrdersReport(startDate, endDate, filialCode, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'PrintHBApplicationsAndOrdersReport');
-        }
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 133, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'PrintHBApplicationsAndOrdersReport');
+                }
+            });
+        }, function () {
+            alert('Error printHBApplicationsAndOrdersReport');
+        });
     };
 
 
@@ -1369,12 +1597,31 @@
             fundType = $scope.searchParams.fundType;
 
         var Data = outPutReportsService.printAparikReport(aparikReportType, startDate, endDate, calculationDate, fundType, shopIdentityIDList, shopIDList, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'AparikReport');
-        }
+        Data.then(function (response) {
+            var reportId = 0;
+            switch (aparikReportType) {
+                case "1":
+                    reportId = 135;
+                    break;
+                case "2":
+                    reportId = 136;
+                    break;
+                case "3":
+                    reportId = 137;
+                    break;
+            }
+            var requestObj = { Parameters: response.data, ReportName: reportId, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'AparikReport');
+                }
+            });
+        }, function () {
+            alert('Error printAparikReport');
+        });
     };
     $scope.printCardsToBeShippedReport = function (format) {
         showloading();
@@ -1399,12 +1646,19 @@
         }
 
         var Data = outPutReportsService.printCardsToBeShippedReport(startDate, endDate, filialcode, cardNumber, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'cardsToBeShippedReport');
-        }
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 142, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'cardsToBeShippedReport');
+                }
+            });
+        }, function () {
+            alert('Error printCardsToBeShippedReport');
+        });
     }
 
     $scope.printVirtualCardsReport = function (format) {
@@ -1419,12 +1673,19 @@
             endDate = dateFilter($scope.searchParams.EndDate, 'yyyy/MM/dd');
 
         var Data = outPutReportsService.printVirtualCardsReport(startDate, endDate, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'printVirtualCardsReport');
-        }
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 140, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'printVirtualCardsReport');
+                }
+            });
+        }, function () {
+            alert('Error printVirtualCardsReport');
+        });
     }
 
     $scope.printRemoteServicesMonitoringReport = function () {
@@ -1449,7 +1710,14 @@
         }
 
         var Data = outPutReportsService.printRemoteServicesMonitoringReport(startDate, endDate);
-        ShowExcel(Data, 'RemoteServicesMonitoringReport');
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 143, ReportExportFormat: 2 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowExcelReport(result, 'RemoteServicesMonitoringReport');
+            });
+        }, function () {
+            alert('Error printRemoteServicesMonitoringReport');
+        });
     };
 
     $scope.printVDTransfersReport = function (format) {
@@ -1464,12 +1732,62 @@
             endDate = dateFilter($scope.searchParams.EndDate, 'yyyy/MM/dd');
 
         var Data = outPutReportsService.printVDTransfersReport(startDate, endDate, format);
-        if (format == 1) {
-            ShowPDF(Data);
-        }
-        else if (format == 2) {
-            ShowExcel(Data, 'printVirtualCardsReport');
-        }
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 145, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (format == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (format == 2) {
+                    ShowExcelReport(result, 'printVirtualCardsReport');
+                }
+            });
+        }, function () {
+            alert('Error printVDTransfersReport');
+        });
     }
 
+    $scope.printPensionApplicationReport = function () {
+        var filialCode = null;
+
+        if ($scope.searchParams.filialCode != undefined)
+            filialCode = $scope.searchParams.filialCode;
+
+        showloading();
+        var Data = outPutReportsService.getPensionApplicationParameters($scope.searchParams.StartDate, $scope.searchParams.EndDate, filialCode);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 158, ReportExportFormat: 2 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowExcelReport(result, "PensionApplicationReport");
+
+            });
+        }, function () {
+            alert('Error getPensionApplicationParameters');
+        });
+    }
+
+    $scope.printSafekeepingItemsReport = function () {
+        var filialCode = null;
+        var startDate = null;
+        var endDate = null;
+        var quality = null;
+        if ($scope.searchParams.filialCode != undefined)
+            filialCode = $scope.searchParams.filialCode;
+        if ($scope.searchParams.StartDate != undefined)
+            startDate = dateFilter($scope.searchParams.StartDate, 'dd/MMM/yyyy');
+        if ($scope.searchParams.EndDate != undefined)
+            endDate = dateFilter($scope.searchParams.EndDate, 'dd/MMM/yyyy');
+        if ($scope.searchParams.quality != 2)
+            quality = $scope.searchParams.quality;
+        showloading();
+        var Data = outPutReportsService.getSafekeepingItemsParameters(startDate, endDate, filialCode, quality);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 159, ReportExportFormat: 2 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowExcelReport(result, "SafekeepingItemsReport");
+            });
+        }, function () {
+            alert('Error getSafekeepingItemsParameters');
+        });
+    }
 }]);

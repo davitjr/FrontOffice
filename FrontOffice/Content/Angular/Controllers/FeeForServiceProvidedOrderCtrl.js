@@ -1,4 +1,4 @@
-﻿app.controller("FeeForServiceProvidedOrderCtrl", ['$scope', 'paymentOrderService', 'customerService', 'infoService', 'dialogService', 'orderService', '$uibModal', '$http', '$confirm', '$filter', 'feeForServiceProvidedOrderService', function ($scope, paymentOrderService, customerService, infoService, dialogService, orderService, $uibModal, $http, $confirm, $filter, feeForServiceProvidedOrderService) {
+﻿app.controller("FeeForServiceProvidedOrderCtrl", ['$scope', 'paymentOrderService', 'customerService', 'infoService', 'dialogService', 'orderService', '$uibModal', '$http', '$confirm', '$filter', 'feeForServiceProvidedOrderService', 'ReportingApiService', function ($scope, paymentOrderService, customerService, infoService, dialogService, orderService, $uibModal, $http, $confirm, $filter, feeForServiceProvidedOrderService, ReportingApiService) {
     $scope.order = {};
     //$scope.order.Amount = 0;
     $scope.order.OrderNumber = "";
@@ -149,7 +149,14 @@
             isCopy = false;
 
         var Data = feeForServiceProvidedOrderService.getFeeForServiceProvidedOrderDetails($scope.order, isCopy);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getFeeForServiceProvidedOrderDetails');
+        });
 
     };
 

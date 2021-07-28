@@ -110,7 +110,7 @@ namespace FrontOffice.Controllers
 
 
 
-        public void GetConvertationCashPaymentOrder(xbs.CurrencyExchangeOrder order)
+        public JsonResult GetConvertationCashPaymentOrder(xbs.CurrencyExchangeOrder order)
         {
             ulong customerNumber = 0;
             byte operationType = 0;
@@ -247,9 +247,9 @@ namespace FrontOffice.Controllers
                 DateTime confirmationDate = OrdersController.GetOrderConfirmationDate(order.Id);
                 parameters.Add(key: "reportDate", value: confirmationDate.ToString("MM/dd/yy HH:mm:ss tt"));
             }
-            ReportService.GetConvertationCashPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
-        public void GetConvertationCashNonCashPaymentOrder(xbs.CurrencyExchangeOrder order)
+        public JsonResult GetConvertationCashNonCashPaymentOrder(xbs.CurrencyExchangeOrder order)
         {
             ulong customerNumber = 0;
             byte operationType = 0;
@@ -392,9 +392,9 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "commissionAmount", value: cashInFeeAmount.ToString());
             parameters.Add(key: "commissionAccount", value: cashInFeeAccountNumber);
 
-            ReportService.GetConvertationCashNonCashPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
-        public void GetConvertationNonCashCashPaymentOrder(xbs.CurrencyExchangeOrder order)
+        public JsonResult GetConvertationNonCashCashPaymentOrder(xbs.CurrencyExchangeOrder order)
         {
             ulong customerNumber = 0;
             byte operationType = 0;
@@ -534,9 +534,9 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "reportDate", value: confirmationDate.ToString("MM/dd/yy HH:mm:ss tt"));
             }
 
-            ReportService.GetConvertationNonCashCashPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
-        public void GetCrossConvertationCash(xbs.CurrencyExchangeOrder order)
+        public JsonResult GetCrossConvertationCash(xbs.CurrencyExchangeOrder order)
         {
             ulong customerNumber = 0;
             int code = -1;
@@ -651,9 +651,9 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "reportDate", value: confirmationDate.ToString("MM/dd/yy HH:mm:ss tt"));
             }
 
-            ReportService.GetCrossConvertationCash(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
-        public void GetCrossConvertationCashNonCash(xbs.CurrencyExchangeOrder order)
+        public JsonResult GetCrossConvertationCashNonCash(xbs.CurrencyExchangeOrder order)
         {
             ulong customerNumber = 0;
             int code = -1;
@@ -773,9 +773,9 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "reportDate", value: confirmationDate.ToString("MM/dd/yy HH:mm:ss tt"));
             }
 
-            ReportService.GetCrossConvertationCashNonCash(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
-        public void GetCrossConvertationNonCashCash(xbs.CurrencyExchangeOrder order)
+        public JsonResult GetCrossConvertationNonCashCash(xbs.CurrencyExchangeOrder order)
         {
             ulong customerNumber = 0;
             int code = -1;
@@ -893,11 +893,11 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "reportDate", value: confirmationDate.ToString("MM/dd/yy HH:mm:ss tt"));
             }
 
-            ReportService.GetCrossConvertationNonCashCash(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
 
-        public void GetCrossConvertationDetails(xbs.CurrencyExchangeOrder order)
+        public JsonResult GetCrossConvertationDetails(xbs.CurrencyExchangeOrder order)
         {
             ulong customerNumber = 0;
             int code = -1;
@@ -1031,11 +1031,11 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "reportDate", value: confirmationDate.ToString("MM/dd/yy HH:mm:ss tt"));
             }
 
-            ReportService.GetCrossConvertation(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
 
-        public void GetConvertationDetails(xbs.CurrencyExchangeOrder order)
+        public JsonResult GetConvertationDetails(xbs.CurrencyExchangeOrder order)
         {
             ulong customerNumber = 0;
             int code = -1;
@@ -1165,7 +1165,7 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "reportDate", value: confirmationDate.ToString("MM/dd/yy HH:mm:ss tt"));
             }
 
-            ReportService.GetConvertation(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -1224,7 +1224,7 @@ namespace FrontOffice.Controllers
         }
 
 
-        public void GetConvertationCashNonCashForMatureOrder(xbs.TransitCurrencyExchangeOrder order)
+        public JsonResult GetConvertationCashNonCashForMatureOrder(xbs.TransitCurrencyExchangeOrder order)
         {
             ulong customerNumber = 0;
             byte operationType = 0;
@@ -1373,10 +1373,10 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "commissionAmount", value: cashInFeeAmount.ToString());
             parameters.Add(key: "commissionAccount", value: cashInFeeAccountNumber);
 
-            ReportService.GetConvertationCashNonCashPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void GetCrossConvertationCashNonCashForMatureOrder(xbs.TransitCurrencyExchangeOrder order)
+        public JsonResult GetCrossConvertationCashNonCashForMatureOrder(xbs.TransitCurrencyExchangeOrder order)
         {
             ulong customerNumber = 0;
             int code = -1;
@@ -1482,10 +1482,10 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "reportDate", value: confirmationDate.ToString("MM/dd/yy HH:mm:ss tt"));
             }
 
-            ReportService.GetCrossConvertationCashNonCash(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void GetConvertationDetailsForMatureOrder(xbs.TransitCurrencyExchangeOrder order)
+        public JsonResult GetConvertationDetailsForMatureOrder(xbs.TransitCurrencyExchangeOrder order)
         {
             ulong customerNumber = 0;
             int code = -1;
@@ -1606,9 +1606,9 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "reportDate", value: confirmationDate.ToString("MM/dd/yy HH:mm:ss tt"));
             }
 
-            ReportService.GetConvertation(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
-        public void GetCrossConvertationDetailsForMatureOrder(xbs.TransitCurrencyExchangeOrder order)
+        public JsonResult GetCrossConvertationDetailsForMatureOrder(xbs.TransitCurrencyExchangeOrder order)
         {
             ulong customerNumber = 0;
             int code = -1;
@@ -1743,7 +1743,7 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "reportDate", value: confirmationDate.ToString("MM/dd/yy HH:mm:ss tt"));
             }
 
-            ReportService.GetCrossConvertation(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

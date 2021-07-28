@@ -30,11 +30,12 @@ namespace FrontOffice.Controllers
         {
             return Json(XBService.GetCardAccountClosingOrder(orderID), JsonRequestBehavior.AllowGet);
         }
-        public void GetCardAccountClosingApplication(ulong productID)
+        public JsonResult GetCardAccountClosingApplication(ulong productID)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "app_id", value: productID.ToString());
-            ReportService.GetCardAccountClosingApplication(parameters);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
     }
 }

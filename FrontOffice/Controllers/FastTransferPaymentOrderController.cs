@@ -55,7 +55,7 @@ namespace FrontOffice.Controllers
         {
             return Json(XBService.GetCrossConvertationVariant(debitCurrency, creditCurrency));
         }
-        public void PrintFastTransferPaymentOrder(xbs.FastTransferPaymentOrder paymentOrder)
+        public JsonResult PrintFastTransferPaymentOrder(xbs.FastTransferPaymentOrder paymentOrder)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -100,7 +100,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "FileName", value: "InternationalTransferApplicationForm");
 
 
-            ReportService.GetInternationalTransferApplicationForm(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         [TransactionPermissionFilterAttribute(OnlyFrontOffice = true)]
@@ -143,7 +143,7 @@ namespace FrontOffice.Controllers
             return response;
         }
 
-        public void PrintSTAKSendMoneyPaymentOrder(xbs.FastTransferPaymentOrder paymentOrder)
+        public JsonResult PrintSTAKSendMoneyPaymentOrder(xbs.FastTransferPaymentOrder paymentOrder)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -245,8 +245,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "InsertValues", value: insertIntoTableType);
 
 
-
-            ReportService.GetSTAKSendMoneyApplicationForm(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
     }

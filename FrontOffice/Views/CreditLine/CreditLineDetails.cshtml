@@ -91,8 +91,8 @@
             </li>
 
         </ul>
-        <ul id="menu" class="dialog-menu light-green" ng-if="(creditline.Type==30 || creditline.Type==54 || creditline.Type==50 || creditline.Type==51  )&& (creditline.Type!=9 || (creditline.Type==9 && canmature == true )) ">
-            <li ng-controller="LoanProductActivationOrderCtrl" class="root-menu-item-4 ">
+        <ul ng-controller="LoanProductActivationOrderCtrl" id="menu" class="dialog-menu light-green" ng-if="(creditline.Type==30 || creditline.Type==54 || creditline.Type==50 || creditline.Type==51  )&& (creditline.Type!=9 || (creditline.Type==9 && canmature == true )) ">
+            <li class="root-menu-item-4 ">
                 <span id="h-menu-item-4" onclick="return false;">
                     <img id="h-menu-icon-4" class="h-menu-icon cashInButton">Փաստաթղթեր
                     <img id="arrow-down" class="arrowButton">
@@ -101,13 +101,21 @@
                     <li id="v-menuItem-4.2" ng-click="getDepositCardCreditLineContract(creditline.ProductId,cardtype);">
                         <span id="h-menu-item-3">Պայմանագիր</span>
                     </li>
-                    <li id="v-menuItem-4.4" ng-if="creditline.Type!=54" ng-click="getDepositLoanProvisionDetails(creditline.ProductId,creditline.FillialCode);">
+                    <li id="v-menuItem-4.4" ng-if="creditline.Type!=54" ng-click="getDepositLoanProvisionDetails(creditline.ProductId,creditline.FillialCode, creditline.Type);">
                         <span id="h-menu-item-5">Գրավ</span>
                     </li>
                     <li id="v-menuItem-4.6" ng-click="getCreditLineTerms(creditline.ProductId);">
                         <span id="h-menu-item-7">Էական պայմաններ</span>
                     </li>
                 </ul>
+            </li>
+            <li class="root-menu-item-4 " ng-if="card.ClosingDate==null" onclick="return false;">
+                <span id="h-menu-item-4">
+                    <select title="Ստորագրող անձ" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-ng-model="confirmationPerson1" style="max-width:120px;height:30px;font-size:10px;" name="ConfirmationPerson1" id="ConfirmationPerson1" class="form-control" ng-change="confirmationPersons1(confirmationPerson1)">
+                        <option value="2">կառավարիչ</option>
+                        <option value="3">կառավարչի տեղակալ</option>
+                    </select>
+                </span>
             </li>
 
         </ul>

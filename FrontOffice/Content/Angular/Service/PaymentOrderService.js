@@ -150,7 +150,6 @@
         var response = $http({
             method: "post",
             url: "/PaymentOrder/GetPaymentOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
             params: {
@@ -164,7 +163,6 @@
         var response = $http({
             method: "post",
             url: "/PaymentOrder/GetBudgetPaymentOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
             params: {
@@ -193,7 +191,6 @@
         var response = $http({
             method: "post",
             url: "/PaymentOrder/GetCashInPaymentOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
             params: {
@@ -206,7 +203,6 @@
         var response = $http({
             method: "post",
             url: "/PaymentOrder/GetCashOutPaymentOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
             params: {
@@ -233,7 +229,6 @@
         var response = $http({
             method: "post",
             url: "/PaymentOrder/PrintCashBigAmountReport",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
             params: {
@@ -322,7 +317,6 @@
         var response = $http({
             method: "post",
             url: "/PaymentOrder/GetCashInByReestrAmounts",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
             params: {
@@ -336,7 +330,6 @@
         var response = $http({
             method: "post",
             url: "/PaymentOrder/GetCashInByReestr",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
             params: {
@@ -350,7 +343,6 @@
         var response = $http({
             method: "post",
             url: "/PaymentOrder/GetCashInByReestrNote",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
             params: {

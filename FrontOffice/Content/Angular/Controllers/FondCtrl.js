@@ -1,4 +1,4 @@
-﻿app.controller('FondCtrl', ['$scope', 'fondService', function ($scope, fondService) {
+﻿app.controller('FondCtrl', ['$scope', 'fondService', 'ReportingApiService', function ($scope, fondService, ReportingApiService) {
     $scope.filter = 1;
     $scope.$root.OpenMode = 14;
 
@@ -39,8 +39,10 @@
 
     $scope.printFondAccountsList = function () {
         //showloading();
-        var Data = fondService.printFondAccountsList();
-        ShowExcel(Data, 'FondAccountsList');
+        var requestObj = { Parameters: null, ReportName: 127, ReportExportFormat: 2 }
+        ReportingApiService.getReport(requestObj, function (result) {
+            ShowExcelReport(result, 'FondAccountsList');
+        });
 
     };
 

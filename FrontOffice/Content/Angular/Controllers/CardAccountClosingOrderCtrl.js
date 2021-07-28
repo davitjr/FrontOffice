@@ -1,4 +1,4 @@
-﻿app.controller("CardAccountClosingOrderCtrl", ['$scope', '$rootScope', 'CardAccountClosingOrderService', 'customerService', 'infoService', 'dialogService', '$uibModal', '$http', '$filter', function ($scope, $rootScope, CardAccountClosingOrderService, customerService, infoService, dialogService, $uibModal, $http, $filter, ) {
+﻿app.controller("CardAccountClosingOrderCtrl", ['$scope', '$rootScope', 'CardAccountClosingOrderService', 'customerService', 'infoService', 'dialogService', '$uibModal', '$http', '$filter', 'ReportingApiService', function ($scope, $rootScope, CardAccountClosingOrderService, customerService, infoService, dialogService, $uibModal, $http, $filter, ReportingApiService) {
     $scope.CardAccountClosingOrder = {}
     
     if ($scope.$parent.card !== undefined) {
@@ -54,7 +54,14 @@
     $scope.getCardAccountClosingApplication = function () {
         showloading();
         var Data = CardAccountClosingOrderService.getCardAccountClosingApplication($scope.CardAccountClosingOrder.ProductId);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 144, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getCardAccountClosingApplication');
+        });
     };
 
 }]);

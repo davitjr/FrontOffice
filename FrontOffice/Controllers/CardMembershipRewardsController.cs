@@ -64,8 +64,11 @@ namespace FrontOffice.Controllers
         {
             return Json(XBService.GetCardMembershipRewardsOrder(orderID), JsonRequestBehavior.AllowGet);
         }
-        
 
+        public JsonResult GetMRDataChangeAvailability(int mrID)
+        {
+            return Json(XBService.GetMRDataChangeAvailability(mrID), JsonRequestBehavior.AllowGet);
+        }
 
 
     }

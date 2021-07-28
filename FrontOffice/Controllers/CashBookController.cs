@@ -131,7 +131,7 @@ namespace FrontOffice.Controllers
         }
 
 
-        public void CashBookAccountStatementReport(xbs.SearchCashBook cashbook, string payerReciever)
+        public JsonResult CashBookAccountStatementReport(xbs.SearchCashBook cashbook, string payerReciever)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "bankCode", value: cashbook.FillialCode.ToString());
@@ -154,14 +154,15 @@ namespace FrontOffice.Controllers
             {
                 parameters.Add(key: "payerReciever", value: "1");
             }
-            ReportService.CashBookAccountStatementReport(parameters);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
         public ActionResult CashBookOrder()
         {
             return PartialView("CashBookOrder");
         }
         
-        public void GetCashOutPaymentOrderDetails(xbs.CashBookOrder order, bool isCopy = false)
+        public JsonResult GetCashOutPaymentOrderDetails(xbs.CashBookOrder order, bool isCopy = false)
         {
            
             order.CreditAccount= XBService.GetCashBookOperationSystemAccount(order, xbs.OrderAccountType.CreditAccount);
@@ -201,10 +202,10 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "reg_Date", value: order.OperationDate.Value.ToString("dd/MMM/yyyy"));
             parameters.Add(key: "f_cashout", value: isCopy ? "92" : "1");
 
-            ReportService.GetCashOutPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void GetCashInPaymentOrderDetails(xbs.CashBookOrder order, bool isCopy = false)
+        public JsonResult GetCashInPaymentOrderDetails(xbs.CashBookOrder order, bool isCopy = false)
         {
             
             string guid = Utility.GetSessionId();
@@ -236,14 +237,14 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "reg_Date", value: order.OperationDate.Value.ToString("dd/MMM/yyyy"));
             parameters.Add(key: "f_cashin", value: isCopy ? "True" : "False");
 
-            ReportService.GetCashInPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
 
         }
 
 
 
-        public void GetPaymentOrderDetails(xbs.CashBookOrder order, bool isCopy = false)
+        public JsonResult GetPaymentOrderDetails(xbs.CashBookOrder order, bool isCopy = false)
         {
             CustomerViewModel customer = new CustomerViewModel();
             //customer.Get(order.OPPerson.CustomerNumber);
@@ -275,7 +276,8 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "cust_name", value: customerName);
             parameters.Add(key: "is_copy", value: isCopy ? "True" : "False");
             parameters.Add(key: "reciever_tax_code", value: "");
-            ReportService.GetPaymentOrder(parameters);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -340,7 +342,7 @@ namespace FrontOffice.Controllers
             return false;
         }
 
-        public void GetCashBookReport(DateTime date)
+        public JsonResult GetCashBookReport(DateTime date)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -349,10 +351,11 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "date", value: date.ToString("dd/MMM/yyyy"));
             string dateArm = "«" + date.Day + "»  " + Utility.GetDateMonthArm(date) + "ի  " + date.Year + " թ․";
             parameters.Add(key: "dateArm", value: dateArm);
-            ReportService.CashBookReport(parameters, ExportFormat.Excel);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void GetCashBookTotalReport(DateTime date)
+        public JsonResult GetCashBookTotalReport(DateTime date)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -361,7 +364,8 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "date", value: date.ToString("dd/MMM/yyyy"));
             string dateString = "«" + date.Day + "»  " + Utility.GetDateMonthArm(date) + "ի  " + date.Year + " թ․";
             parameters.Add(key: "dateString", value: dateString);
-            ReportService.CashBookTotalReport(parameters, ExportFormat.Excel);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
 

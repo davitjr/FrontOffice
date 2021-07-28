@@ -1,4 +1,4 @@
-﻿app.controller("PensionApplicationCtrl", ['$scope', 'pensionApplicationService', '$http', '$confirm', 'pensionApplicationOrderService', function ($scope, pensionApplicationService, $http, $confirm, pensionApplicationOrderService) {
+﻿app.controller("PensionApplicationCtrl", ['$scope', 'pensionApplicationService', '$http', '$confirm', 'pensionApplicationOrderService', 'ReportingApiService', function ($scope, pensionApplicationService, $http, $confirm, pensionApplicationOrderService, ReportingApiService) {
     $scope.filter = 1;
     $scope.getPensionApplicationHistory = function () {
         var Data = pensionApplicationService.getPensionApplicationHistory($scope.filter);
@@ -80,7 +80,14 @@
     $scope.pensionCloseApplicationContract = function (contractId) {
         showloading();
         var Data = pensionApplicationService.pensionCloseApplicationContract(contractId);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 84, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error pensionCloseApplicationContract');
+        });
     };
 
    

@@ -1,4 +1,4 @@
-﻿app.controller("CashPosPaymentOrderCtrl", ['$scope', 'cashPosPaymentOrderService', 'paymentOrderService', 'infoService', '$filter', '$uibModal', 'accountService', 'orderService', 'customerService', '$http', function ($scope, cashPosPaymentOrderService, paymentOrderService, infoService, $filter, $uibModal, accountService,  orderService, customerService, $http) {
+﻿app.controller("CashPosPaymentOrderCtrl", ['$scope', 'cashPosPaymentOrderService', 'paymentOrderService', 'infoService', '$filter', '$uibModal', 'accountService', 'orderService', 'customerService', '$http', 'ReportingApiService', function ($scope, cashPosPaymentOrderService, paymentOrderService, infoService, $filter, $uibModal, accountService, orderService, customerService, $http, ReportingApiService) {
     $scope.order = {};
     $scope.additional = "";
     $scope.order.RegistrationDate = new Date();
@@ -307,7 +307,14 @@
                         Data.then(function(result) {
                             $scope.orderForFee.ReceiverAccount.AccountNumber = result.data;
                             var Data = paymentOrderService.getCashInPaymentOrder($scope.orderForFee, isCopy);
-                            ShowPDF(Data);
+                            Data.then(function (response) {
+                                var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                                ReportingApiService.getReport(requestObj, function (result) {
+                                    ShowPDFReport(result);
+                                });
+                            }, function () {
+                                alert('Error getCashInPaymentOrder');
+                            });
 
                         });
                     }
@@ -315,7 +322,14 @@
                         $scope.orderForFee.Currency = $scope.order.Fees[fee].Currency;
                         $scope.orderForFee.ReceiverAccount.AccountNumber = $scope.order.Fees[fee].CreditAccount.AccountNumber;
                         var Data = paymentOrderService.getCashInPaymentOrder($scope.orderForFee, isCopy);
-                        ShowPDF(Data);
+                        Data.then(function (response) {
+                            var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                            ReportingApiService.getReport(requestObj, function (result) {
+                                ShowPDFReport(result);
+                            });
+                        }, function () {
+                            alert('Error getCashInPaymentOrder');
+                        });
                     }
                 }
 

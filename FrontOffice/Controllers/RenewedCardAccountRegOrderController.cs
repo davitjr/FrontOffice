@@ -33,5 +33,11 @@ namespace FrontOffice.Controllers
         {
             return Json(XBService.GetRenewedCardAccountRegOrder(orderId), JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetRenewedCardAccountRegWarnings(xbs.Card oldCard)
+        {
+            return Json(XBService.GetRenewedCardAccountRegWarnings(oldCard), JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

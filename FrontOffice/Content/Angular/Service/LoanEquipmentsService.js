@@ -37,7 +37,6 @@
         var response = $http({
             method: "post",
             url: "/LoanEquipments/SaledEquipmentsReport",
-            responseType: 'arraybuffer',
             dataType: "json",
             params: {
                 customerNumber: customerNumber,

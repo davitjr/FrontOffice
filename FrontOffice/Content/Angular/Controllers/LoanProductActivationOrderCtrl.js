@@ -5,6 +5,8 @@
     $scope.order.Type = $scope.orderType;
     $scope.order.RegistrationDate = new Date();
     $scope.order.OperationDate = $scope.$root.SessionProperties.OperationDate;
+    $scope.confirmationPerson = '2';
+    $scope.confirmationPerson1 = '2';
 
     if ($scope.product != undefined && ($scope.product.Type == 54 || $scope.product.Type == 51)) {
         $scope.order.FeeAccount = $scope.product.ConnectAccount;
@@ -203,21 +205,21 @@
 
     };
 
-    $scope.getDepositConsumeLoanContract = function (productId) {
+    $scope.getDepositConsumeLoanContract = function (productId, confirmationPerson) {
         showloading();
-        var Data = loanProductActivationOrderService.getConsumeLoanContract(productId);
+        var Data = loanProductActivationOrderService.getConsumeLoanContract(productId, confirmationPerson);
         ShowPDF(Data);
     };
 
-    $scope.getDepositLoanGrafik = function (productId) {
+    $scope.getDepositLoanGrafik = function (productId, confirmationPerson) {
         showloading();
-        var Data = loanProductActivationOrderService.getDepositLoanGrafik(productId);
+        var Data = loanProductActivationOrderService.getDepositLoanGrafik(productId, confirmationPerson);
         ShowPDF(Data);
     };
 
-    $scope.getDepositLoanProvisionDetails = function (productId,filialCode) {
+    $scope.getDepositLoanProvisionDetails = function (productId, filialCode, creditLineType) {
         showloading();
-        var Data = loanProductActivationOrderService.getDepositLoanProvisionDetails(productId, filialCode);
+        var Data = loanProductActivationOrderService.getDepositLoanProvisionDetails(productId, filialCode, creditLineType == 30 ? $scope.confirmationPerson1 : $scope.confirmationPerson);
         ShowPDF(Data);
     };
 
@@ -229,14 +231,9 @@
 
     $scope.getDepositCardCreditLineContract = function (productId, cardType) {
 
-        if (cardType == 20 || cardType == 41) {
-            ShowMessage('American Express Gold <br /> քարտի համար անհրաժեշտ է կիրառել պայմանագրի թղթային տարբերակը:', 'error');
-        }
-        else {
-            showloading();
-            var Data = loanProductActivationOrderService.getDepositCardCreditLineContract(productId, cardType);
-            ShowPDF(Data);
-        }
+        showloading();
+        var Data = loanProductActivationOrderService.getDepositCardCreditLineContract(productId, cardType, $scope.confirmationPerson1);
+        ShowPDF(Data);
     };
 
     $scope.getCreditLineTerms = function (productId) {
@@ -291,5 +288,12 @@
 		});
 	};
 	
+    $scope.confirmationPersons = function (confirmationPerson) {
+        $scope.confirmationPerson = confirmationPerson;
+    };
+
+    $scope.confirmationPersons1 = function (confirmationPerson1) {
+        $scope.confirmationPerson1 = confirmationPerson1;
+    };
 
 }])

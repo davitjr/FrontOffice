@@ -71,7 +71,6 @@
         var response = $http({
             method: "post",
             url: "/Deposit/DepositRepaymentsGrafik",
-            responseType: 'arraybuffer',
             params: {
                 productId: productId
             }
@@ -91,13 +90,14 @@
         return response;
     };
 
-    this.getDepositContract = function (depositNumber) {
+    this.getDepositContract = function (depositNumber, confirmationPerson) {
         var response = $http({
             method: "post",
             url: "/Deposit/GetDepositContract",
             responseType: 'arraybuffer',
             params: {
-                depositNumber: depositNumber
+                depositNumber: depositNumber,
+                confirmationPerson: confirmationPerson
             }
         });
         return response;
@@ -131,7 +131,6 @@
         var response = $http({
             method: "post",
             url: "/Deposit/PrintDepositStatement",
-            responseType: 'arraybuffer',
             params: {
                 productId: appid,
                 accountNumber: accountNumber,
@@ -154,7 +153,6 @@
             var response = $http({
                 method: "post",
                 url: "/Deposit/DepositRepaymentsDetailedGrafik",
-                responseType: 'arraybuffer',
                 params: {
                     productId: productId,
                     exportFormat: exportFormat

@@ -88,7 +88,7 @@ namespace FrontOffice.Controllers
             return Json(XBService.CheckAccountForPSN(accountNumber), JsonRequestBehavior.AllowGet);
         }
        
-        public void GetAccountOpenContract(string accountNumber)
+        public void GetAccountOpenContract(string accountNumber, string confirmationPerson)
         {
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
             string guid = Utility.GetSessionId();
@@ -104,6 +104,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "currencyHB", value: "");
             parameters.Add(key: "accountTypeHB", value: "");
             parameters.Add(key: "thirdPersonCustomerNumberHB", value: "");
+            parameters.Add(key: "confirmationPerson", value: confirmationPerson);
 
             ContractService.CurrentAccountContract(parameters);
         }
@@ -122,13 +123,13 @@ namespace FrontOffice.Controllers
         }
 
         [FrontLoggingFilterAttribute(ActionType = (int)ActionType.AccountStatementPrint)]
-        public void PrintAccountStatement(string accountNumber, ushort lang, string dateFrom, string dateTo, ushort averageRest, ushort currencyRegulation, ushort payerData, ushort additionalInformationByCB, string exportFormat="pdf")
+        public JsonResult PrintAccountStatement(string accountNumber, ushort lang, string dateFrom, string dateTo, ushort averageRest, ushort currencyRegulation, ushort payerData, ushort additionalInformationByCB, string exportFormat="pdf")
         {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
             if (XBService.AccountAccessible(accountNumber, currentUser.AccountGroup))
             {
-                Dictionary<string, string> parameters = new Dictionary<string, string>();
                 parameters.Add(key: "account_gl", value: accountNumber);
                 parameters.Add(key: "start_date", value: Convert.ToDateTime(dateFrom).ToString("dd/MMM/yy"));
                 parameters.Add(key: "end_date", value: Convert.ToDateTime(dateTo).ToString("dd/MMM/yy"));
@@ -140,17 +141,17 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "averageRest", value: averageRest.ToString());
                 parameters.Add(key: "currencyRegulation", value: currencyRegulation.ToString());
             
-                ReportService.AccountStatement(parameters, ReportService.GetExportFormatEnumeration(exportFormat));
             }
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintAccountStatementNew(string accountNumber, ushort lang, string dateFrom, string dateTo, ushort averageRest, ushort currencyRegulation, ushort payerData, ushort additionalInformationByCB, ushort includingExchangeRate, string exportFormat = "pdf")
+        public JsonResult PrintAccountStatementNew(string accountNumber, ushort lang, string dateFrom, string dateTo, ushort averageRest, ushort currencyRegulation, ushort payerData, ushort additionalInformationByCB, ushort includingExchangeRate, string exportFormat = "pdf")
         {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
             if (XBService.AccountAccessible(accountNumber, currentUser.AccountGroup))
             {
-                Dictionary<string, string> parameters = new Dictionary<string, string>();
                 parameters.Add(key: "account_gl", value: accountNumber);
                 parameters.Add(key: "start_date", value: Convert.ToDateTime(dateFrom).ToString("dd/MMM/yy"));
                 parameters.Add(key: "end_date", value: Convert.ToDateTime(dateTo).ToString("dd/MMM/yy"));
@@ -163,11 +164,11 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "currencyRegulation", value: currencyRegulation.ToString());
                 parameters.Add(key: "includingExchangeRate", value: includingExchangeRate.ToString());
 
-                ReportService.AccountStatementNew(parameters, ReportService.GetExportFormatEnumeration(exportFormat));
             }
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintMemorial(string accountNumber, string dateFrom, string dateTo, ushort correct_mo)
+        public JsonResult PrintMemorial(string accountNumber, string dateFrom, string dateTo, ushort correct_mo)
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid +"_User"]);
@@ -180,7 +181,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "bankCode", value: currentUser.filialCode.ToString());
             parameters.Add(key: "filter_str", value: String.Empty);
 
-            ReportService.Memorial(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public void PrintStatementDeliveryApplication(string accountNumber)
@@ -385,6 +386,39 @@ namespace FrontOffice.Controllers
         {
             xbs.ActionResult result = XBService.SaveAndApproveAccountRemoving(order);
             return Json(result);
+        }
+
+
+        public JsonResult GetCheckCustomerFreeFunds(string accountNumber)
+        {
+            return Json(XBService.CheckCustomerFreeFunds(accountNumber), JsonRequestBehavior.AllowGet);
+        }
+        public void GetThirdPersonAccountRightsTransferReport(string accountNumber, long thirdPersonCustomerNumber)
+        {
+            ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            parameters.Add(key: "customerNumber", value: customerNumber.ToString());
+            parameters.Add(key: "armNumber", value: accountNumber);
+            parameters.Add(key: "thirdPersonCustomerNumber", value: thirdPersonCustomerNumber.ToString());
+            ContractService.ThirdPersonAccountRightsTransfer(parameters);
+        }
+        public JsonResult GetRightsTransferTransactionAvailability(string accountNumber)
+        {
+            return Json(XBService.GetRightsTransferAvailability(accountNumber), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult PostTransferThirdPersonAccountRights(xbs.ThirdPersonAccountRightsTransferOrder order)
+        {
+            return Json(XBService.SaveAndApproveThirdPersonAccountRightsTransfer(order), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetRightsTransferVisibility(string accountNumber)
+        {
+            return Json(XBService.GetRightsTransferVisibility(accountNumber), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetCheckCustomerIsThirdPerson(string accountNumber)
+        {
+            ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
+            return Json(XBService.GetCheckCustomerIsThirdPerson(accountNumber, customerNumber), JsonRequestBehavior.AllowGet);
         }
     }
 }

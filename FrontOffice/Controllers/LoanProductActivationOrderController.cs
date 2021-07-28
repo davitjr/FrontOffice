@@ -78,27 +78,29 @@ namespace FrontOffice.Controllers
 
         }
 
-        public void GetConsumeLoanContract(ulong productId)
+        public void GetConsumeLoanContract(ulong productId, string confirmationPerson)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "appID", value: productId.ToString());
             parameters.Add(key: "HbDocID", value: "0");
+            parameters.Add(key: "confirmationPerson", value: confirmationPerson);
             ContractService.ConsumeLoanContract(parameters);
 
         }
 
-        public void GetDepositLoanGrafik(ulong productId)
+        public void GetDepositLoanGrafik(ulong productId, string confirmationPerson)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "appID", value: productId.ToString());
             parameters.Add(key: "prolongID",value: "0");
             parameters.Add(key: "HbDocID", value: "0");
+            parameters.Add(key: "confirmationPerson", value: confirmationPerson);
             ContractService.DepositLoanGrafik(parameters);
 
         }
         
 
-        public void GetDepositLoanProvisionDetails(ulong productId,int fillialCode)
+        public void GetDepositLoanProvisionDetails(ulong productId,int fillialCode, string confirmationPerson)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             xbs.Provision provision = XBService.GetProductProvisions(productId)[0];
@@ -107,6 +109,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "contractType", value: "7");
             parameters.Add(key: "HbDocID", value: "0");
             parameters.Add(key: "assign", value: fillialCode==22000?"4":"6");
+            parameters.Add(key: "confirmationPerson", value: confirmationPerson);
             ContractService.DepositLoanProvision(parameters);
 
         }
@@ -119,21 +122,15 @@ namespace FrontOffice.Controllers
 
         }
 
-        public void GetDepositCardCreditLineContract(ulong productId, int cardType)
+        public void GetDepositCardCreditLineContract(ulong productId, int cardType, string confirmationPerson)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "appID", value: productId.ToString());
             parameters.Add(key: "bln_with_enddate", value: "True");
             parameters.Add(key: "HbDocID", value: "0");
+            parameters.Add(key: "confirmationPerson", value: confirmationPerson);
 
-            if (cardType == 20 || cardType == 41)
-            {
-                System.Web.HttpContext.Current.Response.TrySkipIisCustomErrors = true;
-                System.Web.HttpContext.Current.Response.StatusCode = 422;
-                System.Web.HttpContext.Current.Response.StatusDescription =Utility.ConvertUnicodeToAnsi("American Express Gold <br /> քարտի համար անհրաժեշտ է կիրառել պայմանագրի թղթային տարբերակը:");
-
-            }                                                               //CashBack NFC
-            else if (cardType == 23 || cardType == 34 || cardType == 40 || cardType == 50)
+            if (cardType == 23 || cardType == 34 || cardType == 40 || cardType == 50 || cardType == 20 || cardType == 41)
             {
                 ContractService.CreditLineContractAmex(parameters);
             }

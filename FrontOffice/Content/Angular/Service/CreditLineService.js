@@ -25,7 +25,6 @@
         var response = $http({
             method: "post",
             url: "/CreditLine/GetCreditLineGrafikApplication",
-            responseType: 'arraybuffer',
             params: {
                 loanFullNumber: loanFullNumber,
                 startDate: startDate
@@ -76,7 +75,6 @@
         var response = $http({
             method: "post",
             url: "/CreditLine/GetCreditLineTerminationApplication",
-            responseType: 'arraybuffer',
             params: {
                 cardNumber: cardNumber
             }
@@ -164,7 +162,6 @@
         var response = $http({
             method: "post",
             url: "/CreditLine/GetCreditLineOrderReport",
-            responseType: 'arraybuffer',
             data: JSON.stringify(searchParams)
         });
         return response;

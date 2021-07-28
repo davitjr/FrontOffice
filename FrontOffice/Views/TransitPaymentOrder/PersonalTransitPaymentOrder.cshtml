@@ -21,7 +21,7 @@
 <div id="transitLoad" class="overlay hidden">
     <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
 </div>
-<form ng-controller="TransitPaymentOrderCtrl" name="TransitPaymentOrderForm" id="transitPaymentOrderForm" role="form" class="form-horizontal" ng-submit="TransitPaymentOrderForm.$valid ? saveTransitPaymentOrder() : showValidationMessage();" novalidate labels-required prevent-enter-submit>
+<form ng-controller="TransitPaymentOrderCtrl" name="TransitPaymentOrderForm" id="transitPaymentOrderForm" role="form" class="form-horizontal" ng-submit="TransitPaymentOrderForm.$valid ? saveTransitPaymentOrder() : showValidationMessage();" novalidate labels-required prevent-enter-submit ng-init="getRejectFeeTypes();">
     <div id="transitpaymentorder_menu" class="menu-bar dialog-menu light-green">
         <ul id="menu" class="dialog-menu">
             <li class="root-menu-item-4 " ng-show="forTranferFromTransit!=true" ng-click="TransitPaymentOrderForm.$setSubmitted();TransitPaymentOrderForm.$valid ? getPersonalPaymentOrderDetails() : showValidationMessage();">
@@ -309,7 +309,10 @@
                 <label class="tab_title col-sm-5 " for="DescriptionForRejectFeeType">Չգանձման պատճառ  <span class="redStyle">*</span></label>
                 <div class="col-sm-6">
                     <div class="row">
-                        <textarea rows="3" required style="text-align:left" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="order.DescriptionForRejectFeeType" id="DescriptionForRejectFeeType" name="DescriptionForRejectFeeType" class="form-control tab_title"></textarea>
+                        <select data-ng-model="order.RejectFeeType" name="DescriptionForRejectFeeType" class="form-control"
+                                data-ng-options="k as v for (k,v) in rejectFeeTypes">
+                            <option value="" hidden="hidden" style="margin-left:25px">{{rejectFeeTypes[0]}}</option>
+                        </select>
                     </div>
                     <div class="row">
                         <ng-messages ng-if="TransitPaymentOrderForm.$submitted || TransitPaymentOrderForm.DescriptionForRejectFeeType.$dirty"

@@ -1,4 +1,4 @@
-﻿app.controller("LoanEquipmentsCtrl", ['$scope', 'loanEquipmentsService', 'infoService', 'accountService', '$rootScope', 'dialogService', '$uibModal', '$controller', '$confirm', 'casherService', '$http', '$filter', function ($scope, loanEquipmentsService, infoService, accountService, $rootScope, dialogService, $uibModal, $controller, $confirm, casherService, $http, $filter) {
+﻿app.controller("LoanEquipmentsCtrl", ['$scope', 'loanEquipmentsService', 'infoService', 'accountService', '$rootScope', 'dialogService', '$uibModal', '$controller', '$confirm', 'casherService', '$http', '$filter', 'ReportingApiService', function ($scope, loanEquipmentsService, infoService, accountService, $rootScope, dialogService, $uibModal, $controller, $confirm, casherService, $http, $filter, ReportingApiService) {
 
     $scope.$root.OpenMode = 8;
 
@@ -139,7 +139,14 @@
             saleStage = $scope.searchParams.SaleStage
        
         var Data = loanEquipmentsService.saledEquipmentsReport(customerNumber, filialCode, loanFullNumber, equipmentSalePriceFrom, equipmentSalePriceTo, auctionEndDateFrom, auctionEndDateTo, equipmentDescription, equipmentAddress, equipmentQuality, saleStage);
-        ShowExcel(Data, 'SaledEquipmentsReport');
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 125, ReportExportFormat: 2 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowExcelReport(result, 'SaledEquipmentsReport');
+            });
+        }, function () {
+            alert('Error saledEquipmentsReport');
+        });
     } 
 
     $scope.setClickedRow = function (loanEquipment) {

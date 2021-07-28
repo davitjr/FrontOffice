@@ -3,7 +3,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/CurrentAccountJournalReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -18,7 +17,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/ClosedCurrentAccountJournalReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -34,7 +32,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/TransactionReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -50,7 +47,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/ReopenededCurrentAccountJournalReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -65,7 +61,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/DepositsJournalReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -86,7 +81,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/IntraTransactionsByPeriodReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -101,7 +95,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/CashTransactionExceededReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -116,7 +109,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/CardsOverAccRestsReport",
-            responseType: 'arraybuffer',
             params: {
                 calculationDate: calculationDate,
                 format: format
@@ -130,7 +122,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/GivenCardsReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -150,7 +141,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintProvisionsReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate:startDate,
                 endDate:endDate,
@@ -167,7 +157,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintPeriodicTransferReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -182,7 +171,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintClosedDepositReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -197,7 +185,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintDailyBalanceReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -212,7 +199,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintCashJurnalReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 cashJurnalType: cashJurnalType,
@@ -227,7 +213,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/CashTotalQuantityReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 format: format,
@@ -241,7 +226,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/TransfersByCallReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -256,7 +240,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/HBActiveUsersReport",
-            responseType: 'arraybuffer',
             params: {
                 format: format
             }
@@ -269,7 +252,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintNotMaturedLoans",
-            responseType: 'arraybuffer',
             params: {
                 format: format
             }
@@ -281,7 +263,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintSSTOperationsReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -300,7 +281,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintEOGetClientResponsesReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -316,7 +296,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/ForgivenessReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -347,7 +326,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/GetHBApplicationReport",
-            responseType: 'arraybuffer',
             params: {
                 endDate: Date,
                 filialCode: filialCode,
@@ -361,7 +339,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintHBApplicationsAndOrdersReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -378,7 +355,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintAparikReport",
-            responseType: 'arraybuffer',
             params: {
                 aparikReportType: aparikReportType,
                 startDate: startDate,
@@ -397,7 +373,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintCardsToBeShippedReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -416,7 +391,6 @@
         const response = $http({
             method: "post",
             url: "/OutPutReports/TerminalReport",
-            responseType: 'arraybuffer',
             params: {
                 date: date,
                 terminalId: terminalId,
@@ -431,7 +405,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintVirtualCardsReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -446,7 +419,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintRemoteServicesMonitoringReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -459,7 +431,6 @@
         var response = $http({
             method: "post",
             url: "/OutPutReports/PrintVDTransfersReport",
-            responseType: 'arraybuffer',
             params: {
                 startDate: startDate,
                 endDate: endDate,
@@ -469,5 +440,31 @@
         });
         return response;
     };
-    
+
+    this.getPensionApplicationParameters = function (startDate, endDate, filialCode) {
+        var response = $http({
+            method: "post",
+            url: "/OutPutReports/GetPensionApplicationParameters",
+            params: {
+                startDate: startDate,
+                endDate: endDate,
+                filialCode: filialCode
+            }
+        });
+        return response;
+    };
+
+    this.getSafekeepingItemsParameters = function (startDate, endDate, filialCode, quality) {
+        var response = $http({
+            method: "post",
+            url: "/OutPutReports/GetSafekeepingItemsParameters",
+            params: {
+                startDate: startDate,
+                endDate: endDate,
+                filialCode: filialCode,
+                quality: quality
+            }
+        });
+        return response;
+    };
 }]);

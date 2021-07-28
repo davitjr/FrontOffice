@@ -1,4 +1,4 @@
-﻿app.controller("CardCtrl", ['$scope', 'cardService', '$location', 'loanService', 'dialogService', 'customerService', '$confirm', 'infoService', '$state', 'accountService', 'dateFilter', 'cardTariffContractService', 'cardStatusChangeOrderService', 'casherService', 'ReportingApiService', function ($scope, cardService, $location, loanService, dialogService, customerService, $confirm, infoService, $state, accountService, dateFilter, cardTariffContractService, cardStatusChangeOrderService, casherService, ReportingApiService) {
+﻿app.controller("CardCtrl", ['$scope', 'cardService', '$location', 'loanService', 'dialogService', 'customerService', '$confirm', 'infoService', '$state', 'accountService', 'dateFilter', 'cardTariffContractService', 'cardStatusChangeOrderService', 'casherService', 'ReportingApiService', '$http', function ($scope, cardService, $location, loanService, dialogService, customerService, $confirm, infoService, $state, accountService, dateFilter, cardTariffContractService, cardStatusChangeOrderService, casherService, ReportingApiService, $http) {
     $scope.accessToChangeCardBranchOrders = $scope.$root.SessionProperties.AdvancedOptions["accessToChangeCardBranchOrders"];
     $scope.accessToCardReOpenOrder = $scope.$root.SessionProperties.AdvancedOptions["accessToCardReOpenOrder"];
     $scope.filter = 1;
@@ -8,11 +8,12 @@
     $scope.dateFrom = $scope.$root.SessionProperties.OperationDate;
     $scope.dateTo = $scope.$root.SessionProperties.OperationDate;
     $scope.isCardDepartment = $scope.$root.SessionProperties.AdvancedOptions["isCardDepartment"];
+    $scope.confirmationPerson = '1';
     $scope.myFilter = function (MainCardNumber) {
         return MainCardNumber !== '';
     };
 
-
+    $scope.OperDay = new Date();
     $scope.getCardDAHKDetails = function (cardNumber) {
         var Data = cardService.getCardDAHKDetails(cardNumber);
         Data.then(function (result) {
@@ -80,6 +81,14 @@
                     }
                 }
 
+                if ($scope.$root.SessionProperties.CustomerType != 2 && $scope.$root.SessionProperties.CustomerType != 6) {
+                    $scope.confirmationPersonsFirstValueVisibility = false;
+                    $scope.confirmationPerson = '2';
+                }
+                else {
+                    $scope.confirmationPersonsFirstValueVisibility = true;
+                    $scope.confirmationPerson = '1';
+                }
 
                 $scope.loading = false;
             }, function () {
@@ -209,6 +218,24 @@
                 alert('Error in printApplication');
             });
         }
+        else 
+            if ($scope.applicationID == 18) {
+                var Data = cardService.Validate3DSecureEmailForPrint($scope.card.CardNumber);
+                Data.then(function (res) {
+                    $scope.confirm = false;
+                    if (validate($scope, res.data)) {
+                        $scope.printCardApplicationDetails();
+                    }
+                    else {
+                        $scope.showError = true;
+                        showMesageBoxDialog('Արտատպել հնարավոր չէ:', $scope, 'error', $confirm, $scope.checkCardApplicationDetails);
+                    }
+                }, function () {
+                    $scope.confirm = false;
+                    showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
+                    alert('Error in printApplication');
+                });
+            }
         else if ($scope.applicationID == 11 && $scope.card.SupplementaryType != '2') { //Կից քարտերի դեպքում ստուգում չենք կատարում
             var Data = cardService.validateSMSApplicationForPrint();
             Data.then(function (res) {
@@ -248,13 +275,35 @@
     $scope.printCardStatement = function (card, lang, exportFormat) {
         showloading();
         var Data = cardService.printCardStatement(card, $scope.dateFrom, $scope.dateTo, lang, exportFormat);
-        if (exportFormat == 'xls') {
-            ShowExcel(Data, 'CardStatement');
-        }
-        else {
-            ShowPDF(Data);
-        }
+        Data.then(function (response) {
+            var reportId = 0;
+            var format = 0;
+            if (lang == 1) {
+                reportId = 56;
+            }
+            else {
+                reportId = 57;
+            }
 
+            if (exportFormat == "pdf") {
+                format = 1;
+            }
+            else {
+                format = 2;
+            }
+
+            var requestObj = { Parameters: response.data, ReportName: reportId, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (exportFormat == 'xls') {
+                    ShowExcelReport(result, 'CardStatement');
+                }
+                else {
+                    ShowPDFReport(result);
+                }
+            });
+        }, function () {
+            alert('Error printCardStatement');
+        });
     };
 
     $scope.QualityFilter = function () {
@@ -397,13 +446,13 @@
 
     $scope.getCardContractDetails = function () {
         showloading();
-        var Data = cardService.getCardContractDetails($scope.card.ProductId);
+        var Data = cardService.getCardContractDetails($scope.card.ProductId, $scope.confirmationPerson);
         ShowPDF(Data);
     };
 
     $scope.getCardContractDetailsForBusinessCards = function () {
         showloading();
-        var Data = cardService.getCardContractDetailsForBusinessCards($scope.card.ProductId);
+        var Data = cardService.getCardContractDetailsForBusinessCards($scope.card.ProductId, $scope.confirmationPerson);
         ShowPDF(Data);
     };
 
@@ -648,6 +697,60 @@
         });
     };
 
+    $scope.getUserFilialCode = function () {
+        var Data = cardService.getUserFilialCode();
+        Data.then(function (ref) {
+            $scope.UserFilialCode = ref.data.toString();
+        }, function () {
+            alert('Error GetUserFilialCode');
+        });
+    };
+
+    $scope.confirmationPersons = function (confirmationPerson) {
+        $scope.confirmationPerson = confirmationPerson;
+    };
+
+    $scope.saveVisaAliasOrder = function (alias, cardNumber, ActionName, addInfo) {
+        $scope.order = {};
+        $scope.order.RegistrationDate = new Date();
+        $scope.order.OperationDate = $scope.$root.SessionProperties.OperationDate;
+        $scope.order.Alias = alias;
+        $scope.order.ReasonTypeDescription = addInfo;
+        $scope.order.RecipientPrimaryAccountNumber = cardNumber;
+        $scope.order.Type = 250;
+        if (ActionName == 0) {
+            $scope.order.SubType = 1;
+        }
+        else if (ActionName == 1) {
+            $scope.order.SubType = 2;
+        }
+        else if (ActionName == 2) {
+            $scope.order.SubType = 3;
+        }
+        $scope.order.ReasonTypeDescription = addInfo;
+        cardService.saveVisaAliasOrder($scope.order);
+    };
+
+    $scope.getVisaAliasOrder = function (orderId) {
+        var Data = cardService.getVisaAliasOrder(orderId);
+        Data.then(function (result) {
+            $scope.order = result.data;
+        }, function () {
+
+            alert('Error getVisaAliasOrder');
+        });
+    };
+    $scope.getCardRetainHistory = function (cardNumber) {
+        var Data = cardService.getCardRetainHistory(cardNumber);
+        Data.then(function (res) {
+            $scope.cardRetainHistoryList = res.data;
+        }, function () {
+            alert('Error getCardRetainHistory');
+        });
+    };
+
+
+
     $scope.GetVisaAliasHistory = function (CardNumber) {
         var Data = cardService.getVisaAliasHistory(CardNumber);
         Data.then(function (res) {
@@ -690,42 +793,4 @@
         }
     };
 
-    $scope.saveVisaAliasOrder = function (alias, cardNumber, ActionName, addInfo) {
-        $scope.order = {};
-        $scope.order.RegistrationDate = new Date();
-        $scope.order.OperationDate = $scope.$root.SessionProperties.OperationDate;
-        $scope.order.Alias = alias;
-        $scope.order.ReasonTypeDescription = addInfo;
-        $scope.order.RecipientPrimaryAccountNumber = cardNumber;
-        $scope.order.Type = 250;
-        if (ActionName == 0) {
-            $scope.order.SubType = 1;
-        }
-        else if (ActionName == 1) {
-            $scope.order.SubType = 2;
-        }
-        else if (ActionName == 2) {
-            $scope.order.SubType = 3;
-        }
-        $scope.order.ReasonTypeDescription = addInfo;
-        cardService.saveVisaAliasOrder($scope.order);
-    };
-
-    $scope.getVisaAliasOrder = function (orderId) {
-        var Data = cardService.getVisaAliasOrder(orderId);
-        Data.then(function (result) {
-            $scope.order = result.data;
-        }, function () {
-
-            alert('Error getVisaAliasOrder');
-        });
-    };
-    $scope.getCardRetainHistory = function (cardNumber) {
-        var Data = cardService.getCardRetainHistory(cardNumber);
-        Data.then(function (res) {
-            $scope.cardRetainHistoryList = res.data;
-        }, function () {
-            alert('Error getCardRetainHistory');
-        });
-    };
 }]); 

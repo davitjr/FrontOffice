@@ -110,13 +110,14 @@
         return response;
     };
 
-    this.getAccountOpenContract = function (accountNumber) {
+    this.getAccountOpenContract = function (accountNumber, confirmationPerson) {
         var response = $http({
             method: "post",
             url: "/Account/GetAccountOpenContract",
             responseType: 'arraybuffer',
             params: {
-                accountNumber: accountNumber                
+                accountNumber: accountNumber,
+                confirmationPerson: confirmationPerson
             }
         });
         return response;
@@ -150,7 +151,6 @@
         var response = $http({
             method: "post",
             url: "/Account/PrintAccountStatement",
-            responseType: 'arraybuffer',
             params: {
                 accountNumber: accountNumber,
                 lang: lang,
@@ -170,7 +170,6 @@
         var response = $http({
             method: "post",
             url: "/Account/PrintAccountStatementNew",
-            responseType: 'arraybuffer',
             params: {
                 accountNumber: accountNumber,
                 lang: lang,
@@ -193,7 +192,6 @@
         var response = $http({
             method: "post",
             url: "/Account/PrintMemorial",
-            responseType: 'arraybuffer',
             params: {
                 accountNumber: accountNumber, 
                 dateFrom: dateFrom,
@@ -443,5 +441,69 @@
         });
         return response;
     };
+
+    this.getCheckCustomerFreeFunds = function (accountNumber) {
+        var response = $http({
+            method: "post",
+            url: "/Account/GetCheckCustomerFreeFunds",
+            params: {
+                accountNumber: accountNumber
+            }
+        });
+        return response;
+    };
+    this.getThirdPersonAccountRightsTransferReport = function (accountNumber, thirdPersonCustomerNumber) {
+        var response = $http({
+            method: "post",
+            url: "/Account/GetThirdPersonAccountRightsTransferReport",
+            responseType: 'arraybuffer',
+            params: {
+                accountNumber: accountNumber,
+                thirdPersonCustomerNumber: thirdPersonCustomerNumber
+            }
+        });
+        return response;
+    };
+    this.postTransferThirdPersonAccountRights = function (order) {
+        var response = $http({
+            method: "post",
+            url: "/Account/PostTransferThirdPersonAccountRights",
+            data: order,
+            dataType: "json"
+        });
+        return response;
+    };
+    this.getRightsTransferTransactionAvailability = function (accountNumber) {
+        var response = $http({
+            method: "post",
+            url: "/Account/GetRightsTransferTransactionAvailability",
+            params: {
+                accountNumber: accountNumber
+            }
+        });
+        return response;
+
+    };
+    this.getRightsTransferVisibility = function (accountNumber) {
+        var response = $http({
+            method: "post",
+            url: "/Account/GetRightsTransferVisibility",
+            params: {
+                accountNumber: accountNumber
+            }
+        });
+        return response;
+    };
+    this.getcheckCustomerIsThirdPerson = function (accountNumber) {
+        var response = $http({
+            method: "post",
+            url: "/Account/GetCheckCustomerIsThirdPerson",
+            params: {
+                accountNumber: accountNumber
+            }
+        });
+        return response;
+    };
+
 
 }]);

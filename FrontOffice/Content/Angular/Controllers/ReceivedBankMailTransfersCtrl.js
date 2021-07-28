@@ -1,4 +1,4 @@
-﻿app.controller("ReceivedBankMailTransfersCtrl",['$scope', 'receivedBankMailTransfersService', 'infoService',  'customerService',   '$filter',  'dialogService', 'casherService', '$rootScope',function ($scope, receivedBankMailTransfersService, infoService, customerService, $filter, dialogService, casherService, $rootScope) {
+﻿app.controller("ReceivedBankMailTransfersCtrl", ['$scope', 'receivedBankMailTransfersService', 'infoService', 'customerService', '$filter', 'dialogService', 'casherService', '$rootScope', 'ReportingApiService', function ($scope, receivedBankMailTransfersService, infoService, customerService, $filter, dialogService, casherService, $rootScope, ReportingApiService) {
 
     $rootScope.OpenMode = 3;
 
@@ -144,7 +144,13 @@
 
         showloading();
         var Data = receivedBankMailTransfersService.printTransfer(transferID);
-      ShowPDF(Data);
-
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 77, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error printTransfer');
+        });
     };
 }]);

@@ -1848,4 +1848,12 @@
         });
         return response;
     };
+
+    this.getRejectFeeTypes = function () {
+        var response = $http({
+            method: "post",
+            url: "/Info/GetRejectFeeTypes"
+        });
+        return response;
+    };
 }]);

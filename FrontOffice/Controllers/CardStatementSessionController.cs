@@ -96,7 +96,7 @@ namespace FrontOffice.Controllers
         }
 
 
-        public void PrintCardSessionStatements(int sessionID, int statementCreationStatus, int statementSendStatus, DateTime statementStartDate, DateTime statementEndDate, int actionType, string exportFormat = "xls")
+        public JsonResult PrintCardSessionStatements(int sessionID, int statementCreationStatus, int statementSendStatus, DateTime statementStartDate, DateTime statementEndDate, int actionType, string exportFormat = "xls")
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "sessionNumber", value: sessionID.ToString());
@@ -105,10 +105,10 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "period", value: statementStartDate.ToString("dd/MM/yy") + "-" + statementEndDate.ToString("dd/MM/yy"));
             parameters.Add(key: "actionType", value: actionType.ToString());
 
-            Srv.ReportService.CardStatementSession(parameters, Srv.ReportService.GetExportFormatEnumeration(exportFormat));
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintLoanSessionStatements(int sessionID, int statementCreationStatus, int statementSendStatus, DateTime startDate, DateTime endDate, string exportFormat = "xls")
+        public JsonResult PrintLoanSessionStatements(int sessionID, int statementCreationStatus, int statementSendStatus, DateTime startDate, DateTime endDate, string exportFormat = "xls")
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "sessionNumber", value: sessionID.ToString());
@@ -116,7 +116,8 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "statementSendStatus", value: statementSendStatus.ToString());
             parameters.Add(key: "startDate", value: startDate.ToString("dd/MMM/yy"));
             parameters.Add(key: "endDate", value: endDate.ToString("dd/MMM/yy"));
-            Srv.ReportService.LoanStatementSession(parameters, Srv.ReportService.GetExportFormatEnumeration(exportFormat));
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public int GetStatementType()

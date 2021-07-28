@@ -71,7 +71,7 @@ namespace FrontOffice.Controllers
             // {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
            // parameters.Add(key: "fond", value: fond.ID.ToString());
-            ReportService.FondAccountsList(parameters, ReportService.GetExportFormatEnumeration("xls"));
+            //ReportService.FondAccountsList(parameters, ReportService.GetExportFormatEnumeration("xls"));
             //}
         }
     }

@@ -456,7 +456,9 @@ app.directive('membershiprewards', function () {
             cardnumber: '=',
             productid: '=',
             closingdate: '=',
-            cardtype: '=?'
+            cardtype: '=?',
+            accountnumber: '=?',
+            currency: '=?'
         },
         templateUrl: '/CardMembershipRewards/CardMembershipRewards'
     };
@@ -487,6 +489,18 @@ app.directive('cardservicefee', function () {
         templateUrl: '/Card/CardServiceFee'
     };
 });
+
+app.directive('visaalias', function () {
+    return {
+        restrict: 'EA',
+
+
+        templateUrl: '/Card/VisaAlias',
+
+    };
+});
+
+
 app.directive('closedcreditlines', function () {
     return {
         restrict: 'EA',
@@ -868,7 +882,7 @@ app.directive('paymentaccount', function () {
                         desc = desc + $scope.addSpaces(dif);
 
                         desc += $scope.addSpaces(1);
-                        var productDesc;
+                      
                         if (account.AccountType == 115) {
                             productDesc = account.AccountNumber.replace(account.ProductNumber + ' ', '');
                         }
@@ -3649,3 +3663,16 @@ app.directive('cardretainhistory', function () {
         controller: 'CardCtrl'
     };
 });
+
+app.directive('safekeepingitemview', function () {
+    return {
+        restrict: 'EA',
+        templateUrl: '/SafekeepingItem/SafekeepingItems',
+        link: function (scope, elem, attr, ctrl) {
+            var hideBlank = attr.hideBlank;
+            scope.hideblank = hideBlank;
+        }
+    };
+});
+
+

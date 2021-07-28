@@ -1,4 +1,4 @@
-﻿app.controller("SwiftCopyOrderCtrl", ['$scope', 'paymentOrderService', 'swiftCopyOrderService', '$location', 'dialogService', 'orderService', 'feeForServiceProvidedOrderService','$http', function ($scope, paymentOrderService, swiftCopyOrderService, $location, dialogService, orderService, feeForServiceProvidedOrderService,$http) {
+﻿app.controller("SwiftCopyOrderCtrl", ['$scope', 'paymentOrderService', 'swiftCopyOrderService', '$location', 'dialogService', 'orderService', 'feeForServiceProvidedOrderService', '$http', 'ReportingApiService', function ($scope, paymentOrderService, swiftCopyOrderService, $location, dialogService, orderService, feeForServiceProvidedOrderService, $http, ReportingApiService) {
 
     $scope.order = {};
     //$scope.order.FeeAmount = numeral(1000).format('0,0.00');
@@ -109,7 +109,14 @@
         swiftOrder.DebitAccount = { AccountNumber: "0", Currency: "AMD" };
         swiftOrder.Description = "SWIFT հաստատման փաստաթղթի համար";
         var Data = feeForServiceProvidedOrderService.getFeeForServiceProvidedOrderDetails(swiftOrder, isCopy);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getFeeForServiceProvidedOrderDetails');
+        });
 
     };
 

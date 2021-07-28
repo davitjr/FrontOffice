@@ -51,6 +51,7 @@
         Data.then(function (crd) {
             $scope.card = crd.data;
             $scope.plasticCardExpiryDate = $scope.plasticCard.ExpiryDate;
+            $scope.getRenewedCardAccountRegWarnings();
             $scope.cardExpiryDate = $scope.plasticCardExpiryDate.substring(0, 2) + '/' + $scope.plasticCardExpiryDate.substring(2, 6);
         },
             function () {
@@ -97,4 +98,14 @@
             alert('Error GetCardHolderData');
         });
     };
+
+    $scope.getRenewedCardAccountRegWarnings = function () {
+        var Data = renewedCardAccountRegOrderService.getRenewedCardAccountRegWarnings($scope.card);
+        Data.then(function (acc) {
+            $scope.warnings = acc.data;
+        }, function () {
+            alert('Warnings Error');
+        });
+    };
+
 }]);

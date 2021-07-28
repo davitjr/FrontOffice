@@ -1,4 +1,4 @@
-﻿app.controller("InternationalPaymentOrderCtrl", ['$scope', 'internationalPaymentOrderService', 'utilityService', 'accountService', 'customerService', 'infoService', 'dialogService', 'paymentOrderService', 'orderService', '$confirm', '$filter', '$uibModal', '$http', function ($scope, internationalPaymentOrderService, utilityService, accountService, customerService, infoService, dialogService, paymentOrderService, orderService, $confirm, $filter, $uibModal, $http) {
+﻿app.controller("InternationalPaymentOrderCtrl", ['$scope', 'internationalPaymentOrderService', 'utilityService', 'accountService', 'customerService', 'infoService', 'dialogService', 'paymentOrderService', 'orderService', '$confirm', '$filter', '$uibModal', '$http', 'ReportingApiService', function ($scope, internationalPaymentOrderService, utilityService, accountService, customerService, infoService, dialogService, paymentOrderService, orderService, $confirm, $filter, $uibModal, $http, ReportingApiService) {
 
     $scope.showValidationMessage = function () {
         return ShowMessage('Վավերացման ձախողում<br/>Խնդրում ենք լրացնել բոլոր պարտադիր դաշտերը։', 'error');
@@ -645,14 +645,29 @@
             showloading();
             if (isNewOrder != 1) {
                 var Data = internationalPaymentOrderService.printInternationalPaymentOrder($scope.orderDetails);
+                Data.then(function (response) {
+                    var requestObj = { Parameters: response.data, ReportName: 76, ReportExportFormat: 1 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowPDFReport(result);
+                    });
+                }, function () {
+                    alert('Error printInternationalPaymentOrder');
+                });
 
             }
             else {
                 var Data = internationalPaymentOrderService.printInternationalPaymentOrder($scope.order);
+                Data.then(function (response) {
+                    var requestObj = { Parameters: response.data, ReportName: 76, ReportExportFormat: 1 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowPDFReport(result);
+                    });
+                }, function () {
+                    alert('Error printInternationalPaymentOrder');
+                });
 
             }
 
-            ShowPDF(Data);
         }
         else {
             return ShowMessage('Կատարվել է տվյալների թարմացում: Խնդրում ենք կրկին սեղմել <<Պահպանել>> կոճակը:', 'error');

@@ -82,7 +82,6 @@
         var response = $http({
             method: "post",
             url: "/ClassifiedLoan/StoredCreditProductsByCustReport",
-            responseType: 'arraybuffer',
             dataType: "json",
             params: {
                 filialCode: filialCode,
@@ -95,7 +94,6 @@
         var response = $http({
             method: "post",
             url: "/ClassifiedLoan/StoredCreditProductReport",
-            responseType: 'arraybuffer',
             dataType: "json",
             params: {
                 filialCode: filialCode,
@@ -108,7 +106,6 @@
         var response = $http({
             method: "post",
             url: "/ClassifiedLoan/ReportOfLoansToOutBalance",
-            responseType: 'arraybuffer',
             dataType: "json",
             params: {
                 filialCode: filialCode
@@ -120,7 +117,6 @@
         var response = $http({
             method: "post",
             url: "/ClassifiedLoan/ReportOfLoansReturningToOutBalance",
-            responseType: 'arraybuffer',
             dataType: "json",
             params: {
                 filialCode: filialCode

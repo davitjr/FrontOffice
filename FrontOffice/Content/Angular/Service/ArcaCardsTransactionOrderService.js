@@ -63,7 +63,6 @@
         var response = $http({
             method: "post",
             url: "/ArcaCardsTransactionOrder/GetArcaCardsTransactionOrdersReport",
-            responseType: 'arraybuffer',
             data: JSON.stringify(searchParams)
         });
         return response;

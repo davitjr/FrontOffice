@@ -14,8 +14,7 @@
     this.getCustomerKYC = function () {
         var response = $http({
             method: "post",
-            url: "/PrintDocuments/PrintCustomerKYC",
-            responseType: 'arraybuffer'
+            url: "/PrintDocuments/PrintCustomerKYC"
         });
         return response;
     };
@@ -60,8 +59,7 @@
     this.getListOfCustomerDeposits = function () {
         var response = $http({
             method: "post",
-            url: "/PrintDocuments/GetListOfCustomerDeposits",
-            responseType: 'arraybuffer',
+            url: "/PrintDocuments/GetListOfCustomerDeposits"
 
         });
         return response;
@@ -85,8 +83,7 @@
     this.getSentSMSMessages = function () {
         var response = $http({
             method: "post",
-            url: "/PrintDocuments/GetSentSMSMessages",
-            responseType: 'arraybuffer'
+            url: "/PrintDocuments/GetSentSMSMessages"
         });
         return response;
     };

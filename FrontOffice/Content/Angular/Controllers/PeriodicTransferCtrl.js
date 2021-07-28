@@ -1,4 +1,4 @@
-﻿app.controller("PeriodicTransferCtrl", ['$scope', 'periodicTransferService', 'dialogService', '$http', 'infoService', '$state', function ($scope, periodicTransferService, dialogService, $http, infoService, $state) {
+﻿app.controller("PeriodicTransferCtrl", ['$scope', 'periodicTransferService', 'dialogService', '$http', 'infoService', '$state', 'ReportingApiService', function ($scope, periodicTransferService, dialogService, $http, infoService, $state, ReportingApiService) {
 
     $scope.filter = 1;
     //To Get All Records  
@@ -74,19 +74,40 @@
     $scope.getPeriodicTransferDetails = function (productId) {
         showloading();
         var Data = periodicTransferService.getPeriodicTransferDetails(productId);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 59, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getPeriodicTransferDetails');
+        });
     };
 
     $scope.getPeriodicTransferClosingDetails = function (productId) {
         showloading();
         var Data = periodicTransferService.getPeriodicTransferClosingDetails(productId);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 61, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getPeriodicTransferClosingDetails');
+        });
     };
 
     $scope.getPeriodicSWIFTStatementTransferDetails = function (productId) {
         showloading();
         var Data = periodicTransferService.getPeriodicSWIFTStatementTransferDetails(productId);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 60, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getPeriodicTransferDetails');
+        });
     };
 
 

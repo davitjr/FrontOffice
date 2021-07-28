@@ -1,4 +1,4 @@
-﻿app.controller('ReferenceOrderCtrl', ['$scope', 'infoService', 'referenceOrderService', 'paymentOrderService', '$location', 'dialogService', 'orderService', 'feeForServiceProvidedOrderService', '$http', 'casherService', 'customerService', function ($scope, infoService, referenceOrderService, paymentOrderService, $location, dialogService, orderService, feeForServiceProvidedOrderService, $http, casherService, customerService) {
+﻿app.controller('ReferenceOrderCtrl', ['$scope', 'infoService', 'referenceOrderService', 'paymentOrderService', '$location', 'dialogService', 'orderService', 'feeForServiceProvidedOrderService', '$http', 'casherService', 'customerService', 'ReportingApiService', function ($scope, infoService, referenceOrderService, paymentOrderService, $location, dialogService, orderService, feeForServiceProvidedOrderService, $http, casherService, customerService, ReportingApiService) {
     //$scope.OrderId = 0;
     $scope.reference = {};
     $scope.reference.RegistrationDate = new Date();
@@ -218,7 +218,14 @@
                 refOrder.Description = "Տեղեկանքի համար (" + refOrder.OPPerson.CustomerNumber.toString() + ")";
             }
             var Data = feeForServiceProvidedOrderService.getFeeForServiceProvidedOrderDetails(refOrder, isCopy);
-            ShowPDF(Data);
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowPDFReport(result);
+                });
+            }, function () {
+                alert('Error getFeeForServiceProvidedOrderDetails');
+            });
 
         }
         else {
@@ -235,7 +242,14 @@
                 }
 
                 var Data = feeForServiceProvidedOrderService.getFeeForServiceProvidedOrderDetails(refOrder, isCopy);
-                ShowPDF(Data);
+                Data.then(function (response) {
+                    var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowPDFReport(result);
+                    });
+                }, function () {
+                    alert('Error getFeeForServiceProvidedOrderDetails');
+                });
 
             }, function () {
                 alert('Error getAuthorizedCustomerNumber');

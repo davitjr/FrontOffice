@@ -47,38 +47,41 @@
         return response;
     };
 
-    this.getConsumeLoanContract = function (productId) {
+    this.getConsumeLoanContract = function (productId, confirmationPerson) {
         var response = $http({
             method: "post",
             url: "/LoanProductActivationOrder/GetConsumeLoanContract",
             responseType: 'arraybuffer',
             params: {
-                productId: productId
+                productId: productId,
+                confirmationPerson: confirmationPerson
             }
         });
         return response;
     };
 
-    this.getDepositLoanGrafik = function (productId) {
+    this.getDepositLoanGrafik = function (productId, confirmationPerson) {
         var response = $http({
             method: "post",
             url: "/LoanProductActivationOrder/GetDepositLoanGrafik",
             responseType: 'arraybuffer',
             params: {
-                productId: productId
+                productId: productId,
+                confirmationPerson: confirmationPerson
             }
         });
         return response;
     };
 
-    this.getDepositLoanProvisionDetails = function (productId,fillialCode) {
+    this.getDepositLoanProvisionDetails = function (productId, fillialCode, confirmationPerson) {
         var response = $http({
             method: "post",
             url: "/LoanProductActivationOrder/GetDepositLoanProvisionDetails",
             responseType: 'arraybuffer',
             params: {
                 productId: productId,
-                fillialCode:fillialCode
+                fillialCode: fillialCode,
+                confirmationPerson: confirmationPerson
             }
         });
         return response;
@@ -95,14 +98,15 @@
         return response;
     };
 
-    this.getDepositCardCreditLineContract = function (productId,cardtype) {
+    this.getDepositCardCreditLineContract = function (productId, cardtype, confirmationPerson) {
         var response = $http({
             method: "post",
             url: "/LoanProductActivationOrder/GetDepositCardCreditLineContract",
             responseType: 'arraybuffer',
             params: {
                 productId: productId,
-                cardtype:cardtype
+                cardtype: cardtype,
+                confirmationPerson: confirmationPerson
             }
         });
         return response;

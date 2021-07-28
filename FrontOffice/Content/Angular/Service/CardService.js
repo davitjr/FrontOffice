@@ -1,11 +1,11 @@
-﻿app.service("cardService",['$http', function ($http) {
+﻿app.service("cardService", ['$http', function ($http) {
 
     this.getCards = function (filter) {
         var response = $http({
             method: "post",
             url: "/Card/GetCards",
             params: {
-                filter:filter
+                filter: filter
             }
         });
         return response;
@@ -82,7 +82,6 @@
         var response = $http({
             method: "post",
             url: "/Card/PrintCardStatement",
-            responseType: 'arraybuffer',
             data: JSON.stringify(card),
             params: {
                 dateFrom: dateFrom,
@@ -110,7 +109,7 @@
 
 
 
-   
+
     this.getCardApplicationTypes = function () {
         var response = $http({
             method: "post",
@@ -128,7 +127,7 @@
         });
         return response;
     };
-   
+
 
     this.getCardTariff = function (productId) {
         var response = $http({
@@ -150,8 +149,8 @@
             }
         });
         return response;
-    }; 
-    
+    };
+
     this.ValidateRenewedOtherTypeCardApplicationForPrint = function (cardNumber, confirm) {
         var response = $http({
             method: "post",
@@ -164,31 +163,33 @@
         });
         return response;
     };
-   
-    this.getCardContractDetails = function (productId) {
+
+    this.getCardContractDetails = function (productId, confirmationPerson) {
         var response = $http({
             method: "post",
             url: "/Card/GetCardContractDetails",
             responseType: 'arraybuffer',
             params: {
-                productId: productId
+                productId: productId,
+                confirmationPerson: confirmationPerson
             }
         });
         return response;
     };
-   
-    this.getCardContractDetailsForBusinessCards = function (productId) {
+
+    this.getCardContractDetailsForBusinessCards = function (productId, confirmationPerson) {
         var response = $http({
             method: "post",
             url: "/Card/GetCardContractDetailsForBusinessCards",
             responseType: 'arraybuffer',
             params: {
-                productId: productId
+                productId: productId,
+                confirmationPerson: confirmationPerson
             }
         });
         return response;
     };
-    
+
     this.getCardTransactionsLimitApplication = function (customerNumber, cardType, cardCurrency, cardNumber, cardAccount) {
         var response = $http({
             method: "post",
@@ -216,7 +217,7 @@
         });
         return response;
     };
-   
+
     this.getCardDAHKDetails = function (cardNumber) {
         var response = $http({
             method: "post",
@@ -228,107 +229,107 @@
         return response;
     };
 
-     this.getPlasticCard = function (productId, productIdType) {
-         var response = $http({
-             method: "post",
-             url: "/Card/GetPlasticCard",
-             params: {
-                 productId: productId,
-                 productIdType: productIdType
-             }
-         });
-         return response;
-     };
+    this.getPlasticCard = function (productId, productIdType) {
+        var response = $http({
+            method: "post",
+            url: "/Card/GetPlasticCard",
+            params: {
+                productId: productId,
+                productIdType: productIdType
+            }
+        });
+        return response;
+    };
 
-     this.getCardCashbackAccount = function (productId) {
-         var response = $http({
-             method: "post",
-             url: "/Card/GetCardCashbackAccount",
-             params: {
-                 productId: productId,
-             }
-         });
-         return response;
-     };
+    this.getCardCashbackAccount = function (productId) {
+        var response = $http({
+            method: "post",
+            url: "/Card/GetCardCashbackAccount",
+            params: {
+                productId: productId,
+            }
+        });
+        return response;
+    };
 
-     this.getCardMotherName = function (productId) {
-         var response = $http({
-             method: "post",
-             url: "/Card/GetCardMotherName",
-             params: {
-                 productId: productId,
-             }
-         });
-         return response;
-     };
-
-
-
-     this.getCardActivationInArCa = function (cardNumber, startDate, endDate) {
-         var response = $http({
-             method: "post",
-             url: "/Card/GetCardActivationInArCa",
-             params: {
-                 cardNumber:cardNumber,
-                 startDate: startDate,
-                 endDate: endDate
-             }
-         });
-         return response;
-     };
+    this.getCardMotherName = function (productId) {
+        var response = $http({
+            method: "post",
+            url: "/Card/GetCardMotherName",
+            params: {
+                productId: productId,
+            }
+        });
+        return response;
+    };
 
 
-     this.getLastSendedPaymentFileDate = function () {
-         var response = $http({
-             method: "post",
-             url: "/Card/GetLastSendedPaymentFileDate",
-         });
-         return response;
-     };
 
-     this.getCardActivationInArCaApigateDetail = function (Id) {
-         var response = $http({
-             method: "post",
-             url: "/Card/GetCardActivationInArCaApigateDetail",
-             params: {
-                 Id: Id,
-             }
-         });
-         return response;
-     };
+    this.getCardActivationInArCa = function (cardNumber, startDate, endDate) {
+        var response = $http({
+            method: "post",
+            url: "/Card/GetCardActivationInArCa",
+            params: {
+                cardNumber: cardNumber,
+                startDate: startDate,
+                endDate: endDate
+            }
+        });
+        return response;
+    };
 
-     this.getCardUSSDService = function (productID) {
-         var response = $http({
-             method: "post",
-             url: "/Card/GetCardUSSDService",
-             params: {
-                 productID: productID,
-             }
-         });
-         return response;
-     };
 
-     this.getCardUSSDServiceTariff = function (productID) {
-         var response = $http({
-             method: "post",
-             url: "/Card/GetCardUSSDServiceTariff",
-             params: {
-                 productID: productID,
-             }
-         });
-         return response;
-     };
-     this.getCard3DSecureService = function (productID) {
-         var response = $http({
-             method: "post",
-             url: "/Card/GetCard3DSecureService",
-             params: {
-                 productID: productID,
-             }
-         });
-         return response;
-	};
-	
+    this.getLastSendedPaymentFileDate = function () {
+        var response = $http({
+            method: "post",
+            url: "/Card/GetLastSendedPaymentFileDate",
+        });
+        return response;
+    };
+
+    this.getCardActivationInArCaApigateDetail = function (Id) {
+        var response = $http({
+            method: "post",
+            url: "/Card/GetCardActivationInArCaApigateDetail",
+            params: {
+                Id: Id,
+            }
+        });
+        return response;
+    };
+
+    this.getCardUSSDService = function (productID) {
+        var response = $http({
+            method: "post",
+            url: "/Card/GetCardUSSDService",
+            params: {
+                productID: productID,
+            }
+        });
+        return response;
+    };
+
+    this.getCardUSSDServiceTariff = function (productID) {
+        var response = $http({
+            method: "post",
+            url: "/Card/GetCardUSSDServiceTariff",
+            params: {
+                productID: productID,
+            }
+        });
+        return response;
+    };
+    this.getCard3DSecureService = function (productID) {
+        var response = $http({
+            method: "post",
+            url: "/Card/GetCard3DSecureService",
+            params: {
+                productID: productID,
+            }
+        });
+        return response;
+    };
+
     this.getCardArCaStatus = function (productID) {
         var response = $http({
             method: "post",
@@ -352,15 +353,15 @@
     };
 
     this.getCardTechnology = function (productId) {
-           debugger;
-           var response = $http({
-               method: "post",
-               url: "/Card/GetCardTechnology",
-               params: {
-                   productId: productId,
-               }
-           });
-           return response;
+
+        var response = $http({
+            method: "post",
+            url: "/Card/GetCardTechnology",
+            params: {
+                productId: productId,
+            }
+        });
+        return response;
     };
 
     this.getCardHolderData = function (productId, dataType = 'fullName') {
@@ -394,6 +395,30 @@
         });
         return response;
     };
+
+    this.Validate3DSecureEmailForPrint = function (cardNumber) {
+        var response = $http({
+            method: "post",
+            url: "Card/Validate3DSecureEmailForPrint",
+            dataType: "json",
+            params: {
+                cardNumber: cardNumber
+
+            }
+
+        });
+        return response;
+    };
+
+
+    this.getUserFilialCode = function () {
+        var response = $http({
+            method: "post",
+            url: "/Home/GetUserFilialCode",
+        });
+        return response;
+    };
+
     this.getVisaAliasHistory = function (CardNumber) {
         var response = $http({
             method: "post",
@@ -441,4 +466,5 @@
         });
         return response;
     };
+    
 }]);

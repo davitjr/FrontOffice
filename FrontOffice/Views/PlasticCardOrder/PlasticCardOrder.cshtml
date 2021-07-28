@@ -123,7 +123,7 @@
                     </ng-messages>
                 </div>
             </div>
-            <div class="sub_inner form-group">
+            <div class="sub_inner form-group" ng-if="$root.SessionProperties.CustomerType != 6">
                 <label class="tab_title col-sm-4" for="motherName">Գաղտնաբառ</label>
                 <div class="col-sm-7" data-ng-init="GetCustomerLastMotherName()">
                     <input type="text" ng-model="plasticCardOrder.motherName" name="motherName" required class=" form-control" style="text-align:left" />

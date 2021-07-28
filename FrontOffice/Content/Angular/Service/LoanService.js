@@ -58,7 +58,6 @@
         var response = $http({
             method: "post",
             url: "/Loan/GetLoanGrafikApplication",
-            responseType: 'arraybuffer',
             params: {
                 loanFullNumber: loanFullNumber,
                 startDate: startDate
@@ -72,7 +71,6 @@
         var response = $http({
             method: "post",
             url: "/Loan/PrintLoanStatement",
-            responseType: 'arraybuffer',
             params: {
                 accountNumber: accountNumber,
                 dateFrom: dateFrom,
@@ -86,7 +84,6 @@
         var response = $http({
             method: "post",
             url: "/Loan/PrintLoanStatementNew",
-            responseType: 'arraybuffer',
             params: {
                 accountNumber: accountNumber,
                 dateFrom: dateFrom,
@@ -169,8 +166,7 @@
     this.printNotMaturedLoans = function (format) {
         var response = $http({
             method: "post",
-            url: "/Loan/PrintNotMaturedLoans",
-            responseType: 'arraybuffer'
+            url: "/Loan/PrintNotMaturedLoans"
         });
         return response;
     };

@@ -23,7 +23,6 @@
         var response = $http({
             method: "post",
             url: "/TransitPaymentOrder/GetCashInPaymentOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
             params: {
@@ -38,7 +37,6 @@
         var response = $http({
             method: "post",
             url: "/TransitPaymentOrder/GetCashInPaymentOrderDetailsForRATransfer",
-            responseType: 'arraybuffer',
             data:JSON.stringify({ "order":order, "transitPaymentOrder": transitPaymentOrder }),
             dataType: "json",
             params: {
@@ -52,7 +50,6 @@
         var response = $http({
             method: "post",
             url: "/TransitPaymentOrder/GetCashInPaymentOrderDetailsForBudgetTransfer",
-            responseType: 'arraybuffer',
             data: JSON.stringify({ "order": order, "transitPaymentOrder": transitPaymentOrder }),
             dataType: "json",
             params: {
@@ -92,7 +89,6 @@
         var response = $http({
             method: "post",
             url: "/TransitPaymentOrder/GetCashInPaymentOrderDetailsForMatureOrder",
-            responseType: 'arraybuffer',
             data: JSON.stringify({ "order": order, "matureOrder": matureOrder }),
             dataType: "json",
             params: {
@@ -106,7 +102,6 @@
         var response = $http({
             method: "post",
             url: "/TransitPaymentOrder/GetPaymentOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify({ "order": order, "matureOrder": matureOrder }),
             dataType: "json",
             params: {
@@ -120,7 +115,6 @@
         var response = $http({
             method: "post",
             url: "/TransitPaymentOrder/GetPaymentOrderDetailsForBond",
-            responseType: 'arraybuffer',
             data: JSON.stringify({ "order": order, "bondOrder": bondOrder }),
             dataType: "json",
             params: {

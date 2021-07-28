@@ -1,4 +1,4 @@
-﻿app.controller("PrintDocumentsCtrl", ['$scope', 'printDocumentsService', '$location', 'infoService', function ($scope, printDocumentsService, $location, infoService) {
+﻿app.controller("PrintDocumentsCtrl", ['$scope', 'printDocumentsService', '$location', 'infoService', 'ReportingApiService', function ($scope, printDocumentsService, $location, infoService, ReportingApiService) {
 
     $scope.getCustomerSignature = function () {
         showloading();
@@ -33,7 +33,14 @@
     $scope.getListOfCustomerDeposits = function () {
         showloading();
         var Data = printDocumentsService.getListOfCustomerDeposits();
-        ShowExcel(Data, 'ListOfCustomerDeposits');
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 94, ReportExportFormat: 2 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowExcelReport(result, 'ListOfCustomerDeposits');
+            });
+        }, function () {
+            alert('Error getListOfCustomerDeposits');
+        });
     };
     $scope.mergeApplicationDetails = {};
     $scope.getFilialList = function () {
@@ -55,7 +62,14 @@
     $scope.getSentSMSMessages = function () {
         showloading();
         var Data = printDocumentsService.getSentSMSMessages();
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 58, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getSentSMSMessages');
+        });
     };
 
 

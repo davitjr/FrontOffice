@@ -38,7 +38,7 @@ namespace FrontOffice.Controllers
         }
 
 
-        public void GetCashInPaymentOrderDetails(xbs.DepositCasePenaltyMatureOrder order, bool isCopy = false)
+        public JsonResult GetCashInPaymentOrderDetails(xbs.DepositCasePenaltyMatureOrder order, bool isCopy = false)
         {
             ulong customerNumber = 0;
             customerNumber=XBService.GetAuthorizedCustomerNumber();
@@ -77,8 +77,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "reg_Date", value: order.OperationDate.Value.ToString("dd/MMM/yyyy"));
             parameters.Add(key: "f_cashin", value: isCopy ? "True" : "False");
 
-            ReportService.GetCashInPaymentOrder(parameters);
-
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
 

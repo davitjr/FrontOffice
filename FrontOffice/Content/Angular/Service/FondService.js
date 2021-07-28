@@ -27,7 +27,6 @@
         var response = $http({
             method: "post",
             url: "/Fond/PrintFondAccountsList",
-            responseType: 'arraybuffer',
             data: JSON.stringify(fond)
         });
         return response;

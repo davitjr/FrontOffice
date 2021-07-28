@@ -74,7 +74,6 @@
         var response = $http({
             method: "post",
             url: "/FastTransferPaymentOrder/PrintFastTransferPaymentOrder",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
 

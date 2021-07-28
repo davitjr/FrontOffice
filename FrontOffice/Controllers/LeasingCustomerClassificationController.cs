@@ -630,19 +630,19 @@ namespace FrontOffice.Controllers
         public void PrintOneMoreTimeClassifiedCustomersReport()
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            ReportService.PrintOneMoreTimeClassifiedCustomersReport(parameters);
+           //ReportService.PrintOneMoreTimeClassifiedCustomersReport(parameters);
         }
 
         public void PrintCustomersWithOpenBaseReport()
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            ReportService.PrintLeasingCustomersWithOpenBaseReport(parameters);
+            //ReportService.PrintLeasingCustomersWithOpenBaseReport(parameters);
         }
 
         public void PrintClassificationBaseChangedCustomersReport()
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            ReportService.PrintLeasingClassificationBaseChangedCustomersReport(parameters);
+            //ReportService.PrintLeasingClassificationBaseChangedCustomersReport(parameters);
         }
     }
 }

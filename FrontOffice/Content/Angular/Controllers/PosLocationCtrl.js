@@ -1,4 +1,4 @@
-﻿app.controller("PosLocationCtrl", ['$scope', 'dateFilter', 'posLocationService', '$state', function ($scope, dateFilter, posLocationService, $state) {
+﻿app.controller("PosLocationCtrl", ['$scope', 'dateFilter', 'posLocationService', '$state', 'ReportingApiService', function ($scope, dateFilter, posLocationService, $state, ReportingApiService) {
 
    $scope.filter = 1;
    $scope.dateFrom = $scope.$root.SessionProperties.OperationDate;
@@ -119,13 +119,29 @@
 
        showloading();
        var Data = posLocationService.printPosStatement(accountNumber, $scope.dateFrom, $scope.dateTo, $scope.statementType, exportFormat);
+       Data.then(function (response) {
+           if (response.data != null) {
+               var format = 0;
+               if (exportFormat == 'pdf') {
+                   format = 1;
+               }
+               else {
+                   format = 2;
+               }
+               var requestObj = { Parameters: response.data, ReportName: 88, ReportExportFormat: format }
+               ReportingApiService.getReport(requestObj, function (result) {
+                   if (exportFormat == 'xls') {
+                       ShowExcelReport(result, 'PosStatement');
+                   }
+                   else {
+                       ShowPDFReport(result);
+                   }
+               });
+           }
+       }, function () {
+           alert('Error printPosStatement');
+       });
 
-       if (exportFormat == 'xls') {
-           ShowExcel(Data, 'PosStatement');
-       }
-       else {
-           ShowPDF(Data);
-       }
              
     };
 

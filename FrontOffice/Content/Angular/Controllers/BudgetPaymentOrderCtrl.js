@@ -1,4 +1,4 @@
-﻿app.controller("BudgetPaymentOrderCtrl", ['$scope', 'paymentOrderService', 'utilityService', 'accountService', 'customerService', 'infoService', 'dialogService', 'orderService', '$filter', '$uibModal','$http', function ($scope, paymentOrderService, utilityService, accountService, customerService, infoService, dialogService, orderService, $filter, $uibModal,$http) {
+﻿app.controller("BudgetPaymentOrderCtrl", ['$scope', 'paymentOrderService', 'utilityService', 'accountService', 'customerService', 'infoService', 'dialogService', 'orderService', '$filter', '$uibModal', '$http', 'ReportingApiService', function ($scope, paymentOrderService, utilityService, accountService, customerService, infoService, dialogService, orderService, $filter, $uibModal, $http, ReportingApiService) {
 
     $scope.showValidationMessage = function () {
         return ShowMessage('Վավերացման ձախողում<br/>Խնդրում ենք լրացնել բոլոր պարտադիր դաշտերը։', 'error');
@@ -532,24 +532,38 @@
             $scope.setCreditorDocumentNumbers();
         }
 
-        if (!$scope.IsPoliceViloation && isCopy == false && ($scope.order.PoliceResponseDetailsId == 0 || $scope.order.PoliceResponseDetailsId == undefined) && ($scope.order.ReceiverAccount.AccountNumber == '900013150058' || $scope.order.ReceiverAccount.AccountNumber == '900013150025')) {
-            var Data = paymentOrderService.getPoliceResponseDetailsIDWithoutRequest($scope.order.ViolationID, $scope.order.ViolationDate);
-            Data.then(function (responseID) {
-                $scope.order.PoliceResponseDetailsId = responseID.data;
+            if (!$scope.IsPoliceViloation && isCopy == false && ($scope.order.PoliceResponseDetailsId == 0 || $scope.order.PoliceResponseDetailsId == undefined) && ($scope.order.ReceiverAccount.AccountNumber == '900013150058' || $scope.order.ReceiverAccount.AccountNumber == '900013150025')) {
+                var Data = paymentOrderService.getPoliceResponseDetailsIDWithoutRequest($scope.order.ViolationID, $scope.order.ViolationDate);
+                Data.then(function (responseID) {
+                    $scope.order.PoliceResponseDetailsId = responseID.data;
+
+                    showloading();
+                    var Data = paymentOrderService.getBudgetPaymentOrderDetails($scope.order, isCopy);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 63, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getBudgetPaymentOrderDetails');
+                    });
+
+                }, function () {
+                    alert('error getPoliceResponseDetailsIDWithoutRequest');
+                });
+            }
+            else {
 
                 showloading();
                 var Data = paymentOrderService.getBudgetPaymentOrderDetails($scope.order, isCopy);
-                ShowPDF(Data);
-
-            }, function () {
-                alert('error getPoliceResponseDetailsIDWithoutRequest');
-            });
-        }
-        else {
-   
-            showloading();
-            var Data = paymentOrderService.getBudgetPaymentOrderDetails($scope.order, isCopy);
-            ShowPDF(Data);
+                Data.then(function (response) {
+                    var requestObj = { Parameters: response.data, ReportName: 63, ReportExportFormat: 1 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowPDFReport(result);
+                    });
+                }, function () {
+                    alert('Error getBudgetPaymentOrderDetails');
+                });
             }
         }
         else {

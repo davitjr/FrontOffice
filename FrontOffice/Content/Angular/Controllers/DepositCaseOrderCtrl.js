@@ -1,4 +1,4 @@
-﻿app.controller("DepositCaseOrderCtrl", ['$scope', 'depositCaseOrderService', '$http', 'infoService', '$uibModal', 'dateFilter', '$filter', 'customerService', 'paymentOrderService', 'orderService', function ($scope, depositCaseOrderService, $http, infoService, $uibModal, dateFilter, $filter, customerService, paymentOrderService, orderService) {
+﻿app.controller("DepositCaseOrderCtrl", ['$scope', 'depositCaseOrderService', '$http', 'infoService', '$uibModal', 'dateFilter', '$filter', 'customerService', 'paymentOrderService', 'orderService', 'ReportingApiService', function ($scope, depositCaseOrderService, $http, infoService, $uibModal, dateFilter, $filter, customerService, paymentOrderService, orderService, ReportingApiService) {
     $scope.order = {};
     $scope.contractTypes = [];
     $scope.contractTypes[1] = 'Միաժամանակյա';
@@ -353,26 +353,38 @@
 
     $scope.printOrder = function () {
 
-        if ($scope.order.OrderNumber == undefined || $scope.order.OrderNumber == "")
-            {
-              var Data = customerService.getAuthorizedCustomerNumber();
-              Data.then(function (descr) {
+        if ($scope.order.OrderNumber == undefined || $scope.order.OrderNumber == "") {
+            var Data = customerService.getAuthorizedCustomerNumber();
+            Data.then(function (descr) {
                 $scope.order.CustomerNumber = descr.data;
                 var Data = orderService.generateNextOrderNumber($scope.order.CustomerNumber);
                 Data.then(function (nmb) {
                     $scope.order.OrderNumber = nmb.data;
-                     showloading();
-                     var Data = depositCaseOrderService.printOrder($scope.order);
-                     ShowPDF(Data);
-               });
+                    showloading();
+                    var Data = depositCaseOrderService.printOrder($scope.order);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 81, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error printOrder');
+                    });
+                });
 
-               });
-           }
-        else
-            {
-                showloading();
-                var Data = depositCaseOrderService.printOrder($scope.order);
-                ShowPDF(Data);
-            }
+            });
+        }
+        else {
+            showloading();
+            var Data = depositCaseOrderService.printOrder($scope.order);
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 81, ReportExportFormat: 1 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowPDFReport(result);
+                });
+            }, function () {
+                alert('Error printOrder');
+            });
+        }
     }
 }]);

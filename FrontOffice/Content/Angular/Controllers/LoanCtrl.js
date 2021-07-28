@@ -1,4 +1,4 @@
-﻿app.controller("LoanCtrl", ['$scope', 'loanService', 'customerService', 'utilityService', 'infoService', '$state', '$confirm', function ($scope, loanService, customerService, utilityService, infoService, $state, $confirm) {
+﻿app.controller("LoanCtrl", ['$scope', 'loanService', 'customerService', 'utilityService', 'infoService', '$state', '$confirm', 'ReportingApiService', function ($scope, loanService, customerService, utilityService, infoService, $state, $confirm, ReportingApiService) {
     //var Data = customerService.getCustomerType();
     //Data.then(function (type) {
     //    $scope.customerType = type.data;
@@ -231,7 +231,14 @@
     $scope.getLoanGrafikApplication = function () {
         showloading();
         var Data = loanService.getLoanGrafikApplication($scope.loan.LoanAccount.AccountNumber, new Date(parseInt($scope.loan.StartDate.substr(6))));
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 62, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getLoanGrafikApplication');
+        });
     };
 
     $scope.getLoanProductProlongations = function (productId) {
@@ -337,7 +344,14 @@
     $scope.printNotMaturedLoans = function () {
         showloading();
         var Data = loanService.printNotMaturedLoans();
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 100, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error printNotMaturedLoans');
+        });
     };
 
     $scope.getProductAccountFromCreditCodeForAMD = function (creditCode, productType, accountType) {

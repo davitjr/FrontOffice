@@ -47,31 +47,32 @@ namespace FrontOffice.Controllers
             return PartialView("PeriodicTransfersHistory");
         }
 
-        public void GetPeriodicTransferDetails(ulong productId)
+        public JsonResult GetPeriodicTransferDetails(ulong productId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "app_ID", value: productId.ToString());
             parameters.Add(key: "edit", value: "false");
-            ReportService.PeriodicTransferDetails(parameters);
-            
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
+
         }
 
-        public void GetPeriodicSWIFTStatementTransferDetails(ulong productId)
+        public JsonResult GetPeriodicSWIFTStatementTransferDetails(ulong productId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "app_ID", value: productId.ToString());
-            ReportService.PeriodicSWIFTStatementTransferDetails(parameters);
 
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void GetPeriodicTransferClosingDetails(ulong productId)
+        public JsonResult GetPeriodicTransferClosingDetails(ulong productId)
         {
             string guid = Utility.GetSessionId();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "app_ID", value: productId.ToString());
             parameters.Add(key: "filialcode", value: ((XBS.User)Session[guid+"_User"]).filialCode.ToString());
-            ReportService.PeriodicTransferClosingDetails(parameters);
 
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         [TransactionPermissionFilter]

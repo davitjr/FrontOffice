@@ -1,4 +1,4 @@
-﻿app.controller('OrderCtrl', ['$scope', 'orderService', 'utilityPaymentService', '$location', 'dialogService', '$confirm', '$uibModal', 'customerService', 'casherService', 'arcaCardsTransactionOrderService', 'remittanceCancellationOrderService', 'fastTransferPaymentOrderService', 'remittanceAmendmentOrderService', 'plasticCardService', 'creditLineService', function ($scope, orderService, utilityPaymentService, $location, dialogService, $confirm, $uibModal, customerService, casherService, arcaCardsTransactionOrderService, remittanceCancellationOrderService, fastTransferPaymentOrderService, remittanceAmendmentOrderService, plasticCardService, creditLineService) {
+﻿app.controller('OrderCtrl', ['$scope', 'orderService', 'utilityPaymentService', '$location', 'dialogService', '$confirm', '$uibModal', 'customerService', 'casherService', 'arcaCardsTransactionOrderService', 'remittanceCancellationOrderService', 'fastTransferPaymentOrderService', 'remittanceAmendmentOrderService', 'plasticCardService', 'creditLineService', 'ReportingApiService', function ($scope, orderService, utilityPaymentService, $location, dialogService, $confirm, $uibModal, customerService, casherService, arcaCardsTransactionOrderService, remittanceCancellationOrderService, fastTransferPaymentOrderService, remittanceAmendmentOrderService, plasticCardService, creditLineService, ReportingApiService) {
 
     $scope.OrderType = '0';
     $scope.OrderQualityType = '0';
@@ -198,6 +198,8 @@
             case 185:
             case 248:
             case 249:
+            case 251:
+            case 253:
                 var temp = '/PaymentOrder/PaymentOrderDetails';
                 var id = 'PaymentOrderDetails';
                 var title = title;//'Փոխանցում սեփական հաշիվների մեջ'
@@ -825,6 +827,11 @@
                 var id = 'CardReOpenOrderDetails';
                 var title = title;
                 break;
+            case 250: //Visa Alias  հայտ
+                var temp = '/Card/VisaAliasOrderDetails';
+                var id = 'VisaAliasOrderDetails';
+                var title = title;
+                break;
             default:
                 var temp = '/Error/MsgBoxAccess';
                 var id = 'MsgBoxAccess';
@@ -1299,23 +1306,58 @@
         var Data = null;
         switch ($scope.searchParams.Type) {
             case "206": //Քարտի բլոկավորման/ապաբլոկավորման հայտ
+                fileName = 'Arca_Cards_Transactions_Reporting';
                 Data = arcaCardsTransactionOrderService.GetArcaCardsTransactionOrdersReport($scope.searchParams);
-                fileName = 'Arca_Cards_Transactions_Reporting'
+                Data.then(function (response) {
+                    var requestObj = { Parameters: response.data, ReportName: 128, ReportExportFormat: 2 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowExcelReport(result, fileName);
+                    });
+                }, function () {
+                    alert('Error GetArcaCardsTransactionOrdersReport');
+                });
                 break;
             case "210": //Նոր քարտի հայտ
             case "211": //Լրացուցիչ քարտի պատվեր
             case "212": //Կից քարտի պատվեր
+                fileName = 'Plastic_Card_Orders_Report';
                 Data = plasticCardService.GetPlasticCardOrdersReport($scope.searchParams);
-                fileName = 'Plastic_Card_Orders_Report'
+                Data.then(function (response) {
+                    var requestObj = { Parameters: response.data, ReportName: 141, ReportExportFormat: 2 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowExcelReport(result, fileName);
+                    });
+                }, function () {
+                    alert('Error GetPlasticCardOrdersReport');
+                });
                 break;
             case "21":
             case "199":
-            case "74":
-                Data = creditLineService.GetCreditLineOrderReport($scope.searchParams);
+            case "74":                
                 fileName = 'Creditline_Orders_Report'
+                Data = creditLineService.GetCreditLineOrderReport($scope.searchParams);
+                Data.then(function (response) {
+                    var reportId = 0;
+                    switch ($scope.searchParams.Type) {
+                        case "74":
+                            reportId = 146;
+                            break;
+                        case "21":
+                            reportId = 147;
+                            break;
+                        default:
+                            reportId = 148;
+                            break;
+                    }
+                    var requestObj = { Parameters: response.data, ReportName: reportId, ReportExportFormat: 2 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowExcelReport(result, 'Creditline_Orders_Report');
+                    });
+                }, function () {
+                    alert('Error GetCreditLineOrderReport');
+                });
                 break;
         }
-        ShowExcel(Data, fileName);
     };
 
 

@@ -26,7 +26,7 @@ namespace FrontOffice.Controllers
             return View("Reports");
         }
 
-        public void CurrentAccountJournalReport(DateTime? startDate, DateTime? endDate, ExportFormat format = ExportFormat.PDF)
+        public JsonResult CurrentAccountJournalReport(DateTime? startDate, DateTime? endDate, ExportFormat format = ExportFormat.PDF)
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -38,10 +38,10 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "end_date", value: endDate.Value.ToString("dd/MMM/yy"));
 
             parameters.Add(key: "filialCode", value: currentUser.filialCode.ToString());
-            ReportService.CurrentAccountJournalReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void ClosedCurrentAccountJournalReport(DateTime? startDate, DateTime? endDate, ExportFormat format = ExportFormat.PDF)
+        public JsonResult ClosedCurrentAccountJournalReport(DateTime? startDate, DateTime? endDate, ExportFormat format = ExportFormat.PDF)
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -52,10 +52,10 @@ namespace FrontOffice.Controllers
             if (endDate != null)
                 parameters.Add(key: "endDate", value: endDate.Value.ToString("dd/MMM/yy"));
             parameters.Add(key: "filialCode", value: currentUser.filialCode.ToString());
-            ReportService.ClosedCurrentAccountJournalReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
         
-        public void ReopenededCurrentAccountJournalReport(DateTime? startDate, DateTime? endDate, ExportFormat format = ExportFormat.PDF)
+        public JsonResult ReopenededCurrentAccountJournalReport(DateTime? startDate, DateTime? endDate, ExportFormat format = ExportFormat.PDF)
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -66,10 +66,10 @@ namespace FrontOffice.Controllers
             if (endDate != null)
                 parameters.Add(key: "endDate", value: endDate.Value.ToString("dd/MMM/yy"));
             parameters.Add(key: "filialCode", value: currentUser.filialCode.ToString());
-            ReportService.ReopenededCurrentAccountJournalReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void DepositsJournalReport(DateTime? startDate, DateTime? endDate, uint setNumber, string currency, ushort depositType, ushort quality, ExportFormat format = ExportFormat.PDF)
+        public JsonResult DepositsJournalReport(DateTime? startDate, DateTime? endDate, uint setNumber, string currency, ushort depositType, ushort quality, ExportFormat format = ExportFormat.PDF)
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -86,21 +86,18 @@ namespace FrontOffice.Controllers
 
             if (quality == 0)
             {
-                depositReportMember = 1;
-                if (startDate != null)
-                    parameters.Add(key: "startDate", value: startDate.Value.ToString("dd/MMM/yy"));
-                else
-                    parameters.Add(key: "startDate", value: null);
-                if (endDate != null)
-                    parameters.Add(key: "endDate", value: endDate.Value.ToString("dd/MMM/yy"));
-                else
-                    parameters.Add(key: "endDate", value: null);
+                depositReportMember = 1;               
             }
+
+            if (startDate != null)
+                parameters.Add(key: "startDate", value: startDate.Value.ToString("dd/MMM/yy"));
             else
-            {
                 parameters.Add(key: "startDate", value: null);
+
+            if (endDate != null)
+                parameters.Add(key: "endDate", value: endDate.Value.ToString("dd/MMM/yy"));
+            else
                 parameters.Add(key: "endDate", value: null);
-            }
 
             parameters.Add(key: "filialCode", value: currentUser.filialCode.ToString());
 
@@ -121,10 +118,10 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "quality", value: quality.ToString());
 
 
-            ReportService.DepositsJournalReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void IntraTransactionsByPeriodReport(DateTime? startDate, DateTime? endDate, ExportFormat format = ExportFormat.PDF)
+        public JsonResult IntraTransactionsByPeriodReport(DateTime? startDate, DateTime? endDate, ExportFormat format = ExportFormat.PDF)
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -136,10 +133,10 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "endDate", value: endDate.Value.ToString("dd/MMM/yy"));
             parameters.Add(key: "filialCode", value: currentUser.filialCode.ToString());
 
-            ReportService.PrintIntraTransactionsByPeriod(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void CashTransactionExceededReport(DateTime? startDate, DateTime? endDate, ExportFormat format = ExportFormat.PDF)
+        public JsonResult CashTransactionExceededReport(DateTime? startDate, DateTime? endDate, ExportFormat format = ExportFormat.PDF)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -148,10 +145,10 @@ namespace FrontOffice.Controllers
             if (endDate != null)
                 parameters.Add(key: "endDate", value: endDate.Value.ToString("dd/MMM/yy"));
 
-            ReportService.PrintCashTransactionExceededReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void CardsOverAccRestsReport(DateTime? calculationDate, ExportFormat format = ExportFormat.PDF)
+        public JsonResult CardsOverAccRestsReport(DateTime? calculationDate, ExportFormat format = ExportFormat.PDF)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -164,10 +161,10 @@ namespace FrontOffice.Controllers
 
             parameters.Add(key: "filialCode", value: currentUser.filialCode.ToString());
 
-            ReportService.PrintCardsOverAccRestsReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void GivenCardsReport(DateTime? startDate, DateTime? endDate, byte dateType, string cardSystemType, string cardType, int relatedOfficeNumber, string cardCurrency, ExportFormat format = ExportFormat.PDF)
+        public JsonResult GivenCardsReport(DateTime? startDate, DateTime? endDate, byte dateType, string cardSystemType, string cardType, int relatedOfficeNumber, string cardCurrency, ExportFormat format = ExportFormat.PDF)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -198,10 +195,10 @@ namespace FrontOffice.Controllers
             if (relatedOfficeNumber != 0)
                 parameters.Add(key: "cardOffice", value: relatedOfficeNumber.ToString());
 
-            ReportService.PrintGivenCardsReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintProvisionsReport(DateTime? startDate, DateTime? endDate, byte activeType, byte loanType, byte quality, ExportFormat format = ExportFormat.PDF)
+        public JsonResult PrintProvisionsReport(DateTime? startDate, DateTime? endDate, byte activeType, byte loanType, byte quality, ExportFormat format = ExportFormat.PDF)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -232,10 +229,10 @@ namespace FrontOffice.Controllers
 
             parameters.Add(key: "onlyYerevanFilials", value: "0");
 
-            ReportService.ProvisionsReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintNotMaturedLoans(ExportFormat format = ExportFormat.PDF)
+        public JsonResult PrintNotMaturedLoans(ExportFormat format = ExportFormat.PDF)
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -245,11 +242,11 @@ namespace FrontOffice.Controllers
 
             parameters.Add(key: "customerNumber", value: "0");
 
-            ReportService.NotMaturedLoans(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
 
-        public void PrintPeriodicTransferReport(DateTime? startDate, DateTime? endDate, ExportFormat format, byte obpStarts, byte periodicTransferType)
+        public JsonResult PrintPeriodicTransferReport(DateTime? startDate, DateTime? endDate, ExportFormat format, byte obpStarts, byte periodicTransferType)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -268,11 +265,11 @@ namespace FrontOffice.Controllers
             if (obpStarts != 0)
                 parameters.Add(key: "O_B_P_Starts", value: obpStarts.ToString());
 
-            ReportService.PrintPeriodicTransferReport(parameters, format, periodicTransferType);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
 
-        public void PrintClosedDepositReport(DateTime? startDate, DateTime? endDate, ExportFormat format, byte reportType)
+        public JsonResult PrintClosedDepositReport(DateTime? startDate, DateTime? endDate, ExportFormat format, byte reportType)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -288,11 +285,12 @@ namespace FrontOffice.Controllers
 
             parameters.Add(key: "reportType", value: reportType.ToString());
             parameters.Add(key: "depositReportMember", value: depositReportMember);
-            ReportService.PrintClosedDepositReport(parameters, format);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
 
-        public void PrintDailyBalanceReport(DateTime? startDate, DateTime? endDate, ExportFormat format, bool byOldPlan)
+        public JsonResult PrintDailyBalanceReport(DateTime? startDate, DateTime? endDate, ExportFormat format, bool byOldPlan)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -309,11 +307,11 @@ namespace FrontOffice.Controllers
             string byOldPlanString = byOldPlan == true ? "1" : "0";
             parameters.Add(key: "byOldPlan", value: byOldPlanString);
 
-            ReportService.PrintDailyBalanceReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
 
-        public void PrintCashJurnalReport(DateTime? startDate, byte cashJurnalType, byte onlyInkasDepartment, ExportFormat format)
+        public JsonResult PrintCashJurnalReport(DateTime? startDate, byte cashJurnalType, byte onlyInkasDepartment, ExportFormat format)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -328,7 +326,6 @@ namespace FrontOffice.Controllers
                     {
                         parameters.Add(key: "deb_cred", value: "d");
                         parameters.Add(key: "otherCur", value: "false");
-                        ReportService.PrintDailyBalanceReport(parameters, format);
                         break;
                     }
                 case 2:
@@ -351,10 +348,10 @@ namespace FrontOffice.Controllers
                     }
                 default: { break; }
             }
-            ReportService.PrintCashJurnal(parameters, format, cashJurnalType);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void CashTotalQuantityReport(DateTime? startDate, byte onlyInkasDepartment, ExportFormat format)
+        public JsonResult CashTotalQuantityReport(DateTime? startDate, byte onlyInkasDepartment, ExportFormat format)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -365,10 +362,10 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "operDay", value: startDate.Value.ToString("dd/MMM/yy"));
 
             parameters.Add(key: "onlyInkasDepartment", value: onlyInkasDepartment.ToString());
-            ReportService.CashTotalQuantityReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void TransfersByCallReport(DateTime? startDate, DateTime? endDate, ExportFormat format = ExportFormat.PDF)
+        public JsonResult TransfersByCallReport(DateTime? startDate, DateTime? endDate, ExportFormat format = ExportFormat.PDF)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             if (startDate != null)
@@ -376,7 +373,7 @@ namespace FrontOffice.Controllers
             if (endDate != null)
                 parameters.Add(key: "endDate", value: endDate.Value.ToString("dd/MMM/yy"));
 
-            ReportService.TransfersByCallReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public void HBActiveUsersReport(ExportFormat format = ExportFormat.PDF)
@@ -386,7 +383,7 @@ namespace FrontOffice.Controllers
             //SessionProperties sessionProperties = ((SessionProperties)System.Web.HttpContext.Current.Session[guid + "_SessionProperties"]);
             //if (sessionProperties.AdvancedOptions["isOnlineAcc"] == "1" || sessionProperties.AdvancedOptions["isCardHoldersRelation"] == "1")
             //{
-                ReportService.HBActiveUsersReport(parameters, format);
+                //ReportService.HBActiveUsersReport(parameters, format);
             //}
             //else
             //{
@@ -395,7 +392,7 @@ namespace FrontOffice.Controllers
             //}
         }
 
-        public void PrintSSTOperationsReport(DateTime? startDate, DateTime? endDate, ExportFormat format, int? authId, string SSTerminalId, string SSTOperationType, short? SSTOperationStatus, byte SSTReportType)
+        public JsonResult PrintSSTOperationsReport(DateTime? startDate, DateTime? endDate, ExportFormat format, int? authId, string SSTerminalId, string SSTOperationType, short? SSTOperationStatus, byte SSTReportType)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -434,11 +431,11 @@ namespace FrontOffice.Controllers
 
             parameters.Add(key: "filialCode", value: currentUser.filialCode.ToString());
 
-            ReportService.PrintSSTOperationsReport(parameters, format, SSTReportType);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
 
-        public void PrintEOGetClientResponsesReport(DateTime? startDate, DateTime? endDate, ExportFormat format)
+        public JsonResult PrintEOGetClientResponsesReport(DateTime? startDate, DateTime? endDate, ExportFormat format)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             if (startDate != null)
@@ -446,12 +443,12 @@ namespace FrontOffice.Controllers
             if (endDate != null)
                 parameters.Add(key: "endDate", value: endDate.Value.ToString("dd/MMM/yy"));
 
-            ReportService.PrintEOGetClientResponsesReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
 
 
-        public void ForgivenessReport(DateTime? startDate, DateTime? endDate, short? filialCode, ExportFormat format = ExportFormat.PDF)
+        public JsonResult ForgivenessReport(DateTime? startDate, DateTime? endDate, short? filialCode, ExportFormat format = ExportFormat.PDF)
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -473,7 +470,7 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "FilialCode", value: filialCode == null ? "0" : filialCode.ToString());
             }
 
-            ReportService.ForgivenessReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public ushort GetUserFilialCode()
@@ -484,7 +481,7 @@ namespace FrontOffice.Controllers
             return currentUser.filialCode;
         }
 
-        public void TransactionReport(DateTime? startDate, DateTime? endDate, short? filialCode, ExportFormat format = ExportFormat.Excel)
+        public JsonResult TransactionReport(DateTime? startDate, DateTime? endDate, short? filialCode, ExportFormat format = ExportFormat.Excel)
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -504,10 +501,10 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "FilialCode", value: filialCode == null ? "0" : filialCode.ToString());
             }
 
-            ReportService.TransactionReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void GetHBApplicationReport(DateTime? endDate, short? filialCode, byte HBApplicationReportType)
+        public JsonResult GetHBApplicationReport(DateTime? endDate, short? filialCode, byte HBApplicationReportType)
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -520,10 +517,10 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "filialCode", value: currentUser.filialCode.ToString());
             else
                 parameters.Add(key: "filialCode", value: filialCode != null ? filialCode.ToString() : "0");
-            ReportService.GetHBApplicationReport(parameters, HBApplicationReportType);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintHBApplicationsAndOrdersReport(DateTime? startDate, DateTime? endDate, short? filialCode, ExportFormat format)
+        public JsonResult PrintHBApplicationsAndOrdersReport(DateTime? startDate, DateTime? endDate, short? filialCode, ExportFormat format)
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -545,10 +542,10 @@ namespace FrontOffice.Controllers
                 parameters.Add(key: "filialCode", value: filialCode.ToString());
             }
 
-            ReportService.PrintHBApplicationsAndOrdersReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintAparikReport(byte aparikReportType, DateTime? startDate, DateTime? endDate, DateTime? calculationDate, byte? fundType, string shopIdentityIDList, string shopIDList, ExportFormat format)
+        public JsonResult PrintAparikReport(byte aparikReportType, DateTime? startDate, DateTime? endDate, DateTime? calculationDate, byte? fundType, string shopIdentityIDList, string shopIDList, ExportFormat format)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -585,10 +582,10 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "shopIdentityIDList", value: shopIdentityIDList.ToString());
             parameters.Add(key: "shopIDList", value: shopIDList.ToString());
 
-            ReportService.PrintAparikReport(parameters, format, aparikReportType);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
-        public void PrintCardsToBeShippedReport(DateTime? startDate, DateTime? endDate, short? filialCode, string cardNumber, ExportFormat format = ExportFormat.PDF)
+        public JsonResult PrintCardsToBeShippedReport(DateTime? startDate, DateTime? endDate, short? filialCode, string cardNumber, ExportFormat format = ExportFormat.PDF)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -604,7 +601,7 @@ namespace FrontOffice.Controllers
             if (cardNumber != null)
                 parameters.Add(key: "cardNumber", value: cardNumber);
 
-            ReportService.PrintCardsToBeShippedReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -612,7 +609,7 @@ namespace FrontOffice.Controllers
 
         ////  Տերմինալների հաշվետվություն
 
-        public void TerminalReport(DateTime? date, string terminalId, ExportFormat format = ExportFormat.PDF)
+        public JsonResult TerminalReport(DateTime? date, string terminalId, ExportFormat format = ExportFormat.PDF)
         {
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
@@ -625,10 +622,10 @@ namespace FrontOffice.Controllers
             if (terminalId != null)
                 parameters.Add(key: "Terminal_id", value: terminalId);
 
-            ReportService.TerminalReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintVirtualCardsReport(DateTime? startDate, DateTime? endDate, ExportFormat format)
+        public JsonResult PrintVirtualCardsReport(DateTime? startDate, DateTime? endDate, ExportFormat format)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             if (startDate != null)
@@ -636,10 +633,10 @@ namespace FrontOffice.Controllers
             if (endDate != null)
                 parameters.Add(key: "endDate", value: endDate.Value.ToString("dd/MMM/yy"));
 
-            ReportService.PrintVirtualCardsReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintRemoteServicesMonitoringReport(DateTime? startDate, DateTime? endDate)
+        public JsonResult PrintRemoteServicesMonitoringReport(DateTime? startDate, DateTime? endDate)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -649,10 +646,10 @@ namespace FrontOffice.Controllers
             if (endDate != null)
                 parameters.Add(key: "endDate", value: endDate.Value.ToString("dd/MMM/yy"));
 
-            ReportService.PrintRemoteServicesMonitoringReport(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintVDTransfersReport(DateTime? startDate, DateTime? endDate, ExportFormat format)
+        public JsonResult PrintVDTransfersReport(DateTime? startDate, DateTime? endDate, ExportFormat format)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             if (startDate != null)
@@ -660,9 +657,52 @@ namespace FrontOffice.Controllers
             if (endDate != null)
                 parameters.Add(key: "endDate", value: endDate.Value.ToString("dd/MMM/yy"));
 
-            ReportService.PrintVDTransfersReport(parameters, format);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetPensionApplicationParameters(DateTime startDate, DateTime endDate, short? filialCode)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string guid = Utility.GetSessionId();
+            xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
+            if (startDate != null)
+                parameters.Add(key: "startDate", value: startDate.ToString("dd/MMM/yyyy"));
+            if (endDate != null)
+                parameters.Add(key: "endDate", value: endDate.ToString("dd/MMM/yyyy"));
+
+            if (filialCode != null)
+            {
+                parameters.Add(key: "filialCode", value: filialCode.ToString());
+            }
+            else
+            {
+                parameters.Add(key: "filialCode", value: currentUser.filialCode.ToString());
+            }
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetSafekeepingItemsParameters(DateTime? startDate, DateTime? endDate, short? filialCode, int? quality)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string guid = Utility.GetSessionId();
+            xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
+            if (filialCode != null)
+            {
+                parameters.Add(key: "filial", value: filialCode.ToString());
+            }
+            else
+            {
+                parameters.Add(key: "filial", value: currentUser.filialCode.ToString());
+            }
+            if (quality != null)
+                parameters.Add(key: "quality", value: quality.ToString());
+            if (startDate != null)
+                parameters.Add(key: "startDate", value: startDate.Value.ToString("dd/MMM/yyyy"));
+            if (endDate != null)
+                parameters.Add(key: "endDate", value: endDate.Value.ToString("dd/MMM/yyyy"));
+            return Json(parameters, JsonRequestBehavior.AllowGet);
+        }
     }
    
 }

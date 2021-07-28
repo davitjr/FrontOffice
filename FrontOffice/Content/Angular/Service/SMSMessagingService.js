@@ -49,7 +49,6 @@
         var response = $http({
             method: "post",
             url: "/SMSMessaging/SMSMessagingReport",
-            responseType: 'arraybuffer',
             params: {
                 id: id
             }

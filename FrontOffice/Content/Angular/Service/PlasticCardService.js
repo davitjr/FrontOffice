@@ -82,7 +82,6 @@
         var response = $http({
             method: "post",
             url: "/PlasticCardOrder/GetPlasticCardOrdersReport",
-            responseType: 'arraybuffer',
             data: JSON.stringify(searchParams)
         });
         return response;

@@ -243,7 +243,7 @@ namespace FrontOffice.Controllers
             return PartialView("BudgetPaymentOrderDetails");
         }
 
-        public void GetPaymentOrderDetails(xbs.PaymentOrder paymentOrder, bool isCopy = false)
+        public JsonResult GetPaymentOrderDetails(xbs.PaymentOrder paymentOrder, bool isCopy = false)
         {
             ulong customerNumber = 0;
 
@@ -378,13 +378,13 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "TransactionTime", value:  paymentOrder.RegistrationTime != null ? paymentOrder.RegistrationTime : DateTime.Now.ToString("HH:mm"));
 
 
-            ReportService.GetPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
 
 
 
-        public void GetBudgetPaymentOrderDetails(xbs.BudgetPaymentOrder paymentOrder, bool isCopy = false)
+        public JsonResult GetBudgetPaymentOrderDetails(xbs.BudgetPaymentOrder paymentOrder, bool isCopy = false)
         {
             ulong customerNumber = 0;
 
@@ -496,7 +496,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "set_number", value: user.userID.ToString());
             parameters.Add(key: "TransactionTime", value: paymentOrder.RegistrationTime != null ? paymentOrder.RegistrationTime : DateTime.Now.ToString("HH:mm"));
 
-            ReportService.GetPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -520,9 +520,10 @@ namespace FrontOffice.Controllers
         }
 
 
-        public void PrintCashBigAmountReport(xbs.PaymentOrder order, string inOut)
+        public JsonResult PrintCashBigAmountReport(xbs.PaymentOrder order, string inOut)
         {
             ulong customerNumber;
+            Dictionary<string, string> reportParameters = new Dictionary<string, string>();
 
             if (order.OPPerson != null && order.OPPerson.CustomerNumber != 0)
             {
@@ -536,14 +537,15 @@ namespace FrontOffice.Controllers
             {
                 CustomerMainDataViewModel customer = new CustomerMainDataViewModel();
                 customer.Get(customerNumber);
-                Dictionary<string, string> reportParameters = new Dictionary<string, string>();
+
                 reportParameters.Add(key: "date", value: order.OperationDate.Value.ToString("dd/MMM/yyyy"));
                 reportParameters.Add(key: "Customer_Info", value: Utility.ConvertUnicodeToAnsi(customer.CustomerDescription) + "ë");
                 reportParameters.Add(key: "in", value: (inOut == "in" || inOut == "in_out") ? "1" : "0");
                 reportParameters.Add(key: "out", value: (inOut == "out" || inOut == "in_out") ? "1" : "0");
 
-                ReportService.CashBigAmountReport(reportParameters);
             }
+
+            return Json(reportParameters, JsonRequestBehavior.AllowGet);
         }
         public JsonResult IsBigAmountForPaymentOrder(xbs.PaymentOrder paymentOrder)
         {
@@ -551,7 +553,7 @@ namespace FrontOffice.Controllers
         }
 
 
-        public void GetCashInPaymentOrderDetails(xbs.PaymentOrder paymentOrder, bool isCopy = false)
+        public JsonResult GetCashInPaymentOrderDetails(xbs.PaymentOrder paymentOrder, bool isCopy = false)
         {
 
             string guid = Utility.GetSessionId();
@@ -605,12 +607,11 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "commissionAmount", value: cashInFeeAmount.ToString());
             parameters.Add(key: "commissionAccount", value: cashInFeeAccountNumber);
 
-            ReportService.GetCashInPaymentOrder(parameters);
-
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
 
-        public void GetCashOutPaymentOrderDetails(xbs.PaymentOrder paymentOrder, bool isCopy = false)
+        public JsonResult GetCashOutPaymentOrderDetails(xbs.PaymentOrder paymentOrder, bool isCopy = false)
         {
 
 
@@ -660,7 +661,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "reg_Date", value: paymentOrder.OperationDate.Value.ToString("dd/MMM/yyyy"));
             parameters.Add(key: "f_cashout", value: isCopy ? "92" : "1");
 
-            ReportService.GetCashOutPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public string GetPaymentOrderDescription(xbs.PaymentOrder paymentOrder)
@@ -700,7 +701,7 @@ namespace FrontOffice.Controllers
         }
 
 
-        public void GetCashInByReestrAmounts(xbs.ReestrTransferOrder paymentOrder, bool isCopy = false)
+        public JsonResult GetCashInByReestrAmounts(xbs.ReestrTransferOrder paymentOrder, bool isCopy = false)
         {
 
             string guid = Utility.GetSessionId();
@@ -732,12 +733,12 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "f_cashin", value: isCopy ? "True" : "False");
             parameters.Add(key: "amount", value: amountStr);
 
-            ReportService.GetCashInByReestrAmounts(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
 
         }
 
-        public void GetCashInByReestr(xbs.ReestrTransferOrder paymentOrder, bool isCopy = false)
+        public JsonResult GetCashInByReestr(xbs.ReestrTransferOrder paymentOrder, bool isCopy = false)
         {
 
             string guid = Utility.GetSessionId();
@@ -769,11 +770,11 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "f_cashin", value: isCopy ? "True" : "False");
             parameters.Add(key: "amount", value: amountStr);
 
-            ReportService.GetCashInByReestr(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
 
         }
-        public void GetCashInByReestrNote(xbs.ReestrTransferOrder paymentOrder, bool isCopy = false)
+        public JsonResult GetCashInByReestrNote(xbs.ReestrTransferOrder paymentOrder, bool isCopy = false)
         {
 
             string guid = Utility.GetSessionId();
@@ -805,7 +806,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "f_cashin", value: isCopy ? "True" : "False");
             parameters.Add(key: "amount", value: amountStr);
 
-            ReportService.GetCashInByReestrNote(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
 
         }

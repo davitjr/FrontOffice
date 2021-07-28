@@ -65,7 +65,7 @@ namespace FrontOffice.Controllers
             var jsonResult = Json(XBService.CustomersClassification(), JsonRequestBehavior.AllowGet);
             return jsonResult;
         }
-        public void StoredCreditProductsByCustReport(int filialCode, short type)
+        public JsonResult StoredCreditProductsByCustReport(int filialCode, short type)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -75,9 +75,9 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "setNumber", value: currentUser.userID.ToString());
             parameters.Add(key: "type", value: type.ToString());
 
-            ReportService.StoredCreditProductsByCustReport(parameters, ExportFormat.Excel);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
-        public void StoredCreditProductReport(int filialCode, short type)
+        public JsonResult StoredCreditProductReport(int filialCode, short type)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -87,9 +87,9 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "setNumber", value: currentUser.userID.ToString());
             parameters.Add(key: "type", value: type.ToString());
 
-            ReportService.StoredCreditProductReport(parameters, ExportFormat.Excel);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
-        public void ReportOfLoansToOutBalance(int filialCode)
+        public JsonResult ReportOfLoansToOutBalance(int filialCode)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -98,9 +98,9 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "filialCode", value: filialCode.ToString());
             parameters.Add(key: "setNumber", value: currentUser.userID.ToString());
 
-            ReportService.ReportOfLoansToOutBalance(parameters, ExportFormat.Excel);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
-        public void ReportOfLoansReturningToOutBalance(int filialCode)
+        public JsonResult ReportOfLoansReturningToOutBalance(int filialCode)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -109,7 +109,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "filialCode", value: filialCode.ToString());
             parameters.Add(key: "setNumber", value: currentUser.userID.ToString());
 
-            ReportService.ReportOfLoansReturningToOutBalance(parameters, ExportFormat.Excel);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
 

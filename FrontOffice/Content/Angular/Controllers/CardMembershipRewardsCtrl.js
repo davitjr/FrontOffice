@@ -2,11 +2,17 @@
 
     $scope.startDate = $scope.$root.SessionProperties.OperationDate;
     $scope.endDate = $scope.$root.SessionProperties.OperationDate;
+    $scope.mrDataChange = false;
+    $scope.changes = {};
+    $scope.isEdit = false;
 
     $scope.getCardMembershipRewards = function (cardNumber) {
         var Data = cardMembershipRewardsService.getCardMembershipRewards(cardNumber);
         Data.then(function (crd) {
             $scope.cardMR = crd.data;
+            if ($scope.$root.SessionProperties.AdvancedOptions['MRDataChangeButton'] == '1') {
+                $scope.checkMRDataChangeAvailability();
+            }
         }, function () {
             alert('Error getCardMembershipRewards');
         });
@@ -112,4 +118,17 @@
   
     };
 
+
+    $scope.checkMRDataChangeAvailability = function () {
+        var Data = cardMembershipRewardsService.getMRDataChangeAvailability($scope.cardMR.Id);
+        Data.then(function (acc) {
+            $scope.mrDataChange = acc.data;
+        }, function () {
+            alert('Error getMRDataChangeAvailability');
+        });
+    };
+
+    $scope.reloadData = function () {
+        $scope.getCardMembershipRewards($scope.cardnumber);
+    };
 }]); 

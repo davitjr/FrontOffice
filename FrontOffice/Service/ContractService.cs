@@ -443,5 +443,10 @@ namespace FrontOffice.Service
         {
             RenderContract("PosContract", parameters, "PosContract");
         }
+
+        public static void ThirdPersonAccountRightsTransfer(Dictionary<string, string> parameters)
+        {
+            RenderContract("ThirdPersonAccountRightsTransfer", parameters, "PosContract");
+        }
     }
 }

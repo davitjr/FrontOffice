@@ -1,4 +1,4 @@
-﻿app.controller("CardTariffContractCtrl", ['$scope', 'dateFilter', 'cardTariffContractService', '$state', '$controller', function ($scope, dateFilter, cardTariffContractService, $state, $controller) {
+﻿app.controller("CardTariffContractCtrl", ['$scope', 'dateFilter', 'cardTariffContractService', '$state', '$controller', 'ReportingApiService', function ($scope, dateFilter, cardTariffContractService, $state, $controller, ReportingApiService) {
 
    $scope.filter = 1;
 
@@ -127,7 +127,14 @@
    $scope.printCardTarifContract = function (tarifID) {
        showloading();
        var Data = cardTariffContractService.printCardTarifContract(tarifID);
-       ShowExcel(Data,'SalaryPaymentReport');
+       Data.then(function (response) {
+           var requestObj = { Parameters: response.data, ReportName: 126, ReportExportFormat: 2 }
+           ReportingApiService.getReport(requestObj, function (result) {
+               ShowExcelReport(result, 'SalaryPaymentReport');
+           });
+       }, function () {
+           alert('Error printCardTarifContract');
+       });
    }
 
    function SlideImage(response, extension) {

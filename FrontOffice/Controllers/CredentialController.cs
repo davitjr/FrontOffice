@@ -84,7 +84,7 @@ namespace FrontOffice.Controllers
         }
 
 
-        public void GetFeeForCredentialActivationOrderDetails(xbs.CredentialActivationOrder paymentOrder, bool isCopy = false)
+        public JsonResult GetFeeForCredentialActivationOrderDetails(xbs.CredentialActivationOrder paymentOrder, bool isCopy = false)
         {
             ulong customerNumber = 0;
             string guid = Utility.GetSessionId();
@@ -125,7 +125,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "reg_Date", value: paymentOrder.OperationDate.Value.ToString("dd/MMM/yy"));
             parameters.Add(key: "f_cashin", value: isCopy ? "True" : "False");
 
-            ReportService.GetCashInPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
 
         }

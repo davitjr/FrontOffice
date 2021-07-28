@@ -31,7 +31,6 @@
         var response = $http({
             method: "post",
             url: "/InsuranceOrder/GetPaymentOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
             params: {
@@ -47,7 +46,6 @@
         var response = $http({
             method: "post",
             url: "/InsuranceOrder/GetCashInPaymentOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
             params: {

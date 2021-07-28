@@ -1,15 +1,15 @@
 ﻿<form id="paymentOrderForm" ng-controller="PaymentOrderCtrl" ng-init="details=true">
     <loading-control style="margin-left:260px" scopevariable="order"></loading-control>
-    <div ng-if="type==1 || type==52 || type==51 || type==56 || type==83  || type==84 || type==85  || type==113 || type==121 || type==123 || type==133 || type==134 || type==145 || type==184 || type==249" ng-init="getPaymentOrder(selectedOrderId);"></div>
+    <div ng-if="type==1 || type==52 || type==51 || type==56 || type==83  || type==84 || type==85  || type==113 || type==121 || type==123 || type==133 || type==134 || type==145 || type==184 || type==249 || type==251 || type==253" ng-init="getPaymentOrder(selectedOrderId);"></div>
     <div ng-if="type==2 || type==53 || type==54 || type==55 || type==65 || type==80  || type==81 || type==82 || type==185" ng-init="getCurrencyExchangeOrder(selectedOrderId)"></div>
     <div ng-if="type==95 || type==122 || type==6" ng-init="getReestrTransferOrder(selectedOrderId)"></div>
-    <div id="paymentOrderDetails_menu" class="menu-bar dialog-menu light-green " style="min-width:600px;" ng-if="(((order.Quality == 3 || order.Quality == 20) && $root.SessionProperties.IsCalledFromHB == true && order.Type != 6) && ($root.SessionProperties.AdvancedOptions.isOnlineAcc=='1')) || $root.SessionProperties.IsCalledFromHB != true">
+    <div id="paymentOrderDetails_menu" class="menu-bar dialog-menu light-green " style="min-width:600px;" ng-if="(((order.Quality == 3 || order.Quality == 20) && $root.SessionProperties.IsCalledFromHB == true && order.Type != 6) && ($root.SessionProperties.AdvancedOptions.isOnlineAcc=='1')) || || ($root.SessionProperties.IsCalledFromHB != true && type!=253)">
         <ul id="menu" class="dialog-menu">
-            <li class="root-menu-item-4 " ng-if="order.Quality!=undefined && (type!=122 || type!=6) &&  $root.SessionProperties.IsCalledFromHB != true" ng-click="getPersonalPaymentOrderDetails(true);">
+            <li class="root-menu-item-4 " ng-if="order.Quality!=undefined && (type!=122 || type!=6) &&  $root.SessionProperties.IsCalledFromHB != true  && type!=253" ng-click="getPersonalPaymentOrderDetails(true);">
                 <span id="h-menu-item-4"><img id="h-menu-icon-4" class="printButton h-menu-icon">Հանձնարարական</span>
             </li>
 
-            <li class="root-menu-item-5 " ng-if="order.Quality!=undefined && order.Quality ==30 && $root.SessionProperties.IsCalledFromHB != true && type!=249" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('../RemovalOrder/RemovalOrder','Հեռացման հայտ','removalOrder',callbackgetPaymentOrder)">
+            <li class="root-menu-item-5 " ng-if="order.Quality!=undefined && order.Quality ==30 && $root.SessionProperties.IsCalledFromHB != true && type!=249 && type!=251 && type!=253" ng-controller="PopUpCtrl" ng-click="params={removableorder:order};openWindow('../RemovalOrder/RemovalOrder','Հեռացման հայտ','removalOrder',callbackgetPaymentOrder)">
                 <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հեռացման հայտ</span>
             </li>
 
@@ -54,16 +54,17 @@
         </div>
 
         <div ng-if="order.Type!=51 && order.Type!=54 && order.Type!=53 && order.Type!=113 && order.Type!=123" class="product-detail-row">
-            <div class="product-detail-cell product-detail-lable">Դեբետագրվող հաշիվ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="order.Type!=251">Դեբետագրվող հաշիվ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="order.Type==251">Փոխանցվող հաշիվ</div>
             <div class="product-detail-cell product-detail-value">{{order.DebitAccount.AccountNumber}} {{order.DebitAccount.Currency}} {{ debetOldSintAccount }} {{ debetNewSintAccount }}</div>
         </div>
 
-        <div ng-if="order.Type!=52 && order.Type!=55 && order.Type!=53 && order.Type!=113 &&  order.Type!=123 && order.Type!=6 && order.Type!=249" class="product-detail-row">
+        <div ng-if="order.Type!=52 && order.Type!=55 && order.Type!=53 && order.Type!=113 &&  order.Type!=123 && order.Type!=6 && order.Type!=249 && order.Type!=251 && type!=253" class="product-detail-row">
             <div class="product-detail-cell product-detail-lable">Կրեդիտագրվող հաշիվ</div>
             <div class="product-detail-cell product-detail-value">{{order.ReceiverAccount.AccountNumber}} {{order.ReceiverAccount.Currency}} {{ creditOldSintAccount }} {{ creditNewSintAccount }}</div>
         </div>
 
-        <div class="product-detail-row" ng-if="order.Type!=249">
+        <div class="product-detail-row" ng-if="order.Type!=249 && order.Type!=251 && type!=253">
             <div class="product-detail-cell product-detail-lable">Գումար</div>
             <div class="product-detail-cell product-detail-value">{{order.AmountString}} {{ order.Currency }}</div>
         </div>

@@ -1,8 +1,9 @@
-﻿app.controller("DepositCtrl", ['$scope', 'depositService', 'paymentOrderService', '$location', '$confirm', 'dialogService', 'infoService', '$http', '$state', function ($scope, depositService, paymentOrderService, $location, $confirm, dialogService, infoService, $http, $state) {
+﻿app.controller("DepositCtrl", ['$scope', 'depositService', 'paymentOrderService', '$location', '$confirm', 'dialogService', 'infoService', '$http', '$state', 'ReportingApiService', function ($scope, depositService, paymentOrderService, $location, $confirm, dialogService, infoService, $http, $state, ReportingApiService) {
     $scope.selectedProductId = null;
     $scope.selectedDepositAccount = null;
     $scope.AccountNumber = null;
     $scope.filter = 1;
+    $scope.index;
     if ($scope.currentDeposit != undefined)
     {
         $scope.closedDeposit = angular.copy($scope.currentDeposit);
@@ -116,6 +117,7 @@
                     $scope.deposit.RecontractSign = "Ոչ";
                 $scope.params = { AccountNumber: dep.data.DepositAccount.AccountNumber, deposit: $scope.deposit };
                 $scope.loading = false;
+                $scope.confirmationPersonInit($scope.deposit);
             }, function () {
                 $scope.loading = false;
                 alert('Error getDeposit');
@@ -183,7 +185,14 @@
     $scope.depositRepaymentsGrafik = function () {
         showloading();
         var Data = depositService.depositRepaymentsGrafik($scope.deposit.ProductId);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 151, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error depositRepaymentsGrafik');
+        });
     };
 
 
@@ -193,9 +202,9 @@
         ShowPDF(Data);
     };
 
-    $scope.getDepositContract = function (depositNumber) {
+    $scope.getDepositContract = function (depositNumber, confirmationPerson) {
         showloading();
-        var Data = depositService.getDepositContract(depositNumber);
+        var Data = depositService.getDepositContract(depositNumber, confirmationPerson);
         ShowPDF(Data);
     };
 
@@ -275,13 +284,37 @@
     $scope.depositRepaymentsDetailedGrafik = function (exportFormat) {
         showloading();
         var Data = depositService.depositRepaymentsDetailedGrafik($scope.deposit.ProductId, exportFormat);
-        if (exportFormat == 1) 
-        {
-            ShowPDF(Data);
-        }
-        else
-        {
-            ShowExcel(Data, 'DepositRepaymentsDetailedGrafik');
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 99, ReportExportFormat: exportFormat }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (exportFormat == 1) {
+                    ShowPDFReport(result);
+                }
+                else if (exportFormat == 2) {
+                    ShowExcelReport(result, 'DepositRepaymentsDetailedGrafik');
+                }
+            });
+        }, function () {
+            alert('Error depositRepaymentsDetailedGrafik');
+        });
+    };
+
+    $scope.confirmationPersons = function (confirmationPerson) {
+        $scope.confirmationPerson = confirmationPerson;
+    };
+
+    $scope.confirmationPersonInit = function (deposit, index) {
+        if ($scope.index == undefined || $scope.index != index) {
+            if ((deposit.StartCapital > 3000000 && deposit.Currency == 'AMD') || (deposit.StartCapital > 5000 && deposit.Currency == 'USD') ||
+                (deposit.StartCapital > 5000 && deposit.Currency == 'EUR') || (deposit.StartCapital > 300000 && deposit.Currency == 'RUR')) {
+                $scope.confirmationPersonsFirstValueVisibility = false;
+                $scope.confirmationPerson = '2';
+            }
+            else {
+                $scope.confirmationPersonsFirstValueVisibility = true;
+                $scope.confirmationPerson = '1';
+            }
+            $scope.index = index;
         }
     };
 

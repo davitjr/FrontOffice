@@ -40,7 +40,6 @@
         var response = $http({
             method: "post",
             url: "/PeriodicTransfer/GetPeriodicTransferDetails",
-            responseType: 'arraybuffer',
             params: {
                 productId: productId
             }
@@ -52,7 +51,6 @@
         var response = $http({
             method: "post",
             url: "/PeriodicTransfer/GetPeriodicTransferClosingDetails",
-            responseType: 'arraybuffer',
             params: {
                 productId: productId
             }
@@ -64,7 +62,6 @@
         var response = $http({
             method: "post",
             url: "/PeriodicTransfer/GetPeriodicSWIFTStatementTransferDetails",
-            responseType: 'arraybuffer',
             params: {
                 productId: productId
             }

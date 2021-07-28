@@ -68,7 +68,11 @@ namespace FrontOffice.Controllers
         {
             return Json(XBService.SMSTypeAndValue(cardNumber), JsonRequestBehavior.AllowGet);                                  
         }
-
+        //public JsonResult GetCustomerEmailByCardNumber(ulong cardNumber)
+        //{
+        //    return Json(XBService.GetCustomerEmailByCardNumber(cardNumber), JsonRequestBehavior.AllowGet);
+        //}
+        
     }
     
 }

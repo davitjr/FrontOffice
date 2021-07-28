@@ -1,0 +1,75 @@
+﻿<div ng-controller="SafekeepingItemCtrl">
+    <div class="product-container" id="SafekeepingItem" data-ng-init="initSafekeepingItems();">
+        <div class="header-title">
+            <a ui-sref="safekeepingItems" style="color:black;">
+                Ի պահ ընդունված արժեքներ
+            </a>
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div class="include-closed-products">
+                    <input type="checkbox" class="css-square-checkbox lrg" id="include-closed-safekeepingItems" data-ng-model="filter" ng-true-value="2" ng-false-value="1" ng-change="QualityFilter();">
+                    <label for="include-closed-safekeepingItems" name="include-closed-safekeepingItems-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
+                </div>
+                <div>                   
+                    <i class="add-new-product " data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Նոր Գրավ" ng-controller="PopUpCtrl" ng-click="openWindow('','Նոր Ի պահ ընդունված գրավի մուտքագրում','addSafekeepingItem')"></i>
+                </div>
+            </div>
+
+            <div class="product-content-table custom-scroll" id="safekeepingItemsContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <div ng-if="safekeepingItems==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style::="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="item in safekeepingItems" ng-if="filter==1 && safekeepingItems.length!=0" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,item); hideBlank!='true' &&  getElementPosition($index);" style="max-height:200px;cursor:pointer;" ng-dblclick="openSafekeepingItemDetails();">
+                            <td>
+                                <span class="tab_text">Համար՝ </span><span> {{item.ProductId}}</span><br />
+                                <span class="tab_text">Սկիզբ` </span><span> {{::item.StartDate | mydate | date: 'dd/MM/yyyy'}}</span><br />
+                                <span class="tab_text">Վերջ` </span><span> {{::item.EndDate | mydate | date: 'dd/MM/yyyy'}}</span><br />
+                                <span class="tab_text">Կարգավիճակ` </span><span> {{item.Quality == 1?'Գործող':'Փակված'}}</span>
+                            </td>
+                            <td style="text-align:right;">
+                                {{ ::item.Amount | number:2 }} {{ ::item.Currency }}
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="contextsafekeepingItems" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                        <tr ng-if="filter==1 && safekeepingItems.length==0 ">
+                            <td colspan="3" style="text-align:center;">
+                                Առկա չեն գործող ի պահ ընդունված գրավներ։
+                            </td>
+                        </tr>
+                        <tr ng-if="filter!=1"><td style="color:red; border-width:3px" colspan="3">Փակված գրավներ </td></tr>
+                        <tr ng-repeat="close in closedSafekeepingItems" ng-if="closedSafekeepingItems.length!=0" ng-class="{'selected':$index == selectedRowClose}" ng-click="setClickedRow($index,close); hideBlank!='true' &&  getElementPosition($index);" style="max-height:200px;cursor:pointer;" ng-dblclick="openSafekeepingItemDetails();"> 
+                            <td>
+                                <span class="tab_text">Համար՝ </span><span> {{close.ProductId}}</span><br />
+                                <span class="tab_text">Սկիզբ` </span><span> {{::close.StartDate | mydate | date: 'dd/MM/yyyy'}}</span><br />
+                                <span class="tab_text">Վերջ` </span><span> {{::close.EndDate | mydate | date: 'dd/MM/yyyy'}}</span><br />
+                                <span class="tab_text">Կարգավիճակ` </span><span> {{item.Quality == 1?'Գործող':'Փակված'}}</span>
+                            </td>
+                            <td style="text-align:right;">
+                                {{ ::close.Amount | number:2 }} {{ ::close.Currency }}
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="contextsafekeepingItems" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                        <tr ng-if="filter!=1 && closedSafekeepingItems.length==0">
+                            <td colspan="3" style="text-align:center;">
+                                Առկա չեն փակված ի պահ ընդունված գրավներ։
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <ul id="contextsafekeepingItems" class="dropdown-menu">
+                <li><a style="color: black;text-decoration:none!important;" ui-sref="safekeepingItemDetails({ productId: selectedSafekeepingItem.ProductId})">Մանրամասն դիտարկում</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    $("[data-toggle=tooltip]").tooltip({
+        placement: $(this).data("placement") || 'bottom'
+    });
+</script>
+

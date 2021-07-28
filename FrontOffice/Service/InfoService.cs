@@ -3443,5 +3443,17 @@ namespace FrontOffice.Service
 
             return result;
         }
+
+        public static Dictionary<string, string> GetCommissionNonCollectionReasons()
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            InfoService.Use(client =>
+            {
+                result = client.GetCommissionNonCollectionReasons();
+            });
+
+            return result;
+        }
     }
 }

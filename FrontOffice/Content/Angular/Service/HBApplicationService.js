@@ -69,7 +69,7 @@
         return response;
     };
 
-    this.printOnlineContractPhysical = function (filialCode, contractNumber, contractDate) {
+    this.printOnlineContractPhysical = function (filialCode, contractNumber, contractDate, confirmationPerson) {
         var response = $http({
             method: "post",
             url: "/HBApplicationOrder/PrintOnlineContractPhysical",
@@ -77,42 +77,45 @@
             params: {
                 filialCode: filialCode,
                 contractNumber: contractNumber,
-                contractDate: contractDate
-
+                contractDate: contractDate,
+                confirmationPerson: confirmationPerson
             }
         });
         return response;
     };
 
-    this.printOnlineContractLegal= function (filialCode) {
+    this.printOnlineContractLegal = function (filialCode, confirmationPerson) {
         var response = $http({
             method: "post",
             url: "/HBApplicationOrder/PrintOnlineContractLegal",
             responseType: 'arraybuffer',
             params: {
-                filialCode: filialCode
+                filialCode: filialCode,
+                confirmationPerson: confirmationPerson
             }
         });
         return response;
     };
-    this.printOnlineAgreementPhysical = function (filialCode) {
+    this.printOnlineAgreementPhysical = function (filialCode, confirmationPerson) {
         var response = $http({
             method: "post",
             url: "/HBApplicationOrder/PrintOnlineAgreementPhysical",
             responseType: 'arraybuffer',
             params: {
-                filialCode: filialCode
+                filialCode: filialCode,
+                confirmationPerson: confirmationPerson
             }
         });
         return response;
     };
-    this.printOnlineAgreementLegal = function (filialCode) {
+    this.printOnlineAgreementLegal = function (filialCode, confirmationPerson) {
         var response = $http({
             method: "post",
             url: "/HBApplicationOrder/PrintOnlineAgreementLegal",
             responseType: 'arraybuffer',
             params: {
-                filialCode: filialCode
+                filialCode: filialCode,
+                confirmationPerson: confirmationPerson
             }
         });
         return response;

@@ -57,22 +57,20 @@ namespace FrontOffice.Controllers
             return Json(XBService.GetPosCashbackRates(terminalId), JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintPosStatement(string accountNumber, string dateFrom, string dateTo, ushort statementType, string exportFormat = "pdf")
+        public JsonResult PrintPosStatement(string accountNumber, string dateFrom, string dateTo, ushort statementType, string exportFormat = "pdf")
         {
-            
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
             xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
 
             if (XBService.AccountAccessible(accountNumber, currentUser.AccountGroup))
             {
-                Dictionary<string, string> parameters = new Dictionary<string, string>();
                 parameters.Add(key: "ArmNumber", value: accountNumber);
                 parameters.Add(key: "startDate", value: Convert.ToDateTime(dateFrom).ToString("dd/MMM/yy"));
                 parameters.Add(key: "endDate", value: Convert.ToDateTime(dateTo).ToString("dd/MMM/yy"));
                 parameters.Add(key: "StatmentOption", value: statementType.ToString());
                 parameters.Add(key: "filialCode", value: accountNumber.Substring(0, 5));
 
-                ReportService.PosStatement(parameters, ReportService.GetExportFormatEnumeration(exportFormat));
             }
             else
             {
@@ -81,6 +79,8 @@ namespace FrontOffice.Controllers
                 System.Web.HttpContext.Current.Response.StatusCode = 422;
                 System.Web.HttpContext.Current.Response.StatusDescription = Utility.ConvertUnicodeToAnsi("Գործողությունը հասանելի չէ:");
             }
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public void PrintPosContract(int id, int contractType, string contractNumber)

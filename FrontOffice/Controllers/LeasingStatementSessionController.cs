@@ -116,7 +116,7 @@ namespace FrontOffice.Controllers
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
-            Service.ReportService.PrintLeasingCustomersWithoutEmailReport(parameters, Service.ReportService.GetExportFormatEnumeration(exportFormat));
+            //Service.ReportService.PrintLeasingCustomersWithoutEmailReport(parameters, Service.ReportService.GetExportFormatEnumeration(exportFormat));
         }
 
         public JsonResult PrintLeasingCustomersWithoutEmailForStatementReport(int sessionID, DateTime statementEndDate, string exportFormat = "xls")

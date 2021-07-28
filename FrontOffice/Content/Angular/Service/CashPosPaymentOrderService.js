@@ -40,7 +40,6 @@
         var response = $http({
             method: "post",
             url: "/CashPosPaymentOrder/GetCashPosPaymentOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(cashPosPaymentOrder),
             dataType: "json",
             params: {

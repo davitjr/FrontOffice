@@ -64,7 +64,7 @@ namespace FrontOffice.Controllers
             ContractService.PensionAgreement(parameters);
         }
 
-        public void PensionCloseApplicationContract(string contractId)
+        public JsonResult PensionCloseApplicationContract(string contractId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -81,7 +81,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "unique_number", value: contractId);
             parameters.Add(key: "chief_type", value: chiefType.ToString());
 
-            ReportService.PensionCloseApplicationContract(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
     }
 }

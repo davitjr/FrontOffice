@@ -346,6 +346,19 @@ label {
                     </div>
                 </div>
 
+                <div class="col-sm-4  " ng-if="showSafekeepingQuality">
+                    <div class="product-detail-cell product-detail-lable">
+                        Կարգավիճակ
+                    </div>
+                    <div>
+                        <select data-ng-model="searchParams.quality" name="quality" id="quality" class="form-control">
+                            <option value="2">Բոլորը</option>
+                            <option value="1">Գործող</option>
+                            <option value="0">Փակ</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="col-sm-4  " ng-if="showLoanType">
                     <div class="product-detail-cell product-detail-lable">
                         Վարկի տեսակ

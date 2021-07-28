@@ -16,7 +16,7 @@
                     <li ng-if="$root.SessionProperties.SourceType == 2" id="v-menuItem-4.2" ng-controller="PopUpCtrl" ng-click="params={AccountNumber: deposit.DepositAccount.AccountNumber,checkForDebitAccount:1,checkForReciverAccount:0,checkForFeeAccount:0,orderType:95};openWindowWithTemplate('paymentorder','Կանխիկ մուտք հաշվին ռեեստրով','paymentorder')" data-permission-selector="">
                         <span>Կանխիկ մուտք ռեեստրով</span>
                     </li>
-                    <li ng-if="$root.SessionProperties.SourceType == 2" ng-class="{'my_disable':disabelButton==true}"  id="v-menuItem-4.3" class="last " data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:2,forInputCheckbox:true};openWindowWithTemplate('currencyexchangeorder','Փոխարկում','exchangeorder')">
+                    <li ng-if="$root.SessionProperties.SourceType == 2" ng-class="{'my_disable':disabelButton==true}" id="v-menuItem-4.3" class="last " data-permission-selector="" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:2,forInputCheckbox:true};openWindowWithTemplate('currencyexchangeorder','Փոխարկում','exchangeorder')">
                         <span>Փոխարկում</span>
                     </li>
                     <li id="v-menuItem-4.1" ng-controller="PopUpCtrl" ng-click="params={checkForDebitAccount:0,checkForReciverAccount:0,checkForFeeAccount:0,orderType:1};openWindowWithTemplate('paymentorder','Փոխանցում սեփական հաշիվների միջև','paymentorder')" data-permission-selector="">
@@ -32,10 +32,10 @@
                 </span>
                 <ul>
                     <li id="v-menuItem-5.1" ng-controller="PopUpCtrl" ng-click="openWindow('/Deposit/DepositRepayment','Ավանդի գրաֆիկ','depositrepayment')" data-permission-selector="">
-                        <span >Դիտել</span>
+                        <span>Դիտել</span>
                     </li>
                     <li id="v-menuItem-5.2" ng-click="depositRepaymentsGrafik()" data-permission-selector="">
-                        <span >Տպել</span>
+                        <span>Տպել</span>
                     </li>
                     <li id="v-menuItem-5.2" ng-click="depositRepaymentsDetailedGrafik(1)" data-permission-selector="">
                         <span>Տպել մանրամասն(PDF)</span>
@@ -57,13 +57,23 @@
                     <img id="arrow-down" class="arrowButton">
                 </span>
                 <ul>
-                    <li id="v-menuItem-6.1" class="" ng-if="deposit.DepositQuality!=0" ng-click="getDepositContract(deposit.DepositNumber)" data-permission-selector="">
-                        <span >Ավանդի պայմանագիր</span>
+                    <li id="v-menuItem-6.1" class="" ng-if="deposit.DepositQuality!=0" ng-click="getDepositContract(deposit.DepositNumber, confirmationPerson)" data-permission-selector="">
+                        <span>Ավանդի պայմանագիր</span>
                     </li>
                     <li id="v-menuItem-6.2" class="" ng-if="deposit.DepositQuality==0" ng-click="depositCloseApplication(deposit.DepositNumber);" data-permission-selector="">
                         <span>Դադարեցման դիմում</span>
                     </li>
                 </ul>
+            </li>
+
+            <li ng-if="deposit.DepositQuality!=0">
+                <span id="h-menu-item-5" onclick="return false;">
+                    <select title="Ստորագրող անձ" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-ng-model="confirmationPerson" style="max-width:150px;height:30px" name="ConfirmationPerson" id="h-menu-item-5" ng-change="confirmationPersons(confirmationPerson)">
+                        <option value="1" ng-show="confirmationPersonsFirstValueVisibility">մասնաճյուղի աշխատակից</option>
+                        <option value="2">կառավարիչ</option>
+                        <option value="3">կառավարչի տեղակալ</option>
+                    </select>
+                </span>
             </li>
 
             <li class="root-menu-item-3 " ng-if="deposit.JointType==1 || deposit.JointType==2" ng-controller="PopUpCtrl" ng-click="params={accountNumber: account.AccountNumber};openWindow('/Account/JointAccountCustomersDetails', 'Հաշվի մասնաբաժիններ', 'JointAccountCustomersDetails');">

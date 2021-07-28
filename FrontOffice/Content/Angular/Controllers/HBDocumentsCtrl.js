@@ -1,4 +1,4 @@
-﻿app.controller('HBDocumentsCtrl', ['$scope', '$rootScope', 'HBDocumentsService', 'orderService', '$location', 'customerService', 'casherService', 'dialogService', '$confirm', '$uibModal', '$http', '$compile', '$state', '$window', '$filter', '$sce', function ($scope, $rootScope, HBDocumentsService, orderService, $location, customerService, casherService, dialogService, $confirm, $uibModal, $http, $compile, $state, $window, $filter, $log, $sce) {
+﻿app.controller('HBDocumentsCtrl', ['$scope', '$rootScope', 'HBDocumentsService', 'orderService', '$location', 'customerService', 'casherService', 'dialogService', '$confirm', '$uibModal', '$http', '$compile', '$state', '$window', '$filter','$log', '$sce', 'ReportingApiService', function ($scope, $rootScope, HBDocumentsService, orderService, $location, customerService, casherService, dialogService, $confirm, $uibModal, $http, $compile, $state, $window, $filter, $log, $sce, ReportingApiService) {
     // $scope.isOnlineAcc = $scope.$root.SessionProperties.AdvancedOptions["isOnlineAcc"];
     $scope.searchParams = {};
     $scope.currentOperDay;
@@ -284,7 +284,14 @@
         showloading();
         var obj = angular.fromJson(localStorage.getItem("searchParams"));
         var Data = HBDocumentsService.printHomeBankingDocumentsReport(obj);
-        ShowExcel(Data, 'ՀԲ համակարգով կատարված գործարքների ցուցակ');
+        Data.then(function (options) {
+            var requestObj = { Parameters: options.data, ReportName: 134, ReportExportFormat: 2 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowExcelReport(result, 'ՀԲ համակարգով կատարված գործարքների ցուցակ');
+            });
+        }, function () {
+            alert('Error printHomeBankingDocumentsReport');
+        });
 
     };
 

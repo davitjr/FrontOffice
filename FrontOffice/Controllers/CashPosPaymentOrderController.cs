@@ -45,7 +45,7 @@ namespace FrontOffice.Controllers
             return Json(order, JsonRequestBehavior.AllowGet);
         }
 
-        public void GetCashPosPaymentOrderDetails(xbs.CashPosPaymentOrder cashPosPaymentOrder, bool isCopy = false)
+        public JsonResult GetCashPosPaymentOrderDetails(xbs.CashPosPaymentOrder cashPosPaymentOrder, bool isCopy = false)
         {
            
 
@@ -90,7 +90,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "reg_Date", value: cashPosPaymentOrder.OperationDate.Value.ToString("dd/MMM/yy"));
             parameters.Add(key: "f_cashout", value: isCopy ? "92" : "1");
 
-            ReportService.GetCashOutPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult IsOurCard(string cardNumber)

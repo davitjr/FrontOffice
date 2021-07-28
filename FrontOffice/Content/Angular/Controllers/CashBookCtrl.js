@@ -1,4 +1,4 @@
-﻿app.controller('CashBookCtrl', ['$scope', 'dialogService', '$confirm', '$uibModal', 'customerService', 'casherService', 'infoService', 'cashBookService', '$rootScope', 'utilityService', '$filter', 'accountService', '$http', 'orderService', '$q', function ($scope, dialogService, $confirm, $uibModal, customerService, casherService, infoService, cashBookService, $rootScope, utilityService, $filter, accountService, $http, orderService, $q) {
+﻿app.controller('CashBookCtrl', ['$scope', 'dialogService', '$confirm', '$uibModal', 'customerService', 'casherService', 'infoService', 'cashBookService', '$rootScope', 'utilityService', '$filter', 'accountService', '$http', 'orderService', '$q', 'ReportingApiService', function ($scope, dialogService, $confirm, $uibModal, customerService, casherService, infoService, cashBookService, $rootScope, utilityService, $filter, accountService, $http, orderService, $q, ReportingApiService) {
 
     $scope.partialAmount = 0;
     $scope.isPartially = false;
@@ -535,7 +535,14 @@
                         $scope.order.Amount = $scope.partialAmount;
                     }
                     var Data = cashBookService.getCashOutPaymentOrder($scope.order, isCopy);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 71, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getCashOutPaymentOrder');
+                    });
                 }
                 else if ($scope.linkedCashBookType == 3 && $scope.correspondentAccountType == 1) {
                     if ($scope.order.Type == 200) {
@@ -543,7 +550,14 @@
                     }
 
                     var Data = cashBookService.getPaymentOrderDetails($scope.order, isCopy);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 63, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getPaymentOrderDetails');
+                    });
 
                 }
                 else if ($scope.linkedCashBookType == 3) {
@@ -552,7 +566,14 @@
                     }
 
                     var Data = cashBookService.getCashInPaymentOrderDetails($scope.order, isCopy);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getCashInPaymentOrderDetails');
+                    });
 
                 }
             }, function () {
@@ -619,11 +640,25 @@
                     if ($scope.RowType == 1) {
 
                         var Data = cashBookService.getCashInPaymentOrderDetails($scope.order, isCopy);
-                        ShowPDF(Data);
+                        Data.then(function (response) {
+                            var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                            ReportingApiService.getReport(requestObj, function (result) {
+                                ShowPDFReport(result);
+                            });
+                        }, function () {
+                            alert('Error getCashInPaymentOrderDetails');
+                        });
                     }
                     else if ($scope.RowType == 3) {
                         var Data = cashBookService.getCashOutPaymentOrder($scope.order, isCopy);
-                        ShowPDF(Data);
+                        Data.then(function (response) {
+                            var requestObj = { Parameters: response.data, ReportName: 71, ReportExportFormat: 1 }
+                            ReportingApiService.getReport(requestObj, function (result) {
+                                ShowPDFReport(result);
+                            });
+                        }, function () {
+                            alert('Error getCashOutPaymentOrder');
+                        });
 
                     }
 
@@ -867,7 +902,14 @@
         $scope.searchParams = scope.searchParams;
         if ((scope.searchParams.Currency != undefined) && (scope.searchParams.FillialCode != undefined) && (scope.searchParams.FillialCode != undefined)) {
             var Data = cashBookService.CashBookAccountStatementReport($scope.searchParams, payerReceiver);
-            ShowPDF(Data);
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 83, ReportExportFormat: 1 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowPDFReport(result);
+                });
+            }, function () {
+                alert('Error CashBookAccountStatementReport');
+            });
         } else {
 
             $scope.report.nocurrency = true;
@@ -1159,7 +1201,14 @@
         var cashBookScope = angular.element(document.getElementById('CashBookForm')).scope()
         if (cashBookScope != undefined) {
             var Data = cashBookService.getCashBookReport(cashBookScope.searchParams.RegistrationDate);
-            ShowExcel(Data, 'CashBookReport');
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 119, ReportExportFormat: 2 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowExcelReport(result, 'CashBookReport');
+                });
+            }, function () {
+                alert('Error getCashBookReport');
+            });
         }
     }
 
@@ -1167,7 +1216,14 @@
         var cashBookScope = angular.element(document.getElementById('CashBookForm')).scope()
         if (cashBookScope != undefined) {
             var Data = cashBookService.getCashBookTotalReport(cashBookScope.searchParams.RegistrationDate);
-            ShowExcel(Data, 'CashBookTotalReport');
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 120, ReportExportFormat: 2 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowExcelReport(result, 'CashBookTotalReport');
+                });
+            }, function () {
+                alert('Error getCashBookTotalReport');
+            });
         }
     }
 

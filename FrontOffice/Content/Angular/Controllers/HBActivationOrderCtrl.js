@@ -1,4 +1,4 @@
-﻿app.controller("HBActivationOrderCtrl", ['$scope', '$rootScope', 'HBActivationOrderService', 'paymentOrderService', 'dialogService', '$filter', 'orderService', "customerService", '$http', function ($scope, $rootScope, HBActivationOrderService, paymentOrderService, dialogService, $filter, orderService, customerService, $http) {
+﻿app.controller("HBActivationOrderCtrl", ['$scope', '$rootScope', 'HBActivationOrderService', 'paymentOrderService', 'dialogService', '$filter', 'orderService', "customerService", '$http', 'ReportingApiService', function ($scope, $rootScope, HBActivationOrderService, paymentOrderService, dialogService, $filter, orderService, customerService, $http, ReportingApiService) {
 
 
     $scope.order = {};
@@ -138,41 +138,55 @@
         $scope.order.CreditAccount = {};
         $scope.order.CreditAccount.AccountNumber = 0;
 
-        if ($scope.$root.SessionProperties.CustomerType == 6) {
+            if ($scope.$root.SessionProperties.CustomerType == 6) {
 
-            var orderNumber = $scope.order.OrderNumber;
-            for (var i = 0; i < $scope.order.HBActivationRequests.length; i++) {
-                if ($scope.order.HBActivationRequests[i].RequestType == 1 || $scope.order.HBActivationRequests[i].RequestType == 2) {
+                var orderNumber = $scope.order.OrderNumber;
+                for (var i = 0; i < $scope.order.HBActivationRequests.length; i++) {
+                    if ($scope.order.HBActivationRequests[i].RequestType == 1 || $scope.order.HBActivationRequests[i].RequestType == 2) {
 
-                if ($scope.order.HBActivationRequests[i].HBToken.TokenType == 1) {
-                   
-                        $scope.order.OrderNumber = (parseInt($scope.order.OrderNumber) + 1).toString();
-                        $scope.order.Description = "Տոկենի տրամադրում, " + $scope.person.FirstName + " " + $scope.person.LastName + ", " + $scope.person.CustomerNumber + ", տոկենի համարը` " + $scope.order.HBActivationRequests[i].HBToken.TokenNumber;
-                        var Data = HBActivationOrderService.getFeeForNewTokenOrderDetails($scope.order);
-                        ShowPDF(Data);
+                        if ($scope.order.HBActivationRequests[i].HBToken.TokenType == 1) {
+
+                            $scope.order.OrderNumber = (parseInt($scope.order.OrderNumber) + 1).toString();
+                            $scope.order.Description = "Տոկենի տրամադրում, " + $scope.person.FirstName + " " + $scope.person.LastName + ", " + $scope.person.CustomerNumber + ", տոկենի համարը` " + $scope.order.HBActivationRequests[i].HBToken.TokenNumber;
+                            var Data = HBActivationOrderService.getFeeForNewTokenOrderDetails($scope.order);
+                            Data.then(function (response) {
+                                var requestObj = { Parameters: response.data, ReportName: 81, ReportExportFormat: 1 }
+                                ReportingApiService.getReport(requestObj, function (result) {
+                                    ShowPDFReport(result);
+                                });
+                            }, function () {
+                                alert('Error getFeeForNewTokenOrderDetails');
+                            });
+
+                        }
                     }
                 }
-            }
-            $scope.order.OrderNumber = orderNumber;
-           
-        }
-        else
-        {
-            var orderNumber = $scope.order.OrderNumber;
-            for (var i = 0; i < $scope.order.HBActivationRequests.length; i++) {
-                if ($scope.order.HBActivationRequests[i].RequestType == 1 || $scope.order.HBActivationRequests[i].RequestType == 2) {
+                $scope.order.OrderNumber = orderNumber;
 
-                if ($scope.order.HBActivationRequests[i].HBToken.TokenType == 1) {
-                   
-                        $scope.order.OrderNumber = (parseInt($scope.order.OrderNumber) + 1).toString();
-                        $scope.order.Description = "Տոկենի տրամադրում, " + $scope.person.OrganisationName + ", " + $scope.person.CustomerNumber + ", " + $scope.order.HBActivationRequests[i].HBToken.HBUser.UserFullName + ", տոկենի համարը` " + $scope.order.HBActivationRequests[i].HBToken.TokenNumber;
-                        var Data = HBActivationOrderService.getFeeForNewTokenOrderDetails($scope.order);
-                        ShowPDF(Data);
+            }
+            else {
+                var orderNumber = $scope.order.OrderNumber;
+                for (var i = 0; i < $scope.order.HBActivationRequests.length; i++) {
+                    if ($scope.order.HBActivationRequests[i].RequestType == 1 || $scope.order.HBActivationRequests[i].RequestType == 2) {
+
+                        if ($scope.order.HBActivationRequests[i].HBToken.TokenType == 1) {
+
+                            $scope.order.OrderNumber = (parseInt($scope.order.OrderNumber) + 1).toString();
+                            $scope.order.Description = "Տոկենի տրամադրում, " + $scope.person.OrganisationName + ", " + $scope.person.CustomerNumber + ", " + $scope.order.HBActivationRequests[i].HBToken.HBUser.UserFullName + ", տոկենի համարը` " + $scope.order.HBActivationRequests[i].HBToken.TokenNumber;
+                            var Data = HBActivationOrderService.getFeeForNewTokenOrderDetails($scope.order);
+                            Data.then(function (response) {
+                                var requestObj = { Parameters: response.data, ReportName: 81, ReportExportFormat: 1 }
+                                ReportingApiService.getReport(requestObj, function (result) {
+                                    ShowPDFReport(result);
+                                });
+                            }, function () {
+                                alert('Error getFeeForNewTokenOrderDetails');
+                            });
+                        }
                     }
                 }
+                $scope.order.OrderNumber = orderNumber;
             }
-            $scope.order.OrderNumber = orderNumber;
-        }
         }
         else
         {

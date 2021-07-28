@@ -53,7 +53,7 @@ namespace FrontOffice.Controllers
         }
 
 
-        public void GetPaymentOrderDetails(xbs.InsuranceOrder order, bool isCopy = false)
+        public JsonResult GetPaymentOrderDetails(xbs.InsuranceOrder order, bool isCopy = false)
         {
             ulong customerNumber = 0;
 
@@ -111,11 +111,12 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "cust_name", value: customerName);
             parameters.Add(key: "is_copy", value: isCopy ? "True" : "False");
             parameters.Add(key: "reciever_tax_code", value: "");
-            ReportService.GetPaymentOrder(parameters);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
 
-        public void GetCashInPaymentOrderDetails(xbs.InsuranceOrder order, bool isCopy = false)
+        public JsonResult GetCashInPaymentOrderDetails(xbs.InsuranceOrder order, bool isCopy = false)
         {
             string guid = Utility.GetSessionId();
             xbs.User user = (xbs.User)Session[guid + "_User"];
@@ -146,7 +147,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "reg_Date", value: order.OperationDate.Value.ToString("dd/MMM/yyyy"));
             parameters.Add(key: "f_cashin", value: isCopy ? "True" : "False");
 
-            ReportService.GetCashInPaymentOrder(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
 
         }

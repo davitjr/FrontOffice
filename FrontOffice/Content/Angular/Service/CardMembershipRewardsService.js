@@ -58,4 +58,14 @@
         return response;
     };
 
+    this.getMRDataChangeAvailability = function (mrID) {
+        var response = $http({
+            method: "post",
+            url: "/CardMembershipRewards/GetMRDataChangeAvailability",
+            params: {
+                mrID: mrID
+            }
+        });
+        return response;
+    };
 }]);

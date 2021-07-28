@@ -35,6 +35,14 @@
 
                         </ul>
 
+                        <span id="h-menu-item-5" onclick="return false;">
+                            <select title="Ստորագրող անձ" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-ng-model="confirmationPerson" style="max-width:75px;height:30px" name="ConfirmationPerson" id="h-menu-item-5" ng-change="confirmationPersons(confirmationPerson)">
+                                <option value="1">մասնաճյուղի աշխատակից</option>
+                                <option value="2">կառավարիչ</option>
+                                <option value="3">կառավարչի տեղակալ</option>
+                            </select>
+                        </span>
+
                     </div>
                     <i class="add-new-product " ng-if="forTransitAccounts!=true" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Նոր ընթացիկ հաշիվ" ng-controller="PopUpCtrl" ng-click="openWindow('/AccountOrder/PersonalAccountOrder','Ընթացիկ հաշվի հայտի մուտքագրում','newaccount')"></i>
                     <i class="add-new-product " ng-if="forTransitAccounts==true && ($root.SessionProperties.IsChiefAcc == true || $root.SessionProperties.AdvancedOptions['isOnlineAcc'] == '1' || $root.SessionProperties.AdvancedOptions['canAddCustomerTransitAccount'] == '1')" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Ավելացնել տարանցիկ հաշիվ" ng-controller="PopUpCtrl" ng-click="params={isCustomerTransitAccount:true};openWindow('/TransitAccountsForDebitTransactions/NewTransitAccountsForDebitTransactions','Ավելացնել տարանցիկ հաշիվ','newTransitAccount')"></i>

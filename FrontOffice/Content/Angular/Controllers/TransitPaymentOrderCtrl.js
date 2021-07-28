@@ -1,4 +1,4 @@
-﻿app.controller("TransitPaymentOrderCtrl", ['$scope', 'transitPaymentOrderService', 'infoService', '$location', 'dialogService', '$uibModal', 'orderService', '$filter', 'paymentOrderService', 'customerService', '$http', 'accountService', '$confirm', 'leasingFactory', 'LeasingService', function ($scope, transitPaymentOrderService, infoService, $location, dialogService, $uibModal, orderService, $filter, paymentOrderService, customerService, $http, accountService, $confirm, leasingFactory, LeasingService) {
+﻿app.controller("TransitPaymentOrderCtrl", ['$scope', 'transitPaymentOrderService', 'infoService', '$location', 'dialogService', '$uibModal', 'orderService', '$filter', 'paymentOrderService', 'customerService', '$http', 'accountService', '$confirm', 'leasingFactory', 'LeasingService', 'ReportingApiService', function ($scope, transitPaymentOrderService, infoService, $location, dialogService, $uibModal, orderService, $filter, paymentOrderService, customerService, $http, accountService, $confirm, leasingFactory, LeasingService, ReportingApiService) {
     $scope.order = {};
     $scope.additional = "";
     $scope.order.RegistrationDate = new Date();
@@ -100,8 +100,18 @@
                                 descriptionForRejectFeeType = 'Չգանձման պատճառ :' + $scope.order.Fees[i].DescriptionForRejectFeeType;
                             }
 
+                            var rejectFeeTypeDescription = "";
+                            if ($scope.order.Fees[i].RejectFeeTypeDescription != null) {
+                                rejectFeeTypeDescription = 'Չգանձման պատճառ :' + $scope.order.Fees[i].RejectFeeTypeDescription;
+                            }
 
-                            $scope.FeesString += '\n' + ' ' + $scope.order.Fees[i].Amount + ' ' + $scope.order.Fees[i].Currency + ' ' + $scope.order.Fees[i].TypeDescription + ' ' + descriptionForRejectFeeType;
+                            if (rejectFeeTypeDescription != "") {
+                                $scope.FeesString += '\n' + ' ' + $scope.order.Fees[i].Amount + ' ' + $scope.order.Fees[i].Currency + ' ' + $scope.order.Fees[i].TypeDescription + ' ' + rejectFeeTypeDescription;
+                            }
+                            else {
+                                $scope.FeesString += '\n' + ' ' + $scope.order.Fees[i].Amount + ' ' + $scope.order.Fees[i].Currency + ' ' + $scope.order.Fees[i].TypeDescription + ' ' + descriptionForRejectFeeType;
+                            }
+
                         }
 
                     }
@@ -140,7 +150,7 @@
                     $scope.order.Fees.push({ Amount: 0, Type: 0, Account: 0, Currency: "AMD", OrderNumber: null });
                 }
             } else if ($scope.feeType == 0 && $scope.order.Currency == 'AMD' && ($scope.order.TransitAccountType == '5' || $scope.order.TransitAccountType == '3')) {
-                $scope.order.Fees = [{ Amount: 0, Type: 0, Account: { AccountNumber: 0, Currency: 'AMD' }, Currency: "AMD", OrderNumber: null, DescriptionForRejectFeeType: $scope.order.DescriptionForRejectFeeType }];
+                $scope.order.Fees = [{ Amount: 0, Type: 0, Account: { AccountNumber: 0, Currency: 'AMD' }, Currency: "AMD", OrderNumber: null, DescriptionForRejectFeeType: null, RejectFeeType: $scope.order.RejectFeeType, RejectFeeTypeDescription: null }];
             }
 
             if ($scope.paymentOrder && $scope.order.OPPerson == null) //Եթե կատարվում է ՀՀ տարածքում պատուհանից:
@@ -339,7 +349,14 @@
                     $scope.order.OPPerson = $scope.paymentOrder.OPPerson;
                 }
                 var Data = transitPaymentOrderService.getCashInPaymentOrderDetailsForBudgetTransfer($scope.paymentOrder, $scope.order, isCopy);
-                ShowPDF(Data);
+                Data.then(function (response) {
+                    var requestObj = { Parameters: response.data, ReportName: 82, ReportExportFormat: 1 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowPDFReport(result);
+                    });
+                }, function () {
+                    alert('Error getCashInPaymentOrderDetailsForBudgetTransfer');
+                });
             }
             else {
                 if ($scope.paymentOrder.OPPerson == undefined) {
@@ -348,11 +365,25 @@
 
                 if ($scope.paymentOrder.Currency == "AMD") {
                     var Data = transitPaymentOrderService.getCashInPaymentOrderDetailsForRATransfer($scope.paymentOrder, $scope.order, isCopy);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 82, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getCashInPaymentOrderDetailsForRATransfer');
+                    });
                 }
                 else {
                     var Data = transitPaymentOrderService.getCashInPaymentOrder($scope.order, isCopy);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getCashInPaymentOrder');
+                    });
                 }
 
             }
@@ -360,26 +391,61 @@
         else if ($scope.matureOrder != undefined && $scope.claimRepayment != true) {
             if ($scope.nonCashPayment != true) {
                 var Data = transitPaymentOrderService.getCashInPaymentOrderDetailsForMatureOrder($scope.order, $scope.matureOrder, isCopy);
-                ShowPDF(Data);
+                Data.then(function (response) {
+                    var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowPDFReport(result);
+                    });
+                }, function () {
+                    alert('Error getCashInPaymentOrderDetailsForMatureOrder');
+                });
             }
             else {
                 var Data = transitPaymentOrderService.getPaymentOrderDetails($scope.order, $scope.matureOrder, isCopy);
-                ShowPDF(Data);
+                Data.then(function (response) {
+                    var requestObj = { Parameters: response.data, ReportName: 63, ReportExportFormat: 1 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowPDFReport(result);
+                    });
+                }, function () {
+                    alert('Error getPaymentOrderDetails');
+                });
             }
         }
         else if ($scope.bondAmountChargeOrder != undefined) {
             if ($scope.nonCashPayment == true) {
                 var Data = transitPaymentOrderService.getPaymentOrderDetailsForBond($scope.order, $scope.bondAmountChargeOrder, isCopy);
-                ShowPDF(Data);
+                Data.then(function (response) {
+                    var requestObj = { Parameters: response.data, ReportName: 63, ReportExportFormat: 1 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowPDFReport(result);
+                    });
+                }, function () {
+                    alert('Error getPaymentOrderDetailsForBond');
+                });
             }
             else {
                 var Data = transitPaymentOrderService.getCashInPaymentOrder($scope.order, isCopy);
-                ShowPDF(Data);
+                Data.then(function (response) {
+                    var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowPDFReport(result);
+                    });
+                }, function () {
+                    alert('Error getCashInPaymentOrder');
+                });
             }
         }
         else {
             var Data = transitPaymentOrderService.getCashInPaymentOrder($scope.order, isCopy);
-            ShowPDF(Data);
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowPDFReport(result);
+                });
+            }, function () {
+                alert('Error getCashInPaymentOrder');
+            });
         }
 
         $scope.getPaymentOrderFeeDetails(isCopy);
@@ -717,14 +783,28 @@
                             $scope.orderForFee.ReceiverAccount.AccountNumber = result.data;
                             $scope.orderForFee.Currency = "AMD";
                             var Data = paymentOrderService.getCashInPaymentOrder($scope.orderForFee, isCopy);
-                            ShowPDF(Data);
+                            Data.then(function (response) {
+                                var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                                ReportingApiService.getReport(requestObj, function (result) {
+                                    ShowPDFReport(result);
+                                });
+                            }, function () {
+                                alert('Error getCashInPaymentOrder');
+                            });
                         });
                     }
                     else {
                         $scope.orderForFee.Currency = $scope.order.Fees[fee].Currency;
                         $scope.orderForFee.ReceiverAccount.AccountNumber = $scope.order.Fees[fee].CreditAccount.AccountNumber;
                         var Data = paymentOrderService.getCashInPaymentOrder($scope.orderForFee, isCopy);
-                        ShowPDF(Data);
+                        Data.then(function (response) {
+                            var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+                            ReportingApiService.getReport(requestObj, function (result) {
+                                ShowPDFReport(result);
+                            });
+                        }, function () {
+                            alert('Error getCashInPaymentOrder');
+                        });
                     }
 
 
@@ -1039,4 +1119,12 @@
         }
     };
 
+    $scope.getRejectFeeTypes = function () {
+        var Data = infoService.getRejectFeeTypes();
+        Data.then(function (acc) {
+            $scope.rejectFeeTypes = acc.data;
+        }, function () {
+            alert('Error getRejectFeeTypes');
+        });
+    };
 }]);

@@ -26,7 +26,6 @@
         var response = $http({
             method: "post",
             url: "/CardAccountClosingOrder/GetCardAccountClosingApplication",
-            responseType: 'arraybuffer',
             params: {
                 productID: productID
             }

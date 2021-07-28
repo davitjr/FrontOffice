@@ -17,7 +17,6 @@
         var response = $http({
             method: "post",
             url: "/CurrencyExchangeOrder/GetConvertationCashNonCashPaymentOrder",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
         });
@@ -28,7 +27,6 @@
         var response = $http({
             method: "post",
             url: "/CurrencyExchangeOrder/GetConvertationNonCashCashPaymentOrder",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
 
@@ -40,7 +38,6 @@
         var response = $http({
             method: "post",
             url: "/CurrencyExchangeOrder/GetConvertationCashPaymentOrder",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
 
@@ -52,7 +49,6 @@
         var response = $http({
             method: "post",
             url: "/CurrencyExchangeOrder/GetCrossConvertationCash",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
 
@@ -64,7 +60,6 @@
         var response = $http({
             method: "post",
             url: "/CurrencyExchangeOrder/GetCrossConvertationCashNonCash",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
 
@@ -76,7 +71,6 @@
         var response = $http({
             method: "post",
             url: "/CurrencyExchangeOrder/GetCrossConvertationNonCashCash",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
 
@@ -111,7 +105,6 @@
         var response = $http({
             method: "post",
             url: "/CurrencyExchangeOrder/GetCrossConvertationDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",           
         });
@@ -122,7 +115,6 @@
         var response = $http({
             method: "post",
             url: "/CurrencyExchangeOrder/GetConvertationDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
 
@@ -184,7 +176,6 @@
          var response = $http({
              method: "post",
              url: "/CurrencyExchangeOrder/GetConvertationCashNonCashForMatureOrder",
-             responseType: 'arraybuffer',
              data: JSON.stringify(order),
              dataType: "json",
          });
@@ -195,7 +186,6 @@
          var response = $http({
              method: "post",
              url: "/CurrencyExchangeOrder/GetCrossConvertationCashNonCashForMatureOrder",
-             responseType: 'arraybuffer',
              data: JSON.stringify(order),
              dataType: "json",
          });
@@ -206,7 +196,6 @@
          var response = $http({
              method: "post",
              url: "/CurrencyExchangeOrder/GetConvertationDetailsForMatureOrder",
-             responseType: 'arraybuffer',
              data: JSON.stringify(order),
              dataType: "json",
          });
@@ -217,7 +206,6 @@
          var response = $http({
              method: "post",
              url: "/CurrencyExchangeOrder/GetCrossConvertationDetailsForMatureOrder",
-             responseType: 'arraybuffer',
              data: JSON.stringify(order),
              dataType: "json",
          });

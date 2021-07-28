@@ -1,4 +1,4 @@
-﻿app.controller("ARUSFastTransferOrderCtrl", ['$scope', 'fastTransferPaymentOrderService', 'utilityService', 'accountService', 'customerService', 'infoService', 'dialogService', 'paymentOrderService', 'orderService', '$filter', '$uibModal', '$http', function ($scope, fastTransferPaymentOrderService, utilityService, accountService, customerService, infoService, dialogService, paymentOrderService, orderService, $filter, $uibModal, $http) {
+﻿app.controller("ARUSFastTransferOrderCtrl", ['$scope', 'fastTransferPaymentOrderService', 'utilityService', 'accountService', 'customerService', 'infoService', 'dialogService', 'paymentOrderService', 'orderService', '$filter', '$uibModal', '$http', 'ReportingApiService', function ($scope, fastTransferPaymentOrderService, utilityService, accountService, customerService, infoService, dialogService, paymentOrderService, orderService, $filter, $uibModal, $http, ReportingApiService) {
 
 
     $scope.showValidationMessage = function () {
@@ -211,12 +211,27 @@
         showloading();
         if (isNewOrder != 1) {
             var Data = fastTransferPaymentOrderService.printFastTransferPaymentOrder($scope.orderDetails);
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 76, ReportExportFormat: 1 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowPDFReport(result);
+                });
+            }, function () {
+                alert('Error printFastTransferPaymentOrder');
+            });
         }
         else {
             var Data = fastTransferPaymentOrderService.printFastTransferPaymentOrder($scope.order);
+            Data.then(function (response) {
+                var requestObj = { Parameters: response.data, ReportName: 76, ReportExportFormat: 1 }
+                ReportingApiService.getReport(requestObj, function (result) {
+                    ShowPDFReport(result);
+                });
+            }, function () {
+                alert('Error printFastTransferPaymentOrder');
+            });
         }
 
-        ShowPDF(Data);
 
     };
 

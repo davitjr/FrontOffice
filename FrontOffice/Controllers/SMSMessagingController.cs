@@ -44,12 +44,13 @@ namespace FrontOffice.Controllers
             return Json(Srv.SMSMessagingService.DeleteMessagingSession(id));
         }
 
-        public void SMSMessagingReport(uint id)
+        public JsonResult SMSMessagingReport(uint id)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "sessionId", value: id.ToString());
             parameters.Add(key: "user_ID", value: "0");
-            Srv.ReportService.SMSMessagingReport(parameters);
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
     }
 }

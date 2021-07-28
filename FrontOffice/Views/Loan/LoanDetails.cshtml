@@ -17,7 +17,7 @@
 
 <div ng-controller="LoanCtrl" data-ng-init="getLoan(productId);showResetEarlyRepaymentFeeButton();getLoanRepaymentDelayDetails(productId);getLoanInterestRateConcessionDetails(productId);" id="loandetails">
     <div id="loandetails_menu" class="menu-bar dialog-menu light-green details-menu">
-        <ul id="menu" class="dialog-menu">
+        <ul ng-controller="LoanProductActivationOrderCtrl" id="menu" class="dialog-menu">
             <li class="root-menu-item-4 " ng-if="loan!=undefined">
                 <span id="h-menu-item-4" onclick="return false;">
                     <img id="h-menu-icon-4" class="h-menu-icon applicationButton">Վարկի գրաֆիկ
@@ -84,13 +84,13 @@
                     </li>
                 </ul>
             </li>
-            <li ng-controller="LoanProductActivationOrderCtrl" class="root-menu-item-4 " ng-if="loan.LoanType==29">
+            <li class="root-menu-item-4 " ng-if="loan.LoanType==29">
                 <span id="h-menu-item-4" onclick="return false;">
                     <img id="h-menu-icon-4" class="h-menu-icon cashInButton">Փաստաթղթեր
                     <img id="arrow-down" class="arrowButton">
                 </span>
                 <ul>
-                    <li id="v-menuItem-4.1" ng-click="getDepositConsumeLoanContract(loan.ProductId);">
+                    <li id="v-menuItem-4.1" ng-click="getDepositConsumeLoanContract(loan.ProductId, confirmationPerson);">
                         <span id="h-menu-item-2">Պայմանագիր</span>
                     </li>
 
@@ -100,10 +100,19 @@
                     <li id="v-menuItem-4.5" ng-click="getLoanTerms(loan.ProductId);">
                         <span id="h-menu-item-6">Էական պայմաններ</span>
                     </li>
-                    <li id="v-menuItem-4.3" ng-click="getDepositLoanGrafik(loan.ProductId);">
+                    <li id="v-menuItem-4.3" ng-click="getDepositLoanGrafik(loan.ProductId, confirmationPerson);">
                         <span id="h-menu-item-4">Գրաֆիկ</span>
                     </li>
                 </ul>
+            </li>
+
+            <li class="root-menu-item-5 " ng-if="loan.LoanType==29">
+                <span id="h-menu-item-5" onclick="return false;">
+                    <select title="Ստորագրող անձ" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-ng-model="confirmationPerson" style="max-width:100px;height:30px;font-size:11px;" name="ConfirmationPerson" id="h-menu-item-5" ng-change="confirmationPersons(confirmationPerson)">
+                        <option value="2">կառավարիչ</option>
+                        <option value="3">կառավարչի տեղակալ</option>
+                    </select>
+                </span>
             </li>
 
         </ul>

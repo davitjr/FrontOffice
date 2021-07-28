@@ -58,7 +58,7 @@ namespace FrontOffice.Controllers
 
 
 
-        public void PrintCardTarifContract(int tarifID)
+        public JsonResult PrintCardTarifContract(int tarifID)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -66,7 +66,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "filialCode", value: currentUser.filialCode.ToString());
             parameters.Add(key: "relatedOfficeNumber", value: tarifID.ToString());
 
-            ReportService.PrintSalPaymentReport(parameters, ExportFormat.Excel);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
 

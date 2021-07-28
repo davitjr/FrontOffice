@@ -41,11 +41,11 @@
 
         @* Վարկային գիծ  եթե   վերաթողարկվող քարտը ունի Վարկային գիծ  *@
 
-        <div class="product-detail-row" ng-if="order.WithCreditLineClosing !== null">
+        @*<div class="product-detail-row" ng-if="order.WithCreditLineClosing !== null">
             <div class="product-detail-cell product-detail-lable">Վարկային գիծ </div>
             <div class="product-detail-cell product-detail-value" ng-if="!order.WithCreditLineClosing">Երկարաձգում</div>
             <div class="product-detail-cell product-detail-value" ng-if="order.WithCreditLineClosing">Դադարեցում</div>
-        </div>
+        </div>*@
         @* PIN-ի ստացման եղանակ  վերաթողարկում այլ տեսակի քարտով *@
         <div class="product-detail-row" ng-if="order.RenewWithCardNewType">
             <div class="product-detail-cell product-detail-lable">PIN-ի ստացման եղանակ</div>

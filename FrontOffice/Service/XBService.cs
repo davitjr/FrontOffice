@@ -9164,9 +9164,9 @@ namespace FrontOffice.Service
 
         //GetCardMobilePhones
 
-        public static List<string> GetCardMobilePhones(ulong customerNumber, ulong cardNumber)
+        public static List<XBSInfo.TupleOfstringboolean> GetCardMobilePhones(ulong customerNumber, ulong cardNumber)
         {
-            List<string> CardMobilePhones = new List<string>();
+            List<XBSInfo.TupleOfstringboolean> CardMobilePhones = new List<XBSInfo.TupleOfstringboolean>();
 
             InfoService.Use(client =>
             {
@@ -9189,7 +9189,19 @@ namespace FrontOffice.Service
             });
             return currentPhone;
         }
+        //GetCardHolderEmail
+        public static string GetCustomerEmailByCardNumber(string cardNumber)
+        {
+            string currentPhone = null;
 
+            InfoService.Use(client =>
+            {
+
+                currentPhone = client.GetCustomerEmailByCardNumber(cardNumber);
+
+            });
+            return currentPhone;
+        }
         //SMSTypeAndValue
 
         public static string SMSTypeAndValue(string cardNumber)
@@ -9383,6 +9395,111 @@ namespace FrontOffice.Service
             });
             return isCardOpen;
         }
+        //END 9878
+
+        public static ulong CheckCustomerFreeFunds(string accountNumber)
+        {
+            ulong result = 0;
+            XBService.Use(client =>
+            {
+                result = client.CheckCustomerFreeFunds(accountNumber);
+            });
+            return result;
+        }
+
+        public static ActionResult SaveAndApproveThirdPersonAccountRightsTransfer(ThirdPersonAccountRightsTransferOrder order)
+        {
+            ActionResult result = new ActionResult();
+            XBService.Use(client =>
+            {
+                result = client.SaveAndApproveThirdPersonAccountRightsTransfer(order);
+            }
+            );
+
+            return result;
+        }
+
+        public static bool GetRightsTransferAvailability(string accountNumber)
+        {
+            bool result = false;
+            XBService.Use(client =>
+            {
+                result = client.GetRightsTransferAvailability(accountNumber);
+            }
+            );
+
+            return result;
+        }
+
+        public static bool GetRightsTransferVisibility(string accountNumber)
+        {
+            bool result = false;
+            XBService.Use(client =>
+            {
+                result = client.GetRightsTransferVisibility(accountNumber);
+            }
+            );
+
+            return result;
+        }
+
+
+        public static bool GetCheckCustomerIsThirdPerson(string accountNumber, ulong customerNumber)
+        {
+            bool result = false;
+            XBService.Use(client =>
+            {
+                result = client.GetCheckCustomerIsThirdPerson(accountNumber, customerNumber);
+            }
+            );
+
+            return result;
+        }
+
+        public static List<string> GetRenewedCardAccountRegWarnings(Card card)
+        {
+            List<string> warnings = new List<string>();
+            XBService.Use(client =>
+            {
+                warnings = client.GetRenewedCardAccountRegWarnings(card);
+            });
+            return warnings;
+        }
+
+        public static bool GetMRDataChangeAvailability(int mrID)
+        {
+            bool result = false;
+            XBService.Use(client =>
+            {
+                result = client.GetMRDataChangeAvailability(mrID);
+            }
+            );
+
+            return result;
+        }
+
+        public static ActionResult SaveAndApproveMRDataChangeOrder(MRDataChangeOrder order)
+        {
+            ActionResult result = new ActionResult();
+            XBService.Use(client =>
+            {
+                result = client.SaveAndApproveMRDataChangeOrder(order);
+            }
+            );
+
+            return result;
+        }
+
+        public static VisaAliasOrder VisaAliasOrderDetails(long orderId)
+        {
+            VisaAliasOrder result = new VisaAliasOrder();
+
+            XBService.Use(client =>
+            {
+                result = client.VisaAliasOrderDetails(orderId);
+            });
+            return result;
+        }
 
         public static ActionResult SaveAndApproveVisaAliasOrder(VisaAliasOrder order)
         {
@@ -9395,25 +9512,6 @@ namespace FrontOffice.Service
             return result;
         }
 
-        //public static DeleteLoanOrderDetails GetLoanDeleteOrderDetails(uint orderId)
-        //{
-        //    DeleteLoanOrderDetails result = new DeleteLoanOrderDetails();
-        //    XBService.Use(client =>
-        //    {
-        //        result = client.GetLoanDeleteOrderDetails(orderId);
-        //    });
-        //    return result;
-        //}
-        public static VisaAliasOrder VisaAliasOrderDetails(long orderId)
-        {
-            VisaAliasOrder result = new VisaAliasOrder();
-
-            XBService.Use(client =>
-            {
-                result = client.VisaAliasOrderDetails(orderId);
-            });
-            return result;
-        }
         public static CardHolderAndCardType GetCardTypeAndCardHolder(string cardNumber)
         {
             CardHolderAndCardType cardHolderAndCardType = new CardHolderAndCardType();
@@ -9426,18 +9524,5 @@ namespace FrontOffice.Service
 
             return cardHolderAndCardType;
         }
-
-        //END 9878
     }
 }
-
-
-
-
-
-
-
-
-
-
-

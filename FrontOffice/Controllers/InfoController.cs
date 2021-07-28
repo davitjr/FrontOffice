@@ -1139,5 +1139,10 @@ namespace FrontOffice.Controllers
         {
             return Json(InfoService.GetCardNotRenewReasons(), JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetRejectFeeTypes()
+        {
+            return Json(InfoService.GetCommissionNonCollectionReasons(), JsonRequestBehavior.AllowGet);
+        }
     }
 }

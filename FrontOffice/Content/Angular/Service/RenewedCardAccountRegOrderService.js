@@ -22,4 +22,15 @@
         });
         return response;
     };
+
+    this.getRenewedCardAccountRegWarnings = function (oldCard) {
+        var response = $http({
+            method: "post",
+            url: "/RenewedCardAccountRegOrder/GetRenewedCardAccountRegWarnings",
+            data: JSON.stringify(oldCard),
+            dataType: "json"
+        });
+        return response;
+    };
+
 }]);

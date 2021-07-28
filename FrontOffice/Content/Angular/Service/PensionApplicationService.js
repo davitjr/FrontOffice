@@ -30,7 +30,6 @@
         var response = $http({
             method: "post",
             url: "/PensionApplication/PensionCloseApplicationContract",
-            responseType: 'arraybuffer',
             params: {
                 contractId: contractId
             }

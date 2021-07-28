@@ -292,7 +292,7 @@ namespace FrontOffice.Controllers
             return XBService.GetAutomatedConfirmTime();
         }
 
-        public void PrintHomeBankingDocumentsReport(FrontOffice.XBS.HBDocumentFilters filters)
+        public JsonResult PrintHomeBankingDocumentsReport(FrontOffice.XBS.HBDocumentFilters filters)
         {
             filters.BankCode = 22000;
 
@@ -308,7 +308,7 @@ namespace FrontOffice.Controllers
             parameters.Add("WHERE_CONDITION", filter);
             parameters.Add("OperDay", date);
 
-            ReportService.GetHbDocumentsReport(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetTreansactionConfirmationDetails(int docId, long debitAccount)

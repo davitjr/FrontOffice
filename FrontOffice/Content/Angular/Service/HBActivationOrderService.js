@@ -38,7 +38,6 @@
         var response = $http({
             method: "post",
             url: "/HBActivationOrder/PrintOrder",
-            responseType: 'arraybuffer',
             data: JSON.stringify(order),
             dataType: "json",
             

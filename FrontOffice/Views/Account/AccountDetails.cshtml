@@ -88,7 +88,16 @@
 
                 </ul>
             </li>
-            <li class="root-menu-item-6 " ng-if="account.JointType==1 || account.JointType==2" ng-controller="PopUpCtrl" ng-click="params={accountNumber: account.AccountNumber};openWindow('/Account/JointAccountCustomersDetails', 'Հաշվի մասնաբաժիններ', 'JointAccountCustomersDetails');">
+            <li class="root-menu-item-5 " ng-if="account.ClosingDateString == 'null' && account.TypeOfAccount != 224 && account.TypeOfAccount != 279">
+                <span id="h-menu-item-5" onclick="return false;">
+                    <select title="Ստորագրող անձ" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-ng-model="confirmationPerson" style="max-width:150px;height:30px" name="ConfirmationPerson" id="h-menu-item-5" ng-change="confirmationPersons(confirmationPerson)">
+                        <option value="1">մասնաճյուղի աշխատակից</option>
+                        <option value="2">կառավարիչ</option>
+                        <option value="3">կառավարչի տեղակալ</option>
+                    </select>
+                </span>
+            </li>
+            <li class="root-menu-item-6 " ng-if="account.JointType==1 || account.JointType==2" ng-controller="PopUpCtrl" ng-click="params={accountNumber: account.AccountNumber,accountCurrency:account.Currency};openWindow('/Account/JointAccountCustomersDetails', 'Հաշվի մասնաբաժիններ', 'JointAccountCustomersDetails');">
                 <span id="h-menu-item-6"><img id="h-menu-icon-6" class="sharedAccountsButton h-menu-icon">Մասնաբաժիններ</span>
             </li>
         </ul>

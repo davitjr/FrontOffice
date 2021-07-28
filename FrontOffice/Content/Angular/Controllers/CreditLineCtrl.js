@@ -1,4 +1,4 @@
-﻿app.controller("CreditLineCtrl", ['$scope', 'creditLineService', '$location', 'loanService', '$confirm', 'dialogService', 'paymentOrderService', 'utilityService', '$http', '$state', '$confirm', function ($scope, creditLineService, $location, loanService, $confirm, dialogService, paymentOrderService, utilityService, $http, $state, $confirm) {
+﻿app.controller("CreditLineCtrl", ['$scope', 'creditLineService', '$location', 'loanService', '$confirm', 'dialogService', 'paymentOrderService', 'utilityService', '$http', '$state', 'ReportingApiService', function ($scope, creditLineService, $location, loanService, $confirm, dialogService, paymentOrderService, utilityService, $http, $state, ReportingApiService) {
 
     $scope.filter = 1;
     try {
@@ -79,7 +79,14 @@
     $scope.getCreditLineGrafikApplication = function () {
         showloading();
         var Data = creditLineService.getCreditLineGrafikApplication($scope.creditline.LoanAccount.AccountNumber, new Date(parseInt($scope.creditline.StartDate.substr(6))));
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 150, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getCreditLineGrafikApplication');
+        });
     };
 
 
@@ -155,7 +162,14 @@
     $scope.getCreditLineTerminationApplication = function () {
         showloading();
         var Data = creditLineService.getCreditLineTerminationApplication($scope.cardnumber);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 12, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getCreditLineTerminationApplication');
+        });
     };
 
     $scope.getClosedCreditLines = function (cardNumber) {

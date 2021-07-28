@@ -54,7 +54,7 @@ namespace FrontOffice.Controllers
             return PartialView("CreditLineGrafik");
         }
 
-        public void GetCreditLineGrafikApplication(string loanFullNumber, DateTime startDate)
+        public JsonResult GetCreditLineGrafikApplication(string loanFullNumber, DateTime startDate)
         {
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
 
@@ -66,7 +66,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "Language_id", value: "0");
             //parameters.Add(key: "CustomerName", value: Utility.ConvertAnsiToUnicode(ACBAOperationService.GetCustomerDescription(customerNumber)));
 
-            ReportService.GetCreditLineGrafikApplication(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CreditLineTerminationOrderDetails()
@@ -85,11 +85,11 @@ namespace FrontOffice.Controllers
             return Json(XBService.SaveCreditLineTerminationOrder(order), JsonRequestBehavior.AllowGet);
         }
 
-        public void GetCreditLineTerminationApplication(string cardNumber)
+        public JsonResult GetCreditLineTerminationApplication(string cardNumber)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "cardNumber", value: cardNumber);
-            ReportService.GetCreditLineTerminationApplication(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ClosedCreditLines()
@@ -148,7 +148,7 @@ namespace FrontOffice.Controllers
             return XBService.IsCreditLineActivateOnApiGate(orderId);
         }
 
-        public void GetCreditLineOrderReport(xbs.SearchOrders searchParams)
+        public JsonResult GetCreditLineOrderReport(xbs.SearchOrders searchParams)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -164,14 +164,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "operationFilialCode", value: currentUser.filialCode.ToString());
             parameters.Add(key: "documentType", value: ((short)searchParams.Type).ToString());
 
-            if ((short)searchParams.Type == 74)
-                ReportService.GetCreditLineOrderReport(parameters);
-
-            else if ((short)searchParams.Type == 21)
-                ReportService.GetClosedCreditLineOrderReport(parameters);
-
-            else
-                ReportService.GetProlongCreditLineOrderReport(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
     }
 }

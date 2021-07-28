@@ -1,4 +1,4 @@
-﻿app.controller("CardClosingOrderCtrl", ['$scope', 'cardClosingOrderService', 'infoService', 'cardService', '$location', 'dialogService', '$uibModal', 'orderService','$http', function ($scope, cardClosingOrderService, infoService, cardService, $location, dialogService, $uibModal, orderService,$http) {
+﻿app.controller("CardClosingOrderCtrl", ['$scope', 'cardClosingOrderService', 'infoService', 'cardService', '$location', 'dialogService', '$uibModal', 'orderService', '$http', 'ReportingApiService', function ($scope, cardClosingOrderService, infoService, cardService, $location, dialogService, $uibModal, orderService, $http, ReportingApiService) {
 
     $scope.order = {};
     $scope.order.RegistrationDate = new Date();
@@ -71,7 +71,14 @@
     $scope.getCardClosingApplication = function () {
         showloading();
         var Data = cardClosingOrderService.getCardClosingApplication($scope.card.CardNumber);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 7, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getCardClosingApplication');
+        });
     };
 
     $scope.callbackgetCardClosingOrder = function () {

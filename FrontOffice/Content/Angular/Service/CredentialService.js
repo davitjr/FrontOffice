@@ -52,7 +52,6 @@
         var response = $http({
             method: "post",
             url: "/Credential/GetFeeForCredentialActivationOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
             params: {

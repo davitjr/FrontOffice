@@ -1,4 +1,4 @@
-﻿app.controller("CurrencyExchangeOrderCtrl", ['$scope', 'currencyExchangeOrderService', 'paymentOrderService', 'utilityService', 'infoService', 'orderService', '$uibModal', 'dialogService', 'customerService', '$http', 'accountService', '$confirm', '$filter', 'casherService', function ($scope, currencyExchangeOrderService, paymentOrderService, utilityService, infoService, orderService, $uibModal, dialogService, customerService, $http, accountService, $confirm, $filter, casherService) {
+﻿app.controller("CurrencyExchangeOrderCtrl", ['$scope', 'currencyExchangeOrderService', 'paymentOrderService', 'utilityService', 'infoService', 'orderService', '$uibModal', 'dialogService', 'customerService', '$http', 'accountService', '$confirm', '$filter', 'casherService', 'ReportingApiService', function ($scope, currencyExchangeOrderService, paymentOrderService, utilityService, infoService, orderService, $uibModal, dialogService, customerService, $http, accountService, $confirm, $filter, casherService, ReportingApiService) {
 
 
     $scope.showFeeTypeBlock = true;
@@ -180,11 +180,12 @@
             if ($scope.order.Fees == null || $scope.order.Fees.length == 0) {
 
                 var descriptionForRejectFeeType = null;
+                var rejectFeeType = null;
                 if ($scope.feeType == 0 && ($scope.order.Type == 54 || $scope.order.AccountType == 5) && $scope.order.DebitAccount.Currency == 'AMD' && $scope.order.ReceiverAccount != undefined && $scope.order.ReceiverAccount.Currency != 'AMD') {
-                    descriptionForRejectFeeType = $scope.order.DescriptionForRejectFeeType;
+                    rejectFeeType = $scope.order.RejectFeeType;
                 }
 
-                var oneFeeObj = { Amount: 0, Type: 0, Account: { AccountNumber: 0, Currency: 'AMD' }, Currency: "AMD", OrderNumber: null, DescriptionForRejectFeeType: descriptionForRejectFeeType };
+                var oneFeeObj = { Amount: 0, Type: 0, Account: { AccountNumber: 0, Currency: 'AMD' }, Currency: "AMD", OrderNumber: null, DescriptionForRejectFeeType: descriptionForRejectFeeType, RejectFeeType: rejectFeeType, RejectFeeTypeDescription: null };
                 $scope.order.Fees = [oneFeeObj];
             }
 
@@ -726,7 +727,14 @@
             if ($scope.order.Type == 54) {
                 if ($scope.order.SubType != 3) {
                     var Data = currencyExchangeOrderService.getConvertationCashNonCashPaymentOrder($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 73, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getConvertationCashNonCashPaymentOrder');
+                    });
                 }
                 else {
                     if ($scope.order.OPPerson.PersonAddress == null || $scope.order.OPPerson.PersonAddress == undefined || $scope.order.OPPerson.PersonAddress == '') {
@@ -736,70 +744,161 @@
                         $scope.order.OPPerson.PersonDocument = ' ';
                     }
                     var Data = currencyExchangeOrderService.getCrossConvertationCashNonCash($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 79, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getCrossConvertationCashNonCash');
+                    });
                 }
             }
             if ($scope.order.Type == 80) {
                 if ($scope.order.SubType != 3) {
                     var Data = currencyExchangeOrderService.GetConvertationCashNonCashForMatureOrder($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 73, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error GetConvertationCashNonCashForMatureOrder');
+                    });
                 }
                 else {
                     var Data = currencyExchangeOrderService.GetCrossConvertationCashNonCashForMatureOrder($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 79, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error GetCrossConvertationCashNonCashForMatureOrder');
+                    });
                 }
             }
 
             if ($scope.order.Type == 55 || $scope.order.Type == 81) {
                 if ($scope.order.SubType != 3) {
                     var Data = currencyExchangeOrderService.getConvertationNonCashCashPaymentOrder($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 74, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getConvertationNonCashCashPaymentOrder');
+                    });
                 }
                 else {
                     var Data = currencyExchangeOrderService.getCrossConvertationNonCashCash($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 80, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getCrossConvertationNonCashCash');
+                    });
                 }
             }
 
             if ($scope.order.Type == 53) {
                 if ($scope.order.SubType != 3) {
                     var Data = currencyExchangeOrderService.getConvertationCashPaymentOrder($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 72, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getConvertationCashPaymentOrder');
+                    });
                 }
                 else {
                     var Data = currencyExchangeOrderService.getCrossConvertationCash($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 78, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getCrossConvertationCash');
+                    });
                 }
             }
             if ($scope.order.Type == 65) {
                 if ($scope.order.DebitAccount.Currency == 'AMD' || $scope.order.ReceiverAccount.Currency == 'AMD') {
                     var Data = currencyExchangeOrderService.getConvertationDetails($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 64, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getConvertationDetails');
+                    });
                 }
                 else {
                     var Data = currencyExchangeOrderService.getCrossConvertationDetails($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 149, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getCrossConvertationDetails');
+                    });
                 }
             }
 
             if ($scope.order.Type == 2 || $scope.order.Type == 82) {
                 if ($scope.order.DebitAccount.Currency == 'AMD' || $scope.order.ReceiverAccount.Currency == 'AMD') {
                     var Data = currencyExchangeOrderService.getConvertationDetails($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 64, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getConvertationDetails');
+                    });
                 }
                 else {
                     var Data = currencyExchangeOrderService.getCrossConvertationDetails($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 149, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getCrossConvertationDetails');
+                    });
                 }
             }
             if ($scope.order.Type == 185) {
                 if ($scope.order.SubType != 3) {
                     var Data = currencyExchangeOrderService.getConvertationDetailsForMatureOrder($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 64, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getConvertationDetailsForMatureOrder');
+                    });
                 }
                 else {
                     var Data = currencyExchangeOrderService.getCrossConvertationDetailsForMatureOrder($scope.order);
-                    ShowPDF(Data);
+                    Data.then(function (response) {
+                        var requestObj = { Parameters: response.data, ReportName: 149, ReportExportFormat: 1 }
+                        ReportingApiService.getReport(requestObj, function (result) {
+                            ShowPDFReport(result);
+                        });
+                    }, function () {
+                        alert('Error getCrossConvertationDetailsForMatureOrder');
+                    });
                 }
             }
 
@@ -822,7 +921,14 @@
                 }
 
                 var Data = paymentOrderService.printCashBigAmountReport($scope.order, acc.data.m_Item2);
-                ShowPDF(Data);
+                Data.then(function (response) {
+                    var requestObj = { Parameters: response.data, ReportName: 75, ReportExportFormat: 1 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowPDFReport(result);
+                    });
+                }, function () {
+                    alert('Error printCashBigAmountReport');
+                });
             }
         }, function () {
             alert('Error isBigAmount');
@@ -1419,11 +1525,13 @@
             if ($scope.order.Fees == null || $scope.order.Fees.length == 0) {
 
                 var descriptionForRejectFeeType = null;
+                var rejectFeeType = null;
                 if ($scope.feeType == 0 && ($scope.order.Type == 54 || $scope.order.AccountType == 5) && $scope.order.DebitAccount.Currency == 'AMD' && $scope.order.ReceiverAccount != undefined && $scope.order.ReceiverAccount.Currency != 'AMD') {
-                    descriptionForRejectFeeType = $scope.order.DescriptionForRejectFeeType;
+                    //descriptionForRejectFeeType = $scope.order.DescriptionForRejectFeeType;
+                    rejectFeeType = $scope.order.RejectFeeType;
                 }
 
-                var oneFeeObj = { Amount: 0, Type: 0, Account: { AccountNumber: 0, Currency: 'AMD' }, Currency: "AMD", OrderNumber: null, DescriptionForRejectFeeType: descriptionForRejectFeeType };
+                var oneFeeObj = { Amount: 0, Type: 0, Account: { AccountNumber: 0, Currency: 'AMD' }, Currency: "AMD", OrderNumber: null, DescriptionForRejectFeeType: descriptionForRejectFeeType, RejectFeeType: rejectFeeType, RejectFeeTypeDescription: null };
                 $scope.order.Fees = [oneFeeObj];
             }
 
@@ -1945,4 +2053,12 @@
 
     //***************************************************************************************************************************************************************************
 
+    $scope.getRejectFeeTypes = function () {
+        var Data = infoService.getRejectFeeTypes();
+        Data.then(function (acc) {
+            $scope.rejectFeeTypes = acc.data;
+        }, function () {
+            alert('Error getRejectFeeTypes');
+        });
+    };
 }]);

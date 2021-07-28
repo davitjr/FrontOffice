@@ -7,6 +7,7 @@ using FrontOffice.Service;
 using FrontOffice.Models;
 using xbs = FrontOffice.XBS;
 using System.Web.SessionState;
+using Newtonsoft.Json;
 
 namespace FrontOffice.Controllers
 {
@@ -282,31 +283,37 @@ namespace FrontOffice.Controllers
 
 
 
-        public void PrintTransfer(ulong transferID)
+        public JsonResult PrintTransfer(ulong transferID)
         {
+            Dictionary<string, string> obj = new Dictionary<string, string>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             xbs.Transfer transfer = new xbs.Transfer();
             transfer = XBService.GetTransfer(transferID);
             if (transfer.TransferGroup == 3 && transfer.SendOrReceived == 1 && transfer.TransferSystem != 23)
             {
 
-                PrintInternationalPaymentOrder(transfer);
+                parameters = PrintInternationalPaymentOrder(transfer);
             }
             else if (transfer.TransferGroup == 1 || transfer.TransferGroup == 4)
             {
-                PrintPaymentOrder(transfer);
+                parameters = PrintPaymentOrder(transfer);
             }
             else if (transfer.TransferGroup == 3 && transfer.TransferSystem == 23)
             {
-                PrintStakSwiftTransfer(transfer.Id);
+                parameters = PrintStakSwiftTransfer(transfer.Id);
             }
             else if (transfer.TransferGroup == 3 || transfer.TransferSystem == 1)
             {
-                PrintReceivedSwiftTransfer(transfer);
+                parameters = PrintReceivedSwiftTransfer(transfer);
             }
 
+            obj.Add("result", JsonConvert.SerializeObject(parameters));
+            obj.Add("transfer", JsonConvert.SerializeObject(transfer));
+
+            return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintInternationalPaymentOrder(xbs.Transfer transfer)
+        public Dictionary<string, string> PrintInternationalPaymentOrder(xbs.Transfer transfer)
         {
 
             string descriptionForPaymentRUR = "";
@@ -383,10 +390,10 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "Commission", value: transfer.AmountForPayment.ToString());
             parameters.Add(key: "FileName", value: "InternationalTransferApplicationForm");
 
-            ReportService.GetInternationalTransferApplicationForm(parameters);
+            return parameters;
         }
 
-        public void PrintPaymentOrder(xbs.Transfer transfer)
+        public Dictionary<string, string> PrintPaymentOrder(xbs.Transfer transfer)
         {
 
 
@@ -482,12 +489,12 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "TransactionTime", value: transfer.RegistrationTime.Value.ToString("hh':'mm"));
 
 
-            ReportService.GetPaymentOrder(parameters);
+            return parameters;
 
         }
 
 
-        public void PrintReceivedSwiftTransfer(xbs.Transfer transfer)
+        public Dictionary<string, string> PrintReceivedSwiftTransfer(xbs.Transfer transfer)
         {
 
 
@@ -498,11 +505,11 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "archive", value: "0");
 
 
-            ReportService.PrintReceivedSwiftTransfer(parameters);
+            return parameters;
 
         }
 
-        public void PrintPaidTransfers(DateTime? startDate, DateTime? endDate, byte transferSystem, string filial)
+        public JsonResult PrintPaidTransfers(DateTime? startDate, DateTime? endDate, byte transferSystem, string filial)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string guid = Utility.GetSessionId();
@@ -527,11 +534,10 @@ namespace FrontOffice.Controllers
             {
                 parameters.Add(key: "allFilials", value: "0");
             }
-            ReportService.PrintPaidTransfers(parameters);
-
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
-        public void PrintBankMailTransfers(DateTime? startDate, DateTime? endDate, string transferGroup,
+        public JsonResult PrintBankMailTransfers(DateTime? startDate, DateTime? endDate, string transferGroup,
        string transferType, int confirmationSetNumber, byte session, int amount, string receiverName, byte confirmStatus, int mainFilial)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -559,7 +565,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "receiverName", value: receiverName.ToString());
             parameters.Add(key: "confirmStatus", value: confirmStatus.ToString());
 
-            ReportService.BankMailTransfers(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -573,12 +579,13 @@ namespace FrontOffice.Controllers
             return PartialView("TransferHistory");
         }
 
-        public void PrintStakSwiftTransfer(ulong tranferId)
+        public Dictionary<string, string> PrintStakSwiftTransfer(ulong tranferId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "transferId", value: tranferId.ToString());
             parameters.Add(key: "archive", value: "0");
-            ReportService.PrintStakRemittancePayoutOrder(parameters);
+
+            return parameters;
         }
 
     }

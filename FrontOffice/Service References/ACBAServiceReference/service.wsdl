@@ -233,20 +233,20 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/InformationSecurityLibrary" />
-      <xsd:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
-      <xsd:import schemaLocation="" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-      <xsd:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/SAPCRM" />
-      <xsd:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAccountSecurity" />
-      <xsd:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary" />
-      <xsd:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.CustomerIdentificationAlgorithm.Models" />
-      <xsd:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails" />
-      <xsd:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/System" />
-      <xsd:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/ACBAOperationService" />
-      <xsd:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/CBDataService" />
-      <xsd:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/CBDataService.PoliceViolations" />
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/InformationSecurityLibrary" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/SAPCRM" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAccountSecurity" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.CustomerIdentificationAlgorithm.Models" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ACBAOperationService" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/CBDataService" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/CBDataService.PoliceViolations" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IACBAOperationService_AutorizeUser_InputMessage">
@@ -315,6 +315,15 @@
   <wsdl:message name="IACBAOperationService_CheckAnalyserPermissions_OutputMessage">
     <wsdl:part name="parameters" element="tns:CheckAnalyserPermissionsResponse" />
   </wsdl:message>
+  <wsdl:message name="IACBAOperationService_DefineCustomerLinkType_InputMessage">
+    <wsdl:part name="parameters" element="tns:DefineCustomerLinkType" />
+  </wsdl:message>
+  <wsdl:message name="IACBAOperationService_DefineCustomerLinkType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DefineCustomerLinkTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IACBAOperationService_DefineCustomerLinkType_ResultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q1:Result" />
+  </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomerBankLinkType_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCustomerBankLinkType" />
   </wsdl:message>
@@ -328,7 +337,7 @@
     <wsdl:part name="parameters" element="tns:FindCustomersFromCRMResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_FindCustomersFromCRM_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q1:Result" />
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q2:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_DoEregisterRequestForCRM_InputMessage">
     <wsdl:part name="parameters" element="tns:DoEregisterRequestForCRM" />
@@ -349,13 +358,13 @@
     <wsdl:part name="parameters" element="tns:SaveCustomerChangesInCRMResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerChangesInCRM_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q2:Result" />
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q3:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerChangesInCRM_DahkResultFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q3:DahkResult" />
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q4:DahkResult" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerChangesInCRM_BankruptResultFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q4:BankruptResult" />
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q5:BankruptResult" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomerForExternalRequestInCRM_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCustomerForExternalRequestInCRM" />
@@ -364,7 +373,7 @@
     <wsdl:part name="parameters" element="tns:GetCustomerForExternalRequestInCRMResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomerForExternalRequestInCRM_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q5:Result" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q6:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveLegalCustomerInCRM_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveLegalCustomerInCRM" />
@@ -373,7 +382,7 @@
     <wsdl:part name="parameters" element="tns:SaveLegalCustomerInCRMResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveLegalCustomerInCRM_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q6:Result" />
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q7:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerChangesForCRM_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveCustomerChangesForCRM" />
@@ -382,13 +391,13 @@
     <wsdl:part name="parameters" element="tns:SaveCustomerChangesForCRMResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerChangesForCRM_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q7:Result" />
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q8:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerChangesForCRM_DahkResultFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q8:DahkResult" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q9:DahkResult" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerChangesForCRM_BankruptResultFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q9:BankruptResult" />
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q10:BankruptResult" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_InsertCustomerForCRM_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertCustomerForCRM" />
@@ -397,13 +406,13 @@
     <wsdl:part name="parameters" element="tns:InsertCustomerForCRMResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_InsertCustomerForCRM_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q10:Result" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q11:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_InsertCustomerForCRM_DahkResultFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q11:DahkResult" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q12:DahkResult" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_InsertCustomerForCRM_BankruptResultFault_FaultMessage">
-    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q12:BankruptResult" />
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q13:BankruptResult" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerPhotoContentServer_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveCustomerPhotoContentServer" />
@@ -496,7 +505,7 @@
     <wsdl:part name="parameters" element="tns:GetCustomerForExternalRequestNewResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomerForExternalRequestNew_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q13:Result" />
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q14:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomerGender_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCustomerGender" />
@@ -613,7 +622,7 @@
     <wsdl:part name="parameters" element="tns:GetCustomerForExternalRequestForAparikResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomerForExternalRequestForAparik_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q14:Result" />
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q15:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveOnlineUserPhoto_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveOnlineUserPhoto" />
@@ -676,7 +685,7 @@
     <wsdl:part name="parameters" element="tns:IdentifyCustomerResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_IdentifyCustomer_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q15:Result" />
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q16:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveContactChangingRiskRequestData_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveContactChangingRiskRequestData" />
@@ -780,6 +789,12 @@
   <wsdl:message name="IACBAOperationService_IdentifyCustomerByContact_OutputMessage">
     <wsdl:part name="parameters" element="tns:IdentifyCustomerByContactResponse" />
   </wsdl:message>
+  <wsdl:message name="IACBAOperationService_GetCustomerBirthDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerBirthDate" />
+  </wsdl:message>
+  <wsdl:message name="IACBAOperationService_GetCustomerBirthDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerBirthDateResponse" />
+  </wsdl:message>
   <wsdl:message name="IACBAOperationService_InsertCustomer_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertCustomer" />
   </wsdl:message>
@@ -787,13 +802,13 @@
     <wsdl:part name="parameters" element="tns:InsertCustomerResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_InsertCustomer_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q16:Result" />
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q17:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_InsertCustomer_DahkResultFault_FaultMessage">
-    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q17:DahkResult" />
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q18:DahkResult" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_InsertCustomer_BankruptResultFault_FaultMessage">
-    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q18:BankruptResult" />
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q19:BankruptResult" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerChanges_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveCustomerChanges" />
@@ -802,13 +817,13 @@
     <wsdl:part name="parameters" element="tns:SaveCustomerChangesResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerChanges_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q19:Result" />
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q20:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerChanges_DahkResultFault_FaultMessage">
-    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q20:DahkResult" />
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q21:DahkResult" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerChanges_BankruptResultFault_FaultMessage">
-    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q21:BankruptResult" />
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q22:BankruptResult" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SetCurrentUser_InputMessage">
     <wsdl:part name="parameters" element="tns:SetCurrentUser" />
@@ -828,6 +843,12 @@
   <wsdl:message name="IACBAOperationService_GetCustomerDescription_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCustomerDescriptionResponse" />
   </wsdl:message>
+  <wsdl:message name="IACBAOperationService_GetCustomerDescriptionEnglish_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerDescriptionEnglish" />
+  </wsdl:message>
+  <wsdl:message name="IACBAOperationService_GetCustomerDescriptionEnglish_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerDescriptionEnglishResponse" />
+  </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomer_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCustomer" />
   </wsdl:message>
@@ -835,7 +856,7 @@
     <wsdl:part name="parameters" element="tns:GetCustomerResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomer_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q22:Result" />
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q23:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomerMainData_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCustomerMainData" />
@@ -844,7 +865,7 @@
     <wsdl:part name="parameters" element="tns:GetCustomerMainDataResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomerMainData_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q23:Result" />
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q24:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetIdentityVerificationData_InputMessage">
     <wsdl:part name="parameters" element="tns:GetIdentityVerificationData" />
@@ -913,7 +934,7 @@
     <wsdl:part name="parameters" element="tns:InitKYCReportDataResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_InitKYCReportData_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q24:Result" />
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q25:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomerOldAddresses_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCustomerOldAddresses" />
@@ -946,7 +967,7 @@
     <wsdl:part name="parameters" element="tns:SaveEmployeeCredentialChangesResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveEmployeeCredentialChanges_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q25:Result" />
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q26:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetDocumentDefaultHistoryList_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDocumentDefaultHistoryList" />
@@ -1039,7 +1060,7 @@
     <wsdl:part name="parameters" element="tns:DoEregisterRequestResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_DoEregisterRequest_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q26:Result" />
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q27:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_DoEregisterRequestSAP_InputMessage">
     <wsdl:part name="parameters" element="tns:DoEregisterRequestSAP" />
@@ -1048,7 +1069,7 @@
     <wsdl:part name="parameters" element="tns:DoEregisterRequestSAPResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_DoEregisterRequestSAP_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q27:Result" />
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q28:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_UploadEregisterRequestData_InputMessage">
     <wsdl:part name="parameters" element="tns:UploadEregisterRequestData" />
@@ -1315,7 +1336,7 @@
     <wsdl:part name="parameters" element="tns:CheckCustomerDahkResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_CheckCustomerDahk_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q28:Result" />
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q29:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerMerge_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveCustomerMerge" />
@@ -1324,7 +1345,7 @@
     <wsdl:part name="parameters" element="tns:SaveCustomerMergeResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerMerge_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q29:Result" />
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q30:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomerFilial_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCustomerFilial" />
@@ -1351,7 +1372,7 @@
     <wsdl:part name="parameters" element="tns:RenameGPMCustomerResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_RenameGPMCustomer_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q30:Result" />
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q31:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomerQuality_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCustomerQuality" />
@@ -1528,7 +1549,7 @@
     <wsdl:part name="parameters" element="tns:GetCustomerForExternalRequestResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomerForExternalRequest_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q31:Result" />
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q32:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetAllManagersOfUser_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAllManagersOfUser" />
@@ -1561,7 +1582,7 @@
     <wsdl:part name="parameters" element="tns:SaveLinkedCustomersResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveLinkedCustomers_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q32:Result" />
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q33:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveLegalCustomer_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveLegalCustomer" />
@@ -1570,7 +1591,7 @@
     <wsdl:part name="parameters" element="tns:SaveLegalCustomerResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveLegalCustomer_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q33:Result" />
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q34:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_SaveCustomerGPMOnly_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveCustomerGPMOnly" />
@@ -1597,15 +1618,6 @@
     <wsdl:part name="parameters" element="tns:GetIdentifiedCustomerResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetIdentifiedCustomer_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q34:Result" />
-  </wsdl:message>
-  <wsdl:message name="IACBAOperationService_DefineCustomerLinkType_InputMessage">
-    <wsdl:part name="parameters" element="tns:DefineCustomerLinkType" />
-  </wsdl:message>
-  <wsdl:message name="IACBAOperationService_DefineCustomerLinkType_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DefineCustomerLinkTypeResponse" />
-  </wsdl:message>
-  <wsdl:message name="IACBAOperationService_DefineCustomerLinkType_ResultFault_FaultMessage">
     <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q35:Result" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetData_InputMessage">
@@ -2814,109 +2826,109 @@
   <wsdl:message name="IInfoService_GetVillageFromDescription_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetVillageFromDescriptionResponse" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_FindCustomersFromCRM_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_DefineCustomerLinkType_ResultFault_FaultMessage">
     <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q36:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_SaveCustomerChangesInCRM_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_FindCustomersFromCRM_ResultFault_FaultMessage">
     <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q37:Result" />
   </wsdl:message>
+  <wsdl:message name="ICustomerOperations_SaveCustomerChangesInCRM_ResultFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q38:Result" />
+  </wsdl:message>
   <wsdl:message name="ICustomerOperations_SaveCustomerChangesInCRM_DahkResultFault_FaultMessage">
-    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q38:DahkResult" />
+    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q39:DahkResult" />
   </wsdl:message>
   <wsdl:message name="ICustomerOperations_SaveCustomerChangesInCRM_BankruptResultFault_FaultMessage">
-    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q39:BankruptResult" />
+    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q40:BankruptResult" />
   </wsdl:message>
   <wsdl:message name="ICustomerOperations_GetCustomerForExternalRequestInCRM_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q40:Result" />
-  </wsdl:message>
-  <wsdl:message name="ICustomerOperations_SaveLegalCustomerInCRM_ResultFault_FaultMessage">
     <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q41:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_SaveCustomerChangesForCRM_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_SaveLegalCustomerInCRM_ResultFault_FaultMessage">
     <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q42:Result" />
   </wsdl:message>
+  <wsdl:message name="ICustomerOperations_SaveCustomerChangesForCRM_ResultFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q43:Result" />
+  </wsdl:message>
   <wsdl:message name="ICustomerOperations_SaveCustomerChangesForCRM_DahkResultFault_FaultMessage">
-    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q43:DahkResult" />
+    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q44:DahkResult" />
   </wsdl:message>
   <wsdl:message name="ICustomerOperations_SaveCustomerChangesForCRM_BankruptResultFault_FaultMessage">
-    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q44:BankruptResult" />
+    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q45:BankruptResult" />
   </wsdl:message>
   <wsdl:message name="ICustomerOperations_InsertCustomerForCRM_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q45:Result" />
+    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q46:Result" />
   </wsdl:message>
   <wsdl:message name="ICustomerOperations_InsertCustomerForCRM_DahkResultFault_FaultMessage">
-    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q46:DahkResult" />
+    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q47:DahkResult" />
   </wsdl:message>
   <wsdl:message name="ICustomerOperations_InsertCustomerForCRM_BankruptResultFault_FaultMessage">
-    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q47:BankruptResult" />
+    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q48:BankruptResult" />
   </wsdl:message>
   <wsdl:message name="ICustomerOperations_GetCustomerForExternalRequestNew_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q48:Result" />
-  </wsdl:message>
-  <wsdl:message name="ICustomerOperations_GetCustomerForExternalRequestForAparik_ResultFault_FaultMessage">
     <wsdl:part xmlns:q49="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q49:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_IdentifyCustomer_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_GetCustomerForExternalRequestForAparik_ResultFault_FaultMessage">
     <wsdl:part xmlns:q50="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q50:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_InsertCustomer_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_IdentifyCustomer_ResultFault_FaultMessage">
     <wsdl:part xmlns:q51="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q51:Result" />
   </wsdl:message>
+  <wsdl:message name="ICustomerOperations_InsertCustomer_ResultFault_FaultMessage">
+    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q52:Result" />
+  </wsdl:message>
   <wsdl:message name="ICustomerOperations_InsertCustomer_DahkResultFault_FaultMessage">
-    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q52:DahkResult" />
+    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q53:DahkResult" />
   </wsdl:message>
   <wsdl:message name="ICustomerOperations_InsertCustomer_BankruptResultFault_FaultMessage">
-    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q53:BankruptResult" />
+    <wsdl:part xmlns:q54="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q54:BankruptResult" />
   </wsdl:message>
   <wsdl:message name="ICustomerOperations_SaveCustomerChanges_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q54="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q54:Result" />
+    <wsdl:part xmlns:q55="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q55:Result" />
   </wsdl:message>
   <wsdl:message name="ICustomerOperations_SaveCustomerChanges_DahkResultFault_FaultMessage">
-    <wsdl:part xmlns:q55="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q55:DahkResult" />
+    <wsdl:part xmlns:q56="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q56:DahkResult" />
   </wsdl:message>
   <wsdl:message name="ICustomerOperations_SaveCustomerChanges_BankruptResultFault_FaultMessage">
-    <wsdl:part xmlns:q56="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q56:BankruptResult" />
+    <wsdl:part xmlns:q57="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q57:BankruptResult" />
   </wsdl:message>
   <wsdl:message name="ICustomerOperations_GetCustomer_ResultFault_FaultMessage">
-    <wsdl:part xmlns:q57="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q57:Result" />
-  </wsdl:message>
-  <wsdl:message name="ICustomerOperations_GetCustomerMainData_ResultFault_FaultMessage">
     <wsdl:part xmlns:q58="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q58:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_InitKYCReportData_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_GetCustomerMainData_ResultFault_FaultMessage">
     <wsdl:part xmlns:q59="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q59:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_SaveEmployeeCredentialChanges_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_InitKYCReportData_ResultFault_FaultMessage">
     <wsdl:part xmlns:q60="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q60:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_DoEregisterRequest_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_SaveEmployeeCredentialChanges_ResultFault_FaultMessage">
     <wsdl:part xmlns:q61="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q61:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_DoEregisterRequestSAP_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_DoEregisterRequest_ResultFault_FaultMessage">
     <wsdl:part xmlns:q62="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q62:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_CheckCustomerDahk_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_DoEregisterRequestSAP_ResultFault_FaultMessage">
     <wsdl:part xmlns:q63="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q63:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_SaveCustomerMerge_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_CheckCustomerDahk_ResultFault_FaultMessage">
     <wsdl:part xmlns:q64="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q64:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_RenameGPMCustomer_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_SaveCustomerMerge_ResultFault_FaultMessage">
     <wsdl:part xmlns:q65="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q65:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_GetCustomerForExternalRequest_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_RenameGPMCustomer_ResultFault_FaultMessage">
     <wsdl:part xmlns:q66="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q66:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_SaveLinkedCustomers_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_GetCustomerForExternalRequest_ResultFault_FaultMessage">
     <wsdl:part xmlns:q67="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q67:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_SaveLegalCustomer_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_SaveLinkedCustomers_ResultFault_FaultMessage">
     <wsdl:part xmlns:q68="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q68:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_GetIdentifiedCustomer_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_SaveLegalCustomer_ResultFault_FaultMessage">
     <wsdl:part xmlns:q69="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q69:Result" />
   </wsdl:message>
-  <wsdl:message name="ICustomerOperations_DefineCustomerLinkType_ResultFault_FaultMessage">
+  <wsdl:message name="ICustomerOperations_GetIdentifiedCustomer_ResultFault_FaultMessage">
     <wsdl:part xmlns:q70="http://schemas.datacontract.org/2004/07/ACBALibrary" name="detail" element="q70:Result" />
   </wsdl:message>
   <wsdl:message name="IDataService_GetCustomerLinkedList_InputMessage">
@@ -3041,6 +3053,11 @@
     <wsdl:operation name="CheckAnalyserPermissions">
       <wsdl:input wsaw:Action="http://tempuri.org/ILoginOperations/CheckAnalyserPermissions" message="tns:IACBAOperationService_CheckAnalyserPermissions_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILoginOperations/CheckAnalyserPermissionsResponse" message="tns:IACBAOperationService_CheckAnalyserPermissions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DefineCustomerLinkType">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType" message="tns:IACBAOperationService_DefineCustomerLinkType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResponse" message="tns:IACBAOperationService_DefineCustomerLinkType_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResultFault" name="ResultFault" message="tns:IACBAOperationService_DefineCustomerLinkType_ResultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetCustomerBankLinkType">
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerBankLinkType" message="tns:IACBAOperationService_GetCustomerBankLinkType_InputMessage" />
@@ -3337,6 +3354,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/IdentifyCustomerByContact" message="tns:IACBAOperationService_IdentifyCustomerByContact_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/IdentifyCustomerByContactResponse" message="tns:IACBAOperationService_IdentifyCustomerByContact_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetCustomerBirthDate">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDate" message="tns:IACBAOperationService_GetCustomerBirthDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDateResponse" message="tns:IACBAOperationService_GetCustomerBirthDate_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="InsertCustomer">
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/InsertCustomer" message="tns:IACBAOperationService_InsertCustomer_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/InsertCustomerResponse" message="tns:IACBAOperationService_InsertCustomer_OutputMessage" />
@@ -3362,6 +3383,10 @@
     <wsdl:operation name="GetCustomerDescription">
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerDescription" message="tns:IACBAOperationService_GetCustomerDescription_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionResponse" message="tns:IACBAOperationService_GetCustomerDescription_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerDescriptionEnglish">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglish" message="tns:IACBAOperationService_GetCustomerDescriptionEnglish_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglishResponse" message="tns:IACBAOperationService_GetCustomerDescriptionEnglish_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetCustomer">
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomer" message="tns:IACBAOperationService_GetCustomer_InputMessage" />
@@ -3863,11 +3888,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetIdentifiedCustomer" message="tns:IACBAOperationService_GetIdentifiedCustomer_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/GetIdentifiedCustomerResponse" message="tns:IACBAOperationService_GetIdentifiedCustomer_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/ICustomerOperations/GetIdentifiedCustomerResultFault" name="ResultFault" message="tns:IACBAOperationService_GetIdentifiedCustomer_ResultFault_FaultMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="DefineCustomerLinkType">
-      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType" message="tns:IACBAOperationService_DefineCustomerLinkType_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResponse" message="tns:IACBAOperationService_DefineCustomerLinkType_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResultFault" name="ResultFault" message="tns:IACBAOperationService_DefineCustomerLinkType_ResultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetData">
       <wsdl:input wsaw:Action="http://tempuri.org/IACBAOperationService/GetData" message="tns:IACBAOperationService_GetData_InputMessage" />
@@ -4679,6 +4699,11 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="ICustomerOperations">
+    <wsdl:operation name="DefineCustomerLinkType">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType" message="tns:IACBAOperationService_DefineCustomerLinkType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResponse" message="tns:IACBAOperationService_DefineCustomerLinkType_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResultFault" name="ResultFault" message="tns:ICustomerOperations_DefineCustomerLinkType_ResultFault_FaultMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetCustomerBankLinkType">
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerBankLinkType" message="tns:IACBAOperationService_GetCustomerBankLinkType_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerBankLinkTypeResponse" message="tns:IACBAOperationService_GetCustomerBankLinkType_OutputMessage" />
@@ -4974,6 +4999,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/IdentifyCustomerByContact" message="tns:IACBAOperationService_IdentifyCustomerByContact_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/IdentifyCustomerByContactResponse" message="tns:IACBAOperationService_IdentifyCustomerByContact_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetCustomerBirthDate">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDate" message="tns:IACBAOperationService_GetCustomerBirthDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDateResponse" message="tns:IACBAOperationService_GetCustomerBirthDate_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="InsertCustomer">
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/InsertCustomer" message="tns:IACBAOperationService_InsertCustomer_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/InsertCustomerResponse" message="tns:IACBAOperationService_InsertCustomer_OutputMessage" />
@@ -4999,6 +5028,10 @@
     <wsdl:operation name="GetCustomerDescription">
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerDescription" message="tns:IACBAOperationService_GetCustomerDescription_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionResponse" message="tns:IACBAOperationService_GetCustomerDescription_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerDescriptionEnglish">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglish" message="tns:IACBAOperationService_GetCustomerDescriptionEnglish_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglishResponse" message="tns:IACBAOperationService_GetCustomerDescriptionEnglish_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetCustomer">
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomer" message="tns:IACBAOperationService_GetCustomer_InputMessage" />
@@ -5501,11 +5534,6 @@
       <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/GetIdentifiedCustomerResponse" message="tns:IACBAOperationService_GetIdentifiedCustomer_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/ICustomerOperations/GetIdentifiedCustomerResultFault" name="ResultFault" message="tns:ICustomerOperations_GetIdentifiedCustomer_ResultFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="DefineCustomerLinkType">
-      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType" message="tns:IACBAOperationService_DefineCustomerLinkType_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResponse" message="tns:IACBAOperationService_DefineCustomerLinkType_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResultFault" name="ResultFault" message="tns:ICustomerOperations_DefineCustomerLinkType_ResultFault_FaultMessage" />
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="ILoginOperations">
     <wsdl:operation name="AutorizeUser">
@@ -5711,6 +5739,18 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DefineCustomerLinkType">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResultFault">
+        <soap12:fault use="literal" name="ResultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetCustomerBankLinkType">
       <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/GetCustomerBankLinkType" style="document" />
@@ -6387,6 +6427,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetCustomerBirthDate">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/GetCustomerBirthDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="InsertCustomer">
       <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/InsertCustomer" style="document" />
       <wsdl:input>
@@ -6443,6 +6492,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetCustomerDescription">
       <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/GetCustomerDescription" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerDescriptionEnglish">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglish" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -7577,18 +7635,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetIdentifiedCustomer">
       <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/GetIdentifiedCustomer" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="ResultFault">
-        <soap12:fault use="literal" name="ResultFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="DefineCustomerLinkType">
-      <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -9423,6 +9469,18 @@
     <wsp:PolicyReference URI="#ICustomerOperations_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="DefineCustomerLinkType">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResultFault">
+        <soap12:fault use="literal" name="ResultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="GetCustomerBankLinkType">
       <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/GetCustomerBankLinkType" style="document" />
       <wsdl:input>
@@ -10098,6 +10156,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetCustomerBirthDate">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/GetCustomerBirthDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="InsertCustomer">
       <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/InsertCustomer" style="document" />
       <wsdl:input>
@@ -10154,6 +10221,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetCustomerDescription">
       <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/GetCustomerDescription" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerDescriptionEnglish">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglish" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -11288,18 +11364,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetIdentifiedCustomer">
       <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/GetIdentifiedCustomer" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="ResultFault">
-        <soap12:fault use="literal" name="ResultFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="DefineCustomerLinkType">
-      <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

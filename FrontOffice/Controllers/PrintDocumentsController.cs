@@ -93,7 +93,7 @@ namespace FrontOffice.Controllers
         }
 
 
-        public void GetListOfCustomerDeposits()
+        public JsonResult GetListOfCustomerDeposits()
         {
             //Rep_ListOfCustomerDeposits
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
@@ -103,7 +103,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "customer_number", value: customerNumber.ToString());
 
 
-            ReportService.GetListOfCustomerDeposits(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
         public void GetCustomerMergeApplicationAgreement(int filialCodeChange)
@@ -126,7 +126,7 @@ namespace FrontOffice.Controllers
             return PartialView("CustomerMergeApplicationForm");
         }
 
-        public void GetSentSMSMessages()
+        public JsonResult GetSentSMSMessages()
         {
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
 
@@ -135,7 +135,7 @@ namespace FrontOffice.Controllers
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "identityId", value: identityId.ToString());
 
-            ReportService.GetSentSMSMessages(parameters);
+            return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
 

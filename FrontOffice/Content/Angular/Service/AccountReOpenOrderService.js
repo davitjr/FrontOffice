@@ -37,7 +37,6 @@
         var response = $http({
             method: "post",
             url: "/AccountOrder/GetAccountReOpenOrderDetails",
-            responseType: 'arraybuffer',
             data: JSON.stringify(paymentOrder),
             dataType: "json",
             params: {

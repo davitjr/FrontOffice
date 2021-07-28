@@ -1,5 +1,5 @@
-﻿app.controller("BondOrderCtrl", ['$scope', 'bondOrderService', 'bondIssueService', 'infoService', 'casherService', 'bondService', '$location', 'dialogService', '$uibModal', 'customerService', '$filter', '$http', 'dateFilter',
- function ($scope, bondOrderService, bondIssueService, infoService, casherService, bondService, $location, dialogService, $uibModal, customerService, $filter, $http, dateFilter) {
+﻿app.controller("BondOrderCtrl", ['$scope', 'bondOrderService', 'bondIssueService', 'infoService', 'casherService', 'bondService', '$location', 'dialogService', '$uibModal', 'customerService', '$filter', '$http', 'dateFilter','ReportingApiService',
+    function ($scope, bondOrderService, bondIssueService, infoService, casherService, bondService, $location, dialogService, $uibModal, customerService, $filter, $http, dateFilter, ReportingApiService) {
 
 
      $scope.banks = [];
@@ -323,7 +323,23 @@
              showloading();
 
              var Data = bondOrderService.printBondCustomerCard(accountNumber, accountNumberForBond);
-             ShowPDF(Data);
+             Data.then(function (response) {
+                 var reportId = 0;
+                 var result = angular.fromJson(response.data.result);
+                 var customerType = angular.fromJson(response.data.customerType);
+                 if (customerType == 6) {
+                     reportId = 115;
+                 }
+                 else {
+                     reportId = 116;
+                 }
+                 var requestObj = { Parameters: result, ReportName: reportId, ReportExportFormat: 1 }
+                 ReportingApiService.getReport(requestObj, function (result) {
+                     ShowPDFReport(result);
+                 });
+             }, function () {
+                 alert('Error printBondCustomerCard');
+             });
          }
          else {
              return ShowMessage('Առկա են չմուտքագրված դաշտեր։', 'error');
