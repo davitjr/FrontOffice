@@ -14,7 +14,7 @@
     };
 
     var Data = customerService.getAuthorizedCustomerNumber();
-    Data.then(function(descr) {
+    Data.then(function (descr) {
         $scope.order.CustomerNumber = descr.data;
         if ($scope.matureOrder != undefined) {
             $scope.setTransitForMatureOrder($scope.matureOrder);
@@ -31,7 +31,7 @@
             });
 
 
-                        
+
         }
         $scope.getCustomerDocumentWarnings($scope.order.CustomerNumber);
 
@@ -118,7 +118,7 @@
                 }
             }
         }, function () {
-                alert('Error getTransitPaymentOrder');
+            alert('Error getTransitPaymentOrder');
         });
     };
 
@@ -132,21 +132,18 @@
                 $scope.order.Type = 63;
                 $scope.order.SubType = 1;
             }
-                
+
             if ($scope.additional != "" && $scope.isLeasingAccount != true) {
                 $scope.order.Description = $scope.description.toString() + " " + $scope.additional;
             }
             else
                 $scope.order.Description = $scope.description;
 
-            if ($scope.feeType == 0 && ($scope.order.Currency == 'RUR' || $scope.order.Currency == 'GBP' || $scope.order.Currency == 'CHF'))
-            {
-                if ($scope.order.Fees == null || $scope.order.Fees.length == 0)
-                {
+            if ($scope.feeType == 0 && ($scope.order.Currency == 'RUR' || $scope.order.Currency == 'GBP' || $scope.order.Currency == 'CHF')) {
+                if ($scope.order.Fees == null || $scope.order.Fees.length == 0) {
                     $scope.order.Fees = [{ Amount: 0, Type: 0, Account: 0, Currency: "AMD", OrderNumber: null }];
                 }
-                else
-                {
+                else {
                     $scope.order.Fees.push({ Amount: 0, Type: 0, Account: 0, Currency: "AMD", OrderNumber: null });
                 }
             } else if ($scope.feeType == 0 && $scope.order.Currency == 'AMD' && ($scope.order.TransitAccountType == '5' || $scope.order.TransitAccountType == '3')) {
@@ -185,7 +182,7 @@
 
     $scope.getTransitAccountTypes = function (forTranferFromTransit) {
         var forLoanMature = false;
-        if ($scope.matureOrder != undefined && $scope.claimRepayment != true && forTranferFromTransit!=true)
+        if ($scope.matureOrder != undefined && $scope.claimRepayment != true && forTranferFromTransit != true)
             forLoanMature = true;
 
         var Data = infoService.GetTransitAccountTypes(forLoanMature);
@@ -194,7 +191,7 @@
                 $scope.transitAccountTypesforTranferFromTransit = trans.data;
             } else {
                 $scope.transitAccountTypes = trans.data;
-               
+
             }
         }, function () {
             alert('Error CashTypes');
@@ -335,7 +332,7 @@
         if (isCopy == undefined)
             isCopy = false;
         showloading();
-        
+
         if ($scope.additional != "") {
             $scope.order.Description = $scope.description + ", " + $scope.additional;
         }
@@ -542,108 +539,108 @@
             if ($scope.feeType != 0) {
                 var Data = transitPaymentOrderService.getFee($scope.order, $scope.feeType);
 
-                    Data.then(function(fee) {
-                        $scope.order.TransferFee = fee.data;
-                        if (fee.data == -1) {
-                            $scope.order.Fees = undefined;
-                            return ShowMessage('Սակագին նախատեսված չէ:Ստուգեք փոխանցման տվյալները:', 'error');
-                        }
+                Data.then(function (fee) {
+                    $scope.order.TransferFee = fee.data;
+                    if (fee.data == -1) {
+                        $scope.order.Fees = undefined;
+                        return ShowMessage('Սակագին նախատեսված չէ:Ստուգեք փոխանցման տվյալները:', 'error');
+                    }
 
-                        if (fee.data == 0) {
-                            $scope.showFeeTypeBlock = false;
-                        }
-                        else {
-                            $scope.showFeeTypeBlock = true;
-                        }
+                    if (fee.data == 0) {
+                        $scope.showFeeTypeBlock = false;
+                    }
+                    else {
+                        $scope.showFeeTypeBlock = true;
+                    }
 
 
-                        if ($scope.order.Fees == undefined || $scope.order.Fees.length == 0) {
-                            $scope.order.Fees = [];
-                        }
-                        //Կանխիկ մուտք հաշվին եթե RUR է մուտքագրում իր RUR հաշվին
-                        if ($scope.feeType == '8' || $scope.feeType == '9' || $scope.feeType == '28' || $scope.feeType == '29') {
-                            if ($scope.order.Fees.length != 0) {
-                                for (var i = 0; i < $scope.order.Fees.length; i++) {
-                                    if ($scope.order.Fees[i].Type == '8' || $scope.order.Fees[i].Type == '9' ||
-                                        $scope.order.Fees[i].Type == '28' || $scope.order.Fees[i].Type == '29') {
-                                        $scope.order.Fees[i].Amount = fee.data;
-                                        $scope.order.Fees[i].Type = $scope.feeType;
-                                        $scope.order.Fees[i].Description = "Կանխիկ գումարի մուտքագրման միջնորդավճար(" +
-                                            numeral($scope.order.Amount).format('0,0.00') +
-                                            $scope.order.Currency +
-                                            " " +
-                                            $scope.order.CustomerNumber +
-                                            ")";
-                                        if ($scope.order.Fees[i].Type == '8' || $scope.order.Fees[i].Type == '28') {
-                                            //   $scope.order.Fees[i].OrderNumber = $scope.order.OrderNumber;
-                                        } else {
-                                            $scope.order.Fees[i].OrderNumber = "";
-                                        }
+                    if ($scope.order.Fees == undefined || $scope.order.Fees.length == 0) {
+                        $scope.order.Fees = [];
+                    }
+                    //Կանխիկ մուտք հաշվին եթե RUR է մուտքագրում իր RUR հաշվին
+                    if ($scope.feeType == '8' || $scope.feeType == '9' || $scope.feeType == '28' || $scope.feeType == '29') {
+                        if ($scope.order.Fees.length != 0) {
+                            for (var i = 0; i < $scope.order.Fees.length; i++) {
+                                if ($scope.order.Fees[i].Type == '8' || $scope.order.Fees[i].Type == '9' ||
+                                    $scope.order.Fees[i].Type == '28' || $scope.order.Fees[i].Type == '29') {
+                                    $scope.order.Fees[i].Amount = fee.data;
+                                    $scope.order.Fees[i].Type = $scope.feeType;
+                                    $scope.order.Fees[i].Description = "Կանխիկ գումարի մուտքագրման միջնորդավճար(" +
+                                        numeral($scope.order.Amount).format('0,0.00') +
+                                        $scope.order.Currency +
+                                        " " +
+                                        $scope.order.CustomerNumber +
+                                        ")";
+                                    if ($scope.order.Fees[i].Type == '8' || $scope.order.Fees[i].Type == '28') {
+                                        //   $scope.order.Fees[i].OrderNumber = $scope.order.OrderNumber;
+                                    } else {
+                                        $scope.order.Fees[i].OrderNumber = "";
+                                    }
 
-                                        if ($scope.order.Fees[i].Type == '8' || $scope.order.Fees[i].Type == '28') {
+                                    if ($scope.order.Fees[i].Type == '8' || $scope.order.Fees[i].Type == '28') {
+                                        $scope.order.Fees[i].Account = {
+                                            AccountNumber: 0,
+                                            Currency: 'AMD'
+                                        };
+                                    } else {
+                                        if ($scope.order.Fees[i].Account.AccountNumber != undefined) {
                                             $scope.order.Fees[i].Account = {
-                                                AccountNumber: 0,
-                                                Currency: 'AMD'
                                             };
-                                        } else {
-                                            if ($scope.order.Fees[i].Account.AccountNumber != undefined) {
-                                                $scope.order.Fees[i].Account = {
-                                                };
-                                            }
                                         }
                                     }
                                 }
-                            } else {
-                                if ($scope.feeType == '8') {
-                                    $scope.order.Fees.push({
-                                        Amount: fee.data,
-                                        Type: $scope.feeType,
-                                        Currency: 'AMD',
-                                        Account: { AccountNumber: 0, Currency: 'AMD' },
-                                        OrderNumber: $scope.OrderNumberForFee,
-                                        Description: "Կանխիկ գումարի մուտքագրման միջնորդավճար(" +
-                                            numeral($scope.order.Amount).format('0,0.00') +
-                                            $scope.order.Currency +
-                                            " " +
-                                            $scope.order.CustomerNumber +
-                                            ")"
-                                    });
-                                }
-                                else if ($scope.feeType == '28') {
-                                    $scope.order.Fees.push({
-                                        Amount: fee.data,
-                                        Type: $scope.feeType,
-                                        Currency: 'AMD',
-                                        Account: { AccountNumber: 0, Currency: 'AMD' },
-                                        OrderNumber: $scope.order.OrderNumber,
-                                        Description: "Կանխիկ գումարի մուտքագրման միջնորդավճար(" +
-                                            numeral($scope.order.Amount).format('0,0.00') +
-                                            $scope.order.Currency +
-                                            " " +
-                                            $scope.order.CustomerNumber +
-                                            ")"
-                                    });
-                                }
-                                else {
-                                    $scope.order.Fees.push({
-                                        Amount: fee.data,
-                                        Type: $scope.feeType,
-                                        Currency: 'AMD',
-                                        OrderNumber: "",
-                                        Description: "Կանխիկ գումարի մուտքագրման միջնորդավճար(" +
-                                            numeral($scope.order.Amount).format('0,0.00') +
-                                            $scope.order.Currency +
-                                            " " +
-                                            $scope.order.CustomerNumber +
-                                            ")"
-                                    });
-                                }
+                            }
+                        } else {
+                            if ($scope.feeType == '8') {
+                                $scope.order.Fees.push({
+                                    Amount: fee.data,
+                                    Type: $scope.feeType,
+                                    Currency: 'AMD',
+                                    Account: { AccountNumber: 0, Currency: 'AMD' },
+                                    OrderNumber: $scope.OrderNumberForFee,
+                                    Description: "Կանխիկ գումարի մուտքագրման միջնորդավճար(" +
+                                        numeral($scope.order.Amount).format('0,0.00') +
+                                        $scope.order.Currency +
+                                        " " +
+                                        $scope.order.CustomerNumber +
+                                        ")"
+                                });
+                            }
+                            else if ($scope.feeType == '28') {
+                                $scope.order.Fees.push({
+                                    Amount: fee.data,
+                                    Type: $scope.feeType,
+                                    Currency: 'AMD',
+                                    Account: { AccountNumber: 0, Currency: 'AMD' },
+                                    OrderNumber: $scope.order.OrderNumber,
+                                    Description: "Կանխիկ գումարի մուտքագրման միջնորդավճար(" +
+                                        numeral($scope.order.Amount).format('0,0.00') +
+                                        $scope.order.Currency +
+                                        " " +
+                                        $scope.order.CustomerNumber +
+                                        ")"
+                                });
+                            }
+                            else {
+                                $scope.order.Fees.push({
+                                    Amount: fee.data,
+                                    Type: $scope.feeType,
+                                    Currency: 'AMD',
+                                    OrderNumber: "",
+                                    Description: "Կանխիկ գումարի մուտքագրման միջնորդավճար(" +
+                                        numeral($scope.order.Amount).format('0,0.00') +
+                                        $scope.order.Currency +
+                                        " " +
+                                        $scope.order.CustomerNumber +
+                                        ")"
+                                });
                             }
                         }
-                    });
+                    }
+                });
 
-                }
-}
+            }
+        }
     }
 
     $scope.generateNewOrderNumberForFee = function () {
@@ -726,7 +723,7 @@
         }
     });
 
-    $scope.$watchGroup(['order.Currency','order.TransitAccountType'], function (newValue, oldValue) {
+    $scope.$watchGroup(['order.Currency', 'order.TransitAccountType'], function (newValue, oldValue) {
         if ($scope.details != true) {
 
             var forAMDAccountFee = false;
@@ -754,9 +751,9 @@
 
                 if (($scope.order.Fees[fee].Type == 1 || $scope.order.Fees[fee].Type == 3 || $scope.order.Fees[fee].Type == 8) && $scope.order.Fees[fee].Amount > 0) {
 
-                    $scope.orderForFee = { };
+                    $scope.orderForFee = {};
                     $scope.orderForFee.Amount = $scope.order.Fees[fee].Amount;
-                    $scope.orderForFee.OPPerson = { };
+                    $scope.orderForFee.OPPerson = {};
                     $scope.orderForFee.OPPerson = $scope.order.OPPerson;
                     $scope.orderForFee.ReceiverAccount = {
                     };
@@ -779,7 +776,7 @@
 
                         var Data = transitPaymentOrderService.getOperationSystemAccountForFee($scope.orderForFee,
                             $scope.order.Fees[fee].Type);
-                        Data.then(function(result) {
+                        Data.then(function (result) {
                             $scope.orderForFee.ReceiverAccount.AccountNumber = result.data;
                             $scope.orderForFee.Currency = "AMD";
                             var Data = paymentOrderService.getCashInPaymentOrder($scope.orderForFee, isCopy);
@@ -951,28 +948,28 @@
 
 
     $scope.getDebitAccounts = function (productCurrency) {
-        
-            var Data = paymentOrderService.getAccountsForOrder(1, 3, 1);
-            Data.then(function (acc) {
-                $scope.debitAccounts = acc.data;
-                for (var i = $scope.debitAccounts.length - 1; i >= 0; i--) {
-                    if ($scope.debitAccounts[i].Currency != productCurrency) {
-                        $scope.debitAccounts.splice(i, 1);
-                    }
+
+        var Data = paymentOrderService.getAccountsForOrder(1, 3, 1);
+        Data.then(function (acc) {
+            $scope.debitAccounts = acc.data;
+            for (var i = $scope.debitAccounts.length - 1; i >= 0; i--) {
+                if ($scope.debitAccounts[i].Currency != productCurrency) {
+                    $scope.debitAccounts.splice(i, 1);
                 }
-            }, function () {
-                alert('Error getfeeaccounts');
-            });
-        
+            }
+        }, function () {
+            alert('Error getfeeaccounts');
+        });
+
     };
-    
+
     $scope.setTransitPaymentOrderForBond = function (bondorder, customer) {
         if ($scope.forBond) {
             $scope.order.Currency = bondorder.Currency;
             $scope.order.TransitAccountType = '6';
 
             //$scope.order.Amount = bondorder.Amount;
- 
+
             if ($scope.nonCashPayment == true) {            //    Անկանխիկ մուտք
                 $scope.getDebitAccounts($scope.order.Currency);
                 $scope.order.Type = 184;
@@ -984,12 +981,12 @@
                     $scope.order.Amount = Number(Math.round(bondorder.Amount + 'e' + 2) + 'e-' + 2);
                 }
             }
-            else  {  //  կանխիկ մուտք
+            else {  //  կանխիկ մուտք
                 if (bondorder.Currency != 'AMD') {
                     $scope.order.Amount = Number(Math.round(bondorder.Amount + 'e' + 0) + 'e-' + 0);
                 }
                 else {
-					$scope.order.Amount = Number(Math.round(bondorder.Amount + 'e' + 1) + 'e-' + 1);
+                    $scope.order.Amount = Number(Math.round(bondorder.Amount + 'e' + 1) + 'e-' + 1);
                 }
             }
             $scope.setTransitPaymentOrderBondDescription(bondorder, customer);
@@ -1126,5 +1123,7 @@
         }, function () {
             alert('Error getRejectFeeTypes');
         });
+
     };
+
 }]);

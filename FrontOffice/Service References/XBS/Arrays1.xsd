@@ -194,6 +194,24 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfshort" nillable="true" type="tns:ArrayOfshort" />
+  <xs:complexType name="ArrayOfKeyValueOfintboolean">
+    <xs:annotation>
+      <xs:appinfo>
+        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfintboolean">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Key" type="xs:int" />
+            <xs:element name="Value" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKeyValueOfintboolean" nillable="true" type="tns:ArrayOfKeyValueOfintboolean" />
   <xs:complexType name="ArrayOfdateTime">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="dateTime" type="xs:dateTime" />
@@ -218,24 +236,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfKeyValueOfintArrayOfProblemLoanTax_PA1vKgxZ" nillable="true" type="tns:ArrayOfKeyValueOfintArrayOfProblemLoanTax_PA1vKgxZ" />
-  <xs:complexType name="ArrayOfKeyValueOfintboolean">
-    <xs:annotation>
-      <xs:appinfo>
-        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfintboolean">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Key" type="xs:int" />
-            <xs:element name="Value" type="xs:boolean" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValueOfintboolean" nillable="true" type="tns:ArrayOfKeyValueOfintboolean" />
   <xs:complexType name="ArrayOfdouble">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="double" type="xs:double" />

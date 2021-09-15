@@ -1,4 +1,4 @@
-﻿app.controller("PaymentOrderCtrl", ['$scope', 'paymentOrderService', 'utilityService', 'accountService', 'customerService', 'infoService', 'dialogService', 'orderService', '$uibModal', '$http', 'limitToFilter', '$confirm', '$filter', 'currencyExchangeOrderService', 'casherService', '$timeout', '$controller', 'transitAccountsForDebitTransactionsService', 'leasingFactory', 'LeasingService','ReportingApiService',
+﻿app.controller("PaymentOrderCtrl", ['$scope', 'paymentOrderService', 'utilityService', 'accountService', 'customerService', 'infoService', 'dialogService', 'orderService', '$uibModal', '$http', 'limitToFilter', '$confirm', '$filter', 'currencyExchangeOrderService', 'casherService', '$timeout', '$controller', 'transitAccountsForDebitTransactionsService', 'leasingFactory', 'LeasingService', 'ReportingApiService',
     function ($scope, paymentOrderService, utilityService, accountService, customerService, infoService, dialogService, orderService, $uibModal, $http, limitToFilter, $confirm, $filter, currencyExchangeOrderService, casherService, $timeout, $controller, transitAccountsForDebitTransactionsService, leasingFactory, LeasingService, ReportingApiService) {
 
         $scope.lim = false;
@@ -512,6 +512,9 @@
                             else {
                                 $scope.FeesString += '\n' + ' ' + $scope.order.Fees[i].Amount + ' ' + $scope.order.Fees[i].Currency + ' ' + $scope.order.Fees[i].TypeDescription + ' ' + descriptionForRejectFeeType;
                             }
+
+
+
                         }
 
                     }
@@ -984,7 +987,7 @@
             }
         };
         $scope.confirm = false;
-        
+
         //Հայտի պահպանում
         $scope.savePayment = function () {
 
@@ -2015,8 +2018,7 @@
                         $scope.feeType = '9';
 
                     }
-                    else if ($scope.BankOperationFeeType == 6)
-                    {
+                    else if ($scope.BankOperationFeeType == 6) {
                         if ($scope.order.ReceiverAccount.Currency == 'AMD' && $scope.order.DebitAccount.Currency == 'AMD') {
                             $scope.feeType = '28';
                         }
@@ -3294,7 +3296,7 @@
 
         $scope.isNonExceptionalOrder = function () {
             $scope.setOrderSubType();
-            if ($scope.order.Type == 85 || $scope.order.Type == 122 ) {
+            if ($scope.order.Type == 85 || $scope.order.Type == 122) {
                 return false;
             } else {
                 return true;
@@ -3436,6 +3438,7 @@
             }, function () {
                 alert('Error getRejectFeeTypes');
             });
+
         };
 
     }]);

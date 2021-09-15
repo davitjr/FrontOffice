@@ -187,7 +187,7 @@ var IndicatorDetails =
                   {
                       "Type": "27",
                       "ColumnData": [
-                          { "RowNumber": "68", "PropertyName": "ActualQuantity" },
+                          { "RowNumber": "69", "PropertyName": "ActualQuantity" },
                       ]
                   }
 

@@ -1205,6 +1205,13 @@ refresh = function (orderType, product1, product2) {
         case 231: //Պարտատոմսի կարգավիճակի փոփոխման հայտի մուտքագրում
             window.location.href = location.origin.toString() + '/#!/PensionPaymentDetails';
             break;
+        case 'RefreshLoanRepaymentFromCardDataChange':
+            var refreshScope = angular.element(document.getElementById('GetLoanRepaymentFromCardDataChangeHistory')).scope();
+            if (refreshScope != undefined) {
+                refreshScope.GetLoanRepaymentFromCardDataChangeHistory(refreshScope.appid);
+            }
+            break;
+
         case 'isAlias'://Հետաձգված հայտի չեղարկման հայտ
             var refreshScope = angular.element(document.getElementById('aliasHistory')).scope();
             if (refreshScope != undefined) {

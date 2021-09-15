@@ -7857,13 +7857,13 @@ namespace FrontOffice.Service
             return json;
         }
 
-        public static List<HBMessageFiles> GetMessageUploadedFilesList(int msgId)
+        public static List<HBMessageFiles> GetMessageUploadedFilesList(int msgId, bool showUploadFilesContent)
         {
             List<HBMessageFiles> files = new List<HBMessageFiles>();
 
             XBService.Use(client =>
             {
-                files = client.GetMessageUploadedFilesList(msgId);
+                files = client.GetMessageUploadedFilesList(msgId, showUploadFilesContent);
             });
 
             return files;
@@ -9162,11 +9162,11 @@ namespace FrontOffice.Service
             return AllTypesOfPlasticCardsSMS;
         }
 
-        //GetCardMobilePhones
+        //GetCardMobilePhones 
 
-        public static List<XBSInfo.TupleOfstringboolean> GetCardMobilePhones(ulong customerNumber, ulong cardNumber)
+        public static List<string> GetCardMobilePhones(ulong customerNumber, ulong cardNumber)
         {
-            List<XBSInfo.TupleOfstringboolean> CardMobilePhones = new List<XBSInfo.TupleOfstringboolean>();
+            List<string> CardMobilePhones = new List<string>();
 
             InfoService.Use(client =>
             {
@@ -9176,6 +9176,7 @@ namespace FrontOffice.Service
             });
             return CardMobilePhones;
         }
+
         //GetCurrentPhone
         public static string GetCurrentPhone(ulong cardNumber)
         {
@@ -9190,18 +9191,18 @@ namespace FrontOffice.Service
             return currentPhone;
         }
         //GetCardHolderEmail
-        public static string GetCustomerEmailByCardNumber(string cardNumber)
-        {
-            string currentPhone = null;
+        //public static string GetCustomerEmailByCardNumber(string cardNumber)
+        //{
+        //    string currentPhone = null;
 
-            InfoService.Use(client =>
-            {
+        //    InfoService.Use(client =>
+        //    {
 
-                currentPhone = client.GetCustomerEmailByCardNumber(cardNumber);
+        //        currentPhone = client.GetCustomerEmailByCardNumber(cardNumber);
 
-            });
-            return currentPhone;
-        }
+        //    });
+        //    return currentPhone;
+        //}
         //SMSTypeAndValue
 
         public static string SMSTypeAndValue(string cardNumber)
@@ -9466,6 +9467,7 @@ namespace FrontOffice.Service
             return warnings;
         }
 
+
         public static bool GetMRDataChangeAvailability(int mrID)
         {
             bool result = false;
@@ -9490,15 +9492,36 @@ namespace FrontOffice.Service
             return result;
         }
 
-        public static VisaAliasOrder VisaAliasOrderDetails(long orderId)
+        public static CardlessCashoutOrder GetCardLessCashOutOrder(long id)
         {
-            VisaAliasOrder result = new VisaAliasOrder();
+            CardlessCashoutOrder cardlessCashoutOrder = null;
+            XBService.Use(client =>
+            {
+                cardlessCashoutOrder = client.GetCardLessCashOutOrder(id);
+            }
+          );
+
+            return cardlessCashoutOrder;
+        }
+
+        public static LoanRepaymentFromCardDataChange GetLoanRepaymentFromCardDataChangeHistory(ulong appId)
+        {
+            LoanRepaymentFromCardDataChange result = new LoanRepaymentFromCardDataChange();
 
             XBService.Use(client =>
             {
-                result = client.VisaAliasOrderDetails(orderId);
+                result = client.GetLoanRepaymentFromCardDataChangeHistory(appId);
             });
             return result;
+        }
+
+        public static LoanRepaymentFromCardDataChange SaveLoanRepaymentFromCardDataChange(LoanRepaymentFromCardDataChange loanRepaymentFromCardDataChange)
+        {
+            XBService.Use(client =>
+            {
+                loanRepaymentFromCardDataChange = client.SaveLoanRepaymentFromCardDataChange(loanRepaymentFromCardDataChange);
+            });
+            return loanRepaymentFromCardDataChange;
         }
 
         public static ActionResult SaveAndApproveVisaAliasOrder(VisaAliasOrder order)
@@ -9512,17 +9535,18 @@ namespace FrontOffice.Service
             return result;
         }
 
-        public static CardHolderAndCardType GetCardTypeAndCardHolder(string cardNumber)
+        public static VisaAliasOrder VisaAliasOrderDetails(long orderId)
         {
-            CardHolderAndCardType cardHolderAndCardType = new CardHolderAndCardType();
+            VisaAliasOrder result = new VisaAliasOrder();
 
             XBService.Use(client =>
             {
-                cardHolderAndCardType = client.GetCardTypeAndCardHolder(cardNumber);
-
+                result = client.VisaAliasOrderDetails(orderId);
             });
-
-            return cardHolderAndCardType;
+            return result;
         }
+
+
+
     }
 }

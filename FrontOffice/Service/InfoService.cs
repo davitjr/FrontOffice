@@ -2698,9 +2698,9 @@ namespace FrontOffice.Service
             List<Shop> shopList = new List<Shop>();
 
             InfoService.Use(client =>
-                {
-                    shopList = client.GetShopList();
-                });
+            {
+                shopList = client.GetShopList();
+            });
 
             return shopList;
         }
@@ -2733,9 +2733,9 @@ namespace FrontOffice.Service
             ushort filialCode = user.filialCode;
 
             InfoService.Use(client =>
-                {
-                    SSTerminals = client.GetSSTerminals(filialCode);
-                });
+            {
+                SSTerminals = client.GetSSTerminals(filialCode);
+            });
 
             return SSTerminals;
         }
@@ -3421,7 +3421,7 @@ namespace FrontOffice.Service
             Dictionary<string, string> types = CacheHelper.GetDictionary(cacheKey);
 
             if (types == null)
-            {               
+            {
                 InfoService.Use(client =>
                 {
                     types = client.GetAllReasonsForCardTransactionAction();

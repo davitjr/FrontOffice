@@ -292,4 +292,46 @@
         });
         return response;
     };
+
+    this.printHypotecLoanStatement = function (accountNumber, dateFrom, dateTo, appid) {
+        var response = $http({
+            method: "post",
+            url: "/Loan/PrintHypotecLoanStatement",
+            responseType: 'arraybuffer',
+            params: {
+                accountNumber: accountNumber,
+                dateFrom: dateFrom,
+                dateTo: dateTo,
+                productId: appid
+            }
+        });
+        return response;
+    };
+
+    this.GetLoanRepaymentFromCardDataChangeHistory = function (appid) {
+        var response = $http({
+            method: "post",
+            url: "/Loan/GetLoanRepaymentFromCardDataChangeHistory",
+            params: {
+                appid: appid
+            }
+        });
+        return response;
+    };
+
+    this.SaveLoanRepaymentFromCardDataChange = function (actionName, appid, changeReasonAdd, EndDate) {
+        var response = $http({
+            method: "post",
+            url: "/Loan/SaveLoanRepaymentFromCardDataChange",
+            params: {
+                appid: appid,
+                actionName: actionName,
+                changeReasonAdd: changeReasonAdd,
+                EndDate: EndDate
+            }
+        });
+        return response;
+    };
+
+
 }]);

@@ -1,4 +1,4 @@
-﻿app.controller("LoanCtrl", ['$scope', 'loanService', 'customerService', 'utilityService', 'infoService', '$state', '$confirm', 'ReportingApiService', function ($scope, loanService, customerService, utilityService, infoService, $state, $confirm, ReportingApiService) {
+﻿app.controller("LoanCtrl", ['$scope', 'loanService', 'customerService', 'utilityService', 'infoService', '$state', '$confirm', 'ReportingApiService', '$http', function ($scope, loanService, customerService, utilityService, infoService, $state, $confirm, ReportingApiService, $http) {
     //var Data = customerService.getCustomerType();
     //Data.then(function (type) {
     //    $scope.customerType = type.data;
@@ -9,6 +9,8 @@
     $scope.order.RegistrationDate = new Date();
     $scope.order.OperationDate = $scope.$root.SessionProperties.OperationDate;
     $scope.order.Source = 2;
+    $scope.EndDateValue = new Date();
+    $scope.OperDay = new Date();
 
     $scope.filter = 1;
     try {
@@ -515,6 +517,45 @@
             alert('Error getBondOrder');
         });
 
+    };
+
+    $scope.GetLoanRepaymentFromCardDataChangeHistory = function (appid) {
+        var Data = loanService.GetLoanRepaymentFromCardDataChangeHistory(appid);
+        Data.then(function (result) {
+            $scope.LoanRepaymentFromCardDataChange = result.data;
+        }, function () {
+            alert('Error GetLoanRepaymentFromCardDataChangeHistory');
+        });
+    };
+
+    $scope.SaveLoanRepaymentFromCardDataChange = function (action, appid, changeReasonAdd, EndDate) {
+        if ($http.pendingRequests.length == 0) {
+            if (action != 1) {
+                if ($scope.OperDay > EndDate) {
+                    return ShowMessage('Մուտքագրման օրը պետք է փոքր լինի վերջից', 'error');
+                }
+            }
+            var Data = loanService.SaveLoanRepaymentFromCardDataChange(action, appid, changeReasonAdd, EndDate);
+            Data.then(function (result) {
+                $scope.LoanRepaymentFromCardDataChange = result.data;
+
+                if ($scope.LoanRepaymentFromCardDataChange) {
+                    CloseBPDialog('LoanRepaymentFromCardDataChange');
+                    ShowToaster('Փոփոխությունը կատարված է', 'success');
+                    refresh('RefreshLoanRepaymentFromCardDataChange');
+                }
+                else {
+                    ShowToaster('Տեղի ունեցավ սխալ', 'error');
+                }
+
+            }, function () {
+                alert('Error SaveLoanRepaymentFromCardDataChange');
+            });
+        }
+        else {
+            return ShowMessage('Կատարվել է տվյալների թարմացում: Խնդրում ենք կրկին սեղմել <<Պահպանել>> կոճակը:', 'error');
+
+        }
     };
 
 }]);

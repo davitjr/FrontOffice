@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+﻿﻿
+<style type="text/css">
     #exchangeorder .ui-widget input {
         font-family: 'webly_semibold';
     }
@@ -505,6 +506,7 @@
                 <label class="tab_title col-sm-5 " for="DescriptionForRejectFeeType">Չգանձման պատճառ  <span class="redStyle">*</span></label>
                 <div class="col-sm-6">
                     <div class="row">
+                        @*<textarea rows="3" required style="text-align:left" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="order.DescriptionForRejectFeeType" id="DescriptionForRejectFeeType" name="DescriptionForRejectFeeType" class="form-control tab_title"></textarea>*@
                         <select data-ng-model="order.RejectFeeType" name="DescriptionForRejectFeeType" class="form-control"
                                 data-ng-options="k as v for (k,v) in rejectFeeTypes">
                             <option value="" hidden="hidden" style="margin-left:25px">{{rejectFeeTypes[0]}}</option>

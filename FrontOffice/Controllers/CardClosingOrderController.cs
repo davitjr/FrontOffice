@@ -6,21 +6,38 @@ using System.Web.Mvc;
 using xbs = FrontOffice.XBS;
 using FrontOffice.Service;
 using FrontOffice.Models;
+using FrontOffice.Models.VisaAliasModels;
 
 namespace FrontOffice.Controllers
 {
     [SessionExpireFilter]
     public class CardClosingOrderController : Controller
     {
+        public int GetSetNumber()
+        {
+            string guid = Utility.GetSessionId();
+            FrontOffice.XBS.User user = (FrontOffice.XBS.User)Session[guid + "_User"];
+            int setNumber = user.userID;
+            return setNumber;
+        }
 
         [TransactionPermissionFilterAttribute(OnlyFrontOffice = true)]
         [ActionAccessFilter(actionType = ActionType.CardClosingOrderSave)]
-        public ActionResult SaveCardClosingOrder(xbs.CardClosingOrder order)
+        public ActionResult SaveCardClosingOrder(xbs.CardClosingOrder order, string cardNumber)
         {
+            int UserId = GetSetNumber();
             xbs.ActionResult result = new xbs.ActionResult();
             result = XBService.SaveCardClosingOrder(order);
-            return Json(result);
 
+            if (result.Errors.Count == 0)
+            {
+                VisaAliasHistoryWithCard visaAliasHistoryWithCard = new VisaAliasHistoryWithCard { CardNumber = cardNumber };
+                VisaAliasHistory visaAliasHistory = VisaAliasService.GetVisaAliasHistoryDetails(visaAliasHistoryWithCard);
+
+                DeleteAliasRequest deleteAliasRequest = new DeleteAliasRequest() { SetNumber = UserId, Alias = visaAliasHistory.Alias, Guid = visaAliasHistory.Guid };
+                VisaAliasService.DeleteVisaAlias(deleteAliasRequest);
+            }
+            return Json(result);
         }
 
         [TransactionPermissionFilterAttribute(OnlyFrontOffice = true)]

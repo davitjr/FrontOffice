@@ -1,84 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ExternalBanking.Leasing" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ExternalBanking.Leasing" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="ArrayOfLeasingPaymentsType">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking" />
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
+  <xs:complexType name="ValueTupleOfbooleanCardlessCashoutOrder_PA1vKgxZ">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="ValueTupleOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="boolean" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="CardlessCashoutOrder" Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking" />
+        </GenericType>
+        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="LeasingPaymentsType" nillable="true" type="tns:LeasingPaymentsType" />
+      <xs:element name="Item1" type="xs:boolean" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ExternalBanking" name="Item2" nillable="true" type="q1:CardlessCashoutOrder" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfLeasingPaymentsType" nillable="true" type="tns:ArrayOfLeasingPaymentsType" />
-  <xs:complexType name="LeasingPaymentsType">
+  <xs:element name="ValueTupleOfbooleanCardlessCashoutOrder_PA1vKgxZ" nillable="true" type="tns:ValueTupleOfbooleanCardlessCashoutOrder_PA1vKgxZ" />
+  <xs:complexType name="TupleOfintstring">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="TupleOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="int" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:sequence>
-      <xs:element minOccurs="0" name="PaymentName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PaymentType" type="xs:unsignedByte" />
+      <xs:element name="m_Item1" type="xs:int" />
+      <xs:element name="m_Item2" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="LeasingPaymentsType" nillable="true" type="tns:LeasingPaymentsType" />
-  <xs:complexType name="LeasingLoanRepayments">
+  <xs:element name="TupleOfintstring" nillable="true" type="tns:TupleOfintstring" />
+  <xs:complexType name="TupleOfstringstring">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="TupleOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:sequence>
-      <xs:element minOccurs="0" name="CapitalRepayment" type="xs:double" />
-      <xs:element minOccurs="0" name="CurrentCapital" type="xs:double" />
-      <xs:element minOccurs="0" name="DateOfRepayment" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="PayableAmount" type="xs:double" />
-      <xs:element minOccurs="0" name="RateRepayment" type="xs:double" />
+      <xs:element name="m_Item1" nillable="true" type="xs:string" />
+      <xs:element name="m_Item2" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="LeasingLoanRepayments" nillable="true" type="tns:LeasingLoanRepayments" />
-  <xs:complexType name="ArrayOfCustomerLeasingLoans">
+  <xs:element name="TupleOfstringstring" nillable="true" type="tns:TupleOfstringstring" />
+  <xs:complexType name="TupleOfintArrayOfRACitizenDTpyQ4eh">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="TupleOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="int" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="ArrayOfRACitizen" Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomerLeasingLoans" nillable="true" type="tns:CustomerLeasingLoans" />
+      <xs:element name="m_Item1" type="xs:int" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ACBALibrary" name="m_Item2" nillable="true" type="q2:ArrayOfRACitizen" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfCustomerLeasingLoans" nillable="true" type="tns:ArrayOfCustomerLeasingLoans" />
-  <xs:complexType name="CustomerLeasingLoans">
+  <xs:element name="TupleOfintArrayOfRACitizenDTpyQ4eh" nillable="true" type="tns:TupleOfintArrayOfRACitizenDTpyQ4eh" />
+  <xs:complexType name="Version">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CurrentCapital" type="xs:double" />
-      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="LeasingPayment" type="xs:double" />
-      <xs:element minOccurs="0" name="NextRepaymentDate" nillable="true" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="ProductId" type="xs:long" />
-      <xs:element minOccurs="0" name="ProductType" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="StartCapital" type="xs:double" />
-      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+      <xs:element name="_Build" type="xs:int" />
+      <xs:element name="_Major" type="xs:int" />
+      <xs:element name="_Minor" type="xs:int" />
+      <xs:element name="_Revision" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="CustomerLeasingLoans" nillable="true" type="tns:CustomerLeasingLoans" />
-  <xs:complexType name="LeasingLoanDetails">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:CustomerLeasingLoans">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="CreditCode" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="GeneralNumber" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="InsuranceAmount" type="xs:double" />
-          <xs:element minOccurs="0" name="InterestRate" type="xs:float" />
-          <xs:element minOccurs="0" name="LoanAccount" type="xs:long" />
-          <xs:element minOccurs="0" name="OverdueCapital" type="xs:double" />
-          <xs:element minOccurs="0" name="OverdueLoanDate" nillable="true" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="PenaltyRate" type="xs:double" />
-          <xs:element minOccurs="0" name="Quality" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="LeasingLoanDetails" nillable="true" type="tns:LeasingLoanDetails" />
-  <xs:complexType name="ArrayOfLeasingLoanRepayments">
+  <xs:element name="Version" nillable="true" type="tns:Version" />
+  <xs:complexType name="TupleOfshortshort">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="TupleOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="short" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="short" Namespace="http://www.w3.org/2001/XMLSchema" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="LeasingLoanRepayments" nillable="true" type="tns:LeasingLoanRepayments" />
+      <xs:element name="m_Item1" type="xs:short" />
+      <xs:element name="m_Item2" type="xs:short" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfLeasingLoanRepayments" nillable="true" type="tns:ArrayOfLeasingLoanRepayments" />
-  <xs:complexType name="ArrayOfLeasingLoanStatements">
+  <xs:element name="TupleOfshortshort" nillable="true" type="tns:TupleOfshortshort" />
+  <xs:complexType name="TupleOfbooleanstring">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="TupleOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="boolean" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="LeasingLoanStatements" nillable="true" type="tns:LeasingLoanStatements" />
+      <xs:element name="m_Item1" type="xs:boolean" />
+      <xs:element name="m_Item2" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfLeasingLoanStatements" nillable="true" type="tns:ArrayOfLeasingLoanStatements" />
-  <xs:complexType name="LeasingLoanStatements">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Amount" type="xs:double" />
-      <xs:element minOccurs="0" name="DateOfStatement" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Wording" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="LeasingLoanStatements" nillable="true" type="tns:LeasingLoanStatements" />
+  <xs:element name="TupleOfbooleanstring" nillable="true" type="tns:TupleOfbooleanstring" />
 </xs:schema>

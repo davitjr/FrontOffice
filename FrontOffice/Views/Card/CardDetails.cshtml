@@ -157,7 +157,7 @@
                     </li>
 
                     <li class="root-menu-item-6"
-                        ng-if="plasticCard != null && card.Type != 51"
+                        ng-if="plasticCard != null && card.Type != 51 && card.Type != 53"
                         ng-controller="PopUpCtrl"
                         ng-click="params={productId:productId, plasticCard:plasticCard, card:card};
                         openWindow('/CardRenewOrder/CardRenewOrder', 'Քարտի վերաթողարկում', 'cardRenewOrder', callbackgetrenewcard);">
@@ -181,12 +181,12 @@
                         <span id="h-menu-item-6"><img id="h-menu-icon-6">Փոխարինում՝ նոր համար, նոր ժամկետ - վ․գ․</span>
                     </li>
 
-                    <li class="root-menu-item-6" ng-if="card.CreditLine==null" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard};
+                    <li class="root-menu-item-6" ng-if="card.CreditLine==null && card.Type != 53" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard};
                         openWindow('/NonCreditLineCardReplaceOrder/NonCreditLineCardReplaceOrder', 'Փոխարինում՝ նոր համար, նոր ժամկետ - առանց վ․գ․', 'nonCreditLineCardReplaceOrder', callbackgetrenewcard);">
                         <span id="h-menu-item-6"><img id="h-menu-icon-6">Փոխարինում՝ նոր համար, նոր ժամկետ - առանց վ․գ․</span>
                     </li>
 
-                    <li class="root-menu-item-6" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard}; openWindow('/PINRegenerationOrder/PINRegenerationOrder', 'Փոխարինում՝ նույն համար, նույն ժամկետ', 'pinreg', callbackgetrenewcard);">
+                    <li class="root-menu-item-6" ng-if="card.Type != 53" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard}; openWindow('/PINRegenerationOrder/PINRegenerationOrder', 'Փոխարինում՝ նույն համար, նույն ժամկետ', 'pinreg', callbackgetrenewcard);">
                         <span id="h-menu-item-6"><img id="h-menu-icon-6">Փոխարինում՝ նույն համար, նույն ժամկետ</span>
                     </li>
 
@@ -389,7 +389,7 @@
 
     </div>
     <creditlinedebt ng-if="card.CreditLine!=null && update==false" creditline="card.CreditLine" card="card"></creditlinedebt>
-    <div  class="bhoechie-tab-container" style="max-height:80%;" id="cardDetailsContainer">
+    <div class="bhoechie-tab-container" style="max-height:80%;" id="cardDetailsContainer">
         <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
             <div class="list-group">
                 <div class="list-group-item text-center active">Քաղվածք</div>
@@ -408,10 +408,8 @@
                 <div class="list-group-item text-center">Դասակարգում</div>
                 <div class="list-group-item text-center"><span>Կցված թոքեններ</span></div>
                 <div class="list-group-item text-center"><span>Առգրավման պատմություն</span></div>
-                <div class="list-group-item text-center"  ng-show="card.CardSystem == 4 || card.CardSystem == 5"  ng-click="GetVisaAliasHistory(card.CardNumber)"><span>Կցված բջջ. հեռ.ներ</span></div>
-
+                <div class="list-group-item text-center" ng-click="GetVisaAliasHistory(card.CardNumber)"><span>Կցված բջջ. հեռ.ներ</span></div>
             </div>
-          
         </div>
         <div class="bhoechie-tab" style="width: calc(100% - 140px); display: inline-block;">
             <div class="bhoechie-tab-content active" ng-if="card">
@@ -473,6 +471,7 @@
             <div class="bhoechie-tab-content">
                 <visaalias ng-if="card" cardnumber="card.CardNumber"></visaalias>
             </div>
+
         </div>
     </div>
     <br />

@@ -3,6 +3,7 @@
         $.ajax({
             url: appConfig.reportingApiURL,
             type: 'POST',
+            headers: { 'Content-Encoding': 'gzip' },
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             responseType: 'arraybuffer',
@@ -17,9 +18,8 @@
             error: function (xhr) {
                 alert('Տեղի ունեցավ սխալ');
             },
-            timeout: 100000
+            timeout: 200000
         });
     };  
-
    
 }]);

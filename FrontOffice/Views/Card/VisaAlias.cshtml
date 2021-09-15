@@ -10,10 +10,10 @@
         </div>
         <div class="product-collapsable-section">
             <div class="product-container-header">
-                <div ng-show="aliasHistory.Status==null" ng-controller="PopUpCtrl" ng-click="params={ActionName: 0, cardNumber:card.CardNumber, operDay:aliasHistory.OperDay};openWindow('Card/VisaAliasDataChange','Ստեղծում','VisaAliasDataChange')" class="ng-scope">
+                <div ng-show="aliasHistory.Status==null && $root.SessionProperties.AdvancedOptions['VisaAliasPerm']=='1'" ng-controller="PopUpCtrl" ng-click="params={ActionName: 0, cardNumber:card.CardNumber, operDay:aliasHistory.OperDay};openWindow('Card/VisaAliasDataChange','Ստեղծում','VisaAliasDataChange')" class="ng-scope">
                     <i class="add-new-product tipB" data-original-title="Նոր գրություն"></i>
                 </div>
-
+               
             </div>
             <div class="product-content-table-full_height custom-scroll" id="provisionsContent" style="min-height:100px;">
 
@@ -36,7 +36,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="col-sm-1 click_toggle" context="contextTokens1" id="contextMenu"><div id="contextMenu"></div> </td>
+                            <td class="col-sm-1 click_toggle" context="contextTokens1" id="contextMenu"><div id="contextMenu" ng-show="$root.SessionProperties.AdvancedOptions['VisaAliasPerm']=='1'"></div> </td>
                         </tr>
                         <tr ng-show="aliasHistory.Status==null">
                             <td colspan="3" style="text-align:center;">
@@ -58,7 +58,7 @@
         </div>
 
     </div>
-
+   
 
 </div>
 

@@ -86,8 +86,8 @@ namespace FrontOffice.Controllers
             return Json(InfoService.GetCardSystemTypes(), JsonRequestBehavior.AllowGet);
         }
 
-       
-      
+
+
 
         public JsonResult GetCardTypes(int cardSystem)
         {
@@ -158,7 +158,7 @@ namespace FrontOffice.Controllers
 
 
         public JsonResult SearchRelatedOfficeTypes(string searchParam)
-       {
+        {
             string officeId = "";
             string officeName = "";
 
@@ -1011,17 +1011,17 @@ namespace FrontOffice.Controllers
         {
             return Json(InfoService.GetCardApplicationAcceptanceTypes(), JsonRequestBehavior.AllowGet);
         }
-    
-    
-		public JsonResult GetVirtualCardStatusChangeReasons()
-		{
-			return Json(InfoService.GetVirtualCardStatusChangeReasons(), JsonRequestBehavior.AllowGet);
-		}
 
-		public JsonResult GetVirtualCardChangeActions(int status)
-		{
-			return Json(InfoService.GetVirtualCardChangeActions(status), JsonRequestBehavior.AllowGet);
-		}
+
+        public JsonResult GetVirtualCardStatusChangeReasons()
+        {
+            return Json(InfoService.GetVirtualCardStatusChangeReasons(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetVirtualCardChangeActions(int status)
+        {
+            return Json(InfoService.GetVirtualCardChangeActions(status), JsonRequestBehavior.AllowGet);
+        }
 
         public string GetAuthorizedUserSessionToken()
         {
@@ -1109,7 +1109,7 @@ namespace FrontOffice.Controllers
         {
             return Json(InfoService.GetARUSAmendmentReasons(GetAuthorizedUserSessionToken(), MTOAgentCode), JsonRequestBehavior.AllowGet);
         }
-        
+
         public JsonResult GetReferenceReceiptTypes()
         {
             return Json(InfoService.GetReferenceReceiptTypes(), JsonRequestBehavior.AllowGet);

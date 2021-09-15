@@ -89,7 +89,7 @@
                                 <td style="padding-left:10px" ng-if="request.RequestType==1 || request.RequestType==2">
                                     <span>Հաճախորդ՝ {{::request.HBToken.UserCustomerNumber}}&nbsp;&nbsp;&nbsp;{{::request.HBToken.UserFullName}}</span> <br /> 
                                     <span>Տոկեն N` {{::request.HBToken.TokenNumber}} {{::request.HBToken.TokenTypeDescription}}</span>                                        
-                                    <span ng-if="(request.HBToken.TokenType==3 && request.ServiceFee>0) || ($root.SessionProperties.CustomerType==6 && request.ServiceFee>0)">
+                                    <span ng-if="request.ServiceFee>0">
                                     <br />
                                     <strong>Անվճար</strong>&nbsp;&nbsp;<input type="checkbox" ng-model="request.IsFree" ng-change="setOrderAmount(order.HBActivationRequests)" ng-true-value="true" ng-false-value="false">
                                     </span>

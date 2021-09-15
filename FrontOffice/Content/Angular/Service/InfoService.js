@@ -6,7 +6,7 @@
         });
         return response;
     };
-    
+
     this.getCashPosCurrencies = function () {
         var response = $http({
             method: "post",
@@ -1227,15 +1227,15 @@
         });
         return response;
     }
-        this.getDemandDepositRateTariffs = function () {
-            var response = $http({
-                method: "post",
-                url: "/Info/GetDemandDepositRateTariffs"
-            });
-            return response;
-        };
-       
-        
+    this.getDemandDepositRateTariffs = function () {
+        var response = $http({
+            method: "post",
+            url: "/Info/GetDemandDepositRateTariffs"
+        });
+        return response;
+    };
+
+
     this.getDemandDepositRateTariffs = function () {
         var response = $http({
             method: "post",
@@ -1264,7 +1264,7 @@
             url: "/Info/GetAccountCustomerNumber",
             data: JSON.stringify(account),
             dataType: "json",
-            
+
         });
         return response;
     };
@@ -1295,8 +1295,7 @@
 
     };
 
-    this.GetLoanTypesForLoanApplication = function (loanApplicationType)
-    {
+    this.GetLoanTypesForLoanApplication = function (loanApplicationType) {
         var response = $http({
             method: "post",
             url: "/Info/GetLoanTypesForLoanApplication",
@@ -1360,7 +1359,7 @@
         });
         return response;
     };
-    
+
     this.getTypeofPaymentReasonAboutOutTransfering = function () {
         var response = $http({
             method: "post",
@@ -1369,13 +1368,13 @@
         return response;
     };
 
-	this.getTypeofOperDayClosingOptions = function () {
-		var response = $http({
-			method: "post",
-			url: "/Info/GetTypeofOperDayClosingOptions"
-		});
-		return response;
-	};
+    this.getTypeofOperDayClosingOptions = function () {
+        var response = $http({
+            method: "post",
+            url: "/Info/GetTypeofOperDayClosingOptions"
+        });
+        return response;
+    };
 
     this.getTypeOf24_7Modes = function () {
         var response = $http({
@@ -1400,12 +1399,12 @@
         });
         return response;
     };
-	this.getTypeOfCommunals = function () {
-		var response = $http({
-			method: "post",
-			url: "/Info/GetTypeOfCommunals",
-		});
-		return response;
+    this.getTypeOfCommunals = function () {
+        var response = $http({
+            method: "post",
+            url: "/Info/GetTypeOfCommunals",
+        });
+        return response;
     };
 
     this.GetAccountFreezeReasonsTypesForOrder = function () {
@@ -1428,10 +1427,10 @@
         return response;
     };
 
- 
-   
 
-    
+
+
+
     this.getSSTOperationTypes = function () {
         var response = $http({
             method: "post",
@@ -1448,7 +1447,7 @@
         return response;
     };
 
-   
+
     this.GetSwiftPurposeCode = function () {
         var response = $http({
             method: "post",
@@ -1469,14 +1468,14 @@
         return response;
     }
 
-    
+
     this.GetOrderableCardSystemTypes = function () {
         var response = $http({
             method: "post",
             url: "/Info/GetOrderableCardSystemTypes"
         });
         return response;
-    };this.GetOrderableCardSystemTypes = function () {
+    }; this.GetOrderableCardSystemTypes = function () {
         var response = $http({
             method: "post",
             url: "/Info/GetOrderableCardSystemTypes"
@@ -1567,37 +1566,37 @@
         });
         return response;
     };
-	this.getInsuranceTypesByContractType = function (insuranceContractType, isLoanProduct, isSeparatelyProduct, isProvision) {
-		var response = $http({
-			method: "post",
-			url: "/Info/GetInsuranceTypesByContractType",
-			params: {
-				insuranceContractType: insuranceContractType,
-				isLoanProduct: isLoanProduct,
-				isSeparatelyProduct: isSeparatelyProduct,
-				isProvision: isProvision
-			}
-		});
-		return response;
-	};
+    this.getInsuranceTypesByContractType = function (insuranceContractType, isLoanProduct, isSeparatelyProduct, isProvision) {
+        var response = $http({
+            method: "post",
+            url: "/Info/GetInsuranceTypesByContractType",
+            params: {
+                insuranceContractType: insuranceContractType,
+                isLoanProduct: isLoanProduct,
+                isSeparatelyProduct: isSeparatelyProduct,
+                isProvision: isProvision
+            }
+        });
+        return response;
+    };
 
-	this.GetVirtualCardStatusChangeReasons = function () {
-		var response = $http({
-			method: "post",
-			url: "/Info/GetVirtualCardStatusChangeReasons",
-			params: { status: status }
-		});
-		return response;
-	};
+    this.GetVirtualCardStatusChangeReasons = function () {
+        var response = $http({
+            method: "post",
+            url: "/Info/GetVirtualCardStatusChangeReasons",
+            params: { status: status }
+        });
+        return response;
+    };
 
-	this.GetVirtualCardChangeActions = function (status) {
-		var response = $http({
-			method: "post",
-			url: "/Info/GetVirtualCardChangeActions",
-			params: { status: status }
-		});
-		return response;
-	};
+    this.GetVirtualCardChangeActions = function (status) {
+        var response = $http({
+            method: "post",
+            url: "/Info/GetVirtualCardChangeActions",
+            params: { status: status }
+        });
+        return response;
+    };
 
     this.GetCardReceivingTypes = function () {
         var response = $http({
@@ -1848,6 +1847,7 @@
         });
         return response;
     };
+
 
     this.getRejectFeeTypes = function () {
         var response = $http({

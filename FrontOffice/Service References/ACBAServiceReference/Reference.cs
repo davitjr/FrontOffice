@@ -8610,6 +8610,7 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -9535,6 +9536,7 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -16504,6 +16506,7 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -17240,6 +17243,7 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -17787,6 +17791,7 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -21825,6 +21830,7 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -22496,6 +22502,9 @@ namespace FrontOffice.ACBAServiceReference {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource SourceField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus StatusField;
+        
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string Password {
             get {
@@ -22547,12 +22556,25 @@ namespace FrontOffice.ACBAServiceReference {
                 }
             }
         }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((this.StatusField.Equals(value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountEnumerations.Quality", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
         "countSecurity")]
-    public enum PersonalAccountEnumerationsQuality : int {
+    public enum PersonalAccountEnumerationsQuality : short {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         None = 0,
@@ -22567,7 +22589,7 @@ namespace FrontOffice.ACBAServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountEnumerations.Source", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
         "countSecurity")]
-    public enum PersonalAccountEnumerationsSource : int {
+    public enum PersonalAccountEnumerationsSource : short {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         None = 0,
@@ -22577,6 +22599,21 @@ namespace FrontOffice.ACBAServiceReference {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         CRM = 2,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountEnumerations.Status", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
+        "countSecurity")]
+    public enum PersonalAccountEnumerationsStatus : short {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        None = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        On = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Off = 2,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -24478,13 +24515,6 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILoginOperations/CheckAnalyserPermissions", ReplyAction="http://tempuri.org/ILoginOperations/CheckAnalyserPermissionsResponse")]
         System.Threading.Tasks.Task<bool> CheckAnalyserPermissionsAsync(string ipAddress, ulong customerNumber, short userId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType", ReplyAction="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        short DefineCustomerLinkType(string documentNumber, int customerType, string socialNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType", ReplyAction="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResponse")]
-        System.Threading.Tasks.Task<short> DefineCustomerLinkTypeAsync(string documentNumber, int customerType, string socialNumber);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerBankLinkType", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerBankLinkTypeResponse")]
         short GetCustomerBankLinkType(string documentNumber, int customerType, string socialNumber);
         
@@ -24772,6 +24802,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -25078,6 +25109,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -25366,6 +25398,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -25780,12 +25813,6 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/IdentifyCustomerByContact", ReplyAction="http://tempuri.org/ICustomerOperations/IdentifyCustomerByContactResponse")]
         System.Threading.Tasks.Task<ulong> IdentifyCustomerByContactAsync(string contact, short contactType);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDate", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerBirthDateResponse")]
-        System.Nullable<System.DateTime> GetCustomerBirthDate(ulong customerNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDate", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerBirthDateResponse")]
-        System.Threading.Tasks.Task<System.Nullable<System.DateTime>> GetCustomerBirthDateAsync(ulong customerNumber);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/InsertCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/InsertCustomerResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/InsertCustomerResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.DahkResult), Action="http://tempuri.org/ICustomerOperations/InsertCustomerDahkResultFault", Name="DahkResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
@@ -26047,6 +26074,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -26335,6 +26363,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -26379,12 +26408,6 @@ namespace FrontOffice.ACBAServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerDescription", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionResponse")]
         System.Threading.Tasks.Task<string> GetCustomerDescriptionAsync(ulong customerNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglish", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglishResponse")]
-        string GetCustomerDescriptionEnglish(ulong customerNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglish", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglishResponse")]
-        System.Threading.Tasks.Task<string> GetCustomerDescriptionEnglishAsync(ulong customerNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/GetCustomerResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
@@ -26645,6 +26668,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -26931,6 +26955,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -27222,6 +27247,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -27837,6 +27863,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -28257,6 +28284,13 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetIdentifiedCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/GetIdentifiedCustomerResponse")]
         System.Threading.Tasks.Task<FrontOffice.ACBAServiceReference.Customer> GetIdentifiedCustomerAsync(FrontOffice.ACBAServiceReference.SearchCustomers searchParams);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType", ReplyAction="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
+        short DefineCustomerLinkType(string documentNumber, int customerType, string socialNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType", ReplyAction="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResponse")]
+        System.Threading.Tasks.Task<short> DefineCustomerLinkTypeAsync(string documentNumber, int customerType, string socialNumber);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IACBAOperationService/GetData", ReplyAction="http://tempuri.org/IACBAOperationService/GetDataResponse")]
         string GetData(int value);
         
@@ -28461,14 +28495,6 @@ namespace FrontOffice.ACBAServiceReference {
         
         public System.Threading.Tasks.Task<bool> CheckAnalyserPermissionsAsync(string ipAddress, ulong customerNumber, short userId) {
             return base.Channel.CheckAnalyserPermissionsAsync(ipAddress, customerNumber, userId);
-        }
-        
-        public short DefineCustomerLinkType(string documentNumber, int customerType, string socialNumber) {
-            return base.Channel.DefineCustomerLinkType(documentNumber, customerType, socialNumber);
-        }
-        
-        public System.Threading.Tasks.Task<short> DefineCustomerLinkTypeAsync(string documentNumber, int customerType, string socialNumber) {
-            return base.Channel.DefineCustomerLinkTypeAsync(documentNumber, customerType, socialNumber);
         }
         
         public short GetCustomerBankLinkType(string documentNumber, int customerType, string socialNumber) {
@@ -29031,14 +29057,6 @@ namespace FrontOffice.ACBAServiceReference {
             return base.Channel.IdentifyCustomerByContactAsync(contact, contactType);
         }
         
-        public System.Nullable<System.DateTime> GetCustomerBirthDate(ulong customerNumber) {
-            return base.Channel.GetCustomerBirthDate(customerNumber);
-        }
-        
-        public System.Threading.Tasks.Task<System.Nullable<System.DateTime>> GetCustomerBirthDateAsync(ulong customerNumber) {
-            return base.Channel.GetCustomerBirthDateAsync(customerNumber);
-        }
-        
         public ulong InsertCustomer(object customer, System.Collections.Generic.List<ushort> validate) {
             return base.Channel.InsertCustomer(customer, validate);
         }
@@ -29077,14 +29095,6 @@ namespace FrontOffice.ACBAServiceReference {
         
         public System.Threading.Tasks.Task<string> GetCustomerDescriptionAsync(ulong customerNumber) {
             return base.Channel.GetCustomerDescriptionAsync(customerNumber);
-        }
-        
-        public string GetCustomerDescriptionEnglish(ulong customerNumber) {
-            return base.Channel.GetCustomerDescriptionEnglish(customerNumber);
-        }
-        
-        public System.Threading.Tasks.Task<string> GetCustomerDescriptionEnglishAsync(ulong customerNumber) {
-            return base.Channel.GetCustomerDescriptionEnglishAsync(customerNumber);
         }
         
         public object GetCustomer(ulong customerNumber) {
@@ -30061,6 +30071,14 @@ namespace FrontOffice.ACBAServiceReference {
         
         public System.Threading.Tasks.Task<FrontOffice.ACBAServiceReference.Customer> GetIdentifiedCustomerAsync(FrontOffice.ACBAServiceReference.SearchCustomers searchParams) {
             return base.Channel.GetIdentifiedCustomerAsync(searchParams);
+        }
+        
+        public short DefineCustomerLinkType(string documentNumber, int customerType, string socialNumber) {
+            return base.Channel.DefineCustomerLinkType(documentNumber, customerType, socialNumber);
+        }
+        
+        public System.Threading.Tasks.Task<short> DefineCustomerLinkTypeAsync(string documentNumber, int customerType, string socialNumber) {
+            return base.Channel.DefineCustomerLinkTypeAsync(documentNumber, customerType, socialNumber);
         }
         
         public string GetData(int value) {
@@ -32858,13 +32876,6 @@ namespace FrontOffice.ACBAServiceReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ACBAServiceReference.ICustomerOperations")]
     public interface ICustomerOperations {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType", ReplyAction="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        short DefineCustomerLinkType(string documentNumber, int customerType, string socialNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType", ReplyAction="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResponse")]
-        System.Threading.Tasks.Task<short> DefineCustomerLinkTypeAsync(string documentNumber, int customerType, string socialNumber);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerBankLinkType", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerBankLinkTypeResponse")]
         short GetCustomerBankLinkType(string documentNumber, int customerType, string socialNumber);
         
@@ -33152,6 +33163,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -33458,6 +33470,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -33746,6 +33759,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -34160,12 +34174,6 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/IdentifyCustomerByContact", ReplyAction="http://tempuri.org/ICustomerOperations/IdentifyCustomerByContactResponse")]
         System.Threading.Tasks.Task<ulong> IdentifyCustomerByContactAsync(string contact, short contactType);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDate", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerBirthDateResponse")]
-        System.Nullable<System.DateTime> GetCustomerBirthDate(ulong customerNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDate", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerBirthDateResponse")]
-        System.Threading.Tasks.Task<System.Nullable<System.DateTime>> GetCustomerBirthDateAsync(ulong customerNumber);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/InsertCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/InsertCustomerResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/InsertCustomerResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.DahkResult), Action="http://tempuri.org/ICustomerOperations/InsertCustomerDahkResultFault", Name="DahkResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
@@ -34427,6 +34435,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -34715,6 +34724,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -34759,12 +34769,6 @@ namespace FrontOffice.ACBAServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerDescription", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionResponse")]
         System.Threading.Tasks.Task<string> GetCustomerDescriptionAsync(ulong customerNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglish", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglishResponse")]
-        string GetCustomerDescriptionEnglish(ulong customerNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglish", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerDescriptionEnglishResponse")]
-        System.Threading.Tasks.Task<string> GetCustomerDescriptionEnglishAsync(ulong customerNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/GetCustomerResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
@@ -35025,6 +35029,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -35311,6 +35316,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -35602,6 +35608,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -36217,6 +36224,7 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
@@ -36636,6 +36644,13 @@ namespace FrontOffice.ACBAServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetIdentifiedCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/GetIdentifiedCustomerResponse")]
         System.Threading.Tasks.Task<FrontOffice.ACBAServiceReference.Customer> GetIdentifiedCustomerAsync(FrontOffice.ACBAServiceReference.SearchCustomers searchParams);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType", ReplyAction="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
+        short DefineCustomerLinkType(string documentNumber, int customerType, string socialNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/DefineCustomerLinkType", ReplyAction="http://tempuri.org/ICustomerOperations/DefineCustomerLinkTypeResponse")]
+        System.Threading.Tasks.Task<short> DefineCustomerLinkTypeAsync(string documentNumber, int customerType, string socialNumber);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -36663,14 +36678,6 @@ namespace FrontOffice.ACBAServiceReference {
         
         public CustomerOperationsClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
-        }
-        
-        public short DefineCustomerLinkType(string documentNumber, int customerType, string socialNumber) {
-            return base.Channel.DefineCustomerLinkType(documentNumber, customerType, socialNumber);
-        }
-        
-        public System.Threading.Tasks.Task<short> DefineCustomerLinkTypeAsync(string documentNumber, int customerType, string socialNumber) {
-            return base.Channel.DefineCustomerLinkTypeAsync(documentNumber, customerType, socialNumber);
         }
         
         public short GetCustomerBankLinkType(string documentNumber, int customerType, string socialNumber) {
@@ -37233,14 +37240,6 @@ namespace FrontOffice.ACBAServiceReference {
             return base.Channel.IdentifyCustomerByContactAsync(contact, contactType);
         }
         
-        public System.Nullable<System.DateTime> GetCustomerBirthDate(ulong customerNumber) {
-            return base.Channel.GetCustomerBirthDate(customerNumber);
-        }
-        
-        public System.Threading.Tasks.Task<System.Nullable<System.DateTime>> GetCustomerBirthDateAsync(ulong customerNumber) {
-            return base.Channel.GetCustomerBirthDateAsync(customerNumber);
-        }
-        
         public ulong InsertCustomer(object customer, System.Collections.Generic.List<ushort> validate) {
             return base.Channel.InsertCustomer(customer, validate);
         }
@@ -37279,14 +37278,6 @@ namespace FrontOffice.ACBAServiceReference {
         
         public System.Threading.Tasks.Task<string> GetCustomerDescriptionAsync(ulong customerNumber) {
             return base.Channel.GetCustomerDescriptionAsync(customerNumber);
-        }
-        
-        public string GetCustomerDescriptionEnglish(ulong customerNumber) {
-            return base.Channel.GetCustomerDescriptionEnglish(customerNumber);
-        }
-        
-        public System.Threading.Tasks.Task<string> GetCustomerDescriptionEnglishAsync(ulong customerNumber) {
-            return base.Channel.GetCustomerDescriptionEnglishAsync(customerNumber);
         }
         
         public object GetCustomer(ulong customerNumber) {
@@ -38263,6 +38254,14 @@ namespace FrontOffice.ACBAServiceReference {
         
         public System.Threading.Tasks.Task<FrontOffice.ACBAServiceReference.Customer> GetIdentifiedCustomerAsync(FrontOffice.ACBAServiceReference.SearchCustomers searchParams) {
             return base.Channel.GetIdentifiedCustomerAsync(searchParams);
+        }
+        
+        public short DefineCustomerLinkType(string documentNumber, int customerType, string socialNumber) {
+            return base.Channel.DefineCustomerLinkType(documentNumber, customerType, socialNumber);
+        }
+        
+        public System.Threading.Tasks.Task<short> DefineCustomerLinkTypeAsync(string documentNumber, int customerType, string socialNumber) {
+            return base.Channel.DefineCustomerLinkTypeAsync(documentNumber, customerType, socialNumber);
         }
     }
     

@@ -37,6 +37,11 @@
         else if ($scope.$root.OpenMode == 14) {
             $scope.searchParams.IsFondOrder = true;
         }
+
+        if ($scope.searchParams.RegisteredUserID == null || $scope.searchParams.RegisteredUserID == "") {
+            $scope.searchParams.RegisteredUserID = 0;
+        }
+
         var Data = orderService.getOrders($scope.searchParams);
         Data.then(function (orderList) {
             $scope.orders = orderList.data;
@@ -522,7 +527,7 @@
                 var temp = '/ReplacedCardAccountRegOrder/ReplacedCardAccountRegOrderDetails';
                 var id = 'ReplacedCardAccountRegOrderDetails';
                 var title = title;
-                break;        
+                break;
 
             case 120://to do
             case 119:
@@ -780,7 +785,7 @@
                 var temp = '/LoanDelayOrder/LoanDelayOrderDetails';
                 var id = 'LoanDelayOrderDetails';
                 var title = title;
-                break;           
+                break;
             case 230://Հետաձգված վարկի չեղարկում
                 var temp = '/CancelLoanDelayOrder/CancelLoanDelayOrderDetails';
                 var id = 'CancelLoanDelayOrderDetails';
@@ -810,7 +815,7 @@
                 var temp = '/LoanInterestRateConcession/LoanInterestRateConcessionDetails';
                 var id = 'LoanInterestRateConcessionDetails';
                 var title = title;
-                break;      
+                break;
             case 237: //Չվճարված կենսաթոշակի/նպաստի գումար
                 var temp = '/PensionPaymentOrder/PensionPaymentOrderDetails';
                 var id = 'PensionPaymentOrderDetails';
@@ -820,11 +825,16 @@
                 var temp = '/CardRenewOrder/CardRenewOrderDetails';
                 var id = 'CardRenewOrderDetails';
                 var title = title;
-                break; 
+                break;
 
             case 244: //Քարտի վերաբացման հայտ
                 var temp = '/CardReOpenOrder/CardReOpenOrderDetails';
                 var id = 'CardReOpenOrderDetails';
+                var title = title;
+                break;
+            case 238://Անքարտ կանխիկացման հայտի մանրամասների ցուցադրում
+                var temp = '/CardLessCashoutOrder/CardLessCashoutOrderDetails';
+                var id = 'CardLessCashoutOrderDetails';
                 var title = title;
                 break;
             case 250: //Visa Alias  հայտ
@@ -1333,7 +1343,7 @@
                 break;
             case "21":
             case "199":
-            case "74":                
+            case "74":
                 fileName = 'Creditline_Orders_Report'
                 Data = creditLineService.GetCreditLineOrderReport($scope.searchParams);
                 Data.then(function (response) {

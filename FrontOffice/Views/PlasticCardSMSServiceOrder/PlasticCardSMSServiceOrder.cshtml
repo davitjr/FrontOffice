@@ -76,8 +76,8 @@
                 <label class="tab_title col-sm-5 " for="MobilePhone">Հիմնական հեռախոսահամար</label>
                 <div class="col-sm-6">
                     <div class="row">
-                        <select data-ng-model="Tuple" name="Tuple" id="Tuple" class="form-control" required
-                                data-ng-options="k.m_Item1  for k in MobilePhones"
+                        <select data-ng-model="order.MobilePhone" name="MobilePhone" id="MobilePhone" class="form-control" required
+                                data-ng-options="k  for k in MobilePhones"
                                 ng-disabled="IsDisableMobilePhone">
                             <option selected="selected" value="" hidden>Ընտրեք</option>
                         </select>

@@ -1,263 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
-  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking" />
-  <xs:complexType name="ArrayOfKeyValueOfstringstring">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:simpleType name="ReferenceReceiptTypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="AtBranchSameWorkingDay" />
+      <xs:enumeration value="AtBranch" />
+      <xs:enumeration value="DeliveryService" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ReferenceReceiptTypes" nillable="true" type="tns:ReferenceReceiptTypes" />
+  <xs:simpleType name="TemplateStatus">
     <xs:annotation>
       <xs:appinfo>
-        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfstringstring">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Key" nillable="true" type="xs:string" />
-            <xs:element name="Value" nillable="true" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValueOfstringstring" nillable="true" type="tns:ArrayOfKeyValueOfstringstring" />
-  <xs:complexType name="ArrayOfunsignedShort">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="unsignedShort" type="xs:unsignedShort" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfunsignedShort" nillable="true" type="tns:ArrayOfunsignedShort" />
-  <xs:complexType name="ArrayOfstring">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfstring" nillable="true" type="tns:ArrayOfstring" />
-  <xs:complexType name="ArrayOfint">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="int" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfint" nillable="true" type="tns:ArrayOfint" />
-  <xs:complexType name="ArrayOflong">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="long" type="xs:long" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOflong" nillable="true" type="tns:ArrayOflong" />
-  <xs:complexType name="ArrayOffloat">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="float" type="xs:float" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOffloat" nillable="true" type="tns:ArrayOffloat" />
-  <xs:complexType name="ArrayOfanyType">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" type="xs:anyType" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfanyType" nillable="true" type="tns:ArrayOfanyType" />
-  <xs:complexType name="ArrayOfKeyValueOfunsignedIntArrayOfSearchCustomersDTpyQ4eh">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Active" />
+      <xs:enumeration value="Deleted">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">40</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="TemplateStatus" nillable="true" type="tns:TemplateStatus" />
+  <xs:simpleType name="DigitalAccountRestConfigurationType">
     <xs:annotation>
       <xs:appinfo>
-        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfunsignedIntArrayOfSearchCustomersDTpyQ4eh">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Key" type="xs:unsignedInt" />
-            <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ACBALibrary" name="Value" nillable="true" type="q1:ArrayOfSearchCustomers" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValueOfunsignedIntArrayOfSearchCustomersDTpyQ4eh" nillable="true" type="tns:ArrayOfKeyValueOfunsignedIntArrayOfSearchCustomersDTpyQ4eh" />
-  <xs:complexType name="ArrayOfKeyValueOfanyTypeKeyValueDTpyQ4eh">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Defalut" />
+      <xs:enumeration value="Custom" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DigitalAccountRestConfigurationType" nillable="true" type="tns:DigitalAccountRestConfigurationType" />
+  <xs:simpleType name="CardLessCashoutStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Waiting" />
+      <xs:enumeration value="Rejected" />
+      <xs:enumeration value="Completed" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CardLessCashoutStatus" nillable="true" type="tns:CardLessCashoutStatus" />
+  <xs:simpleType name="LinkPaymentSourceType">
     <xs:annotation>
       <xs:appinfo>
-        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+        <ActualType Name="unsignedByte" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfanyTypeKeyValueDTpyQ4eh">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Key" nillable="true" type="xs:anyType" />
-            <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ACBALibrary" name="Value" nillable="true" type="q2:KeyValue" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValueOfanyTypeKeyValueDTpyQ4eh" nillable="true" type="tns:ArrayOfKeyValueOfanyTypeKeyValueDTpyQ4eh" />
-  <xs:complexType name="ArrayOfunsignedLong">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="unsignedLong" type="xs:unsignedLong" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfunsignedLong" nillable="true" type="tns:ArrayOfunsignedLong" />
-  <xs:complexType name="ArrayOfKeyValueOfDocumentTypesstring8GuwAyh_S">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="FromLinkPayment" />
+      <xs:enumeration value="FromBillSplit" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="LinkPaymentSourceType" nillable="true" type="tns:LinkPaymentSourceType" />
+  <xs:simpleType name="PeriodicTransferTypes">
     <xs:annotation>
       <xs:appinfo>
-        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+        <ActualType Name="unsignedByte" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfDocumentTypesstring8GuwAyh_S">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ACBALibrary" name="Key" type="q3:DocumentTypes" />
-            <xs:element name="Value" nillable="true" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValueOfDocumentTypesstring8GuwAyh_S" nillable="true" type="tns:ArrayOfKeyValueOfDocumentTypesstring8GuwAyh_S" />
-  <xs:complexType name="ArrayOfKeyValueOfExternalRequestOptionsboolean8GuwAyh_S">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NotSet" />
+      <xs:enumeration value="Transfer" />
+      <xs:enumeration value="Payment" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PeriodicTransferTypes" nillable="true" type="tns:PeriodicTransferTypes" />
+  <xs:simpleType name="InternationalCardTransferTypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="VisaDirect">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MasterCardMoneySend">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="InternationalCardTransferTypes" nillable="true" type="tns:InternationalCardTransferTypes" />
+  <xs:simpleType name="PaymentToARCAStatus">
     <xs:annotation>
       <xs:appinfo>
-        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfExternalRequestOptionsboolean8GuwAyh_S">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ACBALibrary" name="Key" type="q4:ExternalRequestOptions" />
-            <xs:element name="Value" type="xs:boolean" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValueOfExternalRequestOptionsboolean8GuwAyh_S" nillable="true" type="tns:ArrayOfKeyValueOfExternalRequestOptionsboolean8GuwAyh_S" />
-  <xs:complexType name="ArrayOfKeyValueOfunsignedIntArrayOfCashierDTpyQ4eh">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Waiting" />
+      <xs:enumeration value="Sending" />
+      <xs:enumeration value="InProgress" />
+      <xs:enumeration value="Failure" />
+      <xs:enumeration value="Success" />
+      <xs:enumeration value="Resend" />
+      <xs:enumeration value="Manual" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PaymentToARCAStatus" nillable="true" type="tns:PaymentToARCAStatus" />
+  <xs:simpleType name="LoanProductType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Loan">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CreditLine">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FastOverdraft">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="LoanProductType" nillable="true" type="tns:LoanProductType" />
+  <xs:simpleType name="ServiceFeePeriodicityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Monthly" />
+      <xs:enumeration value="Yearly" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ServiceFeePeriodicityType" nillable="true" type="tns:ServiceFeePeriodicityType" />
+  <xs:simpleType name="OrderGroupStatus">
     <xs:annotation>
       <xs:appinfo>
-        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfunsignedIntArrayOfCashierDTpyQ4eh">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Key" type="xs:unsignedInt" />
-            <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ACBALibrary" name="Value" nillable="true" type="q5:ArrayOfCashier" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValueOfunsignedIntArrayOfCashierDTpyQ4eh" nillable="true" type="tns:ArrayOfKeyValueOfunsignedIntArrayOfCashierDTpyQ4eh" />
-  <xs:complexType name="ArrayOfKeyValueOfshortstring">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Active">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Deleted">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">0</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OrderGroupStatus" nillable="true" type="tns:OrderGroupStatus" />
+  <xs:simpleType name="OrderGroupType">
     <xs:annotation>
       <xs:appinfo>
-        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfshortstring">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Key" type="xs:short" />
-            <xs:element name="Value" nillable="true" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValueOfshortstring" nillable="true" type="tns:ArrayOfKeyValueOfshortstring" />
-  <xs:complexType name="ArrayOfKeyValueOfshortKeyValueDTpyQ4eh">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="CreatedByCustomer" />
+      <xs:enumeration value="CreatedAutomatically" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OrderGroupType" nillable="true" type="tns:OrderGroupType" />
+  <xs:simpleType name="InterestMarginType">
     <xs:annotation>
       <xs:appinfo>
-        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+        <ActualType Name="unsignedByte" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfshortKeyValueDTpyQ4eh">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Key" type="xs:short" />
-            <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ACBALibrary" name="Value" nillable="true" type="q6:KeyValue" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValueOfshortKeyValueDTpyQ4eh" nillable="true" type="tns:ArrayOfKeyValueOfshortKeyValueDTpyQ4eh" />
-  <xs:complexType name="ArrayOfshort">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="short" type="xs:short" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfshort" nillable="true" type="tns:ArrayOfshort" />
-  <xs:complexType name="ArrayOfKeyValueOfintboolean">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CurrentAccounts">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TermDeposits">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BankBonds">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="InterestMarginType" nillable="true" type="tns:InterestMarginType" />
+  <xs:simpleType name="TaxCourtDecision">
     <xs:annotation>
       <xs:appinfo>
-        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+        <ActualType Name="byte" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfintboolean">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Key" type="xs:int" />
-            <xs:element name="Value" type="xs:boolean" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValueOfintboolean" nillable="true" type="tns:ArrayOfKeyValueOfintboolean" />
-  <xs:complexType name="ArrayOfdateTime">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="dateTime" type="xs:dateTime" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfdateTime" nillable="true" type="tns:ArrayOfdateTime" />
-  <xs:complexType name="ArrayOfKeyValueOfintArrayOfProblemLoanTax_PA1vKgxZ">
-    <xs:annotation>
-      <xs:appinfo>
-        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfintArrayOfProblemLoanTax_PA1vKgxZ">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Key" type="xs:int" />
-            <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ExternalBanking" name="Value" nillable="true" type="q7:ArrayOfProblemLoanTax" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValueOfintArrayOfProblemLoanTax_PA1vKgxZ" nillable="true" type="tns:ArrayOfKeyValueOfintArrayOfProblemLoanTax_PA1vKgxZ" />
-  <xs:complexType name="ArrayOfdouble">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="double" type="xs:double" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfdouble" nillable="true" type="tns:ArrayOfdouble" />
-  <xs:complexType name="ArrayOfKeyValueOfunsignedLongstring">
-    <xs:annotation>
-      <xs:appinfo>
-        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfunsignedLongstring">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Key" type="xs:unsignedLong" />
-            <xs:element name="Value" nillable="true" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValueOfunsignedLongstring" nillable="true" type="tns:ArrayOfKeyValueOfunsignedLongstring" />
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">-1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TaxQualityOperating">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">0</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TaxQualityContract">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TaxQualityDecision">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="TaxCourtDecision" nillable="true" type="tns:TaxCourtDecision" />
 </xs:schema>

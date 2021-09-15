@@ -9,7 +9,7 @@
             $scope.order.Type = 30;
             document.getElementById("cardClosingLoad").classList.remove("hidden");
             $scope.order.ProductId = $scope.card.ProductId;
-            var Data = cardClosingOrderService.saveCardClosingOrder($scope.order);
+            var Data = cardClosingOrderService.saveCardClosingOrder($scope.order, $scope.card.CardNumber);
             Data.then(function (res) {
 
                 if (validate($scope, res.data)) {

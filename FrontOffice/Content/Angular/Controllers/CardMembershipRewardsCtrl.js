@@ -118,7 +118,6 @@
   
     };
 
-
     $scope.checkMRDataChangeAvailability = function () {
         var Data = cardMembershipRewardsService.getMRDataChangeAvailability($scope.cardMR.Id);
         Data.then(function (acc) {

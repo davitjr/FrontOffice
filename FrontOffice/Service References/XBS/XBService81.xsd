@@ -3,8 +3,8 @@
   <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking" />
   <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
   <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd23" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.TokenOperations" />
-  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd24" namespace="http://schemas.datacontract.org/2004/07/AcbaOnlineSecurityService.Helpers" />
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd20" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.TokenOperations" />
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd21" namespace="http://schemas.datacontract.org/2004/07/AcbaOnlineSecurityService.Helpers" />
   <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="HBToken">
     <xs:sequence>

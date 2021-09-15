@@ -43,7 +43,6 @@ namespace FrontOffice.Controllers
         }
 
 
-
         public JsonResult GetPlasticCardSmsServiceActions(string cardNumber)
         {
             return Json(XBService.GetPlasticCardSmsServiceActions(cardNumber), JsonRequestBehavior.AllowGet);

@@ -1972,7 +1972,7 @@
                                                     " " +
                                                     $scope.order.CustomerNumber +
                                                     ")";
-                                                if ($scope.order.Fees[i].Type == '8' ) {
+                                                if ($scope.order.Fees[i].Type == '8') {
                                                     $scope.order.Fees[i].OrderNumber = $scope.OrderNumberForFee;
                                                 }
                                                 else if ($scope.order.Fees[i].Type == '28') {
@@ -2060,5 +2060,6 @@
         }, function () {
             alert('Error getRejectFeeTypes');
         });
+
     };
 }]);

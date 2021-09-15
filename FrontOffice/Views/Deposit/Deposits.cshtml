@@ -57,7 +57,7 @@
                 </div>
                 <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
                     <tbody>
-                        <tr ng-if="filter==1 && deposits.length!=0" ng-repeat="deposit in deposits | filter: { Currency: currency!=undefined?currency:'' }" ng-class="{'selected':$index == selectedRow}" ng-click="confirmationPersonInit(deposit, $index);setClickedRow($index,deposit);selectedDepositIsAccessible  && hideBlank!='true' &&  getElementPosition($index);" ng-dblclick="selectedDepositIsAccessible && openDepositDetails();" style="cursor: pointer;">
+                        <tr ng-if="filter==1 && deposits.length!=0" ng-repeat="deposit in deposits | filter: { Currency: currency!=undefined?currency:'' }" ng-class="{'selected':$index == selectedRow}" ng-click="confirmationPersonInit(deposit, $index); setClickedRow($index,deposit);selectedDepositIsAccessible  && hideBlank!='true' &&  getElementPosition($index);" ng-dblclick="selectedDepositIsAccessible && openDepositDetails();" style="cursor: pointer;">
                             <td class="col-sm-3" id="depositRow_{{$index}}">
                                 {{ ::deposit.DepositTypeDescription }}
                                 <span ng-if="deposit.JointType != 0"><br />{{ ::deposit.DepositAccount.AccountDescription }}</span>

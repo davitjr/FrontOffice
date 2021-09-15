@@ -230,7 +230,6 @@
     };
 
     $scope.getDepositCardCreditLineContract = function (productId, cardType) {
-
         showloading();
         var Data = loanProductActivationOrderService.getDepositCardCreditLineContract(productId, cardType, $scope.confirmationPerson1);
         ShowPDF(Data);
@@ -287,7 +286,7 @@
 			alert('Error GetFactoringCustomerFeeCardAndCurrencyAccounts');
 		});
 	};
-	
+
     $scope.confirmationPersons = function (confirmationPerson) {
         $scope.confirmationPerson = confirmationPerson;
     };

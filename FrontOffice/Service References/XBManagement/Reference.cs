@@ -4181,8 +4181,10 @@ namespace FrontOffice.XBManagement {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         SentToAML = 57,
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        VisaAlias = 250,
     }
-    
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OrderType", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
     public enum OrderType : short {

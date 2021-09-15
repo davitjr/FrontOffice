@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAccountSecurity" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAccountSecurity" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary" />
-  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary" />
+  <xs:import schemaLocation="" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:simpleType name="PersonalAccountEnumerations.GetPersonalAccountOption">
     <xs:annotation>
       <xs:appinfo>
@@ -36,12 +36,19 @@
           <xs:element minOccurs="0" name="PasswordChangeDate" type="xs:dateTime" />
           <xs:element minOccurs="0" name="Quality" type="tns:PersonalAccountEnumerations.Quality" />
           <xs:element minOccurs="0" name="Source" type="tns:PersonalAccountEnumerations.Source" />
+          <xs:element minOccurs="0" name="Status" type="tns:PersonalAccountEnumerations.Status" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="PersonalAccountUser" nillable="true" type="tns:PersonalAccountUser" />
   <xs:simpleType name="PersonalAccountEnumerations.Quality">
+    <xs:annotation>
+      <xs:appinfo>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+        </ActualType>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="None" />
       <xs:enumeration value="Confirmed" />
@@ -50,6 +57,12 @@
   </xs:simpleType>
   <xs:element name="PersonalAccountEnumerations.Quality" nillable="true" type="tns:PersonalAccountEnumerations.Quality" />
   <xs:simpleType name="PersonalAccountEnumerations.Source">
+    <xs:annotation>
+      <xs:appinfo>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+        </ActualType>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="None" />
       <xs:enumeration value="Website" />
@@ -57,6 +70,20 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="PersonalAccountEnumerations.Source" nillable="true" type="tns:PersonalAccountEnumerations.Source" />
+  <xs:simpleType name="PersonalAccountEnumerations.Status">
+    <xs:annotation>
+      <xs:appinfo>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+        </ActualType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="On" />
+      <xs:enumeration value="Off" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PersonalAccountEnumerations.Status" nillable="true" type="tns:PersonalAccountEnumerations.Status" />
   <xs:complexType name="PSActionResult">
     <xs:sequence>
       <xs:element minOccurs="0" name="ActionResultCode" type="tns:PersonalAccountEnumerations.ResultCode" />

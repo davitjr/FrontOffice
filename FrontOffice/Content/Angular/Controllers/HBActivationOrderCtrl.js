@@ -22,10 +22,10 @@
                     $scope.forPrint = true;
                 }
 
-                if ($scope.requests[i].RequestType == 1 && $scope.$root.SessionProperties.CustomerType != 6)
-                {
-                    $scope.requests[i].ServiceFee = 0;
-                }
+                //if ($scope.requests[i].RequestType == 1 && $scope.$root.SessionProperties.CustomerType != 6)
+                //{
+                //    $scope.requests[i].ServiceFee = 0;
+                //}
             }
             $scope.serviceFee = $scope.serviceFee + $scope.requests[i].ServiceFee;
         }
@@ -50,12 +50,12 @@
     {
         var serviceFee = 0;
         for (var i = 0; i < requests.length; i++) {
-            if (requests[i].RequestType == 1 || requests[i].RequestType == 2)
-            {
-                if (requests[i].RequestType == 1 && $scope.$root.SessionProperties.CustomerType != 6) {
-                    requests[i].ServiceFee = 0;
-                }
-            }
+            //if (requests[i].RequestType == 1 || requests[i].RequestType == 2)
+            //{
+            //    if (requests[i].RequestType == 1 && $scope.$root.SessionProperties.CustomerType != 6) {
+            //        requests[i].ServiceFee = 0;
+            //    }
+            //}
             serviceFee = serviceFee + requests[i].ServiceFee;
             if (requests[i].IsFree) {
                 serviceFee = serviceFee - requests[i].ServiceFee;

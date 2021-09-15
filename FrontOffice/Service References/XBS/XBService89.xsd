@@ -526,6 +526,30 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="WebSite" nillable="true" type="tns:WebSite" />
+  <xs:simpleType name="CustomerIdentificationLevel">
+    <xs:annotation>
+      <xs:appinfo>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Completely">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Incomplete">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CustomerIdentificationLevel" nillable="true" type="tns:CustomerIdentificationLevel" />
   <xs:complexType name="Result">
     <xs:sequence>
       <xs:element minOccurs="0" name="NonUnicodeErrorList" nillable="true" type="tns:ArrayOfKeyValue" />
@@ -1875,30 +1899,6 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="CustomerRegistrationSource" nillable="true" type="tns:CustomerRegistrationSource" />
-  <xs:simpleType name="CustomerIdentificationLevel">
-    <xs:annotation>
-      <xs:appinfo>
-        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Completely">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Incomplete">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="CustomerIdentificationLevel" nillable="true" type="tns:CustomerIdentificationLevel" />
   <xs:complexType name="VerificationData">
     <xs:sequence>
       <xs:element minOccurs="0" name="VerificationResultsList" nillable="true" type="tns:ArrayOfVerificationResult" />

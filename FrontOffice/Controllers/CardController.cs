@@ -53,7 +53,7 @@ namespace FrontOffice.Controllers
             return Json(card, JsonRequestBehavior.AllowGet);
         }
 
-        //[FrontLoggingFilterAttribute(ActionType = (int)ActionType.CardStatementOpen)]
+        [FrontLoggingFilterAttribute(ActionType = (int)ActionType.CardStatementOpen)]
         public JsonResult GetCardStatement(XBS.Card card, string dateFrom, string dateTo)
         {
             return Json(XBService.GetCardStatement(card, Convert.ToDateTime(dateFrom), Convert.ToDateTime(dateTo)), JsonRequestBehavior.AllowGet);
@@ -100,14 +100,14 @@ namespace FrontOffice.Controllers
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
             byte customerType = ACBAOperationService.GetCustomerType(customerNumber);
 
-            string value = XBService.GetCustomerEmailByCardNumber(cardNumber); ;
+            //string value = XBService.GetCustomerEmailByCardNumber(cardNumber); ;
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "cardNumber", value: cardNumber);
             //3DSecure ակտիվացման միմումի համար
             if (applicationID == 18)
             {
-                parameters.Add(key: "email", value: value);
+                parameters.Add(key: "email", value: "");
             }
             return Json(parameters, JsonRequestBehavior.AllowGet);
         }
@@ -115,7 +115,7 @@ namespace FrontOffice.Controllers
 
 
 
-        //[FrontLoggingFilterAttribute(ActionType =(int) ActionType.CardStatementPrint)]
+        [FrontLoggingFilterAttribute(ActionType = (int)ActionType.CardStatementPrint)]
         public JsonResult PrintCardStatement(XBS.Card card, string dateFrom, string dateTo, int lang, string exportFormat = "pdf")
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -195,6 +195,18 @@ namespace FrontOffice.Controllers
         public ActionResult CardTariffs()
         {
             return PartialView("CardTariffs");
+        }
+        public ActionResult VisaAlias()
+        {
+            return PartialView("VisaAlias");
+        }
+        public ActionResult VisaAliasDataChange()
+        {
+            return PartialView("VisaAliasDataChange");
+        }
+        public ActionResult VisaAliasOrderDetails()
+        {
+            return PartialView("VisaAliasOrderDetails");
         }
 
         /// <summary>
@@ -455,38 +467,23 @@ namespace FrontOffice.Controllers
             }
             return Json(result);
         }
-        public ActionResult Validate3DSecureEmailForPrint(string cardNumber)
-        {
-            xbs.ActionResult result = new xbs.ActionResult();
-            string email = XBService.GetCustomerEmailByCardNumber(cardNumber);
-            if (email is null)
-            {
-                xbs.ActionError error = new xbs.ActionError();
-                error.Code = 599;
-                error.Description = "Հաճախորդը չունի գրանցված հիմնական էլ․ հասցե";
-                result.Errors = new List<xbs.ActionError>();
-                result.ResultCode = xbs.ResultCode.ValidationError;
-                result.Errors.Add(error);
-                return Json(result);
-            }
+        //public ActionResult Validate3DSecureEmailForPrint(string cardNumber)
+        //{
+        //    xbs.ActionResult result = new xbs.ActionResult();
+        //    string email = XBService.GetCustomerEmailByCardNumber(cardNumber);
+        //    if (email is null)
+        //    {
+        //        xbs.ActionError error = new xbs.ActionError();
+        //        error.Code = 599;
+        //        error.Description = "Հաճախորդը չունի գրանցված հիմնական էլ․ հասցե";
+        //        result.Errors = new List<xbs.ActionError>();
+        //        result.ResultCode = xbs.ResultCode.ValidationError;
+        //        result.Errors.Add(error);
+        //        return Json(result);
+        //    }
 
-            return Json(result);
-        }
-
-        public ActionResult VisaAlias()
-        {
-            return PartialView("VisaAlias");
-        }
-
-        public ActionResult VisaAliasDataChange()
-        {
-            return PartialView("VisaAliasDataChange");
-        }
-
-        public ActionResult VisaAliasOrderDetails()
-        {
-            return PartialView("VisaAliasOrderDetails");
-        }
+        //    return Json(result);
+        //}
 
         public async Task<JsonResult> GetVisaAliasHistory(string CardNumber)
         {
@@ -505,5 +502,6 @@ namespace FrontOffice.Controllers
         {
             return Json(XBService.VisaAliasOrderDetails(orderId), JsonRequestBehavior.AllowGet);
         }
+
     }
 }

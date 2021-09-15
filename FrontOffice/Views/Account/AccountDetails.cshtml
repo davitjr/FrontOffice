@@ -4,7 +4,7 @@
 
 <div ng-controller="AccountCtrl as parentCtr" id="accountDetails" data-ng-init="getCurrentAccount(selectedAccount);getAccountAdditionalDetails(selectedAccount);getCustomerType();getAccountSource(selectedAccount);">
 
-    <div id="accountdetails_menu" class="menu-bar dialog-menu light-green details-menu">
+    <div id="accountdetails_menu" class="menu-bar dialog-menu light-green details-menu" style="width:100%">
         <ul id="menu" class="dialog-menu">
             <li class="root-menu-item-4 " ng-if="account.ClosingDateString == 'null' && account.AccountType != 61 && account.AccountType != 57">
                 <span id="h-menu-item-4" onclick="return false;">

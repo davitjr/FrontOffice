@@ -18,7 +18,7 @@
                     $scope.endDate = new Date(y, m, d);
                     break;
                 case "2":
-                    $scope.startDate = getMonday(date);
+                    $scope.startDate = getMonday(new Date(y, m, d));
                     $scope.endDate = new Date(y, m, d);
                     break;
                 case "3":
@@ -284,7 +284,6 @@
     }
 
     function getMonday(d) {
-        d = new Date(d);
         var day = d.getDay(),
             diff = d.getDate() - day + (day == 0 ? -6 : 1); 
         return new Date(d.setDate(diff));

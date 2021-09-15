@@ -59,6 +59,7 @@
                     <li><a href="" ng-click="dateFrom<=dateTo && printLoanStatementNew(accountnumber,productid,1,'xls')">Տպել Excel(հայերեն)</a></li>
                     <li><a href="" ng-click="dateFrom<=dateTo && printLoanStatementNew(accountnumber,productid,2,'xls')">Տպել Excel(անգլերեն)</a></li>
                     <li><a href="" ng-click="dateFrom<=dateTo && printLoanStatement(accountnumber)">Տպել PDF(հին տարբերակ)</a></li>
+                    <li ng-if="loantype==15"><a href="" ng-click="dateFrom<=dateTo && printHypotecLoanStatement(accountnumber, productid)">Տպել PDF(ՀՀ ՊԵԿ ներկայացվող)</a></li>
                 </ul>
             </div>
 

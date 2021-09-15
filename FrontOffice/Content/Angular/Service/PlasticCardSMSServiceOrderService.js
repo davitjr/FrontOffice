@@ -81,7 +81,7 @@
         return response;
     };
 
-    
+
     this.SMSTypeAndValue = function (cardNumber) {
         var response = $http({
             method: "post",

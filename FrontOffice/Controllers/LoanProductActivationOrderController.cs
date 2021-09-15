@@ -131,13 +131,12 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "confirmationPerson", value: confirmationPerson);
 
             if (cardType == 23 || cardType == 34 || cardType == 40 || cardType == 50 || cardType == 20 || cardType == 41)
-            {
+            {                
                 ContractService.CreditLineContractAmex(parameters);
             }
             else
             {
                 ContractService.CreditLineContract(parameters);
-
             }
 
         }

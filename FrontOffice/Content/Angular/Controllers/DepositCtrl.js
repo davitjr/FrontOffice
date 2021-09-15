@@ -306,7 +306,7 @@
     $scope.confirmationPersonInit = function (deposit, index) {
         if ($scope.index == undefined || $scope.index != index) {
             if ((deposit.StartCapital > 3000000 && deposit.Currency == 'AMD') || (deposit.StartCapital > 5000 && deposit.Currency == 'USD') ||
-                (deposit.StartCapital > 5000 && deposit.Currency == 'EUR') || (deposit.StartCapital > 300000 && deposit.Currency == 'RUR')) {
+                (deposit.StartCapital > 5000 && deposit.Currency == 'EUR') || (deposit.StartCapital > 300000 && deposit.Currency == 'RUR') || deposit.IsVariation == 1) {
                 $scope.confirmationPersonsFirstValueVisibility = false;
                 $scope.confirmationPerson = '2';
             }

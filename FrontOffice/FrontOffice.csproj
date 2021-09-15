@@ -51,8 +51,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ActionLogger">
-      <HintPath>..\..\..\..\Diana'sProjects\Front\FrontOffice-Release\FrontOffice\bin\ActionLogger.dll</HintPath>
+    <Reference Include="ActionLogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>CustomReferences\ActionLogger.dll</HintPath>
     </Reference>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
@@ -206,6 +207,7 @@
     <Compile Include="Controllers\CardController.cs" />
     <Compile Include="Controllers\CardDataChangeOrderController.cs" />
     <Compile Include="Controllers\CardDeliveryController.cs" />
+    <Compile Include="Controllers\CardlessCashoutOrderController.cs" />
     <Compile Include="Controllers\CardLimitChangeOrderController.cs" />
     <Compile Include="Controllers\CardMembershipRewardsController.cs" />
     <Compile Include="Controllers\CardNotRenewOrderController.cs" />
@@ -394,6 +396,7 @@
     <Compile Include="Models\BondIssue.cs" />
     <Compile Include="Models\BondQualityUpdateOrder.cs" />
     <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\CardLessCashOutOrder.cs" />
     <Compile Include="Models\CardLimit.cs" />
     <Compile Include="Models\CardStatement.cs" />
     <Compile Include="Models\CardStatementDetail.cs">
@@ -579,6 +582,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Angular\Controllers\CardLessCashOutOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\AccountClosingOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\AccountDataChangeOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\AccountFreezeCtrl.js" />
@@ -783,6 +787,7 @@
     <Content Include="Content\Angular\Module\SearchRemittanceControl.js" />
     <Content Include="Content\Angular\Module\SearchSwiftCodeControl.js" />
     <Content Include="Content\Angular\Module\SearchTransferBankMail.js" />
+    <Content Include="Content\Angular\Service\CardlessCashoutOrderService.js" />
     <Content Include="Content\Angular\Service\ArcaCardsTransactionOrderService.js" />
     <Content Include="Content\Angular\Service\BondAmountChargeOrderService.js" />
     <Content Include="Content\Angular\Service\BondIssueService.js" />
@@ -1058,6 +1063,7 @@
     <Content Include="Content\newTheme\plugins\core\slimscroll\jquery.slimscroll.min.js" />
     <Content Include="Content\ui-grid.css" />
     <Content Include="Content\ui-grid.min.css" />
+    <Content Include="CustomReferences\ActionLogger.dll" />
     <Content Include="Scripts\angular-chosen-master\angular-chosen-master\chosen-spinner.css" />
     <Content Include="Scripts\angular-img-cropper.min.js" />
     <Content Include="Scripts\angular-loader.js" />
@@ -2837,31 +2843,19 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\XBSInfo\XBInfoService.wsdl" />
-    <None Include="Service References\XBSInfo\XBInfoService.xsd" />
-    <None Include="Service References\XBSInfo\configuration91.svcinfo" />
-    <None Include="Service References\XBSInfo\configuration.svcinfo" />
-    <None Include="Service References\XBSInfo\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Service References\XBManagement\configuration91.svcinfo" />
     <None Include="Service References\XBManagement\configuration.svcinfo" />
     <None Include="Service References\XBManagement\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\XBManagement\XBManagementService.disco" />
     <None Include="Service References\XBSInfo\XBInfoService.disco" />
-    <None Include="Service References\XBSInfo\XBInfoService.wsdl" />
-    <None Include="Service References\XBSInfo\XBInfoService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService1.wsdl" />
-    <None Include="Service References\XBSInfo\XBInfoService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService10.xsd">
-      <SubType>Designer</SubType>
+    <None Include="Service References\XBSInfo\configuration91.svcinfo" />
+    <None Include="Service References\XBSInfo\configuration.svcinfo" />
+    <None Include="Service References\XBSInfo\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Service References\XBSInfo\XBInfoService11.xsd">
       <SubType>Designer</SubType>
@@ -2903,6 +2897,85 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\XBSInfo\XBInfoService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ACBALibrary.ContactsChangingRiskDetails1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ACBALibrary.CustomerIdentificationAlgorithm.Models1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ACBALibrary1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\AcbaOnlineSecurityService.Helpers1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ACBAOperationService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\Arrays3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ARUSInfrastructure1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\CBDataService.PoliceViolations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\CBDataService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ExternalBanking.CTPayment11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ExternalBanking.PreferredAccounts1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ExternalBanking.QrTransfers1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ExternalBanking.UtilityPaymentsManagment1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ExternalBanking.XBManagement1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ExternalBanking1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ExternalBankingSecurityLibrary.PersonalAccountSecurity1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ExternalBankingSecurityLibrary.TokenOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ExternalBankingSecurityLibrary1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\ExternalBankingService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\InformationSecurityLibrary1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\SAPCRM1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\service1.wsdl" />
+    <None Include="Service References\XBS\service3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\service7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\service8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\System.Collections.Generic1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\System1.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\XBS\XBService.disco" />
@@ -3766,11 +3839,44 @@
     <Content Include="Views\Leasing\LeasingDetailedInformation.cshtml" />
     <Content Include="Views\CardReOpenOrder\CardReOpenOrder.cshtml" />
     <Content Include="Views\CardReOpenOrder\CardReOpenOrderDetails.cshtml" />
+    <Content Include="Views\CardRenewOrder\CardRenewOrder.cshtml" />
+    <Content Include="Views\CardRenewOrder\CardRenewOrderDetails.cshtml" />
+    <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrder.cshtml" />
+    <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrderDetails.cshtml" />
+    <Content Include="Views\Card\CardRetainHistory.cshtml" />
+    <Content Include="Views\CardlessCashoutOrder\CardLessCashOutOrderDetails.cshtml" />
+    <None Include="Service References\XBSInfo\XBInfoService.wsdl" />
+    <None Include="Service References\XBSInfo\XBInfoService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBSInfo\XBInfoService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBSInfo\XBInfoService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBSInfo\XBInfoService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBSInfo\XBInfoService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBSInfo\XBInfoService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBSInfo\XBInfoService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBSInfo\XBInfoService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBSInfo\XBInfoService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\XBS\XBService.wsdl" />
     <None Include="Service References\XBS\XBService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\XBS\XBService1.wsdl" />
     <None Include="Service References\XBS\XBService1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -3970,6 +4076,8 @@
     <None Include="Service References\XBS\XBService9.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\SafekeepingItem\SafekeepingItemDetails.cshtml" />
+    <Content Include="Views\SafekeepingItem\SafekeepingItems.cshtml" />
     <Content Include="Views\CardRenewOrder\CardRenewOrder.cshtml" />
     <Content Include="Views\CardRenewOrder\CardRenewOrderDetails.cshtml" />
     <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrder.cshtml" />
@@ -3980,24 +4088,11 @@
     <None Include="Service References\XBS\XBService91.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\Card\CardRetainHistory.cshtml" />
-    <Content Include="Views\SafekeepingItem\SafekeepingItemDetails.cshtml" />
-    <Content Include="Views\SafekeepingItem\SafekeepingItems.cshtml" />
-    <Content Include="Views\Card\VisaAlias.cshtml" />
     <Content Include="Views\Card\VisaAliasDataChange.cshtml" />
     <Content Include="Views\Card\VisaAliasOrderDetails.cshtml" />
-    <None Include="Service References\XBS\XBService92.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService93.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService94.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService95.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <Content Include="Views\Card\VisaAlias.cshtml" />
+    <Content Include="Views\Loan\LoanRepaymentFromCard.cshtml" />
+    <Content Include="Views\Loan\LoanRepaymentFromCardDataChange.cshtml" />
     <None Include="Web References\ReportingRS1001\ReportExecution2005.wsdl" />
     <None Include="Web.SQL2016Profile.config">
       <SubType>Designer</SubType>

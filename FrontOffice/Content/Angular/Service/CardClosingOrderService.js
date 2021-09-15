@@ -1,9 +1,12 @@
-﻿app.service("cardClosingOrderService",['$http', function ($http) {
+﻿app.service("cardClosingOrderService", ['$http', function ($http) {
 
-    this.saveCardClosingOrder = function (order) {
+    this.saveCardClosingOrder = function (order, cardNumber) {
         var response = $http({
             method: "post",
             url: "CardClosingOrder/SaveCardClosingOrder",
+            params: {
+                cardNumber: cardNumber
+            },
             data: JSON.stringify(order),
             dataType: "json"
         });
@@ -36,6 +39,7 @@
         var response = $http({
             method: "post",
             url: "/CardClosingOrder/GetCardClosingApplication",
+            responseType: 'arraybuffer',
             params: {
                 cardNumber: cardNumber
             }

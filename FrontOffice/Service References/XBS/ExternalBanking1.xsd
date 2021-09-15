@@ -5,6 +5,7 @@
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/" />
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.CTPayment" />
   <xs:complexType name="DepositOrder">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Order">
@@ -156,6 +157,8 @@
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DescriptionForRejectFeeType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RejectFeeType" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RejectFeeTypeDescription" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Type" type="xs:short" />
       <xs:element minOccurs="0" name="TypeDescription" nillable="true" type="xs:string" />
     </xs:sequence>
@@ -334,6 +337,13 @@
         <xs:annotation>
           <xs:appinfo>
             <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">14</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="LinkPayment">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">15</EnumerationValue>
           </xs:appinfo>
         </xs:annotation>
       </xs:enumeration>
@@ -1710,6 +1720,20 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="PreferredAccountActivationOrder">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">240</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PreferredAccountDeactivationOrder">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">241</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="LinkPaymentOrder">
         <xs:annotation>
           <xs:appinfo>
@@ -1721,6 +1745,13 @@
         <xs:annotation>
           <xs:appinfo>
             <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">243</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CardReOpenOrder">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">244</EnumerationValue>
           </xs:appinfo>
         </xs:annotation>
       </xs:enumeration>
@@ -1759,10 +1790,31 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="VisaAlias">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">250</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="ThirdPersonAccountRightsTransfer">
         <xs:annotation>
           <xs:appinfo>
             <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">251</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MRDataChangeOrder">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">253</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="LinkTransferPaymentConfirmation">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">254</EnumerationValue>
           </xs:appinfo>
         </xs:annotation>
       </xs:enumeration>
@@ -1799,6 +1851,7 @@
       <xs:element minOccurs="0" name="FilailCode" type="xs:int" />
       <xs:element minOccurs="0" name="InterestRate" type="xs:double" />
       <xs:element minOccurs="0" name="InvolvingSetNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="IsVariation" nillable="true" type="xs:unsignedByte" />
       <xs:element minOccurs="0" name="JointType" type="xs:unsignedShort" />
       <xs:element minOccurs="0" name="JointTypeDescription" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="KeeperOpen" type="xs:int" />
@@ -3717,6 +3770,20 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="RenewedCardAccountRegOrder" nillable="true" type="tns:RenewedCardAccountRegOrder" />
+  <xs:complexType name="VisaAliasOrder">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Order">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Alias" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CardType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ReasonTypeDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RecipientFullName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RecipientPrimaryAccountNumber" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="VisaAliasOrder" nillable="true" type="tns:VisaAliasOrder" />
   <xs:complexType name="CardlessCashoutOrder">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Order">
@@ -3735,6 +3802,7 @@
           <xs:element minOccurs="0" name="OTPGenerationDate" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="OrderOTP" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="RejectionMessage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SvipError" nillable="true" type="tns:CardlessCashoutOrder.SvipErrorResponse" />
           <xs:element minOccurs="0" name="TransactionID" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="TransferFee" type="xs:double" />
           <xs:element minOccurs="0" name="UseCreditLine" type="xs:boolean" />
@@ -3744,6 +3812,13 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="CardlessCashoutOrder" nillable="true" type="tns:CardlessCashoutOrder" />
+  <xs:complexType name="CardlessCashoutOrder.SvipErrorResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorDescription" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CardlessCashoutOrder.SvipErrorResponse" nillable="true" type="tns:CardlessCashoutOrder.SvipErrorResponse" />
   <xs:complexType name="ArrayOfPlasticCard">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="PlasticCard" nillable="true" type="tns:PlasticCard" />
@@ -3934,12 +4009,290 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PlasticCardSMSServiceHistory" nillable="true" type="tns:PlasticCardSMSServiceHistory" />
-  <xs:complexType name="ArrayOfTemplate">
+  <xs:complexType name="ArrayOfGroupTemplateResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Template" nillable="true" type="tns:Template" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="GroupTemplateResponse" nillable="true" type="tns:GroupTemplateResponse" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfTemplate" nillable="true" type="tns:ArrayOfTemplate" />
+  <xs:element name="ArrayOfGroupTemplateResponse" nillable="true" type="tns:ArrayOfGroupTemplateResponse" />
+  <xs:complexType name="GroupTemplateResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InitialFullInfo" nillable="true" type="xs:anyType" />
+      <xs:element minOccurs="0" name="UpToDateShortInfo" nillable="true" type="tns:Template" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GroupTemplateResponse" nillable="true" type="tns:GroupTemplateResponse" />
+  <xs:complexType name="LoanMatureOrderTemplate">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Template">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="LoanMatureOrderTemplateId" type="xs:int" />
+          <xs:element minOccurs="0" name="MatureOrder" nillable="true" type="tns:MatureOrder" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="LoanMatureOrderTemplate" nillable="true" type="tns:LoanMatureOrderTemplate" />
+  <xs:complexType name="MatureOrder">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Order">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Account" nillable="true" type="tns:Account" />
+          <xs:element minOccurs="0" name="CreditCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DayOfProductRateCalculation" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="IsProblematic" type="xs:boolean" />
+          <xs:element minOccurs="0" name="MatureMode" type="xs:int" />
+          <xs:element minOccurs="0" name="MatureType" type="tns:MatureType" />
+          <xs:element minOccurs="0" name="PercentAccount" nillable="true" type="tns:Account" />
+          <xs:element minOccurs="0" name="PercentAmount" type="xs:double" />
+          <xs:element minOccurs="0" name="PercentAmountInAMD" type="xs:double" />
+          <xs:element minOccurs="0" name="ProductAccount" nillable="true" type="tns:Account" />
+          <xs:element minOccurs="0" name="ProductCurrency" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProductId" type="xs:unsignedLong" />
+          <xs:element minOccurs="0" name="ProductType" type="tns:ProductType" />
+          <xs:element minOccurs="0" name="RepaymentSourceType" type="xs:unsignedShort" />
+          <xs:element minOccurs="0" name="RepaymentSourceTypeDescription" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MatureOrder" nillable="true" type="tns:MatureOrder" />
+  <xs:simpleType name="MatureType">
+    <xs:annotation>
+      <xs:appinfo>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+        </ActualType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RateRepayment">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PartialRepayment">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FullRepayment">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ClaimRepayment">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RepaymentByCreditCode">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PartialRepaymentByGrafik">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="MatureType" nillable="true" type="tns:MatureType" />
+  <xs:simpleType name="ProductType">
+    <xs:annotation>
+      <xs:appinfo>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+        </ActualType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Loan" />
+      <xs:enumeration value="CreditLine" />
+      <xs:enumeration value="CommercialCreditLine">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CurrentAccount">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Card">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">11</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Deposit">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">13</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OtherLabilities">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">18</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AparikTexum">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">58</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PeriodicTransfer">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">112</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Accreditive">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Guarantee">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Factoring">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">28</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PaidAccreditive">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">52</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PaidFactoring">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">54</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PaidGuarantee">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">51</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AmexCard">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">103</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="VisaCard">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">104</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MasterCard">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">105</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ArcaCard">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">109</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Credential">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">120</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CardDahkAccount">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">115</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SocialSecurityAccount">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">118</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DevelopersAccount">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">119</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ProductType" nillable="true" type="tns:ProductType" />
+  <xs:complexType name="PaymentOrderTemplate">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Template">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="PaymentOrder" nillable="true" type="tns:PaymentOrder" />
+          <xs:element minOccurs="0" name="PaymentOrderTemplateId" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PaymentOrderTemplate" nillable="true" type="tns:PaymentOrderTemplate" />
+  <xs:complexType name="UtilityPaymentOrderTemplate">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Template">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="UtilityPaymentOrder" nillable="true" type="tns:UtilityPaymentOrder" />
+          <xs:element minOccurs="0" name="UtilityPaymentOrderTemplateId" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UtilityPaymentOrderTemplate" nillable="true" type="tns:UtilityPaymentOrderTemplate" />
   <xs:complexType name="ShowNewDahk">
     <xs:sequence>
       <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ActiveDahkList" nillable="true" type="q12:ArrayOfstring" />
@@ -3999,7 +4352,10 @@
           <xs:element minOccurs="0" name="LinkPaymentDescription" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="LinkURL" nillable="true" type="xs:string" />
           <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="PaymentSourceType" type="q13:LinkPaymentSourceType" />
+          <xs:element minOccurs="0" name="Photo" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Receiver" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ShortId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserId" type="xs:double" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -4022,15 +4378,61 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ContentResultOfstring" nillable="true" type="tns:ContentResultOfstring" />
-  <xs:complexType name="LinkPaymentPayer">
+  <xs:complexType name="PayerLinkPaymentOrder">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Order">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActionCode" type="xs:short" />
+          <xs:element minOccurs="0" name="ArcaAuthId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ArcaOrderNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BankCountryCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BankCountryName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BankName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BindingId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CheckBox" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Expiration" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OrderStatus" type="xs:short" />
+          <xs:element minOccurs="0" name="PayerCard" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PayerName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RRN" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ShortId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TerminalId" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PayerLinkPaymentOrder" nillable="true" type="tns:PayerLinkPaymentOrder" />
+  <xs:complexType name="ContentResultOfArrayOfReceivedBillSplitRequest.BillSplitLinkResultbPNljBtf">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="ContentResultOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="ArrayOfReceivedBillSplitRequest.BillSplitLinkResult" Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking">
+          </GenericParameter>
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:sequence>
-      <xs:element minOccurs="0" name="CheckBox" type="xs:boolean" />
-      <xs:element minOccurs="0" name="PayerCard" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PayerName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ShortId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Content" nillable="true" type="tns:ArrayOfReceivedBillSplitRequest.BillSplitLinkResult" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Errors" nillable="true" type="tns:ArrayOfActionError" />
+      <xs:element minOccurs="0" name="ResultCode" type="tns:ResultCode" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="LinkPaymentPayer" nillable="true" type="tns:LinkPaymentPayer" />
+  <xs:element name="ContentResultOfArrayOfReceivedBillSplitRequest.BillSplitLinkResultbPNljBtf" nillable="true" type="tns:ContentResultOfArrayOfReceivedBillSplitRequest.BillSplitLinkResultbPNljBtf" />
+  <xs:complexType name="ArrayOfReceivedBillSplitRequest.BillSplitLinkResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ReceivedBillSplitRequest.BillSplitLinkResult" nillable="true" type="tns:ReceivedBillSplitRequest.BillSplitLinkResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfReceivedBillSplitRequest.BillSplitLinkResult" nillable="true" type="tns:ArrayOfReceivedBillSplitRequest.BillSplitLinkResult" />
+  <xs:complexType name="ReceivedBillSplitRequest.BillSplitLinkResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Link" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReceivedBillSplitRequest.BillSplitLinkResult" nillable="true" type="tns:ReceivedBillSplitRequest.BillSplitLinkResult" />
   <xs:complexType name="BillSplitSenderRejectionOrder">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Order">
@@ -4148,6 +4550,26 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="AccountRemovingOrder" nillable="true" type="tns:AccountRemovingOrder" />
+  <xs:complexType name="CardReOpenOrder">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Order">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CardNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CardType" type="xs:unsignedByte" />
+          <xs:element minOccurs="0" name="CardTypeDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Filial" type="xs:int" />
+          <xs:element minOccurs="0" name="MainCardNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OrderName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProductID" type="xs:unsignedLong" />
+          <xs:element minOccurs="0" name="ReopenDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ReopenReason" type="xs:unsignedShort" />
+          <xs:element minOccurs="0" name="ReopenReasonString" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SetNumber" type="xs:unsignedShort" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CardReOpenOrder" nillable="true" type="tns:CardReOpenOrder" />
   <xs:complexType name="ThirdPersonAccountRightsTransferOrder">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Order">
@@ -4159,6 +4581,38 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="ThirdPersonAccountRightsTransferOrder" nillable="true" type="tns:ThirdPersonAccountRightsTransferOrder" />
+  <xs:complexType name="MRDataChangeOrder">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Order">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DataChangeAccount" nillable="true" type="tns:Account" />
+          <xs:element minOccurs="0" name="DataChangeCard" nillable="true" type="tns:Card" />
+          <xs:element minOccurs="0" name="MRId" type="xs:int" />
+          <xs:element minOccurs="0" name="ServiceFee" type="xs:double" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MRDataChangeOrder" nillable="true" type="tns:MRDataChangeOrder" />
+  <xs:complexType name="LoanRepaymentFromCardDataChange">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" type="xs:int" />
+      <xs:element minOccurs="0" name="AppId" type="xs:unsignedLong" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SetNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoanRepaymentFromCardDataChange" nillable="true" type="tns:LoanRepaymentFromCardDataChange" />
+  <xs:complexType name="CardHolderAndCardType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CardHolderFirsName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CardHolderLastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CardTypeDescription" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CardHolderAndCardType" nillable="true" type="tns:CardHolderAndCardType" />
   <xs:complexType name="CancelDelayOrder">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Order">
@@ -4182,6 +4636,7 @@
           <xs:element minOccurs="0" name="ReceiverName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SenderCardNumber" nillable="true" type="xs:string" />
           <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="TransferType" type="q14:InternationalCardTransferTypes" />
+          <xs:element minOccurs="0" name="VisaAlias" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -5534,6 +5989,12 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="InternationalOrderTemplate" nillable="true" type="tns:InternationalOrderTemplate" />
+  <xs:complexType name="ArrayOfTemplate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Template" nillable="true" type="tns:Template" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTemplate" nillable="true" type="tns:ArrayOfTemplate" />
   <xs:simpleType name="OrderAccountType">
     <xs:annotation>
       <xs:appinfo>
@@ -5641,167 +6102,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PensionSystem" nillable="true" type="tns:PensionSystem" />
-  <xs:simpleType name="ProductType">
-    <xs:annotation>
-      <xs:appinfo>
-        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-        </ActualType>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="None" />
-      <xs:enumeration value="Loan" />
-      <xs:enumeration value="CreditLine" />
-      <xs:enumeration value="CommercialCreditLine">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="CurrentAccount">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Card">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">11</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Deposit">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">13</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="OtherLabilities">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">18</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="AparikTexum">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">58</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="PeriodicTransfer">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">112</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Accreditive">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Guarantee">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Factoring">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">28</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="PaidAccreditive">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">52</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="PaidFactoring">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">54</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="PaidGuarantee">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">51</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="AmexCard">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">103</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="VisaCard">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">104</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="MasterCard">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">105</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ArcaCard">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">109</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Credential">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">120</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="CardDahkAccount">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">115</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="SocialSecurityAccount">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">118</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="DevelopersAccount">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">119</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="ProductType" nillable="true" type="tns:ProductType" />
   <xs:complexType name="VirtualCardDetails">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Card">
@@ -6188,17 +6488,6 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="CreditCommitmentForgivenessOrder" nillable="true" type="tns:CreditCommitmentForgivenessOrder" />
-  <xs:complexType name="UtilityPaymentOrderTemplate">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Template">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="UtilityPaymentOrder" nillable="true" type="tns:UtilityPaymentOrder" />
-          <xs:element minOccurs="0" name="UtilityPaymentOrderTemplateId" type="xs:int" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="UtilityPaymentOrderTemplate" nillable="true" type="tns:UtilityPaymentOrderTemplate" />
   <xs:complexType name="ArrayOfOrderGroup">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderGroup" nillable="true" type="tns:OrderGroup" />
@@ -6209,7 +6498,6 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="CustomerNumber" type="xs:unsignedLong" />
       <xs:element minOccurs="0" name="GroupName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="GroupTemplates" nillable="true" type="tns:ArrayOfTemplate" />
       <xs:element minOccurs="0" name="ID" type="xs:int" />
       <xs:element minOccurs="0" name="RegistrationDate" type="xs:dateTime" />
       <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="Status" type="q21:OrderGroupStatus" />
@@ -6218,105 +6506,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="OrderGroup" nillable="true" type="tns:OrderGroup" />
-  <xs:complexType name="PaymentOrderTemplate">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Template">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="PaymentOrder" nillable="true" type="tns:PaymentOrder" />
-          <xs:element minOccurs="0" name="PaymentOrderTemplateId" type="xs:int" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="PaymentOrderTemplate" nillable="true" type="tns:PaymentOrderTemplate" />
-  <xs:complexType name="LoanMatureOrderTemplate">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Template">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="LoanMatureOrderTemplateId" type="xs:int" />
-          <xs:element minOccurs="0" name="MatureOrder" nillable="true" type="tns:MatureOrder" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="LoanMatureOrderTemplate" nillable="true" type="tns:LoanMatureOrderTemplate" />
-  <xs:complexType name="MatureOrder">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Order">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Account" nillable="true" type="tns:Account" />
-          <xs:element minOccurs="0" name="CreditCode" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="DayOfProductRateCalculation" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="IsProblematic" type="xs:boolean" />
-          <xs:element minOccurs="0" name="MatureMode" type="xs:int" />
-          <xs:element minOccurs="0" name="MatureType" type="tns:MatureType" />
-          <xs:element minOccurs="0" name="PercentAccount" nillable="true" type="tns:Account" />
-          <xs:element minOccurs="0" name="PercentAmount" type="xs:double" />
-          <xs:element minOccurs="0" name="PercentAmountInAMD" type="xs:double" />
-          <xs:element minOccurs="0" name="ProductAccount" nillable="true" type="tns:Account" />
-          <xs:element minOccurs="0" name="ProductCurrency" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ProductId" type="xs:unsignedLong" />
-          <xs:element minOccurs="0" name="ProductType" type="tns:ProductType" />
-          <xs:element minOccurs="0" name="RepaymentSourceType" type="xs:unsignedShort" />
-          <xs:element minOccurs="0" name="RepaymentSourceTypeDescription" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="MatureOrder" nillable="true" type="tns:MatureOrder" />
-  <xs:simpleType name="MatureType">
-    <xs:annotation>
-      <xs:appinfo>
-        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-        </ActualType>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="RateRepayment">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="PartialRepayment">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="FullRepayment">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ClaimRepayment">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="RepaymentByCreditCode">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="PartialRepaymentByGrafik">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="MatureType" nillable="true" type="tns:MatureType" />
   <xs:complexType name="UploadedFile">
     <xs:sequence>
       <xs:element minOccurs="0" name="CustomerNumber" type="xs:unsignedLong" />
@@ -7557,6 +7746,7 @@
           <xs:element minOccurs="0" name="ConnectAccount" nillable="true" type="tns:Account" />
           <xs:element minOccurs="0" name="ConvertationRate" type="xs:double" />
           <xs:element minOccurs="0" name="CreditAccount" nillable="true" type="tns:Account" />
+          <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/ExternalBanking.CTPayment" minOccurs="0" name="MatureMode" type="q29:MatureMode" />
           <xs:element minOccurs="0" name="ProductId" type="xs:unsignedLong" />
           <xs:element minOccurs="0" name="WithCreditCode" type="xs:boolean" />
         </xs:sequence>
@@ -7586,7 +7776,7 @@
       <xs:element minOccurs="0" name="ProvisionCostConclusion" type="xs:short" />
       <xs:element minOccurs="0" name="ProvisionCostConclusionDescription" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ProvisionCoverCoefficient" type="xs:float" />
-      <xs:element xmlns:q29="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProvisionQualityConclusion" nillable="true" type="q29:ArrayOfshort" />
+      <xs:element xmlns:q30="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProvisionQualityConclusion" nillable="true" type="q30:ArrayOfshort" />
       <xs:element minOccurs="0" name="ProvisionQualityConclusionsDescription" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="RegistrationDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Status" type="xs:short" />
@@ -8117,7 +8307,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="RegistartionDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="SignatureType" type="xs:unsignedShort" />
-      <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/ACBALibrary" minOccurs="0" name="User" nillable="true" type="q30:User" />
+      <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/ACBALibrary" minOccurs="0" name="User" nillable="true" type="q31:User" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DocumentSignatureSetting" nillable="true" type="tns:DocumentSignatureSetting" />
@@ -8448,7 +8638,9 @@
       <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CustomerNumber" type="xs:unsignedLong" />
       <xs:element minOccurs="0" name="DebtAmount" type="xs:double" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FilialCode" type="xs:int" />
       <xs:element minOccurs="0" name="ItemType" type="xs:unsignedShort" />
       <xs:element minOccurs="0" name="ItemTypeDescription" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PacketNumber" nillable="true" type="xs:string" />
@@ -9627,7 +9819,7 @@
           <xs:element minOccurs="0" name="ConfirmatorBankEndDate" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="ContractEndDate" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="PercentCummulation" type="xs:unsignedShort" />
-          <xs:element xmlns:q31="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProlongationDates" nillable="true" type="q31:ArrayOfdateTime" />
+          <xs:element xmlns:q32="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProlongationDates" nillable="true" type="q32:ArrayOfdateTime" />
           <xs:element minOccurs="0" name="SetNumber" type="xs:unsignedInt" />
         </xs:sequence>
       </xs:extension>

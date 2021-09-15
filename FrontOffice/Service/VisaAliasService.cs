@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
-using System.Web.Mvc;
 
 namespace FrontOffice.Service
 {
@@ -29,8 +28,8 @@ namespace FrontOffice.Service
 
         static VisaAliasService()
         {
-            httpClient = new HttpClient() { BaseAddress = new Uri(WebConfigurationManager.AppSettings["VisaAliasBaseAddress"].ToString()) };
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            httpClient = new HttpClient() { BaseAddress = new Uri(WebConfigurationManager.AppSettings["VisaAliasBaseAddress"].ToString()) };
         }
 
         public static async Task<HttpStatusCode> CreateVisaAlias(CreateAliasRequest createAliasRequest)
@@ -75,16 +74,13 @@ namespace FrontOffice.Service
 
         public static async Task<VisaAliasHistory> GetVisaAliasHistory(VisaAliasHistoryWithCard visaAliasHistoryWithCard)
         {
-            VisaAliasHistory visaAliasHistory = new VisaAliasHistory();
+            
+
+
             HttpResponseMessage response = await httpClient.PostAsync(GetAliasWithCardUri, new StringContent(JsonConvert.SerializeObject(visaAliasHistoryWithCard), Encoding.UTF8, "application/json"));
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                visaAliasHistory = JsonConvert.DeserializeObject<VisaAliasHistory>(await response.Content.ReadAsStringAsync());
-            }
-            else
-            {
-                visaAliasHistory = null;
-            }
+
+            VisaAliasHistory visaAliasHistory = JsonConvert.DeserializeObject<VisaAliasHistory>(await response.Content.ReadAsStringAsync());
+
             return visaAliasHistory;
         }
 

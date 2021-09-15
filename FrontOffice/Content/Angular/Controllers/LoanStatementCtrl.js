@@ -49,4 +49,16 @@
 
     };
 
+    $scope.printHypotecLoanStatement = function (accountnumber, appid) {
+        if ($scope.dateFrom <= $scope.dateTo) {
+
+            showloading();
+            var Data = loanService.printHypotecLoanStatement(accountnumber, $scope.dateFrom, $scope.dateTo, appid);
+            ShowPDF(Data);
+
+        }
+
+    };
+
+
 }]);

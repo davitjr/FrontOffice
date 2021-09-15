@@ -25,27 +25,17 @@ namespace FrontOffice.Controllers
         /// <returns></returns>
         public async Task<JsonResult> SaveVisaAliasDataChange(string changeAction, string CardNumber, string alias, string addInfo)
         {
-            xbs.ActionResult result = new xbs.ActionResult();
-
             int SetNumber = GetSetNumber();
+
             if (!string.IsNullOrEmpty(CardNumber))
             {
                 VisaAliasHistoryWithCard visaAliasHistoryWithCard = new VisaAliasHistoryWithCard { CardNumber = CardNumber };
                 VisaAliasHistory visaAliasHistory = await VisaAliasService.GetVisaAliasHistory(visaAliasHistoryWithCard);
-                if (visaAliasHistory==null)
-                {
-                    xbs.ActionError error = new xbs.ActionError();
-                    error.Code = 599;
-                    error.Description = "TEST TEST";
-                    result.Errors = new List<xbs.ActionError>();
-                    result.Errors.Add(error);
-                    result.ResultCode = xbs.ResultCode.ValidationError;
-                    return Json(result);
-                }
 
                 if (changeAction == "0")
                 {
                     string guid = Guid.NewGuid().ToString("N");
+
                     CreateAliasRequest createAliasRequest = new CreateAliasRequest
                     {
                         Country = "AM",
@@ -58,9 +48,11 @@ namespace FrontOffice.Controllers
                         ConsentDateTime = Convert.ToString(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")),
                         AliasType = "01",
                         Guid = guid,
+                        Alias = alias,
                         ExpiryDate = visaAliasHistory.ExpiryDate,
                         SetNumber = SetNumber
                     };
+
                     return Json(await VisaAliasService.CreateVisaAlias(createAliasRequest), JsonRequestBehavior.AllowGet);
                 }
                 else if (changeAction == "1")
@@ -77,22 +69,29 @@ namespace FrontOffice.Controllers
                         ExpiryDate = visaAliasHistory.ExpiryDate,
                         SetNumber = SetNumber
                     };
+
                     return Json(await VisaAliasService.UpdateVisaAlias(updateAliasRequest), JsonRequestBehavior.AllowGet);
+
                 }
                 else if (changeAction == "2")
                 {
                     DeleteAliasRequest deleteAliasRequest = new DeleteAliasRequest { Guid = visaAliasHistory.Guid, Alias = visaAliasHistory.Alias, SetNumber = SetNumber };
+
                     return Json(await VisaAliasService.DeleteVisaAlias(deleteAliasRequest), JsonRequestBehavior.AllowGet);
                 }
                 else if (changeAction == "3")
                 {
                     GetAliasRequest getAliasRequest = new GetAliasRequest { Guid = visaAliasHistory.Guid };
+
                     return Json(await VisaAliasService.GetVisaAlias(getAliasRequest), JsonRequestBehavior.AllowGet);
+
                 }
                 else if (changeAction == "4")
                 {
                     ResolveAliasRequest resolveAliasRequest = new ResolveAliasRequest { BusinessApplicationId = "PP", Alias = visaAliasHistory.Alias, AccountLookUp = "Y", SetNumber = SetNumber };
+
                     return Json(await VisaAliasService.ResolveVisaAlias(resolveAliasRequest), JsonRequestBehavior.AllowGet);
+
                 }
                 else
                 {
@@ -116,6 +115,7 @@ namespace FrontOffice.Controllers
 
         public ActionResult SaveAndApproveVisaAliasOrder(xbs.VisaAliasOrder order)
         {
+            order.CustomerNumber = XBService.GetAuthorizedCustomerNumber();
             order.Source = xbs.SourceType.Bank;
             order.FilialCode = order.FilialCode;            
             order.Quality = xbs.OrderQuality.Draft;

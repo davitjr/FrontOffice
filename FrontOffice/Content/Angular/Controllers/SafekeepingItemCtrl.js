@@ -20,8 +20,8 @@
             Data.then(function (acc) {
 
                 if ($scope.filter == 1) {
-                    $scope.safekeepingItems = acc.data;
                     $scope.closedSafekeepingItems = [];
+                    $scope.safekeepingItems = acc.data;
                 }
                 else if ($scope.filter == 2) {
                     $scope.closedSafekeepingItems = acc.data;
@@ -99,8 +99,14 @@
 
         $scope.initSafekeepingItemDescription = function () {
             var setPerson = null;
-            if ($scope.order.SetPerson != undefined) {
-                setPerson = $scope.order.SetPerson
+            if ($scope.order != undefined) {
+                if ($scope.order.SetPerson != undefined) {
+                    setPerson = $scope.order.SetPerson
+                }
+            }
+            else {
+                $scope.order = {};
+                $scope.order.SafekeepingItem = {};
             }
             $scope.loading = true;
             var Data = SafekeepingItemService.getSafekeepingItemDescription(setPerson);

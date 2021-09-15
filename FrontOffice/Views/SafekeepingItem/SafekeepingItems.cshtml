@@ -1,4 +1,4 @@
-﻿<div ng-controller="SafekeepingItemCtrl">
+﻿<div ng-controller="SafekeepingItemCtrl" ng-show="(hideBlank!='true' && safekeepingItems.length==0) || (safekeepingItems.length!=0 && safekeepingItems.length!=undefined)">
     <div class="product-container" id="SafekeepingItem" data-ng-init="initSafekeepingItems();">
         <div class="header-title">
             <a ui-sref="safekeepingItems" style="color:black;">
@@ -13,7 +13,7 @@
                     <label for="include-closed-safekeepingItems" name="include-closed-safekeepingItems-checkbox_lbl" class="css-label lrg custom-square-checkbox">Դիտել փակվածները</label>
                 </div>
                 <div>                   
-                    <i class="add-new-product " data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Նոր Գրավ" ng-controller="PopUpCtrl" ng-click="openWindow('','Նոր Ի պահ ընդունված գրավի մուտքագրում','addSafekeepingItem')"></i>
+                    <i class="add-new-product " data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Նոր Արժեք" ng-controller="PopUpCtrl" ng-click="openWindow('/SafekeepingItem/NewSafekeepingItemDetails','Նոր Ի պահ ընդունված արժեքի մուտքագրում','addSafekeepingItem')"></i>
                 </div>
             </div>
 
@@ -37,10 +37,10 @@
                         </tr>
                         <tr ng-if="filter==1 && safekeepingItems.length==0 ">
                             <td colspan="3" style="text-align:center;">
-                                Առկա չեն գործող ի պահ ընդունված գրավներ։
+                                Առկա չեն գործող ի պահ ընդունված արժեքներ։
                             </td>
                         </tr>
-                        <tr ng-if="filter!=1"><td style="color:red; border-width:3px" colspan="3">Փակված գրավներ </td></tr>
+                        <tr ng-if="filter!=1"><td style="color:red; border-width:3px" colspan="3">Փակված Ի պահ ընդունված արժեքներ </td></tr>
                         <tr ng-repeat="close in closedSafekeepingItems" ng-if="closedSafekeepingItems.length!=0" ng-class="{'selected':$index == selectedRowClose}" ng-click="setClickedRow($index,close); hideBlank!='true' &&  getElementPosition($index);" style="max-height:200px;cursor:pointer;" ng-dblclick="openSafekeepingItemDetails();"> 
                             <td>
                                 <span class="tab_text">Համար՝ </span><span> {{close.ProductId}}</span><br />
@@ -55,7 +55,7 @@
                         </tr>
                         <tr ng-if="filter!=1 && closedSafekeepingItems.length==0">
                             <td colspan="3" style="text-align:center;">
-                                Առկա չեն փակված ի պահ ընդունված գրավներ։
+                                Առկա չեն փակված Ի պահ ընդունված արժեքներ։
                             </td>
                         </tr>
                     </tbody>

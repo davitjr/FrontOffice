@@ -353,9 +353,9 @@ namespace FrontOffice.Controllers
             return XBService.PostSentMessageToCustomer(obj);
         }
 
-        public JsonResult GetMessageUploadedFilesList(int msgId)
+        public JsonResult GetMessageUploadedFilesList(int msgId,  bool showUploadFilesContent=true)
         {
-            return Json(XBService.GetMessageUploadedFilesList(msgId), JsonRequestBehavior.AllowGet);
+            return Json(XBService.GetMessageUploadedFilesList(msgId, showUploadFilesContent), JsonRequestBehavior.AllowGet);
         }
 
         public int GetCancelTransactionDetails(int docId)
@@ -513,10 +513,10 @@ namespace FrontOffice.Controllers
 
             if (obj.EndDate != "" && obj.EndDate != null)
             {
-                DateTime dt = Convert.ToDateTime(obj.EndDate);
+                DateTime dt = Convert.ToDateTime(obj.EndDate).AddDays(1);
                 string endDate = dt.ToString("dd/MMM/yy");
 
-                filter += " and q.change_date <='" + endDate + "'"; //" and cast(left(q.change_date,11) as date)<='" + endDate + "'";
+                filter += " and q.change_date <='" + endDate + "'"; 
             }
 
             if (obj.CustomerNumber != null)

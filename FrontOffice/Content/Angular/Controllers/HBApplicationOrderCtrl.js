@@ -257,7 +257,6 @@
             alert('Error isCustomerConnectedToOurBank');
         });
     };
-
     $scope.confirmationPersons = function (confirmationPerson) {
         $scope.confirmationPerson = confirmationPerson;
     };

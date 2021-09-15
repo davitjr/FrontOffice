@@ -974,6 +974,10 @@ namespace FrontOffice.Service
             RenderReport("/ACBAReports/STAKSendMoneyApplicationForm", parameters, ExportFormat.PDF, "STAKSendMoneyApplicationForm");
         }
 
+        public static void PrintHypotecLoanStatement(Dictionary<string, string> parameters, ExportFormat exportFormat)
+        {
+            RenderReport("/ACBAReports/Hypotec_Statment", parameters, exportFormat, "LoanStatement");
+        }
 
     }
 }

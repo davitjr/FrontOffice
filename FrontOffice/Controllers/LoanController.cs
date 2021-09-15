@@ -190,6 +190,18 @@ namespace FrontOffice.Controllers
         {
             return View("GoodsDetails");
         }
+
+        public ActionResult LoanRepaymentFromCard()
+        {
+            return PartialView("LoanRepaymentFromCard");
+        }
+
+
+        public ActionResult LoanRepaymentFromCardDataChangeForm()
+        {
+            return PartialView("LoanRepaymentFromCardDataChange");
+        }
+
         public JsonResult PrintNotMaturedLoans()
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -338,5 +350,47 @@ namespace FrontOffice.Controllers
             return Json(XBService.GetLoanDeleteOrderDetails(orderId));
 
         }
+
+        public void PrintHypotecLoanStatement(string accountNumber, string dateFrom, string dateTo, ulong productId)
+        {
+            string guid = Utility.GetSessionId();
+            xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add(key: "account", value: accountNumber);
+            parameters.Add(key: "start_date", value: Convert.ToDateTime(dateFrom).ToString("dd/MMM/yy"));
+            parameters.Add(key: "end_date", value: Convert.ToDateTime(dateTo).ToString("dd/MMM/yy"));
+            parameters.Add(key: "filial_code", value: currentUser.filialCode.ToString());
+            parameters.Add(key: "applicationId", value: productId.ToString());
+
+            ReportService.PrintHypotecLoanStatement(parameters, ReportService.GetExportFormatEnumeration("pdf"));
+        }
+
+        public ActionResult GetLoanRepaymentFromCardDataChangeHistory(ulong appId)
+        {
+            var result = XBService.GetLoanRepaymentFromCardDataChangeHistory(appId);
+            return Json(result);
+        }
+
+        public ActionResult SaveLoanRepaymentFromCardDataChange(int actionName, ulong appid, string changeReasonAdd, DateTime? EndDate)
+        {
+            string guid = Utility.GetSessionId();
+            FrontOffice.XBS.User user = (FrontOffice.XBS.User)Session[guid + "_User"];
+            int setNumber = user.userID;
+
+            XBS.LoanRepaymentFromCardDataChange loanRepaymentFromCardDataChangeFilters = new XBS.LoanRepaymentFromCardDataChange
+            {
+                AppId = appid,
+                Description = changeReasonAdd,
+                Action = actionName,
+                SetNumber = setNumber,
+                EndDate = EndDate,
+                StartDate = DateTime.Now
+            };
+            var result = XBService.SaveLoanRepaymentFromCardDataChange(loanRepaymentFromCardDataChangeFilters);
+            return Json(result);
+        }
+
+
     }
 }

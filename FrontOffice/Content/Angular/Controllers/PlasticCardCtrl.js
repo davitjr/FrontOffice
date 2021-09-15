@@ -255,6 +255,7 @@
 
         var card = mainCards.find(m => { return m.CardNumber == curdNumber });
         $scope.plasticCardOrder.plasticCard.RelatedOfficeNumber = card.RelatedOfficeNumber;
+        $scope.plasticCardOrder.plasticCard.MainCardType = card.CardType;
     }
 
     $scope.saveCardOrder = function () {
@@ -440,5 +441,16 @@
             alert('Error GetCardApplicationAcceptanceTypes');
         });
     };
+
+    $scope.CardTypeChange = function () {
+        if ($scope.plasticCardOrder.plasticCard.cardType == '53')
+            $scope.plasticCardOrder.plasticCard.RelatedOfficeNumber = 174
+        else $scope.plasticCardOrder.plasticCard.RelatedOfficeNumber = ''
+
+    }, function () {
+        alert('Error CardTypeChange');
+    };
+
+
 
 }]);

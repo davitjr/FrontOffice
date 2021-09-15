@@ -489,18 +489,6 @@ app.directive('cardservicefee', function () {
         templateUrl: '/Card/CardServiceFee'
     };
 });
-
-app.directive('visaalias', function () {
-    return {
-        restrict: 'EA',
-
-
-        templateUrl: '/Card/VisaAlias',
-
-    };
-});
-
-
 app.directive('closedcreditlines', function () {
     return {
         restrict: 'EA',
@@ -882,7 +870,7 @@ app.directive('paymentaccount', function () {
                         desc = desc + $scope.addSpaces(dif);
 
                         desc += $scope.addSpaces(1);
-                      
+                        var productDesc;
                         if (account.AccountType == 115) {
                             productDesc = account.AccountNumber.replace(account.ProductNumber + ' ', '');
                         }
@@ -1010,7 +998,8 @@ app.directive('loanstatement', function () {
         restrict: 'EA',
         scope: {
             accountnumber: '=',
-            productid: '=?'
+            productid: '=?',
+            loantype: '=?'
         },
         templateUrl: '/Loan/LoanStatement'
     };
@@ -3675,4 +3664,19 @@ app.directive('safekeepingitemview', function () {
     };
 });
 
+app.directive('loanrepaymentfromcard', function () {
+    return {
+        restrict: 'EA',
+        scope: {
+            appid: '='
+        },
+        templateUrl: '/Loan/LoanRepaymentFromCard'
+    };
+});
 
+app.directive('visaalias', function () {
+    return {
+        restrict: 'EA',
+        templateUrl: '/Card/VisaAlias',
+    };
+});

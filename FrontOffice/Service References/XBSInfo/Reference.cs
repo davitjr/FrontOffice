@@ -1516,65 +1516,6 @@ namespace FrontOffice.XBSInfo {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="TupleOfstringboolean", Namespace="http://schemas.datacontract.org/2004/07/System")]
-    [System.SerializableAttribute()]
-    public partial class TupleOfstringboolean : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private string m_Item1Field;
-        
-        private bool m_Item2Field;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string m_Item1 {
-            get {
-                return this.m_Item1Field;
-            }
-            set {
-                if ((object.ReferenceEquals(this.m_Item1Field, value) != true)) {
-                    this.m_Item1Field = value;
-                    this.RaisePropertyChanged("m_Item1");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public bool m_Item2 {
-            get {
-                return this.m_Item2Field;
-            }
-            set {
-                if ((this.m_Item2Field.Equals(value) != true)) {
-                    this.m_Item2Field = value;
-                    this.RaisePropertyChanged("m_Item2");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DepositOption", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
     [System.SerializableAttribute()]
     public partial class DepositOption : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -3024,12 +2965,6 @@ namespace FrontOffice.XBSInfo {
         SberBankTransferOrder = 239,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        PreferredAccountActivationOrder = 240,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        PreferredAccountDeactivationOrder = 241,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
         LinkPaymentOrder = 242,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
@@ -3054,16 +2989,13 @@ namespace FrontOffice.XBSInfo {
         AccountRemove = 249,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        VisaAlias = 250,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
         ThirdPersonAccountRightsTransfer = 251,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        LeasingPaymentOrder = 252,
+        MRDataChangeOrder = 253,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        MRDataChangeOrder = 253,
+        LinkTransferPaymentConfirmation = 254,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -3682,28 +3614,22 @@ namespace FrontOffice.XBSInfo {
         System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetAllTypesOfPlasticCardsSMSAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCardMobilePhones", ReplyAction="http://tempuri.org/IXBInfoService/GetCardMobilePhonesResponse")]
-        System.Collections.Generic.List<FrontOffice.XBSInfo.TupleOfstringboolean> GetCardMobilePhones(ulong customerNumber, ulong cardNumber);
+        System.Collections.Generic.List<string> GetCardMobilePhones(ulong customerNumber, ulong curdNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCardMobilePhones", ReplyAction="http://tempuri.org/IXBInfoService/GetCardMobilePhonesResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.TupleOfstringboolean>> GetCardMobilePhonesAsync(ulong customerNumber, ulong cardNumber);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetCardMobilePhonesAsync(ulong customerNumber, ulong curdNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCurrentPhone", ReplyAction="http://tempuri.org/IXBInfoService/GetCurrentPhoneResponse")]
-        string GetCurrentPhone(ulong cardNumber);
+        string GetCurrentPhone(ulong curdNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCurrentPhone", ReplyAction="http://tempuri.org/IXBInfoService/GetCurrentPhoneResponse")]
-        System.Threading.Tasks.Task<string> GetCurrentPhoneAsync(ulong cardNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCustomerEmailByCardNumber", ReplyAction="http://tempuri.org/IXBInfoService/GetCustomerEmailByCardNumberResponse")]
-        string GetCustomerEmailByCardNumber(string cardNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCustomerEmailByCardNumber", ReplyAction="http://tempuri.org/IXBInfoService/GetCustomerEmailByCardNumberResponse")]
-        System.Threading.Tasks.Task<string> GetCustomerEmailByCardNumberAsync(string cardNumber);
+        System.Threading.Tasks.Task<string> GetCurrentPhoneAsync(ulong curdNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/SMSTypeAndValue", ReplyAction="http://tempuri.org/IXBInfoService/SMSTypeAndValueResponse")]
-        string SMSTypeAndValue(string cardNumber);
+        string SMSTypeAndValue(string curdNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/SMSTypeAndValue", ReplyAction="http://tempuri.org/IXBInfoService/SMSTypeAndValueResponse")]
-        System.Threading.Tasks.Task<string> SMSTypeAndValueAsync(string cardNumber);
+        System.Threading.Tasks.Task<string> SMSTypeAndValueAsync(string curdNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetTypeOfLoanDelete", ReplyAction="http://tempuri.org/IXBInfoService/GetTypeOfLoanDeleteResponse")]
         System.Collections.Generic.Dictionary<string, string> GetTypeOfLoanDelete();
@@ -3716,6 +3642,12 @@ namespace FrontOffice.XBSInfo {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/IsCardOpen", ReplyAction="http://tempuri.org/IXBInfoService/IsCardOpenResponse")]
         System.Threading.Tasks.Task<bool> IsCardOpenAsync(string cardNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetJointDepositAvailableCurrencies", ReplyAction="http://tempuri.org/IXBInfoService/GetJointDepositAvailableCurrenciesResponse")]
+        System.Collections.Generic.Dictionary<string, string> GetJointDepositAvailableCurrencies(ulong customerNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetJointDepositAvailableCurrencies", ReplyAction="http://tempuri.org/IXBInfoService/GetJointDepositAvailableCurrenciesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetJointDepositAvailableCurrenciesAsync(ulong customerNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCommissionNonCollectionReasons", ReplyAction="http://tempuri.org/IXBInfoService/GetCommissionNonCollectionReasonsResponse")]
         System.Collections.Generic.Dictionary<string, string> GetCommissionNonCollectionReasons();
@@ -5341,36 +5273,28 @@ namespace FrontOffice.XBSInfo {
             return base.Channel.GetAllTypesOfPlasticCardsSMSAsync();
         }
         
-        public System.Collections.Generic.List<FrontOffice.XBSInfo.TupleOfstringboolean> GetCardMobilePhones(ulong customerNumber, ulong cardNumber) {
-            return base.Channel.GetCardMobilePhones(customerNumber, cardNumber);
+        public System.Collections.Generic.List<string> GetCardMobilePhones(ulong customerNumber, ulong curdNumber) {
+            return base.Channel.GetCardMobilePhones(customerNumber, curdNumber);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.TupleOfstringboolean>> GetCardMobilePhonesAsync(ulong customerNumber, ulong cardNumber) {
-            return base.Channel.GetCardMobilePhonesAsync(customerNumber, cardNumber);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetCardMobilePhonesAsync(ulong customerNumber, ulong curdNumber) {
+            return base.Channel.GetCardMobilePhonesAsync(customerNumber, curdNumber);
         }
         
-        public string GetCurrentPhone(ulong cardNumber) {
-            return base.Channel.GetCurrentPhone(cardNumber);
+        public string GetCurrentPhone(ulong curdNumber) {
+            return base.Channel.GetCurrentPhone(curdNumber);
         }
         
-        public System.Threading.Tasks.Task<string> GetCurrentPhoneAsync(ulong cardNumber) {
-            return base.Channel.GetCurrentPhoneAsync(cardNumber);
+        public System.Threading.Tasks.Task<string> GetCurrentPhoneAsync(ulong curdNumber) {
+            return base.Channel.GetCurrentPhoneAsync(curdNumber);
         }
         
-        public string GetCustomerEmailByCardNumber(string cardNumber) {
-            return base.Channel.GetCustomerEmailByCardNumber(cardNumber);
+        public string SMSTypeAndValue(string curdNumber) {
+            return base.Channel.SMSTypeAndValue(curdNumber);
         }
         
-        public System.Threading.Tasks.Task<string> GetCustomerEmailByCardNumberAsync(string cardNumber) {
-            return base.Channel.GetCustomerEmailByCardNumberAsync(cardNumber);
-        }
-        
-        public string SMSTypeAndValue(string cardNumber) {
-            return base.Channel.SMSTypeAndValue(cardNumber);
-        }
-        
-        public System.Threading.Tasks.Task<string> SMSTypeAndValueAsync(string cardNumber) {
-            return base.Channel.SMSTypeAndValueAsync(cardNumber);
+        public System.Threading.Tasks.Task<string> SMSTypeAndValueAsync(string curdNumber) {
+            return base.Channel.SMSTypeAndValueAsync(curdNumber);
         }
         
         public System.Collections.Generic.Dictionary<string, string> GetTypeOfLoanDelete() {
@@ -5387,6 +5311,14 @@ namespace FrontOffice.XBSInfo {
         
         public System.Threading.Tasks.Task<bool> IsCardOpenAsync(string cardNumber) {
             return base.Channel.IsCardOpenAsync(cardNumber);
+        }
+        
+        public System.Collections.Generic.Dictionary<string, string> GetJointDepositAvailableCurrencies(ulong customerNumber) {
+            return base.Channel.GetJointDepositAvailableCurrencies(customerNumber);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetJointDepositAvailableCurrenciesAsync(ulong customerNumber) {
+            return base.Channel.GetJointDepositAvailableCurrenciesAsync(customerNumber);
         }
         
         public System.Collections.Generic.Dictionary<string, string> GetCommissionNonCollectionReasons() {

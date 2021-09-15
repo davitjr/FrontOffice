@@ -586,7 +586,7 @@
                 break;
             case "164":
                 $scope.printPensionApplicationReport();
-                break; 
+                break;
             case "165":
                 $scope.printSafekeepingItemsReport();
                 break; 
@@ -1762,7 +1762,7 @@
 
             });
         }, function () {
-            alert('Error getPensionApplicationParameters');
+                alert('Error getPensionApplicationParameters');
         });
     }
 
@@ -1790,4 +1790,6 @@
             alert('Error getSafekeepingItemsParameters');
         });
     }
+
+
 }]);

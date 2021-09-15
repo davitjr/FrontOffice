@@ -12,8 +12,8 @@
     $scope.myFilter = function (MainCardNumber) {
         return MainCardNumber !== '';
     };
-
     $scope.OperDay = new Date();
+
     $scope.getCardDAHKDetails = function (cardNumber) {
         var Data = cardService.getCardDAHKDetails(cardNumber);
         Data.then(function (result) {
@@ -218,24 +218,24 @@
                 alert('Error in printApplication');
             });
         }
-        else 
-            if ($scope.applicationID == 18) {
-                var Data = cardService.Validate3DSecureEmailForPrint($scope.card.CardNumber);
-                Data.then(function (res) {
-                    $scope.confirm = false;
-                    if (validate($scope, res.data)) {
-                        $scope.printCardApplicationDetails();
-                    }
-                    else {
-                        $scope.showError = true;
-                        showMesageBoxDialog('Արտատպել հնարավոր չէ:', $scope, 'error', $confirm, $scope.checkCardApplicationDetails);
-                    }
-                }, function () {
-                    $scope.confirm = false;
-                    showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
-                    alert('Error in printApplication');
-                });
-            }
+        //else 
+        //    if ($scope.applicationID == 18) {
+        //        var Data = cardService.Validate3DSecureEmailForPrint($scope.card.CardNumber);
+        //        Data.then(function (res) {
+        //            $scope.confirm = false;
+        //            if (validate($scope, res.data)) {
+        //                $scope.printCardApplicationDetails();
+        //            }
+        //            else {
+        //                $scope.showError = true;
+        //                showMesageBoxDialog('Արտատպել հնարավոր չէ:', $scope, 'error', $confirm, $scope.checkCardApplicationDetails);
+        //            }
+        //        }, function () {
+        //            $scope.confirm = false;
+        //            showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
+        //            alert('Error in printApplication');
+        //        });
+        //    }
         else if ($scope.applicationID == 11 && $scope.card.SupplementaryType != '2') { //Կից քարտերի դեպքում ստուգում չենք կատարում
             var Data = cardService.validateSMSApplicationForPrint();
             Data.then(function (res) {
@@ -267,7 +267,7 @@
                 ShowPDFReport(result);
             });
         }, function () {
-                alert('Error getCardApplicationDetails');
+            alert('Error getCardApplicationDetails');
         });
     };
 
@@ -278,6 +278,8 @@
         Data.then(function (response) {
             var reportId = 0;
             var format = 0;
+            delete response.data.lang;
+
             if (lang == 1) {
                 reportId = 56;
             }
@@ -627,7 +629,7 @@
             alert('Error getCard3DSecureService');
         });
     };
-    
+
     $scope.getCardTransactionsLimitApplication = function () {
         showloading();
         var Data = customerService.getAuthorizedCustomerNumber();
@@ -636,37 +638,37 @@
             var Data = cardService.getCardTransactionsLimitApplication($scope.customerNumber, $scope.card.CardType, $scope.card.Currency, $scope.card.CardNumber, $scope.card.CardAccount.AccountNumber);
             ShowPDF(Data);
         });
-	};
+    };
 
     $scope.getCardToOtherCardOrder = function (orderId) {
-		var Data = cardService.getCardToOtherCardOrder(orderId);
-		Data.then(function (result) {
-			$scope.order = result.data;
-		}, function () {
-			
-			alert('Error getCard3DSecureService');
-		});
-	};
+        var Data = cardService.getCardToOtherCardOrder(orderId);
+        Data.then(function (result) {
+            $scope.order = result.data;
+        }, function () {
+
+            alert('Error getCard3DSecureService');
+        });
+    };
 
 
-	$scope.setClickedRowVirtualCard = function (virtual) {
-		$scope.selectedVirtualcard = virtual;
-	};
+    $scope.setClickedRowVirtualCard = function (virtual) {
+        $scope.selectedVirtualcard = virtual;
+    };
 
-	$scope.getCasherDescription = function (setNumber) {
-		
-		if (setNumber == undefined) {
-			$scope.CasherDescription = undefined;
-			return;
-		}
-		var Data = casherService.getCasherDescription(setNumber);
-		Data.then(function (dep) {
-			$scope.CasherDescription = dep.data;
-			
-		}, function () {
-			alert('Error');
-			});
-		return $scope.CasherDescription;
+    $scope.getCasherDescription = function (setNumber) {
+
+        if (setNumber == undefined) {
+            $scope.CasherDescription = undefined;
+            return;
+        }
+        var Data = casherService.getCasherDescription(setNumber);
+        Data.then(function (dep) {
+            $scope.CasherDescription = dep.data;
+
+        }, function () {
+            alert('Error');
+        });
+        return $scope.CasherDescription;
     };
 
     $scope.getCardArCaStatus = function (productID) {
@@ -710,47 +712,6 @@
         $scope.confirmationPerson = confirmationPerson;
     };
 
-    $scope.saveVisaAliasOrder = function (alias, cardNumber, ActionName, addInfo) {
-        $scope.order = {};
-        $scope.order.RegistrationDate = new Date();
-        $scope.order.OperationDate = $scope.$root.SessionProperties.OperationDate;
-        $scope.order.Alias = alias;
-        $scope.order.ReasonTypeDescription = addInfo;
-        $scope.order.RecipientPrimaryAccountNumber = cardNumber;
-        $scope.order.Type = 250;
-        if (ActionName == 0) {
-            $scope.order.SubType = 1;
-        }
-        else if (ActionName == 1) {
-            $scope.order.SubType = 2;
-        }
-        else if (ActionName == 2) {
-            $scope.order.SubType = 3;
-        }
-        $scope.order.ReasonTypeDescription = addInfo;
-        cardService.saveVisaAliasOrder($scope.order);
-    };
-
-    $scope.getVisaAliasOrder = function (orderId) {
-        var Data = cardService.getVisaAliasOrder(orderId);
-        Data.then(function (result) {
-            $scope.order = result.data;
-        }, function () {
-
-            alert('Error getVisaAliasOrder');
-        });
-    };
-    $scope.getCardRetainHistory = function (cardNumber) {
-        var Data = cardService.getCardRetainHistory(cardNumber);
-        Data.then(function (res) {
-            $scope.cardRetainHistoryList = res.data;
-        }, function () {
-            alert('Error getCardRetainHistory');
-        });
-    };
-
-
-
     $scope.GetVisaAliasHistory = function (CardNumber) {
         var Data = cardService.getVisaAliasHistory(CardNumber);
         Data.then(function (res) {
@@ -793,4 +754,35 @@
         }
     };
 
-}]); 
+    $scope.saveVisaAliasOrder = function (alias, cardNumber, ActionName, addInfo) {
+        $scope.order = {};
+        $scope.order.RegistrationDate = new Date();
+        $scope.order.OperationDate = $scope.$root.SessionProperties.OperationDate;
+        $scope.order.Alias = alias;
+        $scope.order.ReasonTypeDescription = addInfo;
+        $scope.order.RecipientPrimaryAccountNumber = cardNumber;
+        $scope.order.Type = 250;
+        if (ActionName == 0) {
+            $scope.order.SubType = 1;
+        }
+        else if (ActionName == 1) {
+            $scope.order.SubType = 2;
+        }
+        else if (ActionName == 2) {
+            $scope.order.SubType = 3;
+        }
+        $scope.order.ReasonTypeDescription = addInfo;
+        cardService.saveVisaAliasOrder($scope.order);
+    };
+
+    $scope.getVisaAliasOrder = function (orderId) {
+        var Data = cardService.getVisaAliasOrder(orderId);
+        Data.then(function (result) {
+            $scope.order = result.data;
+        }, function () {
+
+            alert('Error getVisaAliasOrder');
+        });
+    };
+
+}]);
