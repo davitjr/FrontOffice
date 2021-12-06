@@ -12,18 +12,25 @@
 <div ng-controller="BondIssueCtrl" data-ng-init="getBondIssue(ProductId)" id="BondIssueDetails">
     <div id="BondIssueDetails_menu" class="menu-bar dialog-menu light-green">
         <ul id="menu" class="dialog-menu">
-            <li class="root-menu-item-4 " ng-click="approveBondIssue(ProductId);" ng-if="bondIssue.Quality==1 && hideButton!=true ">
+            <li class="root-menu-item-4 " ng-click="approveBondIssue(ProductId);" 
+                ng-if="bondIssue.Quality==1 && hideButton!=true && (bondIssue.ShareType == 1 || (bondIssue.ShareType == 2 && bondIssue.SetNumber != $root.SessionProperties.UserId))">
                 <span id="h-menu-item-4"><i id="h-menu-icon-4" class="submitButton h-menu-icon"></i></span>
                 <span>Հաստատել</span>
             </li>
-            <li  ng-if="(bondIssue.Quality==1 || (bondIssue.Quality!=1 && bondIssue.IssuerType == 3)) && hideButton!=true " class="root-menu-item-4 " ng-controller="PopUpCtrl" ng-click="params={actionType: 2, bondIssueId: ProductId};openWindow('/BondIssue/BondIssueSave','Պարտատոմսի թողարկման խմբագրում','newbondissue')">
+            <li ng-if="(bondIssue.Quality==1 || (bondIssue.Quality!=1 && bondIssue.IssuerType == 3)) && hideButton!=true && bondIssue.ShareType == 1" class="root-menu-item-4 " ng-controller="PopUpCtrl" ng-click="params={actionType: 2, bondIssueId: ProductId};openWindow('/BondIssue/BondIssueSave','Պարտատոմսի թողարկման խմբագրում','newbondissue')">
                 <span id="h-menu-item-2"><img id="h-menu-icon-2" class="editButton h-menu-icon">Խմբագրել</span>
+            </li>
+            <li ng-if="(bondIssue.Quality==1 || (bondIssue.Quality!=1 && bondIssue.IssuerType == 3)) && hideButton!=true && bondIssue.ShareType == 2" class="root-menu-item-4 " ng-controller="PopUpCtrl" ng-click="params={actionType: 2, bondIssueId: ProductId};openWindow('/BondIssue/StockIssueSave','Բաժնետոմսի թողարկման խմբագրում','newstockissue')">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="editButton h-menu-icon">Խմբագրել</span>
+            </li>
+            <li ng-if="bondIssue.Quality == 11 && bondIssue.IssuerType == 3 && hideButton!=true && bondIssue.ShareType == 2" class="root-menu-item-4">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="distributeButton h-menu-icon">Տեղաբաշխել</span>
             </li>
             <li class="root-menu-item-4 " ng-click="deleteBondIssue(ProductId);" ng-if="bondIssue.Quality==1 && hideButton!=true ">
                 <span id="h-menu-item-4"><i class="glyphicon glyphicon-remove-circle" style="font-size:21px;" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title=""></i></span>
                 <span>Հեռացնել</span>
             </li>
-    
+
             <li class="root-menu-item-4 " onclick="CloseBPDialog('oneBondIssueDetails')">
                 <span id="h-menu-item-4"><i id="h-menu-icon-4" class="h-menu-icon cancelButton"></i></span>
                 <span>Հրաժարվել</span>
@@ -41,7 +48,7 @@
             <div class="product-detail-cell product-detail-lable">Պարտատոմսի ժամկետի տեսակ</div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.PeriodTypeDescription}}</div>
         </div>*@
-        <div class="product-detail-row">
+        <div class="product-detail-row" ng-if="bondIssue.ShareType == 1">
             <div class="product-detail-cell product-detail-lable">Ունիկալ համար</div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.ID}}</div>
         </div>
@@ -49,9 +56,18 @@
             <div class="product-detail-cell product-detail-lable">Տվյալ թողարկման ԱՄՏԾ (ISIN)</div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.ISIN}}</div>
         </div>
+        <div class="product-detail-row" ng-if="bondIssue.ShareType == 2">
+            <div class="product-detail-cell product-detail-lable">Թողարկման սերիան</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.IssueSeria}}</div>
+        </div>
         <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
-            <div class="product-detail-cell product-detail-lable">Պարտատոմսերի ձեռքբերման բանկի հաշվեհամար</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 1">Պարտատոմսերի ձեռքբերման բանկի հաշվեհամար</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 2">Բաժնետոմսերի ձեռքբերման բանկի ռեզիդենտների հաշվեհամար</div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.BankAccount.AccountNumber}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3 && bondIssue.ShareType == 2">
+            <div class="product-detail-cell product-detail-lable">Բաժնետոմսերի ձեռքբերման բանկի ոչ ռեզիդենտների հաշվեհամար</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.BankAccountForNonResident.AccountNumber}}</div>
         </div>
         <div class="product-detail-row">
             <div class="product-detail-cell product-detail-lable">Թողարկման կարգավիճակ</div>
@@ -62,36 +78,47 @@
             <div class="product-detail-cell product-detail-value">{{bondIssue.RegistrationDateToString}}</div>
         </div>
         <div class="product-detail-row">
-            <div class="product-detail-cell product-detail-lable">Արժույթ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 1">Արժույթ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 2">Բաժնետոմսի արժույթ </div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.Currency}}</div>
         </div>
         <div class="product-detail-row">
-            <div class="product-detail-cell product-detail-lable">Թողարկման ընդհանուր ծավալ</div>
-            <div class="product-detail-cell product-detail-value">{{bondIssue.TotalVolume}}</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 1">Թողարկման ընդհանուր ծավալ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 2">Թողարկման ընդհանուր անվանական արժեք </div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.TotalVolume | number:2}}</div>
         </div>
         <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
             <div class="product-detail-cell product-detail-lable">Մեկ պարտատոմսի անվանական արժեք</div>
-            <div class="product-detail-cell product-detail-value">{{bondIssue.NominalPrice}}</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.NominalPrice | number:2}}</div>
         </div>
-        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3 && bondIssue.ShareType == 2">
+            <div class="product-detail-cell product-detail-lable">Մեկ բաժնետոմսի տեղաբաշխման գին</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.PlacementPrice | number:2}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3 && bondIssue.ShareType == 2">
+            <div class="product-detail-cell product-detail-lable">Տեղաբաշխման ենթակա քանակ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.TotalCount}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3 && bondIssue.ShareType == 1">
             <div class="product-detail-cell product-detail-lable">Շրջանառության ժամկետ  (ամիսներ)</div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.EditionCirculation}}</div>
         </div>
-      
-        <div class="product-detail-row">
+
+        <div class="product-detail-row" ng-if="bondIssue.ShareType == 1">
             <div class="product-detail-cell product-detail-lable">Տարեկան արժեկտրոնային դրույք</div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.InterestRateValueToString}} %</div>
         </div>
 
-        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3 && bondIssue.ShareType == 1">
             <div class="product-detail-cell product-detail-lable">Արժեկտրոնների վճարման պարբերականություն` տարվա կտրվածքով</div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.CouponPaymentPeriodicity}}</div>
         </div>
-        <div class="product-detail-row" ng-if="bondIssue.IssuerType != 3">
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType != 3 && bondIssue.ShareType == 1">
             <div class="product-detail-cell product-detail-lable">Արժեկտրոնների վճարման քանակ</div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.CouponPaymentCount}}</div>
         </div>
-        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3 && bondIssue.ShareType == 1">
             <div class="product-detail-cell product-detail-lable">Արժեկտրոնների հաշվարկման օրեր</div>
             <div class="product-detail-cell product-detail-value">
                 <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl"
@@ -100,22 +127,25 @@
             </div>
         </div>
         <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
-            <div class="product-detail-cell product-detail-lable">Պարտատոմսերի տեղաբաշխման սկիզբ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 1">Պարտատոմսերի տեղաբաշխման սկիզբ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 2">Տեղաբաշխման սկզբի ամսաթիվ  </div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.ReplacementDateToString}}</div>
         </div>
         <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
-            <div class="product-detail-cell product-detail-lable">Պարտատոմսերի տեղաբաշխման ավարտ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 1">Պարտատոմսերի տեղաբաշխման ավարտ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 2">Տեղաբաշխման նախատեսվող ավարտ </div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.ReplacementEndDateToString}}</div>
         </div>
         <div class="product-detail-row" ng-if="bondIssue.IssuerType != 3">
-            <div class="product-detail-cell product-detail-lable">Պարտատոմսերի թողարկման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 1">Պարտատոմսերի թողարկման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 2">Թողարկման ամսաթիվ </div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.IssueDateToString}}</div>
         </div>
-        <div class="product-detail-row">
+        <div class="product-detail-row" ng-if="bondIssue.ShareType == 1">
             <div class="product-detail-cell product-detail-lable">Մարման օր</div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.RepaymentDateToString}}</div>
         </div>
-        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
+        <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3 && bondIssue.ShareType == 1">
             <div class="product-detail-cell product-detail-lable">Քանակ</div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.TotalCount}}</div>
         </div>
@@ -128,9 +158,31 @@
             <div class="product-detail-cell product-detail-value">{{bondIssue.MaxSaleQuantity}}</div>
         </div>
         <div class="product-detail-row" ng-if="bondIssue.IssuerType == 3">
-            <div class="product-detail-cell product-detail-lable">Ձեռքբերման համար կատարվող վճարման վերջնաժամկետ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 1">Ձեռքբերման համար կատարվող վճարման վերջնաժամկետ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bondIssue.ShareType == 2">Վճարման վերջնաժամկետը  </div>
             <div class="product-detail-cell product-detail-value">{{bondIssue.PurchaseDeadlineTimeToString}}</div>
         </div>
+        <div class="product-detail-row" ng-if="bondIssue.ShareType == 2">
+            <div class="product-detail-cell product-detail-lable">Գործողության նկարագրություն</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.OperationDescription}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.ShareType == 2 && bondIssue.DecisionDate != null">
+            <div class="product-detail-cell product-detail-lable">Որոշման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.DecisionDate  | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.ShareType == 2">
+            <div class="product-detail-cell product-detail-lable">Նկարագրություն</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.Description}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.ShareType == 2 && bondIssue.PlacementFactualCount != 0">
+            <div class="product-detail-cell product-detail-lable">Տեղաբաշխման փաստացի քանակ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.PlacementFactualCount}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="bondIssue.ShareType == 2 && bondIssue.ReplacementFactualEndDate != null && bondIssue.PlacementFactualCount != 0">
+            <div class="product-detail-cell product-detail-lable">Տեղաբաշխման փաստացի ավարտ</div>
+            <div class="product-detail-cell product-detail-value">{{bondIssue.ReplacementFactualEndDate  | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
     </div>
 
     <br />

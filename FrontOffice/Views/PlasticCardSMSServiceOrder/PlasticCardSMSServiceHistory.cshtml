@@ -62,7 +62,7 @@
                             @* <td style="text-align:center;" class="col-sm-2">{{::history.ArcaAnswer}}</td>*@
                             <td style="text-align:center;" class="col-sm-2">
                                 <span ng-show="history.ArcaAnswer==0">OK</span>
-                                @* <span ng-show="history.ArcaAnswer==1 || history.ArcaAnswer==null">ERROR</span>*@
+                                <span ng-show="history.ArcaAnswer=='ERROR'">ERROR</span>
                             </td>
                             @*<td style="text-align:center;" class="col-sm-1">{{::history.SetNumber}}</td>*@
                             <td style="text-align:center;" class="col-sm-1">

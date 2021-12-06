@@ -88,6 +88,34 @@
         return response;
     };
     
+    this.saveStockIssue = function (stockissue) {
+        var response = $http({
+            method: "post",
+            url: "/BondIssue/SaveStockIssue",
+            data: JSON.stringify(stockissue),
+            dataType: "json"
+        });
+        return response;
+    };
+
+    this.getUnitPrice = function (bondIssueId) {
+        var response = $http({
+            method: "post",
+            url: "/BondIssue/GetUnitPrice",
+            params: {
+                bondIssueId: bondIssueId
+            }
+        });
+        return response;
+    };
+
+    //this.getCheckedCustomerIsResident = function () {
+    //    var response = $http({
+    //        method: "post",
+    //        url: "/BondIssue/GetCheckedCustomerIsResident"
+    //    });
+    //    return response;
+    //}
     
 
 }]);

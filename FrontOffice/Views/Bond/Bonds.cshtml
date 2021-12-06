@@ -27,56 +27,52 @@
     <div class="product-container" id="bonds" data-ng-init="getBonds()" ng-show="(hideBlank!='true' && bondsList.length==0) || (bondsList.length!=0 && bondsList.length!=undefined)">
         <div class="header-title">
             <a ui-sref="bonds" style="color:black;">
-                Պարտատոմսեր
+                Արժեթղթեր
             </a>
             <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
 
         </div>
         <div class="product-collapsable-section">
             <div class="product-container-header" style="height: 33px;">
-               
+
 
                 <div>
                     &nbsp;&nbsp;<label class="css-label">Կարգավիճակ</label>
-                    <select ng-show="qualities" data-ng-init="getBondQualityTypes()" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ կարգավիճակի"
-                            data-ng-model="QualityFilter"
-                            style="max-width:175px;height:32px" name="QualityFilter" id="QualityFilter" class="form-control" @*ng-change="getBonds()"*@
-                            data-ng-options="k as v for (k,v) in qualities">
-                        <option value="100">Բացված</option>
-                    </select>
+                                <select ng-show="bondQualities" data-ng-init="getBondQualityTypes()" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Ֆիլտրացում ըստ կարգավիճակի"
+                                        data-ng-model="quality"
+                                        style="max-width:175px;height:32px" name="QualityFilter" id="QualityFilter" class="form-control"
+                                        data-ng-options="k as v for (k,v) in bondQualities">
+                                    <option value=""></option>
+                                </select>
                     &nbsp;&nbsp;&nbsp;
-                    <i class="add-new-product " data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Նոր պարտատոմս" ng-controller="PopUpCtrl" ng-click="openWindow('/BondOrder/BondOrder','Նոր պարտատոմսի մուտքագրում','newbondorder')"></i>
+                    <div ng-if="$root.SessionProperties.SourceType == 2" class="add-new-product" context="contextNewBond" id="contextMenu"><div id="contextMenu"></div></div>
+                    @* <i class="add-new-product " data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Նոր պարտատոմս" ng-controller="PopUpCtrl" ng-click="openWindow('/BondOrder/BondOrder','Նոր պարտատոմսի մուտքագրում','newbondorder')"></i>*@
                 </div>
-            </div>            
+            </div>
             <div class="product-content-table custom-scroll" id="bondsContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
                 <div ng-if="bondsList==undefined">
                     <loading></loading>
                 </div>
                 <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
                     <tbody>
-
-                        <tr ng-repeat="oneBond in bondsList | bondQualityFilter:QualityFilter" ng-if="filter.Quality!=40 && bondsList.length!=0"
+                        <tr ng-repeat="oneBond in bondsList | filter: { Quality: quality!=undefined? quality:'' }" ng-if="quality!=40 && bondsList.length!=0"
                             ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,oneBond);"
-							
-                            style="max-height:200px;cursor:pointer;" ng-dblclick="openBondDetails();">
+                            style="max-height:200px;cursor:pointer;" ng-dblclick="selectedAccountIsAccessible && openBondDetails();">
                             <td>
                                 <span class="tab_text">ԱՄՏԾ` </span> {{ ::oneBond.ISIN }}
-                                <br /><span class="tab_text">Քանակ` </span> {{ ::oneBond.BondCount }}
-                                <br /><span class="tab_text">Տոկոսադրույք` </span> {{ ::oneBond.InterestRateValueToString}} %
+                                <br /><span class="tab_text">Քանակ` </span> {{ ::oneBond.BondCountToString }}
+                                <span class="tab_text" ng-if="oneBond.ShareType == 1"><br /> Տոկոսադրույք` </span> <span class="tab_title" ng-if="oneBond.ShareType == 1"> {{ ::oneBond.InterestRateValueToString}} % </span>
                                 <br /><span style="font-weight:bold;" ng-class="{ 'redBold':oneBond.Quality==40,'blueBold':oneBond.Quality==10}">{{ ::oneBond.QualityDescription }}</span>
                             </td>
                             <td style="text-align:right;">{{ ::oneBond.TotalPriceToString }}  {{::oneBond.Currency}}</td>
-                            <td class="col-sm-1 click_toggle" context="contextBonds" id="contextMenu"><div id="contextMenu"></div> </td>                            
+                            <td ng-if="selectedAccountIsAccessible" class="col-sm-1 click_toggle" context="contextBonds" id="contextMenu"><div id="contextMenu"></div> </td>
                         </tr>
-                        
-                        <tr ng-if="filter.Quality!=40 && (bondsList == undefined || bondsList.length==0) ">
+
+                        <tr ng-if="quality!=40 && (bondsList == undefined || bondsList.length==0) ">
                             <td colspan="3" style="text-align:center;">
-                                Առկա չեն պարտատոմսեր
+                                Առկա չեն արժեթղթեր
                             </td>
                         </tr>
-
-
-                      
 
                     </tbody>
                 </table>
@@ -84,7 +80,10 @@
             <ul id="contextBonds" class="dropdown-menu">
                 <li><a style="color: black;text-decoration:none!important ;" ui-sref="BondDetails({ProductId: currentBond.ID, bondFilterType: 0})">Մանրամասն դիտարկում</a></li>
             </ul>
-
+            <ul id="contextNewBond" class="dropdown-menu">
+                <li ng-if="$root.SessionProperties.SourceType == 2"><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={shareType:1};openWindow('/BondOrder/BondOrder','Նոր պարտատոմսի մուտքագրում','newbondorder')">Պարտատոմս</a></li>
+                <li ng-if="$root.SessionProperties.SourceType == 2"><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={shareType:2};openWindow('/BondOrder/StockOrder','Նոր բաժնետոմսի մուտքագրում','newstockorder')">Բաժնետոմս</a></li>
+            </ul>
         </div>
     </div>
 </div>

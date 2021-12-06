@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using FrontOffice.Models;
 using System.Web.SessionState;
+using System.Threading.Tasks;
 
 namespace FrontOffice.Controllers
 {
@@ -86,6 +87,11 @@ namespace FrontOffice.Controllers
         public JsonResult GetCustomerDepositaryAccount(ulong customerNumber)
         {
             return Json(XBService.GetCustomerDepositaryAccount(customerNumber), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCustomerDepositaryAccounts(ulong customerNumber)
+        {
+            return Json(XBService.GetCustomerDepositaryAccounts(customerNumber), JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -191,6 +197,20 @@ namespace FrontOffice.Controllers
 
 
             return Json(bondsDealing, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult>  ConfirmStockOrder(int bondId)
+        {
+            xbs.ActionResult result = new xbs.ActionResult();
+            xbs.Bond bond = XBService.GetBondByID(bondId);
+            (bool isResident, bool isPhysical) = DepositaryService.GetCustomerTypeAndResidence(bond.CustomerNumber);
+            if (isResident == false  && bond.CustomerDepositaryAccount.AccountNumber == 0  && bond.DepositaryAccountExistenceType == xbs.DepositaryAccountExistence.Exists)
+            {
+               await DepositaryService.CreateDepositaryAccountOrder(bond.CustomerNumber, bond.CustomerDepositaryAccount.StockIncomeAccountNumber);
+            }
+            result = XBService.ConfirmStockOrder(bondId);
+            return Json(result);
+
         }
 
     }

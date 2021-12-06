@@ -1,10 +1,11 @@
 ﻿app.controller("DepositaryAccountOrderCtrl", ['$scope', 'depositaryAccountOrderService', 'infoService','$http', function ($scope, depositaryAccountOrderService, infoService,$http) {
 
     $scope.banks = [];
+    $scope.depositoryAccountOperators = [];
     $scope.order = {};
     $scope.order.AccountNumber = {};
-    
-
+    $scope.order.OperationDate = $scope.$root.SessionProperties.OperationDate;
+    $scope.hasDepoAccount = undefined;
 
     $scope.getBanks = function () {
         var Data = infoService.getBanks();
@@ -20,22 +21,52 @@
             alert('Error getBanks');
         });
     };
-   
 
-    $scope.saveDepositaryAccountOrder = function () {
+
+        $scope.getDepositoryAccountOperators = function () {
+            var Data = infoService.getDepositoryAccountOperators();
+            Data.then(function (b) {
+                $scope.depositoryAccountOperators = b.data;
+
+                //$scope.newArray = [];
+                //for (var item in $scope.depositoryAccountOperators) {
+                //    $scope.newArray.push({ code: item, description: $scope.depositoryAccountOperators[item] });
+                //}
+
+            }, function () {
+                alert('Error depositoryAccountOperators');
+            });
+    };
+
+
+    $scope.saveDepositaryAccountOrder = function (IsOpeningAccInDepo) {
         if ($http.pendingRequests.length == 0) {
 
-
             document.getElementById("depositaryAccountOrderSaveLoad").classList.remove("hidden");
-            $scope.order.AccountNumber.BankCode = $scope.BankCode.code;
-            $scope.order.AccountNumber.Description = $scope.BankCode.description;
-            
+            debugger;
+            if (IsOpeningAccInDepo === false) {
+                $scope.order.AccountNumber.BankCode = $scope.BankCode;
+                $scope.order.AccountNumber.Description = $scope.depositoryAccountOperators[$scope.BankCode];
+            }
+            else {
+                $scope.order.AccountNumber.BankCode = "22000";
+                $scope.order.AccountNumber.Description = "«ԱԿԲԱ ԲԱՆԿ» ԲԲԸ";            
+            }
+            $scope.order.AccountNumber.IsOpeningAccInDepo = IsOpeningAccInDepo;
+
+
             var Data = depositaryAccountOrderService.saveDepositaryAccountOrder($scope.order);
 
             Data.then(function (res) {
+                
                 if (validate($scope, res.data)) {
                     document.getElementById("depositaryAccountOrderSaveLoad").classList.add("hidden");
-                    CloseBPDialog('DepositaryAccountOrder');
+                    if (IsOpeningAccInDepo === false) {
+                        CloseBPDialog('DepositaryAccountOrder');
+                    }
+                    else {
+                        CloseBPDialog('DepositaryNewAccountOrder');
+                    }
                     showMesageBoxDialog('Արժեթղթերի հաշվի կցման հայտը կատարված է', $scope, 'information');
                     refresh(191);
                 }
@@ -71,6 +102,27 @@
         });
 
     };
-   
 
+        $scope.checkAndGetDepositaryAccount = function () {
+            showloading();
+            var Data = depositaryAccountOrderService.checkAndGetDepositaryAccount();
+            Data.then(function (acc) {
+
+                if (acc.data != undefined) {
+                    var account = acc.data;
+                    if (account.AccountNumber != 0) {
+                        $scope.saveDepositaryAccountOrder(true);
+                        $scope.hasDepoAccount = true;
+                    }
+                    else {
+                        showMesageBoxDialog('Արժեթղթերի հաշիվը գտնված չէ', $scope, 'information');
+                        $scope.hasDepoAccount = false;
+                    }
+                }
+                hideloading();
+            }, function () {
+                hideloading();
+                alert('Error checkAndGetDepositaryAccount');
+            });
+        };
 }]);

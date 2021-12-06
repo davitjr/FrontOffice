@@ -51,9 +51,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ActionLogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>CustomReferences\ActionLogger.dll</HintPath>
+    <Reference Include="ActionLogger">
+      <HintPath>..\packages\ActionLogger.dll</HintPath>
     </Reference>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
@@ -127,6 +126,9 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -421,6 +423,8 @@
     </Compile>
     <Compile Include="Models\DepositaryAccount.cs" />
     <Compile Include="Models\DepositCase.cs" />
+    <Compile Include="Models\DepositoryAccount.cs" />
+    <Compile Include="Models\DepositoryAccountSaveModel.cs" />
     <Compile Include="Models\DepositRepayment.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -561,6 +565,7 @@
     <Compile Include="Service\ACBAOperationService.cs" />
     <Compile Include="Service\CardStatementService.cs" />
     <Compile Include="Service\ContractService.cs" />
+    <Compile Include="Service\DepositaryService.cs" />
     <Compile Include="Service\EmployeeWorksManagementService.cs" />
     <Compile Include="Service\FinancialPlanningService.cs" />
     <Compile Include="Service\InfoService.cs" />
@@ -927,6 +932,7 @@
     <Content Include="Content\Images\COWater.png" />
     <Content Include="Content\Images\Delete_for_Classification.png" />
     <Content Include="Content\Images\details.png" />
+    <Content Include="Content\Images\distribution.png" />
     <Content Include="Content\Images\edit.png" />
     <Content Include="Content\Images\excel.ico" />
     <Content Include="Content\Images\hb_menu.png" />
@@ -939,6 +945,7 @@
     <Content Include="Content\Images\percentage.png" />
     <Content Include="Content\Images\png.png" />
     <Content Include="Content\Images\refresh-icon.png" />
+    <Content Include="Content\Images\reject.png" />
     <Content Include="Content\Images\reply.png" />
     <Content Include="Content\Images\RosgosstrakhInsurance.ico" />
     <Content Include="Content\Images\SILInsurance.png" />
@@ -994,6 +1001,7 @@
     <Content Include="Content\newTheme\Images\customer-status1.png" />
     <Content Include="Content\newTheme\Images\delete.png" />
     <Content Include="Content\newTheme\Images\dictionaries.png" />
+    <Content Include="Content\newTheme\Images\distribution.png" />
     <Content Include="Content\newTheme\Images\field_error.png" />
     <Content Include="Content\newTheme\Images\hasCardTariff.png" />
     <Content Include="Content\newTheme\Images\information.png" />
@@ -2566,6 +2574,7 @@
     <Content Include="Scripts\xlsx\xlsx.full.min.js" />
     <Content Include="Scripts\xlsx\xlsx.js" />
     <Content Include="Scripts\xlsx\xlsx.min.js" />
+    <None Include="Service References\ACBAServiceReference\OperationService.disco" />
     <None Include="Service References\ACBAServiceReference\configuration91.svcinfo" />
     <None Include="Service References\ACBAServiceReference\configuration.svcinfo" />
     <None Include="Service References\ACBAServiceReference\Reference.svcmap">
@@ -2573,47 +2582,47 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="Service References\Application Insights\ConnectedService.json" />
-    <None Include="Service References\ACBAServiceReference\ACBALibrary.ContactsChangingRiskDetails.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService.wsdl" />
+    <None Include="Service References\ACBAServiceReference\OperationService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ACBAServiceReference\ACBALibrary.CustomerIdentificationAlgorithm.Models.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ACBAServiceReference\ACBALibrary.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService10.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ACBAServiceReference\ACBAOperationService.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService11.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ACBAServiceReference\Arrays.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService12.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ACBAServiceReference\CBDataService.PoliceViolations.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService13.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ACBAServiceReference\CBDataService.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ACBAServiceReference\ExternalBankingSecurityLibrary.PersonalAccountSecurity.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ACBAServiceReference\ExternalBankingSecurityLibrary.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ACBAServiceReference\InformationSecurityLibrary.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ACBAServiceReference\SAPCRM.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService6.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ACBAServiceReference\service.wsdl" />
-    <None Include="Service References\ACBAServiceReference\service.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService7.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ACBAServiceReference\service1.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService8.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ACBAServiceReference\System.xsd">
+    <None Include="Service References\ACBAServiceReference\OperationService9.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\CardStatementService\CardStatementService.wsdl" />
@@ -2667,16 +2676,16 @@
     <None Include="Service References\EmployeeWorksManagementService\EmployeeWorksManagementService4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ContractServiceReference\configuration91.svcinfo" />
-    <None Include="Service References\ContractServiceReference\configuration.svcinfo" />
-    <None Include="Service References\ContractServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Service References\CardStatementService\CardStatementService.disco" />
     <None Include="Service References\CardStatementService\configuration91.svcinfo" />
     <None Include="Service References\CardStatementService\configuration.svcinfo" />
     <None Include="Service References\CardStatementService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ContractServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\ContractServiceReference\configuration.svcinfo" />
+    <None Include="Service References\ContractServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -2837,48 +2846,18 @@
     <None Include="Service References\XBManagement\XBManagementService8.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\XBManagement\configuration91.svcinfo" />
-    <None Include="Service References\XBManagement\configuration.svcinfo" />
-    <None Include="Service References\XBManagement\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\XBManagement\configuration91.svcinfo" />
-    <None Include="Service References\XBManagement\configuration.svcinfo" />
-    <None Include="Service References\XBManagement\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Service References\XBManagement\XBManagementService.disco" />
-    <None Include="Service References\XBSInfo\XBInfoService.disco" />
-    <None Include="Service References\XBSInfo\configuration91.svcinfo" />
-    <None Include="Service References\XBSInfo\configuration.svcinfo" />
-    <None Include="Service References\XBSInfo\Reference.svcmap">
+    <None Include="Service References\XBManagement\configuration91.svcinfo" />
+    <None Include="Service References\XBManagement\configuration.svcinfo" />
+    <None Include="Service References\XBManagement\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\XBSInfo\XBInfoService11.xsd">
+    <None Include="Service References\XBSInfo\XBInfoService.wsdl" />
+    <None Include="Service References\XBSInfo\XBInfoService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\XBSInfo\XBInfoService12.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService13.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService14.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService15.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService16.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService17.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService2.xsd">
+    <None Include="Service References\XBSInfo\XBInfoService1.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\XBSInfo\XBInfoService3.xsd">
@@ -3017,11 +2996,12 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Service References\XBS\XBService.disco" />
-    <None Include="Service References\XBSInfo\XBInfoService1.disco" />
-    <None Include="Service References\XBManagement\XBManagementService.disco" />
-    <None Include="Service References\XBSInfo\XBInfoService2.disco" />
-    <None Include="Service References\XBS\XBService1.disco" />
-    <None Include="Service References\XBS\XBService3.disco" />
+    <None Include="Service References\XBS\configuration91.svcinfo" />
+    <None Include="Service References\XBS\configuration.svcinfo" />
+    <None Include="Service References\XBS\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Views\Account\AccountDetails.cshtml" />
     <Content Include="Views\Account\Accounts.cshtml" />
     <Content Include="Views\Account\AccountStatement.cshtml" />
@@ -3845,34 +3825,17 @@
     <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrderDetails.cshtml" />
     <Content Include="Views\Card\CardRetainHistory.cshtml" />
     <Content Include="Views\CardlessCashoutOrder\CardLessCashOutOrderDetails.cshtml" />
-    <None Include="Service References\XBSInfo\XBInfoService.wsdl" />
-    <None Include="Service References\XBSInfo\XBInfoService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService6.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService7.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBSInfo\XBInfoService8.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <Content Include="Views\SafekeepingItem\SafekeepingItemDetails.cshtml" />
+    <Content Include="Views\SafekeepingItem\SafekeepingItems.cshtml" />
+    <Content Include="Views\CardRenewOrder\CardRenewOrder.cshtml" />
+    <Content Include="Views\CardRenewOrder\CardRenewOrderDetails.cshtml" />
+    <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrder.cshtml" />
+    <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrderDetails.cshtml" />
+    <Content Include="Views\BondOrder\StockOrder.cshtml" />
+    <Content Include="Views\BondIssue\StockIssueSave.cshtml" />
+    <Content Include="Views\DepositaryAccountOrder\DepositaryNewAccountOrder.cshtml" />
+    <Content Include="Views\BondOrder\StockOrder.cshtml" />
+    <Content Include="Views\BondIssue\StockIssueSave.cshtml" />
     <None Include="Service References\XBS\XBService.wsdl" />
     <None Include="Service References\XBS\XBService.xsd">
       <SubType>Designer</SubType>
@@ -3928,74 +3891,13 @@
     <None Include="Service References\XBS\XBService24.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\XBS\XBService25.xsd">
+    <None Include="Service References\XBS\XBService241.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\XBS\XBService26.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService27.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService28.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService29.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService3.wsdl" />
     <None Include="Service References\XBS\XBService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\XBS\XBService30.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService31.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService32.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService33.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService34.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService35.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService36.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService37.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService38.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService39.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\XBS\XBService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService40.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService41.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService42.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService43.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService44.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService45.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\XBS\XBService5.xsd">
@@ -4004,73 +3906,10 @@
     <None Include="Service References\XBS\XBService6.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\XBS\XBService69.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\XBS\XBService7.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\XBS\XBService70.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService71.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService72.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService73.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService74.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService75.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService76.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService77.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService78.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService79.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\XBS\XBService8.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService80.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService81.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService82.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService83.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService84.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService85.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService86.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService87.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService88.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService89.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\XBS\XBService9.xsd">

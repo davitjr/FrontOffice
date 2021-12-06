@@ -166,9 +166,9 @@
   </wsdl:binding>
   <wsdl:service name="ContractOerationService">
     <wsdl:port name="IContractOperationService" binding="tns:IContractOperationService">
-      <soap12:address location="net.tcp://webc021.acbaca.local:8082/ContractOerationService.svc/ContractOperation" />
+      <soap12:address location="net.tcp://lt0004572.acbaca.local/ContractService/ContractOerationService.svc/ContractOperation" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://webc021.acbaca.local:8082/ContractOerationService.svc/ContractOperation</wsa10:Address>
+        <wsa10:Address>net.tcp://lt0004572.acbaca.local/ContractService/ContractOerationService.svc/ContractOperation</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>

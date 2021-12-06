@@ -29,54 +29,86 @@
             </div>
             <div class="col-sm-2" style="display:inline-block">
                 <label class="tab_title">Հաճախորդի համար</label>
+                <div class="input-group" style="display:block">
+                    <input type="text" ng-change="mod =  filter.CustomerNumber == ''" ng-model="filter.CustomerNumber" maxlength="12" class="form-control ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength" id="EmployerCustomerNumber" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" />
+                    <div class="input-group-btn" style="display:block;">
+                        <button type="button" class="btn btn-primary searchButton" ng-click="searchCustomers()" title="Հաճախորդի որոնում">
+                            <span class="glyphicon glyphicon-search greenStyle"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <br />
+        <div class="col-sm-12" style="padding:0;margin-bottom:5px">
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Արժեթղթի տեսակ</label>
                 <div>
-                    <input type="text" ng-model="filter.CustomerNumber" style="width: 155px" class="form-control">
+                    <select class="form-control" ng-model="filter.ShareType" style="width: 155px">
+                        <option value="">-Ընտրեք-</option>
+                        <option value="1">Պարտատոմս</option>
+                        <option value="2">Բաժնետոմս</option>
+                    </select>
                 </div>
             </div>
-        <div class="col-sm-2" style="display:inline-block;margin-top: 26px;">
-            <button type="button" class="btn-sm btn-primary" ng-click="getBondsForDealing(filter)"><span class="glyphicon glyphicon-search"></span> Որոնել</button>
-        </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Հայտի կարգավիճակ</label>
+                <loading-control scopevariable="bondQualities"></loading-control>
+                <div data-ng-init="getBondQualityTypes()">
+                    <select ng-show="bondQualities" data-ng-model="filter.Quality" class="form-control"
+                            data-ng-options="k as v for (k,v) in bondQualities" style="width: 155px">
+                        <option value="" selected="selected">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block;margin-top: 26px;">
+                <button type="button" class="btn-sm btn-primary" ng-click="getBondsForDealing(filter)"><span class="glyphicon glyphicon-search"></span> Որոնել</button>
+            </div>
         </div>
        
           
     </form>
 
 
-    <div class="product-container" style="width: 750px;padding:0;margin-bottom:5px;margin-left: inherit">
+    <div class="product-container" style="width: 800px;padding:0;margin-bottom:5px;margin-left: inherit">
         <div class="header-title" ng-if="bondFilterType == 1">
-            Բանկի բազայում արժեթղթերի հաշիվ չունեցող անձանց պարտատոմսեր
+            Բանկի բազայում արժեթղթերի հաշիվ չունեցող անձանց արժեթղթեր
             <div class="product-collapse tipB fa fa-chevron-down " data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
         </div>
         <div class="header-title" ng-if="bondFilterType == 2">
-            Հաստատման ենթակա պարտատոմսեր
+            Հաստատման ենթակա արժեթղթեր
             <div class="product-collapse tipB fa fa-chevron-down " data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
         </div>
 
 
         <div class="product-collapsable-section">
-            <div class="product-content-table custom-scroll" id="bondsDealingList" style="width:750px;min-height:545px;margin-left:0px;margin-top: 0px;border-top-width: 0px;border-right-width: 0px;border-left-width: 0px;">
+            <div class="product-content-table custom-scroll" id="bondsDealingList" style="width:800px;min-height:545px;margin-left:0px;margin-top: 0px;border-top-width: 0px;border-right-width: 0px;border-left-width: 0px;">
                 <div ng-if="bondsDealingList==undefined">
                     <loading></loading>
                 </div>
                 <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
                     <tbody>
                         <tr ng-if="bondsDealingList.length==0">
-                            <td colspan="3" style="text-align:center" ng-if="bondFilterType == 1">Բանկի բազայում արժեթղթերի հաշիվ չունեցող անձանց պարտատոմսեր առկա չեն</td>
-                            <td colspan="3" style="text-align:center" ng-if="bondFilterType == 2">Հաստատման ենթակա պարտատոմսեր առկա չեն</td>
+                            <td colspan="3" style="text-align:center" ng-if="bondFilterType == 1">Բանկի բազայում արժեթղթերի հաշիվ չունեցող անձանց արժեթղթեր առկա չեն</td>
+                            <td colspan="3" style="text-align:center" ng-if="bondFilterType == 2">Հաստատման ենթակա արժեթղթեր առկա չեն</td>
                         </tr>
                         <tr ng-if="bondsDealingList.length!=0" ng-repeat="bondDealing in bondsDealingList" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRowDealing($index)">
-                            <td class="col-sm-5">
+                            <td class="col-sm-3">
                                 <span class="tab_text">Գործարքի համար` </span> {{bondDealing.HBDocId}}
                                 <br />
                                 <span class="tab_text">ԱՄՏԾ` </span> {{bondDealing.ISIN}}
                             </td>
-                            <td class="col-sm-5">
+                            <td class="col-sm-3">
+                                <span class="tab_text">Արժեթղթի տեսակ` </span> {{bondissue.ShareType == 1? 'Պարտատոմս':'Բաժնետոմս'}}
+                                <br />
+                            </td>
+                            <td class="col-sm-3">
                                 <span class="tab_text">Հաճախորդի համար` </span> {{bondDealing.CustomerNumber}}
                                 <br />
                                 <span class="tab_text">Մասնաճյուղ` </span> {{bondDealing.FilialCode}}
                             </td>
-
-                            <td class="col-sm-1" style="text-align:right;font-weight:bold;">{{::bondDealing.QualityDescription }}</td>
+                             
+                            <td class="col-sm-2" style="text-align:right;font-weight:bold;">{{::bondDealing.QualityDescription }}</td>
                             <td class="click_toggle" style="padding-left:38px;" context="context" id="contextMenu"><div id="contextMenu"></div> </td>
 
                         </tr>

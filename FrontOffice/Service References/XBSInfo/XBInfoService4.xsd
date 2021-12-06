@@ -74,6 +74,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="LinkPayment">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">15</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="SourceType" nillable="true" type="tns:SourceType" />
@@ -101,21 +108,6 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="Languages" nillable="true" type="tns:Languages" />
-  <xs:complexType name="ArrayOfShop">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Shop" nillable="true" type="tns:Shop" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfShop" nillable="true" type="tns:ArrayOfShop" />
-  <xs:complexType name="Shop">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="IdentityID" type="xs:long" />
-      <xs:element minOccurs="0" name="ShopID" type="xs:int" />
-      <xs:element minOccurs="0" name="ShopLegalName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ShopName" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Shop" nillable="true" type="tns:Shop" />
   <xs:complexType name="CardTariffContract">
     <xs:sequence>
       <xs:element minOccurs="0" name="AccountNumber" nillable="true" type="xs:string" />
@@ -168,6 +160,36 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CardTariff" nillable="true" type="tns:CardTariff" />
+  <xs:simpleType name="TypeOfHbProductTypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Transfers" />
+      <xs:enumeration value="Application" />
+      <xs:enumeration value="Payment" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="TypeOfHbProductTypes" nillable="true" type="tns:TypeOfHbProductTypes" />
+  <xs:complexType name="ArrayOfDepositOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DepositOption" nillable="true" type="tns:DepositOption" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDepositOption" nillable="true" type="tns:ArrayOfDepositOption" />
+  <xs:complexType name="ArrayOfShop">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Shop" nillable="true" type="tns:Shop" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfShop" nillable="true" type="tns:ArrayOfShop" />
+  <xs:complexType name="Shop">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IdentityID" type="xs:long" />
+      <xs:element minOccurs="0" name="ShopID" type="xs:int" />
+      <xs:element minOccurs="0" name="ShopLegalName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShopName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Shop" nillable="true" type="tns:Shop" />
   <xs:simpleType name="CommunalTypes">
     <xs:annotation>
       <xs:appinfo>
@@ -1634,6 +1656,20 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="PreferredAccountActivationOrder">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">240</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PreferredAccountDeactivationOrder">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">241</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="LinkPaymentOrder">
         <xs:annotation>
           <xs:appinfo>
@@ -1690,6 +1726,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="VisaAlias">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">250</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="ThirdPersonAccountRightsTransfer">
         <xs:annotation>
           <xs:appinfo>
@@ -1708,6 +1751,20 @@
         <xs:annotation>
           <xs:appinfo>
             <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">254</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ConsumeLoanApplicationOrder">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">255</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DepositaryAccountOpeningOrder">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">256</EnumerationValue>
           </xs:appinfo>
         </xs:annotation>
       </xs:enumeration>
@@ -1731,10 +1788,4 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="WaterCoDetail" nillable="true" type="tns:WaterCoDetail" />
-  <xs:complexType name="ArrayOfDepositOption">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="DepositOption" nillable="true" type="tns:DepositOption" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfDepositOption" nillable="true" type="tns:ArrayOfDepositOption" />
 </xs:schema>

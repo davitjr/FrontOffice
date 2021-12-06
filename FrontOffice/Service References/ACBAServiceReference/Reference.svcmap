@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="137b6475-4ce9-401c-9c69-a6944ba9ebc7" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4f314857-880b-49dd-91e5-502a27d4cf6a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -21,24 +21,25 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://webc021:85/OperationService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="4a8507ff-4b39-4452-8bb4-6ab19e078448" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="eded3687-35c8-4d64-9aa4-8104b84b58d5" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="49202802-e3f4-41c4-9856-ff74af5240ec" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="InformationSecurityLibrary.xsd" MetadataType="Schema" ID="460468b9-72c1-4241-bf0f-d0ac9d7d9936" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="ACBALibrary.xsd" MetadataType="Schema" ID="e34b0d60-48ae-48b1-a70d-c6244999f015" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="1b060e53-6dc3-4ee8-ab71-ab5001ee3da3" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="SAPCRM.xsd" MetadataType="Schema" ID="5128287e-e273-4019-9f78-1c9bb8452846" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="ExternalBankingSecurityLibrary.PersonalAccountSecurity.xsd" MetadataType="Schema" ID="71f2f0d5-ef75-4b0e-a372-ad5d25f55c64" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="ExternalBankingSecurityLibrary.xsd" MetadataType="Schema" ID="61d2e5e1-c414-4ac9-8fdf-4bd8bb0ddac5" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="ACBALibrary.CustomerIdentificationAlgorithm.Models.xsd" MetadataType="Schema" ID="8e69ef49-5612-4d8d-b243-edb672bfc15e" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="ACBALibrary.ContactsChangingRiskDetails.xsd" MetadataType="Schema" ID="9fba766b-d20c-4427-b86f-b4c97663bd35" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="6fb56ef9-145d-4396-9119-082ed324c817" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="ACBAOperationService.xsd" MetadataType="Schema" ID="bde2303b-6b34-47ad-a83d-cc02a1571b66" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="CBDataService.xsd" MetadataType="Schema" ID="d9b896a2-6e24-4395-b9f5-37eb3d4b3ea0" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
-    <MetadataFile FileName="CBDataService.PoliceViolations.xsd" MetadataType="Schema" ID="cbe17e18-32af-495c-8292-8b08e2d5d3fe" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8080/OperationService.svc/mex" />
+    <MetadataFile FileName="OperationService.xsd" MetadataType="Schema" ID="0bce9922-144f-4009-8f1b-f3d540fefe44" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd13" />
+    <MetadataFile FileName="OperationService1.xsd" MetadataType="Schema" ID="6c1aac31-c85c-41ad-a61b-559c55ca5d36" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd11" />
+    <MetadataFile FileName="OperationService2.xsd" MetadataType="Schema" ID="eb1264c8-80e8-408a-96da-a61987cf1104" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd8" />
+    <MetadataFile FileName="OperationService3.xsd" MetadataType="Schema" ID="c214c5fd-5e6d-49c3-a70a-f67a0a424dc2" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd6" />
+    <MetadataFile FileName="OperationService4.xsd" MetadataType="Schema" ID="daef29d1-f767-4fcd-8fc8-83601b72dfe1" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd5" />
+    <MetadataFile FileName="OperationService5.xsd" MetadataType="Schema" ID="321fb474-3a18-42bf-b87c-1f088cd5003a" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd3" />
+    <MetadataFile FileName="OperationService6.xsd" MetadataType="Schema" ID="df48d7c6-76f6-4605-ab03-6bb165038548" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd1" />
+    <MetadataFile FileName="OperationService7.xsd" MetadataType="Schema" ID="f2b45f7a-966f-4976-81fb-c99ce621f834" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd12" />
+    <MetadataFile FileName="OperationService.disco" MetadataType="Disco" ID="479b7329-d38b-4e2b-96b7-58c659364547" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?disco" />
+    <MetadataFile FileName="OperationService8.xsd" MetadataType="Schema" ID="10cb74fa-6652-4ac6-a2a2-29ab92aababf" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd9" />
+    <MetadataFile FileName="OperationService9.xsd" MetadataType="Schema" ID="65d44cdb-8d11-49f9-a174-28800c273e58" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd0" />
+    <MetadataFile FileName="OperationService10.xsd" MetadataType="Schema" ID="2cc14569-539b-4f18-a213-baddd3da6583" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd7" />
+    <MetadataFile FileName="OperationService.wsdl" MetadataType="Wsdl" ID="27145853-54e1-490a-afe7-ea8b1c9f1948" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?wsdl" />
+    <MetadataFile FileName="OperationService11.xsd" MetadataType="Schema" ID="b3e8d2da-ae8b-4205-8f9a-4c1ee6e3f94d" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd4" />
+    <MetadataFile FileName="OperationService12.xsd" MetadataType="Schema" ID="41fe1f84-2645-4449-ac0d-2b892a9e2560" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd10" />
+    <MetadataFile FileName="OperationService13.xsd" MetadataType="Schema" ID="0da41f42-c0b7-46a9-918f-b77da65ee17d" SourceId="1" SourceUrl="http://webc021:85/OperationService.svc?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

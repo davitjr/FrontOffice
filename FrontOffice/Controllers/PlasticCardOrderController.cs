@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using xbs = FrontOffice.XBS;
 using FrontOffice.Service;
 using FrontOffice.Models;
+using FrontOffice.ACBAServiceReference;
+using FrontOffice.Models.VisaAliasModels;
 
 namespace FrontOffice.Controllers
 {
@@ -26,6 +28,48 @@ namespace FrontOffice.Controllers
         {
             cardOrder.RegistrationDate = DateTime.Now;
             xbs.ActionResult result = XBService.SavePlasticCardOrder(cardOrder);
+
+            if (result.Errors?.Any() == true && !string.IsNullOrEmpty(result.Errors[0].Description) && (cardOrder.PlasticCard.CardSystem == 4 || cardOrder.PlasticCard.CardSystem == 5 ) && result.Errors.Any(error => error.Code == 0))
+            {
+                xbs.CardHolderAndCardType cardHolderAndCardType;
+
+                cardHolderAndCardType = XBService.GetCardTypeAndCardHolder(result.Errors[0].Description);
+
+                ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
+                Phone phone = ACBAOperationService.GetCustomerMainMobilePhone(customerNumber)?.phone;
+                string phoneNumber = phone?.countryCode + phone?.areaCode + phone?.phoneNumber;
+
+
+                ResolveAliasRequest resolveAliasRequest = new ResolveAliasRequest
+                { BusinessApplicationId = "PP", Alias = phoneNumber.Replace("+", ""), AccountLookUp = "Y", SetNumber = cardOrder.InvolvingSetNumber };
+
+                ResolveAliasResponse resolveAliasResponse = VisaAliasService.ResolveVisaAliasDetails(resolveAliasRequest);
+
+                if (resolveAliasResponse.RecipientPrimaryAccountNumber == null || resolveAliasResponse.IssuerName != "ACBA Bank")
+                {
+                    string guid = Guid.NewGuid().ToString("N");
+
+                    CreateAliasRequest createAliasRequest = new CreateAliasRequest
+                    {
+                        Country = "AM",
+                        RecipientFirstName = cardHolderAndCardType.CardHolderFirsName,
+                        recipientLastName = cardHolderAndCardType.CardHolderLastName,
+                        RecipientLastName = cardHolderAndCardType.CardHolderLastName,
+                        RecipientPrimaryAccountNumber = result.Errors[0].Description,
+                        IssuerName = "ACBA Bank",
+                        CardType = cardHolderAndCardType.CardTypeDescription,
+                        ConsentDateTime = Convert.ToString(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")),
+                        AliasType = "01",
+                        Guid = guid,
+                        Alias = phoneNumber,
+                        ExpiryDate = cardOrder.PlasticCard.ExpiryDate,
+                        SetNumber = cardOrder.InvolvingSetNumber
+                    };
+
+                    VisaAliasService.CreateVisaAlias(createAliasRequest);
+                }
+            }
+
             return Json(result);
         }
 

@@ -218,24 +218,24 @@
                 alert('Error in printApplication');
             });
         }
-        //else 
-        //    if ($scope.applicationID == 18) {
-        //        var Data = cardService.Validate3DSecureEmailForPrint($scope.card.CardNumber);
-        //        Data.then(function (res) {
-        //            $scope.confirm = false;
-        //            if (validate($scope, res.data)) {
-        //                $scope.printCardApplicationDetails();
-        //            }
-        //            else {
-        //                $scope.showError = true;
-        //                showMesageBoxDialog('Արտատպել հնարավոր չէ:', $scope, 'error', $confirm, $scope.checkCardApplicationDetails);
-        //            }
-        //        }, function () {
-        //            $scope.confirm = false;
-        //            showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
-        //            alert('Error in printApplication');
-        //        });
-        //    }
+        else 
+            if ($scope.applicationID  == 18) {
+                var Data = cardService.Validate3DSecureEmailForPrint($scope.card.CardNumber);
+                Data.then(function (res) {
+                    $scope.confirm = false;
+                    if (validate($scope, res.data)) {
+                        $scope.printCardApplicationDetails();
+                    }
+                    else {
+                        $scope.showError = true;
+                        showMesageBoxDialog('Արտատպել հնարավոր չէ:', $scope, 'error', $confirm, $scope.checkCardApplicationDetails);
+                    }
+                }, function () {
+                    $scope.confirm = false;
+                    showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
+                    alert('Error in printApplication');
+                });
+            }
         else if ($scope.applicationID == 11 && $scope.card.SupplementaryType != '2') { //Կից քարտերի դեպքում ստուգում չենք կատարում
             var Data = cardService.validateSMSApplicationForPrint();
             Data.then(function (res) {

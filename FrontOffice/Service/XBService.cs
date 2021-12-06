@@ -101,6 +101,15 @@ namespace FrontOffice.Service
             return mrBonusHistory;
         }
 
+        internal static void DeleteDepoAccounts(ulong customerNumber)
+        {
+            XBService.Use(client =>
+            {
+                client.DeleteDepoAccounts(customerNumber);
+            }
+           );
+            
+        }
 
         public static List<Card> GetCards(ProductQualityFilter filter)
         {
@@ -6101,9 +6110,8 @@ namespace FrontOffice.Service
         {
             ActionResult result = new ActionResult();
             XBService.Use(client =>
-            {
-                order.Type = OrderType.BondRegistrationOrder;
-                order.SubType = 1;
+            {       
+                order.Type = OrderType.BondRegistrationOrder;                
                 order.RegistrationDate = order.RegistrationDate.Date;
 
                 result = client.SaveAndApproveBondOrder(order);
@@ -6223,6 +6231,16 @@ namespace FrontOffice.Service
             return account;
         }
 
+        public static List<DepositaryAccount> GetCustomerDepositaryAccounts(ulong customerNumber)
+        {
+            List<DepositaryAccount> account = new List<DepositaryAccount>();
+            XBService.Use(client =>
+            {
+                account = client.GetCustomerDepositaryAccounts(customerNumber);
+            });
+            return account;
+        }
+
 
         public static List<Bond> GetBondsForDealing(BondFilter filter, string bondFilterType)
         {
@@ -6240,7 +6258,6 @@ namespace FrontOffice.Service
             ActionResult result = new ActionResult();
             XBService.Use(client =>
             {
-                order.Type = OrderType.DepositaryAccountOrder;
                 order.RegistrationDate = DateTime.Now.Date;
                 order.Source = SourceType.Bank;
                 order.SubType = 1;
@@ -9164,9 +9181,9 @@ namespace FrontOffice.Service
 
         //GetCardMobilePhones 
 
-        public static List<string> GetCardMobilePhones(ulong customerNumber, ulong cardNumber)
+        public static List<XBSInfo.TupleOfstringboolean> GetCardMobilePhones(ulong customerNumber, ulong cardNumber)
         {
-            List<string> CardMobilePhones = new List<string>();
+            List<XBSInfo.TupleOfstringboolean> CardMobilePhones = new List<XBSInfo.TupleOfstringboolean>();
 
             InfoService.Use(client =>
             {
@@ -9191,20 +9208,19 @@ namespace FrontOffice.Service
             return currentPhone;
         }
         //GetCardHolderEmail
-        //public static string GetCustomerEmailByCardNumber(string cardNumber)
-        //{
-        //    string currentPhone = null;
+        public static string GetCustomerEmailByCardNumber(string cardNumber)
+        {
+            string currentEmail = null;
 
-        //    InfoService.Use(client =>
-        //    {
+            InfoService.Use(client =>
+            {
 
-        //        currentPhone = client.GetCustomerEmailByCardNumber(cardNumber);
+                currentEmail = client.GetCustomerEmailByCardNumber(cardNumber);
 
-        //    });
-        //    return currentPhone;
-        //}
+            });
+            return currentEmail;
+        }
         //SMSTypeAndValue
-
         public static string SMSTypeAndValue(string cardNumber)
         {
             string smsTypeAndValue = null;
@@ -9548,5 +9564,77 @@ namespace FrontOffice.Service
 
 
 
+        public static int GetBondOrderIssueSeria(int bondIssueId)
+        {
+            int issueSeria = 0;
+            XBService.Use(client =>
+            {
+                issueSeria = client.GetBondOrderIssueSeria(bondIssueId);
+            }
+           );
+
+            return issueSeria;
+
+        }
+
+        public static double GetUnitPrice(int bondIssueId)
+        {
+            double result = 0;
+            XBService.Use(client =>
+            {
+                result = client.GetUnitPrice(bondIssueId);
+            });
+
+            return result;
+        }
+
+        public static List<Account> GetAccountsForStock()
+        {
+            List<Account> accounts = new List<Account>();
+
+            XBService.Use(client =>
+            {
+                accounts = client.GetAccountsForStock();
+            }
+           );
+
+            return accounts;
+        }
+
+        public static ActionResult ConfirmStockOrder(int bondId)
+        {
+            ActionResult result = new ActionResult();
+            XBService.Use(client =>
+            {
+                result = client.ConfirmStockOrder(bondId);
+            }
+            );
+
+            return result;
+        }
+
+        public static double GetBuyKursForDate(string currency)
+        {
+            double result = 0;
+            XBService.Use(client =>
+            {
+                result = client.GetBuyKursForDate(currency);
+            });
+
+            return result;
+        }
+
+        public static CardHolderAndCardType GetCardTypeAndCardHolder(string cardNumber)
+        {
+            CardHolderAndCardType cardHolderAndCardType = new CardHolderAndCardType();
+
+            XBService.Use(client =>
+            {
+                cardHolderAndCardType = client.GetCardTypeAndCardHolder(cardNumber);
+
+            });
+
+            return cardHolderAndCardType;
+        }
     }
 }

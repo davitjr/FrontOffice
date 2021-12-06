@@ -139,6 +139,11 @@ namespace FrontOffice.Controllers
             {
                 statementType = 3;
             }
+            else if (sessionProperties.AdvancedOptions["posStatement"].ToString() == "1")
+            {
+                statementType = 4;
+            }
+
             return statementType;
         }
     }

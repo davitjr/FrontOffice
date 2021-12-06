@@ -76,6 +76,12 @@
                 $rootScope.OpenMode = 0;
                 $scope.actionType = 3;
             }
+            else if (res.data == 4) {
+                $scope.cardStatementSessionsText = 'POS քաղվածքների սեսիաների պատմություն'
+                $rootScope.OpenMode = 0;
+                $scope.actionType = 4;
+            }
+
         }, function () {
             alert('Error GetStatementType');
         });

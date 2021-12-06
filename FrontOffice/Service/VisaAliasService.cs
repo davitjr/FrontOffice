@@ -74,9 +74,6 @@ namespace FrontOffice.Service
 
         public static async Task<VisaAliasHistory> GetVisaAliasHistory(VisaAliasHistoryWithCard visaAliasHistoryWithCard)
         {
-            
-
-
             HttpResponseMessage response = await httpClient.PostAsync(GetAliasWithCardUri, new StringContent(JsonConvert.SerializeObject(visaAliasHistoryWithCard), Encoding.UTF8, "application/json"));
 
             VisaAliasHistory visaAliasHistory = JsonConvert.DeserializeObject<VisaAliasHistory>(await response.Content.ReadAsStringAsync());

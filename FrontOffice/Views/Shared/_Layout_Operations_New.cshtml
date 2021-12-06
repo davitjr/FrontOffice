@@ -203,21 +203,21 @@
                     <li ng-if="$root.OpenMode == 13" id="bondIssue" class="operation-menu-item">
                         <a onclick="SlideApplicationAreas()" ui-sref="bondIssue()" style="height: 160px;">
                             <i class="glyphicon glyphicon-pencil"></i>
-                            Պարտատոմսերի թողարկում
+                            Արժեթղթերի թողարկում
                         </a>
 
                     </li>
                     <li ng-if="$root.OpenMode == 13 && ($root.SessionProperties.AdvancedOptions['isDealingBackOfficeDepartment']=='1')" id="bondDealing" class="operation-menu-item">
                         <a onclick="SlideApplicationAreas()" ui-sref="bondDealing({bondFilterType: 1})" style="height: 160px;">
                             <i class="glyphicon glyphicon-list-alt"></i>
-                            Բանկի բազայում արժեթղթերի հաշիվ չունեցող անձանց պարտատոմսեր
+                            Բանկի բազայում արժեթղթերի հաշիվ չունեցող անձանց արժեթղթեր
                         </a>
 
                     </li>
                     <li ng-if="$root.OpenMode == 13 && ($root.SessionProperties.AdvancedOptions['isDealingDepartment']=='1')" id="bondDealing" class="operation-menu-item">
                         <a onclick="SlideApplicationAreas()" ui-sref="bondDealing({bondFilterType: 2})" style="height: 160px;">
                             <i class="glyphicon glyphicon-bullhorn"></i>
-                            Հաստատման ենթակա պարտատոմսեր
+                            Հաստատման ենթակա արժեթղթեր
                         </a>
 
                     </li>

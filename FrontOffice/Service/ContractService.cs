@@ -448,5 +448,20 @@ namespace FrontOffice.Service
         {
             RenderContract("ThirdPersonAccountRightsTransfer", parameters, "PosContract");
         }
+
+        public static void StockAcquisitionApplicationForLegals(Dictionary<string, string> parameters)
+        {
+            RenderContract("ACBAStockContractForLegals", parameters, "ACBAStockContractForLegals");
+        }
+
+        public static void StockAcquisitionApplicationForPhysicals(Dictionary<string, string> parameters)
+        {
+            RenderContract("ACBAStockContractForPhysicals", parameters, "ACBAStockContractForPhysicals");
+        }
+
+        public static void StockInformationalSheet()
+        {
+            RenderContract("StockInformationalSheet", null, "StockInformationalSheet");
+        }
     }
 }

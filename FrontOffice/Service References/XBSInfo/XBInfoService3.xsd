@@ -33,22 +33,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="KeyValuePairOfintstring" nillable="true" type="tns:KeyValuePairOfintstring" />
-  <xs:complexType name="KeyValuePairOfstringdateTime">
-    <xs:annotation>
-      <xs:appinfo>
-        <GenericType Name="KeyValuePairOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
-          <GenericParameter Name="dateTime" Namespace="http://www.w3.org/2001/XMLSchema" />
-        </GenericType>
-        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="key" nillable="true" type="xs:string" />
-      <xs:element name="value" type="xs:dateTime" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="KeyValuePairOfstringdateTime" nillable="true" type="tns:KeyValuePairOfstringdateTime" />
   <xs:complexType name="ArrayOfKeyValuePairOfunsignedBytestring">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValuePairOfunsignedBytestring" type="tns:KeyValuePairOfunsignedBytestring" />
@@ -115,6 +99,28 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="KeyValuePairOfstringstring" nillable="true" type="tns:KeyValuePairOfstringstring" />
+  <xs:complexType name="ArrayOfKeyValuePairOfintstring">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValuePairOfintstring" type="tns:KeyValuePairOfintstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKeyValuePairOfintstring" nillable="true" type="tns:ArrayOfKeyValuePairOfintstring" />
+  <xs:complexType name="KeyValuePairOfstringdateTime">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="KeyValuePairOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="dateTime" Namespace="http://www.w3.org/2001/XMLSchema" />
+        </GenericType>
+        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="key" nillable="true" type="xs:string" />
+      <xs:element name="value" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KeyValuePairOfstringdateTime" nillable="true" type="tns:KeyValuePairOfstringdateTime" />
   <xs:complexType name="ArrayOfKeyValuePairOflongstring">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValuePairOflongstring" type="tns:KeyValuePairOflongstring" />
@@ -165,10 +171,4 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="KeyValuePairOfunsignedShortstring" nillable="true" type="tns:KeyValuePairOfunsignedShortstring" />
-  <xs:complexType name="ArrayOfKeyValuePairOfintstring">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValuePairOfintstring" type="tns:KeyValuePairOfintstring" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValuePairOfintstring" nillable="true" type="tns:ArrayOfKeyValuePairOfintstring" />
 </xs:schema>

@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="XBManagementService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="IExternalOperationManagementService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd5" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.TokenOperations" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/AcbaOnlineSecurityService.Helpers" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingService" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IXBManagementService_Init_InputMessage">
+    <wsdl:part name="parameters" element="tns:Init" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_Init_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InitResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetXBUserGroups_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetXBUserGroups" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetXBUserGroups_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetXBUserGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBUsersByGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBUsersByGroup" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBUsersByGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBUsersByGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetApprovementSchema_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetApprovementSchema" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetApprovementSchema_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetApprovementSchemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetApprovementSchemaDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetApprovementSchemaDetails" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetApprovementSchemaDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetApprovementSchemaDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GenerateNextGroupName_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateNextGroupName" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GenerateNextGroupName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateNextGroupNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBApplication_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBApplication" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBApplication_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBApplicationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBApplicationShablon_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBApplicationShablon" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBApplicationShablon_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBApplicationShablonResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBApplicationOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBApplicationOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBApplicationOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBApplicationOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApproveHBApplicationOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveHBApplicationOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApproveHBApplicationOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveHBApplicationOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBUsers" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBTokens_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBTokens" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBTokens_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBTokensResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBTokenNumbers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBTokenNumbers" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBTokenNumbers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBTokenNumbersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_CheckHBUserNameAvailability_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckHBUserNameAvailability" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_CheckHBUserNameAvailability_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckHBUserNameAvailabilityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetPhoneBankingContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhoneBankingContract" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetPhoneBankingContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhoneBankingContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApprovePhoneBankingContractOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApprovePhoneBankingContractOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApprovePhoneBankingContractOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApprovePhoneBankingContractOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApproveHBApplicationQualityChangeOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveHBApplicationQualityChangeOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApproveHBApplicationQualityChangeOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveHBApplicationQualityChangeOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApprovePhoneBankingContractClosingOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApprovePhoneBankingContractClosingOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApprovePhoneBankingContractClosingOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApprovePhoneBankingContractClosingOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetPhoneBankingContractClosingOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhoneBankingContractClosingOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetPhoneBankingContractClosingOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhoneBankingContractClosingOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_CancelTokenNumberReservation_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelTokenNumberReservation" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_CancelTokenNumberReservation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelTokenNumberReservationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetPhoneBankingContractOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhoneBankingContractOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetPhoneBankingContractOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhoneBankingContractOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApproveHBServletRequestOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveHBServletRequestOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApproveHBServletRequestOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveHBServletRequestOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBAssigneeCustomers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBAssigneeCustomers" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBAssigneeCustomers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBAssigneeCustomersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBApplicationQualityChangeOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBApplicationQualityChangeOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBApplicationQualityChangeOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBApplicationQualityChangeOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBServletRequestOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBServletRequestOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBServletRequestOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBServletRequestOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_ApproveHBActivationOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveHBActivationOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_ApproveHBActivationOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveHBActivationOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApproveHBActivationOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveHBActivationOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApproveHBActivationOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveHBActivationOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveHBActivationOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveHBActivationOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveHBActivationOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveHBActivationOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBRequests_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBRequests" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBRequests_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBRequestsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBActivationOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBActivationOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBActivationOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBActivationOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetOperationSystemAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOperationSystemAccount" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetOperationSystemAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOperationSystemAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBServiceFee_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBServiceFee" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBServiceFee_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBServiceFeeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBTokenGID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBTokenGID" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBTokenGID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBTokenGIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveHBRegistrationCodeResendOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveHBRegistrationCodeResendOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveHBRegistrationCodeResendOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveHBRegistrationCodeResendOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApproveHBActivationRejectionOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveHBActivationRejectionOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApproveHBActivationRejectionOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveHBActivationRejectionOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBUserLog_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBUserLog" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBUserLog_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBUserLogResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetPhoneBankingRequests_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhoneBankingRequests" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetPhoneBankingRequests_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhoneBankingRequestsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApprovePhoneBankingContractActivationOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApprovePhoneBankingContractActivationOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApprovePhoneBankingContractActivationOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApprovePhoneBankingContractActivationOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetUnusedTokensByFilialAndRange_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUnusedTokensByFilialAndRange" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetUnusedTokensByFilialAndRange_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUnusedTokensByFilialAndRangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_MoveUnusedTokens_InputMessage">
+    <wsdl:part name="parameters" element="tns:MoveUnusedTokens" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_MoveUnusedTokens_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MoveUnusedTokensResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SetUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetUser" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SetUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetCustomerEmails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerEmails" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetCustomerEmails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerEmailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GenerateAcbaOnline_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateAcbaOnline" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GenerateAcbaOnline_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateAcbaOnlineResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_AddEmailForCustomer_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddEmailForCustomer" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_AddEmailForCustomer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddEmailForCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBUserCustomerNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBUserCustomerNumber" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBUserCustomerNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBUserCustomerNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetXBMTestMobileBankingUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetXBMTestMobileBankingUser" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetXBMTestMobileBankingUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetXBMTestMobileBankingUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApproveHBApplicationFullPermissionsGrantingOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveHBApplicationFullPermissionsGrantingOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_SaveAndApproveHBApplicationFullPermissionsGrantingOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveHBApplicationFullPermissionsGrantingOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBApplicationFullPermissionsGrantingOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBApplicationFullPermissionsGrantingOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBManagementService_GetHBApplicationFullPermissionsGrantingOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHBApplicationFullPermissionsGrantingOrderResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IXBManagementService">
+    <wsdl:operation name="Init">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/Init" message="tns:IXBManagementService_Init_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/InitResponse" message="tns:IXBManagementService_Init_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetXBUserGroups">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetXBUserGroups" message="tns:IXBManagementService_GetXBUserGroups_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetXBUserGroupsResponse" message="tns:IXBManagementService_GetXBUserGroups_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBUsersByGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBUsersByGroup" message="tns:IXBManagementService_GetHBUsersByGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBUsersByGroupResponse" message="tns:IXBManagementService_GetHBUsersByGroup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetApprovementSchema">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetApprovementSchema" message="tns:IXBManagementService_GetApprovementSchema_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetApprovementSchemaResponse" message="tns:IXBManagementService_GetApprovementSchema_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetApprovementSchemaDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetApprovementSchemaDetails" message="tns:IXBManagementService_GetApprovementSchemaDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetApprovementSchemaDetailsResponse" message="tns:IXBManagementService_GetApprovementSchemaDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateNextGroupName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GenerateNextGroupName" message="tns:IXBManagementService_GenerateNextGroupName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GenerateNextGroupNameResponse" message="tns:IXBManagementService_GenerateNextGroupName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBApplication">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBApplication" message="tns:IXBManagementService_GetHBApplication_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBApplicationResponse" message="tns:IXBManagementService_GetHBApplication_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBApplicationShablon">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBApplicationShablon" message="tns:IXBManagementService_GetHBApplicationShablon_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBApplicationShablonResponse" message="tns:IXBManagementService_GetHBApplicationShablon_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBApplicationOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBApplicationOrder" message="tns:IXBManagementService_GetHBApplicationOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBApplicationOrderResponse" message="tns:IXBManagementService_GetHBApplicationOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveHBApplicationOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApproveHBApplicationOrder" message="tns:IXBManagementService_SaveAndApproveHBApplicationOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApproveHBApplicationOrderResponse" message="tns:IXBManagementService_SaveAndApproveHBApplicationOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBUsers" message="tns:IXBManagementService_GetHBUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBUsersResponse" message="tns:IXBManagementService_GetHBUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBTokens">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBTokens" message="tns:IXBManagementService_GetHBTokens_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBTokensResponse" message="tns:IXBManagementService_GetHBTokens_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBTokenNumbers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBTokenNumbers" message="tns:IXBManagementService_GetHBTokenNumbers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBTokenNumbersResponse" message="tns:IXBManagementService_GetHBTokenNumbers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckHBUserNameAvailability">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/CheckHBUserNameAvailability" message="tns:IXBManagementService_CheckHBUserNameAvailability_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/CheckHBUserNameAvailabilityResponse" message="tns:IXBManagementService_CheckHBUserNameAvailability_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoneBankingContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetPhoneBankingContract" message="tns:IXBManagementService_GetPhoneBankingContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetPhoneBankingContractResponse" message="tns:IXBManagementService_GetPhoneBankingContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApprovePhoneBankingContractOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApprovePhoneBankingContractOrder" message="tns:IXBManagementService_SaveAndApprovePhoneBankingContractOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApprovePhoneBankingContractOrderResponse" message="tns:IXBManagementService_SaveAndApprovePhoneBankingContractOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveHBApplicationQualityChangeOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApproveHBApplicationQualityChangeOrder" message="tns:IXBManagementService_SaveAndApproveHBApplicationQualityChangeOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApproveHBApplicationQualityChangeOrderResponse" message="tns:IXBManagementService_SaveAndApproveHBApplicationQualityChangeOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApprovePhoneBankingContractClosingOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApprovePhoneBankingContractClosingOrder" message="tns:IXBManagementService_SaveAndApprovePhoneBankingContractClosingOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApprovePhoneBankingContractClosingOrderResponse" message="tns:IXBManagementService_SaveAndApprovePhoneBankingContractClosingOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoneBankingContractClosingOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetPhoneBankingContractClosingOrder" message="tns:IXBManagementService_GetPhoneBankingContractClosingOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetPhoneBankingContractClosingOrderResponse" message="tns:IXBManagementService_GetPhoneBankingContractClosingOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelTokenNumberReservation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/CancelTokenNumberReservation" message="tns:IXBManagementService_CancelTokenNumberReservation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/CancelTokenNumberReservationResponse" message="tns:IXBManagementService_CancelTokenNumberReservation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoneBankingContractOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetPhoneBankingContractOrder" message="tns:IXBManagementService_GetPhoneBankingContractOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetPhoneBankingContractOrderResponse" message="tns:IXBManagementService_GetPhoneBankingContractOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveHBServletRequestOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApproveHBServletRequestOrder" message="tns:IXBManagementService_SaveAndApproveHBServletRequestOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApproveHBServletRequestOrderResponse" message="tns:IXBManagementService_SaveAndApproveHBServletRequestOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBAssigneeCustomers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBAssigneeCustomers" message="tns:IXBManagementService_GetHBAssigneeCustomers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBAssigneeCustomersResponse" message="tns:IXBManagementService_GetHBAssigneeCustomers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBApplicationQualityChangeOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBApplicationQualityChangeOrder" message="tns:IXBManagementService_GetHBApplicationQualityChangeOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBApplicationQualityChangeOrderResponse" message="tns:IXBManagementService_GetHBApplicationQualityChangeOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBServletRequestOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBServletRequestOrder" message="tns:IXBManagementService_GetHBServletRequestOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBServletRequestOrderResponse" message="tns:IXBManagementService_GetHBServletRequestOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ApproveHBActivationOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/ApproveHBActivationOrder" message="tns:IXBManagementService_ApproveHBActivationOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/ApproveHBActivationOrderResponse" message="tns:IXBManagementService_ApproveHBActivationOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveHBActivationOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApproveHBActivationOrder" message="tns:IXBManagementService_SaveAndApproveHBActivationOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApproveHBActivationOrderResponse" message="tns:IXBManagementService_SaveAndApproveHBActivationOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveHBActivationOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/SaveHBActivationOrder" message="tns:IXBManagementService_SaveHBActivationOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/SaveHBActivationOrderResponse" message="tns:IXBManagementService_SaveHBActivationOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBRequests">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBRequests" message="tns:IXBManagementService_GetHBRequests_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBRequestsResponse" message="tns:IXBManagementService_GetHBRequests_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBActivationOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBActivationOrder" message="tns:IXBManagementService_GetHBActivationOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBActivationOrderResponse" message="tns:IXBManagementService_GetHBActivationOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOperationSystemAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetOperationSystemAccount" message="tns:IXBManagementService_GetOperationSystemAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetOperationSystemAccountResponse" message="tns:IXBManagementService_GetOperationSystemAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBServiceFee">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBServiceFee" message="tns:IXBManagementService_GetHBServiceFee_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBServiceFeeResponse" message="tns:IXBManagementService_GetHBServiceFee_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBTokenGID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBTokenGID" message="tns:IXBManagementService_GetHBTokenGID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBTokenGIDResponse" message="tns:IXBManagementService_GetHBTokenGID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveHBRegistrationCodeResendOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/SaveHBRegistrationCodeResendOrder" message="tns:IXBManagementService_SaveHBRegistrationCodeResendOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/SaveHBRegistrationCodeResendOrderResponse" message="tns:IXBManagementService_SaveHBRegistrationCodeResendOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveHBActivationRejectionOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApproveHBActivationRejectionOrder" message="tns:IXBManagementService_SaveAndApproveHBActivationRejectionOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApproveHBActivationRejectionOrderResponse" message="tns:IXBManagementService_SaveAndApproveHBActivationRejectionOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBUserLog">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBUserLog" message="tns:IXBManagementService_GetHBUserLog_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBUserLogResponse" message="tns:IXBManagementService_GetHBUserLog_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoneBankingRequests">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetPhoneBankingRequests" message="tns:IXBManagementService_GetPhoneBankingRequests_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetPhoneBankingRequestsResponse" message="tns:IXBManagementService_GetPhoneBankingRequests_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApprovePhoneBankingContractActivationOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApprovePhoneBankingContractActivationOrder" message="tns:IXBManagementService_SaveAndApprovePhoneBankingContractActivationOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApprovePhoneBankingContractActivationOrderResponse" message="tns:IXBManagementService_SaveAndApprovePhoneBankingContractActivationOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUnusedTokensByFilialAndRange">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetUnusedTokensByFilialAndRange" message="tns:IXBManagementService_GetUnusedTokensByFilialAndRange_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetUnusedTokensByFilialAndRangeResponse" message="tns:IXBManagementService_GetUnusedTokensByFilialAndRange_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MoveUnusedTokens">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/MoveUnusedTokens" message="tns:IXBManagementService_MoveUnusedTokens_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/MoveUnusedTokensResponse" message="tns:IXBManagementService_MoveUnusedTokens_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/SetUser" message="tns:IXBManagementService_SetUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/SetUserResponse" message="tns:IXBManagementService_SetUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerEmails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetCustomerEmails" message="tns:IXBManagementService_GetCustomerEmails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetCustomerEmailsResponse" message="tns:IXBManagementService_GetCustomerEmails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateAcbaOnline">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GenerateAcbaOnline" message="tns:IXBManagementService_GenerateAcbaOnline_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GenerateAcbaOnlineResponse" message="tns:IXBManagementService_GenerateAcbaOnline_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddEmailForCustomer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/AddEmailForCustomer" message="tns:IXBManagementService_AddEmailForCustomer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/AddEmailForCustomerResponse" message="tns:IXBManagementService_AddEmailForCustomer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBUserCustomerNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBUserCustomerNumber" message="tns:IXBManagementService_GetHBUserCustomerNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBUserCustomerNumberResponse" message="tns:IXBManagementService_GetHBUserCustomerNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetXBMTestMobileBankingUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetXBMTestMobileBankingUser" message="tns:IXBManagementService_GetXBMTestMobileBankingUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetXBMTestMobileBankingUserResponse" message="tns:IXBManagementService_GetXBMTestMobileBankingUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveHBApplicationFullPermissionsGrantingOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApproveHBApplicationFullPermissionsGrantingOrder" message="tns:IXBManagementService_SaveAndApproveHBApplicationFullPermissionsGrantingOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/SaveAndApproveHBApplicationFullPermissionsGrantingOrderResponse" message="tns:IXBManagementService_SaveAndApproveHBApplicationFullPermissionsGrantingOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBApplicationFullPermissionsGrantingOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBManagementService/GetHBApplicationFullPermissionsGrantingOrder" message="tns:IXBManagementService_GetHBApplicationFullPermissionsGrantingOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBManagementService/GetHBApplicationFullPermissionsGrantingOrderResponse" message="tns:IXBManagementService_GetHBApplicationFullPermissionsGrantingOrder_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IExternalOperationManagementService" type="tns:IXBManagementService">
+    <wsp:PolicyReference URI="#IExternalOperationManagementService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Init">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/Init" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetXBUserGroups">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetXBUserGroups" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBUsersByGroup">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBUsersByGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetApprovementSchema">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetApprovementSchema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetApprovementSchemaDetails">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetApprovementSchemaDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateNextGroupName">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GenerateNextGroupName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBApplication">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBApplication" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBApplicationShablon">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBApplicationShablon" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBApplicationOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBApplicationOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveHBApplicationOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/SaveAndApproveHBApplicationOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBUsers">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBTokens">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBTokens" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBTokenNumbers">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBTokenNumbers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckHBUserNameAvailability">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/CheckHBUserNameAvailability" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoneBankingContract">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetPhoneBankingContract" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApprovePhoneBankingContractOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/SaveAndApprovePhoneBankingContractOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveHBApplicationQualityChangeOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/SaveAndApproveHBApplicationQualityChangeOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApprovePhoneBankingContractClosingOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/SaveAndApprovePhoneBankingContractClosingOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoneBankingContractClosingOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetPhoneBankingContractClosingOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelTokenNumberReservation">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/CancelTokenNumberReservation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoneBankingContractOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetPhoneBankingContractOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveHBServletRequestOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/SaveAndApproveHBServletRequestOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBAssigneeCustomers">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBAssigneeCustomers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBApplicationQualityChangeOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBApplicationQualityChangeOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBServletRequestOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBServletRequestOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApproveHBActivationOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/ApproveHBActivationOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveHBActivationOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/SaveAndApproveHBActivationOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveHBActivationOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/SaveHBActivationOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBRequests">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBRequests" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBActivationOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBActivationOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOperationSystemAccount">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetOperationSystemAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBServiceFee">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBServiceFee" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBTokenGID">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBTokenGID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveHBRegistrationCodeResendOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/SaveHBRegistrationCodeResendOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveHBActivationRejectionOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/SaveAndApproveHBActivationRejectionOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBUserLog">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBUserLog" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoneBankingRequests">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetPhoneBankingRequests" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApprovePhoneBankingContractActivationOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/SaveAndApprovePhoneBankingContractActivationOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUnusedTokensByFilialAndRange">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetUnusedTokensByFilialAndRange" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveUnusedTokens">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/MoveUnusedTokens" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetUser">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/SetUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerEmails">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetCustomerEmails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateAcbaOnline">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GenerateAcbaOnline" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddEmailForCustomer">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/AddEmailForCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBUserCustomerNumber">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBUserCustomerNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetXBMTestMobileBankingUser">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetXBMTestMobileBankingUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveHBApplicationFullPermissionsGrantingOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/SaveAndApproveHBApplicationFullPermissionsGrantingOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBApplicationFullPermissionsGrantingOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBManagementService/GetHBApplicationFullPermissionsGrantingOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="XBManagementService">
+    <wsdl:port name="IExternalOperationManagementService" binding="tns:IExternalOperationManagementService">
+      <soap12:address location="net.tcp://ws0004617.acbaca.local/ExternalBankingService/XBManagementService.svc/ExternalOperationManagementService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://ws0004617.acbaca.local/ExternalBankingService/XBManagementService.svc/ExternalOperationManagementService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>Babken.Makaryan@acbaca.local</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

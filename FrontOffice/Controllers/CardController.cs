@@ -100,14 +100,14 @@ namespace FrontOffice.Controllers
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
             byte customerType = ACBAOperationService.GetCustomerType(customerNumber);
 
-            //string value = XBService.GetCustomerEmailByCardNumber(cardNumber); ;
+            string value = XBService.GetCustomerEmailByCardNumber(cardNumber); ;
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(key: "cardNumber", value: cardNumber);
             //3DSecure ակտիվացման միմումի համար
             if (applicationID == 18)
             {
-                parameters.Add(key: "email", value: "");
+                parameters.Add(key: "email", value: value);
             }
             return Json(parameters, JsonRequestBehavior.AllowGet);
         }
@@ -481,9 +481,24 @@ namespace FrontOffice.Controllers
         //        result.Errors.Add(error);
         //        return Json(result);
         //    }
-
-        //    return Json(result);
         //}
+        public ActionResult Validate3DSecureEmailForPrint(string cardNumber)
+        {
+            xbs.ActionResult result = new xbs.ActionResult();
+            string email = XBService.GetCustomerEmailByCardNumber(cardNumber);
+            if (email is null)
+            {
+                xbs.ActionError error = new xbs.ActionError();
+                error.Code = 599;
+                error.Description = "Հաճախորդը չունի գրանցված հիմնական էլ․ հասցե";
+                result.Errors = new List<xbs.ActionError>();
+                result.ResultCode = xbs.ResultCode.ValidationError;
+                result.Errors.Add(error);
+                return Json(result);
+            }
+
+            return Json(result);
+        }
 
         public async Task<JsonResult> GetVisaAliasHistory(string CardNumber)
         {

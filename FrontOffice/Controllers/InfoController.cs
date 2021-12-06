@@ -866,6 +866,8 @@ namespace FrontOffice.Controllers
 
         }
 
+
+
         public JsonResult GetCurrenciesForBondIssue()
         {
             return Json(InfoService.GetCurrenciesForBondIssue(), JsonRequestBehavior.AllowGet);
@@ -1143,6 +1145,13 @@ namespace FrontOffice.Controllers
         public JsonResult GetRejectFeeTypes()
         {
             return Json(InfoService.GetCommissionNonCollectionReasons(), JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult GetDepositoryAccountOperators()
+        {
+            return Json(InfoService.GetDepositoryAccountOperators(), JsonRequestBehavior.AllowGet);
+
         }
     }
 }

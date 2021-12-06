@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="182653fe-71c0-48ab-88d0-0d97821724fb" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="26964fd5-92ce-40f4-8714-9b553e4e12b5" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -21,16 +21,16 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://webc021.acbaca.local:8082/ContractOerationService.svc/mex/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://lt0004572.acbaca.local/ContractService/ContractOerationService.svc/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="d915690c-683d-4b1f-b2fc-12526d011b62" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8082/ContractOerationService.svc/mex/mex" />
-    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="2c77aed1-21dc-4d5f-96a5-c57efb4736de" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8082/ContractOerationService.svc/mex/mex" />
-    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="1dc92024-37fa-4b57-a47a-1d98a456bae4" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8082/ContractOerationService.svc/mex/mex" />
-    <MetadataFile FileName="ContractService1.xsd" MetadataType="Schema" ID="ad790662-b6e3-4295-988e-d1a8867e42cc" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8082/ContractOerationService.svc/mex/mex" />
-    <MetadataFile FileName="Arrays1.xsd" MetadataType="Schema" ID="29c887a3-d95e-4022-807c-2e9dd53c2c35" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8082/ContractOerationService.svc/mex/mex" />
-    <MetadataFile FileName="System.Collections.Generic1.xsd" MetadataType="Schema" ID="fc6f4fcb-95de-4214-b663-dd52a25d33f1" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8082/ContractOerationService.svc/mex/mex" />
-    <MetadataFile FileName="System1.xsd" MetadataType="Schema" ID="247d7d61-31e9-4f8a-a3d8-ec6e2d4f64e5" SourceId="1" SourceUrl="net.tcp://webc021.acbaca.local:8082/ContractOerationService.svc/mex/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="d0f63812-02e9-4fcf-baed-8c5308f582fa" SourceId="1" SourceUrl="net.tcp://lt0004572.acbaca.local/ContractService/ContractOerationService.svc/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="74d407f1-a45b-4924-ab71-56d1ee8fa2b9" SourceId="1" SourceUrl="net.tcp://lt0004572.acbaca.local/ContractService/ContractOerationService.svc/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="521e6123-9f8e-417d-a381-5b355d628efd" SourceId="1" SourceUrl="net.tcp://lt0004572.acbaca.local/ContractService/ContractOerationService.svc/mex" />
+    <MetadataFile FileName="ContractService.xsd" MetadataType="Schema" ID="6a48b404-75e8-4f0e-b397-3dba96593688" SourceId="1" SourceUrl="net.tcp://lt0004572.acbaca.local/ContractService/ContractOerationService.svc/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="0db6f9b7-2d6e-4cd0-ad66-0b329e091434" SourceId="1" SourceUrl="net.tcp://lt0004572.acbaca.local/ContractService/ContractOerationService.svc/mex" />
+    <MetadataFile FileName="System.Collections.Generic.xsd" MetadataType="Schema" ID="44d975ab-86e8-45c5-a768-e5aa37bc4e89" SourceId="1" SourceUrl="net.tcp://lt0004572.acbaca.local/ContractService/ContractOerationService.svc/mex" />
+    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="4cc26f08-31c5-4521-b8bc-61236c709938" SourceId="1" SourceUrl="net.tcp://lt0004572.acbaca.local/ContractService/ContractOerationService.svc/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

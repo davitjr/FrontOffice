@@ -160,7 +160,8 @@
     $scope.saveBondIssue = function () {
         if ($http.pendingRequests.length == 0) {
             
-            
+            $scope.bondIssueNew.ShareType = 1;
+
             document.getElementById("bondIssueSaveLoad").classList.remove("hidden");
 
             if ($scope.bondIssueNew.IssuerType == 3)
@@ -312,7 +313,122 @@
 
     };
     
+    $scope.initStockIssue = function () {
+        //var Data = bondIssueService.getCheckedCustomerIsResident();
+        //Data.then(function (types) {
+            
+        //}, function () {
+        //        alert('Error getCheckedCustomerIsResident');
+        //});        
+        if ($scope.actionType != 2) {
+            //Նոր թողարկում
+            $scope.stockIssueNew = {};
+            $scope.stockIssueNew.RegistrationDate = new Date();
+            $scope.stockIssueNew.Quality = 1;
+            $scope.stockIssueNew.BankAccount = {};
+            $scope.stockIssueNew.BankAccountForNonResident = {};
+            $scope.stockIssueNew.BankAccount.AccountNumber = "220004200055000";
+            $scope.stockIssueNew.BankAccountForNonResident.AccountNumber = "220006190098000";
+            $scope.stockIssueNew.OperationDescription = "Բաժնետոմսերի լրացուցիչ տեղաբաշխում";
 
-    
+            $scope.minRegDate = new Date();
+            $scope.minRegDate.setDate($scope.stockIssueNew.RegistrationDate.getDate() - 1);
+        }
+        else {
+            //Թողարկման խմբագրում
+            //$scope.bondIssueNew.Quality = 11;  //Հաստատված
+            $scope.getStockIssueForEdit($scope.bondIssueId);
+        }
+    };
 
+    $scope.getStockIssueForEdit = function (id) {
+        $scope.stockIssueNew = {};
+
+        var Data = bondIssueService.getBondIssue(id);
+        Data.then(function (b) {
+            $scope.stockIssueNew = b.data;
+
+            $scope.stockIssueNew.RegistrationDate = ($scope.stockIssueNew.RegistrationDate) ? $filter('mydate')($scope.stockIssueNew.RegistrationDate, "dd/MM/yyyy") : '';
+            $scope.stockIssueNew.ReplacementDate = ($scope.stockIssueNew.ReplacementDate) ? $filter('mydate')($scope.stockIssueNew.ReplacementDate, "dd/MM/yyyy") : '';
+            $scope.stockIssueNew.ReplacementEndDate = ($scope.stockIssueNew.ReplacementEndDate) ? $filter('mydate')($scope.stockIssueNew.ReplacementEndDate, "dd/MM/yyyy") : '';
+            $scope.stockIssueNew.RepaymentDate = ($scope.stockIssueNew.RepaymentDate) ? $filter('mydate')($scope.stockIssueNew.RepaymentDate, "dd/MM/yyyy") : '';
+            $scope.stockIssueNew.IssueDate = ($scope.stockIssueNew.IssueDate) ? $filter('mydate')($scope.stockIssueNew.IssueDate, "dd/MM/yyyy") : '';
+            $scope.stockIssueNew.IssuerType = $scope.stockIssueNew.IssuerType.toString();
+            $scope.stockIssueNew.DecisionDate = ($scope.stockIssueNew.DecisionDate) ? $filter('mydate')($scope.stockIssueNew.DecisionDate, "dd/MM/yyyy") : '';
+
+            if ($scope.stockIssueNew.PlacementFactualCount == 0)
+                $scope.stockIssueNew.PlacementFactualCount = "";
+
+            if ($scope.stockIssueNew.ReplacementFactualEndDate != '/Date(-62135596800000)/')
+                $scope.stockIssueNew.ReplacementFactualEndDate = ($scope.stockIssueNew.ReplacementFactualEndDate) ? $filter('mydate')($scope.stockIssueNew.ReplacementFactualEndDate, "dd/MM/yyyy") : '';
+
+            var today = new Date();
+            $scope.stockIssueNew.PurchaseDeadlineDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), $scope.stockIssueNew.PurchaseDeadlineTime.Hours, $scope.stockIssueNew.PurchaseDeadlineTime.Minutes);
+
+
+        }, function () {
+                alert('Error getStockIssueForEdit');
+        });
+    };
+
+    $scope.calculateTotalVolume = function () {
+        if ($scope.stockIssueNew.TotalCount != undefined && $scope.stockIssueNew.TotalCount != null && $scope.stockIssueNew.TotalCount != 0 &&
+            $scope.stockIssueNew.NominalPrice != undefined && $scope.stockIssueNew.NominalPrice != null && $scope.stockIssueNew.NominalPrice != 0){
+
+            $scope.stockIssueNew.TotalVolume = $scope.stockIssueNew.TotalCount * $scope.stockIssueNew.NominalPrice;
+
+        }
+    };
+
+    $scope.saveStockIssue = function () {
+        if ($http.pendingRequests.length == 0) {
+
+
+            document.getElementById("bondIssueSaveLoad").classList.remove("hidden");
+
+            if ($scope.stockIssueNew.IssuerType == 3) {
+                var minutes = $scope.stockIssueNew.PurchaseDeadlineDate.getMinutes()
+                var hours = $scope.stockIssueNew.PurchaseDeadlineDate.getHours()
+                $scope.stockIssueNew.PurchaseDeadlineTime = hours + ':' + minutes;
+            }
+
+            $scope.stockIssueNew.ShareType = 2;
+
+            var Data = bondIssueService.saveStockIssue($scope.stockIssueNew);
+
+            Data.then(function (res) {
+                if (validate($scope, res.data)) {
+                    document.getElementById("bondIssueSaveLoad").classList.add("hidden");
+                    CloseBPDialog('newstockissue');
+                    var refreshScope = angular.element(document.getElementById('oneBondIssueDetails')).scope();
+                    if (refreshScope != undefined) {
+                        CloseBPDialog('oneBondIssueDetails');
+                    }
+                    showMesageBoxDialog('Բաժնետոմսի մուտքագրումը կատարված է', $scope, 'information');
+                    $scope.refreshBondIssues();
+                    $scope.getBondIssuesList();
+                }
+                else {
+                    document.getElementById("bondIssueSaveLoad").classList.add("hidden");
+                    showMesageBoxDialog('Խնդրում ենք ուղղել սխալները և կրկին փորձել', $scope, 'error');
+                }
+
+            }, function (err) {
+                document.getElementById("bondIssueSaveLoad").classList.add("hidden");
+                if (err.status != 420) {
+                    showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
+                }
+                    alert('Error saveStockIssue');
+            });
+        }
+
+        else {
+            return ShowMessage('Կատարվել է տվյալների թարմացում: Խնդրում ենք կրկին սեղմել <<Պահպանել>> կոճակը:', 'error');
+        }
+    };
+
+    $scope.setMinReplacementDate = function () {
+        $scope.minReplacementDate = new Date();
+        $scope.minReplacementDate.setDate($scope.stockIssueNew.ReplacementDate.getDate() - 1);
+    };
 }]); 

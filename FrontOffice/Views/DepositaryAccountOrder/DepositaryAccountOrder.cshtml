@@ -15,8 +15,8 @@
 
     <div id="DepositaryAccountOrder_menu" class="menu-bar dialog-menu light-green">
         <ul id="menu" class="dialog-menu">
-            <li class="root-menu-item-4 " ng-click="DepositaryAccountOrderForm.$setSubmitted();DepositaryAccountOrderForm.$valid  && saveDepositaryAccountOrder();">
-                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            <li class="root-menu-item-4 " ng-click="DepositaryAccountOrderForm.$setSubmitted();DepositaryAccountOrderForm.$valid  && saveDepositaryAccountOrder(false);">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Հաստատել</span>
             </li>
             <li class="root-menu-item-5 " onclick="CloseBPDialog('DepositaryAccountOrder')">
                 <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
@@ -37,17 +37,17 @@
                 <div class="panel-heading">Արժեթղթերի հաշվի տեղեկատվություն</div>
                 <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px; height:340px">
 
-                    <div class="form-group" data-ng-init="getBanks();">
+                    <div class="form-group" data-ng-init="getDepositoryAccountOperators();">
                         <label class="tab_title col-sm-5 " for="DepositaryAccountDescription">Արժեթղթերի հաշիվը  հաշվառող անձի անվանում<span class='redStyle'>*</span></label>
 
                         <div class="col-sm-6">
                             <div class="row">
-                                <div class="multiple_columns col-sm-12">
-                                    <loading-control scopevariable="newArray"></loading-control>
-                                    <select chosen data-ng-model="BankCode" 
-                                            name="DepositaryAccountDescription" id="DepositaryAccountDescriptionNew" class="form-control" required
-                                            style="max-width:100%;" data-ng-options="k as k.description for k in  newArray" data-placeholder="Ընտրեք...">
-                                        <option value="" hidden>Ընտրեք...</option>
+                                <div class="multiple_columns col-sm-12">               
+                                    <select ng-model="BankCode"
+                                            name="DepositaryAccountDescription" id="DepositaryAccountDescriptionNew" class="form-control" required>
+                                        <option value="">Ընտրեք ...</option>
+
+                                        <option class="select_options_style" ng-repeat="(key, value) in depositoryAccountOperators" value="{{key}}">{{value}}</option>
                                     </select>
 
                                 </div>

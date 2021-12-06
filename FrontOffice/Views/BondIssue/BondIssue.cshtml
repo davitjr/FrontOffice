@@ -6,21 +6,27 @@
     <form class="form">
         <div class="col-sm-12" style="padding:0;margin-bottom:5px">
             <div class="col-sm-2" style="display:inline-block">
-                <label class="tab_title">Սկիզբ</label>
+                <label class="tab_title">Տեղաբաշխման սկիզբ</label>
                 <div>
                     <input type="date" ng-model="filter.StartDate" style="width: 155px;" class="form-control">
                 </div>
             </div>
-            <div class="col-sm-2" style="display:inline-block">
-                <label class="tab_title">Վերջ</label>
+            <div class="col-sm-3" style="display:inline-block">
+                <label class="tab_title">Տեղաբաշխման ավարտ</label>
                 <div>
                     <input type="date" ng-model="filter.EndDate" style="width:155px" class="form-control">
                 </div>
             </div>
-            <div class="col-sm-2" style="display:inline-block">
+            <div class="col-sm-2" style="display:inline-block;margin-left:-8.5%">
                 <label class="tab_title">ԱՄՏԾ</label>
                 <div>
                     <input type="text" ng-model="filter.ISIN" style="width: 155px" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Թողարկման սերիան</label>
+                <div>
+                    <input type="text" ng-model="filter.IssueSeria" style="width: 155px" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                 </div>
             </div>
         </div>
@@ -57,37 +63,53 @@
                 </select>
             </div>
         </div>
-
+        <div class="col-sm-2" style="display:inline-block">
+            <label class="tab_title">Արժեթղթի տեսակ</label>
+            <div>
+                <select class="form-control" ng-model="filter.ShareType" name="BondType" id="BondType" style="width: 155px">
+                    <option value="">-Ընտրեք-</option>
+                    <option value="1">Պարտատոմս</option>
+                    <option value="2">Բաժնետոմս</option>
+                </select>
+            </div>
+        </div>
         <div class="col-sm-2" style="display:inline-block;margin-top: 26px;">
             <button type="button" class="btn-sm btn-primary" ng-click="getBondIssuesList(filter)"><span class="glyphicon glyphicon-search"></span> Որոնել</button>
         </div>
     </form>
 
-    <div class="product-container" style="width: 750px;padding:0;margin-bottom:5px;margin-left: inherit">
+    <div class="product-container" style="width: 840px;padding:0;margin-bottom:5px;margin-left: inherit">
         <div class="header-title">
-            Պարտատոմսերի թողարկում
+            Արժեթղթերի թողարկում
             <div class="product-collapse tipB fa fa-chevron-down " data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
         </div>
 
         <div class="product-collapsable-section">
             <div class="product-container-header" style="height:30px">
-                <div ng-controller="PopUpCtrl" ng-click="openWindow('/BondIssue/BondIssueSave','Պարտատոմսի թողարկում','newbondissue')">
-                    <i class="add-new-product tipB" data-original-title="Նոր պարտատոմս"></i>
-                </div>
+                @*<div ng-controller="PopUpCtrl" ng-click="openWindow('/BondIssue/BondIssueSave','Պարտատոմսի թողարկում','newbondissue')">
+                <i class="add-new-product tipB" data-original-title="Նոր պարտատոմս"></i>
+            </div>*@
+                <div class="add-new-product tipB" context="contextNewBondIssue" id="contextMenu"><div id="contextMenu"></div></div>
             </div>
-            <div class="product-content-table custom-scroll" id="bondissueList" style="width:750px;min-height:545px;margin-left:0px;margin-top: 0px;border-top-width: 0px;border-right-width: 0px;border-left-width: 0px;">
+            <div class="product-content-table custom-scroll" id="bondissueList" style="width:840px;min-height:545px;margin-left:0px;margin-top: 0px;border-top-width: 0px;border-right-width: 0px;border-left-width: 0px;">
                 <div ng-if="bondsIssuesList==undefined">
                     <loading></loading>
                 </div>
                 <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
                     <tbody>
                         <tr ng-if="bondsIssuesList.length!=0" ng-repeat="bondissue in bondsIssuesList" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
-                            <td class="col-sm-5">
+                            <td class="col-sm-3">
                                 <span class="tab_text">Թողարկող` </span> {{bondissue.IssuerTypeDescription}}
                                 <br />
                                 <span class="tab_text">ԱՄՏԾ` </span> {{bondissue.ISIN}}
+                                <br />
+                                <span class="tab_text">Թողարկման սերիան` </span> {{bondissue.IssueSeria}}
                             </td>
                             <td class="col-sm-4">
+                                <span class="tab_text">Արժեթղթի տեսակ` </span> {{bondissue.ShareType == 1? 'Պարտատոմս':'Բաժնետոմս'}}
+                                <br />
+                            </td>
+                            <td class="col-sm-2">
                                 <span class="tab_text">Արժույթ` </span> {{bondissue.Currency}}
                                 <br />
                                 <span ng-if="bondissue.IssuerType == 3"><span class="tab_text">Քանակ` </span> {{bondissue.TotalCount}}</span>
@@ -96,7 +118,7 @@
                             <td class="click_toggle" style="padding-left:48px;" context="context" id="contextMenu"><div id="contextMenu"></div> </td>
                         </tr>
                         <tr ng-if="bondsIssuesList.length==0">
-                            <td colspan="3" style="text-align:center">Պարտատոմսերի թողարկումներ առկա չեն</td>
+                            <td colspan="4" style="text-align:center">Արժեթղթերի թողարկումներ առկա չեն</td>
                         </tr>
                     </tbody>
                 </table>
@@ -107,6 +129,11 @@
                     <a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl"
                        ng-click="params={ProductId:currentBondIssue.ID}; openWindow('/BondIssue/BondIssueDetails','Մանրամասն դիտարկում ','oneBondIssueDetails')">Մանրամասն դիտարկում</a>
                 </li>
+            </ul>
+
+            <ul id="contextNewBondIssue" class="dropdown-menu">
+                <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={bondType:'Պարտատոմս'};openWindow('/BondIssue/BondIssueSave','Պարտատոմսի թողարկում','newbondissue')">Պարտատոմս</a></li>
+                <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="params={bondType:'Բաժնետոմս'};openWindow('/BondIssue/StockIssueSave','Բաժնետոմսի թողարկում','newstockissue')">Բաժնետոմս</a></li>
             </ul>
         </div>
 
@@ -131,6 +158,7 @@
 
         });
     })(jQuery);
+
 </script>
 
 

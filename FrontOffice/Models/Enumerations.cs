@@ -666,4 +666,22 @@ namespace FrontOffice.Models
         /// </summary>
         CardReOpenOrderController = 244
     }
+
+    public enum SearchForSecuritiesTypes : short
+    {
+        GetAll = 0,
+        GetOnlyOne = 1
+    }
+    public enum SecurityAccountUpdateTypes : short
+    {
+        UpdateAccountAllData = 0,
+        UpdateBankAccount = 1
+    }
+
+
+    public enum BankAccountUpdateTypes : short
+    {
+        AddNew = 1,
+        UpdateExisting = 2
+    }
 }

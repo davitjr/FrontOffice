@@ -72,5 +72,92 @@
         return response;
     };
 
-    
+    this.getBondOrderIssueSeria = function (bondIssueId) {
+        var response = $http({
+            method: "post",
+            url: "/BondOrder/GetBondOrderIssueSeria",
+            params: {
+                bondIssueId: bondIssueId
+            }
+        });
+        return response;
+    };
+
+    this.checkAndSaveDepositoryAccount = function (bondOrder) {
+        var response = $http({
+            method: "post",
+            url: "/BondOrder/CheckAndSaveDepositoryAccount",
+            data: JSON.stringify(bondOrder),
+            dataType: "json"
+        });
+        return response;
+    };
+
+    this.getStockPurchaseApplication = function (bondId, customerNumber) {
+        var response = $http({
+            method: "post",
+            url: "/BondOrder/GetStockPurchaseApplication",
+            params: {
+                bondId: bondId,
+                customerNumber: customerNumber
+            },
+            responseType: 'arraybuffer'
+        });
+        return response;
+    };
+
+    this.checkAndGetDepositaryAccount = function () {
+        var response = $http({
+            method: "post",
+            url: "/BondOrder/CheckAndGetDepositaryAccount"
+        });
+        return response;
+    };
+
+    this.getAccountsForStock = function () {
+
+        var response = $http({
+            method: "post",
+            url: "BondOrder/GetAccountsForStock",
+        });
+        return response;
+
+    };
+
+    this.getConvertationDetails = function (order) {
+        var response = $http({
+            method: "post",
+            url: "/BondOrder/GetConvertationDetails",
+            data: JSON.stringify(order),
+            dataType: "json",
+
+        });
+        return response;
+    };
+
+    this.getBuyKurs = function (currency) {
+        var response = $http({
+            method: "post",
+            url: "/BondOrder/GetBuyKursForDate",
+            params: {
+                currency: currency
+            }
+        });
+        return response;
+    };
+
+    this.getPaymentOrderDetails = function (paymentOrder, isCopy) {
+        var response = $http({
+            method: "post",
+            url: "/BondOrder/GetPaymentOrderDetails",
+            data: JSON.stringify(paymentOrder),
+            dataType: "json",
+            params: {
+                isCopy: isCopy
+            }
+        });
+        return response;
+    };
+
+
 }]);

@@ -25,10 +25,20 @@
             <div class="product-detail-cell product-detail-value">{{orderDetails.OperationDateString}}</div>
         </div>
         <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Արժեթղթի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Bond.ShareType == 1 ? 'Պարտատոմս':'Բաժնետոմս'}}</div>
+        </div>
+        <div class="product-detail-row" ng-if="orderDetails.Bond.ShareType == 2 && orderDetails.Bond.SecuringMoney == true">
+            <div class="product-detail-cell product-detail-lable">Ընթացիկ հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Bond.AccountForBond.AccountNumber}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="orderDetails.Bond.ShareType == 1">
             <div class="product-detail-cell product-detail-lable">Ընթացիկ հաշիվ</div>
             <div class="product-detail-cell product-detail-value">{{orderDetails.Bond.AccountForCoupon.AccountNumber}}</div>
         </div>
-        <div class="product-detail-row" ng-if="orderDetails.Currency != 'AMD'">
+
+        <div class="product-detail-row" ng-if="orderDetails.Currency != 'AMD' && orderDetails.Bond.ShareType == 1">
             <div class="product-detail-cell product-detail-lable">Ընթացիկ հաշիվ արտարժույթային</div>
             <div class="product-detail-cell product-detail-value">{{orderDetails.Bond.AccountForBond.AccountNumber}}</div>
         </div>
@@ -46,7 +56,7 @@
         </div>
         <div class="product-detail-row">
             <div class="product-detail-cell product-detail-lable">Արժեթղթերի հաշվի առկայություն</div>
-            <div class="product-detail-cell product-detail-value">{{orderDetails.Bond.DepositaryAccountExistenceTypeDescription}}</div>
+            <div class="product-detail-cell product-detail-value">{{orderDetails.Bond.ShareType == 2 && orderDetails.Bond.CustomerDepositaryAccount.AccountNumber == 0 ? 'Առկա չէ' : orderDetails.Bond.DepositaryAccountExistenceTypeDescription}}</div>
         </div>
         <div class="product-detail-row">
             <div class="product-detail-cell product-detail-lable">Արժեթղթերի հաշիվ</div>
@@ -56,7 +66,7 @@
             <div class="product-detail-cell product-detail-lable">Արժեթղթերի հաշվի նկարագրություն</div>
             <div class="product-detail-cell product-detail-value">{{orderDetails.Bond.CustomerDepositaryAccount.Description}}</div>
         </div>
-    
+
         <div class="product-detail-row">
             <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
             <div ng-if="orderDetails.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{orderDetails.QualityDescription}}</div>

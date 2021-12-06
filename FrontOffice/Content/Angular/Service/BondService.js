@@ -45,6 +45,17 @@
         return response;
     };
 
+    this.getCustomerDepositaryAccounts = function (customerNumber) {
+        var response = $http({
+            method: "post",
+            url: "/Bond/GetCustomerDepositaryAccounts",
+            params: {
+                customerNumber: customerNumber
+            }
+        });
+        return response;
+    };
+
     this.hasCustomerDepositaryAccountInBankDB = function (customerNumber) {
         var response = $http({
             method: "post",
@@ -83,6 +94,16 @@
         return response;
     };
 
+    this.confirmStockOrder = function (bondId) {
+        var response = $http({
+            method: "post",
+            url: "/Bond/ConfirmStockOrder",
+            params: {
+                bondId: bondId
+            }
+        });
+        return response;
+    };
 
 
 

@@ -14,16 +14,33 @@
     <div id="bonddetails_menu"  class="menu-bar dialog-menu light-green details-menu" style="min-width:810px;">
         <ul id="menu" class="dialog-menu">
 
-            <li class="root-menu-item-2 " ng-if="bond.Quality == 10 && OpenType == 1" ng-controller="PopUpCtrl" ng-click="params={bondId: bond.ID, subType: 1};openWindow('/BondQualityUpdateOrder/BondQualityUpdateOrder','Պարտատոմսի հեռացման հայտ','newBondQualityUpdateOrder')">
+            <li class="root-menu-item-6" ng-if="bond.ShareType == 2">
+                <span id="h-menu-item-6" onclick="return false;">
+                    <img id="h-menu-icon-6" class="h-menu-icon printButton">Փաստաթղթեր
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-6.1" ng-click="printStockPurchaseApplication()">
+                        <span>Բաժնետոմսերի ձեռքբերման հայտ </span>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="root-menu-item-2 " ng-if="(bond.Quality == 10 || bond.Quality == 21 || bond.Quality == 22) && OpenType == 1 && bond.ShareType != 2" ng-controller="PopUpCtrl" ng-click="params={bondId: bond.ID, subType: 1};openWindow('/BondQualityUpdateOrder/BondQualityUpdateOrder','Պարտատոմսի հեռացման հայտ','newBondQualityUpdateOrder')">
                 <span id="h-menu-item-2"><img id="h-menu-icon-2" class="closeAccountButton h-menu-icon">&nbsp;&nbsp;&nbsp;Հեռացնել</span>
             </li>
 
-            <li class="root-menu-item-2 " ng-if="bond.Quality == 20 && OpenType == 2 && bondFilterType == 2" ng-controller="PopUpCtrl" ng-click="params={bondId: bond.ID, subType: 2};openWindow('/BondQualityUpdateOrder/BondQualityUpdateOrder','Պարտատոմսի հաստատման հայտ','newBondQualityUpdateOrder')">
+            <li class="root-menu-item-2 " ng-if="bond.Quality == 20 && OpenType == 2 && bondFilterType == 2 && bond.ShareType == 1" ng-controller="PopUpCtrl" ng-click="params={bondId: bond.ID, subType: 2};openWindow('/BondQualityUpdateOrder/BondQualityUpdateOrder','Պարտատոմսի հաստատման հայտ','newBondQualityUpdateOrder')">
                 <span id="h-menu-item-2"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Հաստատել</span>
             </li>
 
-            <li class="root-menu-item-3 " ng-if="(bond.Quality == 20 || bond.Quality == 10) && (bondFilterType == 1 || bondFilterType == 2)" ng-controller="PopUpCtrl" ng-click="params={bondId: bond.ID, subType: 3};openWindow('/BondQualityUpdateOrder/BondQualityUpdateOrder','Պարտատոմսի մերժման հայտ','newBondQualityUpdateOrder')">
-                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="reopenAccountButton h-menu-icon">Մերժել</span>
+            <li class="root-menu-item-2 " ng-if="((bond.Quality == 21  && bondFilterType == 1) || (bond.Quality == 22 && bondFilterType == 2)) && bond.ShareType == 2" ng-click="confirmStockOrder();">
+                <span id="h-menu-item-2"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Հաստատել</span>
+            </li>
+
+            <li class="root-menu-item-3 " ng-if="(bond.Quality == 20 || bond.Quality == 10 || bond.Quality == 21 || bond.Quality == 22) && (bondFilterType == 1 || bondFilterType == 2)" ng-controller="PopUpCtrl" ng-click="params={bondId: bond.ID, subType: 3};openWindow('/BondQualityUpdateOrder/BondQualityUpdateOrder','Պարտատոմսի մերժման հայտ','newBondQualityUpdateOrder')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" src="~/Content/Images/reject.png" class="h-menu-icon">Մերժել</span>
             </li>
 
             <li class="root-menu-item-2 " ng-if="bond.Quality == 10 && OpenType == 1" ng-controller="PopUpCtrl" ng-click="params={bondID: bond.ID, currency: bond.Currency, totalPrice: bond.TotalPrice, bondCount: bond.BondCount};openWindow('/BondAmountChargeOrder/BondAmountChargeOrder','Պարտատոմսի գումարի գանձման հայտ','amountChargeOrderForBond')">
@@ -44,7 +61,8 @@
             <div class="product-detail-cell product-detail-value">{{bond.FilialCode}}</div>
         </div>
         <div class="product-detail-row">
-            <div class="product-detail-cell product-detail-lable">Հայտի ներկայացման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bond.ShareType == 1">Հայտի ներկայացման ամսաթիվ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bond.ShareType == 2">Հայտի ամսաթիվ</div>
             <div class="product-detail-cell product-detail-value">{{bond.RegistrationDateToString}}</div>
         </div>
         <div class="product-detail-row">
@@ -52,53 +70,85 @@
             <div class="product-detail-cell product-detail-value">{{bond.DocumentNumber}}</div>
         </div>
         <div class="product-detail-row">
-            <div class="product-detail-cell product-detail-lable">Հայտը ներկայացնողի ՊԿ</div>
-            <div class="product-detail-cell product-detail-value">{{bond.SetNumber}} &nbsp;&nbsp;
-                <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:bond.SetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')" 
+            <div class="product-detail-cell product-detail-lable">Հայտ ներկայացնողի ՊԿ</div>
+            <div class="product-detail-cell product-detail-value">
+                {{bond.SetNumber}} &nbsp;&nbsp;
+                <span style="color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={setNumber:bond.SetNumber}; openWindow('/Home/UserDetails','Օգտագործողի  տվյալներ','userdetails')"
                       class="glyphicon glyphicon-info-sign"></span>
             </div>
         </div>
-
         <div class="product-detail-row">
-            <div class="product-detail-cell product-detail-lable">Պարտատոմսի ԱՄՏԾ (ISIN)</div>
-            <div class="product-detail-cell product-detail-value">{{bond.ISIN}}
-                <span style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" 
-                      ng-click="params={ProductId:bond.BondIssueId , hideButton: true};openWindow('/BondIssue/BondIssueDetails','Մանրամասն դիտարկում ','oneBondIssueDetails')" 
+            <div class="product-detail-cell product-detail-lable">Արժեթղթի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{bond.ShareType == 1 ? 'Պարտատոմս':'Բաժնետոմս'}}</div>
+        </div>
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable" ng-if="bond.ShareType == 1">Պարտատոմսի ԱՄՏԾ (ISIN)</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bond.ShareType == 2">Բաժնետոմսի ԱՄՏԾ (ISIN)</div>
+            <div class="product-detail-cell product-detail-value">
+                {{bond.ISIN}}
+                <span style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl"
+                      ng-click="params={ProductId:bond.BondIssueId , hideButton: true};openWindow('/BondIssue/BondIssueDetails','Մանրամասն դիտարկում ','oneBondIssueDetails')"
                       class="glyphicon glyphicon-info-sign" />
             </div>
         </div>
+        <div class="product-detail-row" ng-if="bond.ShareType == 2">
+            <div class="product-detail-cell product-detail-lable">Թողարկման սերիան</div>
+            <div class="product-detail-cell product-detail-value">{{bond.IssueSeria}}</div>
+        </div>
         <div class="product-detail-row">
-            <div class="product-detail-cell product-detail-lable">Ձեռք բերված պարտատոմսերի քանակ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bond.ShareType == 1">Ձեռք բերված պարտատոմսերի քանակ</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bond.ShareType == 2">Ձեռք բերվող բաժնետոմսերի քանակ </div>
             <div class="product-detail-cell product-detail-value">{{bond.BondCount}}</div>
         </div>
         <div class="product-detail-row">
-            <div class="product-detail-cell product-detail-lable">Մեկ պարտատոմսի ձեռքբերման գին</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bond.ShareType == 1">Մեկ պարտատոմսի ձեռքբերման գին</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bond.ShareType == 2">Մեկ բաժնետոմսի տեղաբաշխման գին</div>
             <div class="product-detail-cell product-detail-value">{{bond.UnitPrice}}</div>
         </div>
         <div class="product-detail-row">
-            <div class="product-detail-cell product-detail-lable">Ձեռք բերված պարտատոմսերի ընդհանուր գումար</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bond.ShareType == 1">Ձեռք բերված պարտատոմսերի ընդհանուր գումար</div>
+            <div class="product-detail-cell product-detail-lable" ng-if="bond.ShareType == 2">Ձեռքբերվող բաժնետոմսերի համար վճարման ենթակա  ընդհանուր գումար</div>
             <div class="product-detail-cell product-detail-value">{{bond.TotalPrice}}</div>
         </div>
-        <div class="product-detail-row" >
-            <div class="product-detail-cell product-detail-lable" >Ընթացիկ հաշիվ AMD</div>
-            <div class="product-detail-cell product-detail-value">{{bond.AccountForCoupon.AccountNumber}} 
-                <span ng-if="OpenType == 1" style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" 
-                      ng-click="params={accountNumber:bond.AccountForBond.AccountNumber,accountCurrency:bond.Currency};openWindowWithTemplate('accountflowdetails','Հաշվի շարժ','accountflowdetails');" 
+
+        <div class="product-detail-row" ng-if="bond.ShareType == 2">
+            <div class="product-detail-cell product-detail-lable">Գումարի ապահովում </div>
+            <div class="product-detail-cell product-detail-value">{{bond.SecuringMoney == true ? 'Գումարի գանձում':'Գումարի ապահովում ապագայում'}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="bond.ShareType == 2 && bond.SecuringMoney == true">
+            <div class="product-detail-cell product-detail-lable">Ընթացիկ հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">
+                {{bond.AccountForBond.AccountNumber}}
+                <span ng-if="OpenType == 1" style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl"
+                      ng-click="params={accountNumber:bond.AccountForBond.AccountNumber,accountCurrency:bond.Currency};openWindowWithTemplate('accountflowdetails','Հաշվի շարժ','accountflowdetails');"
                       class="glyphicon glyphicon-info-sign" />
             </div>
         </div>
 
-        <div class="product-detail-row" ng-if="bond.Currency!='AMD'">
-            <div class="product-detail-cell product-detail-lable">Ընթացիկ հաշիվ (արտարժութային)</div>
-            <div class="product-detail-cell product-detail-value">{{bond.AccountForBond.AccountNumber}} 
-                <span ng-if="OpenType == 1" style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl" 
-                      ng-click="params={accountNumber:bond.AccountForCoupon.AccountNumber,accountCurrency:bond.Currency};openWindowWithTemplate('accountflowdetails','Հաշվի շարժ','accountflowdetails');" 
+        <div class="product-detail-row" ng-if="bond.ShareType == 1">
+            <div class="product-detail-cell product-detail-lable">Ընթացիկ հաշիվ AMD</div>
+            <div class="product-detail-cell product-detail-value">
+                {{bond.AccountForCoupon.AccountNumber}}
+                <span ng-if="OpenType == 1" style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl"
+                      ng-click="params={accountNumber:bond.AccountForCoupon.AccountNumber,accountCurrency:bond.Currency};openWindowWithTemplate('accountflowdetails','Հաշվի շարժ','accountflowdetails');"
                       class="glyphicon glyphicon-info-sign" />
             </div>
         </div>
+
+        <div class="product-detail-row" ng-if="bond.Currency!='AMD' && bond.ShareType == 1">
+            <div class="product-detail-cell product-detail-lable">Ընթացիկ հաշիվ (արտարժութային)</div>
+            <div class="product-detail-cell product-detail-value">
+                {{bond.AccountForBond.AccountNumber}}
+                <span ng-if="OpenType == 1" style="left:4pt; color: #337AB7; cursor:pointer;vertical-align:top;" ng-controller="PopUpCtrl"
+                      ng-click="params={accountNumber:bond.AccountForBond.AccountNumber,accountCurrency:bond.Currency};openWindowWithTemplate('accountflowdetails','Հաշվի շարժ','accountflowdetails');"
+                      class="glyphicon glyphicon-info-sign" />
+            </div>
+        </div>
+
         <div class="product-detail-row">
             <div class="product-detail-cell product-detail-lable">Արժեթղթերի հաշվի առկայություն</div>
-            <div class="product-detail-cell product-detail-value">{{bond.DepositaryAccountExistenceTypeDescription}}</div>
+            <div class="product-detail-cell product-detail-value">{{bond.ShareType == 2 && bond.CustomerDepositaryAccount.AccountNumber == 0 ? 'Առկա չէ' : bond.DepositaryAccountExistenceTypeDescription}}</div>
         </div>
 
         <div class="product-detail-row">
@@ -113,11 +163,11 @@
             <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
             <div class="product-detail-cell product-detail-value">{{bond.QualityDescription}}</div>
         </div>
-        <div class="product-detail-row" ng-if="bond.Quality != 10">
+        <div class="product-detail-row" ng-if="bond.Quality != 10 && bond.ShareType == 1">
             <div class="product-detail-cell product-detail-lable">Դրամական միջոցների մուտքագրման ամսաթիվ</div>
             <div class="product-detail-cell product-detail-value">{{bond.AmountChargeDateToString}}</div>
         </div>
-        <div class="product-detail-row" ng-if="bond.Quality != 10">
+        <div class="product-detail-row" ng-if="bond.Quality != 10 && bond.ShareType == 1">
             <div class="product-detail-cell product-detail-lable">Դրամական միջոցների մուտքագրման ժամ</div>
             <div class="product-detail-cell product-detail-value">{{bond.AmountChargeTimeToString}}</div>
         </div>

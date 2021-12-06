@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking" />
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" />
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBManagementService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingService" />
+  <xs:element name="Init">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="authorizedCustomerSessionID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="language" type="xs:unsignedByte" />
+        <xs:element minOccurs="0" name="clientIp" nillable="true" type="xs:string" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ACBALibrary" minOccurs="0" name="user" nillable="true" type="q1:User" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="source" type="q2:SourceType" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="customerServiceType" type="q3:ServiceType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InitResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InitResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetXBUserGroups">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetXBUserGroupsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetXBUserGroupsResult" nillable="true" type="q4:ArrayOfXBUserGroup" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBUsersByGroup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBUsersByGroupResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetHBUsersByGroupResult" nillable="true" type="q5:ArrayOfHBUser" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetApprovementSchema">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetApprovementSchemaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetApprovementSchemaResult" nillable="true" type="q6:ApprovementSchema" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetApprovementSchemaDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="schemaId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetApprovementSchemaDetailsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetApprovementSchemaDetailsResult" nillable="true" type="q7:ArrayOfApprovementSchemaDetails" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateNextGroupName">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="customerNumber" type="xs:unsignedLong" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateNextGroupNameResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GenerateNextGroupNameResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBApplication">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBApplicationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetHBApplicationResult" nillable="true" type="q8:HBApplication" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBApplicationShablon">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBApplicationShablonResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetHBApplicationShablonResult" nillable="true" type="q9:HBApplication" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBApplicationOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ID" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBApplicationOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetHBApplicationOrderResult" nillable="true" type="q10:HBApplicationOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApproveHBApplicationOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="order" nillable="true" type="q11:HBApplicationOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApproveHBApplicationOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="SaveAndApproveHBApplicationOrderResult" nillable="true" type="q12:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBUsers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="hbAppID" type="xs:int" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="filter" type="q13:ProductQualityFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBUsersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetHBUsersResult" nillable="true" type="q14:ArrayOfHBUser" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBTokens">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="HBUserID" type="xs:int" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="filter" type="q15:ProductQualityFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBTokensResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetHBTokensResult" nillable="true" type="q16:ArrayOfHBToken" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBTokenNumbers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="tokenType" type="q17:HBTokenTypes" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBTokenNumbersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetHBTokenNumbersResult" nillable="true" type="q18:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckHBUserNameAvailability">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="hbUser" nillable="true" type="q19:HBUser" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckHBUserNameAvailabilityResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CheckHBUserNameAvailabilityResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPhoneBankingContract">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPhoneBankingContractResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetPhoneBankingContractResult" nillable="true" type="q20:PhoneBankingContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApprovePhoneBankingContractOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="order" nillable="true" type="q21:PhoneBankingContractOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApprovePhoneBankingContractOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="SaveAndApprovePhoneBankingContractOrderResult" nillable="true" type="q22:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApproveHBApplicationQualityChangeOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="order" nillable="true" type="q23:HBApplicationQualityChangeOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApproveHBApplicationQualityChangeOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="SaveAndApproveHBApplicationQualityChangeOrderResult" nillable="true" type="q24:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApprovePhoneBankingContractClosingOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="order" nillable="true" type="q25:PhoneBankingContractClosingOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApprovePhoneBankingContractClosingOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="SaveAndApprovePhoneBankingContractClosingOrderResult" nillable="true" type="q26:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPhoneBankingContractClosingOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ID" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPhoneBankingContractClosingOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetPhoneBankingContractClosingOrderResult" nillable="true" type="q27:PhoneBankingContractClosingOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelTokenNumberReservation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="token" nillable="true" type="q28:HBToken" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelTokenNumberReservationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="CancelTokenNumberReservationResult" nillable="true" type="q29:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPhoneBankingContractOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ID" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPhoneBankingContractOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetPhoneBankingContractOrderResult" nillable="true" type="q30:PhoneBankingContractOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApproveHBServletRequestOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="order" nillable="true" type="q31:HBServletRequestOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApproveHBServletRequestOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="SaveAndApproveHBServletRequestOrderResult" nillable="true" type="q32:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBAssigneeCustomers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="customerNumber" type="xs:unsignedLong" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBAssigneeCustomersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetHBAssigneeCustomersResult" nillable="true" type="q33:ArrayOfAssigneeCustomer" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBApplicationQualityChangeOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ID" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBApplicationQualityChangeOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetHBApplicationQualityChangeOrderResult" nillable="true" type="q34:HBApplicationQualityChangeOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBServletRequestOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ID" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBServletRequestOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetHBServletRequestOrderResult" nillable="true" type="q35:HBServletRequestOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ApproveHBActivationOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="order" nillable="true" type="q36:HBActivationOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ApproveHBActivationOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="ApproveHBActivationOrderResult" nillable="true" type="q37:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApproveHBActivationOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="order" nillable="true" type="q38:HBActivationOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApproveHBActivationOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="SaveAndApproveHBActivationOrderResult" nillable="true" type="q39:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveHBActivationOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="order" nillable="true" type="q40:HBActivationOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveHBActivationOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="SaveHBActivationOrderResult" nillable="true" type="q41:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBRequests">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBRequestsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetHBRequestsResult" nillable="true" type="q42:ArrayOfHBActivationRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBActivationOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ID" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBActivationOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetHBActivationOrderResult" nillable="true" type="q43:HBActivationOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOperationSystemAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="order" nillable="true" type="q44:Order" />
+        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="accountType" type="q45:OrderAccountType" />
+        <xs:element minOccurs="0" name="operationCurrency" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="filialCode" type="xs:unsignedShort" />
+        <xs:element minOccurs="0" name="utilityBranch" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="customerNumber" type="xs:unsignedLong" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOperationSystemAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="GetOperationSystemAccountResult" nillable="true" type="q46:Account" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBServiceFee">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="date" type="xs:dateTime" />
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="requestType" type="q47:HBServiceFeeRequestTypes" />
+        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="tokenType" type="q48:HBTokenTypes" />
+        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="tokenSubType" type="q49:HBTokenSubType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBServiceFeeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetHBServiceFeeResult" type="xs:double" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBTokenGID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="hbuserID" type="xs:int" />
+        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="tokenType" type="q50:HBTokenTypes" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBTokenGIDResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetHBTokenGIDResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveHBRegistrationCodeResendOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="order" nillable="true" type="q51:HBRegistrationCodeResendOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveHBRegistrationCodeResendOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="SaveHBRegistrationCodeResendOrderResult" nillable="true" type="q52:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApproveHBActivationRejectionOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="order" nillable="true" type="q53:HBActivationRejectionOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApproveHBActivationRejectionOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="SaveAndApproveHBActivationRejectionOrderResult" nillable="true" type="q54:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBUserLog">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBUserLogResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetHBUserLogResult" nillable="true" type="q55:ArrayOfHBUserLog" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPhoneBankingRequests">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPhoneBankingRequestsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q56="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetPhoneBankingRequestsResult" nillable="true" type="q56:PhoneBankingContractActivationRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApprovePhoneBankingContractActivationOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q57="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="order" nillable="true" type="q57:PhoneBankingContractActivationOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApprovePhoneBankingContractActivationOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q58="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="SaveAndApprovePhoneBankingContractActivationOrderResult" nillable="true" type="q58:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUnusedTokensByFilialAndRange">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="from" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="to" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="filial" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUnusedTokensByFilialAndRangeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q59="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetUnusedTokensByFilialAndRangeResult" nillable="true" type="q59:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MoveUnusedTokens">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="filialToMove" type="xs:int" />
+        <xs:element xmlns:q60="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="unusedTokens" nillable="true" type="q60:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MoveUnusedTokensResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q61="http://schemas.datacontract.org/2004/07/ExternalBankingService" minOccurs="0" name="authorizedCustomer" nillable="true" type="q61:AuthorizedCustomer" />
+        <xs:element minOccurs="0" name="language" type="xs:unsignedByte" />
+        <xs:element minOccurs="0" name="ClientIp" nillable="true" type="xs:string" />
+        <xs:element xmlns:q62="http://schemas.datacontract.org/2004/07/ACBALibrary" minOccurs="0" name="user" nillable="true" type="q62:User" />
+        <xs:element xmlns:q63="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="source" type="q63:SourceType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetUserResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCustomerEmails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="customerNumber" type="xs:unsignedLong" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCustomerEmailsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/ACBALibrary" minOccurs="0" name="GetCustomerEmailsResult" nillable="true" type="q64:ArrayOfCustomerEmail" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateAcbaOnline">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="customerNumber" type="xs:unsignedLong" />
+        <xs:element minOccurs="0" name="phoneNumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="customerQuality" type="xs:int" />
+        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateAcbaOnlineResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="GenerateAcbaOnlineResult" nillable="true" type="q65:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddEmailForCustomer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="emailAddress" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="customerNumber" type="xs:unsignedLong" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddEmailForCustomerResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q66="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="AddEmailForCustomerResult" nillable="true" type="q66:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBUserCustomerNumber">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBUserCustomerNumberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetHBUserCustomerNumberResult" type="xs:unsignedLong" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetXBMTestMobileBankingUser">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetXBMTestMobileBankingUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q67="http://schemas.datacontract.org/2004/07/ExternalBankingService" minOccurs="0" name="GetXBMTestMobileBankingUserResult" nillable="true" type="q67:AuthorizedCustomer" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApproveHBApplicationFullPermissionsGrantingOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q68="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="order" nillable="true" type="q68:HBApplicationFullPermissionsGrantingOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAndApproveHBApplicationFullPermissionsGrantingOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q69="http://schemas.datacontract.org/2004/07/ExternalBanking" minOccurs="0" name="SaveAndApproveHBApplicationFullPermissionsGrantingOrderResult" nillable="true" type="q69:ActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBApplicationFullPermissionsGrantingOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ID" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHBApplicationFullPermissionsGrantingOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q70="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" minOccurs="0" name="GetHBApplicationFullPermissionsGrantingOrderResult" nillable="true" type="q70:HBApplicationFullPermissionsGrantingOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

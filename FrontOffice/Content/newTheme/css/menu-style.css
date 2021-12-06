@@ -611,6 +611,10 @@ li:hover .h-menu-customer-debt
      content: url("../Images/Menu/edit.png")
 }
 
+.distributeButton {
+    content: url("../Images/distribution.png")
+}
+
 .startButton {
     content: url("../Images/Menu/invisible.png");
     background-image: url('../Images/Menu/customer-service.png');

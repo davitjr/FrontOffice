@@ -24,50 +24,58 @@
     });
 </script>
 <div ng-controller="DepositaryAccountCtrl">
-    <div class="product-container" id="depositaryAccount" data-ng-init="getCustomerDepositaryAccount();" ng-show="(hideBlank!='true'  || depoAccount.ID != undefined)">
+    <div class="product-container" id="depositaryAccount" data-ng-init="getCustomerDepositaryAccounts();" ng-show="(hideBlank!='true'  || (depoAccounts != undefined && depoAccounts.length > 0))">
         <div class="header-title">
-            <a ui-sref="depositaryAccount" style="color:black;"> 
+            <a ui-sref="depositaryAccount" style="color:black;">
                 Արժեթղթերի հաշիվ
             </a>
             <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
-
         </div>
         <div class="product-collapsable-section">
             <div class="product-container-header">
                 <div ng-if="$root.SessionProperties.AdvancedOptions['isDealingBackOfficeDepartment']=='1' || $root.SessionProperties.AdvancedOptions['canAddNewDepoAccount']=='1'">
                     &nbsp;&nbsp;&nbsp;
-                    <i class="add-new-product" data-toggle="tooltip" ng-if="!depoAccount" data-trigger="hover" data-placement="bottom" title="Նոր արժեթղթերի հաշիվ" ng-controller="PopUpCtrl" ng-click="openWindow('/DepositaryAccountOrder/DepositaryAccountOrder','Նոր արժեթղթերի հաշվի մուտքագրում','DepositaryAccountOrder')"></i>
+                    <div class="add-new-product" context="contextdepositaryAccount" id="contextMenu"><div id="contextMenu"></div></div>
+                    <ul id="contextdepositaryAccount" class="dropdown-menu">
+                        <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="openWindow('/DepositaryAccountOrder/DepositaryNewAccountOrder','Նոր արժեթղթերի հաշվի բացում','DepositaryNewAccountOrder')">Բացել արժեթղթերի նոր հաշիվ</a></li>
+                        <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="openWindow('/DepositaryAccountOrder/DepositaryAccountOrder','Գոյություն ունեցող արժեթղթերի հաշվի մուտքագրում','DepositaryAccountOrder')">Մուտքագրել գոյություն ունեցող արժեթղթերի հաշիվ</a></li>
+                    </ul>
                 </div>
             </div>
-                <div class="product-content-table custom-scroll" id="depositaryAccountContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
-                    <div ng-if="depoAccount.ID==undefined">
-                        <loading></loading>
-                    </div>
-                    <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
-                        <tbody>
-                            <tr ng-if="depoAccount.ID != undefined" ng-class="{'selected':$index == selectedRow}" ng-dblclick="openDepositaryAccountDetails();" style="cursor: pointer;">
-                                <td class="col-sm-3" id="depositaryAccountRow_{{$index}}">
-                                    <span class="tab_text">Արժեթղթերի հաշիվ` </span> {{ depoAccount.AccountNumber}}
-                                    <br /> <span class="tab_text">Բանկի անվանում` </span> <span class="tab_title">{{depoAccount.Description}}</span>
-                                </td>
-                                <td class="col-sm-1 click_toggle" context="contextDepositaryAccount" id="contextMenu"><div id="contextMenu"></div> </td>
-                            </tr>
-                            <tr ng-if="depoAccount.ID == undefined">
-                                <td colspan="3" style="text-align:center">Առկա չէ արժեթղթերի հաշիվ</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                 
-
-                   
+            <div class="product-content-table custom-scroll" id="depositaryAccountContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <div ng-if="depoAccounts ==undefined">
+                    <loading></loading>
                 </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="depoAccounts != undefined" ng-repeat="depoAccount in depoAccounts" ng-click="setClickedRow($index)" ng-class="{'selected':$index == selectedRow}"
+                            ng-dblclick="openDepositaryAccountDetails();" style="cursor: pointer;">
+                            <td class="col-sm-3" id="depositaryAccountRow_{{$index}}">
+                                <span class="tab_text">Արժեթղթերի հաշիվ` </span> {{ depoAccount.AccountNumber}}
+                                <br /> <span class="tab_text">Հաշվի կարգավիճակ` </span> {{ depoAccount.Status }}
+                                <br /> <span class="tab_text">Արժեթղթերի հաշիվը հաշվառող անձի անվանում` </span> <span class="tab_title">{{depoAccount.Description}}</span>
+                                <br /> <span class="tab_text">Արժեթղթերի հաշվի եկամտային հաշիվ` </span> <span class="tab_title">{{depoAccount.StockIncomeAccountNumber != '' ? depoAccount.StockIncomeAccountNumber : '-'}}</span>
+
+                            </td>
+                            <td class="col-sm-1 click_toggle" context="contextDepositaryAccount" id="contextMenu"><div id="contextMenu"></div> </td>
+                        </tr>
+                        <tr ng-if="depoAccounts == undefined || depoAccounts.length == 0">
+                            <td colspan="3" style="text-align:center">Առկա չէ արժեթղթերի հաշիվ</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+            </div>
             <ul id="contextDepositaryAccount" class="dropdown-menu">
-                <li><a style="color: black;text-decoration:none!important ;" ui-sref="depositaryAccountDetails({ProductId: depoAccount.ID })">Մանրամասն դիտարկում</a></li>
+                <li><a style="color: black;text-decoration:none!important ;" ui-sref="depositaryAccountDetails({ProductId: currentDepositaryAccount.ID })">Մանրամասն դիտարկում</a></li>
+
             </ul>
 
-            </div>
         </div>
     </div>
+</div>
 <script>
     $("[data-toggle=tooltip]").tooltip({
         placement: $(this).data("placement") || 'bottom'

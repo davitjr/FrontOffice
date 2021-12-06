@@ -39,7 +39,7 @@
         var response = $http({
             method: "post",
             url: "/CardClosingOrder/GetCardClosingApplication",
-            responseType: 'arraybuffer',
+            dataType: "json",
             params: {
                 cardNumber: cardNumber
             }

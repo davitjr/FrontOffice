@@ -11,7 +11,7 @@ namespace FrontOffice.XBS
         {
             get
             {
-                return RepaymentDate.ToString("dd/MM/yyyy");
+                return RepaymentDate.Value.ToString("dd/MM/yyyy");
             }
         }
 

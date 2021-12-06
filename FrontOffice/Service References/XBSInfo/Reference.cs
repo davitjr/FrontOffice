@@ -819,6 +819,9 @@ namespace FrontOffice.XBSInfo {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         SberBankTransfer = 14,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        LinkPayment = 15,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1165,7 +1168,7 @@ namespace FrontOffice.XBSInfo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="TypeOfHbProductTypes", Namespace="http://schemas.datacontract.org/2004/07/")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TypeOfHbProductTypes", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
     public enum TypeOfHbProductTypes : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
@@ -1500,6 +1503,124 @@ namespace FrontOffice.XBSInfo {
                 if ((this.userPermissionIdField.Equals(value) != true)) {
                     this.userPermissionIdField = value;
                     this.RaisePropertyChanged("userPermissionId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TupleOfstringboolean", Namespace="http://schemas.datacontract.org/2004/07/System")]
+    [System.SerializableAttribute()]
+    public partial class TupleOfstringboolean : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private string m_Item1Field;
+        
+        private bool m_Item2Field;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string m_Item1 {
+            get {
+                return this.m_Item1Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.m_Item1Field, value) != true)) {
+                    this.m_Item1Field = value;
+                    this.RaisePropertyChanged("m_Item1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public bool m_Item2 {
+            get {
+                return this.m_Item2Field;
+            }
+            set {
+                if ((this.m_Item2Field.Equals(value) != true)) {
+                    this.m_Item2Field = value;
+                    this.RaisePropertyChanged("m_Item2");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TupleOfbooleanboolean", Namespace="http://schemas.datacontract.org/2004/07/System")]
+    [System.SerializableAttribute()]
+    public partial class TupleOfbooleanboolean : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private bool m_Item1Field;
+        
+        private bool m_Item2Field;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public bool m_Item1 {
+            get {
+                return this.m_Item1Field;
+            }
+            set {
+                if ((this.m_Item1Field.Equals(value) != true)) {
+                    this.m_Item1Field = value;
+                    this.RaisePropertyChanged("m_Item1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public bool m_Item2 {
+            get {
+                return this.m_Item2Field;
+            }
+            set {
+                if ((this.m_Item2Field.Equals(value) != true)) {
+                    this.m_Item2Field = value;
+                    this.RaisePropertyChanged("m_Item2");
                 }
             }
         }
@@ -2965,6 +3086,12 @@ namespace FrontOffice.XBSInfo {
         SberBankTransferOrder = 239,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
+        PreferredAccountActivationOrder = 240,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        PreferredAccountDeactivationOrder = 241,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
         LinkPaymentOrder = 242,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
@@ -2989,6 +3116,9 @@ namespace FrontOffice.XBSInfo {
         AccountRemove = 249,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
+        VisaAlias = 250,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
         ThirdPersonAccountRightsTransfer = 251,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
@@ -2996,6 +3126,12 @@ namespace FrontOffice.XBSInfo {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         LinkTransferPaymentConfirmation = 254,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ConsumeLoanApplicationOrder = 255,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DepositaryAccountOpeningOrder = 256,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -3614,22 +3750,28 @@ namespace FrontOffice.XBSInfo {
         System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetAllTypesOfPlasticCardsSMSAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCardMobilePhones", ReplyAction="http://tempuri.org/IXBInfoService/GetCardMobilePhonesResponse")]
-        System.Collections.Generic.List<string> GetCardMobilePhones(ulong customerNumber, ulong curdNumber);
+        System.Collections.Generic.List<FrontOffice.XBSInfo.TupleOfstringboolean> GetCardMobilePhones(ulong customerNumber, ulong cardNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCardMobilePhones", ReplyAction="http://tempuri.org/IXBInfoService/GetCardMobilePhonesResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetCardMobilePhonesAsync(ulong customerNumber, ulong curdNumber);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.TupleOfstringboolean>> GetCardMobilePhonesAsync(ulong customerNumber, ulong cardNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCurrentPhone", ReplyAction="http://tempuri.org/IXBInfoService/GetCurrentPhoneResponse")]
-        string GetCurrentPhone(ulong curdNumber);
+        string GetCurrentPhone(ulong cardNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCurrentPhone", ReplyAction="http://tempuri.org/IXBInfoService/GetCurrentPhoneResponse")]
-        System.Threading.Tasks.Task<string> GetCurrentPhoneAsync(ulong curdNumber);
+        System.Threading.Tasks.Task<string> GetCurrentPhoneAsync(ulong cardNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCustomerEmailByCardNumber", ReplyAction="http://tempuri.org/IXBInfoService/GetCustomerEmailByCardNumberResponse")]
+        string GetCustomerEmailByCardNumber(string cardNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCustomerEmailByCardNumber", ReplyAction="http://tempuri.org/IXBInfoService/GetCustomerEmailByCardNumberResponse")]
+        System.Threading.Tasks.Task<string> GetCustomerEmailByCardNumberAsync(string cardNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/SMSTypeAndValue", ReplyAction="http://tempuri.org/IXBInfoService/SMSTypeAndValueResponse")]
-        string SMSTypeAndValue(string curdNumber);
+        string SMSTypeAndValue(string cardNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/SMSTypeAndValue", ReplyAction="http://tempuri.org/IXBInfoService/SMSTypeAndValueResponse")]
-        System.Threading.Tasks.Task<string> SMSTypeAndValueAsync(string curdNumber);
+        System.Threading.Tasks.Task<string> SMSTypeAndValueAsync(string cardNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetTypeOfLoanDelete", ReplyAction="http://tempuri.org/IXBInfoService/GetTypeOfLoanDeleteResponse")]
         System.Collections.Generic.Dictionary<string, string> GetTypeOfLoanDelete();
@@ -3654,6 +3796,18 @@ namespace FrontOffice.XBSInfo {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCommissionNonCollectionReasons", ReplyAction="http://tempuri.org/IXBInfoService/GetCommissionNonCollectionReasonsResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetCommissionNonCollectionReasonsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCustomerTypeAndResidence", ReplyAction="http://tempuri.org/IXBInfoService/GetCustomerTypeAndResidenceResponse")]
+        FrontOffice.XBSInfo.TupleOfbooleanboolean GetCustomerTypeAndResidence(ulong customerNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCustomerTypeAndResidence", ReplyAction="http://tempuri.org/IXBInfoService/GetCustomerTypeAndResidenceResponse")]
+        System.Threading.Tasks.Task<FrontOffice.XBSInfo.TupleOfbooleanboolean> GetCustomerTypeAndResidenceAsync(ulong customerNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetDepositoryAccountOperators", ReplyAction="http://tempuri.org/IXBInfoService/GetDepositoryAccountOperatorsResponse")]
+        System.Collections.Generic.Dictionary<string, string> GetDepositoryAccountOperators();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetDepositoryAccountOperators", ReplyAction="http://tempuri.org/IXBInfoService/GetDepositoryAccountOperatorsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetDepositoryAccountOperatorsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetInsuranceTypes", ReplyAction="http://tempuri.org/IXBInfoService/GetInsuranceTypesResponse")]
         System.Collections.Generic.Dictionary<string, string> GetInsuranceTypes();
@@ -5273,28 +5427,36 @@ namespace FrontOffice.XBSInfo {
             return base.Channel.GetAllTypesOfPlasticCardsSMSAsync();
         }
         
-        public System.Collections.Generic.List<string> GetCardMobilePhones(ulong customerNumber, ulong curdNumber) {
-            return base.Channel.GetCardMobilePhones(customerNumber, curdNumber);
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.TupleOfstringboolean> GetCardMobilePhones(ulong customerNumber, ulong cardNumber) {
+            return base.Channel.GetCardMobilePhones(customerNumber, cardNumber);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetCardMobilePhonesAsync(ulong customerNumber, ulong curdNumber) {
-            return base.Channel.GetCardMobilePhonesAsync(customerNumber, curdNumber);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.TupleOfstringboolean>> GetCardMobilePhonesAsync(ulong customerNumber, ulong cardNumber) {
+            return base.Channel.GetCardMobilePhonesAsync(customerNumber, cardNumber);
         }
         
-        public string GetCurrentPhone(ulong curdNumber) {
-            return base.Channel.GetCurrentPhone(curdNumber);
+        public string GetCurrentPhone(ulong cardNumber) {
+            return base.Channel.GetCurrentPhone(cardNumber);
         }
         
-        public System.Threading.Tasks.Task<string> GetCurrentPhoneAsync(ulong curdNumber) {
-            return base.Channel.GetCurrentPhoneAsync(curdNumber);
+        public System.Threading.Tasks.Task<string> GetCurrentPhoneAsync(ulong cardNumber) {
+            return base.Channel.GetCurrentPhoneAsync(cardNumber);
         }
         
-        public string SMSTypeAndValue(string curdNumber) {
-            return base.Channel.SMSTypeAndValue(curdNumber);
+        public string GetCustomerEmailByCardNumber(string cardNumber) {
+            return base.Channel.GetCustomerEmailByCardNumber(cardNumber);
         }
         
-        public System.Threading.Tasks.Task<string> SMSTypeAndValueAsync(string curdNumber) {
-            return base.Channel.SMSTypeAndValueAsync(curdNumber);
+        public System.Threading.Tasks.Task<string> GetCustomerEmailByCardNumberAsync(string cardNumber) {
+            return base.Channel.GetCustomerEmailByCardNumberAsync(cardNumber);
+        }
+        
+        public string SMSTypeAndValue(string cardNumber) {
+            return base.Channel.SMSTypeAndValue(cardNumber);
+        }
+        
+        public System.Threading.Tasks.Task<string> SMSTypeAndValueAsync(string cardNumber) {
+            return base.Channel.SMSTypeAndValueAsync(cardNumber);
         }
         
         public System.Collections.Generic.Dictionary<string, string> GetTypeOfLoanDelete() {
@@ -5327,6 +5489,22 @@ namespace FrontOffice.XBSInfo {
         
         public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetCommissionNonCollectionReasonsAsync() {
             return base.Channel.GetCommissionNonCollectionReasonsAsync();
+        }
+        
+        public FrontOffice.XBSInfo.TupleOfbooleanboolean GetCustomerTypeAndResidence(ulong customerNumber) {
+            return base.Channel.GetCustomerTypeAndResidence(customerNumber);
+        }
+        
+        public System.Threading.Tasks.Task<FrontOffice.XBSInfo.TupleOfbooleanboolean> GetCustomerTypeAndResidenceAsync(ulong customerNumber) {
+            return base.Channel.GetCustomerTypeAndResidenceAsync(customerNumber);
+        }
+        
+        public System.Collections.Generic.Dictionary<string, string> GetDepositoryAccountOperators() {
+            return base.Channel.GetDepositoryAccountOperators();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetDepositoryAccountOperatorsAsync() {
+            return base.Channel.GetDepositoryAccountOperatorsAsync();
         }
         
         public System.Collections.Generic.Dictionary<string, string> GetInsuranceTypes() {

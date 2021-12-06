@@ -6,6 +6,7 @@ using FrontOffice.ACBAServiceReference;
 using FrontOffice.XBSInfo;
 using System.ServiceModel;
 using FrontOffice.Filters;
+using System.Threading.Tasks;
 
 namespace FrontOffice.Service
 {
@@ -3455,5 +3456,31 @@ namespace FrontOffice.Service
 
             return result;
         }
+
+        public static Dictionary<string, string> GetDepositoryAccountOperators()
+        {
+            string cacheKey = "Info_DepositoryAccountOperators";
+
+            Dictionary<string, string> depositoryAccountOperators = CacheHelper.GetDictionary(cacheKey);
+
+            if (depositoryAccountOperators == null)
+            {
+                InfoService.Use(client =>
+                {
+                    depositoryAccountOperators = client.GetDepositoryAccountOperators();
+                });
+            }
+
+            return depositoryAccountOperators;
+        }
+
+        internal static (bool isResident, bool isPhysical) GetCustomerTypeAndResidence(ulong customerNumber)
+        {
+            TupleOfbooleanboolean typeAndResidence = new TupleOfbooleanboolean();
+             InfoService.Use(client => typeAndResidence =  client.GetCustomerTypeAndResidence(customerNumber));
+            (bool isResident, bool isPhysical) result = (typeAndResidence.m_Item1, typeAndResidence.m_Item2);
+            return result;
+        }
+
     }
 }

@@ -7,6 +7,14 @@ using System.Web.Mvc;
 using FrontOffice.Models;
 using xbs = FrontOffice.XBS;
 using System.Web.SessionState;
+using System.IO;
+using System.Xml.Serialization;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Net;
+using FrontOffice.XBS;
+using ActionResult = System.Web.Mvc.ActionResult;
+using FrontOffice.XBManagement;
 
 namespace FrontOffice.Controllers
 {
@@ -20,13 +28,23 @@ namespace FrontOffice.Controllers
             return PartialView("DepositaryAccountOrder");
         }
 
-        [ActionAccessFilter(actionType = ActionType.DepositaryAccountOrderSave)]
-        public ActionResult SaveDepositaryAccountOrder(xbs.DepositaryAccountOrder order)
+        public ActionResult DepositaryNewAccountOrder()
         {
-            xbs.ActionResult result = new xbs.ActionResult();
-            result = XBService.SaveDepositaryAccountOrder(order);
-            return Json(result);
+            return PartialView("DepositaryNewAccountOrder");
+        }
 
+        [ActionAccessFilter(actionType = ActionType.DepositaryAccountOrderSave)]
+        public async Task<ActionResult> SaveDepositaryAccountOrder(xbs.DepositaryAccountOrder order)
+        {
+            xbs.ActionResult result = new xbs.ActionResult() { ResultCode = xbs.ResultCode.Normal, Errors = new List<xbs.ActionError>() };
+            DepositoryAccountSaveModel depositoryAccountSaveModel = new DepositoryAccountSaveModel
+            {
+                order = order,
+                fromBondOrder = false
+            };
+
+            result = await DepositaryService.SaveDepositaryAccountOrderWithAccountCheck(depositoryAccountSaveModel);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetDepositaryAccountOrder(int id)

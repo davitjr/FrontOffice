@@ -1643,6 +1643,37 @@ app.config(['$stateProvider', function ($stateProvider) {
                         }
                     }
                 ]
+            })
+        .state('StockDetails',
+            {
+                url: "/stockdetails",
+                ncyBreadcrumb: {
+                    label: 'Պրոդուկտներ >> Արժեթղթեր >> Բաժնետոմսերի տվյալներ'
+                },
+                params: {
+                    ProductId: null,
+                    bondFilterType: null
+                },
+                templateUrl: '/Bond/BondDetails',
+                controller: [
+                    '$scope', '$stateParams', function ($scope, $stateParams) {
+                        // get the id
+                        if ($stateParams.ProductId == null) {
+                            $scope.ProductId = sessionStorage.getItem('currentBondID');
+                        } else {
+                            $scope.ProductId = $stateParams.ProductId;
+                            sessionStorage.setItem('currentBondID', $stateParams.ProductId);
+                        }
+
+                        if ($stateParams.bondFilterType == null) {
+                            $scope.bondFilterType = sessionStorage.getItem('bondFilterType');
+                        } else {
+                            $scope.ProductId = $stateParams.ProductId;
+                            sessionStorage.setItem('bondFilterType', $stateParams.bondFilterType);
+                        }
+
+                    }
+                ]
             });
     //.state('FTPRate',
     //{

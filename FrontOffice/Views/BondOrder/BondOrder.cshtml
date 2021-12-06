@@ -344,7 +344,7 @@
 
 
 
-                    <div class="form-group" data-ng-init="getBanks();" ng-if="bondOrder.Bond.DepositaryAccountExistenceType != undefined && bondOrder.Bond.DepositaryAccountExistenceType != 3">
+                    <div class="form-group" data-ng-init="getDepositoryAccountOperators();" ng-if="bondOrder.Bond.DepositaryAccountExistenceType != undefined && bondOrder.Bond.DepositaryAccountExistenceType != 3">
                         <label class="tab_title col-sm-5 " for="DepositaryAccountDescription">Արժեթղթերի հաշիվը  հաշվառող անձի անվանում<span class='redStyle'>*</span></label>
 
                         <div class="col-sm-6">
@@ -356,7 +356,7 @@
 
                                     <select ng-if="bondOrder.Bond.DepositaryAccountExistenceType == 2" chosen data-ng-model="bondOrder.Bond.CustomerDepositaryAccount.BankCode" 
                                             name="DepositaryAccountDescription" id="DepositaryAccountDescriptionNew" class="form-control" required 
-                                            style="max-width:100%;" data-ng-options="k as v for (k,v) in banks" data-placeholder="Ընտրեք...">
+                                            style="max-width:100%;" data-ng-options="k as v for (k,v) in depositoryAccountOperators" data-placeholder="Ընտրեք...">
                                         <option value="" hidden>Ընտրեք...</option>
                                     </select>
 

@@ -1,0 +1,592 @@
+﻿@{
+    Layout = null;
+}
+<style type="text/css">
+    #StockIssueSaveForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+
+
+<div id="bondIssueSaveLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="BondIssueCtrl" name="StockIssueSaveForm" id="StockIssueSaveForm" data-ng-init="getBondIssuerTypes();initStockIssue(); " role="form" style="min-width:600px;min-height:570px;" novalidate class="form-horizontal" labels-required-always>
+
+    <div id="BondIssueSave_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="StockIssueSaveForm.$setSubmitted();StockIssueSaveForm.$valid  && saveStockIssue();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newstockissue')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div class="col-sm-7" style="padding:0;padding-left:5px;">
+
+        <div class="col-sm-12" style="max-width:650px">
+
+            <div style="max-width:630px">
+                <errors></errors>
+            </div>
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-6 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12 ">
+                        <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="stockIssueNew.RegistrationDate" required>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-6 " for="IssuerType">Թողարկող</label>
+                <div class="col-sm-6 row">
+                    <div class="multiple_columns col-sm-12">
+                        <loading-control scopevariable="issuerTypes"></loading-control>
+                        <select ng-disabled="stockIssueNew.Quality != 1" ng-model="stockIssueNew.IssuerType" name="IssuerType" id="IssuerType" ng-change="issuerTypeChange()" class="form-control" style="text-align: left;"
+                                data-ng-options="k as v for (k,v) in issuerTypes" required>
+                            <option value="" hidden>Ընտրեք տեսակը ...</option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="panel panel-success" style="margin-bottom: 10px;">
+                <div class="panel-heading">Տվյալ թողարկման բաժնետոմսերի տեղեկատվություն</div>
+                <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+                    <div class="form-group">
+                        <label class="tab_title col-sm-6 " for="ISIN">Բաժնետոմսի ԱՄՏԾ (ISIN)</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="stockIssueNew.Quality != 1" maxlength="12" class="form-control tab_title unstyled" style="text-align: left;" id="ISIN" name="ISIN" ng-model="stockIssueNew.ISIN" required />
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.ISIN.$dirty"
+                                             for="StockIssueSaveForm.ISIN.$error">
+                                    <ng-message when="required" class="errors">
+                                        Բաժնետոմսի ԱՄՏԾ (ISIN)-ն մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="tab_title col-sm-6 " for="Seria">Թողարկման սերիան </label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input  ng-disabled="stockIssueNew.Quality != 1" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control tab_title unstyled" style="text-align: left;" id="IssueSeria" name="IssueSeria" ng-model="stockIssueNew.IssueSeria" required />
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.IssueSeria.$dirty"
+                                             for="StockIssueSaveForm.IssueSeria.$error">
+                                    <ng-message when="required" class="errors">
+                                        Թողարկման սերիան մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="IssueDate">Թողարկման ամսաթիվ<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input type="date" ng-disabled="stockIssueNew.Quality != 1" min="{{minRegDate}}" class="form-control" style="text-align: left;" id="IssueDate" name="IssueDate" ng-model="stockIssueNew.IssueDate" required />
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.IssueDate.$dirty"
+                                             for="StockIssueSaveForm.IssueDate.$error">
+                                    <ng-message when="required" class="errors">
+                                        Թողարկման ամսաթիվը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="date" class="errors">
+                                        Թողարկման ամսաթիվը սխալ է նշված
+                                    </ng-message>
+                                    <ng-message when="min" class="errors">
+                                        Թողարկման ամսաթիվը սխալ է նշված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="ReplacementDate">Տեղաբաշխման սկիզբի ամսաթիվ <span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input type="date" ng-disabled="stockIssueNew.Quality != 1" min="{{minRegDate}}" class="form-control" ng-change="setMinReplacementDate();" style="text-align: left;" id="ReplacementDate" name="ReplacementDate" ng-model="stockIssueNew.ReplacementDate" required />
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.ReplacementDate.$dirty"
+                                             for="StockIssueSaveForm.ReplacementDate.$error">
+                                    <ng-message when="required" class="errors">
+                                        Տեղաբաշխման սկիզբը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="date" class="errors">
+                                        Տեղաբաշխման սկիզբը սխալ է նշված
+                                    </ng-message>
+                                    <ng-message when="min" class="errors">
+                                        Տեղաբաշխման սկիզբը սխալ է նշված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="ReplacementEndDate">Տեղաբաշխման նախատեսվող ավարտ<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="stockIssueNew.Quality != 1" type="date" class="form-control" style="text-align: left;" min="{{minReplacementDate}}" id="ReplacementEndDate" name="ReplacementEndDate" ng-model="stockIssueNew.ReplacementEndDate" required />
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.ReplacementEndDate.$dirty"
+                                             for="StockIssueSaveForm.ReplacementEndDate.$error">
+                                    <ng-message when="required" class="errors">
+                                        Տեղաբաշխման ավարտը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="date" class="errors">
+                                        Տեղաբաշխման ավարտը սխալ է նշված
+                                    </ng-message>
+                                    <ng-message when="min" class="errors">
+                                        Տեղաբաշխման ավարտը սխալ է նշված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="BankAccount">Ռեզիդենտների հաշվեհամար <span class='redStyle'> *</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input class="form-control tab_title unstyled" ng-disabled="stockIssueNew.Quality != 1" ng-maxlength="15" onkeypress='return event.charCode >= 48 && event.charCode <= 57' style="text-align: left;"
+                                           id="BankAccount" name="BankAccount" ng-model="stockIssueNew.BankAccount.AccountNumber" maxlength="17" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.BankAccount.$dirty"
+                                             for="StockIssueSaveForm.BankAccount.$error">
+                                    <ng-message when="required" class="errors">
+                                        Ռեզիդենտների հաշվեհամարը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Ռեզիդենտների հաշվեհամարը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="BankAccountForNonResident">Ոչ ռեզիդենտների հաշվեհամար <span class='redStyle'> *</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input class="form-control tab_title unstyled" ng-disabled="stockIssueNew.Quality != 1" ng-maxlength="15" onkeypress='return event.charCode >= 48 && event.charCode <= 57' style="text-align: left;"
+                                           id="BankAccountForNonResident" name="BankAccountForNonResident" ng-model="stockIssueNew.BankAccountForNonResident.AccountNumber" maxlength="17" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.BankAccountForNonResident.$dirty"
+                                             for="StockIssueSaveForm.BankAccountForNonResident.$error">
+                                    <ng-message when="required" class="errors">
+                                        Ոչ ռեզիդենտների հաշվեհամարը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Ոչ ռեզիդենտների հաշվեհամարը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="tab_title col-sm-6 " for="TotalVolume">Թողարկման ընդհանուր անվանական արժեք <span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input disabled="disabled" fcsa-number class="form-control tab_title unstyled" style="text-align: left;"
+                                           id="TotalVolume" name="TotalVolume" ng-model="stockIssueNew.TotalVolume" onkeypress='return event.charCode >= 48 && event.charCode <= 57'  required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.TotalVolume.$dirty"
+                                             for="StockIssueSaveForm.TotalVolume.$error">
+                                    <ng-message when="required" class="errors"> 
+                                        Թողարկման ընդհանուր անվանական արժեքը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsa-number" class="errors">
+                                        Թողարկման ընդհանուր անվանական արժեքը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="tab_title col-sm-6 " for="Currency">Բաժնետոմսի արժույթ </label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <select ng-disabled="stockIssueNew.Quality != 1" ng-model="stockIssueNew.Currency" name="Currency" id="Currency" class="form-control" style="text-align: left;">
+                                        <option value="" hidden>Ընտրեք արժույթը ...</option>
+                                        <option value="AMD">AMD</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.Currency.$dirty"
+                                             for="StockIssueSaveForm.Currency.$error">
+                                    <ng-message when="required" class="errors">
+                                        Բաժնետոմսի արժույթը մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="NominalPrice">Մեկ բաժնետոմսի անվանական արժեք<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="stockIssueNew.Quality != 1" class="form-control tab_title unstyled" fcsa-number ng-change="calculateTotalVolume()" style="text-align: left;"
+                                           id="NominalPrice" name="NominalPrice" ng-model="stockIssueNew.NominalPrice" ng-text-change="calculatevPlacementCount()" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                           required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.NominalPrice.$dirty"
+                                             for="StockIssueSaveForm.NominalPrice.$error">
+                                    <ng-message when="required" class="errors">
+                                        Մեկ բաժնետոմսի անվանական արժեքը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsa-number" class="errors">
+                                        Մեկ բաժնետոմսի անվանական արժեքը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="PlacementPrice">Մեկ բաժնետոմսի տեղաբաշխման գին<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="stockIssueNew.Quality != 1" class="form-control tab_title unstyled" fcsa-number style="text-align: left;"
+                                           id="PlacementPrice" name="PlacementPrice" ng-model="stockIssueNew.PlacementPrice" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                           required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.PlacementPrice.$dirty"
+                                             for="StockIssueSaveForm.PlacementPrice.$error">
+                                    <ng-message when="required" class="errors">
+                                        Մեկ բաժնետոմսի տեղաբաշխման գինը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsa-number" class="errors">
+                                        Մեկ բաժնետոմսի տեղաբաշխման գինը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="PlacementCount">Տեղաբաշխման ենթակա քանակ<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="stockIssueNew.Quality != 1" type="number" class="form-control tab_title unstyled" onkeypress='return event.charCode >= 48 && event.charCode <= 57' style="text-align: left;"
+                                           id="TotalCount" name="TotalCount" ng-model="stockIssueNew.TotalCount" ng-change="calculateTotalVolume()"/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.TotalCount.$dirty"
+                                             for="StockIssueSaveForm.TotalCount.$error">
+                                    <ng-message when="required" class="errors">
+                                        Տեղաբաշխման ենթակա քանակը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Տեղաբաշխման ենթակա քանակը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="PurchaseDeadlineDate">Վճարման վերջնաժամկետը <span class='redStyle'>*</span> </label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="stockIssueNew.Quality != 1" class="form-control tab_title unstyled" type="time" style="text-align: left;" id="PurchaseDeadlineDate" name="PurchaseDeadlineDate"
+                                           ng-model="stockIssueNew.PurchaseDeadlineDate" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.PurchaseDeadlineDate.$dirty"
+                                             for="StockIssueSaveForm.PurchaseDeadlineDate.$error">
+                                    <ng-message when="required" class="errors">
+                                        Վճարման վերջնաժամկետը մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="panel panel-success" style="margin-bottom: 10px;">
+                <div class="panel-heading">Արժեկտրոնների տեղեկատվություն</div>
+                <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="CouponPaymentPeriodicity">Գործողության նկարագրություն <span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <textarea ng-disabled="stockIssueNew.Quality != 1" class="form-control tab_title unstyled" style="text-align: left;" id="OperationDescription" name="OperationDescription" ng-model="stockIssueNew.OperationDescription" required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.OperationDescription.$dirty"
+                                             for="StockIssueSaveForm.OperationDescription.$error">
+                                    <ng-message when="required" class="errors">
+                                        Գործողության նկարագրությունը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Գործողության նկարագրությունը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="DecisionDate">Որոշման ամսաթիվ <span class='redStyle'>*</span> </label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input type="date" ng-disabled="stockIssueNew.Quality != 1" class="form-control" style="text-align: left;width:280px" id="DecisionDate" name="DecisionDate" ng-model="stockIssueNew.DecisionDate" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.DecisionDate.$dirty"
+                                             for="StockIssueSaveForm.DecisionDate.$error">
+                                    <ng-message when="required" class="errors">
+                                        Որոշման ամսաթիվը մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3">
+                        <label class="tab_title col-sm-6 " for="Description">Նկարագրություն <span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <div class="multiple_columns col-sm-12">
+                                        <input ng-disabled="stockIssueNew.Quality != 1" class="form-control tab_title unstyled" style="text-align: left;width:280px" id="Description" name="Description" ng-model="stockIssueNew.Description" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.Description.$dirty"
+                                             for="StockIssueSaveForm.Description.$error">
+                                    <ng-message when="required" class="errors">
+                                        Նկարագրությունը մուտքագրված չէ
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3 && stockIssueNew.Quality != 1">
+                        <label class="tab_title col-sm-6 " for="PlacementFactualCount">Տեղաբաշխման փաստացի քանակ </label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input class="form-control tab_title" style="text-align: left;" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                           id="PlacementFactualCount" name="PlacementFactualCount" min="{{stockIssueNew.ReplacementDate}}" ng-model="stockIssueNew.PlacementFactualCount" />
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.PlacementFactualCount.$dirty"
+                                             for="StockIssueSaveForm.PlacementFactualCount.$error">
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Տեղաբաշխման փաստացի քանակը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="stockIssueNew.IssuerType == 3 && stockIssueNew.Quality != 1">
+                        <label class="tab_title col-sm-6 " for="ReplacementFactualEndDate">Տեղաբաշխման փաստացի ավարտ</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-11">
+                                    <input type="date" class="form-control" style="text-align: left;width:280px" min="{{minReplacementDate}}" id="ReplacementFactualEndDate" name="ReplacementFactualEndDate" ng-model="stockIssueNew.ReplacementFactualEndDate" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.ReplacementFactualEndDate.$dirty"
+                                             for="StockIssueSaveForm.ReplacementFactualEndDate.$error">
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Տեղաբաշխման փաստացի ավարտը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-success" style="margin-bottom: 10px; " ng-if="stockIssueNew.IssuerType == 3">
+                <div class="panel-heading">Մեկ ներդրողի նկատմամբ կիրառվող ձեռք բերվող պարտատոմսերի ծավալի սահմանափակումներ</div>
+                <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+                    <div class="form-group">
+                        <label class="tab_title col-sm-6 " for="MinSaleQuantity">Մեկ ներդրողի կողմից նվազագույն ձեռք բերվող քանակ <span class='redStyle'>*</span></label>
+
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="stockIssueNew.Quality != 1" class="form-control tab_title unstyled" onkeypress='return event.charCode >= 48 && event.charCode <= 57' style="text-align: left;"
+                                           id="MinSaleQuantity" name="MinSaleQuantity" ng-model="stockIssueNew.MinSaleQuantity" required />
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.MinSaleQuantity.$dirty"
+                                             for="StockIssueSaveForm.MinSaleQuantity.$error">
+                                    <ng-message when="required" class="errors">
+                                        Մեկ ներդրողի կողմից նվազագույն ձեռք բերվող քանակը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Մեկ ներդրողի կողմից նվազագույն ձեռք բերվող քանակը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="tab_title col-sm-6 " for="MaxSaleQuantity">Մեկ ներդրողի կողմից առավելագույն ձեռք բերվող քանակ <span class='redStyle'>*</span></label>
+
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input ng-disabled="stockIssueNew.Quality != 1" class="form-control tab_title unstyled" onkeypress='return event.charCode >= 48 && event.charCode <= 57' style="text-align: left;"
+                                           id="MaxSaleQuantity" name="MaxSaleQuantity" ng-model="stockIssueNew.MaxSaleQuantity" required />
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="StockIssueSaveForm.$submitted || StockIssueSaveForm.MaxSaleQuantity.$dirty"
+                                             for="StockIssueSaveForm.MaxSaleQuantity.$error">
+                                    <ng-message when="required" class="errors">
+                                        Մեկ ներդրողի կողմից առավելագույն ձեռք բերվող քանակը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsaNumber" class="errors">
+                                        Մեկ ներդրողի կողմից առավելագույն ձեռք բերվող քանակը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

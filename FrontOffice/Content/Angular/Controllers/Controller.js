@@ -1115,6 +1115,7 @@ refresh = function (orderType, product1, product2) {
             if (state == 'allProducts' || state == 'depositaryAccount') {
                 var refreshScope2 = angular.element(document.getElementById('depositaryAccount')).scope();
                 if (refreshScope2 != undefined) {
+                    refreshScope2.getCustomerDepositaryAccounts();
                     refreshScope2.getCustomerDepositaryAccount();
                 }
             }         

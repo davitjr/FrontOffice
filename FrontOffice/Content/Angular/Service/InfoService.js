@@ -1856,4 +1856,13 @@
         });
         return response;
     };
+
+    this.getDepositoryAccountOperators = function () {
+        var response = $http({
+            method: "post",
+            url: "/Info/getDepositoryAccountOperators"
+        });
+        return response;
+    };
+
 }]);

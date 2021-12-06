@@ -24,7 +24,15 @@
         return response;
     };
 
-
-
+    this.checkAndGetDepositaryAccount = function () {
+                var response = $http({
+            method: "post",
+            url: "/BondOrder/CheckAndGetDepositaryAccount",
+            params: {
+                searchForSecuritiesType: 0
+            }
+        });
+        return response;
+    };
 
 }]);

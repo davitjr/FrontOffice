@@ -1,0 +1,627 @@
+﻿
+@{
+    Layout = null;
+}
+<style type="text/css">
+    #BondOrderForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+</style>
+
+
+<div id="bondOrderSaveLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="BondOrderCtrl" name="BondOrderForm" id="BondOrderForm" role="form" style="min-width:600px;min-height:570px;" novalidate class="form-horizontal" data-ng-init="initBondOrder(); getBondIssues()" labels-required>
+
+    <div id="BondOrder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-3 " ng-if="bondOrder.Bond.SecuringMoney == 'true'" ng-click="BondOrderForm.$setSubmitted();BondOrderForm.bondRepaymentAccount.$valid && printRecommendation()">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="h-menu-icon printButton">Հանձնարարական</span>
+            </li>
+
+            <li class="root-menu-item-4 " ng-click="BondOrderForm.$setSubmitted();BondOrderForm.$valid  && getcheckAndSaveDepositoryAccount();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-6" ng-if="bondOrder.Bond.DepositaryAccountExistenceType != 4">
+                <span id="h-menu-item-6" onclick="return false;">
+                    <img id="h-menu-icon-6" class="h-menu-icon printButton">Փաստաթղթեր
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-6.1" ng-click="getBondContract(bondOrder.Bond.AccountForCoupon.AccountNumber,bondOrder.Bond.CustomerDepositaryAccount.StockIncomeAccountNumber,bondOrder.RegistrationDate)">
+                        <span>Արժեթղթերի պահառության պայմանագիր</span>
+                    </li>
+                    <li id="v-menuItem-6.1" ng-click="printBondCustomerCard(bondOrder.Bond.AccountForCoupon.AccountNumber,bondOrder.Bond.AccountForBond.AccountNumber)">
+                        <span>Հաշվետիրոջ քարտ</span>
+                    </li>
+                </ul>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newstockorder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+
+
+
+
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div class="col-sm-7" style="padding:0;padding-left:5px;">
+
+        <div class="col-sm-12" style="max-width:650px">
+
+            <div style="max-width:630px">
+                <errors></errors>
+            </div>
+
+            <div class="panel panel-success" style="margin-bottom: 10px; ">
+                <div class="panel-heading">Արժեթղթերի հաշվի տեղեկատվություն</div>
+                <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+
+
+
+                    <label class="tab_title col-sm-5 " for="DepositaryAccountExistenceType"><span style="margin-left: -5%;">Արժեթղթերի հաշվի օպերատոր</span><span class='redStyle'>*</span></label>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input type="radio" value="2" class="checkbox-inline" style="width:initial"
+                                           name="DepositaryAccountExistenceType" ng-model="bondOrder.Bond.DepositaryAccountExistenceType" ng-change="clearAllFields();checkAndGetDepositaryAccount()" required />
+
+                                    <label for="DepositaryAccountExistenceType" style="font-size:12px" class="tab_title">Ակբա Բանկ ԲԲԸ</label>
+
+                                    @*<br />
+                        <input type="radio" value="3" class="checkbox-inline" style="width:initial"
+                               name="DepositaryAccountExistenceType" ng-model="bondOrder.Bond.DepositaryAccountExistenceType" required />
+                        <label style="font-size:12px" for="ttt" class="tab_title"> Առկա չէ</label>*@
+
+                                    <br />
+                                    <input type="radio" value="4" class="checkbox-inline" style="width:initial"
+                                           name="DepositaryAccountExistenceType" ng-model="bondOrder.Bond.DepositaryAccountExistenceType" ng-change="clearAllFields()" required />
+                                    <label style="font-size:12px" for="ttt" class="tab_title">Այլ ՀՕ-ի</label>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.DepositaryAccountExistenceType.$dirty"
+                                             for="BondOrderForm.DepositaryAccountExistenceType.$error">
+                                    <ng-message when="required" class="errors">
+                                        Արժեթղթերի հաշվի առկայությունը մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+
+                    @*AYL HO START*@
+
+                    <div class="form-group" data-ng-init="getDepositoryAccountOperators();" ng-if="bondOrder.Bond.DepositaryAccountExistenceType != undefined && bondOrder.Bond.DepositaryAccountExistenceType == 4">
+                        <label class="tab_title col-sm-5 " for="DepositaryAccountDescription">Արժեթղթերի հաշիվը  հաշվառող անձի անվանում<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <select ng-model="bondOrder.Bond.CustomerDepositaryAccount.BankCode"
+                                            name="DepositaryAccountDescription" id="DepositaryAccountDescription" class="form-control" required>
+                                        <option value="">Ընտրեք ...</option>
+
+                                        <option class="select_options_style" ng-repeat="(key, value) in depositoryAccountOperators" value="{{key}}">{{value}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.DepositaryAccountDescription.$dirty"
+                                             for="BondOrderForm.DepositaryAccountDescription.$error">
+                                    <ng-message when="required" class="errors">
+                                        Արժեթղթերի հաշիվը  հաշվառող անձի անվանումը մուտքագրված չէ
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" ng-if="bondOrder.Bond.DepositaryAccountExistenceType != undefined && bondOrder.Bond.DepositaryAccountExistenceType == 4">
+                        <label class="tab_title col-sm-5 " for="DepositaryAccount">Արժեթղթերի հաշիվ<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input class="form-control tab_title unstyled" style="text-align: left;" ng-disabled="bondOrder.Bond.DepositaryAccountExistenceType == 1"
+                                           id="DepositaryAccount" name="DepositaryAccount" ng-model="bondOrder.Bond.CustomerDepositaryAccount.AccountNumber" type="number" required />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.DepositaryAccount.$dirty"
+                                             for="BondOrderForm.DepositaryAccount.$error">
+                                    <ng-message when="required" class="errors">
+                                        Արժեթղթերի հաշիվը մուտքագրված չէ
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class=" form-group" ng-controller="AccountCtrl" ng-if="bondOrder.Bond.DepositaryAccountExistenceType == 4 ">
+                        <label class="tab_title col-sm-5" for="otherBankAccount">Բանկային հաշիվ</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="input-group" style="display: inline-flex; width: 88%" ng-init="getCurrentAccounts();text='Այլ բանկի հաշիվ';check=1">
+                                    <span id="AccountInit" class="input-group-addon" ng-click="!disable && (check==0?check=1:check=0);bondOrder.Bond.CustomerDepositaryAccount.StockIncomeAccountNumber = ''" style="display: inline-block;padding-right: 20px;padding-top: 10px;" ng-disabled="disable" title="" data-placement="left" data-toggle="tooltip" data-original-title="{{text}}">
+                                        <input type="checkbox" aria-label="..." ng-model="check" ng-change="check==0?check=1:check=0;check==1?text='Այլ բանկի հաշիվ':text='Ընթացիկ հաշիվներ';bondOrder.Bond.CustomerDepositaryAccount.StockIncomeAccountNumber = ''" ng-disabled="disable" ng-true-value="1" ng-false-value="0">
+                                    </span>
+                                    <select ng-model="bondOrder.Bond.CustomerDepositaryAccount.StockIncomeAccountNumber"
+                                            name="account" id="account" class="form-control" ng-hide="check==0" required>
+                                        <option value="">Ընտրեք Հաշվեհամարը...</option>
+                                        <option class="select_options_style" ng-repeat='account in accounts' ng-if="account.Currency == 'AMD' && account.TypeOfAccount != 282  && account.TypeOfAccount != 283 && account.JointType == 0 && account.AccountType == 10" style="margin-left:25px" value='{{ account.AccountNumber }}'>{{ account.AccountNumber }}</option>
+                                    </select>
+                                    <input ng-hide="check==1" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' type="text" class="form-control tab_title" style="text-align: left;" id="otherBankAccount" name="otherBankAccount" ng-model="bondOrder.Bond.CustomerDepositaryAccount.StockIncomeAccountNumber" placeholder="Լրացրեք այլ բանկի հաշիվը" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.otherBankAccount.$dirty || BondOrderForm.account.$dirty"
+                                             for="BondOrderForm.otherBankAccount.$error">
+                                    <ng-message when="required" class="errors">
+                                        Հաշվեհամարը ընտրված/լրացված չէ
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*AYL HO END*@
+
+
+                    @*Ակբա Բանկ ԲԲԸ START*@
+
+                    <div class="form-group" ng-if="bondOrder.Bond.DepositaryAccountExistenceType == 2">
+                        <label class="tab_title col-sm-5 " for="StockAccount">Արժեթղթերի հաշիվ </label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12" ng-if="bondOrder.Bond.CustomerDepositaryAccount.AccountNumber !== 0">
+                                    <input type="text" class="form-control tab_title unstyled" disabled="disabled" style="text-align: left;" id="StockAccount" name="StockAccount" ng-model="bondOrder.Bond.CustomerDepositaryAccount.AccountNumber" />
+                                </div>
+                                <div class="multiple_columns col-sm-12" ng-if="bondOrder.Bond.CustomerDepositaryAccount.AccountNumber === 0">
+                                    <input type="text" class="form-control tab_title unstyled" disabled="disabled" style="text-align: left;" placeholder="Առկա չէ արժեթղթերի հաշիվ" />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    @*Ակբա Բանկ ԲԲԸ LIST DATARK START*@
+                    <div class="form-group" ng-controller="AccountCtrl" ng-if="bondOrder.Bond.DepositaryAccountExistenceType == 2 && (stockIncomeaccList.length == 0  || stockIncomeaccList == 'undefined' || stockIncomeaccList == null) ">
+                        <label class="tab_title col-sm-5 " for="otherBankAccount">Բանկային հաշիվ </label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="input-group" style="display: inline-flex; width: 88%" ng-init="getCurrentAccounts();text='Այլ բանկի հաշիվ';check=1">
+                                    <span id="AccountInit" class="input-group-addon" ng-click="!disable && (check==0?check=1:check=0);bondOrder.Bond.CustomerDepositaryAccount.StockIncomeAccountNumber = ''" style="display: inline-block;padding-right: 20px;padding-top: 10px;" ng-disabled="disable" title="" data-placement="left" data-toggle="tooltip" data-original-title="{{text}}">
+                                        <input type="checkbox" aria-label="..." ng-model="check" ng-change="check==0?check=1:check=0;check==1?text='Այլ բանկի հաշիվ':text='Ընթացիկ հաշիվներ';bondOrder.Bond.CustomerDepositaryAccount.StockIncomeAccountNumber = ''" ng-disabled="disable" ng-true-value="1" ng-false-value="0">
+                                    </span>
+                                    <select ng-model="bondOrder.Bond.CustomerDepositaryAccount.StockIncomeAccountNumber"
+                                            name="account" id="account" class="form-control" ng-hide="check==0" required>
+                                        <option value="">Ընտրեք Հաշվեհամարը...</option>
+                                        <option class="select_options_style" ng-repeat='account in accounts' ng-if="account.Currency == 'AMD' && account.TypeOfAccount != 282  && account.TypeOfAccount != 283 && account.JointType == 0 && account.AccountType == 10" style="margin-left:25px" value='{{ account.AccountNumber }}'>{{ account.AccountNumber }}</option>
+                                    </select>
+                                    <input ng-hide="check==1" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' type="text" class="form-control tab_title" style="text-align: left;" id="otherBankAccount" name="otherBankAccount" ng-model="bondOrder.Bond.CustomerDepositaryAccount.StockIncomeAccountNumber" placeholder="Լրացրեք այլ բանկի հաշիվը" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.otherBankAccount.$dirty || BondOrderForm.account.$dirty"
+                                             for="BondOrderForm.otherBankAccount.$error">
+                                    <ng-message when="required" class="errors">
+                                        Հաշվեհամարը ընտրված/լրացված չէ
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+                    @*Ակբա Բանկ ԲԲԸ LIST DATARK END*@
+
+                    @*Ակբա Բանկ ԲԲԸ LIST LIQ@ START*@
+                    <div class=" form-group" ng-if="bondOrder.Bond.DepositaryAccountExistenceType == 2 &&   stockIncomeaccList.length != 0 && stockIncomeaccList != 'undefined' && stockIncomeaccList != null">
+                        <label class="tab_title col-sm-5" for="otherBankAccount">Բանկային հաշիվ</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <select ng-model="bondOrder.Bond.CustomerDepositaryAccount.StockIncomeAccountNumber"
+                                        name="otherBankAccount" id="otherBankAccount" class="form-control" required>
+                                    <option value="">Ընտրեք Հաշվեհամարը...</option>
+                                    <option class="select_options_style" ng-repeat='account in stockIncomeaccList' style="margin-left:25px" value='{{ account }}'>{{ account }}</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.otherBankAccount.$dirty || BondOrderForm.account.$dirty"
+                                             for="BondOrderForm.otherBankAccount.$error">
+                                    <ng-message when="required" class="errors">
+                                        Հաշվեհամարը ընտրված/լրացված չէ
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+                    @*Ակբա Բանկ ԲԲԸ LIST LIQ@ END*@
+                    @*Ակբա Բանկ ԲԲԸ END*@
+
+
+
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="multiple_columns col-sm-12">
+                            <input disabled="disabled" type="date" class="form-control tab_title unstyled" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="bondOrder.RegistrationDate" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.RegistrationDate.$dirty"
+                                     for="BondOrderForm.RegistrationDate.$error">
+                            <ng-message when="required" class="errors">
+                                Մուտքագրման ա/թը մուտքագրված չէ
+                            </ng-message>
+
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="FilialCode">Տարածքային ստորաբաժանման համար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="multiple_columns col-sm-12">
+                            <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="FilialCode" name="FilialCode" ng-model="bondOrder.Bond.FilialCode" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.FilialCode.$dirty"
+                                     for="BondOrderForm.FilialCode.$error">
+                            <ng-message when="required" class="errors">
+                                Տարածքային ստորաբաժանման համարը մուտքագրված չէ
+                            </ng-message>
+
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="DocumentNumber">Հայտի համար</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="multiple_columns col-sm-12">
+                            <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="DocumentNumber" name="DocumentNumber" ng-model="bondOrder.Bond.DocumentNumber" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.DocumentNumber.$dirty"
+                                     for="BondOrderForm.DocumentNumber.$error">
+                            <ng-message when="required" class="errors">
+                                Հայտի համարը մուտքագրված չէ
+                            </ng-message>
+
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="tab_title col-sm-5 " for="DocumentNumber">Արժեթղթի տեսակ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="multiple_columns col-sm-12">
+                            <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="BondType" name="BondType" ng-model="shareTypeDescription" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.DocumentNumber.$dirty"
+                                     for="BondOrderForm.BondType.$error">
+                            <ng-message when="required" class="errors">
+                                Արժեթղթի տեսակը մուտքագրված չէ
+                            </ng-message>
+
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="panel panel-success" style="margin-bottom: 10px;">
+                <div class="panel-heading">Բաժնետոմսերի տեղեկատվություն</div>
+                <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+                    <div class="form-group">
+                        <label class="tab_title col-sm-5 " for="ISIN">Բաժնետոմսի ԱՄՏԾ</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <loading-control scopevariable="bondIssuesList"></loading-control>
+                                    <select ng-model="bondOrder.Bond.BondIssueId" name="BondIssueId" id="BondIssueId" ng-change="bondIssueChange()" class="form-control" style="text-align: left;"
+                                            data-ng-options="bondIssueItem.ID as bondIssueItem.ISIN + ' ' + bondIssueItem.Currency for bondIssueItem in bondIssuesList" required>
+                                        <option value="" hidden>Ընտրեք...</option>
+                                    </select>
+
+
+                                </div>
+                                <span ng-if="bondIssue != undefined" style="left:1pt; color: #337AB7; cursor:pointer;vertical-align:central;" ng-controller="PopUpCtrl" ng-click="params={ProductId:bondIssue.ID , hideButton: true};openWindow('/BondIssue/BondIssueDetails','Մանրամասն դիտարկում ','oneBondIssueDetails')" class="glyphicon glyphicon-info-sign" />
+                            </div>
+
+
+                            <div class="row">
+                                <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.BondIssueId.$dirty"
+                                             for="BondOrderForm.BondIssueId.$error">
+                                    <ng-message when="required" class="errors">
+                                        ԱՄՏԾ-ն մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="tab_title col-sm-5 " for="ISIN">Թողարկման սերիան</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input type="number" class="form-control tab_title unstyled" disabled="disabled" style="text-align: left;" id="IssueSeria" name="IssueSeria" ng-model="bondOrder.Bond.IssueSeria" required />
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.IssueSeria.$dirty"
+                                             for="BondOrderForm.IssueSeria.$error">
+                                    <ng-message when="required" class="errors">
+                                        Թողարկման սերիան մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="tab_title col-sm-5 " for="NonDistributedBondCount">Չտեղաբաշխված բաժնետոմսերի քանակ<span class='redStyle'>*</span></label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input disabled="disabled" class="form-control tab_title unstyled" style="text-align: left;" id="NonDistributedBondCount" name="NonDistributedBondCount"
+                                           ng-model="NonDistributedBondCount" onkeypress='return event.charCode >= 48 && event.charCode <= 57'  required />
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.NonDistributedBondCount.$dirty"
+                                             for="BondOrderForm.NonDistributedBondCount.$error">
+                                    <ng-message when="required" class="errors">
+                                        Չտեղաբաշխված բաժնետոմսերի քանակը մուտքագրված չէ
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="tab_title col-sm-5 " for="BondCount">Ձեռք բերվող բաժնետոմսերի քանակ</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input class="form-control tab_title unstyled" style="text-align: left;" ng-blur="calculateTotalPrice()"
+                                           id="NominalPrice" name="BondCount" ng-model="bondOrder.Bond.BondCount" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                           maxlength="10" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.BondCount.$dirty"
+                                             for="BondOrderForm.BondCount.$error">
+                                    <ng-message when="required" class="errors">
+                                        Ձեռք բերվող բաժնետոմսերի քանակը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsa-number" class="errors">
+                                        Ձեռք բերվող բաժնետոմսերի քանակը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="tab_title col-sm-5 " for="UnitPrice">Մեկ բաժնետոմսի տեղաբաշխման գին</label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input type="text" class="form-control tab_title unstyled" fcsa-number="{ maxDecimals: 4 }" disabled="disabled" style="text-align: left;" id="UnitPrice" name="UnitPrice" ng-model="bondOrder.Bond.UnitPrice" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.UnitPrice.$dirty"
+                                             for="BondOrderForm.UnitPrice.$error">
+                                    <ng-message when="required" class="errors">
+                                        Մեկ բաժնետոմսի ձեռքբերման գինը մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsa-number" class="errors">
+                                        Մեկ բաժնետոմսի ձեռքբերման գինը  սխալ է լրացված
+                                    </ng-message>
+
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="tab_title col-sm-5 " for="TotalPrice">Ձեռքբերվող բաժնետոմսերի համար վճարման ենթակա  ընդհանուր գումար </label>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="multiple_columns col-sm-12">
+                                    <input type="text" class="form-control tab_title unstyled" fcsa-number="{ maxDecimals: 10 }" disabled="disabled" style="text-align: left;" id="TotalPrice" name="TotalPrice" ng-model="bondOrder.Bond.TotalPrice" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.TotalPrice.$dirty"
+                                             for="BondOrderForm.UnitPrice.$error">
+                                    <ng-message when="required" class="errors">
+                                        Ձեռքբերվող բաժնետոմսերի համար վճարման ենթակա  ընդհանուր գումարը  մուտքագրված չէ
+                                    </ng-message>
+                                    <ng-message when="fcsa-number" class="errors">
+                                        Ձեռքբերվող բաժնետոմսերի համար վճարման ենթակա  ընդհանուր գումարը ը սխալ է լրացված
+                                    </ng-message>
+                                </ng-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-success" style="margin-bottom: 10px;">
+                <div class="panel-heading">Գումարի ապահովում </div>
+                <div class="panel-body">
+                    @* <label class="tab_title col-sm-5 ">Գումարի ապահովում<span class='redStyle'>*</span></label>*@
+                    <label class="tab_title col-sm-5 " for="SecuringMoney"><span style="margin-left: -5%;">Գումարի ապահովում</span><span class='redStyle'>*</span></label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="multiple_columns col-sm-12">
+                                <input type="radio" value="true" class="checkbox-inline" style="width:initial"
+                                       name="SecuringMoney" ng-model="bondOrder.Bond.SecuringMoney" required />
+
+                                <label for="SecuringMoney" style="font-size:12px" class="tab_title">Գումարի գանձում</label>
+
+
+                                <br />
+                                <input type="radio" value="false" class="checkbox-inline" style="width:initial"
+                                       name="SecuringMoney" ng-model="bondOrder.Bond.SecuringMoney" required />
+                                <label style="font-size:12px" class="tab_title">Գումարի ապահովում ապագայում </label>
+
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.SecuringMoney.$dirty"
+                                         for="BondOrderForm.SecuringMoney.$error">
+                                <ng-message when="required" class="errors">
+                                    Գումարի ապահովումը մուտքագրված չէ
+                                </ng-message>
+
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;" ng-if="bondOrder.Bond.SecuringMoney == 'true'">
+
+                    <paymentaccount accounts="bondRepaymentAccounts"
+                                    accountselectname="bondRepaymentAccount"
+                                    account="bondOrder.Bond.AccountForBond"
+                                    check="0"
+                                    nameforaccount="'Ընթացիկ հաշիվներ'"
+                                    nameforcurrency=""
+                                    showloading="false"
+                                    formname="BondOrderForm">
+                    </paymentaccount>
+
+                    <div class="row">
+                        <div class="col-sm-5"></div>
+                        <ng-messages ng-if="BondOrderForm.$submitted || BondOrderForm.AccountForBond.$dirty"
+                                     for="BondOrderForm.bondRepaymentAccount.$error">
+                            <ng-message when="required" class="errors">
+                                Ընթացիկ հաշիվը մուտքագրված չէ
+                            </ng-message>
+
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-success" style="margin-bottom: 10px; " ng-if="bondOrder.Bond.DepositaryAccountExistenceType != 1 && bondOrder.Bond.DepositaryAccountExistenceType != 4">
+                <div class="panel-heading">
+                    Փաստաթղթերի կցում
+
+                </div>
+                <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+                    <div class="product-container-header">
+
+                        &nbsp;&nbsp;&nbsp;
+                        <i class="add-new-product " data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="Նոր փաստաթուղթ"
+                           ng-click="newFile();"></i>
+
+                    </div>
+                    <div class="form-group">
+                        <div ng-repeat="counter in attachmentsCounter">
+                            <div class="col-sm-4">
+
+                                <div>
+                                    <label class="tab_title col-sm-5">Ֆայլ</label>
+                                    <div flow-init="{singleFile:true}"
+                                         flow-files-submitted="$flow.upload()"
+                                         flow-files-added="convertfile($files, $event, $flow, $index)"
+                                         flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1,pdf:1}[$file.getExtension()]"
+                                         flow-file-success="$file.msg = $message"
+                                         flow-name="obj.flow">
+                                        <div class="thumbnail ng-hide" ng-show="!$flow.files.length" style="margin-bottom:5px">
+                                            <img src="~/Content/Images/blog-no-image.png" style="max-width:150px;max-height:150px;min-height:150px;min-width:150px;" />
+                                        </div>
+                                        <div class="thumbnail" ng-show="$flow.files.length" style="margin-bottom:5px">
+                                            <img flow-img="$flow.files[0]" style="max-width:150px;max-height:150px;min-height:150px;min-width:150px;" ng-if="$flow.files[0].getExtension() != 'pdf' " />
+                                            <img src="~/Content/Images/pdf.png" style="max-width:150px;max-height:150px;" ng-if="$flow.files[0].getExtension() == 'pdf' " />
+                                            <div class="additionalInfoLabel">
+                                                Ֆայլի անվանում` <b>{{$flow.files[0].name}}</b>
+                                            </div>
+
+                                            <div ng-if="$flow.files[0].size > 307200" style="color:red;">
+                                                <span class="glyphicon glyphicon-warning-sign "> Կցված ֆայլի չափը մեծ է 300kb-ից:</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span class="btn btn-sm btn-primary ng-hide" ng-show="!$flow.files.length" flow-btn="" style="min-width:110.78px;"><span class="glyphicon glyphicon-upload"></span>&nbsp;Կցել ֆայլ<input type="file" style="visibility: hidden; position: absolute;"></span>
+                                            <span class="btn btn-sm btn-info" ng-show="$flow.files.length" flow-btn=""><span class="glyphicon glyphicon-refresh"></span>&nbsp;Փոխել ֆայլը<input type="file" style="visibility: hidden; position: absolute;"></span>
+                                            <span class="btn btn-sm btn-danger" ng-show="$flow.files.length" ng-click="$flow.cancel();removeFile($index);" style="min-width:110.78px;">
+                                                <span class="glyphicon glyphicon-trash"></span>&nbsp;
+                                                Հեռացնել
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+

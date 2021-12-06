@@ -1,7 +1,6 @@
-﻿app.controller("BondCtrl", ['$scope', '$confirm', 'bondService', 'infoService', '$filter', '$http', '$rootScope', '$state', 'bondIssueService', function ($scope, $confirm, bondService, infoService, $filter, $http, $rootScope, $state, bondIssueService) {
+﻿app.controller("BondCtrl", ['$scope', '$confirm', 'bondService', 'bondOrderService', 'infoService', '$filter', '$http', '$rootScope', '$state', 'bondIssueService', '$uibModal', function ($scope, $confirm, bondService, bondOrderService, infoService, $filter, $http, $rootScope, $state, bondIssueService, $uibModal) {
 
     $scope.filter = {
-        Quality: 0,
         CustomerNumber: "",
         ISIN: ""
     };
@@ -15,12 +14,10 @@
         $scope.OpenType = 2; //Բացվել է Դիլինգի պատուհանից
     }
 
-    $scope.QualityFilter = '100';
-
-
 	$scope.setClickedRow = function (index, oneBond) {
 		$scope.selectedRow = index;
-		$scope.currentBond = oneBond;// $scope.bondsList[index];
+        $scope.currentBond = oneBond;// $scope.bondsList[index];
+        $scope.selectedAccountIsAccessible = oneBond.AccountForBond.isAccessible;
     };
 
 
@@ -94,12 +91,71 @@
     $scope.getBondQualityTypes = function () {
         var Data = infoService.getBondQualityTypes();
         Data.then(function (types) {
-            $scope.qualities = types.data;
+            $scope.bondQualities = types.data;
         }, function () {
             alert('Error getBondQualityTypes');
         });
     };
 
-   
+    $scope.printStockPurchaseApplication = function () {
+        showloading();
+        var Data = bondOrderService.getStockPurchaseApplication($scope.bond.ID, $scope.bond.CustomerNumber);
+        ShowPDF(Data);
+    };
+
+    $scope.confirmStockOrder = function () {
+        showloading();
+        $scope.error = null;
+        var Data = bondService.confirmStockOrder($scope.bond.ID);
+        Data.then(function (res) {
+            if (validate($scope, res.data)) {
+                hideloading();
+                showMesageBoxDialog('Բաժնետոմսը հաստատված է։', $scope, 'information');
+                CloseBPDialog('oneBondDetails');
+
+                var refreshScope = angular.element(document.getElementById('BondDealing')).scope()
+                if (refreshScope != undefined) {
+                    refreshScope.getBondsForDealing(refreshScope.filter);
+                }
+
+            }
+            else {
+                hideloading();
+                $scope.showError = true;
+                showMesageBoxDialog('Խնդրում ենք ուղղել սխալները և կրկին փորձել', $scope, 'error');
+            }
+        }, function () {
+            hideloading();
+            showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
+            alert('Error confirmStockOrder');
+        });
+    };
+
+    $scope.searchCustomers = function () {
+        $scope.searchCustomersModalInstance = $uibModal.open({
+            template: '<searchcustomer callback="getSearchedCustomer(customer)" close="closeSearchCustomersModal()"></searchcustomer>',
+            scope: $scope,
+            backdrop: true,
+            backdropClick: true,
+            dialogFade: false,
+            keyboard: false,
+            backdrop: 'static'
+        });
+    };
+
+    $scope.closeSearchCustomersModal = function () {
+        $scope.searchCustomersModalInstance.close();
+        if ($scope.filter.CustomerNumber != undefined) {
+            $scope.mod = false;
+        }
+
+    };
+
+    $scope.getSearchedCustomer = function (customer) {
+        $scope.filter.CustomerNumber = parseInt(customer.customerNumber);
+
+        $scope.closeSearchCustomersModal();
+    };
+
 
 }]);

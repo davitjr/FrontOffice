@@ -25,15 +25,29 @@
         });
     };
 
+    $scope.getCustomerDepositaryAccounts = function () {
+        var Data = customerService.getAuthorizedCustomerNumber();
+        Data.then(function (res) {
+            $scope.customerNumber = res.data;
+            var Data = bondService.getCustomerDepositaryAccounts($scope.customerNumber);
+            Data.then(function (acc) {
+                $scope.depoAccounts = acc.data;
+            });
+        }, function () {
+            alert('Error getCustomerDepositaryAccounts');
+        });
+    };
+
     $scope.setClickedRow = function (index) {
+        
         $scope.selectedRow = index;
-        $scope.currentDepositaryAccount = $scope.depoAccount[index];
+        $scope.currentDepositaryAccount = $scope.depoAccounts[index];
     };
 
 
 
     $scope.openDepositaryAccountDetails = function () {
-        $state.go('depositaryAccountDetails', { ProductId: $scope.depoAccount.ID });
+        $state.go('depositaryAccountDetails', { ProductId: $scope.currentDepositaryAccount.ID });
 
     };
 

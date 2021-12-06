@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.SessionState;
+using FrontOffice.Models;
 
 namespace FrontOffice.Controllers
 {
@@ -70,7 +71,7 @@ namespace FrontOffice.Controllers
                 List<xbs.BondIssue> bondIssuesNew = new List<XBS.BondIssue>();
                 foreach (xbs.BondIssue bondIssue in bondIssues)
                 {
-                    if(XBService.GetNonDistributedBondsCount(bondIssue.ID) > 0 && bondIssue.ReplacementDate <= DateTime.Now && bondIssue.ReplacementEndDate >= DateTime.Now)
+                    if(bondIssue.NonDistributedBondsCount >= 0 && bondIssue.ReplacementDate <= DateTime.Now && bondIssue.ReplacementEndDate >= DateTime.Now)
                     {
                         bondIssuesNew.Add(bondIssue);
                     }                
@@ -140,5 +141,21 @@ namespace FrontOffice.Controllers
         {
             return PartialView("BondIssue");
         }
+
+        public ActionResult StockIssueSave()
+        {
+            return PartialView("StockIssueSave");
+        }
+        
+        public JsonResult SaveStockIssue(xbs.BondIssue bondissue)
+        {
+            return Json(XBService.SaveBondIssue(bondissue), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetUnitPrice(int bondIssueId)
+        {
+            return Json(XBService.GetUnitPrice(bondIssueId), JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

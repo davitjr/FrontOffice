@@ -396,19 +396,20 @@
         return response;
     };
 
-    //this.Validate3DSecureEmailForPrint = function (cardNumber) {
-    //    var response = $http({
-    //        method: "post",
-    //        url: "Card/Validate3DSecureEmailForPrint",
-    //        dataType: "json",
-    //        params: {
-    //            cardNumber: cardNumber
+ 
+    this.Validate3DSecureEmailForPrint = function (cardNumber) {
+        var response = $http({
+            method: "post",
+            url: "Card/Validate3DSecureEmailForPrint",
+            dataType: "json",
+            params: {
+                cardNumber: cardNumber
 
-    //        }
+            }
 
-    //    });
-    //    return response;
-    //};
+        });
+        return response;
+    };
 
 
     this.getUserFilialCode = function () {
