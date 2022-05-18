@@ -160,11 +160,11 @@
                         <td style="text-align:center;width: 15%;" ng-if="forCashin!=true && isOrderDetails==true">Գործարքի կատարման նշում</td>
                         <td style="text-align:center;width: 25%;" ng-if="showPaymentType==true">Արգելադրման նպատակ</td>
                     </tr>
-                    <tr ng-repeat="reestrTransferAdditionalDetail in order.ReestrTransferAdditionalDetails | reestrDetails:transactionConfirmStatus | reestrDetails2:transactionCheckStatus" ng-style="{ backgroundColor : reestrTransferAdditionalDetail.NonValidate==true ?'#e67878':''}">
+                    <tr  ng-init="$index == 0?$parent.sumAmount = 0:''" ng-repeat="reestrTransferAdditionalDetail in order.ReestrTransferAdditionalDetails | reestrDetails:transactionConfirmStatus | reestrDetails2:transactionCheckStatus" ng-style="{ backgroundColor : reestrTransferAdditionalDetail.NonValidate==true ?'#e67878':''}">
                         <td style="text-align:center;width: 10%;">{{$index+1}}&nbsp;&nbsp;</td>
                         <td style="text-align:center"> {{::reestrTransferAdditionalDetail.Description}}&nbsp;&nbsp; </td>
                         <td style="text-align:right">{{::reestrTransferAdditionalDetail.CreditAccount.AccountNumber}}&nbsp;&nbsp;</td>
-                        <td style="text-align:right" ng-init="filterSelected==false?($parent.sumAmount=$parent.sumAmount+reestrTransferAdditionalDetail.Amount):''">
+                        <td style="text-align:right" ng-init="$parent.sumAmount=$parent.sumAmount+reestrTransferAdditionalDetail.Amount">
                             {{::reestrTransferAdditionalDetail.Amount | number:2}}&nbsp;&nbsp;
                         </td>
 

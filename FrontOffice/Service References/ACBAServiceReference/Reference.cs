@@ -2176,6 +2176,9 @@ namespace FrontOffice.ACBAServiceReference {
         private bool DoubleCustomersField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsLeasingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool MatchCaseField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -2297,6 +2300,19 @@ namespace FrontOffice.ACBAServiceReference {
                 if ((this.DoubleCustomersField.Equals(value) != true)) {
                     this.DoubleCustomersField = value;
                     this.RaisePropertyChanged("DoubleCustomers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsLeasing {
+            get {
+                return this.IsLeasingField;
+            }
+            set {
+                if ((this.IsLeasingField.Equals(value) != true)) {
+                    this.IsLeasingField = value;
+                    this.RaisePropertyChanged("IsLeasing");
                 }
             }
         }
@@ -5866,27 +5882,16 @@ namespace FrontOffice.ACBAServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CBViolationPayment", Namespace="http://schemas.datacontract.org/2004/07/CBDataService.PoliceViolations")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TupleOfintArrayOfRACitizenDTpyQ4eh", Namespace="http://schemas.datacontract.org/2004/07/System")]
     [System.SerializableAttribute()]
-    public partial class CBViolationPayment : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class TupleOfintArrayOfRACitizenDTpyQ4eh : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int OrderingIdField;
+        private int m_Item1Field;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal PayedSumField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime PaymentDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PaymentDocNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TaskIdField;
+        private System.Collections.Generic.List<FrontOffice.ACBAServiceReference.RACitizen> m_Item2Field;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -5898,67 +5903,28 @@ namespace FrontOffice.ACBAServiceReference {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int OrderingId {
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int m_Item1 {
             get {
-                return this.OrderingIdField;
+                return this.m_Item1Field;
             }
             set {
-                if ((this.OrderingIdField.Equals(value) != true)) {
-                    this.OrderingIdField = value;
-                    this.RaisePropertyChanged("OrderingId");
+                if ((this.m_Item1Field.Equals(value) != true)) {
+                    this.m_Item1Field = value;
+                    this.RaisePropertyChanged("m_Item1");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal PayedSum {
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public System.Collections.Generic.List<FrontOffice.ACBAServiceReference.RACitizen> m_Item2 {
             get {
-                return this.PayedSumField;
+                return this.m_Item2Field;
             }
             set {
-                if ((this.PayedSumField.Equals(value) != true)) {
-                    this.PayedSumField = value;
-                    this.RaisePropertyChanged("PayedSum");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime PaymentDate {
-            get {
-                return this.PaymentDateField;
-            }
-            set {
-                if ((this.PaymentDateField.Equals(value) != true)) {
-                    this.PaymentDateField = value;
-                    this.RaisePropertyChanged("PaymentDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PaymentDocNumber {
-            get {
-                return this.PaymentDocNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PaymentDocNumberField, value) != true)) {
-                    this.PaymentDocNumberField = value;
-                    this.RaisePropertyChanged("PaymentDocNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int TaskId {
-            get {
-                return this.TaskIdField;
-            }
-            set {
-                if ((this.TaskIdField.Equals(value) != true)) {
-                    this.TaskIdField = value;
-                    this.RaisePropertyChanged("TaskId");
+                if ((object.ReferenceEquals(this.m_Item2Field, value) != true)) {
+                    this.m_Item2Field = value;
+                    this.RaisePropertyChanged("m_Item2");
                 }
             }
         }
@@ -5975,18 +5941,24 @@ namespace FrontOffice.ACBAServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/ACBAOperationService")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RACitizen", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
     [System.SerializableAttribute()]
-    public partial class CompositeType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class RACitizen : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool BoolValueField;
+        private FrontOffice.ACBAServiceReference.Address AddressField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string StringValueField;
+        private string BirthDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.ACBAServiceReference.FullName FullNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private uint IdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -5999,27 +5971,810 @@ namespace FrontOffice.ACBAServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool BoolValue {
+        public FrontOffice.ACBAServiceReference.Address Address {
             get {
-                return this.BoolValueField;
+                return this.AddressField;
             }
             set {
-                if ((this.BoolValueField.Equals(value) != true)) {
-                    this.BoolValueField = value;
-                    this.RaisePropertyChanged("BoolValue");
+                if ((object.ReferenceEquals(this.AddressField, value) != true)) {
+                    this.AddressField = value;
+                    this.RaisePropertyChanged("Address");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string StringValue {
+        public string BirthDate {
             get {
-                return this.StringValueField;
+                return this.BirthDateField;
             }
             set {
-                if ((object.ReferenceEquals(this.StringValueField, value) != true)) {
-                    this.StringValueField = value;
-                    this.RaisePropertyChanged("StringValue");
+                if ((object.ReferenceEquals(this.BirthDateField, value) != true)) {
+                    this.BirthDateField = value;
+                    this.RaisePropertyChanged("BirthDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.ACBAServiceReference.FullName FullName {
+            get {
+                return this.FullNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FullNameField, value) != true)) {
+                    this.FullNameField = value;
+                    this.RaisePropertyChanged("FullName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public uint Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Version", Namespace="http://schemas.datacontract.org/2004/07/System")]
+    [System.SerializableAttribute()]
+    public partial class Version : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int _BuildField;
+        
+        private int _MajorField;
+        
+        private int _MinorField;
+        
+        private int _RevisionField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int _Build {
+            get {
+                return this._BuildField;
+            }
+            set {
+                if ((this._BuildField.Equals(value) != true)) {
+                    this._BuildField = value;
+                    this.RaisePropertyChanged("_Build");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int _Major {
+            get {
+                return this._MajorField;
+            }
+            set {
+                if ((this._MajorField.Equals(value) != true)) {
+                    this._MajorField = value;
+                    this.RaisePropertyChanged("_Major");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int _Minor {
+            get {
+                return this._MinorField;
+            }
+            set {
+                if ((this._MinorField.Equals(value) != true)) {
+                    this._MinorField = value;
+                    this.RaisePropertyChanged("_Minor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int _Revision {
+            get {
+                return this._RevisionField;
+            }
+            set {
+                if ((this._RevisionField.Equals(value) != true)) {
+                    this._RevisionField = value;
+                    this.RaisePropertyChanged("_Revision");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TupleOfshortshort", Namespace="http://schemas.datacontract.org/2004/07/System")]
+    [System.SerializableAttribute()]
+    public partial class TupleOfshortshort : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private short m_Item1Field;
+        
+        private short m_Item2Field;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public short m_Item1 {
+            get {
+                return this.m_Item1Field;
+            }
+            set {
+                if ((this.m_Item1Field.Equals(value) != true)) {
+                    this.m_Item1Field = value;
+                    this.RaisePropertyChanged("m_Item1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public short m_Item2 {
+            get {
+                return this.m_Item2Field;
+            }
+            set {
+                if ((this.m_Item2Field.Equals(value) != true)) {
+                    this.m_Item2Field = value;
+                    this.RaisePropertyChanged("m_Item2");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ContactChangingRiskRequestData", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails")]
+    [System.SerializableAttribute()]
+    public partial class ContactChangingRiskRequestData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.ACBAServiceReference.ContactChangingRiskRequest ChangingRiskRequestField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction> ChangingRiskVerificationActionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData> ChangingRiskVerificationDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact> ChangingRiskverificationContactField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.ACBAServiceReference.ContactChangingRiskRequest ChangingRiskRequest {
+            get {
+                return this.ChangingRiskRequestField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChangingRiskRequestField, value) != true)) {
+                    this.ChangingRiskRequestField = value;
+                    this.RaisePropertyChanged("ChangingRiskRequest");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction> ChangingRiskVerificationAction {
+            get {
+                return this.ChangingRiskVerificationActionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChangingRiskVerificationActionField, value) != true)) {
+                    this.ChangingRiskVerificationActionField = value;
+                    this.RaisePropertyChanged("ChangingRiskVerificationAction");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData> ChangingRiskVerificationData {
+            get {
+                return this.ChangingRiskVerificationDataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChangingRiskVerificationDataField, value) != true)) {
+                    this.ChangingRiskVerificationDataField = value;
+                    this.RaisePropertyChanged("ChangingRiskVerificationData");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact> ChangingRiskverificationContact {
+            get {
+                return this.ChangingRiskverificationContactField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChangingRiskverificationContactField, value) != true)) {
+                    this.ChangingRiskverificationContactField = value;
+                    this.RaisePropertyChanged("ChangingRiskverificationContact");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ContactChangingRiskRequest", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails")]
+    [System.SerializableAttribute()]
+    public partial class ContactChangingRiskRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ulong CustomerNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int FilialCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime RequestDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RequestGUIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private uint RequestIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private short StatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private uint UserSetNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime ValidaDateField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ulong CustomerNumber {
+            get {
+                return this.CustomerNumberField;
+            }
+            set {
+                if ((this.CustomerNumberField.Equals(value) != true)) {
+                    this.CustomerNumberField = value;
+                    this.RaisePropertyChanged("CustomerNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int FilialCode {
+            get {
+                return this.FilialCodeField;
+            }
+            set {
+                if ((this.FilialCodeField.Equals(value) != true)) {
+                    this.FilialCodeField = value;
+                    this.RaisePropertyChanged("FilialCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime RequestDate {
+            get {
+                return this.RequestDateField;
+            }
+            set {
+                if ((this.RequestDateField.Equals(value) != true)) {
+                    this.RequestDateField = value;
+                    this.RaisePropertyChanged("RequestDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RequestGUID {
+            get {
+                return this.RequestGUIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RequestGUIDField, value) != true)) {
+                    this.RequestGUIDField = value;
+                    this.RaisePropertyChanged("RequestGUID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public uint RequestId {
+            get {
+                return this.RequestIdField;
+            }
+            set {
+                if ((this.RequestIdField.Equals(value) != true)) {
+                    this.RequestIdField = value;
+                    this.RaisePropertyChanged("RequestId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public short Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((this.StatusField.Equals(value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public uint UserSetNumber {
+            get {
+                return this.UserSetNumberField;
+            }
+            set {
+                if ((this.UserSetNumberField.Equals(value) != true)) {
+                    this.UserSetNumberField = value;
+                    this.RaisePropertyChanged("UserSetNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime ValidaDate {
+            get {
+                return this.ValidaDateField;
+            }
+            set {
+                if ((this.ValidaDateField.Equals(value) != true)) {
+                    this.ValidaDateField = value;
+                    this.RaisePropertyChanged("ValidaDate");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ContactChangingRiskVerificationAction", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails")]
+    [System.SerializableAttribute()]
+    public partial class ContactChangingRiskVerificationAction : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime ActionDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActionReasonField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private uint ActionUserField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private short ActiontypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private uint RequestIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime ActionDate {
+            get {
+                return this.ActionDateField;
+            }
+            set {
+                if ((this.ActionDateField.Equals(value) != true)) {
+                    this.ActionDateField = value;
+                    this.RaisePropertyChanged("ActionDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ActionReason {
+            get {
+                return this.ActionReasonField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActionReasonField, value) != true)) {
+                    this.ActionReasonField = value;
+                    this.RaisePropertyChanged("ActionReason");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public uint ActionUser {
+            get {
+                return this.ActionUserField;
+            }
+            set {
+                if ((this.ActionUserField.Equals(value) != true)) {
+                    this.ActionUserField = value;
+                    this.RaisePropertyChanged("ActionUser");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public short Actiontype {
+            get {
+                return this.ActiontypeField;
+            }
+            set {
+                if ((this.ActiontypeField.Equals(value) != true)) {
+                    this.ActiontypeField = value;
+                    this.RaisePropertyChanged("Actiontype");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public uint RequestId {
+            get {
+                return this.RequestIdField;
+            }
+            set {
+                if ((this.RequestIdField.Equals(value) != true)) {
+                    this.RequestIdField = value;
+                    this.RaisePropertyChanged("RequestId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ContactChangingRiskVerificationData", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails")]
+    [System.SerializableAttribute()]
+    public partial class ContactChangingRiskVerificationData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private short ContactTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NewValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OldValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private uint RequestIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public short ContactType {
+            get {
+                return this.ContactTypeField;
+            }
+            set {
+                if ((this.ContactTypeField.Equals(value) != true)) {
+                    this.ContactTypeField = value;
+                    this.RaisePropertyChanged("ContactType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NewValue {
+            get {
+                return this.NewValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NewValueField, value) != true)) {
+                    this.NewValueField = value;
+                    this.RaisePropertyChanged("NewValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OldValue {
+            get {
+                return this.OldValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OldValueField, value) != true)) {
+                    this.OldValueField = value;
+                    this.RaisePropertyChanged("OldValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public uint RequestId {
+            get {
+                return this.RequestIdField;
+            }
+            set {
+                if ((this.RequestIdField.Equals(value) != true)) {
+                    this.RequestIdField = value;
+                    this.RaisePropertyChanged("RequestId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ContactChangingRiskVerificationContact", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails")]
+    [System.SerializableAttribute()]
+    public partial class ContactChangingRiskVerificationContact : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContactField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private short ContactTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NeedSendSMSForVerificationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private uint RequestIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Contact {
+            get {
+                return this.ContactField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContactField, value) != true)) {
+                    this.ContactField = value;
+                    this.RaisePropertyChanged("Contact");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public short ContactType {
+            get {
+                return this.ContactTypeField;
+            }
+            set {
+                if ((this.ContactTypeField.Equals(value) != true)) {
+                    this.ContactTypeField = value;
+                    this.RaisePropertyChanged("ContactType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NeedSendSMSForVerification {
+            get {
+                return this.NeedSendSMSForVerificationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NeedSendSMSForVerificationField, value) != true)) {
+                    this.NeedSendSMSForVerificationField = value;
+                    this.RaisePropertyChanged("NeedSendSMSForVerification");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public uint RequestId {
+            get {
+                return this.RequestIdField;
+            }
+            set {
+                if ((this.RequestIdField.Equals(value) != true)) {
+                    this.RequestIdField = value;
+                    this.RaisePropertyChanged("RequestId");
                 }
             }
         }
@@ -6139,54 +6894,29 @@ namespace FrontOffice.ACBAServiceReference {
         Incomplete = 2,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountEnumerations.GetPersonalAccountOption", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
-        "countSecurity")]
-    public enum PersonalAccountEnumerationsGetPersonalAccountOption : short {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        ByCustomerNumber = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        ByUserName = 2,
-    }
-    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ExternalUser", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CBViolationPayment", Namespace="http://schemas.datacontract.org/2004/07/CBDataService.PoliceViolations")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-    public partial class ExternalUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class CBViolationPayment : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int BranchCodeField;
+        private int OrderingIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ChangeRequirementField;
+        private decimal PayedSumField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CustomerNumberField;
+        private System.DateTime PaymentDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FullNameField;
+        private string PaymentDocNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FullNameEngField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int PermissionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SessionIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int UserIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UserNameField;
+        private int TaskIdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -6199,577 +6929,66 @@ namespace FrontOffice.ACBAServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int BranchCode {
+        public int OrderingId {
             get {
-                return this.BranchCodeField;
+                return this.OrderingIdField;
             }
             set {
-                if ((this.BranchCodeField.Equals(value) != true)) {
-                    this.BranchCodeField = value;
-                    this.RaisePropertyChanged("BranchCode");
+                if ((this.OrderingIdField.Equals(value) != true)) {
+                    this.OrderingIdField = value;
+                    this.RaisePropertyChanged("OrderingId");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ChangeRequirement {
+        public decimal PayedSum {
             get {
-                return this.ChangeRequirementField;
+                return this.PayedSumField;
             }
             set {
-                if ((this.ChangeRequirementField.Equals(value) != true)) {
-                    this.ChangeRequirementField = value;
-                    this.RaisePropertyChanged("ChangeRequirement");
+                if ((this.PayedSumField.Equals(value) != true)) {
+                    this.PayedSumField = value;
+                    this.RaisePropertyChanged("PayedSum");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CustomerNumber {
+        public System.DateTime PaymentDate {
             get {
-                return this.CustomerNumberField;
+                return this.PaymentDateField;
             }
             set {
-                if ((object.ReferenceEquals(this.CustomerNumberField, value) != true)) {
-                    this.CustomerNumberField = value;
-                    this.RaisePropertyChanged("CustomerNumber");
+                if ((this.PaymentDateField.Equals(value) != true)) {
+                    this.PaymentDateField = value;
+                    this.RaisePropertyChanged("PaymentDate");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FullName {
+        public string PaymentDocNumber {
             get {
-                return this.FullNameField;
+                return this.PaymentDocNumberField;
             }
             set {
-                if ((object.ReferenceEquals(this.FullNameField, value) != true)) {
-                    this.FullNameField = value;
-                    this.RaisePropertyChanged("FullName");
+                if ((object.ReferenceEquals(this.PaymentDocNumberField, value) != true)) {
+                    this.PaymentDocNumberField = value;
+                    this.RaisePropertyChanged("PaymentDocNumber");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FullNameEng {
+        public int TaskId {
             get {
-                return this.FullNameEngField;
+                return this.TaskIdField;
             }
             set {
-                if ((object.ReferenceEquals(this.FullNameEngField, value) != true)) {
-                    this.FullNameEngField = value;
-                    this.RaisePropertyChanged("FullNameEng");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Permission {
-            get {
-                return this.PermissionField;
-            }
-            set {
-                if ((this.PermissionField.Equals(value) != true)) {
-                    this.PermissionField = value;
-                    this.RaisePropertyChanged("Permission");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionID {
-            get {
-                return this.SessionIDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SessionIDField, value) != true)) {
-                    this.SessionIDField = value;
-                    this.RaisePropertyChanged("SessionID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int UserID {
-            get {
-                return this.UserIDField;
-            }
-            set {
-                if ((this.UserIDField.Equals(value) != true)) {
-                    this.UserIDField = value;
-                    this.RaisePropertyChanged("UserID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
-            get {
-                return this.UserNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
-                    this.UserNameField = value;
-                    this.RaisePropertyChanged("UserName");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountUser", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
-        "countSecurity")]
-    [System.SerializableAttribute()]
-    public partial class PersonalAccountUser : FrontOffice.ACBAServiceReference.ExternalUser {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PasswordField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime PasswordChangeDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality QualityField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource SourceField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Password {
-            get {
-                return this.PasswordField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
-                    this.PasswordField = value;
-                    this.RaisePropertyChanged("Password");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime PasswordChangeDate {
-            get {
-                return this.PasswordChangeDateField;
-            }
-            set {
-                if ((this.PasswordChangeDateField.Equals(value) != true)) {
-                    this.PasswordChangeDateField = value;
-                    this.RaisePropertyChanged("PasswordChangeDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality Quality {
-            get {
-                return this.QualityField;
-            }
-            set {
-                if ((this.QualityField.Equals(value) != true)) {
-                    this.QualityField = value;
-                    this.RaisePropertyChanged("Quality");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource Source {
-            get {
-                return this.SourceField;
-            }
-            set {
-                if ((this.SourceField.Equals(value) != true)) {
-                    this.SourceField = value;
-                    this.RaisePropertyChanged("Source");
-                }
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountEnumerations.Quality", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
-        "countSecurity")]
-    public enum PersonalAccountEnumerationsQuality : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        None = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Confirmed = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        NotConfirmed = 2,
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountEnumerations.Source", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
-        "countSecurity")]
-    public enum PersonalAccountEnumerationsSource : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        None = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Website = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        CRM = 2,
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PSActionResult", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
-        "countSecurity")]
-    [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-    public partial class PSActionResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode ActionResultCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<string> DescriptionsField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode ActionResultCode {
-            get {
-                return this.ActionResultCodeField;
-            }
-            set {
-                if ((this.ActionResultCodeField.Equals(value) != true)) {
-                    this.ActionResultCodeField = value;
-                    this.RaisePropertyChanged("ActionResultCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<string> Descriptions {
-            get {
-                return this.DescriptionsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DescriptionsField, value) != true)) {
-                    this.DescriptionsField = value;
-                    this.RaisePropertyChanged("Descriptions");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ContentResultOfstring", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
-        "countSecurity")]
-    [System.SerializableAttribute()]
-    public partial class ContentResultOfstring : FrontOffice.ACBAServiceReference.PSActionResult {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContentField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Content {
-            get {
-                return this.ContentField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContentField, value) != true)) {
-                    this.ContentField = value;
-                    this.RaisePropertyChanged("Content");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ContentResultOfPersonalAccountUserE4WxUX8p", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
-        "countSecurity")]
-    [System.SerializableAttribute()]
-    public partial class ContentResultOfPersonalAccountUserE4WxUX8p : FrontOffice.ACBAServiceReference.PSActionResult {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FrontOffice.ACBAServiceReference.PersonalAccountUser ContentField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public FrontOffice.ACBAServiceReference.PersonalAccountUser Content {
-            get {
-                return this.ContentField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContentField, value) != true)) {
-                    this.ContentField = value;
-                    this.RaisePropertyChanged("Content");
-                }
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountEnumerations.ResultCode", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
-        "countSecurity")]
-    public enum PersonalAccountEnumerationsResultCode : short {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        None = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Normal = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Failed = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        ChangePassword = 3,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        ValidationFailed = 4,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        NotFound = 5,
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Lead", Namespace="http://schemas.datacontract.org/2004/07/SAPCRM")]
-    [System.SerializableAttribute()]
-    public partial class Lead : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double AmountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CurrencyField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int DurationField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int FilialCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private float InterestRateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private short ProductTypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ProductTypeDescriptionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime RegistrationDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ResponsibleEmployeeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private short TypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TypeDescriptionField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Amount {
-            get {
-                return this.AmountField;
-            }
-            set {
-                if ((this.AmountField.Equals(value) != true)) {
-                    this.AmountField = value;
-                    this.RaisePropertyChanged("Amount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Currency {
-            get {
-                return this.CurrencyField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CurrencyField, value) != true)) {
-                    this.CurrencyField = value;
-                    this.RaisePropertyChanged("Currency");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Duration {
-            get {
-                return this.DurationField;
-            }
-            set {
-                if ((this.DurationField.Equals(value) != true)) {
-                    this.DurationField = value;
-                    this.RaisePropertyChanged("Duration");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int FilialCode {
-            get {
-                return this.FilialCodeField;
-            }
-            set {
-                if ((this.FilialCodeField.Equals(value) != true)) {
-                    this.FilialCodeField = value;
-                    this.RaisePropertyChanged("FilialCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public float InterestRate {
-            get {
-                return this.InterestRateField;
-            }
-            set {
-                if ((this.InterestRateField.Equals(value) != true)) {
-                    this.InterestRateField = value;
-                    this.RaisePropertyChanged("InterestRate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public short ProductType {
-            get {
-                return this.ProductTypeField;
-            }
-            set {
-                if ((this.ProductTypeField.Equals(value) != true)) {
-                    this.ProductTypeField = value;
-                    this.RaisePropertyChanged("ProductType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ProductTypeDescription {
-            get {
-                return this.ProductTypeDescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ProductTypeDescriptionField, value) != true)) {
-                    this.ProductTypeDescriptionField = value;
-                    this.RaisePropertyChanged("ProductTypeDescription");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime RegistrationDate {
-            get {
-                return this.RegistrationDateField;
-            }
-            set {
-                if ((this.RegistrationDateField.Equals(value) != true)) {
-                    this.RegistrationDateField = value;
-                    this.RaisePropertyChanged("RegistrationDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ResponsibleEmployee {
-            get {
-                return this.ResponsibleEmployeeField;
-            }
-            set {
-                if ((this.ResponsibleEmployeeField.Equals(value) != true)) {
-                    this.ResponsibleEmployeeField = value;
-                    this.RaisePropertyChanged("ResponsibleEmployee");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public short Type {
-            get {
-                return this.TypeField;
-            }
-            set {
-                if ((this.TypeField.Equals(value) != true)) {
-                    this.TypeField = value;
-                    this.RaisePropertyChanged("Type");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TypeDescription {
-            get {
-                return this.TypeDescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TypeDescriptionField, value) != true)) {
-                    this.TypeDescriptionField = value;
-                    this.RaisePropertyChanged("TypeDescription");
+                if ((this.TaskIdField.Equals(value) != true)) {
+                    this.TaskIdField = value;
+                    this.RaisePropertyChanged("TaskId");
                 }
             }
         }
@@ -9274,19 +9493,25 @@ namespace FrontOffice.ACBAServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Person", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -9518,18 +9743,8 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -9543,15 +9758,20 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
     public partial class Person : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -10199,19 +10419,25 @@ namespace FrontOffice.ACBAServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Organisation", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -10443,18 +10669,8 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -10468,15 +10684,20 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
     public partial class Organisation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -17168,19 +17389,25 @@ namespace FrontOffice.ACBAServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Holder", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -17412,18 +17639,8 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -17437,15 +17654,20 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
     public partial class Holder : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -17904,19 +18126,25 @@ namespace FrontOffice.ACBAServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Lender", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -18148,18 +18376,8 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -18173,15 +18391,20 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
     public partial class Lender : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -18451,19 +18674,25 @@ namespace FrontOffice.ACBAServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Owner", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -18695,18 +18924,8 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -18720,15 +18939,20 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
     public partial class Owner : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -20412,99 +20636,6 @@ namespace FrontOffice.ACBAServiceReference {
                 if ((this.servicingSetNumberField.Equals(value) != true)) {
                     this.servicingSetNumberField = value;
                     this.RaisePropertyChanged("servicingSetNumber");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RACitizen", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-    [System.SerializableAttribute()]
-    public partial class RACitizen : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FrontOffice.ACBAServiceReference.Address AddressField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string BirthDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FrontOffice.ACBAServiceReference.FullName FullNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private uint IdField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public FrontOffice.ACBAServiceReference.Address Address {
-            get {
-                return this.AddressField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AddressField, value) != true)) {
-                    this.AddressField = value;
-                    this.RaisePropertyChanged("Address");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BirthDate {
-            get {
-                return this.BirthDateField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BirthDateField, value) != true)) {
-                    this.BirthDateField = value;
-                    this.RaisePropertyChanged("BirthDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public FrontOffice.ACBAServiceReference.FullName FullName {
-            get {
-                return this.FullNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FullNameField, value) != true)) {
-                    this.FullNameField = value;
-                    this.RaisePropertyChanged("FullName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public uint Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
                 }
             }
         }
@@ -22478,19 +22609,25 @@ namespace FrontOffice.ACBAServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ChangeSet", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -22722,18 +22859,8 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -22747,15 +22874,20 @@ namespace FrontOffice.ACBAServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
     public partial class ChangeSet : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -23139,6 +23271,743 @@ namespace FrontOffice.ACBAServiceReference {
                 if ((this.regionIdField.Equals(value) != true)) {
                     this.regionIdField = value;
                     this.RaisePropertyChanged("regionId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Lead", Namespace="http://schemas.datacontract.org/2004/07/SAPCRM")]
+    [System.SerializableAttribute()]
+    public partial class Lead : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double AmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int DurationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int FilialCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private float InterestRateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private short ProductTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProductTypeDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime RegistrationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ResponsibleEmployeeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private short TypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TypeDescriptionField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Amount {
+            get {
+                return this.AmountField;
+            }
+            set {
+                if ((this.AmountField.Equals(value) != true)) {
+                    this.AmountField = value;
+                    this.RaisePropertyChanged("Amount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Currency {
+            get {
+                return this.CurrencyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrencyField, value) != true)) {
+                    this.CurrencyField = value;
+                    this.RaisePropertyChanged("Currency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Duration {
+            get {
+                return this.DurationField;
+            }
+            set {
+                if ((this.DurationField.Equals(value) != true)) {
+                    this.DurationField = value;
+                    this.RaisePropertyChanged("Duration");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int FilialCode {
+            get {
+                return this.FilialCodeField;
+            }
+            set {
+                if ((this.FilialCodeField.Equals(value) != true)) {
+                    this.FilialCodeField = value;
+                    this.RaisePropertyChanged("FilialCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public float InterestRate {
+            get {
+                return this.InterestRateField;
+            }
+            set {
+                if ((this.InterestRateField.Equals(value) != true)) {
+                    this.InterestRateField = value;
+                    this.RaisePropertyChanged("InterestRate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public short ProductType {
+            get {
+                return this.ProductTypeField;
+            }
+            set {
+                if ((this.ProductTypeField.Equals(value) != true)) {
+                    this.ProductTypeField = value;
+                    this.RaisePropertyChanged("ProductType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProductTypeDescription {
+            get {
+                return this.ProductTypeDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProductTypeDescriptionField, value) != true)) {
+                    this.ProductTypeDescriptionField = value;
+                    this.RaisePropertyChanged("ProductTypeDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime RegistrationDate {
+            get {
+                return this.RegistrationDateField;
+            }
+            set {
+                if ((this.RegistrationDateField.Equals(value) != true)) {
+                    this.RegistrationDateField = value;
+                    this.RaisePropertyChanged("RegistrationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ResponsibleEmployee {
+            get {
+                return this.ResponsibleEmployeeField;
+            }
+            set {
+                if ((this.ResponsibleEmployeeField.Equals(value) != true)) {
+                    this.ResponsibleEmployeeField = value;
+                    this.RaisePropertyChanged("ResponsibleEmployee");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public short Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((this.TypeField.Equals(value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TypeDescription {
+            get {
+                return this.TypeDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TypeDescriptionField, value) != true)) {
+                    this.TypeDescriptionField = value;
+                    this.RaisePropertyChanged("TypeDescription");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ExternalUser", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+    public partial class ExternalUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int BranchCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ChangeRequirementField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CustomerNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FullNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FullNameEngField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PermissionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SessionIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int UserIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int BranchCode {
+            get {
+                return this.BranchCodeField;
+            }
+            set {
+                if ((this.BranchCodeField.Equals(value) != true)) {
+                    this.BranchCodeField = value;
+                    this.RaisePropertyChanged("BranchCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ChangeRequirement {
+            get {
+                return this.ChangeRequirementField;
+            }
+            set {
+                if ((this.ChangeRequirementField.Equals(value) != true)) {
+                    this.ChangeRequirementField = value;
+                    this.RaisePropertyChanged("ChangeRequirement");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CustomerNumber {
+            get {
+                return this.CustomerNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomerNumberField, value) != true)) {
+                    this.CustomerNumberField = value;
+                    this.RaisePropertyChanged("CustomerNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FullName {
+            get {
+                return this.FullNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FullNameField, value) != true)) {
+                    this.FullNameField = value;
+                    this.RaisePropertyChanged("FullName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FullNameEng {
+            get {
+                return this.FullNameEngField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FullNameEngField, value) != true)) {
+                    this.FullNameEngField = value;
+                    this.RaisePropertyChanged("FullNameEng");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Permission {
+            get {
+                return this.PermissionField;
+            }
+            set {
+                if ((this.PermissionField.Equals(value) != true)) {
+                    this.PermissionField = value;
+                    this.RaisePropertyChanged("Permission");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SessionID {
+            get {
+                return this.SessionIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SessionIDField, value) != true)) {
+                    this.SessionIDField = value;
+                    this.RaisePropertyChanged("SessionID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int UserID {
+            get {
+                return this.UserIDField;
+            }
+            set {
+                if ((this.UserIDField.Equals(value) != true)) {
+                    this.UserIDField = value;
+                    this.RaisePropertyChanged("UserID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountEnumerations.GetPersonalAccountOption", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
+        "countSecurity")]
+    public enum PersonalAccountEnumerationsGetPersonalAccountOption : short {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ByCustomerNumber = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ByUserName = 2,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountUser", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
+        "countSecurity")]
+    [System.SerializableAttribute()]
+    public partial class PersonalAccountUser : FrontOffice.ACBAServiceReference.ExternalUser {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime PasswordChangeDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality QualityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource SourceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus StatusField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime PasswordChangeDate {
+            get {
+                return this.PasswordChangeDateField;
+            }
+            set {
+                if ((this.PasswordChangeDateField.Equals(value) != true)) {
+                    this.PasswordChangeDateField = value;
+                    this.RaisePropertyChanged("PasswordChangeDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality Quality {
+            get {
+                return this.QualityField;
+            }
+            set {
+                if ((this.QualityField.Equals(value) != true)) {
+                    this.QualityField = value;
+                    this.RaisePropertyChanged("Quality");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource Source {
+            get {
+                return this.SourceField;
+            }
+            set {
+                if ((this.SourceField.Equals(value) != true)) {
+                    this.SourceField = value;
+                    this.RaisePropertyChanged("Source");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((this.StatusField.Equals(value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountEnumerations.Quality", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
+        "countSecurity")]
+    public enum PersonalAccountEnumerationsQuality : short {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        None = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Confirmed = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NotConfirmed = 2,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountEnumerations.Source", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
+        "countSecurity")]
+    public enum PersonalAccountEnumerationsSource : short {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        None = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Website = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CRM = 2,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountEnumerations.Status", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
+        "countSecurity")]
+    public enum PersonalAccountEnumerationsStatus : short {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        None = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        On = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Off = 2,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PSActionResult", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
+        "countSecurity")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+    public partial class PSActionResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode ActionResultCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<string> DescriptionsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode ActionResultCode {
+            get {
+                return this.ActionResultCodeField;
+            }
+            set {
+                if ((this.ActionResultCodeField.Equals(value) != true)) {
+                    this.ActionResultCodeField = value;
+                    this.RaisePropertyChanged("ActionResultCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<string> Descriptions {
+            get {
+                return this.DescriptionsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionsField, value) != true)) {
+                    this.DescriptionsField = value;
+                    this.RaisePropertyChanged("Descriptions");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PersonalAccountEnumerations.ResultCode", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
+        "countSecurity")]
+    public enum PersonalAccountEnumerationsResultCode : short {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        None = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Normal = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Failed = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ChangePassword = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ValidationFailed = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NotFound = 5,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ContentResultOfstring", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
+        "countSecurity")]
+    [System.SerializableAttribute()]
+    public partial class ContentResultOfstring : FrontOffice.ACBAServiceReference.PSActionResult {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContentField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Content {
+            get {
+                return this.ContentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContentField, value) != true)) {
+                    this.ContentField = value;
+                    this.RaisePropertyChanged("Content");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ContentResultOfPersonalAccountUserE4WxUX8p", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAc" +
+        "countSecurity")]
+    [System.SerializableAttribute()]
+    public partial class ContentResultOfPersonalAccountUserE4WxUX8p : FrontOffice.ACBAServiceReference.PSActionResult {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.ACBAServiceReference.PersonalAccountUser ContentField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.ACBAServiceReference.PersonalAccountUser Content {
+            get {
+                return this.ContentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContentField, value) != true)) {
+                    this.ContentField = value;
+                    this.RaisePropertyChanged("Content");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/ACBAOperationService")]
+    [System.SerializableAttribute()]
+    public partial class CompositeType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool BoolValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StringValueField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool BoolValue {
+            get {
+                return this.BoolValueField;
+            }
+            set {
+                if ((this.BoolValueField.Equals(value) != true)) {
+                    this.BoolValueField = value;
+                    this.RaisePropertyChanged("BoolValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StringValue {
+            get {
+                return this.StringValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StringValueField, value) != true)) {
+                    this.StringValueField = value;
+                    this.RaisePropertyChanged("StringValue");
                 }
             }
         }
@@ -23592,822 +24461,6 @@ namespace FrontOffice.ACBAServiceReference {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ContactChangingRiskRequestData", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails")]
-    [System.SerializableAttribute()]
-    public partial class ContactChangingRiskRequestData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FrontOffice.ACBAServiceReference.ContactChangingRiskRequest ChangingRiskRequestField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction> ChangingRiskVerificationActionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData> ChangingRiskVerificationDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact> ChangingRiskverificationContactField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public FrontOffice.ACBAServiceReference.ContactChangingRiskRequest ChangingRiskRequest {
-            get {
-                return this.ChangingRiskRequestField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChangingRiskRequestField, value) != true)) {
-                    this.ChangingRiskRequestField = value;
-                    this.RaisePropertyChanged("ChangingRiskRequest");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction> ChangingRiskVerificationAction {
-            get {
-                return this.ChangingRiskVerificationActionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChangingRiskVerificationActionField, value) != true)) {
-                    this.ChangingRiskVerificationActionField = value;
-                    this.RaisePropertyChanged("ChangingRiskVerificationAction");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData> ChangingRiskVerificationData {
-            get {
-                return this.ChangingRiskVerificationDataField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChangingRiskVerificationDataField, value) != true)) {
-                    this.ChangingRiskVerificationDataField = value;
-                    this.RaisePropertyChanged("ChangingRiskVerificationData");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact> ChangingRiskverificationContact {
-            get {
-                return this.ChangingRiskverificationContactField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChangingRiskverificationContactField, value) != true)) {
-                    this.ChangingRiskverificationContactField = value;
-                    this.RaisePropertyChanged("ChangingRiskverificationContact");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ContactChangingRiskRequest", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails")]
-    [System.SerializableAttribute()]
-    public partial class ContactChangingRiskRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ulong CustomerNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int FilialCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime RequestDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string RequestGUIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private uint RequestIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private short StatusField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private uint UserSetNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime ValidaDateField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ulong CustomerNumber {
-            get {
-                return this.CustomerNumberField;
-            }
-            set {
-                if ((this.CustomerNumberField.Equals(value) != true)) {
-                    this.CustomerNumberField = value;
-                    this.RaisePropertyChanged("CustomerNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int FilialCode {
-            get {
-                return this.FilialCodeField;
-            }
-            set {
-                if ((this.FilialCodeField.Equals(value) != true)) {
-                    this.FilialCodeField = value;
-                    this.RaisePropertyChanged("FilialCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime RequestDate {
-            get {
-                return this.RequestDateField;
-            }
-            set {
-                if ((this.RequestDateField.Equals(value) != true)) {
-                    this.RequestDateField = value;
-                    this.RaisePropertyChanged("RequestDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string RequestGUID {
-            get {
-                return this.RequestGUIDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RequestGUIDField, value) != true)) {
-                    this.RequestGUIDField = value;
-                    this.RaisePropertyChanged("RequestGUID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public uint RequestId {
-            get {
-                return this.RequestIdField;
-            }
-            set {
-                if ((this.RequestIdField.Equals(value) != true)) {
-                    this.RequestIdField = value;
-                    this.RaisePropertyChanged("RequestId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public short Status {
-            get {
-                return this.StatusField;
-            }
-            set {
-                if ((this.StatusField.Equals(value) != true)) {
-                    this.StatusField = value;
-                    this.RaisePropertyChanged("Status");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public uint UserSetNumber {
-            get {
-                return this.UserSetNumberField;
-            }
-            set {
-                if ((this.UserSetNumberField.Equals(value) != true)) {
-                    this.UserSetNumberField = value;
-                    this.RaisePropertyChanged("UserSetNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ValidaDate {
-            get {
-                return this.ValidaDateField;
-            }
-            set {
-                if ((this.ValidaDateField.Equals(value) != true)) {
-                    this.ValidaDateField = value;
-                    this.RaisePropertyChanged("ValidaDate");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ContactChangingRiskVerificationAction", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails")]
-    [System.SerializableAttribute()]
-    public partial class ContactChangingRiskVerificationAction : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime ActionDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ActionReasonField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private uint ActionUserField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private short ActiontypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private uint RequestIdField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ActionDate {
-            get {
-                return this.ActionDateField;
-            }
-            set {
-                if ((this.ActionDateField.Equals(value) != true)) {
-                    this.ActionDateField = value;
-                    this.RaisePropertyChanged("ActionDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ActionReason {
-            get {
-                return this.ActionReasonField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ActionReasonField, value) != true)) {
-                    this.ActionReasonField = value;
-                    this.RaisePropertyChanged("ActionReason");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public uint ActionUser {
-            get {
-                return this.ActionUserField;
-            }
-            set {
-                if ((this.ActionUserField.Equals(value) != true)) {
-                    this.ActionUserField = value;
-                    this.RaisePropertyChanged("ActionUser");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public short Actiontype {
-            get {
-                return this.ActiontypeField;
-            }
-            set {
-                if ((this.ActiontypeField.Equals(value) != true)) {
-                    this.ActiontypeField = value;
-                    this.RaisePropertyChanged("Actiontype");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public uint RequestId {
-            get {
-                return this.RequestIdField;
-            }
-            set {
-                if ((this.RequestIdField.Equals(value) != true)) {
-                    this.RequestIdField = value;
-                    this.RaisePropertyChanged("RequestId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ContactChangingRiskVerificationData", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails")]
-    [System.SerializableAttribute()]
-    public partial class ContactChangingRiskVerificationData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private short ContactTypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NewValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string OldValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private uint RequestIdField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public short ContactType {
-            get {
-                return this.ContactTypeField;
-            }
-            set {
-                if ((this.ContactTypeField.Equals(value) != true)) {
-                    this.ContactTypeField = value;
-                    this.RaisePropertyChanged("ContactType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string NewValue {
-            get {
-                return this.NewValueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NewValueField, value) != true)) {
-                    this.NewValueField = value;
-                    this.RaisePropertyChanged("NewValue");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OldValue {
-            get {
-                return this.OldValueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OldValueField, value) != true)) {
-                    this.OldValueField = value;
-                    this.RaisePropertyChanged("OldValue");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public uint RequestId {
-            get {
-                return this.RequestIdField;
-            }
-            set {
-                if ((this.RequestIdField.Equals(value) != true)) {
-                    this.RequestIdField = value;
-                    this.RaisePropertyChanged("RequestId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ContactChangingRiskVerificationContact", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails")]
-    [System.SerializableAttribute()]
-    public partial class ContactChangingRiskVerificationContact : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContactField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private short ContactTypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NeedSendSMSForVerificationField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private uint RequestIdField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Contact {
-            get {
-                return this.ContactField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContactField, value) != true)) {
-                    this.ContactField = value;
-                    this.RaisePropertyChanged("Contact");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public short ContactType {
-            get {
-                return this.ContactTypeField;
-            }
-            set {
-                if ((this.ContactTypeField.Equals(value) != true)) {
-                    this.ContactTypeField = value;
-                    this.RaisePropertyChanged("ContactType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string NeedSendSMSForVerification {
-            get {
-                return this.NeedSendSMSForVerificationField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NeedSendSMSForVerificationField, value) != true)) {
-                    this.NeedSendSMSForVerificationField = value;
-                    this.RaisePropertyChanged("NeedSendSMSForVerification");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public uint RequestId {
-            get {
-                return this.RequestIdField;
-            }
-            set {
-                if ((this.RequestIdField.Equals(value) != true)) {
-                    this.RequestIdField = value;
-                    this.RaisePropertyChanged("RequestId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="TupleOfintArrayOfRACitizenDTpyQ4eh", Namespace="http://schemas.datacontract.org/2004/07/System")]
-    [System.SerializableAttribute()]
-    public partial class TupleOfintArrayOfRACitizenDTpyQ4eh : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private int m_Item1Field;
-        
-        private System.Collections.Generic.List<FrontOffice.ACBAServiceReference.RACitizen> m_Item2Field;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int m_Item1 {
-            get {
-                return this.m_Item1Field;
-            }
-            set {
-                if ((this.m_Item1Field.Equals(value) != true)) {
-                    this.m_Item1Field = value;
-                    this.RaisePropertyChanged("m_Item1");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.Collections.Generic.List<FrontOffice.ACBAServiceReference.RACitizen> m_Item2 {
-            get {
-                return this.m_Item2Field;
-            }
-            set {
-                if ((object.ReferenceEquals(this.m_Item2Field, value) != true)) {
-                    this.m_Item2Field = value;
-                    this.RaisePropertyChanged("m_Item2");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Version", Namespace="http://schemas.datacontract.org/2004/07/System")]
-    [System.SerializableAttribute()]
-    public partial class Version : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private int _BuildField;
-        
-        private int _MajorField;
-        
-        private int _MinorField;
-        
-        private int _RevisionField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int _Build {
-            get {
-                return this._BuildField;
-            }
-            set {
-                if ((this._BuildField.Equals(value) != true)) {
-                    this._BuildField = value;
-                    this.RaisePropertyChanged("_Build");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int _Major {
-            get {
-                return this._MajorField;
-            }
-            set {
-                if ((this._MajorField.Equals(value) != true)) {
-                    this._MajorField = value;
-                    this.RaisePropertyChanged("_Major");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int _Minor {
-            get {
-                return this._MinorField;
-            }
-            set {
-                if ((this._MinorField.Equals(value) != true)) {
-                    this._MinorField = value;
-                    this.RaisePropertyChanged("_Minor");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int _Revision {
-            get {
-                return this._RevisionField;
-            }
-            set {
-                if ((this._RevisionField.Equals(value) != true)) {
-                    this._RevisionField = value;
-                    this.RaisePropertyChanged("_Revision");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="TupleOfshortshort", Namespace="http://schemas.datacontract.org/2004/07/System")]
-    [System.SerializableAttribute()]
-    public partial class TupleOfshortshort : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private short m_Item1Field;
-        
-        private short m_Item2Field;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public short m_Item1 {
-            get {
-                return this.m_Item1Field;
-            }
-            set {
-                if ((this.m_Item1Field.Equals(value) != true)) {
-                    this.m_Item1Field = value;
-                    this.RaisePropertyChanged("m_Item1");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public short m_Item2 {
-            get {
-                return this.m_Item2Field;
-            }
-            set {
-                if ((this.m_Item2Field.Equals(value) != true)) {
-                    this.m_Item2Field = value;
-                    this.RaisePropertyChanged("m_Item2");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ACBAServiceReference.IACBAOperationService")]
     public interface IACBAOperationService {
@@ -24515,19 +24568,25 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.DahkResult), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesInCRMDahkResultFault", Name="DahkResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.BankruptResult), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesInCRMBankruptResultFaul" +
             "t", Name="BankruptResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -24760,18 +24819,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -24785,15 +24834,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         void SaveCustomerChangesInCRM(object customer, System.Collections.Generic.List<ushort> listToValidate, System.Collections.Generic.Dictionary<object, FrontOffice.ACBAServiceReference.KeyValue> closedObjects);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesInCRM", ReplyAction="http://tempuri.org/ICustomerOperations/SaveCustomerChangesInCRMResponse")]
@@ -24821,19 +24875,25 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.DahkResult), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesForCRMDahkResultFault", Name="DahkResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.BankruptResult), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesForCRMBankruptResultFau" +
             "lt", Name="BankruptResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -25066,18 +25126,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -25091,15 +25141,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         void SaveCustomerChangesForCRM(object customer, System.Collections.Generic.List<ushort> ListToValidate, System.Collections.Generic.Dictionary<object, FrontOffice.ACBAServiceReference.KeyValue> closedObjects);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesForCRM", ReplyAction="http://tempuri.org/ICustomerOperations/SaveCustomerChangesForCRMResponse")]
@@ -25109,19 +25164,25 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/InsertCustomerForCRMResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.DahkResult), Action="http://tempuri.org/ICustomerOperations/InsertCustomerForCRMDahkResultFault", Name="DahkResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.BankruptResult), Action="http://tempuri.org/ICustomerOperations/InsertCustomerForCRMBankruptResultFault", Name="BankruptResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -25354,18 +25415,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -25379,15 +25430,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         ulong InsertCustomerForCRM(object customer, System.Collections.Generic.List<ushort> listToValidate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/InsertCustomerForCRM", ReplyAction="http://tempuri.org/ICustomerOperations/InsertCustomerForCRMResponse")]
@@ -25786,23 +25842,35 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDate", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerBirthDateResponse")]
         System.Threading.Tasks.Task<System.Nullable<System.DateTime>> GetCustomerBirthDateAsync(ulong customerNumber);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasing", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasingResponse")]
+        string GetCustomerNumberFromLeasing(bool getleasingNumber, string customerNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasing", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasingResponse")]
+        System.Threading.Tasks.Task<string> GetCustomerNumberFromLeasingAsync(bool getleasingNumber, string customerNumber);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/InsertCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/InsertCustomerResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/InsertCustomerResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.DahkResult), Action="http://tempuri.org/ICustomerOperations/InsertCustomerDahkResultFault", Name="DahkResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.BankruptResult), Action="http://tempuri.org/ICustomerOperations/InsertCustomerBankruptResultFault", Name="BankruptResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -26035,18 +26103,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -26060,15 +26118,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         ulong InsertCustomer(object customer, System.Collections.Generic.List<ushort> validate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/InsertCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/InsertCustomerResponse")]
@@ -26078,19 +26141,25 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.DahkResult), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesDahkResultFault", Name="DahkResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.BankruptResult), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesBankruptResultFault", Name="BankruptResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -26323,18 +26392,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -26348,15 +26407,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         void SaveCustomerChanges(object customer, System.Collections.Generic.List<ushort> ListToValidate, System.Collections.Generic.Dictionary<object, FrontOffice.ACBAServiceReference.KeyValue> closedObjects);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/SaveCustomerChanges", ReplyAction="http://tempuri.org/ICustomerOperations/SaveCustomerChangesResponse")]
@@ -26388,19 +26452,25 @@ namespace FrontOffice.ACBAServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/GetCustomerResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -26633,18 +26703,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -26658,15 +26718,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         object GetCustomer(ulong customerNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerResponse")]
@@ -26674,19 +26739,25 @@ namespace FrontOffice.ACBAServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerMainData", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerMainDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/GetCustomerMainDataResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -26919,18 +26990,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -26944,15 +27005,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         object GetCustomerMainData(ulong customerNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerMainData", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerMainDataResponse")]
@@ -26965,19 +27031,25 @@ namespace FrontOffice.ACBAServiceReference {
         System.Threading.Tasks.Task<FrontOffice.ACBAServiceReference.VerificationData> GetIdentityVerificationDataAsync(uint identityId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerBankServices", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerBankServicesResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -27210,18 +27282,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -27235,15 +27297,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         System.Collections.Generic.List<object> GetCustomerBankServices(uint identityId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerBankServices", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerBankServicesResponse")]
@@ -27580,19 +27647,25 @@ namespace FrontOffice.ACBAServiceReference {
         System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.ACBAServiceReference.CustomerHistory>> GetCustomerHistoryAsync(ulong customerNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetBankLinkCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/GetBankLinkCustomerResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -27825,18 +27898,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -27850,15 +27913,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         object GetBankLinkCustomer(uint id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetBankLinkCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/GetBankLinkCustomerResponse")]
@@ -29037,6 +29105,14 @@ namespace FrontOffice.ACBAServiceReference {
         
         public System.Threading.Tasks.Task<System.Nullable<System.DateTime>> GetCustomerBirthDateAsync(ulong customerNumber) {
             return base.Channel.GetCustomerBirthDateAsync(customerNumber);
+        }
+        
+        public string GetCustomerNumberFromLeasing(bool getleasingNumber, string customerNumber) {
+            return base.Channel.GetCustomerNumberFromLeasing(getleasingNumber, customerNumber);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetCustomerNumberFromLeasingAsync(bool getleasingNumber, string customerNumber) {
+            return base.Channel.GetCustomerNumberFromLeasingAsync(getleasingNumber, customerNumber);
         }
         
         public ulong InsertCustomer(object customer, System.Collections.Generic.List<ushort> validate) {
@@ -32895,19 +32971,25 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.DahkResult), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesInCRMDahkResultFault", Name="DahkResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.BankruptResult), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesInCRMBankruptResultFaul" +
             "t", Name="BankruptResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -33140,18 +33222,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -33165,15 +33237,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         void SaveCustomerChangesInCRM(object customer, System.Collections.Generic.List<ushort> listToValidate, System.Collections.Generic.Dictionary<object, FrontOffice.ACBAServiceReference.KeyValue> closedObjects);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesInCRM", ReplyAction="http://tempuri.org/ICustomerOperations/SaveCustomerChangesInCRMResponse")]
@@ -33201,19 +33278,25 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.DahkResult), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesForCRMDahkResultFault", Name="DahkResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.BankruptResult), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesForCRMBankruptResultFau" +
             "lt", Name="BankruptResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -33446,18 +33529,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -33471,15 +33544,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         void SaveCustomerChangesForCRM(object customer, System.Collections.Generic.List<ushort> ListToValidate, System.Collections.Generic.Dictionary<object, FrontOffice.ACBAServiceReference.KeyValue> closedObjects);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesForCRM", ReplyAction="http://tempuri.org/ICustomerOperations/SaveCustomerChangesForCRMResponse")]
@@ -33489,19 +33567,25 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/InsertCustomerForCRMResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.DahkResult), Action="http://tempuri.org/ICustomerOperations/InsertCustomerForCRMDahkResultFault", Name="DahkResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.BankruptResult), Action="http://tempuri.org/ICustomerOperations/InsertCustomerForCRMBankruptResultFault", Name="BankruptResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -33734,18 +33818,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -33759,15 +33833,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         ulong InsertCustomerForCRM(object customer, System.Collections.Generic.List<ushort> listToValidate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/InsertCustomerForCRM", ReplyAction="http://tempuri.org/ICustomerOperations/InsertCustomerForCRMResponse")]
@@ -34166,23 +34245,35 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDate", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerBirthDateResponse")]
         System.Threading.Tasks.Task<System.Nullable<System.DateTime>> GetCustomerBirthDateAsync(ulong customerNumber);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasing", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasingResponse")]
+        string GetCustomerNumberFromLeasing(bool getleasingNumber, string customerNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasing", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasingResponse")]
+        System.Threading.Tasks.Task<string> GetCustomerNumberFromLeasingAsync(bool getleasingNumber, string customerNumber);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/InsertCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/InsertCustomerResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/InsertCustomerResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.DahkResult), Action="http://tempuri.org/ICustomerOperations/InsertCustomerDahkResultFault", Name="DahkResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.BankruptResult), Action="http://tempuri.org/ICustomerOperations/InsertCustomerBankruptResultFault", Name="BankruptResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -34415,18 +34506,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -34440,15 +34521,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         ulong InsertCustomer(object customer, System.Collections.Generic.List<ushort> validate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/InsertCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/InsertCustomerResponse")]
@@ -34458,19 +34544,25 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.DahkResult), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesDahkResultFault", Name="DahkResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.BankruptResult), Action="http://tempuri.org/ICustomerOperations/SaveCustomerChangesBankruptResultFault", Name="BankruptResult", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -34703,18 +34795,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -34728,15 +34810,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         void SaveCustomerChanges(object customer, System.Collections.Generic.List<ushort> ListToValidate, System.Collections.Generic.Dictionary<object, FrontOffice.ACBAServiceReference.KeyValue> closedObjects);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/SaveCustomerChanges", ReplyAction="http://tempuri.org/ICustomerOperations/SaveCustomerChangesResponse")]
@@ -34768,19 +34855,25 @@ namespace FrontOffice.ACBAServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/GetCustomerResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -35013,18 +35106,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -35038,15 +35121,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         object GetCustomer(ulong customerNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerResponse")]
@@ -35054,19 +35142,25 @@ namespace FrontOffice.ACBAServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerMainData", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerMainDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(FrontOffice.ACBAServiceReference.Result), Action="http://tempuri.org/ICustomerOperations/GetCustomerMainDataResultFault", Name="Result", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -35299,18 +35393,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -35324,15 +35408,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         object GetCustomerMainData(ulong customerNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerMainData", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerMainDataResponse")]
@@ -35345,19 +35434,25 @@ namespace FrontOffice.ACBAServiceReference {
         System.Threading.Tasks.Task<FrontOffice.ACBAServiceReference.VerificationData> GetIdentityVerificationDataAsync(uint identityId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerBankServices", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerBankServicesResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -35590,18 +35685,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -35615,15 +35700,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         System.Collections.Generic.List<object> GetCustomerBankServices(uint identityId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetCustomerBankServices", ReplyAction="http://tempuri.org/ICustomerOperations/GetCustomerBankServicesResponse")]
@@ -35960,19 +36050,25 @@ namespace FrontOffice.ACBAServiceReference {
         System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.ACBAServiceReference.CustomerHistory>> GetCustomerHistoryAsync(ulong customerNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetBankLinkCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/GetBankLinkCustomerResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CustomerIdentificationResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBViolationPayment))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.User))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Result))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.KeyValue>))]
@@ -36205,18 +36301,8 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Village>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Village))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ViolationRequestResponse))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequestData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskRequest))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContactChangingRiskVerificationContact))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Lead>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Lead))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
@@ -36230,15 +36316,20 @@ namespace FrontOffice.ACBAServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<uint, System.Collections.Generic.List<FrontOffice.ACBAServiceReference.Cashier>>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, string>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<short, FrontOffice.ACBAServiceReference.KeyValue>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfintArrayOfRACitizenDTpyQ4eh))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.Version))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.TupleOfshortshort))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.LoginInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PasswordChangeInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.AuthorizedUser))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissionsInfo))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.ACBAServiceReference.ClientPermissions>))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ClientPermissions))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ExternalUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsGetPersonalAccountOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountUser))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsQuality))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsSource))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PSActionResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.PersonalAccountEnumerationsResultCode))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfstring))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.ContentResultOfPersonalAccountUserE4WxUX8p))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CompositeType))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountStatusInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBAccountInfo))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FrontOffice.ACBAServiceReference.CBResult))]
         object GetBankLinkCustomer(uint id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerOperations/GetBankLinkCustomer", ReplyAction="http://tempuri.org/ICustomerOperations/GetBankLinkCustomerResponse")]
@@ -37239,6 +37330,14 @@ namespace FrontOffice.ACBAServiceReference {
         
         public System.Threading.Tasks.Task<System.Nullable<System.DateTime>> GetCustomerBirthDateAsync(ulong customerNumber) {
             return base.Channel.GetCustomerBirthDateAsync(customerNumber);
+        }
+        
+        public string GetCustomerNumberFromLeasing(bool getleasingNumber, string customerNumber) {
+            return base.Channel.GetCustomerNumberFromLeasing(getleasingNumber, customerNumber);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetCustomerNumberFromLeasingAsync(bool getleasingNumber, string customerNumber) {
+            return base.Channel.GetCustomerNumberFromLeasingAsync(getleasingNumber, customerNumber);
         }
         
         public ulong InsertCustomer(object customer, System.Collections.Generic.List<ushort> validate) {

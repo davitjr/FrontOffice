@@ -14,6 +14,7 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Configuration;
+using FrontOffice.Models;
 
 namespace FrontOffice.Controllers
 {
@@ -220,6 +221,15 @@ namespace FrontOffice.Controllers
         {
             return PartialView("CreditCodeAccountDetails");
         }
+        public ActionResult TaxRefundAgreements()
+        {
+            return PartialView("TaxRefundAgreements");
+        }
+        public ActionResult TaxRefundAgreementHistory()
+        {
+            return PartialView("TaxRefundAgreementHistory");
+        }
+        
         public JsonResult GetProductAccountFromCreditCode(string creditCode, ushort productType, ushort accountType)
         {
             return Json(XBService.GetProductAccountFromCreditCode(creditCode, productType, accountType), JsonRequestBehavior.AllowGet);
@@ -391,6 +401,18 @@ namespace FrontOffice.Controllers
             return Json(result);
         }
 
+        public JsonResult GetLoanGrafikChangeDates(string productId)
+        {
+            List<FrontOffice.XBS.KeyValuePairOfstringstring> DatesNew = XBService.GetLoanGrafikChangeDates(productId);
+            List<KeyValuePair<string, string>> Dates = new List<KeyValuePair<string, string>>();
+            foreach (var item in DatesNew)
+            {
+                Dates.Add(new KeyValuePair<string, string>(item.key, item.value));
+            }
+            return Json(Dates, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetLoanGrafikBeforeChange(string productIdStr, string changeDateStr) => Json(XBService.GetLoanGrafikBeforeChange(productIdStr, changeDateStr), JsonRequestBehavior.AllowGet);
 
     }
 }

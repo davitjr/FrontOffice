@@ -1,0 +1,119 @@
+﻿@{
+    Layout = null;
+}
+
+<div id="taxRefundAgreementDetails" ng-controller="TaxRefundAgreementCtrl" ng-if="productid" ng-init="getLoanBorrowers(productid)" style="width:90%">
+    <div class="product-container" style="width:100%">
+        <div class="header-title">
+            Համաձայնության առկայություն
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header" style="height:44px;">
+                <div style="text-align:center" class="col-sm-3">Հաճախորդի համար</div>
+                <div style="text-align:center" class="col-sm-5">Անուն, ազգանուն</div>
+                <div style="text-align:center" class="col-sm-2">Համաձայնության առկայություն</div>
+                <div style="text-align:center" class="col-sm-2"></div>
+            </div>
+            <div class="product-content-table-full_height custom-scroll" id="loanMainContractContent" style="min-height:100px;float:left;">
+                <div ng-if="borrowers==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody ng-repeat="borrower in borrowers" style="background-color: white;">
+                        <tr>
+                            <td style="text-align:center" class="col-sm-3">{{::borrower.CustomerNumber}}</td>
+                            <td style="text-align:center" class="col-sm-5">{{::borrower.FullName}}</td>
+                            <td style="text-align:center" class="col-sm-2">
+
+                                <input type="checkbox" class="checkbox" style="display:inline-block" id="agreement-existence"
+                                       data-ng-model="checked" ng-checked="borrower.AgreementExistence"
+                                       ng-true-value="1" ng-false-value="0" ng-click="saveTaxRefundAgreementDetails(borrower.CustomerNumber,productid,checked)">
+                            </td>
+                            <td style="text-align:center" class="col-sm-2">
+                                <span style="margin-left:10pt; color: #337AB7; cursor:pointer;" ng-controller="PopUpCtrl" ng-click="params={agreementId:borrower.AgreementId};openWindow('/Loan/TaxRefundAgreementHistory','Համաձայնության առկայության փոփոխությունների պատմություն','TaxRefundAgreementHistory');" class="fa fa-header" />
+                            </td>
+
+                        </tr>
+                        <tr ng-if="borrowers.length==0 " style="background-color: white;">
+                            <td colspan="6" style="text-align: center;">
+                                Տվյալները բացակայում են
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="product-container" style="width:100%;height:400px">
+        <form name="TaxRefundRequestSendForm" id="taxRefundRequestSendForm" style="margin-bottom:20px;margin-top:10px" role="form" class="form-horizontal" prevent-enter-submit novalidate labels-required>
+            <div class="header-title">
+                Նախորդ ժամանակահատվածի տվյալներ
+            </div>
+
+
+            <div style="margin-left:20px">
+                <div style="max-width:540px">
+                    <errors></errors>
+                </div>
+                <div class="form-group">
+                    <label class="tab_title col-sm-4" for="requestYear">Տարեթիվ</label>
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <input type="number" ng-model="requestYear" name="requestYear" class="tab_title form-control" ng-value="requestYear" ng-pattern=/^(19|20)\d{2}$/
+                                   required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12"></div>
+                    <ng-messages ng-if="TaxRefundRequestSendForm.$submitted || TaxRefundRequestSendForm.requestYear.$dirty || requestYear == null"
+                                 for="TaxRefundRequestSendForm.requestYear.$error">
+                        <ng-message when="required" class="errors">
+                            Տարեթիվը նշված չէ
+                        </ng-message>
+                    </ng-messages>
+                    <ng-messages ng-if="TaxRefundRequestSendForm.$submitted || TaxRefundRequestSendForm.requestYear.$dirty"
+                                 for="TaxRefundRequestSendForm.requestYear.$error">
+                        <ng-message when="pattern" class="errors">
+                            Սխալ ամսաթիվ
+                        </ng-message>
+                    </ng-messages>
+
+                </div>
+                <div class="form-group">
+                    <label class="tab_title col-sm-4" for="quarter">Եռամսյակ<span class='redStyle'>*</span></label>
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <div class="row form-group">
+                                <input class="col-sm-2" type="checkbox" name="selectedAll" id="selectedAll" ng-model="selectedAll" style="margin-top: 12px;" ng-click="selectAll();isCheckedQuarter()" />
+                                <label class="tab_title col-sm-4" for="selectedAll" style="display:inline-block">Ամբողջը</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row form-group" ng-repeat="quarter in quarters" name="quarters" required>
+                                <input class="col-sm-2" name="quarter" style="margin-top: 12px;" type="checkbox" ng-checked="selectedAll"
+                                       ng-value="{{quarter.key}}" ng-model="quarter.Selected" id={{quarter.value}} ng-change="isCheckedQuarter()" />
+                                <label class="tab_title col-sm-4" for="{{value}}" style="display:inline-block">{{quarter.value}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div ng-if="TaxRefundRequestSendForm.$submitted && !isValidQuarter">
+                        <span class="errors">
+                            Եռամսյակն ընտրված չէ
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-primary" ng-click="isCheckedQuarter();TaxRefundRequestSendForm.$setSubmitted();TaxRefundRequestSendForm.$valid && send(borrowers,productid,requestYear);">
+                            Ուղարկել
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

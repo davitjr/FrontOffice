@@ -21,7 +21,7 @@
             }
         });
         return response;
-    }
+    };
 
     this.getPlasticCardRemovalOrder = function (orderID) {
 
@@ -34,7 +34,7 @@
             }
         });
         return response;
-    }
+    };
 
     this.getCardRemovalReasons = function () {
         var response = $http({
@@ -43,7 +43,7 @@
             dataType: "json"
         });
         return response;
-    }
+    };
 
     this.getCustomerPlasticCards = function () {
         var response = $http({
@@ -52,6 +52,16 @@
             dataType: "json"
         });
         return response;
-    }
+    };
+
+    this.checkPlasticCardRemovalOrder = function (order) {
+        var response = $http({
+            method: "post",
+            url: "/PlasticCardRemovalOrder/CheckPlasticCardRemovalOrder",
+            data: JSON.stringify(order),
+            dataType: "json"
+        });
+        return response;
+    };
 
 }]);

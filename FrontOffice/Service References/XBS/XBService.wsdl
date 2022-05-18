@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="XBService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="XBService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsp:Policy wsu:Id="IExternalOperationService_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -41,24 +41,38 @@
       <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement" />
       <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/System" />
       <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/ARUSInfrastructure" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd11" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.PreferredAccounts" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd12" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.QrTransfers" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd13" namespace="http://schemas.datacontract.org/2004/07/CBDataService.PoliceViolations" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd14" namespace="http://schemas.datacontract.org/2004/07/ACBAOperationService" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.SecuritiesTrading" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd11" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.Leasing" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd12" namespace="http://schemas.datacontract.org/2004/07/ARUSInfrastructure" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd13" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.PreferredAccounts" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd14" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.QrTransfers" />
       <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd15" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.CustomerIdentificationAlgorithm.Models" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd16" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAccountSecurity" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd17" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd18" namespace="http://schemas.datacontract.org/2004/07/SAPCRM" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd19" namespace="http://schemas.datacontract.org/2004/07/CBDataService" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd20" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd21" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.UtilityPaymentsManagment" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd22" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.TokenOperations" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd23" namespace="http://schemas.datacontract.org/2004/07/AcbaOnlineSecurityService.Helpers" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd24" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingService" />
-      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd25" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.CTPayment" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd16" namespace="http://schemas.datacontract.org/2004/07/SAPCRM" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd17" namespace="http://schemas.datacontract.org/2004/07/ACBAOperationService" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd18" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd19" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAccountSecurity" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd20" namespace="http://schemas.datacontract.org/2004/07/CBDataService.PoliceViolations" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd21" namespace="http://schemas.datacontract.org/2004/07/CBDataService" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd22" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd23" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.UtilityPaymentsManagment" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd24" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.TokenOperations" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd25" namespace="http://schemas.datacontract.org/2004/07/AcbaOnlineSecurityService.Helpers" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd26" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingService" />
+      <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd27" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.CTPayment" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IXBService_NewPosApplicationOrderDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:NewPosApplicationOrderDetails" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_NewPosApplicationOrderDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NewPosApplicationOrderDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetPosTerminalActivitySphere_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPosTerminalActivitySphere" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetPosTerminalActivitySphere_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPosTerminalActivitySphereResponse" />
+  </wsdl:message>
   <wsdl:message name="IXBService_GetVisaAliasGuidByCutomerNumber_InputMessage">
     <wsdl:part name="parameters" element="tns:GetVisaAliasGuidByCutomerNumber" />
   </wsdl:message>
@@ -154,6 +168,420 @@
   </wsdl:message>
   <wsdl:message name="IXBService_GetBondCertificateDetailsByDocId_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetBondCertificateDetailsByDocIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveConsumeLoanSettlementOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveConsumeLoanSettlementOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveConsumeLoanSettlementOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveConsumeLoanSettlementOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetConsumeLoanSettlementOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetConsumeLoanSettlementOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetConsumeLoanSettlementOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetConsumeLoanSettlementOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAndApproveCardlessCashoutCancellationOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveCardlessCashoutCancellationOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAndApproveCardlessCashoutCancellationOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveCardlessCashoutCancellationOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_UpdateCardDesign_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCardDesign" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_UpdateCardDesign_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCardDesignResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetAllCurrentAccounts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllCurrentAccounts" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetAllCurrentAccounts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllCurrentAccountsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_CheckCreditLineForRenewedCardAccountRegOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckCreditLineForRenewedCardAccountRegOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_CheckCreditLineForRenewedCardAccountRegOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckCreditLineForRenewedCardAccountRegOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ApproveConsumeLoanSettlementOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveConsumeLoanSettlementOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ApproveConsumeLoanSettlementOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveConsumeLoanSettlementOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetOrderGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderGroup" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetOrderGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetInterestRateEffective_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInterestRateEffective" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetInterestRateEffective_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInterestRateEffectiveResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLoanGrafikChangeDates_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoanGrafikChangeDates" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLoanGrafikChangeDates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoanGrafikChangeDatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLoanGrafikBeforeChange_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoanGrafikBeforeChange" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLoanGrafikBeforeChange_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoanGrafikBeforeChangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_PrintConsumeLoanSettlement_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrintConsumeLoanSettlement" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_PrintConsumeLoanSettlement_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrintConsumeLoanSettlementResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveVehicleInsuranceOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveVehicleInsuranceOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveVehicleInsuranceOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveVehicleInsuranceOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_UpdateVehicleInsuranceOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateVehicleInsuranceOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_UpdateVehicleInsuranceOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateVehicleInsuranceOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetConsumeLoanSettlementSchedult_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetConsumeLoanSettlementSchedult" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetConsumeLoanSettlementSchedult_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetConsumeLoanSettlementSchedultResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ApproveConsumeLoanSettlementOrderForApproveOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveConsumeLoanSettlementOrderForApproveOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ApproveConsumeLoanSettlementOrderForApproveOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveConsumeLoanSettlementOrderForApproveOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_CheckPlasticCardRemovalOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckPlasticCardRemovalOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_CheckPlasticCardRemovalOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckPlasticCardRemovalOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetCardChangeType_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardChangeType" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetCardChangeType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardChangeTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetVehicleInsuranceOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVehicleInsuranceOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetVehicleInsuranceOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVehicleInsuranceOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLoanBorrowers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoanBorrowers" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLoanBorrowers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoanBorrowersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveTaxRefundAgreementDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveTaxRefundAgreementDetails" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveTaxRefundAgreementDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveTaxRefundAgreementDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetTaxRefundAgreementHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaxRefundAgreementHistory" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetTaxRefundAgreementHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaxRefundAgreementHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ApproveVehicleInsuranceOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveVehicleInsuranceOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ApproveVehicleInsuranceOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveVehicleInsuranceOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ValidateVehicleInusuranceOrderForSending_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateVehicleInusuranceOrderForSending" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ValidateVehicleInusuranceOrderForSending_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateVehicleInusuranceOrderForSendingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ApproveSecuritiesTradingOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveSecuritiesTradingOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ApproveSecuritiesTradingOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveSecuritiesTradingOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveSecuritiesTradingOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveSecuritiesTradingOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveSecuritiesTradingOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveSecuritiesTradingOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetSecuritiesTradingOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSecuritiesTradingOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetSecuritiesTradingOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSecuritiesTradingOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ApproveBudgetPaymentOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveBudgetPaymentOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ApproveBudgetPaymentOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveBudgetPaymentOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetBrokerContractOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrokerContractOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetBrokerContractOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrokerContractOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_InsertASWAContractResponseDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertASWAContractResponseDetails" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_InsertASWAContractResponseDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertASWAContractResponseDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAswaSearchResponseDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAswaSearchResponseDetails" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAswaSearchResponseDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAswaSearchResponseDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetAswaSearchResponseDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAswaSearchResponseDetails" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetAswaSearchResponseDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAswaSearchResponseDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveBrokerContractOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveBrokerContractOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveBrokerContractOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveBrokerContractOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ApproveBrokerContractOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveBrokerContractOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ApproveBrokerContractOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveBrokerContractOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAndApproveBrokerContractOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveBrokerContractOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAndApproveBrokerContractOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveBrokerContractOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetSentSecuritiesTradingOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSentSecuritiesTradingOrders" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetSentSecuritiesTradingOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSentSecuritiesTradingOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAndApproveSecuritiesMarketTradingOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveSecuritiesMarketTradingOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAndApproveSecuritiesMarketTradingOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveSecuritiesMarketTradingOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetSecuritiesTradingOrderById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSecuritiesTradingOrderById" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetSecuritiesTradingOrderById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSecuritiesTradingOrderByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetSecuritiesMarketTradingOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSecuritiesMarketTradingOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetSecuritiesMarketTradingOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSecuritiesMarketTradingOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetSecuritiesTradingOrderCancellationOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSecuritiesTradingOrderCancellationOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetSecuritiesTradingOrderCancellationOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSecuritiesTradingOrderCancellationOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetSecuritiesTradingOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSecuritiesTradingOrders" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetSecuritiesTradingOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSecuritiesTradingOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAndApproveSecuritiesTradingOrderCancellationOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveSecuritiesTradingOrderCancellationOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAndApproveSecuritiesTradingOrderCancellationOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveSecuritiesTradingOrderCancellationOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ConfirmSecuritiesTradingOrderCancellationOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmSecuritiesTradingOrderCancellationOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ConfirmSecuritiesTradingOrderCancellationOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmSecuritiesTradingOrderCancellationOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ConfirmSecuritiesTradingOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmSecuritiesTradingOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_ConfirmSecuritiesTradingOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmSecuritiesTradingOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_IsACBASecurity_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsACBASecurity" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_IsACBASecurity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsACBASecurityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_RejectSecuritiesTradingOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:RejectSecuritiesTradingOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_RejectSecuritiesTradingOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RejectSecuritiesTradingOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_RejectSecuritiesTradingOrderCancellationOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:RejectSecuritiesTradingOrderCancellationOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_RejectSecuritiesTradingOrderCancellationOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RejectSecuritiesTradingOrderCancellationOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasings_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasings" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasing_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasing" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasing_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingRepayments_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingRepayments" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingRepayments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingRepaymentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingLoanStatements_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingLoanStatements" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingLoanStatements_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingLoanStatementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingPaymentsType_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingPaymentsType" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingPaymentsType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingPaymentsTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingDetailsByAppID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingDetailsByAppID" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingDetailsByAppID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingDetailsByAppIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SetLeasingReceiver_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetLeasingReceiver" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SetLeasingReceiver_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetLeasingReceiverResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingPaymentDescription_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingPaymentDescription" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingPaymentDescription_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingPaymentDescriptionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingPaymentDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingPaymentDetails" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingPaymentDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingPaymentDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingOverdueDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingOverdueDetails" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingOverdueDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingOverdueDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetManagerCustomerNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetManagerCustomerNumber" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetManagerCustomerNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetManagerCustomerNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingInsurances_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingInsurances" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingInsurances_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingInsurancesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAndEditLeasingCredential_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndEditLeasingCredential" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAndEditLeasingCredential_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndEditLeasingCredentialResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingCredentials_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingCredentials" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingCredentials_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingCredentialsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveRemovedLeasingCredential_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveRemovedLeasingCredential" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveRemovedLeasingCredential_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveRemovedLeasingCredentialResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveClosedLeasingCredential_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveClosedLeasingCredential" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveClosedLeasingCredential_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveClosedLeasingCredentialResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetBrokerContractProduct_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrokerContractProduct" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetBrokerContractProduct_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrokerContractProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingCustomerCredentials_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingCustomerCredentials" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetLeasingCustomerCredentials_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingCustomerCredentialsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetGovernmentBonds_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetGovernmentBonds" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetGovernmentBonds_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetGovernmentBondsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_UpdateSecuritiesTradingOrderDeposited_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSecuritiesTradingOrderDeposited" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_UpdateSecuritiesTradingOrderDeposited_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSecuritiesTradingOrderDepositedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetCustomerSentSecuritiesTradingOrdersQuantity_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerSentSecuritiesTradingOrdersQuantity" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_GetCustomerSentSecuritiesTradingOrdersQuantity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerSentSecuritiesTradingOrdersQuantityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAndApproveNewPosLocationOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveNewPosLocationOrder" />
+  </wsdl:message>
+  <wsdl:message name="IXBService_SaveAndApproveNewPosLocationOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAndApproveNewPosLocationOrderResponse" />
   </wsdl:message>
   <wsdl:message name="IXBService_SaveCardLessCashOutOrder_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveCardLessCashOutOrder" />
@@ -6786,6 +7214,14 @@
     <wsdl:part name="parameters" element="tns:SaveCustomerDataOrderResponse" />
   </wsdl:message>
   <wsdl:portType name="IXBService">
+    <wsdl:operation name="NewPosApplicationOrderDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/NewPosApplicationOrderDetails" message="tns:IXBService_NewPosApplicationOrderDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/NewPosApplicationOrderDetailsResponse" message="tns:IXBService_NewPosApplicationOrderDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPosTerminalActivitySphere">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetPosTerminalActivitySphere" message="tns:IXBService_GetPosTerminalActivitySphere_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetPosTerminalActivitySphereResponse" message="tns:IXBService_GetPosTerminalActivitySphere_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetVisaAliasGuidByCutomerNumber">
       <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetVisaAliasGuidByCutomerNumber" message="tns:IXBService_GetVisaAliasGuidByCutomerNumber_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetVisaAliasGuidByCutomerNumberResponse" message="tns:IXBService_GetVisaAliasGuidByCutomerNumber_OutputMessage" />
@@ -6849,6 +7285,282 @@
     <wsdl:operation name="GetBondCertificateDetailsByDocId">
       <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetBondCertificateDetailsByDocId" message="tns:IXBService_GetBondCertificateDetailsByDocId_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetBondCertificateDetailsByDocIdResponse" message="tns:IXBService_GetBondCertificateDetailsByDocId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveConsumeLoanSettlementOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveConsumeLoanSettlementOrder" message="tns:IXBService_SaveConsumeLoanSettlementOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveConsumeLoanSettlementOrderResponse" message="tns:IXBService_SaveConsumeLoanSettlementOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetConsumeLoanSettlementOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetConsumeLoanSettlementOrder" message="tns:IXBService_GetConsumeLoanSettlementOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetConsumeLoanSettlementOrderResponse" message="tns:IXBService_GetConsumeLoanSettlementOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveCardlessCashoutCancellationOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveAndApproveCardlessCashoutCancellationOrder" message="tns:IXBService_SaveAndApproveCardlessCashoutCancellationOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveAndApproveCardlessCashoutCancellationOrderResponse" message="tns:IXBService_SaveAndApproveCardlessCashoutCancellationOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCardDesign">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/UpdateCardDesign" message="tns:IXBService_UpdateCardDesign_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/UpdateCardDesignResponse" message="tns:IXBService_UpdateCardDesign_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllCurrentAccounts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetAllCurrentAccounts" message="tns:IXBService_GetAllCurrentAccounts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetAllCurrentAccountsResponse" message="tns:IXBService_GetAllCurrentAccounts_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckCreditLineForRenewedCardAccountRegOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/CheckCreditLineForRenewedCardAccountRegOrder" message="tns:IXBService_CheckCreditLineForRenewedCardAccountRegOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/CheckCreditLineForRenewedCardAccountRegOrderResponse" message="tns:IXBService_CheckCreditLineForRenewedCardAccountRegOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ApproveConsumeLoanSettlementOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/ApproveConsumeLoanSettlementOrder" message="tns:IXBService_ApproveConsumeLoanSettlementOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/ApproveConsumeLoanSettlementOrderResponse" message="tns:IXBService_ApproveConsumeLoanSettlementOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetOrderGroup" message="tns:IXBService_GetOrderGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetOrderGroupResponse" message="tns:IXBService_GetOrderGroup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInterestRateEffective">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetInterestRateEffective" message="tns:IXBService_GetInterestRateEffective_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetInterestRateEffectiveResponse" message="tns:IXBService_GetInterestRateEffective_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLoanGrafikChangeDates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLoanGrafikChangeDates" message="tns:IXBService_GetLoanGrafikChangeDates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLoanGrafikChangeDatesResponse" message="tns:IXBService_GetLoanGrafikChangeDates_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLoanGrafikBeforeChange">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLoanGrafikBeforeChange" message="tns:IXBService_GetLoanGrafikBeforeChange_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLoanGrafikBeforeChangeResponse" message="tns:IXBService_GetLoanGrafikBeforeChange_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PrintConsumeLoanSettlement">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/PrintConsumeLoanSettlement" message="tns:IXBService_PrintConsumeLoanSettlement_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/PrintConsumeLoanSettlementResponse" message="tns:IXBService_PrintConsumeLoanSettlement_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveVehicleInsuranceOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveVehicleInsuranceOrder" message="tns:IXBService_SaveVehicleInsuranceOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveVehicleInsuranceOrderResponse" message="tns:IXBService_SaveVehicleInsuranceOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateVehicleInsuranceOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/UpdateVehicleInsuranceOrder" message="tns:IXBService_UpdateVehicleInsuranceOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/UpdateVehicleInsuranceOrderResponse" message="tns:IXBService_UpdateVehicleInsuranceOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetConsumeLoanSettlementSchedult">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetConsumeLoanSettlementSchedult" message="tns:IXBService_GetConsumeLoanSettlementSchedult_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetConsumeLoanSettlementSchedultResponse" message="tns:IXBService_GetConsumeLoanSettlementSchedult_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ApproveConsumeLoanSettlementOrderForApproveOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/ApproveConsumeLoanSettlementOrderForApproveOrder" message="tns:IXBService_ApproveConsumeLoanSettlementOrderForApproveOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/ApproveConsumeLoanSettlementOrderForApproveOrderResponse" message="tns:IXBService_ApproveConsumeLoanSettlementOrderForApproveOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckPlasticCardRemovalOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/CheckPlasticCardRemovalOrder" message="tns:IXBService_CheckPlasticCardRemovalOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/CheckPlasticCardRemovalOrderResponse" message="tns:IXBService_CheckPlasticCardRemovalOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCardChangeType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetCardChangeType" message="tns:IXBService_GetCardChangeType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetCardChangeTypeResponse" message="tns:IXBService_GetCardChangeType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVehicleInsuranceOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetVehicleInsuranceOrder" message="tns:IXBService_GetVehicleInsuranceOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetVehicleInsuranceOrderResponse" message="tns:IXBService_GetVehicleInsuranceOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLoanBorrowers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLoanBorrowers" message="tns:IXBService_GetLoanBorrowers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLoanBorrowersResponse" message="tns:IXBService_GetLoanBorrowers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveTaxRefundAgreementDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveTaxRefundAgreementDetails" message="tns:IXBService_SaveTaxRefundAgreementDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveTaxRefundAgreementDetailsResponse" message="tns:IXBService_SaveTaxRefundAgreementDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaxRefundAgreementHistory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetTaxRefundAgreementHistory" message="tns:IXBService_GetTaxRefundAgreementHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetTaxRefundAgreementHistoryResponse" message="tns:IXBService_GetTaxRefundAgreementHistory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ApproveVehicleInsuranceOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/ApproveVehicleInsuranceOrder" message="tns:IXBService_ApproveVehicleInsuranceOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/ApproveVehicleInsuranceOrderResponse" message="tns:IXBService_ApproveVehicleInsuranceOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateVehicleInusuranceOrderForSending">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/ValidateVehicleInusuranceOrderForSending" message="tns:IXBService_ValidateVehicleInusuranceOrderForSending_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/ValidateVehicleInusuranceOrderForSendingResponse" message="tns:IXBService_ValidateVehicleInusuranceOrderForSending_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ApproveSecuritiesTradingOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/ApproveSecuritiesTradingOrder" message="tns:IXBService_ApproveSecuritiesTradingOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/ApproveSecuritiesTradingOrderResponse" message="tns:IXBService_ApproveSecuritiesTradingOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveSecuritiesTradingOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveSecuritiesTradingOrder" message="tns:IXBService_SaveSecuritiesTradingOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveSecuritiesTradingOrderResponse" message="tns:IXBService_SaveSecuritiesTradingOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSecuritiesTradingOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetSecuritiesTradingOrder" message="tns:IXBService_GetSecuritiesTradingOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetSecuritiesTradingOrderResponse" message="tns:IXBService_GetSecuritiesTradingOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ApproveBudgetPaymentOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/ApproveBudgetPaymentOrder" message="tns:IXBService_ApproveBudgetPaymentOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/ApproveBudgetPaymentOrderResponse" message="tns:IXBService_ApproveBudgetPaymentOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBrokerContractOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetBrokerContractOrder" message="tns:IXBService_GetBrokerContractOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetBrokerContractOrderResponse" message="tns:IXBService_GetBrokerContractOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertASWAContractResponseDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/InsertASWAContractResponseDetails" message="tns:IXBService_InsertASWAContractResponseDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/InsertASWAContractResponseDetailsResponse" message="tns:IXBService_InsertASWAContractResponseDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAswaSearchResponseDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveAswaSearchResponseDetails" message="tns:IXBService_SaveAswaSearchResponseDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveAswaSearchResponseDetailsResponse" message="tns:IXBService_SaveAswaSearchResponseDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAswaSearchResponseDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetAswaSearchResponseDetails" message="tns:IXBService_GetAswaSearchResponseDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetAswaSearchResponseDetailsResponse" message="tns:IXBService_GetAswaSearchResponseDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveBrokerContractOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveBrokerContractOrder" message="tns:IXBService_SaveBrokerContractOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveBrokerContractOrderResponse" message="tns:IXBService_SaveBrokerContractOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ApproveBrokerContractOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/ApproveBrokerContractOrder" message="tns:IXBService_ApproveBrokerContractOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/ApproveBrokerContractOrderResponse" message="tns:IXBService_ApproveBrokerContractOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveBrokerContractOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveAndApproveBrokerContractOrder" message="tns:IXBService_SaveAndApproveBrokerContractOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveAndApproveBrokerContractOrderResponse" message="tns:IXBService_SaveAndApproveBrokerContractOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSentSecuritiesTradingOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetSentSecuritiesTradingOrders" message="tns:IXBService_GetSentSecuritiesTradingOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetSentSecuritiesTradingOrdersResponse" message="tns:IXBService_GetSentSecuritiesTradingOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveSecuritiesMarketTradingOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveAndApproveSecuritiesMarketTradingOrder" message="tns:IXBService_SaveAndApproveSecuritiesMarketTradingOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveAndApproveSecuritiesMarketTradingOrderResponse" message="tns:IXBService_SaveAndApproveSecuritiesMarketTradingOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSecuritiesTradingOrderById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetSecuritiesTradingOrderById" message="tns:IXBService_GetSecuritiesTradingOrderById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetSecuritiesTradingOrderByIdResponse" message="tns:IXBService_GetSecuritiesTradingOrderById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSecuritiesMarketTradingOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetSecuritiesMarketTradingOrder" message="tns:IXBService_GetSecuritiesMarketTradingOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetSecuritiesMarketTradingOrderResponse" message="tns:IXBService_GetSecuritiesMarketTradingOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSecuritiesTradingOrderCancellationOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetSecuritiesTradingOrderCancellationOrder" message="tns:IXBService_GetSecuritiesTradingOrderCancellationOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetSecuritiesTradingOrderCancellationOrderResponse" message="tns:IXBService_GetSecuritiesTradingOrderCancellationOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSecuritiesTradingOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetSecuritiesTradingOrders" message="tns:IXBService_GetSecuritiesTradingOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetSecuritiesTradingOrdersResponse" message="tns:IXBService_GetSecuritiesTradingOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveSecuritiesTradingOrderCancellationOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveAndApproveSecuritiesTradingOrderCancellationOrder" message="tns:IXBService_SaveAndApproveSecuritiesTradingOrderCancellationOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveAndApproveSecuritiesTradingOrderCancellationOrderResponse" message="tns:IXBService_SaveAndApproveSecuritiesTradingOrderCancellationOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmSecuritiesTradingOrderCancellationOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/ConfirmSecuritiesTradingOrderCancellationOrder" message="tns:IXBService_ConfirmSecuritiesTradingOrderCancellationOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/ConfirmSecuritiesTradingOrderCancellationOrderResponse" message="tns:IXBService_ConfirmSecuritiesTradingOrderCancellationOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmSecuritiesTradingOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/ConfirmSecuritiesTradingOrder" message="tns:IXBService_ConfirmSecuritiesTradingOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/ConfirmSecuritiesTradingOrderResponse" message="tns:IXBService_ConfirmSecuritiesTradingOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsACBASecurity">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/IsACBASecurity" message="tns:IXBService_IsACBASecurity_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/IsACBASecurityResponse" message="tns:IXBService_IsACBASecurity_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RejectSecuritiesTradingOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/RejectSecuritiesTradingOrder" message="tns:IXBService_RejectSecuritiesTradingOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/RejectSecuritiesTradingOrderResponse" message="tns:IXBService_RejectSecuritiesTradingOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RejectSecuritiesTradingOrderCancellationOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/RejectSecuritiesTradingOrderCancellationOrder" message="tns:IXBService_RejectSecuritiesTradingOrderCancellationOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/RejectSecuritiesTradingOrderCancellationOrderResponse" message="tns:IXBService_RejectSecuritiesTradingOrderCancellationOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLeasings" message="tns:IXBService_GetLeasings_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLeasingsResponse" message="tns:IXBService_GetLeasings_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasing">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLeasing" message="tns:IXBService_GetLeasing_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLeasingResponse" message="tns:IXBService_GetLeasing_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingRepayments">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLeasingRepayments" message="tns:IXBService_GetLeasingRepayments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLeasingRepaymentsResponse" message="tns:IXBService_GetLeasingRepayments_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingLoanStatements">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLeasingLoanStatements" message="tns:IXBService_GetLeasingLoanStatements_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLeasingLoanStatementsResponse" message="tns:IXBService_GetLeasingLoanStatements_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingPaymentsType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLeasingPaymentsType" message="tns:IXBService_GetLeasingPaymentsType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLeasingPaymentsTypeResponse" message="tns:IXBService_GetLeasingPaymentsType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingDetailsByAppID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLeasingDetailsByAppID" message="tns:IXBService_GetLeasingDetailsByAppID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLeasingDetailsByAppIDResponse" message="tns:IXBService_GetLeasingDetailsByAppID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetLeasingReceiver">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SetLeasingReceiver" message="tns:IXBService_SetLeasingReceiver_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SetLeasingReceiverResponse" message="tns:IXBService_SetLeasingReceiver_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingPaymentDescription">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLeasingPaymentDescription" message="tns:IXBService_GetLeasingPaymentDescription_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLeasingPaymentDescriptionResponse" message="tns:IXBService_GetLeasingPaymentDescription_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingPaymentDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLeasingPaymentDetails" message="tns:IXBService_GetLeasingPaymentDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLeasingPaymentDetailsResponse" message="tns:IXBService_GetLeasingPaymentDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingOverdueDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLeasingOverdueDetails" message="tns:IXBService_GetLeasingOverdueDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLeasingOverdueDetailsResponse" message="tns:IXBService_GetLeasingOverdueDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetManagerCustomerNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetManagerCustomerNumber" message="tns:IXBService_GetManagerCustomerNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetManagerCustomerNumberResponse" message="tns:IXBService_GetManagerCustomerNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingInsurances">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLeasingInsurances" message="tns:IXBService_GetLeasingInsurances_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLeasingInsurancesResponse" message="tns:IXBService_GetLeasingInsurances_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndEditLeasingCredential">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveAndEditLeasingCredential" message="tns:IXBService_SaveAndEditLeasingCredential_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveAndEditLeasingCredentialResponse" message="tns:IXBService_SaveAndEditLeasingCredential_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingCredentials">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLeasingCredentials" message="tns:IXBService_GetLeasingCredentials_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLeasingCredentialsResponse" message="tns:IXBService_GetLeasingCredentials_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveRemovedLeasingCredential">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveRemovedLeasingCredential" message="tns:IXBService_SaveRemovedLeasingCredential_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveRemovedLeasingCredentialResponse" message="tns:IXBService_SaveRemovedLeasingCredential_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveClosedLeasingCredential">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveClosedLeasingCredential" message="tns:IXBService_SaveClosedLeasingCredential_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveClosedLeasingCredentialResponse" message="tns:IXBService_SaveClosedLeasingCredential_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBrokerContractProduct">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetBrokerContractProduct" message="tns:IXBService_GetBrokerContractProduct_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetBrokerContractProductResponse" message="tns:IXBService_GetBrokerContractProduct_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingCustomerCredentials">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetLeasingCustomerCredentials" message="tns:IXBService_GetLeasingCustomerCredentials_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetLeasingCustomerCredentialsResponse" message="tns:IXBService_GetLeasingCustomerCredentials_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGovernmentBonds">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetGovernmentBonds" message="tns:IXBService_GetGovernmentBonds_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetGovernmentBondsResponse" message="tns:IXBService_GetGovernmentBonds_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSecuritiesTradingOrderDeposited">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/UpdateSecuritiesTradingOrderDeposited" message="tns:IXBService_UpdateSecuritiesTradingOrderDeposited_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/UpdateSecuritiesTradingOrderDepositedResponse" message="tns:IXBService_UpdateSecuritiesTradingOrderDeposited_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerSentSecuritiesTradingOrdersQuantity">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/GetCustomerSentSecuritiesTradingOrdersQuantity" message="tns:IXBService_GetCustomerSentSecuritiesTradingOrdersQuantity_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/GetCustomerSentSecuritiesTradingOrdersQuantityResponse" message="tns:IXBService_GetCustomerSentSecuritiesTradingOrdersQuantity_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveNewPosLocationOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveAndApproveNewPosLocationOrder" message="tns:IXBService_SaveAndApproveNewPosLocationOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBService/SaveAndApproveNewPosLocationOrderResponse" message="tns:IXBService_SaveAndApproveNewPosLocationOrder_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SaveCardLessCashOutOrder">
       <wsdl:input wsaw:Action="http://tempuri.org/IXBService/SaveCardLessCashOutOrder" message="tns:IXBService_SaveCardLessCashOutOrder_InputMessage" />
@@ -11274,6 +11986,24 @@
   <wsdl:binding name="IExternalOperationService" type="tns:IXBService">
     <wsp:PolicyReference URI="#IExternalOperationService_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="NewPosApplicationOrderDetails">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/NewPosApplicationOrderDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPosTerminalActivitySphere">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetPosTerminalActivitySphere" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetVisaAliasGuidByCutomerNumber">
       <soap12:operation soapAction="http://tempuri.org/IXBService/GetVisaAliasGuidByCutomerNumber" style="document" />
       <wsdl:input>
@@ -11411,6 +12141,627 @@
     </wsdl:operation>
     <wsdl:operation name="GetBondCertificateDetailsByDocId">
       <soap12:operation soapAction="http://tempuri.org/IXBService/GetBondCertificateDetailsByDocId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveConsumeLoanSettlementOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveConsumeLoanSettlementOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConsumeLoanSettlementOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetConsumeLoanSettlementOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveCardlessCashoutCancellationOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveAndApproveCardlessCashoutCancellationOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCardDesign">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/UpdateCardDesign" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllCurrentAccounts">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetAllCurrentAccounts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckCreditLineForRenewedCardAccountRegOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/CheckCreditLineForRenewedCardAccountRegOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApproveConsumeLoanSettlementOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/ApproveConsumeLoanSettlementOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderGroup">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetOrderGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInterestRateEffective">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetInterestRateEffective" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLoanGrafikChangeDates">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLoanGrafikChangeDates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLoanGrafikBeforeChange">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLoanGrafikBeforeChange" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrintConsumeLoanSettlement">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/PrintConsumeLoanSettlement" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveVehicleInsuranceOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveVehicleInsuranceOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateVehicleInsuranceOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/UpdateVehicleInsuranceOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConsumeLoanSettlementSchedult">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetConsumeLoanSettlementSchedult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApproveConsumeLoanSettlementOrderForApproveOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/ApproveConsumeLoanSettlementOrderForApproveOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckPlasticCardRemovalOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/CheckPlasticCardRemovalOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCardChangeType">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetCardChangeType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVehicleInsuranceOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetVehicleInsuranceOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLoanBorrowers">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLoanBorrowers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveTaxRefundAgreementDetails">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveTaxRefundAgreementDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaxRefundAgreementHistory">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetTaxRefundAgreementHistory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApproveVehicleInsuranceOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/ApproveVehicleInsuranceOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateVehicleInusuranceOrderForSending">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/ValidateVehicleInusuranceOrderForSending" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApproveSecuritiesTradingOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/ApproveSecuritiesTradingOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveSecuritiesTradingOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveSecuritiesTradingOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSecuritiesTradingOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetSecuritiesTradingOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApproveBudgetPaymentOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/ApproveBudgetPaymentOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBrokerContractOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetBrokerContractOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertASWAContractResponseDetails">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/InsertASWAContractResponseDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAswaSearchResponseDetails">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveAswaSearchResponseDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAswaSearchResponseDetails">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetAswaSearchResponseDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveBrokerContractOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveBrokerContractOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApproveBrokerContractOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/ApproveBrokerContractOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveBrokerContractOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveAndApproveBrokerContractOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSentSecuritiesTradingOrders">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetSentSecuritiesTradingOrders" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveSecuritiesMarketTradingOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveAndApproveSecuritiesMarketTradingOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSecuritiesTradingOrderById">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetSecuritiesTradingOrderById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSecuritiesMarketTradingOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetSecuritiesMarketTradingOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSecuritiesTradingOrderCancellationOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetSecuritiesTradingOrderCancellationOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSecuritiesTradingOrders">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetSecuritiesTradingOrders" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveSecuritiesTradingOrderCancellationOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveAndApproveSecuritiesTradingOrderCancellationOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmSecuritiesTradingOrderCancellationOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/ConfirmSecuritiesTradingOrderCancellationOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmSecuritiesTradingOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/ConfirmSecuritiesTradingOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsACBASecurity">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/IsACBASecurity" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RejectSecuritiesTradingOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/RejectSecuritiesTradingOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RejectSecuritiesTradingOrderCancellationOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/RejectSecuritiesTradingOrderCancellationOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasings">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLeasings" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasing">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLeasing" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingRepayments">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLeasingRepayments" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingLoanStatements">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLeasingLoanStatements" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingPaymentsType">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLeasingPaymentsType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingDetailsByAppID">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLeasingDetailsByAppID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetLeasingReceiver">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SetLeasingReceiver" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingPaymentDescription">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLeasingPaymentDescription" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingPaymentDetails">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLeasingPaymentDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingOverdueDetails">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLeasingOverdueDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetManagerCustomerNumber">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetManagerCustomerNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingInsurances">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLeasingInsurances" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndEditLeasingCredential">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveAndEditLeasingCredential" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingCredentials">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLeasingCredentials" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveRemovedLeasingCredential">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveRemovedLeasingCredential" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveClosedLeasingCredential">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveClosedLeasingCredential" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBrokerContractProduct">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetBrokerContractProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingCustomerCredentials">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetLeasingCustomerCredentials" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGovernmentBonds">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetGovernmentBonds" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSecuritiesTradingOrderDeposited">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/UpdateSecuritiesTradingOrderDeposited" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerSentSecuritiesTradingOrdersQuantity">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/GetCustomerSentSecuritiesTradingOrdersQuantity" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAndApproveNewPosLocationOrder">
+      <soap12:operation soapAction="http://tempuri.org/IXBService/SaveAndApproveNewPosLocationOrder" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -21366,9 +22717,9 @@
   </wsdl:binding>
   <wsdl:service name="XBService">
     <wsdl:port name="IExternalOperationService" binding="tns:IExternalOperationService">
-      <soap12:address location="net.tcp://ws0004706.acbaca.local/ExternalBankingService/XBService.svc/ExternalOperationService" />
+      <soap12:address location="net.tcp://lt0004574.acbaca.local/ExternalBankingService/XBService.svc/ExternalOperationService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://ws0004706.acbaca.local/ExternalBankingService/XBService.svc/ExternalOperationService</wsa10:Address>
+        <wsa10:Address>net.tcp://lt0004574.acbaca.local/ExternalBankingService/XBService.svc/ExternalOperationService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Upn>Davit.Jraghatspanyan@acbaca.local</Upn>
         </Identity>

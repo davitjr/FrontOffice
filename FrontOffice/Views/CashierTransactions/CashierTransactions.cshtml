@@ -514,12 +514,15 @@
                         </span>
                     </td>
                     <td class='sexm' style='min-width:100px;' title='Միջնորդավճար'>
-                        <span class='currency'>
+                        <span ng-if="xy.Order.Fees[0].Amount !==0" class='currency' style="color:red">
                             {{xy.Order.Fees[0].Amount | currency : " "}}
-                            <span ng-if='xy.Order.Fees[0].Currency==="AMD" && xy.Order.Fees[0].Amount !==0'>ՀՀ դրամ</span>
-                            <span ng-if='xy.Order.Fees[0].Currency==="USD" && xy.Order.Fees[0].Amount !==0'>USD</span>
-                            <span ng-if='xy.Order.Fees[0].Currency==="EUR" && xy.Order.Fees[0].Amount !==0'>EUR</span>
-                            <span ng-if='xy.Order.Fees[0].Currency==="RUR" && xy.Order.Fees[0].Amount !==0'>RUR</span>
+                            <span ng-if='xy.Order.Fees[0].Currency==="AMD" && xy.Order.Fees[0].Amount !==0' style="color:red">ՀՀ դրամ</span>
+                            <span ng-if='xy.Order.Fees[0].Currency==="USD" && xy.Order.Fees[0].Amount !==0' style="color:red">USD</span>
+                            <span ng-if='xy.Order.Fees[0].Currency==="EUR" && xy.Order.Fees[0].Amount !==0' style="color:red">EUR</span>
+                            <span ng-if='xy.Order.Fees[0].Currency==="RUR" && xy.Order.Fees[0].Amount !==0' style="color:red">RUR</span>
+                        </span>
+                        <span ng-if="xy.Order.Fees[0].Amount ==0" class='currency'>
+                            {{xy.Order.Fees[0].Amount | currency : " "}}
                         </span>
                     </td>
                     <td style='width:15rem;' title='Գործարքի տեսակ'>{{xy.TypeDescription}}</td>

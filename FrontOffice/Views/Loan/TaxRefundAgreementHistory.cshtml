@@ -1,0 +1,34 @@
+﻿@{
+    Layout = null;
+}
+
+
+<form style="width:520px" ng-controller="TaxRefundAgreementCtrl" ng-init="getTaxRefundAgreementHistory(agreementId)">
+    <div class="product-details bhoechie-tab-content" style="min-width:520px;padding-left:10px">
+
+        <div class="product-container-header" style="height:44px;">
+            <div style="text-align:center" class="col-sm-3">Ամսաթիվ</div>
+            <div style="text-align:center" class="col-sm-3">ՊԿ</div>
+            <div style="text-align:center" class="col-sm-6">Գործողություն</div>
+        </div>
+        <div class="product-content-table-full_height custom-scroll" style="min-height:100px;float:left;">
+            <div ng-if="history==undefined">
+                <loading></loading>
+            </div>
+            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                <tbody ng-repeat="detail in history" style="background-color: white;">
+                    <tr>
+                        <td style="text-align:center" class="col-sm-3">{{::detail.Date | mydate | date: 'dd/MM/yyyy'}}</td>
+                        <td style="text-align:center" class="col-sm-3">{{::detail.SetNumber}}</td>
+                        <td style="text-align:center" class="col-sm-6">{{::detail.Description}}</td>
+                    </tr>
+                    <tr ng-if="history.length==0 " style="background-color: white;">
+                        <td colspan="6" style="text-align: center;">
+                            Տվյալները բացակայում են
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>

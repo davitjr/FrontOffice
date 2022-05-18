@@ -61,6 +61,12 @@ namespace FrontOffice.Controllers
 
             string guid = Utility.GetSessionId();
             int filailCode = Convert.ToInt32(((XBS.User)Session[guid + "_User"]).filialCode.ToString());
+            string description = "";
+
+            if (paymentOrder.TransactionTypeByAML != null && !String.IsNullOrEmpty(paymentOrder.TransactionTypeByAML.AdditionalDescription))
+            {
+                description += ", " + paymentOrder.TransactionTypeByAML.AdditionalDescription;
+            }
 
             parameters.Add(key: "Number", value: paymentOrder.OrderNumber);
             parameters.Add(key: "TransactionDate", value: paymentOrder.OperationDate.Value.ToString("dd/MMM/yy"));
@@ -81,7 +87,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "Amount", value: paymentOrder.Amount.ToString());
             parameters.Add(key: "Currency", value: paymentOrder.Currency);
             parameters.Add(key: "Receiver", value: paymentOrder.Receiver);
-            parameters.Add(key: "PaymentDescriptionAddInf", value: ", transfer control number:"  + paymentOrder.Code);
+            parameters.Add(key: "PaymentDescriptionAddInf", value: ", transfer control number:"  + paymentOrder.Code + ", " + description);
             parameters.Add(key: "ReceiverAddInf", value: paymentOrder.ReceiverAddInf);
             parameters.Add(key: "ReceiverPassport", value: paymentOrder.ReceiverPassport);
             parameters.Add(key: "PaymentDescription", value: paymentOrder.DescriptionForPayment);
@@ -149,6 +155,12 @@ namespace FrontOffice.Controllers
 
             string guid = Utility.GetSessionId();
             int filailCode = Convert.ToInt32(((XBS.User)Session[guid + "_User"]).filialCode.ToString());
+            string description = "";
+
+            if (paymentOrder.TransactionTypeByAML != null && !String.IsNullOrEmpty(paymentOrder.TransactionTypeByAML.AdditionalDescription))
+            {
+                description += ", " + paymentOrder.TransactionTypeByAML.AdditionalDescription;
+            }
 
             parameters.Add(key: "Number", value: paymentOrder.OrderNumber);
             parameters.Add(key: "TransactionDate", value: paymentOrder.OperationDate.Value.ToString("dd/MMM/yy"));
@@ -165,7 +177,7 @@ namespace FrontOffice.Controllers
             parameters.Add(key: "Currency", value: paymentOrder.Currency);
             parameters.Add(key: "Receiver", value: paymentOrder.Receiver);
             parameters.Add(key: "PaymentDescription", value: paymentOrder.DescriptionForPayment + " by STAK system");
-            parameters.Add(key: "PaymentDescriptionAddInf", value: ", transfer control number: " + paymentOrder.Code);
+            parameters.Add(key: "PaymentDescriptionAddInf", value: ", transfer control number: " + paymentOrder.Code + ", " + description);
             parameters.Add(key: "BeneficiaryAgentCode", value: paymentOrder.BeneficiaryAgentCode == null ? "" : paymentOrder.BeneficiaryAgentCode);
             parameters.Add(key: "URN", value: ", URN: " + paymentOrder.Code);
             parameters.Add(key: "DestinationCountry", value: ", Destination (Country): " + paymentOrder.CountryName);

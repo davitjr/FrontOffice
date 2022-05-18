@@ -121,10 +121,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="NetTcpBinding_IFinancialPlanningService" contract="FinancialPlanningService.IFinancialPlanningService" bindingType="netTcpBinding" address="net.tcp://ws0004706.acbaca.local/ACBAOperationService/FinancialPlanningService.svc/FinancialPlanningService" bindingConfiguration="NetTcpBinding_IFinancialPlanningService">
+    <endpoint name="NetTcpBinding_IFinancialPlanningService" contract="FinancialPlanningService.IFinancialPlanningService" bindingType="netTcpBinding" address="net.tcp://LT0004574.acbaca.local/ACBAOperationService/FinancialPlanningService.svc/FinancialPlanningService" bindingConfiguration="NetTcpBinding_IFinancialPlanningService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://ws0004706.acbaca.local/ACBAOperationService/FinancialPlanningService.svc/FinancialPlanningService</serializedValue>
+          <serializedValue>net.tcp://LT0004574.acbaca.local/ACBAOperationService/FinancialPlanningService.svc/FinancialPlanningService</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

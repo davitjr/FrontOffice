@@ -431,4 +431,70 @@
         $scope.minReplacementDate = new Date();
         $scope.minReplacementDate.setDate($scope.stockIssueNew.ReplacementDate.getDate() - 1);
     };
+
+
+    $scope.prepareForPlacement = function () {
+        showloading();
+        var Data = bondIssueService.postPrepareForPlacement($scope.bondIssue.ID);
+        Data.then(function (res) {
+            if (validate($scope, res.data)) {
+                if (res.data.Count == 0) {
+                    hideloading();
+                    howMesageBoxDialog('Տեղաբաշխման գրանցման համար արժեթղթեր առկա չեն։ ', $scope, 'information');
+                }
+                else if (res.data.Count == undefined) {
+                    hideloading();
+                    showMesageBoxDialog(res.data, $scope, 'error');
+                }
+                else {
+                    hideloading();
+                    CloseBPDialog('oneBondIssueDetails');
+                    showMesageBoxDialog(res.data.Count + ' արժեթղթի համար գործողությունը հաջողությամբ կատարվել է։', $scope, 'information');
+                    $scope.refreshBondIssues();
+                    $scope.getBondIssuesList();
+                }
+             
+            }
+            else {
+                hideloading();
+                showMesageBoxDialog('Խնդրում ենք ուղղել սխալները և կրկին փորձել', $scope, 'error');
+            }
+        }, function () {
+            hideloading();
+            alert('Error PostPrepareForPlacement');
+        });
+    };
+
+
+    $scope.placeStocks = function () {
+        showloading();
+        var Data = bondIssueService.postPlaceStocks($scope.bondIssue.ID);
+        Data.then(function (res) {
+            if (validate($scope, res.data)) {
+                if (res.data.Count == 0) {
+                    hideloading();
+                    howMesageBoxDialog('Տեղաբաշխման համար արժեթղթեր առկա չեն։ ', $scope, 'information');
+                }
+                else if (res.data.Count == undefined) {
+                    hideloading();
+                    showMesageBoxDialog(res.data, $scope, 'error');
+                }
+                else {
+                    hideloading();
+                    CloseBPDialog('oneBondIssueDetails');
+                    showMesageBoxDialog('Կատարվել է ' + res.data.Count + ' հատ արժեթղթի տեղաբաշխում։', $scope, 'information');
+                    $scope.refreshBondIssues();
+                    $scope.getBondIssuesList();
+                }
+            }
+            else {
+                hideloading();
+                showMesageBoxDialog('Խնդրում ենք ուղղել սխալները և կրկին փորձել', $scope, 'error');
+            }
+        }, function () {
+            hideloading();
+            alert('Error PostPlaceStocks');
+        });
+    };
+
 }]); 

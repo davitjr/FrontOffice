@@ -243,7 +243,7 @@
                       <div class="form-group sub_inner" ng-if="PrepaidSign==2" ng-init="forPepaidSign()">
                           <label class="tab_title col-sm-5" for="UrgentSign"> Կանխավճարային </label>
                           <div class="col-sm-1 row">
-                              <input type="checkbox" ng-change="forPepaidSign()" ng-disabled="" ng-model="order.PrepaidSign" ng-true-value="1" ng-false-value="0" 
+                              <input type="checkbox" ng-change="forPepaidSign()" ng-disabled="" ng-model="order.PrepaidSign" ng-true-value="1" ng-false-value="0"
                                      style="width:18px" name="prepaidCheck" />
                           </div>
                       </div>
@@ -260,7 +260,7 @@
                               </div>
                           </div>
                       </div>
-
+                      <div class="form-group" style="margin-left: 0px;"><transactiontypes></transactiontypes></div>
                       <div class="form-group" ng-if="ordertype!=117 && ordertype!=118">
                           <label class="tab_title col-sm-5" for="Description">Նկարագրություն</label>
                           <div class="col-sm-6 ">
@@ -278,7 +278,7 @@
                               </div>
                           </div>
                       </div>
-
+                      <div><additionaldescription></additionaldescription></div>
                   </div>
               </div>
           <div class="col-sm-5" ng-if="!periodic">

@@ -12,7 +12,6 @@
         $scope.loading = true;
         var Data = plasticCardRemovalService.getCustomerPlasticCards();
         Data.then(function (card) {
-
             $scope.cards = card.data;
             $scope.loading = false;
         }, function () {
@@ -29,12 +28,8 @@
             isAccessible: false
         }
         $scope.order.RemovalReason = $scope.RemovalReason;
-
         if ($http.pendingRequests.length == 0) {
-
-            messageText = 'Քարտի հեռացման հետ մեկտեղ հեռացվելու են նաև քարտին կցված հաշիվները: Շարունակել:';
-            $confirm({ title: 'Շարունակե՞լ', text: messageText })
-                .then(function () { $scope.save() });
+            $scope.CheckPlasticCardRemovalOrder();
         }
         else {
             return ShowMessage('Կատարվել է տվյալների թարմացում: Խնդրում ենք կրկին սեղմել <<Պահպանել>> կոճակը:', 'error');
@@ -68,7 +63,7 @@
             }
             alert('Error in saveCardRemovalOrder');
         });
-    }
+    };
 
     $scope.getCardRegistrationWarnings = function () {
         var Data = cardRegistrationOrderService.GetCardRegistrationWarnings($scope.card);
@@ -84,7 +79,7 @@
         Data.then(function (cardDetails) {
             $scope.order = cardDetails.data;
         });
-    }
+    };
 
     $scope.getCardRemovalReasons = function () {
         $scope.loading = true;
@@ -96,14 +91,34 @@
             $scope.loading = false;
             alert('Error getCardRemovalReasons');
         });
-    }
+    };
 
     $scope.checkHeight = function (event) {
         var el = event.target;
-        setTimeout(function(){
-          el.style.cssText = 'height:auto;';
-          el.style.cssText = 'height:' + el.scrollHeight + 'px';
-        },0);
+        setTimeout(function () {
+            el.style.cssText = 'height:auto;';
+            el.style.cssText = 'height:' + el.scrollHeight + 'px';
+        }, 0);
     };
 
+    $scope.CheckPlasticCardRemovalOrder = function () {
+        $scope.loading = true;
+        var Data = plasticCardRemovalService.checkPlasticCardRemovalOrder($scope.order);
+        Data.then(function (confData) {
+            if (confData.data.length) {
+                let showMessage = '';
+                for (let i = 0; i < confData.data.length; i++) {
+                    showMessage = showMessage + `${i + 1}.` + confData.data[i] + '\n';
+                }
+                $confirm({ title: '', text: showMessage + '\n' + '\n' })
+                    .then(function () { $scope.save() });
+            } else {
+                $scope.save();
+            }
+            $scope.loading = false;
+        }, function () {
+            $scope.loading = false;
+            alert('Error CheckPlasticCardRemovalOrder');
+        });
+    };
 }]);

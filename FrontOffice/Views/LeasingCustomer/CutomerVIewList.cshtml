@@ -1,0 +1,45 @@
+﻿
+
+<div class="col-sm-12" ng-controller="CustomerCtrl" data-ng-init="getCustomer(customernumber)">
+    <div class="col-sm-12">
+        <div class="col-sm-2">
+            {{customer.CustomerNumber}}
+        </div>
+        <div class="col-sm-7" style="text-align:center">
+            <span ng-if="customer.CustomerType==6">
+                {{customer.FirstName + ' ' + customer.LastName + ' ' + customer.MiddleName }}
+
+                
+
+            </span>
+            <span ng-if="customer.CustomerType!=6">{{customer.OrganisationName }}</span>
+
+            <script type="text/javascript">
+                                        $('[data-toggle="tooltip"]').tooltip({
+                                            placement: 'left'
+                                    });
+            </script>
+            <span style="font-weight:500;color:green">{{ customer.qualityDescription }}</span>
+            <button type="button" style="float:right" ng-click="getAttachmentDocumentList(customer.CustomerNumber,true,true,true);">
+                <span class="fa fa-print" data-toggle="tooltip" data-original-title="Կցված փաստաթղթեր"></span>
+            </button>
+            <button type="button" ng-controller="PopUpCtrl" style="float:right" ng-click="params={customerNumber:customer.CustomerNumber}; openWindow('/Customer/CustomerDetails','Հաճախորդի տվյալներ','customerdetails')">
+                <span class="fa fa-info-circle" data-toggle="tooltip" data-original-title="Հաճախորդի տվյալներ"></span>
+            </button>
+        </div>
+        <div class="col-sm-2" style="text-align:center">
+            <span ng-if="customer.CustomerType==6">{{customer.DocumentNumber}}</span>
+            <span ng-if="customer.CustomerType!=6">{{customer.TaxCode}}</span>
+        </div>
+        <div class="col-sm-1" style="text-align:center">
+            {{customer.SocCardNumber}}
+        </div>
+        <div class="col-sm-12">
+            {{customer.Address}}
+        </div>
+    </div>
+</div>
+
+
+
+

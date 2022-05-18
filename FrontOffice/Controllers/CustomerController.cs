@@ -329,5 +329,10 @@ namespace FrontOffice.Controllers
         {
             return Json(XBService.GetLeasingCustomerNumber(leasingCustomerNumber), JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetLeasingNumber(ulong customerNumber)
+        {
+            return Json(ACBAOperationService.GetLeasingNumber(customerNumber.ToString()), JsonRequestBehavior.AllowGet);
+        }
     }
 }

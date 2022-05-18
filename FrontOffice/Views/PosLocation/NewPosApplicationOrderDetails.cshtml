@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div>
+    <form style="min-width:600px" ng-controller="PosLocationCtrl" ng-init="getNewPosApplicationOrderDetails(selectedOrderId)">
+
+        <div>
+
+            <div class="product-details bhoechie-tab-content" style="min-width:600px;margin-right:10px;padding-left:10px">
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+                    <div class="product-detail-cell product-detail-value">{{order.Id}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div> 
+                    <div class="product-detail-cell product-detail-value">{{order.RegistrationDateString}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Գործառնական օր</div>
+                    <div class="product-detail-cell product-detail-value">{{order.OperationDateString}}</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Հաճախորդ </div>
+                    <div class="product-detail-cell product-detail-value">{{order.CustomerNumber}}</div>
+                </div>
+
+                <div class="product-detail-row" ng-if="order.SubType==1">
+                    <div class="product-detail-cell product-detail-lable">Գործողության ենթատեսակ</div>
+                    <div class="product-detail-cell product-detail-value"> Նոր POS տերմինալի մուտքագրում</div>
+                </div>
+
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div> 
+                    <div ng-if="order.Quality==30" class="product-detail-cell product-detail-value greenStyle">{{order.QualityDescription}}</div>
+                    <div ng-if="order.Quality==31" class="product-detail-cell product-detail-value redStyle">{{order.QualityDescription}}</div>
+                    <div ng-if="order.Quality!=31 && order.Quality!=30" class="product-detail-cell product-detail-value">{{order.QualityDescription}}</div>
+                </div>
+
+                <div ng-if="order.Quality==31" ng-controller="OrderCtrl" class="product-detail-row">
+                    <div ng-init="getOrderRejectHistory(selectedOrderId)" class="product-detail-cell product-detail-lable" style="clear:both;color:#6F6A6A;font-weight:bold">Մերժման պատճառ`</div>
+                    <div class="product-detail-cell product-detail-value redStyle">&nbsp;&nbsp;&nbsp;{{ rejectHistory.ReasonDescription }}</div>
+                </div>
+
+            </div>
+            <div style="clear:both;color:#6F6A6A;font-weight:bold; margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+
+            <br />
+
+        </div>
+    </form>
+</div>
+

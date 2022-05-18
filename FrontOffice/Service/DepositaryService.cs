@@ -25,6 +25,9 @@ namespace FrontOffice.Service
         private const string CheckAccountRequestUri = "/Depository/getCustomerSecuritiesAccount";
         private const string CreateAccountRequestUri = "/Depository/createAccount";
         private const string UpdateAccountRequestUri = "/Depository/updateBankAccountAsync";
+        private const string PlacementRegistrationRequestUri = "/Depository/placementRegistration"; //  ---- Նախապատրաստել Տեղաբաշխում  
+        private const string PlacementAuthorizationAndApplyRequestUri = "/Depository/placementAuthorizationAndApply";  //Տեղաբաշխում
+
         private const int AcbaBankCode = 22000;
         private const string AcbaBankDescription = "«ԱԿԲԱ ԲԱՆԿ» ԲԲԸ";
 
@@ -277,5 +280,58 @@ namespace FrontOffice.Service
                 OperationDate = XBService.GetCurrentOperDay()
             };
         }
+        public static async Task<object> PlacementRegistrationInDepository(int bondIssueId)
+        {
+            object request = new { IssueID = bondIssueId };
+            HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, PlacementRegistrationRequestUri)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json")
+            };
+            HttpResponseMessage response = await httpClient.SendAsync(httpRequest);
+
+            if(response.StatusCode == HttpStatusCode.ExpectationFailed)
+            {
+                string result = await response.Content.ReadAsStringAsync();
+                return result;
+            }
+            else
+            {
+                PlacementOutputDetails result = DeserializeJson<PlacementOutputDetails>(await response.Content.ReadAsStringAsync());
+                return result;
+            }
+            return response;
+         
+        }
+
+        class PlacementOutputDetails
+        {
+            public int Count { get; set; }
+        }
+
+        public static async Task<object> PlacementAuthorizationAndApplyInDepository(int bondIssueId)
+        {
+            
+            object request = new { IssueID = bondIssueId};
+
+            HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, PlacementAuthorizationAndApplyRequestUri)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage response = await httpClient.SendAsync(httpRequest);
+
+            if (response.StatusCode == HttpStatusCode.ExpectationFailed)
+            {
+                string result = await response.Content.ReadAsStringAsync();
+                return result;
+            }
+            else
+            {
+                PlacementOutputDetails result = DeserializeJson<PlacementOutputDetails>(await response.Content.ReadAsStringAsync());
+                return result;
+            }
+            return response;
+        }
+
     }
 }

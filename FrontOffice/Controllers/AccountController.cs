@@ -168,6 +168,20 @@ namespace FrontOffice.Controllers
             return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult PrintAccountTransactions(string accountNumber, string dateFrom, string dateTo)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string guid = Utility.GetSessionId();
+            xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
+            if (XBService.AccountAccessible(accountNumber, currentUser.AccountGroup))
+            {
+                parameters.Add(key: "account_gl", value: accountNumber);
+                parameters.Add(key: "start_date", value: Convert.ToDateTime(dateFrom).ToString("dd/MMM/yy"));
+                parameters.Add(key: "end_date", value: Convert.ToDateTime(dateTo).ToString("dd/MMM/yy"));
+            }
+            return Json(parameters, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult PrintMemorial(string accountNumber, string dateFrom, string dateTo, ushort correct_mo)
         {
             string guid = Utility.GetSessionId();

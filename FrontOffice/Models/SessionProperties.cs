@@ -68,5 +68,15 @@ namespace FrontOffice
         /// Թեստաին տարբերակ է, թե ոչ
         /// </summary>
         public bool IsTestVersion { get { return bool.Parse(WebConfigurationManager.AppSettings["TestVersion"].ToString()); } }
+
+        /// <summary>
+        /// Լիզինգի գործառնական օրը
+        /// </summary>
+        public DateTime? LeasingOperDay { get; set; }
+
+        /// <summary>
+        /// Լիզինգի հաճախորդ համար
+        /// </summary>
+        public string LeasingNumber { get; set; }
     }
 }

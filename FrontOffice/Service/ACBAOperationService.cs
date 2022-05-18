@@ -750,5 +750,17 @@ namespace FrontOffice.Service
 
             return phoneNumber;
         }
+
+        public static string GetLeasingNumber(string customerNumber)
+        {
+            string leasingNumber = string.Empty;
+
+            ACBAOperationService.Use(client =>
+            {
+                leasingNumber = client.GetCustomerNumberFromLeasing(true, customerNumber);
+            });
+
+            return leasingNumber;
+        }
     }
 }

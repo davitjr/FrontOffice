@@ -1613,6 +1613,123 @@ namespace FrontOffice.Controllers
             ViewBag.redirecturl = "/LeasingStatementSession/Index";
             return PartialView("RedirectDirection");
         }
+
+        public ActionResult LeasingAllProductsSharePoint()
+        {
+            String authorizedUserSessionToken = this.Request.QueryString["authorizedUserSessionToken"];
+            xbs.AuthorizedUser authorizedUser = new xbs.AuthorizedUser();
+            xbs.User user = new xbs.User();
+            initUSerBySessionToken(authorizedUserSessionToken, ref authorizedUser, ref user);
+            string guid = Guid.NewGuid().ToString();
+            Session[guid + "_authorizedUserSessionToken"] = authorizedUserSessionToken;
+            Session[guid + "_AuthorizedUser"] = authorizedUser;
+            Session[guid + "_User"] = user;
+            Session[guid + "_CustomerNumber"] = this.Request.QueryString["customerNumber"];
+            System.Web.HttpContext.Current.Request.Headers["SessionId"] = guid;
+
+            SessionProperties sessionProperties = new SessionProperties();
+            sessionProperties.HasTransactionPermission = false;
+            sessionProperties.SourceType = 2;
+            sessionProperties.UserName = authorizedUser.userName;
+            sessionProperties.OperDay = XBService.GetCurrentOperDay();
+            sessionProperties.UserId = Convert.ToUInt32(user.userID);
+            sessionProperties.IsChiefAcc = user.IsChiefAcc;
+            sessionProperties.IsManager = user.IsManager;
+            sessionProperties.AdvancedOptions = user.AdvancedOptions;
+            sessionProperties.LeasingOperDay = XBService.GetLeasingOperDay();
+            sessionProperties.LeasingNumber = ACBAOperationService.GetLeasingNumber(Convert.ToString(this.Request.QueryString["customerNumber"]));
+
+            Session[guid + "_LeasingCustomerNumber"] = sessionProperties.LeasingNumber;
+            Session[guid + "_SessionProperties"] = sessionProperties;
+
+            TempData["sessionId"] = guid;
+            TempData["user"] = user;
+            TempData["customerNumber"] = this.Request.QueryString["customerNumber"];
+
+            return RedirectToAction("LeasingAllProducts", "Login");
+
+        }
+
+        public ActionResult LeasingAllProducts()
+        {
+            TempData.Keep();
+            return PartialView("LeasingAllProductsSharePoint");
+        }
+
+        [HttpPost]
+        [SessionExpireFilter]
+        public JsonResult RedirectBackToLeasingCustomersList()//Redirecting to Customers search
+        {
+            string guid = Utility.GetSessionId();
+            string authorizedUserSessionToken = " ";
+            if (Session[guid + "_authorizedUserSessionToken"] != null)
+                authorizedUserSessionToken = Session[guid + "_authorizedUserSessionToken"].ToString();
+
+            ulong customerNumber = 0;
+            customerNumber = XBService.GetAuthorizedCustomerNumber();
+
+
+            if (customerNumber == 0 && Session[guid + "_CustomerNumber"] != null)
+            {
+                customerNumber = Convert.ToUInt64(Session[guid + "_CustomerNumber"]);
+            }
+
+
+            XBService.SaveExternalBankingLogOutHistory(authorizedUserSessionToken);
+            Session[guid + "_AuthorisedCustomerSessionId"] = null;
+
+
+            bool isDevVersion = false;
+            isDevVersion = bool.Parse(ConfigurationManager.AppSettings["ForDevelopment"].ToString());
+
+            if (isDevVersion)
+            {
+                return Json(new { redirectUrl = "/Login/Testversion" });
+            }
+
+
+
+            Utility.ClearSession(guid);
+            return Json(new { redirectUrl = ConfigurationManager.AppSettings["CustomersURL"] + ConfigurationManager.AppSettings["LeasingCustomersExternalSharePointURL"], customerNumber = customerNumber, authorizedUserSessionToken = authorizedUserSessionToken }, JsonRequestBehavior.AllowGet);
+        }
+
+        
+        public ActionResult LeasingOutPutReportsSharePoint()
+        {
+            string guid = Guid.NewGuid().ToString();
+            String authorizedUserSessionToken = this.Request.QueryString["authorizedUserSessionToken"];
+            xbs.AuthorizedUser authorizedUser = new xbs.AuthorizedUser();
+            xbs.User user = new xbs.User();
+
+            initUSerBySessionToken(authorizedUserSessionToken, ref authorizedUser, ref user);
+
+
+            Session[guid + "_authorizedUserSessionToken"] = authorizedUserSessionToken;
+            Session[guid + "_AuthorizedUser"] = authorizedUser;
+
+            Session[guid + "_User"] = user;
+            SessionProperties sessionProperties = new SessionProperties();
+            sessionProperties.OperDay = XBService.GetCurrentOperDay();
+            sessionProperties.UserId = Convert.ToUInt32(user.userID);
+            sessionProperties.IsChiefAcc = user.IsChiefAcc;
+            sessionProperties.IsManager = user.IsManager;
+            sessionProperties.AdvancedOptions = user.AdvancedOptions;
+            sessionProperties.NonCheckFilialATSAccount = true;
+            sessionProperties.LeasingOperDay = XBService.GetLeasingOperDay();
+            Session[guid + "_SessionProperties"] = sessionProperties;
+
+            Session[guid + "_SessionProperties"] = sessionProperties;
+
+            TempData["sessionId"] = guid;
+            return RedirectToAction("LeasingOutPutReports", "Login");
+        }
+
+        public ActionResult LeasingOutPutReports()
+        {
+            TempData.Keep();
+            ViewBag.redirecturl = "/LeasingOutPutReports/Index";
+            return PartialView("RedirectDirection");
+        }
     }
 }
 

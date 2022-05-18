@@ -15,6 +15,7 @@
 		});
 		return response;
 	};
+
 	this.getVirtualCardHistory = function (virtualCardId) {
 		var response = $http({
 			method: "post",
@@ -41,6 +42,38 @@
 
 		return response;
 	};
+
+	this.getVirtualCardCTFInfo = function (virtualCardId) {
+		var response = $http({
+			method: "post",
+			headers: {
+				'Content-Type': "application/json"
+			},
+			url: "/Card/GetVirtualCardCTFInfo",
+			responseType: 'application/json',
+			params: {
+				virtualCardId: virtualCardId
+			}
+		});
+		return response;
+	};
+
+
+	this.getVirtualCardInfoFromThales = function (productID) {
+		var response = $http({
+			method: "post",
+			headers: {
+				'Content-Type': "application/json"
+			},
+			url: "/Card/GetVirtualCardInfoFromThales",
+			responseType: 'application/json',
+			params: {
+				productID: productID
+			}
+		});
+		return response;
+	};
+
 
 
 }]);

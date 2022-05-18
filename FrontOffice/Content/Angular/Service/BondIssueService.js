@@ -109,6 +109,28 @@
         return response;
     };
 
+    this.postPrepareForPlacement = function (bondIssueId) {
+        var response = $http({
+            method: "post",
+            url: "/BondIssue/PostPrepareForPlacement",
+            params: {
+                bondIssueId: bondIssueId
+            }
+        });
+        return response;
+    };
+
+    this.postPlaceStocks = function (bondIssueId) {
+        var response = $http({
+            method: "post",
+            url: "/BondIssue/PostPlaceStocks",
+            params: {
+                bondIssueId: bondIssueId
+            }
+        });
+        return response;
+    };
+
     //this.getCheckedCustomerIsResident = function () {
     //    var response = $http({
     //        method: "post",

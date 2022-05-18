@@ -1865,4 +1865,75 @@
         return response;
     };
 
+    this.getTransactionTypes = function () {
+
+        var response = $http({
+            method: "post",
+            url: "/Info/GetTransactionTypes"
+        });
+        return response;
+    }
+
+    this.getOrderQualityTypes = function () {
+        var response = $http({
+            method: "post",
+            url: "/Info/GetOrderQualityTypes"
+        });
+        return response;
+    }
+
+    this.getSecuritiesTypes = function () {
+        var response = $http({
+            method: "post",
+            url: "/Info/GetSecuritiesTypes"
+        });
+        return response;
+    };
+
+
+    this.getTradingOrderTypes = function () {
+        var response = $http({
+            method: "post",
+            url: "/Info/GetTradingOrderTypes"
+        });
+        return response;
+    };
+
+
+    this.getTradingOrderExpirationTypes = function () {
+        var response = $http({
+            method: "post",
+            url: "/Info/GetTradingOrderExpirationTypes"
+        });
+        return response;
+    };
+    
+    this.getLinkedCardWarnings = function (cardNumber, renewWithCardNewType) {
+        var response = $http({
+            method: "post",
+            url: "/Card/GetLinkedCardWarnings",
+            data: {
+                cardNumber: cardNumber,
+                renewWithCardNewType: renewWithCardNewType
+            }
+        });
+        return response;
+    };
+
+    
+    this.getLeasingReportTypes = function () {
+        var response = $http({
+            method: "post",
+            url: "/Info/GetLeasingReportTypes"
+        });
+        return response;
+    };
+
+    this.getLeasingCredentialClosingReasons = function () {
+        var response = $http({
+            method: "post",
+            url: "/Info/GetLeasingCredentialClosingReasons"
+        });
+        return response;
+    };
 }]);

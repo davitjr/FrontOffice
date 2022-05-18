@@ -160,7 +160,7 @@
             <div class="product-detail-cell product-detail-lable">Պայմանագրի վերջ</div>
             <div class="product-detail-cell product-detail-value">{{deposit.EndDateToString}}</div>
         </div>
-        <div class="product-detail-row">
+        <div ng-if="deposit.HasCommunicationType == 1" class="product-detail-row">
             <div class="product-detail-cell product-detail-lable">Քաղվածքի տրամադրման եղանակ</div>
             <div class="product-detail-cell product-detail-value">{{deposit.StatementDeliveryTypeDescription}}</div>
         </div>

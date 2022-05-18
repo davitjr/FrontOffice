@@ -247,6 +247,32 @@ function ShowExcelReport(response, fileName) {
 
 }
 
+function ShowLeasingExcelReport(response, fileName) {
+    var binary_string = window.atob(response.reportBuffer);
+    var len = binary_string.length;
+    var bytes = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+        bytes[i] = binary_string.charCodeAt(i);
+    }
+    var file = new Blob([bytes.buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    saveAs(file, fileName + '.xlsx');
+    hideloading();
+
+}
+
+function ShowLeasingOldExcelReport(response, fileName) {
+    var binary_string = window.atob(response.reportBuffer);
+    var len = binary_string.length;
+    var bytes = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+        bytes[i] = binary_string.charCodeAt(i);
+    }
+    var file = new Blob([bytes.buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    saveAs(file, fileName + '.xlsm');
+    hideloading();
+
+}
+
 $.fn.scrollTo = function (target, options, callback) {
     if (typeof options == 'function' && arguments.length == 2) { callback = options; options = target; }
     var settings = $.extend({
@@ -1219,6 +1245,17 @@ refresh = function (orderType, product1, product2) {
                 refreshScope.GetVisaAliasHistory(refreshScope.$parent.cardNumber);
             }
             break;
+        case 'RefreshAgreementExistanceChange':
+            var refreshScope = angular.element(document.getElementById('taxRefundAgreementDetails')).scope();
+            if (refreshScope != undefined) {
+                refreshScope.getLoanBorrowers(refreshScope.productid);
+            }
+            break;
+        case 263:
+            var refreshScope = angular.element(document.getElementById('brokerContract')).scope();
+            if (refreshScope != undefined) {
+                refreshScope.callbackBrokerContractProduct();
+            }
         default:
             break;
 

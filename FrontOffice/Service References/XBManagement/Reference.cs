@@ -391,6 +391,12 @@ namespace FrontOffice.XBManagement {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         SberBankTransfer = 14,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        LinkPayment = 15,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        AcbaMat = 16,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
@@ -1960,6 +1966,9 @@ namespace FrontOffice.XBManagement {
         private System.Collections.Generic.List<FrontOffice.XBManagement.OrderAttachment> AttachmentsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> CancellationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> ConfirmationDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -2035,6 +2044,12 @@ namespace FrontOffice.XBManagement {
         private System.DateTime RegistrationDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> RejectionDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> SentDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private FrontOffice.XBManagement.SourceType SourceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -2045,6 +2060,9 @@ namespace FrontOffice.XBManagement {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TerminalIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.XBManagement.TransactionTypeByAML TransactionTypeByAMLField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private FrontOffice.XBManagement.OrderType TypeField;
@@ -2097,6 +2115,19 @@ namespace FrontOffice.XBManagement {
                 if ((object.ReferenceEquals(this.AttachmentsField, value) != true)) {
                     this.AttachmentsField = value;
                     this.RaisePropertyChanged("Attachments");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> CancellationDate {
+            get {
+                return this.CancellationDateField;
+            }
+            set {
+                if ((this.CancellationDateField.Equals(value) != true)) {
+                    this.CancellationDateField = value;
+                    this.RaisePropertyChanged("CancellationDate");
                 }
             }
         }
@@ -2427,6 +2458,32 @@ namespace FrontOffice.XBManagement {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> RejectionDate {
+            get {
+                return this.RejectionDateField;
+            }
+            set {
+                if ((this.RejectionDateField.Equals(value) != true)) {
+                    this.RejectionDateField = value;
+                    this.RaisePropertyChanged("RejectionDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> SentDate {
+            get {
+                return this.SentDateField;
+            }
+            set {
+                if ((this.SentDateField.Equals(value) != true)) {
+                    this.SentDateField = value;
+                    this.RaisePropertyChanged("SentDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public FrontOffice.XBManagement.SourceType Source {
             get {
                 return this.SourceField;
@@ -2474,6 +2531,19 @@ namespace FrontOffice.XBManagement {
                 if ((object.ReferenceEquals(this.TerminalIDField, value) != true)) {
                     this.TerminalIDField = value;
                     this.RaisePropertyChanged("TerminalID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.XBManagement.TransactionTypeByAML TransactionTypeByAML {
+            get {
+                return this.TransactionTypeByAMLField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TransactionTypeByAMLField, value) != true)) {
+                    this.TransactionTypeByAMLField = value;
+                    this.RaisePropertyChanged("TransactionTypeByAML");
                 }
             }
         }
@@ -3150,6 +3220,67 @@ namespace FrontOffice.XBManagement {
                 if ((object.ReferenceEquals(this.PersonSocialNumberField, value) != true)) {
                     this.PersonSocialNumberField = value;
                     this.RaisePropertyChanged("PersonSocialNumber");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TransactionTypeByAML", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
+    [System.SerializableAttribute()]
+    public partial class TransactionTypeByAML : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AdditionalDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> TransactionTypeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AdditionalDescription {
+            get {
+                return this.AdditionalDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AdditionalDescriptionField, value) != true)) {
+                    this.AdditionalDescriptionField = value;
+                    this.RaisePropertyChanged("AdditionalDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> TransactionType {
+            get {
+                return this.TransactionTypeField;
+            }
+            set {
+                if ((this.TransactionTypeField.Equals(value) != true)) {
+                    this.TransactionTypeField = value;
+                    this.RaisePropertyChanged("TransactionType");
                 }
             }
         }
@@ -3988,6 +4119,12 @@ namespace FrontOffice.XBManagement {
         private string OrderNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> RejectFeeTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RejectFeeTypeDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private short TypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -4095,6 +4232,32 @@ namespace FrontOffice.XBManagement {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> RejectFeeType {
+            get {
+                return this.RejectFeeTypeField;
+            }
+            set {
+                if ((this.RejectFeeTypeField.Equals(value) != true)) {
+                    this.RejectFeeTypeField = value;
+                    this.RaisePropertyChanged("RejectFeeType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RejectFeeTypeDescription {
+            get {
+                return this.RejectFeeTypeDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RejectFeeTypeDescriptionField, value) != true)) {
+                    this.RejectFeeTypeDescriptionField = value;
+                    this.RaisePropertyChanged("RejectFeeTypeDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public short Type {
             get {
                 return this.TypeField;
@@ -4184,10 +4347,11 @@ namespace FrontOffice.XBManagement {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         SentToAML = 57,
+        
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        VisaAlias = 250,
+        ReviewingByEmployee = 60,
     }
-
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OrderType", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
     public enum OrderType : short {
@@ -4841,6 +5005,12 @@ namespace FrontOffice.XBManagement {
         SberBankTransferOrder = 239,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
+        PreferredAccountActivationOrder = 240,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        PreferredAccountDeactivationOrder = 241,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
         LinkPaymentOrder = 242,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
@@ -4865,19 +5035,73 @@ namespace FrontOffice.XBManagement {
         AccountRemove = 249,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
+        VisaAlias = 250,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
         ThirdPersonAccountRightsTransfer = 251,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
+        LeasingPaymentOrder = 252,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
         MRDataChangeOrder = 253,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        LinkTransferPaymentConfirmation = 254,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ConsumeLoanApplicationOrder = 255,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DepositaryAccountOpeningOrder = 256,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CardlessCashoutCancellationOrder = 257,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ConsumeLoanSettlementOrder = 258,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        VehicleInsuranceOrder = 259,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        AcbamatOrder = 260,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SecuritiesBuyOrder = 261,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SecuritiesSellOrder = 262,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        BrokerContractOrder = 263,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SecuritiesMarketTradingOrder = 264,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SecuritiesTradingOrderCancellationOrder = 265,
+
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NewPosTerminalInsertOrder = 268,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="HBApplicationUpdate", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking.XBManagement")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.AuthorizedCustomer))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.TokenOperationsInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.TokenOperationsResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.TokenOperationsInfo1))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.TokenOperationsResult1))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.CustomerEmail))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.KeyValue))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.Email))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.CustomerPhone))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.Phone))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.User))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.XBManagement.CustomerEmail>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.HBTokenQuality))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.HBTokenSubType))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.HBTokenTypes))]
@@ -4895,6 +5119,7 @@ namespace FrontOffice.XBManagement {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.OPPerson))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.OrderQuality))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.SourceType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.TransactionTypeByAML))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.OrderType))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.OrderAccountType))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.ServiceType))]
@@ -4906,11 +5131,6 @@ namespace FrontOffice.XBManagement {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.ProductQualityFilter))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.HBServletAction))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.HBServiceFeeRequestTypes))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.AuthorizedCustomer))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.TokenOperationsInfo1))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.TokenOperationsResult1))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.TokenOperationsInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.TokenOperationsResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.HBUser))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.LogonInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.XBManagement.HBProductPermission>))]
@@ -4946,13 +5166,9 @@ namespace FrontOffice.XBManagement {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.RequestType))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.PhoneBankingContractActivationOrder))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.HBApplicationFullPermissionsGrantingOrder))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.CustomerEmail))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.KeyValue))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.Email))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.CustomerPhone))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.Phone))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(FrontOffice.XBManagement.User))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<FrontOffice.XBManagement.CustomerEmail>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, string>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<object>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
     public partial class HBApplicationUpdate : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -6470,261 +6686,6 @@ namespace FrontOffice.XBManagement {
         NewPhoneBankingContract = 4,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="OrderAccountType", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
-    public enum OrderAccountType : byte {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        DebitAccount = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        CreditAccount = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        FeeAccount = 3,
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ActionResult", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
-    [System.SerializableAttribute()]
-    public partial class ActionResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<FrontOffice.XBManagement.ActionError> ErrorsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FrontOffice.XBManagement.ResultCode ResultCodeField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<FrontOffice.XBManagement.ActionError> Errors {
-            get {
-                return this.ErrorsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ErrorsField, value) != true)) {
-                    this.ErrorsField = value;
-                    this.RaisePropertyChanged("Errors");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public FrontOffice.XBManagement.ResultCode ResultCode {
-            get {
-                return this.ResultCodeField;
-            }
-            set {
-                if ((this.ResultCodeField.Equals(value) != true)) {
-                    this.ResultCodeField = value;
-                    this.RaisePropertyChanged("ResultCode");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ActionError", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
-    [System.SerializableAttribute()]
-    public partial class ActionError : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private short CodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DescriptionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<string> ParamsField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public short Code {
-            get {
-                return this.CodeField;
-            }
-            set {
-                if ((this.CodeField.Equals(value) != true)) {
-                    this.CodeField = value;
-                    this.RaisePropertyChanged("Code");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Description {
-            get {
-                return this.DescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
-                    this.DescriptionField = value;
-                    this.RaisePropertyChanged("Description");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<string> Params {
-            get {
-                return this.ParamsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ParamsField, value) != true)) {
-                    this.ParamsField = value;
-                    this.RaisePropertyChanged("Params");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ResultCode", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
-    public enum ResultCode : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Normal = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Failed = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        NotAutorized = 3,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        ValidationError = 4,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        SavedNotConfirmed = 5,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Warning = 6,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        NoneAutoConfirm = 7,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        SaveAndSendToConfirm = 8,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        DoneAndReturnedValues = 9,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        InvalidRequest = 10,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        PartiallyCompleted = 13,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        DoneErrorInFurtherActions = 14,
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ProductQualityFilter", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
-    public enum ProductQualityFilter : short {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        NotSet = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Opened = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Closed = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        StillNotActive = 3,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Contracts = 4,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        AllExceptContracts = 5,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        OpenedAndNotActive = 6,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        All = 100,
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="HBServiceFeeRequestTypes", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
-    public enum HBServiceFeeRequestTypes : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        NotSpecified = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        NewApplication = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        NewToken = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        AllowDataEntryPermission = 3,
-    }
-    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AuthorizedCustomer", Namespace="http://schemas.datacontract.org/2004/07/ExternalBankingService")]
@@ -7008,6 +6969,479 @@ namespace FrontOffice.XBManagement {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CustomerPhone", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
+    [System.SerializableAttribute()]
+    public partial class CustomerPhone : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.XBManagement.KeyValue CheckedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string addInfField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private uint idField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.XBManagement.Phone phoneField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.XBManagement.KeyValue phoneTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.XBManagement.KeyValue priorityField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.XBManagement.KeyValue Checked {
+            get {
+                return this.CheckedField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CheckedField, value) != true)) {
+                    this.CheckedField = value;
+                    this.RaisePropertyChanged("Checked");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string addInf {
+            get {
+                return this.addInfField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.addInfField, value) != true)) {
+                    this.addInfField = value;
+                    this.RaisePropertyChanged("addInf");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public uint id {
+            get {
+                return this.idField;
+            }
+            set {
+                if ((this.idField.Equals(value) != true)) {
+                    this.idField = value;
+                    this.RaisePropertyChanged("id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.XBManagement.Phone phone {
+            get {
+                return this.phoneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.phoneField, value) != true)) {
+                    this.phoneField = value;
+                    this.RaisePropertyChanged("phone");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.XBManagement.KeyValue phoneType {
+            get {
+                return this.phoneTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.phoneTypeField, value) != true)) {
+                    this.phoneTypeField = value;
+                    this.RaisePropertyChanged("phoneType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.XBManagement.KeyValue priority {
+            get {
+                return this.priorityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.priorityField, value) != true)) {
+                    this.priorityField = value;
+                    this.RaisePropertyChanged("priority");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Phone", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
+    [System.SerializableAttribute()]
+    public partial class Phone : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string areaCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string countryCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private uint idField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string phoneNumberField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string areaCode {
+            get {
+                return this.areaCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.areaCodeField, value) != true)) {
+                    this.areaCodeField = value;
+                    this.RaisePropertyChanged("areaCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string countryCode {
+            get {
+                return this.countryCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.countryCodeField, value) != true)) {
+                    this.countryCodeField = value;
+                    this.RaisePropertyChanged("countryCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public uint id {
+            get {
+                return this.idField;
+            }
+            set {
+                if ((this.idField.Equals(value) != true)) {
+                    this.idField = value;
+                    this.RaisePropertyChanged("id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string phoneNumber {
+            get {
+                return this.phoneNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.phoneNumberField, value) != true)) {
+                    this.phoneNumberField = value;
+                    this.RaisePropertyChanged("phoneNumber");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="OrderAccountType", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
+    public enum OrderAccountType : byte {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DebitAccount = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CreditAccount = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FeeAccount = 3,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ActionResult", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
+    [System.SerializableAttribute()]
+    public partial class ActionResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.XBManagement.ActionError> ErrorsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FrontOffice.XBManagement.ResultCode ResultCodeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.XBManagement.ActionError> Errors {
+            get {
+                return this.ErrorsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorsField, value) != true)) {
+                    this.ErrorsField = value;
+                    this.RaisePropertyChanged("Errors");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FrontOffice.XBManagement.ResultCode ResultCode {
+            get {
+                return this.ResultCodeField;
+            }
+            set {
+                if ((this.ResultCodeField.Equals(value) != true)) {
+                    this.ResultCodeField = value;
+                    this.RaisePropertyChanged("ResultCode");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ActionError", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
+    [System.SerializableAttribute()]
+    public partial class ActionError : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private short CodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<string> ParamsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public short Code {
+            get {
+                return this.CodeField;
+            }
+            set {
+                if ((this.CodeField.Equals(value) != true)) {
+                    this.CodeField = value;
+                    this.RaisePropertyChanged("Code");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<string> Params {
+            get {
+                return this.ParamsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ParamsField, value) != true)) {
+                    this.ParamsField = value;
+                    this.RaisePropertyChanged("Params");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResultCode", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
+    public enum ResultCode : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Normal = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Failed = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NotAutorized = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ValidationError = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SavedNotConfirmed = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Warning = 6,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NoneAutoConfirm = 7,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SaveAndSendToConfirm = 8,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DoneAndReturnedValues = 9,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        InvalidRequest = 10,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        PartiallyCompleted = 13,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DoneErrorInFurtherActions = 14,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ProductQualityFilter", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
+    public enum ProductQualityFilter : short {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NotSet = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Opened = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Closed = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        StillNotActive = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Contracts = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        AllExceptContracts = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        OpenedAndNotActive = 6,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        All = 100,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="HBServiceFeeRequestTypes", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
+    public enum HBServiceFeeRequestTypes : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NotSpecified = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NewApplication = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NewToken = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        AllowDataEntryPermission = 3,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -7499,224 +7933,6 @@ namespace FrontOffice.XBManagement {
                 if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
                     this.UserNameField = value;
                     this.RaisePropertyChanged("UserName");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CustomerPhone", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-    [System.SerializableAttribute()]
-    public partial class CustomerPhone : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FrontOffice.XBManagement.KeyValue CheckedField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string addInfField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private uint idField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FrontOffice.XBManagement.Phone phoneField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FrontOffice.XBManagement.KeyValue phoneTypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FrontOffice.XBManagement.KeyValue priorityField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public FrontOffice.XBManagement.KeyValue Checked {
-            get {
-                return this.CheckedField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CheckedField, value) != true)) {
-                    this.CheckedField = value;
-                    this.RaisePropertyChanged("Checked");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string addInf {
-            get {
-                return this.addInfField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.addInfField, value) != true)) {
-                    this.addInfField = value;
-                    this.RaisePropertyChanged("addInf");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public uint id {
-            get {
-                return this.idField;
-            }
-            set {
-                if ((this.idField.Equals(value) != true)) {
-                    this.idField = value;
-                    this.RaisePropertyChanged("id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public FrontOffice.XBManagement.Phone phone {
-            get {
-                return this.phoneField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.phoneField, value) != true)) {
-                    this.phoneField = value;
-                    this.RaisePropertyChanged("phone");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public FrontOffice.XBManagement.KeyValue phoneType {
-            get {
-                return this.phoneTypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.phoneTypeField, value) != true)) {
-                    this.phoneTypeField = value;
-                    this.RaisePropertyChanged("phoneType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public FrontOffice.XBManagement.KeyValue priority {
-            get {
-                return this.priorityField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.priorityField, value) != true)) {
-                    this.priorityField = value;
-                    this.RaisePropertyChanged("priority");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Phone", Namespace="http://schemas.datacontract.org/2004/07/ACBALibrary")]
-    [System.SerializableAttribute()]
-    public partial class Phone : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string areaCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string countryCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private uint idField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string phoneNumberField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string areaCode {
-            get {
-                return this.areaCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.areaCodeField, value) != true)) {
-                    this.areaCodeField = value;
-                    this.RaisePropertyChanged("areaCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string countryCode {
-            get {
-                return this.countryCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.countryCodeField, value) != true)) {
-                    this.countryCodeField = value;
-                    this.RaisePropertyChanged("countryCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public uint id {
-            get {
-                return this.idField;
-            }
-            set {
-                if ((this.idField.Equals(value) != true)) {
-                    this.idField = value;
-                    this.RaisePropertyChanged("id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string phoneNumber {
-            get {
-                return this.phoneNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.phoneNumberField, value) != true)) {
-                    this.phoneNumberField = value;
-                    this.RaisePropertyChanged("phoneNumber");
                 }
             }
         }

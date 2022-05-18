@@ -96,7 +96,7 @@ namespace FrontOffice.XBS
                 User user = (User)System.Web.HttpContext.Current.Session[guid + "_User"];
 
                 bool accountAccessible = false;
-                Account currentAccount = new Account();
+                Account currentAccount = null;
 
                 if (sessionProperties == null)
                 {
@@ -116,6 +116,7 @@ namespace FrontOffice.XBS
                             accountAccessible = XBService.AccountAccessible(account.AccountNumber, user.AccountGroup);
                             if (accountAccessible)
                             {
+                                currentAccount = new Account();
                                 currentAccount = account;
                                 break;
                             }
@@ -130,6 +131,7 @@ namespace FrontOffice.XBS
                             accountAccessible = XBService.AccountAccessible(card.CardAccount.AccountNumber, user.AccountGroup);
                             if (accountAccessible)
                             {
+                                currentAccount = new Account();
                                 currentAccount = card.CardAccount;
                                 break;
                             }

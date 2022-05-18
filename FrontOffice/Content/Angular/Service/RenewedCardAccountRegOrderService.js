@@ -33,4 +33,13 @@
         return response;
     };
 
+    this.checkCreditLineForRenewedCardAccountRegOrder = function (order) {
+        var response = $http({
+            method: "post",
+            url: "/RenewedCardAccountRegOrder/CheckCreditLineForRenewedCardAccountRegOrder",
+            data: JSON.stringify(order),
+            dataType: "json"
+        });
+        return response;
+    };
 }]);

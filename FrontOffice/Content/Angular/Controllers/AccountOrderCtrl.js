@@ -206,14 +206,14 @@
         $scope.order.JointCustomers.splice(index, 1);
     };
 
-    $scope.getStatementDeliveryTypes = function () {
-        var Data = infoService.GetStatementDeliveryTypes();
-        Data.then(function (delTypes) {
-            $scope.deliveryTypes = delTypes.data;
-        }, function () {
-            alert('Error StatementDeliveryTypes');
-        });
-    };
+    //$scope.getStatementDeliveryTypes = function () {
+    //    var Data = infoService.GetStatementDeliveryTypes();
+    //    Data.then(function (delTypes) {
+    //        $scope.deliveryTypes = delTypes.data;
+    //    }, function () {
+    //        alert('Error StatementDeliveryTypes');
+    //    });
+    //};
 
     $scope.getAccountOpenWarnings = function () {
         var Data = accountOrderService.GetAccountOpenWarnings();

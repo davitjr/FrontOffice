@@ -138,13 +138,13 @@
                 </ul>
             </li>
 
-            <li class="root-menu-item-2 " ng-if="card.MainCardNumber=='' && card.ClosingDate!=null" ng-controller="PopUpCtrl" ng-click="params={cardProductId:productId,checkForDebitAccount:0,checkForReciverAccount:1,checkForFeeAccount:0,orderType:83,cardNumber:card.CardNumber};openWindowWithTemplate('paymentorder','Քարտի սպասարկման միջնորդավճարի գանձում','paymentorder')">
+            <li class="root-menu-item-2 " ng-if="card.ClosingDate!=null" ng-controller="PopUpCtrl" ng-click="params={cardProductId:productId,checkForDebitAccount:0,checkForReciverAccount:1,checkForFeeAccount:0,orderType:83,cardNumber:card.CardNumber};openWindowWithTemplate('paymentorder','Քարտի սպասարկման միջնորդավճարի գանձում','paymentorder')">
                 <span id="h-menu-item-2"><img id="h-menu-icon-2" class="balanceButton h-menu-icon">Սպասարկման միջնորդավճարի գանձում</span>
             </li>
             <li class="h-menu-last-rendered" data-permission-selector="" id="cssmenu" ng-if="$root.SessionProperties.SourceType == 2 ">
                 <span id="menu-last-item"></span>
                 <ul>
-                    <li ng-if="card.MainCardNumber=='' && card.ClosingDate==null" ng-class="{'my_disable':disabelButton==true}" class="root-menu-item-6 " ng-controller="PopUpCtrl" ng-click="openWindow('/CardUnpaidPercentPaymentOrder/CardUnpaidPercentPaymentOrder','Քարտային հաշվի չվճարված դրական տոկոսագումարի վճարման հայտ','cardUnpaidPercentPayment')">
+                    <li ng-if="card.ClosingDate==null" ng-class="{'my_disable':disabelButton==true}" class="root-menu-item-6 " ng-controller="PopUpCtrl" ng-click="openWindow('/CardUnpaidPercentPaymentOrder/CardUnpaidPercentPaymentOrder','Քարտային հաշվի չվճարված դրական տոկոսագումարի վճարման հայտ','cardUnpaidPercentPayment')">
                         <span id="h-menu-item-6"><img id="h-menu-icon-6">Ցպահանջ տոկոսի վճարում</span>
                     </li>
 
@@ -165,7 +165,7 @@
                     </li>
 
                     <li class="root-menu-item-6"
-                        ng-if="plasticCard != null && plasticCard.CardChangeType == 1"
+                        ng-if="plasticCard != null && plasticCard.PlasticCardChangeType == 1"
                         ng-controller="PopUpCtrl"
                         ng-click="params={productId:productId, plasticCard:plasticCard};
                         openWindow('/RenewedCardAccountRegOrder/RenewedCardAccountRegOrder', 'Վերաթողարկված քարտի հաշվի կցում', 'renewedCardAccountRegOrder', callbackgetrenewcard);">
@@ -176,7 +176,7 @@
                         <span id="h-menu-item-6"><img id="h-menu-icon-6">Չվերաթողարկել քարտը</span>
                     </li>
 
-                    <li class="root-menu-item-6" ng-if="card.CreditLine!=null" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard};
+                    <li class="root-menu-item-6" ng-if="card.CreditLine!=null && card.Type != 53" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard};
                         openWindow('/CreditLineCardReplaceOrder/CreditLineCardReplaceOrder', 'Փոխարինում՝ նոր համար, նոր ժամկետ - վ․գ․', 'creditLineCardReplaceOrder', callbackgetrenewcard);">
                         <span id="h-menu-item-6"><img id="h-menu-icon-6">Փոխարինում՝ նոր համար, նոր ժամկետ - վ․գ․</span>
                     </li>
@@ -186,11 +186,11 @@
                         <span id="h-menu-item-6"><img id="h-menu-icon-6">Փոխարինում՝ նոր համար, նոր ժամկետ - առանց վ․գ․</span>
                     </li>
 
-                    <li class="root-menu-item-6" ng-if="card.Type != 53" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard}; openWindow('/PINRegenerationOrder/PINRegenerationOrder', 'Փոխարինում՝ նույն համար, նույն ժամկետ', 'pinreg', callbackgetrenewcard);">
+                    <li class="root-menu-item-6" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard}; openWindow('/PINRegenerationOrder/PINRegenerationOrder', 'Փոխարինում՝ նույն համար, նույն ժամկետ', 'pinreg', callbackgetrenewcard);">
                         <span id="h-menu-item-6"><img id="h-menu-icon-6">Փոխարինում՝ նույն համար, նույն ժամկետ</span>
                     </li>
 
-                    <li class="root-menu-item-6" ng-if="plasticCard != null && plasticCard.CardChangeType == 3 && card.ClosingDate == null" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard}; openWindow('/ReplacedCardAccountRegOrder/ReplacedCardAccountRegOrder', 'Փոխարինված քարտի հաշվի կցում', 'replacedCardAccountRegOrder', callbackgetrenewcard);">
+                    <li class="root-menu-item-6" ng-if="plasticCard != null && plasticCard.PlasticCardChangeType == 3 && card.ClosingDate == null" ng-controller="PopUpCtrl" ng-click="params={productId:productId, plasticCard:plasticCard}; openWindow('/ReplacedCardAccountRegOrder/ReplacedCardAccountRegOrder', 'Փոխարինված քարտի հաշվի կցում', 'replacedCardAccountRegOrder', callbackgetrenewcard);">
                         <span id="h-menu-item-6"><img id="h-menu-icon-6">Փոխարինված քարտի հաշվի կցում</span>
                     </li>
 

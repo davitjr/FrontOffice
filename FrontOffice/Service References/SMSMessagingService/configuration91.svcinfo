@@ -121,10 +121,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="NetTcpBinding_ISMSMessagingService" contract="SMSMessagingService.ISMSMessagingService" bindingType="netTcpBinding" address="net.tcp://ws0004706.acbaca.local/ACBAOperationService/SMSMessagingService.svc/SMSMessagingService" bindingConfiguration="NetTcpBinding_ISMSMessagingService">
+    <endpoint name="NetTcpBinding_ISMSMessagingService" contract="SMSMessagingService.ISMSMessagingService" bindingType="netTcpBinding" address="net.tcp://LT0004574.acbaca.local/ACBAOperationService/SMSMessagingService.svc/SMSMessagingService" bindingConfiguration="NetTcpBinding_ISMSMessagingService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://ws0004706.acbaca.local/ACBAOperationService/SMSMessagingService.svc/SMSMessagingService</serializedValue>
+          <serializedValue>net.tcp://LT0004574.acbaca.local/ACBAOperationService/SMSMessagingService.svc/SMSMessagingService</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

@@ -60,8 +60,7 @@
                             <td style="text-align:center;width:70px;">Հաճախորդ</td>
                             <td style="text-align:center;width:80px;">Հաղորդագր. N</td>
                             <td style="text-align:center;width:70px;">Վարույթի կոդ</td>
-                            <td style="text-align:center">Գործատուի հաշվեհամար</td>
-                            <td ng-if="filterClosed==2" style="text-align:center">Փակման ա/թ</td>
+                            <td style="text-align:center">Գործատուի հաշվեհամար</td>                            
                         </tr>
                     </thead>
                     <tbody>
@@ -70,8 +69,7 @@
                             <td style="text-align:center">{{::employer.RequestNumber}}</td>
                             <td style="text-align:center">{{::employer.InquestCode}}</td>
                             <td style="text-align:center">{{::employer.AccountNumber}}</td>
-
-                            <td ng-if="filterClosed==2" style="text-align:center;color:red;">{{::employer.ClosingDate | mydate | date: 'dd/MM/yyyy HH:mm'}}</td>
+                           
                         </tr>
                         <tr ng-if="dahkEmployers.length==0 && filterClosed==2">
                             <td colspan="5" style="text-align:center">Տվյալներ առկա չեն</td>

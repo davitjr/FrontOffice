@@ -10,6 +10,8 @@
     $scope.dateTo = $scope.$root.SessionProperties.OperationDate;
     $scope.includingExchangeRate = 1;//ներառել նաև փոխարժեքը
 
+    $scope.canPrintCBStatements = $scope.$root.SessionProperties.AdvancedOptions["canPrintCBStatements"];
+
 
     $scope.getAccountStatement = function (accountNumber) {
         if ($scope.withoutstatement == true)
@@ -73,8 +75,35 @@
         if ($scope.memorial == 1) {
             $scope.printMemorial(accountNumber, 0);
             $scope.printMemorial(accountNumber, 1);
-
+            
         }
+    };
+
+    $scope.printAccountTransactions = function (accountNumber, exportFormat) {
+        showloading();
+        var Data = accountService.printAccountTransactions(accountNumber, $scope.dateFrom, $scope.dateTo);
+        Data.then(function (response) {
+            var format = 0;
+            if (exportFormat == 'xls') {
+                format = 2;
+            }
+            else {
+                format = 1;
+            }
+            var requestObj = { Parameters: response.data, ReportName: 183, ReportExportFormat: format }
+            ReportingApiService.getReport(requestObj, function (result) {
+                if (exportFormat == 'xls') {
+                    ShowExcelReport(result, 'AccountTransactions');
+                }
+                else {
+                    ShowPDFReport(result);
+                }
+            });
+        }, function () {
+            alert('Error printAccountStatementNew');
+        });
+
+
     };
 
     $scope.printAccountStatementNew = function (accountNumber, lang, exportFormat) {

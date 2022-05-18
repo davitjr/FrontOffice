@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="QCTfTrtEmkO6mXc7QDddCh2GsNq88XbDq+DojnLQJQU=">
+<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="7xIiR59pbiugJmk2a5Y5Y9nl6fBWbOd2N6JITWHFAac=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="netTcpBinding" name="IACBAOperationService1">
       <properties>
@@ -119,10 +119,10 @@
         </property>
       </properties>
     </bindingConfiguration>
-    <bindingConfiguration bindingType="netTcpBinding" name="IClassFactory2">
+    <bindingConfiguration bindingType="netTcpBinding" name="IClassFactory3">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IClassFactory2</serializedValue>
+          <serializedValue>IClassFactory3</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -237,10 +237,10 @@
         </property>
       </properties>
     </bindingConfiguration>
-    <bindingConfiguration bindingType="netTcpBinding" name="IInfoService2">
+    <bindingConfiguration bindingType="netTcpBinding" name="IInfoService3">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IInfoService2</serializedValue>
+          <serializedValue>IInfoService3</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -355,10 +355,10 @@
         </property>
       </properties>
     </bindingConfiguration>
-    <bindingConfiguration bindingType="netTcpBinding" name="ICustomerOperations2">
+    <bindingConfiguration bindingType="netTcpBinding" name="ICustomerOperations1">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ICustomerOperations2</serializedValue>
+          <serializedValue>ICustomerOperations1</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -473,10 +473,10 @@
         </property>
       </properties>
     </bindingConfiguration>
-    <bindingConfiguration bindingType="netTcpBinding" name="ILoginOperations2">
+    <bindingConfiguration bindingType="netTcpBinding" name="ILoginOperations3">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ILoginOperations2</serializedValue>
+          <serializedValue>ILoginOperations3</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -591,10 +591,10 @@
         </property>
       </properties>
     </bindingConfiguration>
-    <bindingConfiguration bindingType="netTcpBinding" name="IDataService2">
+    <bindingConfiguration bindingType="netTcpBinding" name="IDataService3">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IDataService2</serializedValue>
+          <serializedValue>IDataService3</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -709,10 +709,10 @@
         </property>
       </properties>
     </bindingConfiguration>
-    <bindingConfiguration bindingType="netTcpBinding" name="IExternalOperations2">
+    <bindingConfiguration bindingType="netTcpBinding" name="IExternalOperations3">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IExternalOperations2</serializedValue>
+          <serializedValue>IExternalOperations3</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -829,10 +829,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="IACBAOperationService1" contract="ACBAServiceReference.IACBAOperationService" bindingType="netTcpBinding" address="net.tcp://web1021.acbaca.local:8080/OperationService.svc/AcbaOperation" bindingConfiguration="IACBAOperationService1">
+    <endpoint name="IACBAOperationService1" contract="ACBAServiceReference.IACBAOperationService" bindingType="netTcpBinding" address="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/AcbaOperation" bindingConfiguration="IACBAOperationService1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://web1021.acbaca.local:8080/OperationService.svc/AcbaOperation</serializedValue>
+          <serializedValue>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/AcbaOperation</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -914,10 +914,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="IClassFactory1" contract="ACBAServiceReference.IClassFactory" bindingType="netTcpBinding" address="net.tcp://web1021.acbaca.local:8080/OperationService.svc/ClassFactory" bindingConfiguration="IClassFactory2">
+    <endpoint name="IClassFactory" contract="ACBAServiceReference.IClassFactory" bindingType="netTcpBinding" address="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/ClassFactory" bindingConfiguration="IClassFactory3">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://web1021.acbaca.local:8080/OperationService.svc/ClassFactory</serializedValue>
+          <serializedValue>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/ClassFactory</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -926,7 +926,7 @@
           <serializedValue>netTcpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IClassFactory2</serializedValue>
+          <serializedValue>IClassFactory3</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>ACBAServiceReference.IClassFactory</serializedValue>
@@ -944,7 +944,7 @@
           <serializedValue>System.ServiceModel.Configuration.UserPrincipalNameElement</serializedValue>
         </property>
         <property path="/identity/userPrincipalName/value" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>acbaaccess_test@acbaca.local</serializedValue>
+          <serializedValue>Remi.Safary@acbaca.local</serializedValue>
         </property>
         <property path="/identity/servicePrincipalName" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.ServicePrincipalNameElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.ServicePrincipalNameElement</serializedValue>
@@ -989,7 +989,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IClassFactory1</serializedValue>
+          <serializedValue>IClassFactory</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -999,10 +999,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="IInfoService1" contract="ACBAServiceReference.IInfoService" bindingType="netTcpBinding" address="net.tcp://web1021.acbaca.local:8080/OperationService.svc/InfoService" bindingConfiguration="IInfoService2">
+    <endpoint name="IInfoService" contract="ACBAServiceReference.IInfoService" bindingType="netTcpBinding" address="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/InfoService" bindingConfiguration="IInfoService3">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://web1021.acbaca.local:8080/OperationService.svc/InfoService</serializedValue>
+          <serializedValue>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/InfoService</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -1011,7 +1011,7 @@
           <serializedValue>netTcpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IInfoService2</serializedValue>
+          <serializedValue>IInfoService3</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>ACBAServiceReference.IInfoService</serializedValue>
@@ -1029,7 +1029,7 @@
           <serializedValue>System.ServiceModel.Configuration.UserPrincipalNameElement</serializedValue>
         </property>
         <property path="/identity/userPrincipalName/value" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>acbaaccess_test@acbaca.local</serializedValue>
+          <serializedValue>Remi.Safary@acbaca.local</serializedValue>
         </property>
         <property path="/identity/servicePrincipalName" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.ServicePrincipalNameElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.ServicePrincipalNameElement</serializedValue>
@@ -1074,7 +1074,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IInfoService1</serializedValue>
+          <serializedValue>IInfoService</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -1084,10 +1084,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="ICustomerOperations1" contract="ACBAServiceReference.ICustomerOperations" bindingType="netTcpBinding" address="net.tcp://web1021.acbaca.local:8080/OperationService.svc/CustomerOperations" bindingConfiguration="ICustomerOperations2">
+    <endpoint name="ICustomerOperations1" contract="ACBAServiceReference.ICustomerOperations" bindingType="netTcpBinding" address="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/CustomerOperations" bindingConfiguration="ICustomerOperations1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://web1021.acbaca.local:8080/OperationService.svc/CustomerOperations</serializedValue>
+          <serializedValue>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/CustomerOperations</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -1096,7 +1096,7 @@
           <serializedValue>netTcpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ICustomerOperations2</serializedValue>
+          <serializedValue>ICustomerOperations1</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>ACBAServiceReference.ICustomerOperations</serializedValue>
@@ -1114,7 +1114,7 @@
           <serializedValue>System.ServiceModel.Configuration.UserPrincipalNameElement</serializedValue>
         </property>
         <property path="/identity/userPrincipalName/value" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>acbaaccess_test@acbaca.local</serializedValue>
+          <serializedValue>Remi.Safary@acbaca.local</serializedValue>
         </property>
         <property path="/identity/servicePrincipalName" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.ServicePrincipalNameElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.ServicePrincipalNameElement</serializedValue>
@@ -1169,10 +1169,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="ILoginOperations1" contract="ACBAServiceReference.ILoginOperations" bindingType="netTcpBinding" address="net.tcp://web1021.acbaca.local:8080/OperationService.svc/LoginOperations" bindingConfiguration="ILoginOperations2">
+    <endpoint name="ILoginOperations" contract="ACBAServiceReference.ILoginOperations" bindingType="netTcpBinding" address="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/LoginOperations" bindingConfiguration="ILoginOperations3">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://web1021.acbaca.local:8080/OperationService.svc/LoginOperations</serializedValue>
+          <serializedValue>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/LoginOperations</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -1181,7 +1181,7 @@
           <serializedValue>netTcpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ILoginOperations2</serializedValue>
+          <serializedValue>ILoginOperations3</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>ACBAServiceReference.ILoginOperations</serializedValue>
@@ -1199,7 +1199,7 @@
           <serializedValue>System.ServiceModel.Configuration.UserPrincipalNameElement</serializedValue>
         </property>
         <property path="/identity/userPrincipalName/value" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>acbaaccess_test@acbaca.local</serializedValue>
+          <serializedValue>Remi.Safary@acbaca.local</serializedValue>
         </property>
         <property path="/identity/servicePrincipalName" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.ServicePrincipalNameElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.ServicePrincipalNameElement</serializedValue>
@@ -1244,7 +1244,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ILoginOperations1</serializedValue>
+          <serializedValue>ILoginOperations</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -1254,10 +1254,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="IDataService1" contract="ACBAServiceReference.IDataService" bindingType="netTcpBinding" address="net.tcp://web1021.acbaca.local:8080/OperationService.svc/DataService" bindingConfiguration="IDataService2">
+    <endpoint name="IDataService" contract="ACBAServiceReference.IDataService" bindingType="netTcpBinding" address="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/DataService" bindingConfiguration="IDataService3">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://web1021.acbaca.local:8080/OperationService.svc/DataService</serializedValue>
+          <serializedValue>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/DataService</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -1266,7 +1266,7 @@
           <serializedValue>netTcpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IDataService2</serializedValue>
+          <serializedValue>IDataService3</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>ACBAServiceReference.IDataService</serializedValue>
@@ -1284,7 +1284,7 @@
           <serializedValue>System.ServiceModel.Configuration.UserPrincipalNameElement</serializedValue>
         </property>
         <property path="/identity/userPrincipalName/value" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>acbaaccess_test@acbaca.local</serializedValue>
+          <serializedValue>Remi.Safary@acbaca.local</serializedValue>
         </property>
         <property path="/identity/servicePrincipalName" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.ServicePrincipalNameElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.ServicePrincipalNameElement</serializedValue>
@@ -1329,7 +1329,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IDataService1</serializedValue>
+          <serializedValue>IDataService</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -1339,10 +1339,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="IExternalOperations1" contract="ACBAServiceReference.IExternalOperations" bindingType="netTcpBinding" address="net.tcp://web1021.acbaca.local:8080/OperationService.svc/ExternalOperations" bindingConfiguration="IExternalOperations2">
+    <endpoint name="IExternalOperations" contract="ACBAServiceReference.IExternalOperations" bindingType="netTcpBinding" address="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/ExternalOperations" bindingConfiguration="IExternalOperations3">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://web1021.acbaca.local:8080/OperationService.svc/ExternalOperations</serializedValue>
+          <serializedValue>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/ExternalOperations</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -1351,7 +1351,7 @@
           <serializedValue>netTcpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IExternalOperations2</serializedValue>
+          <serializedValue>IExternalOperations3</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>ACBAServiceReference.IExternalOperations</serializedValue>
@@ -1369,7 +1369,7 @@
           <serializedValue>System.ServiceModel.Configuration.UserPrincipalNameElement</serializedValue>
         </property>
         <property path="/identity/userPrincipalName/value" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>acbaaccess_test@acbaca.local</serializedValue>
+          <serializedValue>Remi.Safary@acbaca.local</serializedValue>
         </property>
         <property path="/identity/servicePrincipalName" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.ServicePrincipalNameElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.ServicePrincipalNameElement</serializedValue>
@@ -1414,7 +1414,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>IExternalOperations1</serializedValue>
+          <serializedValue>IExternalOperations</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

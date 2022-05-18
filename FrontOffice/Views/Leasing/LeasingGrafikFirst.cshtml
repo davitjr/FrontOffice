@@ -1,0 +1,120 @@
+﻿
+
+<style>
+    #tbl table, #tbl th, #tbl td {
+        border: 1px solid #cecece;
+        border-collapse: collapse;
+    }
+
+    #tbl table {
+        border-collapse: collapse;
+    }
+
+        #tbl table .top td {
+            font-size: 12px;
+        }
+
+        #tbl table tr {
+            height: 7px;
+        }
+
+    #tbl .form-horizontal {
+        margin-top: -22px;
+    }
+</style>
+
+
+<form style="max-width:1200px" id="leasingGrafik" ng-controller="LeasingCtrl" ng-init="getLeasingGrafik(1)"
+      role="form" class="form-horizontal" novalidate>
+    <div id="leasingGrafik_menu" class="menu-bar dialog-menu light-green">
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-12" id="tbl">
+            <div class="col-sm-8" style="font-size:13px">
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Վարկային հաշիվ</div>
+                <div class="product-detail-cell product-detail-value">{{::selectedLeasing.LoanAccount}}&nbsp;&nbsp;{{::selectedLeasing.Currency}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Ժամկետ</div>
+                <div class="product-detail-cell product-detail-value">{{::selectedLeasing.StartDate | mydate | date: 'dd/MM/yyyy'}} - {{::selectedLeasing.EndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Տոկոսադրույք</div>
+                <div class="product-detail-cell product-detail-value">{{::selectedLeasing.InterestRate|number:2}}%</div>
+            </div>
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable">Կարգավիճակ</div>
+                <div class="product-detail-cell product-detail-value">{{::selectedLeasing.QualityDescription}}</div>
+            </div>
+        </div>
+            <br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <table border="1" width="100" id="loansGrafikContent">
+            <tr class="product-container-header">
+                <td rowspan="2" style="text-align:center;width: 4%;">N</td>
+                <td rowspan="2" style="text-align:center" class="col-sm-2">Մարման <br /> ա/թ</td>
+                <td rowspan="2" style="text-align:center" class="col-sm-1">Տոկոսա<br />դրույք</td>
+                <td rowspan="2" style="text-align:center">Լիզինգի մնացորդ</td>
+                <td colspan="{{::tableColspanCount}}" style="text-align:center">Մարման ենթակա</td>
+            </tr>
+            <tr class="product-container-header">
+                <td style="text-align:center">Լիզինգի տոկոսագումար</td>
+                <td style="text-align:center">Լիզինգի գումար</td>
+                @*<td style="text-align:center">Չսուբսիդա վորվող %-ագումար</td>
+                <td style="text-align:center">Սուբսիդա վորվող %-ագումար</td>
+                <td style="text-align:center">Սպասարկման վճար</td>
+                <td ng-show="checkRescheduledAmount" style="text-align:center">Հետաձգված գումար</td>*@
+                <td style="text-align:center">Ընդամենը</td>
+            </tr>
+            <tr ng-repeat="grafik in ::leasingGrafik">
+                <td style="text-align:right">{{::$index+1}}&nbsp;&nbsp;&nbsp;</td>
+                <td style="text-align:center" class="col-sm-2">{{::grafik.RepaymentDateTostring}}</td>
+                <td style="text-align:center" class="col-sm-1">{{::grafik.InterestRate*100 |number:2 }}%</td>
+                <td style="text-align:right">{{::grafik.RestCapitalToString}}&nbsp;&nbsp;&nbsp;</td>
+                <td style="text-align:right"> {{::grafik.RateRepaymentToString}}&nbsp;&nbsp;&nbsp;</td>
+                <td style="text-align:right">{{::grafik.CapitalRepaymentToString}}&nbsp;&nbsp;&nbsp;</td>
+                @*<td style="text-align:right">{{::grafik.NonSubsidiaRateRepayment | number:2}}&nbsp;&nbsp;&nbsp;</td>
+                <td style="text-align:right">{{::grafik.SubsidiaRateRepayment | number:2}}&nbsp;&nbsp;&nbsp;</td>
+                <td style="text-align:right">{{::grafik.FeeRepayment | number:2}}&nbsp;&nbsp;&nbsp;</td>
+                <td ng-show="checkRescheduledAmount" style="text-align:right">{{::grafik.RescheduledAmountToString}}&nbsp;&nbsp;&nbsp;</td>*@
+                <td style="text-align:right">{{::grafik.TotalRepaymentToString}}&nbsp;&nbsp;&nbsp;</td>
+            </tr>
+            <tr style="text-align:-webkit-right; margin-bottom:15px;" ng-if="leasingGrafik">
+
+                <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white" colspan="4">
+                    Ընդամենը`
+                </td>
+                <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                    {{::sum1.toFixed(2)| currency:''}}&nbsp;&nbsp;&nbsp;
+                </td>
+                <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                    {{::sum2.toFixed(2)| currency:''}}&nbsp;&nbsp;&nbsp;
+                </td>
+                <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                    {{::sum3.toFixed(2)| currency:''}}&nbsp;&nbsp;&nbsp;
+                </td>
+                @*<td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                    {{::sum5.toFixed(2)| currency:''}}&nbsp;&nbsp;&nbsp;
+                </td>
+                <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                    {{::sum4.toFixed(2)| currency:''}}&nbsp;&nbsp;&nbsp;
+                </td>
+                <td ng-show="checkRescheduledAmount" style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                    {{::sum7.toFixed(2)| currency:''}}&nbsp;&nbsp;&nbsp;
+                </td>
+                <td style="border-bottom-color:white;border-left-color:white;border-top-color:white;border-right-color:white">
+                    {{::sum3.toFixed(2)| currency:''}}&nbsp;&nbsp;&nbsp;
+                </td>*@
+
+            </tr>
+        </table>
+
+
+        </div>
+
+    </div>
+
+
+</form>

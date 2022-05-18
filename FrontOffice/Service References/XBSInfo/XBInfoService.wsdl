@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="XBInfoService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="XBInfoService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsp:Policy wsu:Id="IExternalOperationInfoService_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -41,6 +41,66 @@
       <xsd:import schemaLocation="http://localhost/ExternalBankingService/XBInfoService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/System" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IXBInfoService_GetBannerVersion_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBannerVersion" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetBannerVersion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBannerVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetSecuritiesTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSecuritiesTypes" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetSecuritiesTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSecuritiesTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetTradingOrderTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTradingOrderTypes" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetTradingOrderTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTradingOrderTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GenerateBrokerContractNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateBrokerContractNumber" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GenerateBrokerContractNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateBrokerContractNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetBrokerContractSurvey_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrokerContractSurvey" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetBrokerContractSurvey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrokerContractSurveyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_HasBrokerContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:HasBrokerContract" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_HasBrokerContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HasBrokerContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetTradingOrderExpirationTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTradingOrderExpirationTypes" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetTradingOrderExpirationTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTradingOrderExpirationTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetLinkedCardWarnings_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLinkedCardWarnings" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetLinkedCardWarnings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLinkedCardWarningsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetLeasingReportTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingReportTypes" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetLeasingReportTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingReportTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetLeasingCredentialClosingReasons_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingCredentialClosingReasons" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetLeasingCredentialClosingReasons_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLeasingCredentialClosingReasonsResponse" />
+  </wsdl:message>
   <wsdl:message name="IXBInfoService_GetCurrenciesForReceivedFastTransfer_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCurrenciesForReceivedFastTransfer" />
   </wsdl:message>
@@ -520,6 +580,36 @@
   </wsdl:message>
   <wsdl:message name="IXBInfoService_GetDepositoryAccountOperators_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetDepositoryAccountOperatorsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetTransactionTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTransactionTypes" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetTransactionTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTransactionTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetTransactionTypeByAML_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTransactionTypeByAML" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetTransactionTypeByAML_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTransactionTypeByAMLResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetCardDesignThemes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardDesignThemes" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetCardDesignThemes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardDesignThemesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetCardDesignImagesByThemeId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardDesignImagesByThemeId" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetCardDesignImagesByThemeId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardDesignImagesByThemeIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetCardDesignImageByDesignId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardDesignImageByDesignId" />
+  </wsdl:message>
+  <wsdl:message name="IXBInfoService_GetCardDesignImageByDesignId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardDesignImageByDesignIdResponse" />
   </wsdl:message>
   <wsdl:message name="IXBInfoService_GetInsuranceTypes_InputMessage">
     <wsdl:part name="parameters" element="tns:GetInsuranceTypes" />
@@ -1542,6 +1632,46 @@
     <wsdl:part name="parameters" element="tns:GetSMSMessagingStatusTypesResponse" />
   </wsdl:message>
   <wsdl:portType name="IXBInfoService">
+    <wsdl:operation name="GetBannerVersion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetBannerVersion" message="tns:IXBInfoService_GetBannerVersion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetBannerVersionResponse" message="tns:IXBInfoService_GetBannerVersion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSecuritiesTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetSecuritiesTypes" message="tns:IXBInfoService_GetSecuritiesTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetSecuritiesTypesResponse" message="tns:IXBInfoService_GetSecuritiesTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTradingOrderTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetTradingOrderTypes" message="tns:IXBInfoService_GetTradingOrderTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetTradingOrderTypesResponse" message="tns:IXBInfoService_GetTradingOrderTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateBrokerContractNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GenerateBrokerContractNumber" message="tns:IXBInfoService_GenerateBrokerContractNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GenerateBrokerContractNumberResponse" message="tns:IXBInfoService_GenerateBrokerContractNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBrokerContractSurvey">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetBrokerContractSurvey" message="tns:IXBInfoService_GetBrokerContractSurvey_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetBrokerContractSurveyResponse" message="tns:IXBInfoService_GetBrokerContractSurvey_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="HasBrokerContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/HasBrokerContract" message="tns:IXBInfoService_HasBrokerContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/HasBrokerContractResponse" message="tns:IXBInfoService_HasBrokerContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTradingOrderExpirationTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetTradingOrderExpirationTypes" message="tns:IXBInfoService_GetTradingOrderExpirationTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetTradingOrderExpirationTypesResponse" message="tns:IXBInfoService_GetTradingOrderExpirationTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLinkedCardWarnings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetLinkedCardWarnings" message="tns:IXBInfoService_GetLinkedCardWarnings_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetLinkedCardWarningsResponse" message="tns:IXBInfoService_GetLinkedCardWarnings_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingReportTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetLeasingReportTypes" message="tns:IXBInfoService_GetLeasingReportTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetLeasingReportTypesResponse" message="tns:IXBInfoService_GetLeasingReportTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingCredentialClosingReasons">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetLeasingCredentialClosingReasons" message="tns:IXBInfoService_GetLeasingCredentialClosingReasons_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetLeasingCredentialClosingReasonsResponse" message="tns:IXBInfoService_GetLeasingCredentialClosingReasons_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetCurrenciesForReceivedFastTransfer">
       <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetCurrenciesForReceivedFastTransfer" message="tns:IXBInfoService_GetCurrenciesForReceivedFastTransfer_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetCurrenciesForReceivedFastTransferResponse" message="tns:IXBInfoService_GetCurrenciesForReceivedFastTransfer_OutputMessage" />
@@ -1861,6 +1991,26 @@
     <wsdl:operation name="GetDepositoryAccountOperators">
       <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetDepositoryAccountOperators" message="tns:IXBInfoService_GetDepositoryAccountOperators_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetDepositoryAccountOperatorsResponse" message="tns:IXBInfoService_GetDepositoryAccountOperators_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetTransactionTypes" message="tns:IXBInfoService_GetTransactionTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetTransactionTypesResponse" message="tns:IXBInfoService_GetTransactionTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionTypeByAML">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetTransactionTypeByAML" message="tns:IXBInfoService_GetTransactionTypeByAML_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetTransactionTypeByAMLResponse" message="tns:IXBInfoService_GetTransactionTypeByAML_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCardDesignThemes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetCardDesignThemes" message="tns:IXBInfoService_GetCardDesignThemes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetCardDesignThemesResponse" message="tns:IXBInfoService_GetCardDesignThemes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCardDesignImagesByThemeId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetCardDesignImagesByThemeId" message="tns:IXBInfoService_GetCardDesignImagesByThemeId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetCardDesignImagesByThemeIdResponse" message="tns:IXBInfoService_GetCardDesignImagesByThemeId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCardDesignImageByDesignId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetCardDesignImageByDesignId" message="tns:IXBInfoService_GetCardDesignImageByDesignId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IXBInfoService/GetCardDesignImageByDesignIdResponse" message="tns:IXBInfoService_GetCardDesignImageByDesignId_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetInsuranceTypes">
       <wsdl:input wsaw:Action="http://tempuri.org/IXBInfoService/GetInsuranceTypes" message="tns:IXBInfoService_GetInsuranceTypes_InputMessage" />
@@ -2546,6 +2696,96 @@
   <wsdl:binding name="IExternalOperationInfoService" type="tns:IXBInfoService">
     <wsp:PolicyReference URI="#IExternalOperationInfoService_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="GetBannerVersion">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetBannerVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSecuritiesTypes">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetSecuritiesTypes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTradingOrderTypes">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetTradingOrderTypes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateBrokerContractNumber">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GenerateBrokerContractNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBrokerContractSurvey">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetBrokerContractSurvey" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HasBrokerContract">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/HasBrokerContract" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTradingOrderExpirationTypes">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetTradingOrderExpirationTypes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLinkedCardWarnings">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetLinkedCardWarnings" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingReportTypes">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetLeasingReportTypes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeasingCredentialClosingReasons">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetLeasingCredentialClosingReasons" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetCurrenciesForReceivedFastTransfer">
       <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetCurrenciesForReceivedFastTransfer" style="document" />
       <wsdl:input>
@@ -3259,6 +3499,51 @@
     </wsdl:operation>
     <wsdl:operation name="GetDepositoryAccountOperators">
       <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetDepositoryAccountOperators" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionTypes">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetTransactionTypes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionTypeByAML">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetTransactionTypeByAML" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCardDesignThemes">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetCardDesignThemes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCardDesignImagesByThemeId">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetCardDesignImagesByThemeId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCardDesignImageByDesignId">
+      <soap12:operation soapAction="http://tempuri.org/IXBInfoService/GetCardDesignImageByDesignId" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -4799,9 +5084,9 @@
   </wsdl:binding>
   <wsdl:service name="XBInfoService">
     <wsdl:port name="IExternalOperationInfoService" binding="tns:IExternalOperationInfoService">
-      <soap12:address location="net.tcp://ws0004706.acbaca.local/ExternalBankingService/XBInfoService.svc/ExternalOperationInfoService" />
+      <soap12:address location="net.tcp://lt0004574.acbaca.local/ExternalBankingService/XBInfoService.svc/ExternalOperationInfoService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://ws0004706.acbaca.local/ExternalBankingService/XBInfoService.svc/ExternalOperationInfoService</wsa10:Address>
+        <wsa10:Address>net.tcp://lt0004574.acbaca.local/ExternalBankingService/XBInfoService.svc/ExternalOperationInfoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Upn>Davit.Jraghatspanyan@acbaca.local</Upn>
         </Identity>

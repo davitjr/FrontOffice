@@ -20,19 +20,12 @@ namespace FrontOffice.Controllers
         {
             return PartialView("CardNotRenewOrderDetails");
         }
-
-        public JsonResult GetCard(ulong productId)
-        {
-            return Json(XBService.GetCard(productId), JsonRequestBehavior.AllowGet);
-        }
-
         public ActionResult SaveCardNotRenewOrder(xbs.CardNotRenewOrder cardNotRenewOrder)
         {
             cardNotRenewOrder.RegistrationDate = DateTime.Now;
             xbs.ActionResult result = XBService.SaveCardNotRenewOrder(cardNotRenewOrder);
             return Json(result);
         }
-
         public JsonResult GetCardNotRenewOrder(long orderId)
         {
             return Json(XBService.GetCardNotRenewOrder(orderId), JsonRequestBehavior.AllowGet);

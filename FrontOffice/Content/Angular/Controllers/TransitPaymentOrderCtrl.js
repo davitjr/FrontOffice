@@ -139,6 +139,10 @@
             else
                 $scope.order.Description = $scope.description;
 
+            if ($scope.additional != "" && $scope.order.TransactionTypeByAML !== undefined) {
+                $scope.order.TransactionTypeByAML.AdditionalDescription = $scope.additional;
+            }
+
             if ($scope.feeType == 0 && ($scope.order.Currency == 'RUR' || $scope.order.Currency == 'GBP' || $scope.order.Currency == 'CHF')) {
                 if ($scope.order.Fees == null || $scope.order.Fees.length == 0) {
                     $scope.order.Fees = [{ Amount: 0, Type: 0, Account: 0, Currency: "AMD", OrderNumber: null }];

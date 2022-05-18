@@ -28,10 +28,10 @@ namespace FrontOffice.Controllers
         {
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
             byte customerType = ACBAOperationService.GetCustomerType(customerNumber);
-            var customerDocuments = ACBAOperationService.GetCustomerDocuments(customerNumber, 1);
 
             if (customerType == (byte)xbs.CustomerTypes.physical)
             {
+                var customerDocuments = ACBAOperationService.GetCustomerDocuments(customerNumber, 1);
                 if (customerDocuments.Exists(m => m.documentType.key == 56))
                     return Json(XBService.GetAllPensionPayment(customerDocuments.FirstOrDefault(d => d.documentType.key == 56).documentNumber), JsonRequestBehavior.AllowGet);
                 else

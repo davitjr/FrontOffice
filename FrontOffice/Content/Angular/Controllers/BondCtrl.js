@@ -17,7 +17,7 @@
 	$scope.setClickedRow = function (index, oneBond) {
 		$scope.selectedRow = index;
         $scope.currentBond = oneBond;// $scope.bondsList[index];
-        $scope.selectedAccountIsAccessible = oneBond.AccountForBond.isAccessible;
+        $scope.selectedAccountIsAccessible = oneBond.isAccessible;
     };
 
 

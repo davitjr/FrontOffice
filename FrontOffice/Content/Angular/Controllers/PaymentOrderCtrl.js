@@ -1021,6 +1021,10 @@
                 }
                 else
                     $scope.order.Description = $scope.description;
+
+                if ($scope.additional != "" && $scope.order.TransactionTypeByAML !== undefined) {
+                    $scope.order.TransactionTypeByAML.AdditionalDescription = $scope.additional;
+                }
                 //$scope.setOrderType();
                 $scope.setCurrency();
                 //$scope.order.Currency = $scope.order.DebitAccount.Currency;

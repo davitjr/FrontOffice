@@ -221,6 +221,13 @@
                         </a>
 
                     </li>
+                    <li ng-if="$root.OpenMode == 13 && $root.SessionProperties.IsTestVersion == true && ($root.SessionProperties.AdvancedOptions['checkAccessToSecuritiesTranding']=='1')"  id="SecuritiesTrading" class="operation-menu-item" >
+                        <a onclick="SlideApplicationAreas()" ui-sref="securitiesTrading()" style="height: 160px;">
+                            <i class="glyphicon glyphicon-sort-by-attributes-alt"></i>
+                            Բրոքերային հայտեր
+                        </a>
+
+                    </li>
                     <li ng-if="$root.OpenMode == 11 && ($root.SessionProperties.IsManager || $root.SessionProperties.IsChiefAcc)" id="statementAdvertisements" class="operation-menu-item">
                         <a onclick="SlideApplicationAreas()" ng-controller="PopUpCtrl" ng-click="openWindow('/EmployeePersonalPage/DocumentSignatureSetting','Փաստաթղթի ստորագրության կարգավորում','documentSignatureSetting')">
                             <i class="glyphicon glyphicon-pencil"></i>

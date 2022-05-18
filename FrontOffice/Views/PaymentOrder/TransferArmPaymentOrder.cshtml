@@ -208,7 +208,7 @@
                     </div>
                 </div>
             </div>
-
+            <div ng-if="order.Type == 1 || order.Type == 56 || order.Type == 86 || order.Type == 90"><transactiontypes></transactiontypes></div>
             <reasonforouttransfer reasonid="order.ReasonId"
                                   reasoniddescription="order.ReasonIdDescription"
                                   formname="transferArmPaymentOrderForm"
@@ -287,7 +287,7 @@
                               formname="transferArmPaymentOrderForm"
                               disable="swiftMessage != undefined">
             </orderdescription>
-
+            <div ng-if="order.Type == 1 || order.Type == 56 || order.Type == 86 || order.Type == 90"><additionaldescription></additionaldescription></div>
             <div ng-if="!periodic  && !interBankTransfer && !(transferArmPaymentOrderForm.ForCreditor==true)  && swiftMessage == undefined">
                 <div class="form-group ">
                     <label class="tab_title col-sm-5" for="CreditCode">Վարկային կոդ</label>

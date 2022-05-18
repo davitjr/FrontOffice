@@ -511,5 +511,124 @@ app.controller('LoginCtrl', ['$scope', '$rootScope', 'loginService', '$location'
                 ShowMessage('Հասանելի չէ։', 'information');
         }
 
+        $scope.leasingLogIn = function (path) {
+
+            var sessionData = loginService.setSessionGuid();
+            sessionData.then(function (ch) {
+
+                sessionStorage.setItem('sessionId', ch.data);
+
+                /// $scope.$root.sessionGuid = ch.data;
+
+                var Data = loginService.logIn();
+                Data.then(function (ch) {
+                    $scope.session = ch.data;
+
+                    if ($scope.session == true) {
+
+                        var url = location.origin.toString();
+                        if (path)
+                            window.location.href = url + path;
+                        else
+                            window.location.href = url + '#!/leasingAllProducts';
+                    }
+                    else if ($scope.session == false) {
+                        $.ajax({ type: "POST", data: {}, dataType: "json", url: "/Login/RedirectBackToLeasingCustomersList" })
+                            .then(function (data) {
+                                window.location = data.redirectUrl + "?authorizedUserSessionToken=" + data.authorizedUserSessionToken + "&customerNumber=" + data.customerNumber;
+                            }, function (error) {
+                                console.log(error);
+                            });
+
+                    }
+                    else {
+                        $scope.$uibModalInstance = $uibModal.open({
+                            scope: $scope,
+                            template:
+                                '<style> .glyphicon {  top: -6px; }</style> <div> <div class="col-sm-12 popup_wrapper_top" style="height:40px;background-color:#d2322d;">' +
+                                '<div style="margin-top:-5px"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Վավերացման ձախողում</div> </div><br />' +
+                                '<br /> <br /><br /><div class="my_text1" style="text-align:center;font-size:17px">Տվյալները հասանելի չեն</div>  <br /> <br />  <br />  <br /> <button style="width:90px;margin-top:-35px;margin-left:100px" class="col-sm-5 my_save_button" ng-click="closeErrorModal()">OK</button> </div>',
+                            keyboard: false,
+                            controller: 'LoginCtrl',
+                            backdrop: 'static',
+                            windowClass: 'app-modal-window3',
+                            size: ''
+                        });
+                    }
+                }, function () {
+                    $scope.loading = false;
+                    $scope.$uibModalInstance = $uibModal.open({
+                        scope: $scope,
+                        template:
+                            '<style> .glyphicon {  top: -6px; }</style> <div> <div class="col-sm-12 popup_wrapper_top" style="height:40px;background-color:#d2322d;">' +
+                            '<div style="margin-top:-5px"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Վավերացման ձախողում</div> </div><br />' +
+                            '<br /> <br /><br /><div class="my_text1" style="text-align:center;font-size:17px">Տեղի ունեցավ սխալ</div>  <br /> <br />  <br />  <br /> <button style="width:90px;margin-top:-35px;margin-left:100px" class="col-sm-5 my_save_button" ng-click="closeErrorModal()">OK</button> </div>',
+                        keyboard: false,
+                        controller: 'LoginCtrl',
+                        backdrop: 'static',
+                        windowClass: 'app-modal-window3',
+                        size: ''
+                    });
+                });
+
+            });
+
+        }
+
+        $scope.exitToLeasingCustomer = function () {
+
+            var Data = infoService.isTestingMode();
+            Data.then(function (res) {
+                if ($rootScope.SessionProperties.AdvancedOptions.CanCompleteTheServiceAlways == "0") {
+                    if ($scope.$root.SessionProperties != undefined && $scope.$root.SessionProperties.SourceType == 2 && $scope.$root.notificationCount > 0 && res.data == false) {
+                        ShowMessage('Առկա են չկատարված հայտեր: Խնդրում ենք ապահովել հայտերի կատարումը:', 'error');
+                        return;
+                    }
+                }
+                $http({
+                    method: "post",
+                    url: "/Login/RedirectBackToLeasingCustomersList",
+                    data: {},
+                    dataType: "json"
+                }).then(function (acc) {
+                    if (acc.data.redirectUrl == "/Login/Testversion") {
+                        window.location = acc.data.redirectUrl;
+                    } else {
+                        sessionStorage.clear();
+                        window.location = acc.data.redirectUrl +
+                            "?authorizedUserSessionToken=" +
+                            acc.data.authorizedUserSessionToken +
+                            "&customerNumber=" +
+                            acc.data.customerNumber;
+                    }
+                });
+
+            }, function () {
+
+                alert('Error exitToLeasingCustomer');
+            });
+        }
+               
+
+        $scope.redirectToLoanManagementSystemLeasingCollateral = function () {
+            $.ajax({
+                type: "POST", data: {}, dataType: "json", url: "/Provision/RedirectLoanManagementSystemLeasingCollateral",
+                success: function (data) {
+                    window.location = data.redirectUrl + "?customerNumber=" + data.customerNumber + "&authorizedUserSessionToken=" + data.authorizedUserSessionToken + "&authorisedCustomerSessionId=" + data.authorisedCustomerSessionId;
+                },
+                error: function (xhr, status, error) {
+                    if (xhr.status == 500) {
+                        ShowMessage("Նշված գործողությունը հասանելի չէ:", "error");
+                    }
+                    else if (xhr.status == 411) {
+                        ShowMessage("Աշխատանքային սեսիան ավարտված է: Անհրաժեշտ է վերագրանցվել(մուտք գործել) ծրագիր:", "error");
+                    }
+                    else {
+                        ShowMessage("Տեղի ունեցավ սխալ։", "error");
+                    }
+                }
+            });
+        };
+
     }]);
 

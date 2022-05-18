@@ -1,0 +1,438 @@
+﻿@*Davit Pos*@
+
+<style type="text/css">
+    #newPosLocationForm .ui-widget input {
+        font-family: 'webly_semibold';
+    }
+
+    #newPosLocationForm {
+        min-width: 570px;
+    }
+
+    .form-group input, .form-group select {
+        height: 34px;
+    }
+
+    .form-horizontal {
+        max-width: 902px;
+    }
+
+    .font-weight-normal label {
+        font-weight: normal !important;
+    }
+</style>
+
+@*newPosLocationForm.$valid &&*@  
+<div id="plasticCardLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="PosLocationCtrl" name="newPosLocationForm" id="newPosLocationForm" ng-init="GetCustomer()" role="form" class="form-horizontal" novalidate prevent-enter-submit labels-required>
+    <div id="cardorder_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="newPosLocationForm.$setSubmitted();newPosLocationForm.$valid && saveNewPosLocationOrder()">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('NewPosApplication')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div>
+        <div class="col-sm-8">
+            <div style="max-width:600px">
+                <errors></errors>
+            </div>
+
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4">Գրանցման ա/թ</label>
+                <div class="col-sm-8">
+                    <input disabled="disabled" type="date" class="form-control tab_title" style="text-align: left;" id="RegistrationDate" name="RegistrationDate" ng-model="newPosLocationOrder.OperDay" ng-required="">
+
+                </div>
+            </div>
+
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4">ԱՍԿ Տեսակ</label>
+                <div class="col-sm-8">
+                    <select class="form-control" id="posType" name="posType" ng-model="newPosLocationOrder.posType" required>
+                        <option ng-value="0" style="margin-left:25px">ԱՍԿ</option>
+                        <option ng-value="1" style="margin-left:25px">Ինտերնետային ԱՍԿ</option>
+                    </select>
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.posType.$dirty" for="newPosLocationForm.posType.$error">
+                            <ng-message when="required" class="errors">
+                                ԱՍԿ Տեսակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="sub_inner form-group" ng-if="newPosLocationOrder.posType == 1">
+                <label class="tab_title col-sm-4">Կայք/Հավ. անվ.</label>
+                <div class="col-sm-8">
+                    <input type="text" name="siteOrApp" id="siteOrApp" ng-model="newPosLocationOrder.siteOrApp" class="form-control" style="text-align:left" ng-maxlength="30" required>
+                </div>
+
+                <div class="row">
+                    <ng-messages ng-if="newPosLocationForm.$submitted || newPosLocationForm.siteOrApp.$dirty" for="newPosLocationForm.siteOrApp.$error">
+                        <ng-message when="required" class="errors">
+                            Կայք/Հավ. անվ-ը ընտրված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+
+            </div>
+
+
+            <div class="sub_inner form-group" ng-if="newPosLocationOrder.posType == 0">
+                <label class="tab_title col-sm-4">Անվանում հայերեն</label>
+                <div class="col-sm-8">
+                    <input required type="text" name="nameArm" id="nameArm" ng-model="newPosLocationOrder.nameArm" class="form-control" style="text-align:left" ng-maxlength="30">
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted || newPosLocationForm.nameArm.$dirty" for="newPosLocationForm.nameArm.$error">
+                            <ng-message when="required" class="errors">
+                                Կայք/Հավ. անվ-ը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-if="newPosLocationOrder.posType == 0">
+                <label class="tab_title col-sm-4">Անվանում անգլերեն</label>
+                <div class="col-sm-8">
+                    <input type="text" name="nameEng" id="nameEng" ng-model="newPosLocationOrder.nameEng" class="form-control" style="text-align:left" ng-maxlength="30" required>
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.nameEng.$dirty" for="newPosLocationForm.nameEng.$error">
+                            <ng-message when="required" class="errors">
+                                Անվանում անգլերենը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4">Գործ. հասցե</label>
+                <div class="col-sm-8">
+                    <textarea required type="text" name="posAddress" id="posAddress" ng-model="newPosLocationOrder.posAddress" class="form-control" style="text-align:left" ng-maxlength="30"></textarea>
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.posAddress.$dirty" for="newPosLocationForm.posAddress.$error">
+                            <ng-message when="required" class="errors">
+                                Գործ. հասցե ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4">ԱՍԿ հեռ.</label>
+                <div class="col-sm-3">
+                    <input type="text" name="phoneCode" id="phoneCode" ng-model="newPosLocationOrder.phoneCode" disabled ng-value="newPosLocationOrder.phoneCode" class="form-control" style="text-align:left" ng-maxlength="30" required>
+                </div>
+
+                <div class="col-sm-5">
+                    <input type="number" name="posPhone" id="posPhone" ng-model="newPosLocationOrder.posPhone" class="form-control" style="text-align:left" data-maxlength="8" required>
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.posPhone.$dirty" for="newPosLocationForm.posPhone.$error">
+                            <ng-message when="required" class="errors">
+                                ԱՍԿ հեռ.ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class=" form-group" ng-controller="AccountCtrl" ng-if="true">
+                <label class="tab_title col-sm-4" for="otherBankAccount">Հաշվեհամար</label>
+                <div class="col-sm-8">
+                    <div class="row">
+                        <div class="input-group" style="display: inline-flex; width: 100%" ng-init="getCurrentAccounts();text='Այլ բանկի հաշիվ';check=1; ">
+                            <span id="AccountInit" class="input-group-addon" ng-click="!disable && (check==0?check=1:check=0);newPosLocationOrder.AccountNumber = ''" style="display: inline-block; padding-right: 20px; padding-top: 0px; padding-bottom: 0px;" ng-disabled="disable" title="" data-placement="left" data-toggle="tooltip" data-original-title="{{text}}">
+                                <input type="checkbox" aria-label="..." ng-model="check" ng-change="check==0?check=1:check=0;check==1?text='Այլ բանկի հաշիվ':text='Ընթացիկ հաշիվներ';newPosLocationOrder.AccountNumber = ''" ng-disabled="disable" ng-true-value="1" ng-false-value="0">
+                            </span>
+                            <select ng-model="newPosLocationOrder.AccountNumber"
+                                    name="account" id="account" class="form-control" ng-hide="check==0" required>
+                                <option value="">Ընտրեք Հաշվեհամարը...</option>
+                                <option class="select_options_style" ng-repeat='account in accounts' style="margin-left:25px" value='{{ account.AccountNumber }}'>{{ account.AccountNumber }}</option>
+                            </select>
+                            <input ng-hide="check==1" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' type="text" class="form-control tab_title" style="text-align: left;" id="otherBankAccount" name="otherBankAccount" ng-model="newPosLocationOrder.AccountNumber" placeholder="Լրացրեք այլ բանկի հաշիվը" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted || newPosLocationForm.otherBankAccount.$dirty ||newPosLocationOrder.account.$dirty"
+                                     for="newPosLocationForm.otherBankAccount.$error">
+                            <ng-message when="required" class="errors">
+                                Հաշվեհամարը ընտրված/լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+       
+            <div class="form-group">
+                <label class="tab_title col-sm-4">Հիմական բանկ</label>
+                <div class="col-sm-8">
+                    <input type="text" name="mainBank" id="mainBank" ng-model="newPosLocationOrder.mainBank"  class="form-control" style="text-align:left" ng-maxlength="50" required>
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.mainBank.$dirty" for="newPosLocationForm.mainBank.$error">
+                            <ng-message when="required" class="errors">
+                                Հիմական բանկը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4">Գործ. ոլորտ</label>
+                <div class="col-sm-8" ng-init="GetPosTerminalActivitySphere()">
+                    @*<input type="text" name="activitySphere" id="activitySphere" ng-model="newPosLocationOrder.activitySphere" class="form-control" style="text-align:left" ng-maxlength="30" required>*@
+
+                    <select ng-model="newPosLocationOrder.activitySphere" name="activitySphere" id="activitySphere" class="form-control" ng-hide="check==0" required>
+                        <option value="">Ընտրեք գործ. ոլորտը</option>
+                        <option class="select_options_style" ng-repeat='activitySphere in newPosLocationOrder.ActivitySphere' style="margin-left:25px" value='{{ activitySphere }}'>{{  activitySphere }}</option>
+                    </select>
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.activitySphere.$dirty" for="newPosLocationForm.activitySphere.$error">
+                            <ng-message when="required" class="errors">
+                                Գործ. ոլորտ ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4">Էլ. Փոստ</label>
+                <div class="col-sm-8">
+                    <input type="text" name="mail" id="mail" ng-model="newPosLocationOrder.mail" required class="form-control" style="text-align:left" ng-maxlength="30" disabled="disabled">
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.mail.$dirty" for="newPosLocationForm.mail.$error">
+                            <ng-message when="required" class="errors">
+                                Էլ. Փոստ ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="sub_inner form-group" ng-if="newPosLocationOrder.posType == 0">
+                <label class="tab_title col-sm-4">Նոր Սերնդ ՀԴՄ</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="newPosLocationOrder.newHdm" id="newHdm" name="newHdm" required>
+                        <option value="1" style=" margin-left:25px">Այո</option>
+                        <option value="0" style=" margin-left:25px">Ոչ</option>
+                    </select>
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.newHdm.$dirty" for="newPosLocationForm.newHdm.$error">
+                            <ng-message when="required" class="errors">
+                                Նոր Սերնդ ՀԴՄ ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4">Կոնտակտ անձ</label>
+                <div class="col-sm-8">
+                    <input type="text" name="contactPerson" id="contactPerson" ng-model="newPosLocationOrder.contactPerson" required class="form-control" style="text-align:left" ng-maxlength="30">
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.contactPerson.$dirty" for="newPosLocationForm.contactPerson.$error">
+                            <ng-message when="required" class="errors">
+                                Կոնտակտ անձ ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4">Կոնտ.անձի հեռ.</label>
+
+                <div class="col-sm-3">
+                    <input type="text" name="phoneCode" id="phoneCode" ng-model="newPosLocationOrder.phoneCode" disabled ng-value="newPosLocationOrder.phoneCode" class="form-control" style="text-align:left" ng-maxlength="30" required>
+                </div>
+
+                <div class="col-sm-5">
+                    <input type="text" maxlength="15" name="contactPersonPhone" id="contactPersonPhone" required ng-model="newPosLocationOrder.contactPersonPhone" class="form-control" style="text-align:left">
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.contactPersonPhone.$dirty" for="newPosLocationForm.contactPersonPhone.$error">
+                            <ng-message when="required" class="errors">
+                                Կոնտ.անձի հեռ.ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="sub_inner form-group" ng-if="newPosLocationOrder.posType==0">
+                <label class="tab_title col-sm-4">Տերմինալի տեսակը</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="newPosLocationOrder.terminalType" id="terminalType" name="terminalType" required>
+                        <option value="0" style=" margin-left:25px">ՀԴՄ</option>
+                        <option value="1" style=" margin-left:25px">POS</option>
+                        <option value="2" style=" margin-left:25px">softPOS</option>
+                    </select>
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.terminalType.$dirty" for="newPosLocationForm.terminalType.$error">
+                            <ng-message when="required" class="errors">
+                                Տերմինալի տեսակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="sub_inner form-group" ng-if="newPosLocationOrder.posType==1">
+                <label class="tab_title col-sm-4">Տերմինալի տեսակը</label>
+                <div class="col-sm-8">
+                    <select class="form-control">
+                        <option value="3" style=" margin-left:25px" selected>vPOS</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4">Քանակ</label>
+                <div class="col-sm-8">
+                    <input type="number" name="posCount" id="posCount" ng-model="newPosLocationOrder.posCount" required class="form-control" style="text-align:left" ng-maxlength="30">
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.posCount.$dirty" for="newPosLocationForm.posCount.$error">
+                            <ng-message when="required" class="errors">
+                                Քանակ դաշտը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4">ՀԴՄ սերիալ համ.</label>
+                <div class="col-sm-8">
+                    <input type="text" name="posSerialNumber" id="posSerialNumber" ng-model="newPosLocationOrder.posSerialNumber" required class="form-control" style="text-align:left" ng-maxlength="30">
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.posSerialNumber.$dirty" for="newPosLocationForm.posSerialNumber.$error">
+                            <ng-message when="required" class="errors">
+                                ՀԴՄ սերիալ համ.ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="sub_inner form-group" ng-if="newPosLocationOrder.posType == 0">
+                <label class="tab_title col-sm-4">Վճարում առանց քարտի ներկ. </label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="newPosLocationOrder.payWithoutCard">
+                        <option ng-value="1" style=" margin-left:25px">Այո</option>
+                        <option ng-value="0" selected style=" margin-left:25px">Ոչ</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="sub_inner form-group" ng-if="newPosLocationOrder.payWithoutCard == 1">
+                <label class="tab_title col-sm-4" for="currency">Անհրաժեշ. հիմնավորում</label>
+                <div class="col-sm-8">
+                    <textarea type="text" name="necessity" id="necessity" ng-model="newPosLocationOrder.necessity" required class="form-control" style="text-align:left" maxlength="100"></textarea>
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.necessity.$dirty" for="newPosLocationForm.necessity.$error">
+                            <ng-message when="required" class="errors">
+                                Անհրաժեշ. հիմնավորումը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="StockToolIds"> Քարտերի տեսակներ </label>
+                <div class="col-sm-3 pl-0">
+                    <div class="row" style="width:auto !important">
+
+                        <span style="margin-left: 117%; margin-bottom: 50px; position: absolute !important "> Local</span> <span style="margin-left: 175% !important "> Int.</span>
+
+                        <div class="input-group col-sm-12" ng-repeat="item in cardSystem" id="cardType" name="cardType" required>
+                            <label class="tab_title col-md-10" style="font-family:'Arial Armenian'">{{ item.description }}</label>
+                            <input type="checkbox" id="cardType" name="cardType" ng-true-value="true" ng-false-value="false" ng-model="isChecked" ng-click="selectCardSystem(item.id, isChecked, fee, feeInt)">
+                            <input ng-value="item.fee" ng-model="fee" style="display: inline-block; height: 18px; width: 40px !important; margin-left: 20px; position: absolute; margin-top: 10px !important;" ng-disabled="isChecked == 1">
+                            <input ng-value="item.feeInt" ng-model="feeInt" style="display: inline-block; height: 18px; width: 40px !important; margin-left: 80px; position: absolute; margin-top: 10px !important;" ng-disabled="isChecked == 1">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div class="sub_inner form-group">
+                <label class="tab_title col-sm-4" for="currency">Քարտ. սպաս. բոլոր ԱՍԿ-ներում</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="newPosLocationOrder.allTerminals" name="allTerminals" id="allTerminals" required>
+                        <option ng-value="1" style=" margin-left:25px">Այո</option>
+                        <option ng-value="0" style=" margin-left:25px">Ոչ</option>
+                    </select>
+
+                    <div class="row">
+                        <ng-messages ng-if="newPosLocationForm.$submitted  || newPosLocationForm.allTerminals.$dirty" for="newPosLocationForm.allTerminals.$error">
+                            <ng-message when="required" class="errors">
+                                Քարտ.սպաս.բոլոր ԱՍԿ-ներում դաշտը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+</form>
+
+

@@ -903,149 +903,153 @@
             </div>
             <div class="panel panel-success" style=" margin-bottom: 10px;">
                 <div class="panel-heading">Գործարքի նկարագրություն</div>
-                <div style="padding-right: 25px; padding-top: 5px;">
-                    <orderdescription ordertype="order.Type" operations="operations"
-                                      description="description" labeldescription="'Նկարագրություն'" formname="internationalPaymentOrderForm"></orderdescription>
-                </div>
-            </div>
-            <div class="panel panel-success" style=" margin-bottom: 10px;" ng-init="isUrgentTime();">
-                <div class="panel-heading">Ծախսեր</div>
                 <div class="panel-body" style="padding-bottom: 0; padding-top: 5px;padding-right: 15px;">
-                    <div style="padding-right: 10px; margin-bottom: 0px;">
-                        <countrylist labeldescription="'Ուղարկվող երկիր'" disabled1="isdisable" country="order.Country" showriskquality="1" formname="internationalPaymentOrderForm"></countrylist>
-                        <div class="row">
-                            <div class="col-sm-6"></div>
-                            <ng-messages class="errors" ng-if="internationalPaymentOrderForm.$submitted && order.Country==undefined">
-                                Երկիրն ընտրված չէ
-                            </ng-messages>
-
-                        </div>
+                    <div style="padding-right: 25px; padding-top: 5px;" ng-if="order.Type == 3 || order.Type == 64"><transactiontypes></transactiontypes></div>
+                    <div style="padding-right: 25px; padding-top: 5px;">
+                        <orderdescription ordertype="order.Type" operations="operations"
+                                          description="description" labeldescription="'Նկարագրություն'" formname="internationalPaymentOrderForm"></orderdescription>
+                        <div ng-if="order.Type == 3 || order.Type == 64"><additionaldescription></additionaldescription></div>
                     </div>
-
-                    <div class="form-group" style="padding-right: 10px;">
-                        <label class="tab_title col-sm-5" for="DetailsOfCharges">Փոխանցման եղանակ</label>
-                        <div class="col-sm-6" data-ng-init="GetDetailsOfCharges()">
+                    </div>
+                </div>
+                <div class="panel panel-success" style=" margin-bottom: 10px;" ng-init="isUrgentTime();">
+                    <div class="panel-heading">Ծախսեր</div>
+                    <div class="panel-body" style="padding-bottom: 0; padding-top: 5px;padding-right: 15px;">
+                        <div style="padding-right: 10px; margin-bottom: 0px;">
+                            <countrylist labeldescription="'Ուղարկվող երկիր'" disabled1="isdisable" country="order.Country" showriskquality="1" formname="internationalPaymentOrderForm"></countrylist>
                             <div class="row">
-                                <select ng-disabled="swiftMessage != undefined" data-ng-model="order.DetailsOfCharges" name="DetailsOfCharges" id="DetailsOfCharges" ng-change="getFee()" class="form-control" required>
-                                    <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք փոխանցման եղանակը...</option>
-                                    <option ng-repeat="k in detailsOfCharges">{{k.name}}</option>
-                                </select>
-                            </div>
-                            <div class="row">
-                                <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.DetailsOfCharges.$dirty"
-                                             for="internationalPaymentOrderForm.DetailsOfCharges.$error">
-                                    <ng-message when="required" class="errors">
-                                        Փոխանցման եղանակ դաշտը ընտրված չէ
-                                    </ng-message>
+                                <div class="col-sm-6"></div>
+                                <ng-messages class="errors" ng-if="internationalPaymentOrderForm.$submitted && order.Country==undefined">
+                                    Երկիրն ընտրված չէ
                                 </ng-messages>
+
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group " style="padding-right: 10px;" ng-if="isUrgentTime == 'True'">
-                        <label class="tab_title col-sm-5" for="UrgentSign"> Շտապ փոխանցում</label>
-
-                        <div class="col-sm-1 row">
-                            <input type="checkbox" ng-change="getFee()" ng-disabled="order.Amount!=null && !((( order.Currency=='USD' || order.Currency=='EUR'  ) && order.Amount<500000) || ( order.Currency=='RUR' && order.Amount<10000000) )" ng-model="order.UrgentSign" style="width:18px" name="UrgentSign" />
-                        </div>
-                    </div>
-                    <div class="form-group " style="padding-right: 10px;" ng-if="isUrgentTime == 'True'">
-                        <label class="tab_title col-sm-12" style="font-style:italic; color:red;"> Միջազգային փոխանցումը կարող է ընդունվել Շտապ պայմանով Ժամը 15:00-ից մինչև 15:30-ը</label>
-
-                    </div>
-
-
-                    @*<div class="form-group" style="padding-right: 10px; margin-bottom: 0">
-                            <label class="tab_title col-sm-5" for="FeeAccount">Միջնորդավճարի հաշիվ</label>
-
-                            <div class="col-sm-7" data-ng-init="getFeeAccounts(3,1)">
-                                <loading-control scopevariable="feeAccounts"></loading-control>
+                        <div class="form-group" style="padding-right: 10px;">
+                            <label class="tab_title col-sm-5" for="DetailsOfCharges">Փոխանցման եղանակ</label>
+                            <div class="col-sm-6" data-ng-init="GetDetailsOfCharges()">
                                 <div class="row">
-                                    <select name="FeeAccount" ng-show="feeAccounts" data-ng-model="order.FeeAccount" class="form-control"
-                                            data-ng-options="a.AccountNumber + ' ' + a.Currency + ' '+a.BalanceString+' ' + a.AccountTypeDescription group by a.AccountTypeDescription for a in feeAccounts" required>
-                                        <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                                    <select ng-disabled="swiftMessage != undefined" data-ng-model="order.DetailsOfCharges" name="DetailsOfCharges" id="DetailsOfCharges" ng-change="getFee()" class="form-control" required>
+                                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք փոխանցման եղանակը...</option>
+                                        <option ng-repeat="k in detailsOfCharges">{{k.name}}</option>
                                     </select>
                                 </div>
                                 <div class="row">
-                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.feeAccounts.$dirty"
-                                                 for="internationalPaymentOrderForm.FeeAccount.$error">
+                                    <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.DetailsOfCharges.$dirty"
+                                                 for="internationalPaymentOrderForm.DetailsOfCharges.$error">
                                         <ng-message when="required" class="errors">
-                                            Միջնորդավճարի հաշիվ դաշտն ընտրված չէ
+                                            Փոխանցման եղանակ դաշտը ընտրված չէ
                                         </ng-message>
                                     </ng-messages>
                                 </div>
-
                             </div>
-                        </div>*@
+                        </div>
 
-                    <div style="margin-right: 10px;">
-                        <div ng-open="{{order.Type==64?checkForFeeAccount=1:checkForFeeAccount=0}};"></div>
-                        <paymentaccount data-ng-init="getFeeAccounts(1,2)"
-                                        accountselectname="feeAccount"
-                                        accounts="feeAccounts"
-                                        account="order.FeeAccount"
-                                        onlyamd="true"
-                                        check="checkForFeeAccount"
-                                        nameforaccount="'Միջնորդավճարի հաշիվ'"
-                                        nameforcurrency="'Միջնորդավճարի արժույթ'"
-                                        tooltipdescription="{{checkForFeeAccount!=0?'Տարանցիկ հաշիվ փոխանցումների գծով':null}}">
-                        </paymentaccount>
-                        <div class="col-sm-6"></div>
+                        <div class="form-group " style="padding-right: 10px;" ng-if="isUrgentTime == 'True'">
+                            <label class="tab_title col-sm-5" for="UrgentSign"> Շտապ փոխանցում</label>
+
+                            <div class="col-sm-1 row">
+                                <input type="checkbox" ng-change="getFee()" ng-disabled="order.Amount!=null && !((( order.Currency=='USD' || order.Currency=='EUR'  ) && order.Amount<500000) || ( order.Currency=='RUR' && order.Amount<10000000) )" ng-model="order.UrgentSign" style="width:18px" name="UrgentSign" />
+                            </div>
+                        </div>
+                        <div class="form-group " style="padding-right: 10px;" ng-if="isUrgentTime == 'True'">
+                            <label class="tab_title col-sm-12" style="font-style:italic; color:red;"> Միջազգային փոխանցումը կարող է ընդունվել Շտապ պայմանով Ժամը 15:00-ից մինչև 15:30-ը</label>
+
+                        </div>
+
+
+                        @*<div class="form-group" style="padding-right: 10px; margin-bottom: 0">
+                    <label class="tab_title col-sm-5" for="FeeAccount">Միջնորդավճարի հաշիվ</label>
+
+                    <div class="col-sm-7" data-ng-init="getFeeAccounts(3,1)">
+                        <loading-control scopevariable="feeAccounts"></loading-control>
                         <div class="row">
-                            <ng-messages class="errors" ng-if="internationalPaymentOrderForm.$submitted && order.FeeAccount==undefined && checkForDebitAccountInternationalPayment==0">
-                                Հաշիվը ընտրված չէ
+                            <select name="FeeAccount" ng-show="feeAccounts" data-ng-model="order.FeeAccount" class="form-control"
+                                    data-ng-options="a.AccountNumber + ' ' + a.Currency + ' '+a.BalanceString+' ' + a.AccountTypeDescription group by a.AccountTypeDescription for a in feeAccounts" required>
+                                <option value="" hidden="hidden" style=" margin-left:25px">Ընտրեք...</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <ng-messages ng-if="internationalPaymentOrderForm.$submitted || internationalPaymentOrderForm.feeAccounts.$dirty"
+                                         for="internationalPaymentOrderForm.FeeAccount.$error">
+                                <ng-message when="required" class="errors">
+                                    Միջնորդավճարի հաշիվ դաշտն ընտրված չէ
+                                </ng-message>
                             </ng-messages>
-                            <ng-messages class="errors" ng-if="internationalPaymentOrderForm.$submitted && order.FeeAccount==undefined && checkForDebitAccountInternationalPayment==1">
-                                Արժույթն ընտրված չէ
-                            </ng-messages>
                         </div>
-                    </div>
 
-                    <div class="sub_inner">
-                        <div class="col-sm-8" style="text-align: left; padding: 0; " ng-if="order.DebitAccount.AccountType == 11 ">
-                            <h5>
-                                Միջնորդավճար`
-                            </h5>
-                        </div>
-                        <div class="col-sm-3" style="text-align: left; padding: 0; " ng-if="order.DebitAccount.AccountType== undefined || order.DebitAccount.AccountType != 11 ">
-                            <h5>
-                                Միջնորդավճար`
-                            </h5>
-                        </div>
-                        <div class="col-sm-3" style="text-align: right  ; padding: 0">
-                            <h5>
-                                {{order.TransferFee != null ? (order.TransferFee  | number:2)  : (0 | number:2)}}
-                            </h5>
-                        </div>
-                        <div class="col-sm-1" style="text-align: right  ; padding: 0">
-                            <h5>
-                                AMD
-                            </h5>
-                        </div>
                     </div>
-                    <div class="sub_inner" ng-if="order.DebitAccount.AccountType == 11 ">
-                        <div class="col-sm-8" style="text-align: left; padding: 0; ">
-                            <h5 style="margin-top:0">
-                                Քարտային ելքագրման միջնորդավճար`
-                            </h5>
-                        </div>
-                        <div class="col-sm-3" style="text-align: right; padding: 0; ">
-                            <h5 style="margin-top:0">
-                                {{order.CardFee != null ? (order.CardFee  | number:2)  : (0 | number:2) }}
-                            </h5>
-                        </div>
-                        <div class="col-sm-1" style="text-align: right; padding: 0; ">
-                            <h5 style="margin-top:0">
-                                {{order.DebitAccount.Currency}}
-                            </h5>
-                        </div>
-                    </div>
+                </div>*@
 
+                        <div style="margin-right: 10px;">
+                            <div ng-open="{{order.Type==64?checkForFeeAccount=1:checkForFeeAccount=0}};"></div>
+                            <paymentaccount data-ng-init="getFeeAccounts(1,2)"
+                                            accountselectname="feeAccount"
+                                            accounts="feeAccounts"
+                                            account="order.FeeAccount"
+                                            onlyamd="true"
+                                            check="checkForFeeAccount"
+                                            nameforaccount="'Միջնորդավճարի հաշիվ'"
+                                            nameforcurrency="'Միջնորդավճարի արժույթ'"
+                                            tooltipdescription="{{checkForFeeAccount!=0?'Տարանցիկ հաշիվ փոխանցումների գծով':null}}">
+                            </paymentaccount>
+                            <div class="col-sm-6"></div>
+                            <div class="row">
+                                <ng-messages class="errors" ng-if="internationalPaymentOrderForm.$submitted && order.FeeAccount==undefined && checkForDebitAccountInternationalPayment==0">
+                                    Հաշիվը ընտրված չէ
+                                </ng-messages>
+                                <ng-messages class="errors" ng-if="internationalPaymentOrderForm.$submitted && order.FeeAccount==undefined && checkForDebitAccountInternationalPayment==1">
+                                    Արժույթն ընտրված չէ
+                                </ng-messages>
+                            </div>
+                        </div>
+
+                        <div class="sub_inner">
+                            <div class="col-sm-8" style="text-align: left; padding: 0; " ng-if="order.DebitAccount.AccountType == 11 ">
+                                <h5>
+                                    Միջնորդավճար`
+                                </h5>
+                            </div>
+                            <div class="col-sm-3" style="text-align: left; padding: 0; " ng-if="order.DebitAccount.AccountType== undefined || order.DebitAccount.AccountType != 11 ">
+                                <h5>
+                                    Միջնորդավճար`
+                                </h5>
+                            </div>
+                            <div class="col-sm-3" style="text-align: right  ; padding: 0">
+                                <h5>
+                                    {{order.TransferFee != null ? (order.TransferFee  | number:2)  : (0 | number:2)}}
+                                </h5>
+                            </div>
+                            <div class="col-sm-1" style="text-align: right  ; padding: 0">
+                                <h5>
+                                    AMD
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="sub_inner" ng-if="order.DebitAccount.AccountType == 11 ">
+                            <div class="col-sm-8" style="text-align: left; padding: 0; ">
+                                <h5 style="margin-top:0">
+                                    Քարտային ելքագրման միջնորդավճար`
+                                </h5>
+                            </div>
+                            <div class="col-sm-3" style="text-align: right; padding: 0; ">
+                                <h5 style="margin-top:0">
+                                    {{order.CardFee != null ? (order.CardFee  | number:2)  : (0 | number:2) }}
+                                </h5>
+                            </div>
+                            <div class="col-sm-1" style="text-align: right; padding: 0; ">
+                                <h5 style="margin-top:0">
+                                    {{order.DebitAccount.Currency}}
+                                </h5>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
+
+
             </div>
-
-
-        </div>
 
         <div class="col-sm-5  ">
             @*<div style="position:fixed ">*@

@@ -1,0 +1,90 @@
+﻿@{
+    Layout = null;
+}
+
+<form style="width:850px" ng-controller="SecuritiesMarketTradingOrderCtrl" data-ng-init="GetSecuritiesMarketTradingOrder(orderId)">
+
+
+    <div class="product-container" style="width: 900px;padding:0;margin-bottom:5px;margin-left: inherit">
+        <div class="header-title">
+            Բորսայական գործարքներ
+            <div class="product-collapse tipB fa fa-chevron-down " data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+
+        <div class="product-collapsable-section">
+            <div class="product-content-table custom-scroll" id="orderDetails" style="width:900px;min-height:545px;margin-left:0px;margin-top: 0px;border-top-width: 0px;border-right-width: 0px;border-left-width: 0px;">
+                <div ng-if="orderDetails==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="orderDetails.length==0">
+                            <td colspan="3" style="text-align:center">Բորսայական հայտեր առկա չեն</td>
+                        </tr>
+                        <tr ng-if="SecuritieTradingsList.length!=0">
+                            <th class="col-sm-3" >Հաճախորդի տվյալներ</th>
+                            <th class="col-sm-3" >Արժեթղթերի տվյալներ</th>
+                            <th class="col-sm-3" >Հանձնարարականի տվյալներ</th>
+                            <th class="col-sm-3">Գործարքի տվյալներ</th>
+                        </tr>
+                        <tr ng-if="orderDetails.length!=0" ng-repeat="SecuritiesTradingDealing in orderDetails" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRowDealing($index)">
+                            <td class="col-sm-3">
+                                <span class="tab_text">Բորսայական կոդ` <br /> </span> {{SecuritiesTradingDealing.BrokerageCode}}
+                                <br />
+                                <span class="tab_text">Հաճախորդի անվանում` <br /> </span> {{SecuritiesTradingDealing.FullName}}
+                                <br />
+                                <span class="tab_text">Արժեթղթի հաշիվ` </span> {{SecuritiesTradingDealing.DepositoryAccount.AccountNumber}}
+                            </td>
+                            <td class="col-sm-3">
+                                <span class="tab_text">ԱՄՏԾ` </span> {{SecuritiesTradingDealing.ISIN}}
+                                <br />
+                                <span class="tab_text">Բորսայական հապավում` </span> {{SecuritiesTradingDealing.Ticker}}
+                                <br />
+                                <span class="tab_text">Արժույթ` </span> {{SecuritiesTradingDealing.Currency}}
+                            </td>
+
+                            <td class="col-sm-3">
+                                <span class="tab_text">Գործարքի տեսակ` </span> {{SecuritiesTradingDealing.TypeDescription}}
+                                <br />
+                                <span class="tab_text">Պատվերի տեսակ`  </span> {{SecuritiesTradingDealing.TradingOrderType}}
+                                <br />
+                                <span class="tab_text">Գին`  </span> {{SecuritiesTradingDealing.LimitPrice}}
+                                <br />
+                                <span class="tab_text">Ժամանակային պայման`  </span> {{SecuritiesTradingDealing.LimitPrice}}
+                                <br />
+                                <span class="tab_text">Հանձնարարականի համար`  </span> {{SecuritiesTradingDealing.ReferenceNumber}}
+                                <br />
+                                <span class="tab_text">Ամսաթիվ/ժամ`  </span> {{SecuritiesTradingDealing.SecuritiTrandingOrderDateString}}
+                                <br />
+                            </td>
+
+                            <td class="col-sm-3">
+                                <span class="tab_text">Գործարքի կատարման ա/թ, ժամ` </span> {{SecuritiesTradingDealing.ConfirmDateString}}
+                                <br />
+                                <span class="tab_text">Կատարված քանակ`  </span> {{SecuritiesTradingDealing.ActuallyQuantity}}
+                                <br />
+                                <span class="tab_text">Միավորի գին`  </span> {{SecuritiesTradingDealing.UnitAmount}}
+                                <br />
+                                <span class="tab_text">Ընդհանուր ծավալ`  </span> {{SecuritiesTradingDealing.TotalVolume}}
+                                <br />
+                                <span class="tab_text">Միջնորդավճար`  </span> petka lracnel
+                                <br />
+                                <span class="tab_text">Մնացորդային քանակ`  </span> {{SecuritiesTradingDealing.ResidualQuantity}}
+                                <br />
+                                <span class="tab_text">Գործարքի մյուս կողմ`  </span> {{SecuritiesTradingDealing.OrderDealOtherSide}}
+                                <br />
+                                <span class="tab_text">Գործարքի գնման վայր`  </span> {{SecuritiesTradingDealing.TransactionPlace}}
+                                <br />
+                                <span class="tab_text">Գործարքը կատարող աշխատակից`  </span> {{SecuritiesTradingDealing.ConfirmOrderUserName}}
+                                <br />
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</form>

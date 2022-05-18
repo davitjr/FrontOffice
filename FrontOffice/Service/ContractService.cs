@@ -413,7 +413,7 @@ namespace FrontOffice.Service
         {
             RenderContract("RemittanceAmendmentApplication", parameters, "RemittanceAmendmentApplication");
         }
-
+//--
         public static void CardServiceContract(Dictionary<string, string> parameters)
         {
             RenderContract("CardServiceContract", parameters, "CardServiceContract");
@@ -443,6 +443,7 @@ namespace FrontOffice.Service
         {
             RenderContract("PosContract", parameters, "PosContract");
         }
+//---        
 
         public static void ThirdPersonAccountRightsTransfer(Dictionary<string, string> parameters)
         {
@@ -462,6 +463,21 @@ namespace FrontOffice.Service
         public static void StockInformationalSheet()
         {
             RenderContract("StockInformationalSheet", null, "StockInformationalSheet");
+        }
+
+        public static void StockBrokerContract(Dictionary<string, string> parameters)
+        {
+            RenderContract("StockBrokerContract", parameters, "StockBrokerContract");
+        }
+
+        public static void StocksInvestmentRisksDescription()
+        {
+            RenderContract("StocksInvestmentRisksDescription", null, "StocksInvestmentRisksDescription");
+        }
+
+        public static void InterestPolicyContract()
+        {
+            RenderContract("InterestPolicyContract", null, "InterestPolicyContract");
         }
     }
 }

@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="eSignService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/eSignatureService/eSignService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/eSignatureService/eSignService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/eSignatureService/eSignService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Library" />
+      <xsd:import schemaLocation="http://localhost/eSignatureService/eSignService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IESignService_CreateDigitalContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateDigitalContract" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_CreateDigitalContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateDigitalContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_UpdateAttachments_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAttachments" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_UpdateAttachments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAttachmentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetDigitalContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDigitalContract" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetDigitalContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDigitalContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetDigitalContractId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDigitalContractId" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetDigitalContractId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDigitalContractIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_CancelDigitalContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelDigitalContract" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_CancelDigitalContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelDigitalContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetDigitalContractStatusByProductId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDigitalContractStatusByProductId" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetDigitalContractStatusByProductId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDigitalContractStatusByProductIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_SignedInPaper_InputMessage">
+    <wsdl:part name="parameters" element="tns:SignedInPaper" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_SignedInPaper_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SignedInPaperResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetOTP_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOTP" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetOTP_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOTPResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_SaveDigitalContractDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveDigitalContractDetail" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_SaveDigitalContractDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveDigitalContractDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_ValidateOTP_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateOTP" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_ValidateOTP_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateOTPResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_ConfirmDigitalContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmDigitalContract" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_ConfirmDigitalContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmDigitalContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_ValidateDigitalContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateDigitalContract" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_ValidateDigitalContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateDigitalContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_SendDigitalContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendDigitalContract" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_SendDigitalContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendDigitalContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetDigitalContractForSign_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDigitalContractForSign" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetDigitalContractForSign_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDigitalContractForSignResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_SendOTP_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendOTP" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_SendOTP_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendOTPResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetDigitalContractFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDigitalContractFile" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetDigitalContractFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDigitalContractFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetDigitalContractFiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDigitalContractFiles" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetDigitalContractFiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDigitalContractFilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_ApproveDigitalContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveDigitalContract" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_ApproveDigitalContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ApproveDigitalContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetSentDigitalContracts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSentDigitalContracts" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetSentDigitalContracts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSentDigitalContractsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetSignedDigitalContracts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSignedDigitalContracts" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetSignedDigitalContracts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSignedDigitalContractsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_CancelDigitalContractById_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelDigitalContractById" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_CancelDigitalContractById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelDigitalContractByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_SignedInPaperById_InputMessage">
+    <wsdl:part name="parameters" element="tns:SignedInPaperById" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_SignedInPaperById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SignedInPaperByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetSignedDocuments_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSignedDocuments" />
+  </wsdl:message>
+  <wsdl:message name="IESignService_GetSignedDocuments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSignedDocumentsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IESignService">
+    <wsdl:operation name="CreateDigitalContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/CreateDigitalContract" message="tns:IESignService_CreateDigitalContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/CreateDigitalContractResponse" message="tns:IESignService_CreateDigitalContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAttachments">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/UpdateAttachments" message="tns:IESignService_UpdateAttachments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/UpdateAttachmentsResponse" message="tns:IESignService_UpdateAttachments_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDigitalContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/GetDigitalContract" message="tns:IESignService_GetDigitalContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/GetDigitalContractResponse" message="tns:IESignService_GetDigitalContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDigitalContractId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/GetDigitalContractId" message="tns:IESignService_GetDigitalContractId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/GetDigitalContractIdResponse" message="tns:IESignService_GetDigitalContractId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelDigitalContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/CancelDigitalContract" message="tns:IESignService_CancelDigitalContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/CancelDigitalContractResponse" message="tns:IESignService_CancelDigitalContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDigitalContractStatusByProductId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/GetDigitalContractStatusByProductId" message="tns:IESignService_GetDigitalContractStatusByProductId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/GetDigitalContractStatusByProductIdResponse" message="tns:IESignService_GetDigitalContractStatusByProductId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SignedInPaper">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/SignedInPaper" message="tns:IESignService_SignedInPaper_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/SignedInPaperResponse" message="tns:IESignService_SignedInPaper_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOTP">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/GetOTP" message="tns:IESignService_GetOTP_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/GetOTPResponse" message="tns:IESignService_GetOTP_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveDigitalContractDetail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/SaveDigitalContractDetail" message="tns:IESignService_SaveDigitalContractDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/SaveDigitalContractDetailResponse" message="tns:IESignService_SaveDigitalContractDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateOTP">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/ValidateOTP" message="tns:IESignService_ValidateOTP_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/ValidateOTPResponse" message="tns:IESignService_ValidateOTP_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmDigitalContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/ConfirmDigitalContract" message="tns:IESignService_ConfirmDigitalContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/ConfirmDigitalContractResponse" message="tns:IESignService_ConfirmDigitalContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateDigitalContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/ValidateDigitalContract" message="tns:IESignService_ValidateDigitalContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/ValidateDigitalContractResponse" message="tns:IESignService_ValidateDigitalContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendDigitalContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/SendDigitalContract" message="tns:IESignService_SendDigitalContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/SendDigitalContractResponse" message="tns:IESignService_SendDigitalContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDigitalContractForSign">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/GetDigitalContractForSign" message="tns:IESignService_GetDigitalContractForSign_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/GetDigitalContractForSignResponse" message="tns:IESignService_GetDigitalContractForSign_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendOTP">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/SendOTP" message="tns:IESignService_SendOTP_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/SendOTPResponse" message="tns:IESignService_SendOTP_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDigitalContractFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/GetDigitalContractFile" message="tns:IESignService_GetDigitalContractFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/GetDigitalContractFileResponse" message="tns:IESignService_GetDigitalContractFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDigitalContractFiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/GetDigitalContractFiles" message="tns:IESignService_GetDigitalContractFiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/GetDigitalContractFilesResponse" message="tns:IESignService_GetDigitalContractFiles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ApproveDigitalContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/ApproveDigitalContract" message="tns:IESignService_ApproveDigitalContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/ApproveDigitalContractResponse" message="tns:IESignService_ApproveDigitalContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSentDigitalContracts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/GetSentDigitalContracts" message="tns:IESignService_GetSentDigitalContracts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/GetSentDigitalContractsResponse" message="tns:IESignService_GetSentDigitalContracts_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSignedDigitalContracts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/GetSignedDigitalContracts" message="tns:IESignService_GetSignedDigitalContracts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/GetSignedDigitalContractsResponse" message="tns:IESignService_GetSignedDigitalContracts_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelDigitalContractById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/CancelDigitalContractById" message="tns:IESignService_CancelDigitalContractById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/CancelDigitalContractByIdResponse" message="tns:IESignService_CancelDigitalContractById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SignedInPaperById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/SignedInPaperById" message="tns:IESignService_SignedInPaperById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/SignedInPaperByIdResponse" message="tns:IESignService_SignedInPaperById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSignedDocuments">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESignService/GetSignedDocuments" message="tns:IESignService_GetSignedDocuments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESignService/GetSignedDocumentsResponse" message="tns:IESignService_GetSignedDocuments_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IESignService" type="tns:IESignService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateDigitalContract">
+      <soap:operation soapAction="http://tempuri.org/IESignService/CreateDigitalContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAttachments">
+      <soap:operation soapAction="http://tempuri.org/IESignService/UpdateAttachments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDigitalContract">
+      <soap:operation soapAction="http://tempuri.org/IESignService/GetDigitalContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDigitalContractId">
+      <soap:operation soapAction="http://tempuri.org/IESignService/GetDigitalContractId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelDigitalContract">
+      <soap:operation soapAction="http://tempuri.org/IESignService/CancelDigitalContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDigitalContractStatusByProductId">
+      <soap:operation soapAction="http://tempuri.org/IESignService/GetDigitalContractStatusByProductId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SignedInPaper">
+      <soap:operation soapAction="http://tempuri.org/IESignService/SignedInPaper" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOTP">
+      <soap:operation soapAction="http://tempuri.org/IESignService/GetOTP" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveDigitalContractDetail">
+      <soap:operation soapAction="http://tempuri.org/IESignService/SaveDigitalContractDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateOTP">
+      <soap:operation soapAction="http://tempuri.org/IESignService/ValidateOTP" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmDigitalContract">
+      <soap:operation soapAction="http://tempuri.org/IESignService/ConfirmDigitalContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateDigitalContract">
+      <soap:operation soapAction="http://tempuri.org/IESignService/ValidateDigitalContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDigitalContract">
+      <soap:operation soapAction="http://tempuri.org/IESignService/SendDigitalContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDigitalContractForSign">
+      <soap:operation soapAction="http://tempuri.org/IESignService/GetDigitalContractForSign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendOTP">
+      <soap:operation soapAction="http://tempuri.org/IESignService/SendOTP" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDigitalContractFile">
+      <soap:operation soapAction="http://tempuri.org/IESignService/GetDigitalContractFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDigitalContractFiles">
+      <soap:operation soapAction="http://tempuri.org/IESignService/GetDigitalContractFiles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApproveDigitalContract">
+      <soap:operation soapAction="http://tempuri.org/IESignService/ApproveDigitalContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSentDigitalContracts">
+      <soap:operation soapAction="http://tempuri.org/IESignService/GetSentDigitalContracts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSignedDigitalContracts">
+      <soap:operation soapAction="http://tempuri.org/IESignService/GetSignedDigitalContracts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelDigitalContractById">
+      <soap:operation soapAction="http://tempuri.org/IESignService/CancelDigitalContractById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SignedInPaperById">
+      <soap:operation soapAction="http://tempuri.org/IESignService/SignedInPaperById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSignedDocuments">
+      <soap:operation soapAction="http://tempuri.org/IESignService/GetSignedDocuments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="eSignService">
+    <wsdl:port name="BasicHttpBinding_IESignService" binding="tns:BasicHttpBinding_IESignService">
+      <soap:address location="http://localhost/eSignatureService/eSignService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -954,6 +954,59 @@ namespace FrontOffice.Service
             //}
         }
 
+        public static async Task UseAsync(Func<IXBInfoService, Task> action)
+        {
+
+            string ipAddress = HttpContext.Current.Request["REMOTE_ADDR"];
+
+            IXBInfoService client = ProxyManager<IXBInfoService>.GetProxy(nameof(IXBInfoService));
+            bool success = false;
+
+            try
+            {
+                client.Init(ipAddress, 1);
+                await action(client);
+                ((IClientChannel)client).Close();
+
+                success = true;
+            }
+#pragma warning disable CS0168 // The variable 'ex' is declared but never used
+            catch (FaultException ex)
+#pragma warning restore CS0168 // The variable 'ex' is declared but never used
+            {
+                ((IClientChannel)client).Close();
+
+                throw;
+            }
+#pragma warning disable CS0168 // The variable 'e' is declared but never used
+            catch (TimeoutException e)
+#pragma warning restore CS0168 // The variable 'e' is declared but never used
+            {
+                ((IClientChannel)client).Close();
+
+                throw;
+            }
+#pragma warning disable CS0168 // The variable 'e' is declared but never used
+            catch (Exception e)
+#pragma warning restore CS0168 // The variable 'e' is declared but never used
+            {
+                ((IClientChannel)client).Abort();
+
+                throw;
+            }
+            finally
+            {
+                if (!success)
+                {
+                    ((IClientChannel)client).Abort();
+
+                }
+                ((IClientChannel)client).Dispose();
+            }
+
+            //}
+        }
+
         public static Dictionary<string, string> GetDisputeResolutions()
         {
             string cacheKey = "Info_DisputeResolutions";
@@ -3477,10 +3530,138 @@ namespace FrontOffice.Service
         internal static (bool isResident, bool isPhysical) GetCustomerTypeAndResidence(ulong customerNumber)
         {
             TupleOfbooleanboolean typeAndResidence = new TupleOfbooleanboolean();
-             InfoService.Use(client => typeAndResidence =  client.GetCustomerTypeAndResidence(customerNumber));
+            InfoService.Use(client => typeAndResidence = client.GetCustomerTypeAndResidence(customerNumber));
             (bool isResident, bool isPhysical) result = (typeAndResidence.m_Item1, typeAndResidence.m_Item2);
             return result;
         }
+        public static Dictionary<string, string> GetTransactionTypes()
+        {
+            string cacheKey = "Info_TransactionTypes";
+            Dictionary<string, string> types = CacheHelper.GetDictionary(cacheKey);
 
+            if (types == null)
+            {
+                InfoService.Use(client =>
+                {
+                    types = client.GetTransactionTypes();
+                    CacheHelper.Add(types, cacheKey);
+                });
+            }
+            return types;
+        }
+        public static TransactionTypeByAML GetTransactionTypeByAML(long doc_id)
+        {
+            TransactionTypeByAML transactionTypeByAML = null;
+
+            InfoService.Use(client =>
+            {
+                transactionTypeByAML = client.GetTransactionTypeByAML(doc_id);
+            });
+            return transactionTypeByAML;
+        }
+
+        public static Dictionary<string, string> GetSecuritiesTypes()
+        {
+            string cacheKey = "Info_SecuritiesTypes";
+            Dictionary<string, string> types = CacheHelper.GetDictionary(cacheKey);
+
+            if (types == null)
+            {
+                InfoService.Use(client =>
+                {
+                    types = client.GetSecuritiesTypes().ToDictionary(x =>x.key.ToString(), x =>x.value);
+                    CacheHelper.Add(types, cacheKey);
+                });
+            }
+            return types;
+        }
+
+        public static Dictionary<string, string> GetTradingOrderTypes()
+        {
+            string cacheKey = "Info_TradingOrderTypes";
+            Dictionary<string, string> types = CacheHelper.GetDictionary(cacheKey);
+
+            if (types == null)
+            {
+                InfoService.Use(client =>
+                {
+                    types = client.GetTradingOrderTypes().ToDictionary(x => x.key.ToString(), x => x.value);
+                    CacheHelper.Add(types, cacheKey);
+                });
+            }
+            return types;
+        }
+
+        public static Dictionary<string, string> GetTradingOrderExpirationTypes()
+        {
+            string cacheKey = "Info_TradingOrderExpirationTypes";
+            Dictionary<string, string> types = CacheHelper.GetDictionary(cacheKey);
+
+            if (types == null)
+            {
+                InfoService.Use(client =>
+                {
+                    types = client.GetTradingOrderExpirationTypes().ToDictionary(x => x.key.ToString(), x => x.value);
+                    CacheHelper.Add(types, cacheKey);
+                });
+            }
+            return types;
+        }
+
+        public static List<string> GetLinkedCardWarnings(string cardNumber, bool renewWithCardNewType)
+        {
+            var result = new List<string>();
+
+            InfoService.Use(client =>
+            {
+                result = client.GetLinkedCardWarnings(cardNumber, renewWithCardNewType);
+            });
+
+            return result;
+        }
+        
+        public static Dictionary<string, string> GetLeasingReportTypes()
+        {
+            Dictionary<string, string> reportTypes = new Dictionary<string, string>();
+
+            InfoService.Use(client =>
+            {
+                reportTypes = client.GetLeasingReportTypes();
+            });
+            return reportTypes;
+        }
+
+        
+        public static Dictionary<string, string> GetLeasingCredentialClosingReasons()
+        {
+            Dictionary<string, string> reasonTypes = new Dictionary<string, string>();
+
+            InfoService.Use(client =>
+            {
+                reasonTypes = client.GetLeasingCredentialClosingReasons();
+            });
+            return reasonTypes;
+        }
+        public static async Task<BrokerContractSurvey> GetBrokerContractSurveyAsync()
+        {
+            BrokerContractSurvey brokerContractSurvey = null;
+
+            await InfoService.UseAsync(async client =>
+              {
+                  brokerContractSurvey = await client.GetBrokerContractSurveyAsync();
+              });
+            return brokerContractSurvey;
+        }
+
+        public static async Task<string> GenerateBrokerContractNumberAsync()
+        {
+            string BrokerContractNumber = String.Empty;
+            await InfoService.UseAsync(async client =>
+                {
+                    BrokerContractNumber = await client.GenerateBrokerContractNumberAsync();
+                });
+
+            return BrokerContractNumber;
+        }
     }
 }

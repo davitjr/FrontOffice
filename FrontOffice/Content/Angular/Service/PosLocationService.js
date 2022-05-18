@@ -156,7 +156,126 @@
             }
         });
         return response;
-    };    
+    };
+
+    this.sendDigitalContract = function (id, selectedDocuments, parameters) {
+        var response = $http({
+            method: "post",
+            url: "/PosLocation/SendPosContracts",
+            params: {
+                id: id,
+                attachmentTypes: selectedDocuments,
+                merchantID: parameters.merchantID,
+                code: parameters.code,
+                contractNumber: parameters.contractNumber,
+                agreementNumber: parameters.agreementNumber,
+                actNumber: parameters.actNumber,
+                includeAll: parameters.includeAll
+            }
+        });
+        return response;
+    };
+
+    this.getSentDigitalContracts = function () {
+        var response = $http({
+            method: "post",
+            url: "/PosLocation/GetSentDigitalContracts"
+        });
+        return response;
+    };
+
+    this.getSignedDigitalContracts = function () {
+        var response = $http({
+            method: "post",
+            url: "/PosLocation/GetSignedDigitalContracts"
+        });
+        return response;
+    };
+
+    this.cancelDigitalContract = function (digitalContractId) {
+        var response = $http({
+            method: "post",
+            url: "/PosLocation/CancelDigitalContract",
+            params: {
+                digitalContractId: digitalContractId
+            }
+        });
+        return response;
+    };
+
+    this.signedInPaperDigitalContract = function (digitalContractId) {
+        var response = $http({
+            method: "post",
+            url: "/PosLocation/SignedInPaperDigitalContract",
+            params: {
+                digitalContractId: digitalContractId
+            }
+        });
+        return response;
+    };
+
+    this.hasCustomerVPos = function () {
+        var response = $http({
+            method: "post",
+            url: "/PosLocation/HasCustomerVPos",
+        });
+        return response;
+    };
+
+    this.getSignedDocument = function (id, name) {
+        var response = $http({
+            method: "post",
+            url: "/PosLocation/GetSignedDocument",
+            responseType: 'arraybuffer',
+            params: {
+                fileId: id,
+                fileName: name
+            }
+        });
+        return response;
+    };
+
+    //Davit Pos
+    this.saveNewPosLocationOrder = function (newPosLocationOrder) {
+        var response = $http({
+            method: "post",
+            url: "/PosLocation/NewPosLocationOrder",
+            data: JSON.stringify(newPosLocationOrder),
+            dataType: "json"
+        });
+        return response;
+    };
+    //Davit Pos
+    this.getNewPosApplicationOrderDetails = function (orderId) {
+        var response = $http({
+            method: "post",
+            url: "/PosLocation/GetNewPosApplicationOrderDetails",
+            params: {
+                orderId: orderId,
+            }
+        });
+        return response;
+    };
+    //Davit Pos
+    this.GetPosTerminalActivitySphere = function () {
+        var response = $http({
+            method: "post",
+            url: "/PosLocation/GetPosTerminalActivitySphere",
+        });
+        return response;
+    };
+
+    //Davit Pos
+    this.saveNewPosTerminalOrder = function (newPosLocationOrder) {
+        var response = $http({
+            method: "post",
+            url: "/PosLocation/NewPosTerminalOrder",
+            data: JSON.stringify(newPosLocationOrder),
+            dataType: "json"
+        });
+        return response;
+    };
+
 
 }]);
 

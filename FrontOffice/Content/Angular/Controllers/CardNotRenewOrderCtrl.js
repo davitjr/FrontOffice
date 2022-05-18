@@ -7,7 +7,7 @@
     };
     $scope.getCard = function (productId) {
         $scope.loading = true;
-        var Data = cardNotRenewOrderService.getCard(productId);
+        var Data = cardService.getPlasticCard(productId, true);
         Data.then(function (card) {
             $scope.card = card.data;
             $scope.relOfficeDescription = $scope.getCardRelatedOfficeName($scope.card.RelatedOfficeNumber);
@@ -53,7 +53,7 @@
 
     $scope.saveCardNotRenewOrder = function () {
         if ($http.pendingRequests.length == 0) {
-            $scope.cardNotRenewOrder.Card = $scope.card;
+            $scope.cardNotRenewOrder.PlasticCard = $scope.card;
             document.getElementById("cardNotRenewOrderLoad").classList.remove("hidden");
             var Data = cardNotRenewOrderService.saveCardNotRenewOrder($scope.cardNotRenewOrder);
             Data.then(function (res) {

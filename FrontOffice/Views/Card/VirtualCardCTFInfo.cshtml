@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+<div ng-controller="VirtualCardCtrl" ng-init="getVirtualCardCTFInfo(virtualcardid)">
+    <div class="product-container">
+        <div class="header-title">
+           CTF պատմություն
+        </div>
+        <div class="product-collapsable-section">
+
+            <div class="product-content-table-full_height custom-scroll" id="provisionsContent" style="min-height:100px;">
+                <div ng-if="CTFInfos==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-repeat="info in ::CTFInfos" ng-class="{'selected':$index == selectedRow}" style="max-height:200px">
+                            <td class="text-left col-sm-11">
+                                <div style="margin-left: 5pt;">
+
+                                    <div>
+                                        <span class="my_label" style="font-size:13px"> ​x‐correlation‐id` </span>{{::info.EnrolmentID}} <span ng-if="his.Action=='REQUESTED'">({{his.NewStatusDescription}})</span>
+                                    </div>
+                                    <div>
+                                        <span class="my_label" style="font-size:13px"> Կարգավիճակ` </span>{{::info.Status}} <span ng-if="his.Action=='REQUESTED'">({{his.NewStatusDescription}})</span>
+                                    </div>
+
+
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr ng-if="CTFInfos.length==0 || CTFInfos == null ">
+                            <td colspan="3" style="text-align:center;">
+                                Տվյալները բացակայում են
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+              
+            </div>
+        </div>
+    </div>
+</div>

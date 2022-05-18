@@ -342,6 +342,11 @@ namespace FrontOffice.Controllers
                 description += ", " + paymentOrder.CreditCode + ", " + paymentOrder.Borrower + ", " + paymentOrder.MatureTypeDescription;
 
             }
+            if (paymentOrder.TransactionTypeByAML != null && !String.IsNullOrEmpty(paymentOrder.TransactionTypeByAML.AdditionalDescription))
+            {
+                description += ", " + paymentOrder.TransactionTypeByAML.AdditionalDescription;
+            }
+
             parameters.Add(key: "deb_acc", value: paymentOrder.DebitAccount.AccountNumber.Substring(5));
             parameters.Add(key: "deb_bank", value: paymentOrder.DebitAccount.AccountNumber.Substring(0, 5));
 
@@ -708,10 +713,16 @@ namespace FrontOffice.Controllers
             xbs.User user = (xbs.User)Session[guid + "_User"];
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string amountStr = "";
+            string transactionDescription = "";
+
+            if (paymentOrder.TransactionTypeByAML != null && !String.IsNullOrEmpty(paymentOrder.TransactionTypeByAML.AdditionalDescription))
+            {
+                transactionDescription += ", " + paymentOrder.TransactionTypeByAML.AdditionalDescription;
+            }
 
             foreach (xbs.ReestrTransferAdditionalDetails detail in paymentOrder.ReestrTransferAdditionalDetails)
             {
-                amountStr += detail.Amount + "|" + detail.Description + "#";
+                amountStr += detail.Amount + "|" + detail.Description + transactionDescription + "#";
             }
             amountStr = amountStr.Substring(0, amountStr.Length - 1);
             parameters.Add(key: "FilialCode", value: user.filialCode.ToString());
@@ -745,10 +756,16 @@ namespace FrontOffice.Controllers
             xbs.User user = (xbs.User)Session[guid + "_User"];
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string amountStr = "";
+            string transactionDescription = "";
+
+            if (paymentOrder.TransactionTypeByAML != null && !String.IsNullOrEmpty(paymentOrder.TransactionTypeByAML.AdditionalDescription))
+            {
+                transactionDescription += ", " + paymentOrder.TransactionTypeByAML.AdditionalDescription;
+            }
 
             foreach (xbs.ReestrTransferAdditionalDetails detail in paymentOrder.ReestrTransferAdditionalDetails)
             {
-                amountStr += detail.Amount + "|" + detail.Description + "#";
+                amountStr += detail.Amount + "|" + detail.Description + transactionDescription + "#";
             }
             amountStr = amountStr.Substring(0, amountStr.Length - 1);
             parameters.Add(key: "FilialCode", value: user.filialCode.ToString());
@@ -781,10 +798,16 @@ namespace FrontOffice.Controllers
             xbs.User user = (xbs.User)Session[guid + "_User"];
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string amountStr = "";
+            string transactionDescription = "";
+
+            if (paymentOrder.TransactionTypeByAML != null && !String.IsNullOrEmpty(paymentOrder.TransactionTypeByAML.AdditionalDescription))
+            {
+                transactionDescription += ", " + paymentOrder.TransactionTypeByAML.AdditionalDescription;
+            }
 
             foreach (xbs.ReestrTransferAdditionalDetails detail in paymentOrder.ReestrTransferAdditionalDetails)
             {
-                amountStr += detail.Amount + "|" + detail.Description + "#";
+                amountStr += detail.Amount + "|" + detail.Description + transactionDescription + "#";
             }
             amountStr = amountStr.Substring(0, amountStr.Length - 1);
             parameters.Add(key: "FilialCode", value: user.filialCode.ToString());

@@ -396,14 +396,31 @@ namespace FrontOffice.Controllers
 
         public JsonResult GetVirtualCards(ulong productID)
         {
+                       
             string jsonResult = Utility.DoPostRequestJson(Newtonsoft.Json.JsonConvert.SerializeObject(new { issuerCardRefId = productID }), "getCardInfo", "CtokenURL", null);
             return Json(jsonResult, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetVirtualCardHistory(string virtualCardId)
         {
+
             string jsonResult = Utility.DoPostRequestJson(Newtonsoft.Json.JsonConvert.SerializeObject(new { virtualCardId = virtualCardId }), "getVirtualCardHistory", "CtokenURL", null);
             return Json(jsonResult, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetVirtualCardCTFInfo(string virtualCardId)
+        {
+
+            string jsonResult = Utility.DoPostRequestJson(Newtonsoft.Json.JsonConvert.SerializeObject(new { virtualCardId = virtualCardId }), "getCardCTFInfo", "CtokenURL", null);
+            return Json(jsonResult, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult GetVirtualCardInfoFromThales(ulong productID)
+        {
+            string jsonResult = Utility.DoPostRequestJson(Newtonsoft.Json.JsonConvert.SerializeObject(new { issuerCardRefId = productID }), "getCardInfoFromThales", "CtokenURL", null);
+            return Json(jsonResult, JsonRequestBehavior.AllowGet);
+        }
+
 
         public JsonResult GetCardArCaStatus(ulong productID)
         {
@@ -518,5 +535,15 @@ namespace FrontOffice.Controllers
             return Json(XBService.VisaAliasOrderDetails(orderId), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult VirtualCardCTFInfo()
+        {
+            return PartialView("VirtualCardCTFInfo");
+        }
+
+
+        public JsonResult GetLinkedCardWarnings(string cardNumber, bool renewWithCardNewType)
+        {
+            return Json(InfoService.GetLinkedCardWarnings(cardNumber, renewWithCardNewType), JsonRequestBehavior.AllowGet);
+        }
     }
 }

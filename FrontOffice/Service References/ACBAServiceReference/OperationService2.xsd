@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ACBALibrary.CustomerIdentificationAlgorithm.Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ACBALibrary.CustomerIdentificationAlgorithm.Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
+  <xs:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
   <xs:complexType name="CustomerIdentificationResult">
     <xs:sequence>
       <xs:element minOccurs="0" name="CustomerNumber" type="xs:unsignedLong" />

@@ -4,12 +4,14 @@
 <div id="load" class="overlay hidden">
     <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
 </div>
+
+
 <div ng-controller="PosLocationCtrl" data-ng-init="getPosLocation(posLocationId); " id="posLocationDetails">
     <div class="product-details bhoechie-tab-content" style="min-width:800px;margin-left:10px;">
         @*<div class="product-detail-row">
-            <div class="product-detail-cell product-detail-lable">Համար</div>
-            <div class="product-detail-cell product-detail-value">{{posLocation.Id}}</div>
-        </div>*@
+                <div class="product-detail-cell product-detail-lable">Համար</div>
+                <div class="product-detail-cell product-detail-value">{{posLocation.Id}}</div>
+            </div>*@
         <div class="product-detail-row">
             <div class="product-detail-cell product-detail-lable">Պայմանագրի ա/թ</div>
             <div class="product-detail-cell product-detail-value">{{posLocation.OpenDateString}}</div>
@@ -49,6 +51,8 @@
             <div class="list-group">
                 <div class="list-group-item text-center active"><span>POS տերմինալներ</span></div>
                 <div class="list-group-item text-center">Քաղվածք</div>
+                <div class="list-group-item text-center" ng-click="getSentDigitalContracts()"><span>Ուղարկված փաստաթղթեր</span></div>
+                <div class="list-group-item text-center" ng-click="getSignedDigitalContracts()"><span>Ստորագրված փաստաթղթեր</span></div>
             </div>
         </div>
         <div class="bhoechie-tab" style="width: calc(100% - 140px); display: inline-block;">
@@ -65,6 +69,12 @@
                             <div class="col-sm-3" style="text-align:center">Հաշվեհամար</div>
                             <div class="col-sm-2" style="text-align:right">Մասնաճյուղ</div>
                             <div class="col-sm-1" style="text-align:center">Բանկ</div>
+                            @*Davit Pos*@
+                            <div ng-controller="PopUpCtrl" ng-click="params=openWindow('PosLocation/NewPosTerminalApplication','Ստեղծում','NewPosTerminalApplication')" class="ng-scope">
+                                <i class="add-new-product tipB" data-original-title="Նոր տերմինալ" style="margin-top : 1px"></i>
+                            </div>
+                            @*Davit Pos*@
+
                             <div class="col-sm-1" style="text-align:left"></div>
                         </div>
                         <div class="product-content-table-full_height custom-scroll" id="statementContent" style="min-height:100px;overflow-x:hidden">
@@ -82,7 +92,7 @@
                                                 <div class="col-sm-2" style="text-align:center;">{{::posTerminal.FilialCode}}</div>
                                                 <div class="col-sm-1" style="text-align:center;">{{::posTerminal.OwnerBankCode}}</div>
                                                 <div class="col-sm-1 click_toggle" context="contextPosTerminal" id="contextMenu"><div id="contextMenu"></div> </div>
-                                            </div>                    
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -93,7 +103,7 @@
             </div>
             <div class="bhoechie-tab-content ">
                 <div class="row">
-                    <div >
+                    <div>
                         <div class="col-sm-3" style="padding-right:0;">
                             <span class="product-detail-lable">Հաշվեհամար</span>
                             <select data-ng-model="selectedPosTerminal" name="PosTerminalAccount" id="PosTerminalAccount" class="form-control" required
@@ -107,18 +117,18 @@
                             <span class="product-detail-lable">Սկիզբ</span>
                             <input type="date" ng-model="dateFrom" name="DateFrom" class="form-control" style="width:150px;"
                                    required>
-                           
+
                         </div>
                         <div class="col-sm-3">
                             <span class="product-detail-lable">Վերջ</span>
                             <input type="date" ng-model="dateTo" name="DateTo" class="form-control" style="width:150px;"
                                    required>
-                            
+
                         </div>
                         <div class="col-sm-3">
                             <br />
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                               Քաղվածք <span class="caret"></span>
+                                Քաղվածք <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a href="" ng-click="dateFrom<=dateTo && printPosStatement(selectedPosTerminal.AccountNumber,'pdf')">Տպել PDF</a></li>
@@ -128,20 +138,93 @@
                         <br />
                     </div>
                     <div ng-if="dateFrom>dateTo" class="col-md-10  errors">Քաղվածքի ժամկետի սկիզբը պետք է փոքր լինի վերջից</div>
-                    
+
                 </div>
                 <br />
                 <div>
-                    <div >
+                    <div>
                         <div class="btn-group">
-                            <div id="printdetails" >
+                            <div id="printdetails">
                                 <span class="product-detail-lable">
-                                    <input style="width:initial;margin-top:-2px" type="radio" value="1" name="statementType" ng-model="statementType" >Գործարքի ա/թ<br />
-                                    <input style="width:initial;margin-top:-2px" type="radio" value="2" name="statementType" ng-model="statementType" >Ձևակերպման ա/թ<br />
+                                    <input style="width:initial;margin-top:-2px" type="radio" value="1" name="statementType" ng-model="statementType">Գործարքի ա/թ<br />
+                                    <input style="width:initial;margin-top:-2px" type="radio" value="2" name="statementType" ng-model="statementType">Ձևակերպման ա/թ<br />
                                     <input style="width:initial;margin-top:-2px" type="radio" value="3" name="statementType" ng-model="statementType">Միայն գործարքները<br />
                                     <br />
                                 </span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bhoechie-tab-content">
+                <div class="product-container" style="width:98%" ng-repeat="digitalContract in SentDigitalContracts">
+                    <div class="header-title">
+                        <span>Ուղարկման ամսաթիվ` {{digitalContract.RegistrationDate}}</span>
+                        <br />
+                        <span>Կարգավիճակը՝ {{digitalContract.StatusText}} {{digitalContract.StatusDate}}</span>
+                        <br />
+                        <span ng-if="digitalContract.Status==1" class="btn-danger" ng-click="cancelDigitalContract(digitalContract.Id)">Չեղարկել</span>
+                        <br />
+                        <span ng-if="digitalContract.Status==1" class="btn-warning" ng-click="signedInPaperDigitalContract(digitalContract.Id)">Փաստաթղթերը հաստատվել են թղթային եղանակով</span>
+                    </div>
+                    <div class="product-collapsable-section">
+                        <div class="product-container-header" style="height:22px;">
+                            <div class="col-sm-5" style="text-align:center">Փաստաթուղթ</div>
+                            <div class="col-sm-3" style="text-align:center">Համար</div>
+                            <div class="col-sm-3" style="text-align:center">Ամսաթիվ</div>
+                            <div class="col-sm-1" style="text-align:left"></div>
+                        </div>
+                        <div class="product-content-table-full_height custom-scroll" id="statementContent" style="min-height:100px;overflow-x:hidden">
+                            <div ng-if="posLocation.Posterminals==undefined">
+                                <loading></loading>
+                            </div>
+                            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                                <tbody>
+                                    <tr ng-repeat="attachment in ::digitalContract.Attachments">
+                                        <td colspan="6">
+                                            <div class="row">
+                                                <div class="col-sm-5" style="text-align:center"><span>{{::attachment.Name}}</span></div>
+                                                <div class="col-sm-3" style="text-align: center;"><span>{{::attachment.Number}}</span></div>
+                                                <div class="col-sm-3" style="text-align:center;">{{::attachment.Date}}</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bhoechie-tab-content">
+                <div class="product-container" style="width:98%" ng-repeat="digitalContract in signedDigitalContracts">
+                    <div class="header-title">
+                        <span>Ուղարկման ամսաթիվ` {{digitalContract.RegistrationDate}}</span>
+                        <br/>
+                        <span>Ստորագրման ամսաթիվ՝ {{digitalContract.SignatureDate}}</span>
+                        <br />
+                    </div>
+                    <div class="product-collapsable-section">
+                        <div class="product-container-header" style="height:22px;">
+                            <div class="col-sm-8" style="text-align:center">Փաստաթուղթ</div>
+                            <div class="col-sm-3" style="text-align:center"></div>
+                            <div class="col-sm-1" style="text-align:left"></div>
+                        </div>
+                        <div class="product-content-table-full_height custom-scroll" id="statementContent" style="min-height:100px;overflow-x:hidden">
+                            <div ng-if="posLocation.Posterminals==undefined">
+                                <loading></loading>
+                            </div>
+                            <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                                <tbody>
+                                    <tr ng-repeat="attachment in ::digitalContract.SignedAttachments">
+                                        <td colspan="6">
+                                            <div class="row">
+                                                <div class="col-sm-8" style="text-align:center"><span>{{::attachment.Name}}</span></div>
+                                                <div class="col-sm-3" style="text-align: center;"><a ng-click="getSignedDocument(attachment.FileId)"><span class="glyphicon-download">Ներբեռնել</span></a></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -151,6 +234,7 @@
             <li><a style="color: black;text-decoration:none!important" ng-controller="PopUpCtrl" ng-click="params={terminalId:terminalId};openWindow('PosLocation/PosRates','Միջնորդավճար','posterminalrates')" href="">Միջնորդավճար</a></li>
             <li><a style="color: black;text-decoration:none!important" ng-controller="PopUpCtrl" ng-click="params={terminalId:terminalId};openWindow('PosLocation/PosCashbackRates','Cashback միջնորդավճար','posterminalcashbackrates')" href="">Cashback միջնորդավճար</a></li>
             <li><a style="color: black;text-decoration:none!important" ng-controller="PopUpCtrl" ng-click="params={terminalId:terminalId, merchantId:merchantId};openWindow('PosLocation/PrintPosDocuments','Տպել փաստաթղթերը','posterminaldocuments')" href="">Տպել փաստաթղթերը</a></li>
+            <li><a style="color: black;text-decoration:none!important" ng-controller="PopUpCtrl" ng-click="params={terminalId:terminalId, merchantId:merchantId, posTerminalType:posTerminalType, posOwnerBankCode:posOwnerBankCode};openWindow('PosLocation/SendPosDocuments','Ստեղծել փաստաթղթերը','sendposterminaldocuments');" href="">Ստեղծել փաստաթղթերը</a></li>
         </ul>
     </div>
     <br />

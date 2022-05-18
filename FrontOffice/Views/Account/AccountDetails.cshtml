@@ -67,9 +67,6 @@
                     <li id="v-menuItem-5.2" ng-if="account.ClosingDateString == 'null'" ng-click="printDetailsForTransfer(account.AccountNumber,account.Currency)" data-permission-selector="">
                         <span>Փոխանցման ռեկվիզիտներ</span>
                     </li>
-                    <li id="v-menuItem-5.3" ng-if="account.ClosingDateString == 'null' && hasStatementDeliveryType == true " ng-click="printStatementDeliveryApplication(account.AccountNumber)" data-permission-selector="">
-                        <span>Քաղվածքի ստացման դիմում</span>
-                    </li>
                     <li id="v-menuItem-5.4" class="last " ng-if="account.ClosingDateString == 'null' && $root.SessionProperties.CustomerType!=6" ng-click="printAccountOpenApplication(selectedAccount)" data-permission-selector="">
                         <span>Հաշվի բացման դիմում</span>
                     </li>
@@ -278,7 +275,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div ng-if="addition.AdditionType == 5">
+                        <div ng-if="addition.AdditionType == 5 && account.HasCommunicationType == 1">
                             <div ng-hide="isEdit">
                                 <div>
                                     {{addition.AdditionValue}}

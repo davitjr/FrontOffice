@@ -70,13 +70,22 @@
 	};
 
 	$scope.getVirtualCardChangeActions = function () {
-		var Data = infoService.GetVirtualCardChangeActions($scope.status);
-		Data.then(function (b) {
-			$scope.statuses = b.data;
+		if ($scope.status == 0) {
+			$scope.statuses = { "RESUME": "Ակտիվացնել" };
+		}
+		else {
+			var Data = infoService.GetVirtualCardChangeActions($scope.status);
+			Data.then(function (b) {
+				$scope.statuses = b.data;
+				if ($scope.statuses != undefined) {
+					$scope.statuses.UNBIND_DEVICE ="UNBIND_DEVICE"
+                }
+			}, function () {
+				alert('Error');
+			});
+        }
 
-		}, function () {
-			alert('Error');
-		});
+
 	};
 
 

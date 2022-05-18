@@ -39,5 +39,9 @@ namespace FrontOffice.Controllers
             return Json(XBService.GetRenewedCardAccountRegWarnings(oldCard), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult CheckCreditLineForRenewedCardAccountRegOrder(xbs.RenewedCardAccountRegOrder order)
+        {
+            return Json(XBService.CheckCreditLineForRenewedCardAccountRegOrder(order), JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -588,5 +588,63 @@ namespace FrontOffice.Controllers
             return parameters;
         }
 
+        public JsonResult PaymentOrderWithStateDutiesMark(ulong transferID)
+        {
+            Dictionary<string, string> obj = new Dictionary<string, string>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            xbs.Transfer transfer = new xbs.Transfer();
+            transfer = XBService.GetTransfer(transferID);
+
+            parameters = PrintPaymentOrderWithStateDutiesMark(transfer);
+
+            obj.Add("result", JsonConvert.SerializeObject(parameters));
+            obj.Add("transfer", JsonConvert.SerializeObject(transfer));
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
+        public Dictionary<string, string> PrintPaymentOrderWithStateDutiesMark(xbs.Transfer transfer)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string guid = Utility.GetSessionId();
+            xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
+            string wherecond = " T.ID = " + transfer.Id.ToString();
+
+            parameters.Add(key: "wherecond", value: wherecond);
+            parameters.Add(key: "archive", value: "false");
+            parameters.Add(key: "checkBox", value: "true");
+            parameters.Add(key: "Code", value: currentUser.filialCode.ToString());
+            parameters.Add(key: "FileName", value: "PaymentOrderWithStateDutiesMark");
+
+            return parameters;
+        }
+        public JsonResult PaymentOrderWithoutStateDutiesMark(ulong transferID)
+        {
+            Dictionary<string, string> obj = new Dictionary<string, string>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            xbs.Transfer transfer = new xbs.Transfer();
+            transfer = XBService.GetTransfer(transferID);
+
+            parameters = PrintPaymentOrderWithoutStateDutiesMark(transfer);
+
+            obj.Add("result", JsonConvert.SerializeObject(parameters));
+            obj.Add("transfer", JsonConvert.SerializeObject(transfer));
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
+        public Dictionary<string, string> PrintPaymentOrderWithoutStateDutiesMark(xbs.Transfer transfer)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string guid = Utility.GetSessionId();
+            xbs.User currentUser = ((xbs.User)Session[guid + "_User"]);
+            string wherecond = "T.ID =" + transfer.Id.ToString();
+
+            parameters.Add(key: "wherecond", value: wherecond);
+            parameters.Add(key: "archive", value: "false");
+            parameters.Add(key: "checkBox", value: "false");
+            parameters.Add(key: "Code", value: currentUser.filialCode.ToString());
+            parameters.Add(key: "FileName", value: "PaymentOrderWithStateDutiesMark");
+
+            return parameters;
+        }
+
+
     }
 }

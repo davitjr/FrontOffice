@@ -159,9 +159,9 @@
   </wsdl:binding>
   <wsdl:service name="SMSMessagingService">
     <wsdl:port name="NetTcpBinding_ISMSMessagingService" binding="tns:NetTcpBinding_ISMSMessagingService">
-      <soap12:address location="net.tcp://ws0004706.acbaca.local/ACBAOperationService/SMSMessagingService.svc/SMSMessagingService" />
+      <soap12:address location="net.tcp://LT0004574.acbaca.local/ACBAOperationService/SMSMessagingService.svc/SMSMessagingService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://ws0004706.acbaca.local/ACBAOperationService/SMSMessagingService.svc/SMSMessagingService</wsa10:Address>
+        <wsa10:Address>net.tcp://LT0004574.acbaca.local/ACBAOperationService/SMSMessagingService.svc/SMSMessagingService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Upn>Davit.Jraghatspanyan@acbaca.local</Upn>
         </Identity>

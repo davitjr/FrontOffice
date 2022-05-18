@@ -1,0 +1,39 @@
+﻿
+
+<style>
+    #HasHB .table > thead > tr > th, #HasHB .table > tbody > tr > th, #HasHB .table > tfoot > tr > th, #HasHB .table > thead > tr > td, #HasHB .table > tbody > tr > td, #HasHB .table > tfoot > tr > td {
+        border-top: 0px;
+    }
+</style>
+
+<div class="container" ng-controller="CustomerCtrl" data-ng-init="hasACBAOnline();hasPhoneBanking();getHBRequests()">
+    <div class=" panel-group col-sm-7" ng-show="HasPB && HasHB">
+        <div class="panel panel-default" style="background-color:#eeeeee">
+            <div class="panel-body table_title_products" style="padding: 0px">
+                <table class="table table-condensed  col-sm-14" style="margin-bottom:0;" id="HasHB">
+                    <thead>
+                        <tr>
+                            <td style="padding-left:50px">Առկա է ACBA-Online`</td>
+                            <td colspan="2">{{ACBAOnline}} &nbsp;<span ng-if="HasHB==1" class="glyphicon glyphicon-minus" aria-hidden="true"></span><span ng-if="HasHB==2" class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+                        </tr>
+                        <tr ng-if="requests.length>0">
+                            <td colspan="3" style="padding-left:50px">Հարցումներ ՝</td>
+                        </tr>
+                        <tr ng-repeat="request in requests">
+                            <td colspan="2" style="padding-left:50px">{{::request.RequestTypeDescription}}<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span></td>
+                            <td ng-if="$root.SessionProperties.SourceType == 2 && $root.SessionProperties.CustomerType==6"><button type="button" ng-controller="PopUpCtrl" ng-click="params={request:requests[$index]};openWindow('/HBActivationOrder/HBActivationOrder','ՀԲ ծառայության ակտիվացում','newHBActivationOrder',callbackhasOnlineBanking)" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-flash"></span>&nbsp;<text ng-if="request.RequestType==1 || request.RequestType==3">Ակտիվացում</text><text ng-if="request.RequestType==4 || request.RequestType==5">Հաստատել&nbsp;&nbsp;&nbsp;</text> </button></td>
+                        </tr>
+                        <tr style="border-top: 1px solid #ddd">
+                            <td style="padding-left:50px">Առկա է PhoneBanking`</td>
+                            <td colspan="2">{{PhoneBanking}} &nbsp;<span ng-if="HasPB==1" class="glyphicon glyphicon-minus" aria-hidden="true"></span><span ng-if="HasPB==2" class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+                        </tr>
+
+
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,115 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    #collectionsDetails {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: 900px;
+    }
+
+
+    #collectionsTable td, th {
+        border: 1px solid #cecece;
+        width: 100px;
+        font-size: 12px;
+    }
+
+    #collectionsTable top th {
+        font-size: 12px;
+    }
+
+    #tbl table .top td {
+        font-size: 12px;
+    }
+
+    .redBackground {
+        background-color: rosybrown;
+    }
+
+    .greenStyle {
+        color: green;
+    }
+</style>
+<div id="cardRegistrationLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="PosLocationCtrl" ng-init="getDocumetTypes()" name="SendPosContractsForm" id="SendPosContractsForm" role="form" style="min-width:650px;" novalidate class="form-horizontal" labels-required>
+    <div id="cardregistration_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="SendPosContractsForm.$setSubmitted();SendPosContractsForm.$valid?SendContracts() : showValidationMessage();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="sendContract h-menu-icon">Ուղարկել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+
+    <div style="max-width:530px">
+        <errors></errors>
+    </div>
+    <div class="col-sm-12">
+        <div class=" form-group">
+            <label class="tab_title col-sm-4" for="contractDate">Պայմանագրերի ա/թ</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input disabled="disabled" type="date" class="form-control tab_title unstyled" id="contractDate" name="contractDate" ng-model="contractDate" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="tab_title col-sm-4" for="contractNumber">Պայմանագրի համար</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="text" name="contractNumber" id="contractNumber" ng-model="contractNumber" class="form-control" required />
+                    <ng-messages class="col-sm-11" ng-if="SendPosContractsForm.$setSubmitted || SendPosContractsForm.contractNumber.$dirty"
+                                 for="SendPosContractsForm.contractNumber.$error">
+                        <ng-message when="required" class="errors">
+                            Պայմանագրի համարը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="tab_title col-sm-4" for="agreementNumber">Համաձայնագրի համար</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="text" name="agreementNumber" id="agreementNumber" ng-model="agreementNumber" class="form-control" ng-required="selectedDocument[2]||selectedDocument[3]" />
+                    <ng-messages class="col-sm-11" ng-if="SendPosContractsForm.$setSubmitted || SendPosContractsForm.agreementNumber.$dirty"
+                                 for="SendPosContractsForm.agreementNumber.$error">
+                        <ng-message when="required" class="errors">
+                            Համաձայնագրի համարը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="tab_title col-sm-4" for="actNumber">Ակտի համար</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <input type="text" name="actNumber" id="actNumber" ng-model="actNumber" class="form-control" ng-required="selectedDocument[5]||selectedDocument[6]" />
+                    <ng-messages class="col-sm-11" ng-if="SendPosContractsForm.$setSubmitted || SendPosContractsForm.actNumber.$dirty"
+                                 for="SendPosContractsForm.actNumber.$error">
+                        <ng-message when="required" class="errors">
+                            Ակտի համարը լրացված չէ
+                        </ng-message>
+                    </ng-messages>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-repeat="(key, value) in documentTypes">
+            <label class="tab_title col-sm-4" for="{{value}}">{{value}}</label>
+            <div class="col-sm-1">
+                <input type="checkbox" id="{{value}}" ng-value="{{key}}" ng-model="selectedDocument[key]" class="form-control" />
+            </div>
+        </div>
+        <div ng-if="posTerminalType!=3" class="form-group">
+            <label class="tab_title col-sm-4" for="forAllPOS">Ներառել բոլոր POS-երը</label>
+            <div class="col-sm-1">
+                <input type="checkbox" name="forAllPOS" id="forAllPOS" ng-model="forAllPOS" ng-click="include(forAllPOS)" class="form-control" />
+            </div>
+        </div>
+    </div>
+</form>

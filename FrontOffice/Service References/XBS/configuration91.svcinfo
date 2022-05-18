@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="6WnanoINiHOwdiuGt4Lp8rp5XXOdt7Lnce6NbEEkIHw=">
+<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="4WbagAZgZ5mTwgJW2beKuN4j8vdTo8lxP0m6FNEETzA=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="netTcpBinding" name="IExternalOperationService1">
       <properties>
@@ -121,10 +121,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="IExternalOperationService" contract="XBS.IXBService" bindingType="netTcpBinding" address="net.tcp://ws0004706.acbaca.local/ExternalBankingService/XBService.svc/ExternalOperationService" bindingConfiguration="IExternalOperationService1">
+    <endpoint name="IExternalOperationService" contract="XBS.IXBService" bindingType="netTcpBinding" address="net.tcp://lt0004574.acbaca.local/ExternalBankingService/XBService.svc/ExternalOperationService" bindingConfiguration="IExternalOperationService1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://ws0004706.acbaca.local/ExternalBankingService/XBService.svc/ExternalOperationService</serializedValue>
+          <serializedValue>net.tcp://lt0004574.acbaca.local/ExternalBankingService/XBService.svc/ExternalOperationService</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

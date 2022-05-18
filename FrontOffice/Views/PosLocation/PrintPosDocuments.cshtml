@@ -87,7 +87,7 @@
         <label class="tab_title col-sm-4" for="actType">Ակտի տեսակ</label>
         <div class="col-sm-6">
             <div class="row">
-                <select ng-model="actType" ng-change="changeActType()" name="actType" id="actType" class="form-control"> 
+                <select ng-model="actType" ng-change="changeActType()" name="actType" id="actType" class="form-control">
                     <option value="" style="margin-left:25px" selected>Ընտրեք</option>
                     <option ng-repeat="(key, value)  in actTypes" ng-value="{{key}}">{{value}}</option>
                 </select>
@@ -99,6 +99,14 @@
         <div class="col-sm-6">
             <div class="row">
                 <input type="text" name="actNumber" id="actNumber" ng-model="actNumber" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="tab_title col-sm-4" for="contractNumber">Տպել բոլոր POS-երի համար</label>
+        <div class="col-sm-6">
+            <div class="row">
+                <input type="checkbox" name="forAllPOS" id="forAllPOS" ng-model="forAllPOS" class="form-control" />
             </div>
         </div>
     </div>

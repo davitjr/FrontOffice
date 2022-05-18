@@ -1,0 +1,128 @@
+﻿<form ng-show="false">
+    <div class="menu-bar dialog-menu light-green">
+    </div>
+    <div>
+    </div>
+</form>
+<div ng-controller="CustomerCtrl" id="customerDetailsNew" data-ng-init="getCustomer(customerNumber)" style="max-width:700px;min-width:600px">
+    <div id="customerData" class="customer-data-sidebar custom-scroll sidebar-item modal-header" style="padding:10px 0 0 0;">
+        <div class="customer-main-info" style="padding-left:8px;padding-right:8px">
+            <div class="customer-informative-notifications">
+                <div id="customerUpdate" ng-if="customer.UpdateExpired==1" class="customerInfo customer-data-notification">
+                    <i class="fa fa-exclamation-triangle" style="margin-right: 5px; font-size: 30px;"></i>
+                    <div class="customer-data-notification-text">Տվյալները չեն թարմացվել 1 տարվա ընթացքում</div>
+                </div>
+                <div ng-if="customer.IsBirthdayToday==1" class="customerInfo customer-data-notification">
+                    <div class="customer-birthday-icon"></div>
+                    <div class="customer-data-notification-text" style="height: 30px; vertical-align: top; line-height: 30px;">Այսoր հաճախորդի ծննդյան օրն է</div>
+                </div>
+                <div>
+
+                    <div style="display: inline-block;" >
+                        <div ng-if="customer.RiskQuality != null" class="customer-high-risk"></div>
+                        <div ng-if="customerPhoto" class="customer-image" ng-mouseover="showImageDetails=true" ng-init="getCustomerPhoto(customerNumber)"
+                             ng-mouseleave="showImageDetails=false" style="background-image: url({{customerPhoto=='/Content/newTheme/Images/bluemanmxxl.png'?'/Content/newTheme/Images/bluemanmxxl.png':customerPhoto}});background-size:cover">
+                            <div class="btn-group" ng-show="showImageDetails" style="margin-bottom: -160px;" flow-init="{singleFile:true}"
+                                 flow-files-submitted="$flow.upload()"
+                                 flow-files-added="convertfile($files, $event, $flow)"
+                                 flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+                                 flow-file-success="$file.msg = $message"
+                                 flow-name="obj.flow">
+                                <button ng-if="hasPicture==true" type="button" ng-click="getCustomerOnePhoto(photo.Id)" class="btn  btn-primary btn-xs"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></button>
+                            </div>
+                            <div class="btn-group" ng-show="!showImageDetails" style="margin-bottom: -160px;">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: inline-block; vertical-align: top;width: calc(100% - 110px);">
+                        <div ng-show="customer.CustomerType==6" style="font-weight:900;font-size: 14px; vertical-align: top; margin-bottom: 5px;">{{customer.FirstName + ' ' + customer.LastName + ' ' + customer.MiddleName}}</div>
+                        <div ng-show="customer.CustomerType!=6" style="font-weight:900;font-size: 14px; vertical-align: top; margin-bottom: 5px;">{{customer.OrganisationName}}</div>
+                        <div class="customerInfo" style="margin-bottom: 5px;">Համար` {{customer.CustomerNumber}}</div>
+                        <div class="customerInfo tipB" data-original-title="{{customer.FilialCode}}" style="margin-bottom: 5px;">{{customer.FilialName}}</div>
+                        <div ng-show="$root.SessionProperties.SourceType != 2" class="customerInfo tipB" data-original-title="Բանկային գաղտնաբառ" style="margin-bottom: 5px;">Գաղտնաբառ՝ {{customer.SecurityCode != "" ? customer.SecurityCode : "Առկա չէ" }}</div>
+                        <div class="customerInfo tipB" data-original-title="Հաճախորդի տվյալների թարմացման ա/թ" style="margin-bottom: 5px;">Թարմացման ա/թ՝ {{customer.LastDate | mydate | date: 'dd/MM/yyyy'}}</div>
+                        <div ng-show="customer.VipType" class="customer-status-lable">{{customer.VipType}}</div>
+                        <div ng-if="customer.VipTypeId == 1" class="customer-status-icon-vip"></div>
+                        <div ng-if="customer.VipTypeId == 7" class="customer-status-icon-classic"></div>
+                        <div ng-if="customer.VipTypeId == 8" class="customer-status-icon-avangard"></div>
+                        <div ng-if="customer.VipTypeId == 9" class="customer-status-icon-premium"></div>
+
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <table class="col-sm-12" border="1" style="margin-bottom:20px">
+                <tr>
+                    <td class="customerInfo customerInfoHeader col-sm-6" style="background-color: #CFDAD0;font-size:14px;text-align:center;color: #245775">ԱՆՁՆԱԿԱՆ ՏՎՅԱԼՆԵՐ</td>
+                    <td class="customerInfo customerInfoHeader col-sm-6" style="background-color: #CFDAD0;font-size:14px;text-align:center;color: #245775">ԿՈՆՏԱԿՏՆԵՐ</td>
+                </tr>
+                <tr>
+                    <td class="col-sm-6">
+                        <div ng-if="customer.CustomerType==6" class="customerInfo"> <span style="color: #245775;"> Ծննդյան ա/թ`</span> <span style="color: #670505;"> {{customer.BirthDate + ' (' + customer.Age + ')'}}</span><br /></div>
+                        <div ng-if="customer.CustomerType==6 && customer.DocumentNumber!=null" class="customerInfo"><span style="color: #245775;">Փաստաթուղթ`</span> <span style="color: #670505;">{{customer.DocumentNumber + ',' + customer.DocumentGivenBy + ',' + customer.DocumentGivenDate  }}</span><br /></div>
+                        <div ng-if="customer.CustomerType==6 && customer.DocumentNumber!=null && customer.PassportNumber!=null && customer.DocumentNumber!=customer.PassportNumber" class="customerInfo"><span style="color: #245775;">Անձնագիր`</span> <span style="color: #670505;">{{customer.PassportNumber + ',' + customer.PassportGivenBy + ',' + customer.PassportGivenDate  }}</span><br /></div>
+                        <div ng-if="customer.CustomerType==6 && customer.SocCardNumber!=null && customer.SocCardNumber!=''" class="customerInfo"><span style="color: #245775;">ՀԾՀ`</span> <span style="color: #670505;">{{customer.SocCardNumber}}</span><br /></div>
+                        <div ng-if="customer.CustomerType==6 && customer.NoSocCardNumber!=null && customer.NoSocCardNumber!=''" class="customerInfo"><span style="color: #245775;">ՀԾՀ-ից հրաժարվելու տեղեկանք`</span> <span style="color: #670505;">{{customer.NoSocCardNumber}}</span><br /></div>
+                        <div ng-if="customer.CustomerType==6 && customer.TaxCode!=null" class="customerInfo"><span style="color: #245775;">ՀՎՀՀ`</span> <span style="color: #670505;">{{customer.TaxCode}}</span></div>
+                        <div ng-if="customer.CustomerType==6 && customer.Gender" class="customerInfo"> <span style="color: #245775;">{{ customer.Gender == 1 ? "Արական" : "Իգական" }}</span><br /></div>
+                        <div ng-if="customer.CustomerType==6 && customer.MaritalStatusDescription" class="customerInfo"> <span style="color: #245775;">{{customer.MaritalStatusDescription}}</span><br /></div>
+                        <div ng-if="customer.OrganisationDirector!=null && customer.CustomerType!=6" class="customerInfo tipB" data-original-title="{{customer.OrganisationDirector.Key}}"><span style="color: #245775;">Տնօրեն`</span> <span style="color: #670505;">{{customer.OrganisationDirector.Value}}</span><br /></div>
+                        <div ng-if="customer.TaxCode!=null && customer.CustomerType!=6" class="customerInfo"><span style="color: #245775;">ՀՎՀՀ`</span> <span style="color: #670505;">{{customer.TaxCode}}</span></div>
+                    </td>
+                    <td class="col-sm-6">
+                        <div ng-repeat="(key, value) in customer.AddressList" class="customerInfo table-row">
+
+                            <i ng-if="value.Key==1 " class="fa fa-home table-cell tipB" style="margin-right:5px" data-original-title="Բնակության հասցե"></i>
+                            <i ng-if="value.Key==2 " class="fa fa-pencil table-cell tipB" style="margin-right:5px" data-original-title="Գրանցման հասցե"></i>
+                            <i ng-if="value.Key==3 " class="fa fa-briefcase table-cell tipB" style="margin-right:5px" data-original-title="Գործունեության հասցե"></i>
+                            <div class="table-cell" style="color: #670505;">{{::value.Value}}</div>
+
+                        </div>
+                        <div ng-repeat="phone in customer.PhoneList" class="customerInfo table-row">
+                            <i ng-if="phone.phoneType.key==1" class="fa fa-mobile table-cell tipB" style="margin-right:5px" data-original-title="Բջջային հեռախոսահամր"></i>
+                            <i ng-if="phone.phoneType.key!=1" class="fa fa-phone table-cell tipB" style="margin-right:5px" data-original-title="Քաղաքային հեռախոսահամր"></i>
+                            <div class="table-cell">
+                                <a href="tel:{{::phone.phone.countryCode}}{{::phone.phone.areaCode}}{{::phone.phone.phoneNumber}}">{{::phone.phone.countryCode}} {{::phone.phone.areaCode}} {{::phone.phone.phoneNumber}}</a>
+                            </div>
+                        </div>
+                        <div ng-repeat="email in customer.EmailList" class="customerInfo table-row">
+                            <i class="fa fa-envelope-o table-cell tipB" style="margin-right:5px" data-original-title="Էլեկտրոնային հասցե"></i>
+                            <div class="table-cell"><a href="mailto:{{::email}}">{{::email}}</a></div>
+                        </div>
+
+
+                    </td>
+                </tr>
+        
+
+            </table>
+      
+            <div class="customer-documents">
+                <div class="customerInfo customerInfoHeader">
+                    <span style="color: #670505;">Կցված փաստաթղթեր</span>
+                    <script type="text/javascript">
+                        $('[data-toggle="tooltip"]').tooltip({
+                            placement: 'left'
+                        });
+                    </script>
+                    <button type="button" ng-click="getAttachmentDocumentList(customerNumber,true,true);">
+                        <span class="fa fa-print" data-toggle="tooltip" data-original-title="Կցված փաստաթղթեր"></span>
+                    </button>
+                </div>
+
+            </div>
+            <div>
+                <div class="customerInfo"> <span style="color: #245775;">Խորհրդատու`</span> <span style="color:blue;">{{customer.ServingEmployee.servingEmployee.firstName}}  {{customer.ServingEmployee.servingEmployee.lastName}} ({{customer.ServingEmployee.servingEmployee.setNumber}})</span> </div>
+            </div>
+           
+            <br />
+        </div>
+
+
+
+       
+    </div>
+    
+</div>

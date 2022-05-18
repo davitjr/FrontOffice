@@ -90,8 +90,21 @@
     $scope.getCashInPaymentOrder = function (isCopy) {
         isCopy = false;
         showloading();
+        //var Data = depositCasePenaltyMatureOrderService.getCashInPaymentOrder($scope.order, isCopy);
+        //ShowPDF(Data);
+
+
         var Data = depositCasePenaltyMatureOrderService.getCashInPaymentOrder($scope.order, isCopy);
-        ShowPDF(Data);
+        Data.then(function (response) {
+            var requestObj = { Parameters: response.data, ReportName: 70, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+        }, function () {
+            alert('Error getCashInPaymentOrder');
+        });
+
+
     }
 
 }]);

@@ -1,0 +1,290 @@
+﻿@{
+    Layout = null;
+}
+
+<div id="SecuritiesMarketTradingOrderLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<form ng-controller="SecuritiesMarketTradingOrderCtrl" name="SaveOrderForm" id="SaveOrderForm" style="min-width:952px;" role="form" ng-init="InitSecuritiesMarketTradingOrder(securitiesTrading)" novalidate class="form-horizontal" labels-required>
+    <div id="newMature_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+
+            <li class="root-menu-item-4 " ng-click="SaveOrderForm.$setSubmitted(); SaveOrderForm.$valid &&  SaveAndApproveSecuritiesMarketTradingOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('oneSecuritiesMarketTradingOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+
+        <div class="col-sm-12">
+            <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+                <div style="max-width:630px">
+                    <errors></errors>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="RegistrationDate">Մուտքագրման ա/թ</label>
+                    <div class="col-sm-6 row">
+                        <input type="date" class="tab_title form-control" id="RegistrationDate" name="RegistrationDate" data-ng-model="saveOrder.RegistrationDate" style="text-align:left; margin-left:50px; width:65%" required disabled="disabled" />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.RegistrationDate.$dirty"
+                                         for="SaveOrderForm.RegistrationDate.$error">
+                                <ng-message when="required" class="errors">
+                                    Մուտքագրման ա/թ դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="BrokerageCode">Հաճախորդի բորսայական կոդ</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" class="tab_title form-control" id="BrokerageCode" name="BrokerageCode" data-ng-model="saveOrder.BrokerageCode" style="text-align:left; margin-left:50px; width:65%" required disabled="disabled" />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.BrokerageCode.$dirty"
+                                         for="SaveOrderForm.BrokerageCode.$error">
+                                <ng-message when="required" class="errors">
+                                    Հաճախորդի բորսայական կոդ դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="FullName">Հաճախորդի ԱԱՀ կամ անվանումը</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" class="tab_title form-control" id="FullName" name="FullName" data-ng-model="saveOrder.FullName" style="text-align:left; margin-left:50px; width:65%" required disabled="disabled" />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.FullName.$dirty"
+                                         for="SaveOrderForm.FullName.$error">
+                                <ng-message when="required" class="errors">
+                                    Հաճախորդի ԱԱՀ կամ անվանումը դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="ConfirmDate">Գործարքի կատարման ամսաթիվ և ժամ</label>
+                    <div class="col-sm-6 row">
+                        <input type="datetime-local" class="tab_title form-control" id="ConfirmDate" name="ConfirmDate" data-ng-model="saveOrder.ConfirmDate" style="text-align:left; margin-left:50px; width:65%" required />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.ConfirmDate.$dirty"
+                                         for="SaveOrderForm.ConfirmDate.$error">
+                                <ng-message when="required" class="errors">
+                                    Գործարքի կատարման ամսաթիվ և ժամ դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="ReferenceNumber">Հանձնարարականի համար</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" class="tab_title form-control" id="ReferenceNumber" name="ReferenceNumber" data-ng-model="saveOrder.ReferenceNumber" style="text-align:left; margin-left:50px; width:65%" required disabled="disabled" />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.ReferenceNumber.$dirty"
+                                         for="SaveOrderForm.ReferenceNumber.$error">
+                                <ng-message when="required" class="errors">
+                                    Հանձնարարականի համար դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="ISIN">ԱՄՏԾ</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" class="tab_title form-control" id="ISIN" name="ISIN" data-ng-model="saveOrder.ISIN" style="text-align:left; margin-left:50px; width:65%" required disabled="disabled" />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.ISIN.$dirty"
+                                         for="SaveOrderForm.ISIN.$error">
+                                <ng-message when="required" class="errors">
+                                    Արժեթղթի ծածկագիրը(ISIN) դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="TypeDescription">Գործարքի տեսակ</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" class="tab_title form-control" id="TypeDescription" name="TypeDescription" data-ng-model="saveOrder.TypeDescription" style="text-align:left; margin-left:50px; width:65%" required disabled="disabled" />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.TypeDescription.$dirty"
+                                         for="SaveOrderForm.Type.$error">
+                                <ng-message when="required" class="errors">
+                                    Գործարքի տեսակ դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="TradingOrderTypeDescription">Պատվերի տեսակ</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" class="tab_title form-control" id="TradingOrderTypeDescription" name="TradingOrderTypeDescription" data-ng-model="saveOrder.TradingOrderTypeDescription" style="text-align:left; margin-left:50px; width:65%" required disabled="disabled" />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.TradingOrderTypeDescription.$dirty"
+                                         for="SaveOrderForm.TradingOrderTypeDescription.$error">
+                                <ng-message when="required" class="errors">
+                                    Պատվերի տեսակ դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="ActuallyQuantity">Կատարված քանակ</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' class="tab_title form-control" id="ActuallyQuantity" name="ActuallyQuantity" data-ng-model="saveOrder.ActuallyQuantity" ng-change="updateTotalVolume(); updateResidualQuantity()" style="text-align:left; margin-left:50px; width:65%" required />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.ActuallyQuantity.$dirty"
+                                         for="SaveOrderForm.ActuallyQuantity.$error">
+                                <ng-message when="required" class="errors">
+                                    Կատարված քանակ դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="UnitAmount">Միավոր գին</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' class="tab_title form-control" id="UnitAmount" name="UnitAmount" data-ng-model="saveOrder.UnitAmount" ng-change="updateTotalVolume()" style="text-align:left; margin-left:50px; width:65%" required />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.UnitAmount.$dirty"
+                                         for="SaveOrderForm.UnitAmount.$error">
+                                <ng-message when="required" class="errors">
+                                    Միավոր գին դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="TotalVolume">Ընդհանուր ծավալ</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" class="tab_title form-control" id="TotalVolume" name="TotalVolume" data-ng-model="saveOrder.TotalVolume" style="text-align:left; margin-left:50px; width:65%" required disabled="disabled" />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.TotalVolume.$dirty"
+                                         for="SaveOrderForm.TotalVolume.$error">
+                                <ng-message when="required" class="errors">
+                                    Ընդհանուր ծավալ դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="TransactionPlace">Գործարքի կնքման վայր</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" class="tab_title form-control" id="TransactionPlace" name="TransactionPlace" data-ng-model="saveOrder.TransactionPlace" style="text-align:left; margin-left:50px; width:65%" required disabled="disabled" />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.TransactionPlace.$dirty"
+                                         for="SaveOrderForm.TransactionPlace.$error">
+                                <ng-message when="required" class="errors">
+                                    Գործարքի կնքման վայր դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="OrderDealOtherSide">Գործարքի մյուս կողմ</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" class="tab_title form-control" id="OrderDealOtherSide" name="OrderDealOtherSide" data-ng-model="saveOrder.OrderDealOtherSide" style="text-align:left; margin-left:50px; width:65%" required />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.OrderDealOtherSide.$dirty"
+                                         for="SaveOrderForm.OrderDealOtherSide.$error">
+                                <ng-message when="required" class="errors">
+                                    Գործարքի մյուս կողմ դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="RegistrationDate">Գործարք կատարող աշխատակից</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" class="tab_title form-control" id="ConfirmOrderUserName" name="ConfirmOrderUserName" data-ng-model="saveOrder.ConfirmOrderUserName" style="text-align:left; margin-left:50px; width:65%" required />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.ConfirmOrderUserName.$dirty"
+                                         for="SaveOrderForm.ConfirmOrderUserName.$error">
+                                <ng-message when="required" class="errors">
+                                    Գործարք կատարող աշխատակից դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="ResidualQuantity">Մնացորդային քանակ</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode==46' class="tab_title form-control" id="ResidualQuantity" name="ResidualQuantity" data-ng-model="saveOrder.ResidualQuantity" ng-change="updateTotalVolume()" style="text-align:left; margin-left:50px; width:65%" required />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="SaveOrderForm.$submitted || SaveOrderForm.ResidualQuantity.$dirty"
+                                         for="SaveOrderForm.ResidualQuantity.$error">
+                                <ng-message when="required" class="errors">
+                                    Մնացորդային քանակ դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+                <br /><br /><br />
+            </div>
+        </div>
+    </div>
+</form>
+

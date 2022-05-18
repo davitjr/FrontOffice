@@ -1,0 +1,94 @@
+﻿<style>
+
+.tContainer {
+    width: 65%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    height: 8rem;
+    transform: translate(0px,-80px);
+    margin-left: 2%;
+}
+
+.tContainer > div {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+}
+/* .tContainer> div> input{
+    box-sizing: border-box;
+    border: 1px solid lightgrey;
+    height: 35px;
+    padding-left: 10px;  
+} */     
+label {
+    color: #245775;
+    font-weight: normal;
+}
+</style>
+
+
+<form name="LeasingReportsForm" ng-controller="LeasingOutPutReportsCtrl" id="AllReports" novalidate>
+    <div class="product-details bhoechie-tab-content" style="min-width:730px;margin-left:10px;">
+        <div class="row">
+            <div class="col-sm-12 ">
+
+                <div class="col-sm-6  ">
+                    <div class="product-detail-cell product-detail-lable">
+                        Տեսակ
+                    </div>
+                    <div data-ng-init="getPrintReportTypes()">
+                        <loading-control scopevariable="printReportTypes"></loading-control>
+                        <select data-ng-model="searchParams.ReportType" name="ReportType" ng-change="showSearchParamByReportType(searchParams.ReportType)" id="ReportType" class="form-control"
+                                data-ng-options="k as v for (k,v) in printReportTypes">
+                            <option selected="selected" value="" hidden>Ընտրեք տեսակը...</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+
+                    <br />
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Կատարել <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" style="left:inherit!important">
+                        <li><a href="" ng-show="showPDF" ng-click="printReport(1)">PDF</a></li>
+                        <li><a href="" ng-click="printReport(2)">Excel</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 15px;">
+            <div class="col-sm-12 ">
+                <div class="col-sm-3  " ng-if="showStartDate">
+                    <div class="product-detail-cell product-detail-lable">
+                        Սկիզբ
+                    </div>
+                    <input type="date" ng-model="searchParams.StartDate" name="DateFrom" class="form-control">
+
+                </div>
+                <div class="col-sm-3  " ng-if="showEndDate">
+                    <div class="product-detail-cell product-detail-lable">
+                        Վերջ
+                    </div>
+                    <input type="date" ng-model="searchParams.EndDate" name="DateTo" class="form-control">
+                </div>
+
+                <div class="col-sm-3  " ng-if="showDate">
+                    <div class="product-detail-cell product-detail-lable">
+                        Ամսաթիվ
+                    </div>
+                    <input type="date" ng-model="searchParams.Date" name="DateTo" class="form-control">
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</form>
+
+

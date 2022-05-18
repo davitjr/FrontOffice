@@ -1,0 +1,159 @@
+﻿@{
+    Layout = null;
+}
+
+
+<div id="ConfirmOrRejectSecuritiesTradingOrderCancellationOrder" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<div id="ConfirmOrRejectSecuritiesTradingOrder" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+
+<form style="width:850px" ng-controller="SecuritiesTradingCtrl" data-ng-init="GetSentSecuritiesTradingOrder(type, orderId)">
+    <ul id="menu" class="dialog-menu">
+        <li class="root-menu-item-4" ng-if="SecuritiesOrderDetails.Type != 265 && SecuritiesOrderDetails.Quality == 3 && checkAccessToSaveOrRejectSecuritiesTranding == 1" ng-click="ConfirmSecuritiesTradingOrder();">
+            <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ընդունել</span>
+        </li>
+        <li class="root-menu-item-4" ng-if="SecuritiesOrderDetails.Type != 265 && SecuritiesOrderDetails.Quality == 3 && checkAccessToSaveOrRejectSecuritiesTranding == 1">
+            <a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl"
+               ng-click="params={orderId:SecuritiesOrderDetails.Id}; openWindow('/SecuritiesTrading/RejectSecuritiesTradingOrderView','Մերժել','oneRejectSecuritiesTradingOrder')">Մերժել</a>
+        </li>
+
+        <li class="root-menu-item-4" ng-if="SecuritiesOrderDetails.Type == 265 && SecuritiesOrderDetails.Quality == 3 && checkAccessToSaveOrRejectSecuritiesTranding == 1" ng-click="ConfirmSecuritiesTradingOrderCancellationOrder();">
+            <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Ընդունել</span>
+        </li>
+        <li class="root-menu-item-5" ng-if="SecuritiesOrderDetails.Type == 265 && SecuritiesOrderDetails.Quality == 3 && checkAccessToSaveOrRejectSecuritiesTranding == 1">
+            <a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl"
+               ng-click="params={orderId:SecuritiesOrderDetails.Id, securitiesTradingOrderId: SecuritiesOrderDetails.SecuritiesTradingOrderId, customerNumber: SecuritiesOrderDetails.CustomerNumber};
+               openWindow('/SecuritiesTrading/RejectSecuritiesTradingOrderCancellationOrderView','Մերժել','oneRejectSecuritiesTradingOrderCancellationOrder')">Մերժել</a>
+        </li>
+
+        <li class="root-menu-item-5 " onclick="CloseBPDialog('oneSecuritieTradingDetails')">
+            <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+        </li>
+    </ul>
+    <div ng-show="SecuritiesOrderDetails" class="product-details bhoechie-tab-content" style="min-width:800px;padding-left:10px">
+        <div style="max-width:630px">
+            <errors></errors>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հայտի համար</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.Id}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="SecuritiesOrderDetails.Type == 265">
+            <div class="product-detail-cell product-detail-lable">Չեղարկվող գործարքի կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.SecuritiesTradingOrderId}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.RegistrationDateString}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="SecuritiesOrderDetails.SecurityType != 1 &&  SecuritiesOrderDetails.SecuritySubType != 2 && SecuritiesOrderDetails.Volume != 0">
+            <div class="product-detail-cell product-detail-lable">Արժեթղթերի ծավալ</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.Volume}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հանձնարարականի համար</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.ReferenceNumber}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Արժեթղթի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.SecurityTypeDescription}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">ԱՄՏԾ</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.ISIN}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Բանկային հաշվեհամար</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.ReceiverAccount.AccountNumber}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Շուկայական արժեք</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.MarketPrice}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործարքի տեսակի</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.TradingOrderTypeDescription}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաճախորդի կողմից մուտքագրված արժեթղթի գին լիմիտային / ստոպ լիմիտային գործարքի դեպքում</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.LimitPrice}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Հաճախորդի կողմից մուտքագրված ստոպ գին ՍՏՈՊ / ստոպ լիմիտային գործարքի դեպքում</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.StopPrice}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Շուկայական արժեք</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.MarketPrice}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Պատվերի տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.ExpirationTypeDescription}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Գործարքի կնքման վայր</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.TradingPlatform}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">SecuritiesMarketTradingOrder Տեսակի հայտերի քանակ (quantity) դաշտի համագումարը</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.MarketTradedQuantity}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="SecuritiesOrderDetails.SecurityType != 0 ||  SecuritiesOrderDetails.SecurityType != 1">
+            <div class="product-detail-cell product-detail-lable">Եկամտաբերություն</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.Yield}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="SecuritiesOrderDetails.SecurityType != 0 ||  SecuritiesOrderDetails.SecurityType != 1">
+            <div class="product-detail-cell product-detail-lable">Ստոպ եկամտաբերություն</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.StopYield}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Թողարկողի անվանում</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.IssuerName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Փոխանցման միջնորդավճարի հաշվեհամար</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.FeeAccount.AccountNumber}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Բրոքերային կոդ</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.BrokerageCode}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Բորսայական հապավում</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.Ticker}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">Մուտքագրման ա/թ</div>
+            <div class="product-detail-cell product-detail-value">{{SecuritiesOrderDetails.Type}}</div>
+        </div>
+
+    </div>
+    <div style="clear:both;color:#6F6A6A;font-weight:bold;margin-left:10px">Կատարվել է {{selectedSourceDescription}}-ի միջոցով</div>
+</form>

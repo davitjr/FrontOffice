@@ -76,5 +76,15 @@ namespace FrontOffice.Controllers
             string authorisedCustomerSessionId = System.Web.HttpContext.Current.Session[guid + "_AuthorisedCustomerSessionId"].ToString();
             return Json(new { redirectUrl = ConfigurationManager.AppSettings["LoanManagementSystemCollateralURL"] + ConfigurationManager.AppSettings["LoanManagementSystemCollateralSharePoint"], authorizedUserSessionToken = authorizedUserSessionToken, customerNumber = customerNumber, authorisedCustomerSessionId = authorisedCustomerSessionId });
         }
+
+        [HttpPost]
+        public JsonResult RedirectLoanManagementSystemLeasingCollateral()
+        {
+            string customerNumber = XBService.GetAuthorizedCustomerNumber().ToString();
+            string guid = Utility.GetSessionId();
+            string authorizedUserSessionToken = System.Web.HttpContext.Current.Session[guid + "_authorizedUserSessionToken"].ToString();
+            string authorisedCustomerSessionId = System.Web.HttpContext.Current.Session[guid + "_AuthorisedCustomerSessionId"].ToString();
+            return Json(new { redirectUrl = ConfigurationManager.AppSettings["LoanManagementSystemCollateralURL"] + ConfigurationManager.AppSettings["LoanManagementSystemLeasingCollateralSharePoint"], authorizedUserSessionToken = authorizedUserSessionToken, customerNumber = customerNumber, authorisedCustomerSessionId = authorisedCustomerSessionId});
+        }
     }
 }

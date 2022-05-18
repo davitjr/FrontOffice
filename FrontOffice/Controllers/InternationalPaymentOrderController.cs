@@ -80,6 +80,10 @@ namespace FrontOffice.Controllers
 
             string guid = Utility.GetSessionId();
             int filailCode = Convert.ToInt32(((XBS.User)Session[guid + "_User"]).filialCode.ToString());
+            if (paymentOrder.TransactionTypeByAML != null && !String.IsNullOrEmpty(paymentOrder.TransactionTypeByAML.AdditionalDescription))
+            {
+                paymentOrder.DescriptionForPayment += ", " + paymentOrder.TransactionTypeByAML.AdditionalDescription;
+            }
 
             parameters.Add(key: "Number", value: paymentOrder.OrderNumber);
 
@@ -137,6 +141,11 @@ namespace FrontOffice.Controllers
                 {
                     descriptionForPaymentRUR = descriptionForPaymentRUR + " " + paymentOrder.DescriptionForPaymentRUR6 + " RUB";
                 }
+                if (paymentOrder.TransactionTypeByAML != null && !String.IsNullOrEmpty(paymentOrder.TransactionTypeByAML.AdditionalDescription))
+                {
+                    descriptionForPaymentRUR += ", " + paymentOrder.TransactionTypeByAML.AdditionalDescription;
+                }
+
                 parameters.Add(key: "PaymentDescriptionRUROther", value: descriptionForPaymentRUR);
 
             }

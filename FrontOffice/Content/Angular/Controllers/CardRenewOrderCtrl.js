@@ -205,19 +205,37 @@
         });
     };
 
-    $scope.getCardSystemTypes = function () {
+    $scope.getCardSystemTypes = function (cardSystem) {
         var Data = infoService.GetOrderableCardSystemTypes();
         Data.then(function (ref) {
-            $scope.cardSystemTypes = ref.data["4"];
+            if (cardSystem == 9)
+                $scope.cardSystemTypes = ref.data["4"];
+            else
+                $scope.cardSystemTypes = ref.data[cardSystem];
         }, function () {
             alert('Error CardSystemTypes');
         });
     };
 
-    $scope.getCardTypes = function (cardSystem) {
-        var Data = infoService.getCardTypes(cardSystem);
+    $scope.getCardTypes = function (cardSystem, type, cardType) {
+        let Data = infoService.getCardTypes(cardSystem == 9 ? 4 : cardSystem);
         Data.then(function (ref) {
             $scope.cardTypes = ref.data;
+            let check = [];
+            if (cardSystem == 9) {
+                check = [36, 46]; //Arca Arca քարտերի համար այլ տեսակով վերաթողարկում հասանելի է միայն VISA Classic և Barerar
+                angular.forEach($scope.cardTypes, function (value, key) {
+                    if (check.indexOf(parseInt(key)) < 0) {
+                        delete $scope.cardTypes[key];
+                    }
+                });
+            }
+            else {
+                angular.forEach($scope.cardTypes, function (value, key) {
+                    if (key == type || value.toUpperCase() == cardType)
+                        delete $scope.cardTypes[key];
+                });
+            }
         }, function () {
             alert('Error CardTypes');
         });
@@ -227,5 +245,14 @@
         if ($scope.cardRenewOrder.CardPINCodeReceivingType == 1 || $scope.cardRenewOrder.cardApplicationAcceptanceType == 2) {
             $scope.cardRenewOrder.CardReceivingType = "2";
         }
+    };
+
+    $scope.getLinkedCardWarnings = function (cardNumber, renewWithCardNewType) {
+        var Data = infoService.getLinkedCardWarnings(cardNumber, renewWithCardNewType);
+        Data.then(function (acc) {
+            $scope.warnings = acc.data;
+        }, function () {
+            alert('Warnings Error');
+        });
     };
 }]);

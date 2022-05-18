@@ -7,6 +7,7 @@ using FrontOffice.Service;
 using xbs = FrontOffice.XBS;
 using System.Web.SessionState;
 using System.Web.UI;
+using FrontOffice.Models;
 
 namespace FrontOffice.Controllers
 {
@@ -38,6 +39,11 @@ namespace FrontOffice.Controllers
             return PartialView("PrintPosDocuments");
         }
 
+        public ActionResult SendPosDocuments()
+        {
+            return PartialView("SendPosDocuments");
+        }
+
         public ActionResult PosRates()
         {
             return PartialView("PosRates");
@@ -48,6 +54,24 @@ namespace FrontOffice.Controllers
             return PartialView("PosCashbackRates");
         }
 
+        //Davit Pos
+        public ActionResult NewPosApplication()
+        {
+            return PartialView("NewPosApplication");
+        }
+        //Davit Pos
+        public ActionResult NewPosApplicationOrderDetails()
+        {
+            return PartialView("NewPosApplicationOrderDetails");
+        }
+
+        //Davit Pos
+        public ActionResult NewPosTerminalApplication()
+        {
+            return PartialView("NewPosTerminalApplication");
+        }
+
+        
         public JsonResult GetPosRates(int terminalId)
         {
             return Json(XBService.GetPosRates(terminalId), JsonRequestBehavior.AllowGet);
@@ -147,7 +171,7 @@ namespace FrontOffice.Controllers
 
             ContractService.TradeServiceCentersAcceptanceDischargeAct(parameters);
         }
-                
+
         public void PrintPosActs(int id, int actType, string merchantId)
         {
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
@@ -162,5 +186,84 @@ namespace FrontOffice.Controllers
 
             ContractService.PosContract(parameters);
         }
+
+        public ActionResult SendPosContracts(int id, int[] attachmentTypes, string merchantID, string code, string contractNumber, string agreementNumber, string actNumber, bool includeAll)
+        {
+            string operDay = XBService.GetCurrentOperDay().ToString("dd/MMM/yy");
+            ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("merchantID", merchantID);
+            parameters.Add("code", code);
+            parameters.Add("contractNumber", contractNumber);
+            parameters.Add("agreementNumber", agreementNumber);
+            parameters.Add("actNumber", actNumber);
+            parameters.Add("actDate", operDay);
+            parameters.Add("contractDate", operDay);
+            parameters.Add("agreementDate", operDay);
+
+            FrontOffice.eSignServiceReference.ActionResult result = eSignService.SendDigitalContract((ulong)id, customerNumber, attachmentTypes, parameters, XBService.GetCurrentOperDay(), includeAll);
+            return Json(result);
+        }
+
+        public ActionResult GetSentDigitalContracts()
+        {
+            ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
+            List<FrontOffice.eSignServiceReference.SentDigitalContract> sentDigitalContracts = eSignService.GetSentDigitalContracts(customerNumber);
+            return Json(sentDigitalContracts);
+        }
+
+        public ActionResult GetSignedDigitalContracts()
+        {
+            ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
+            List<FrontOffice.eSignServiceReference.SignedDigitalContract> signedDigitalContracts = eSignService.GetSignedDigitalContracts(customerNumber);
+            return Json(signedDigitalContracts);
+        }
+
+        public ActionResult CancelDigitalContract(Guid digitalContractId)
+        {
+            FrontOffice.eSignServiceReference.ActionResult result = eSignService.CancelDigitalContract(digitalContractId);
+            return Json(result);
+        }
+
+        public ActionResult SignedInPaperDigitalContract(Guid digitalContractId)
+        {
+            FrontOffice.eSignServiceReference.ActionResult result = eSignService.SignedInPaperDigitalContract(digitalContractId);
+            return Json(result);
+        }
+
+        public void GetSignedDocument(string fileId, string fileName)
+        {
+
+            byte[] result = eSignService.GetSignedDocument(fileId, fileName);
+            ReportService.ShowDocument(result, ExportFormat.PDF, fileName);
+        }
+
+        //Davit Pos
+        public ActionResult NewPosLocationOrder(XBS.NewPosLocationOrder newPosLocationModel)
+        {
+            newPosLocationModel.Quality = xbs.OrderQuality.Draft;
+            XBS.ActionResult result = XBService.SaveAndApproveNewPosLocationOrder(newPosLocationModel);
+
+            return Json(result); 
+        }
+        //Davit Pos
+        public ActionResult GetNewPosApplicationOrderDetails(long orderId)
+        {
+            return Json(XBService.NewPosApplicationOrderDetails(orderId), JsonRequestBehavior.AllowGet);
+        }
+        //Davit Pos
+        public ActionResult GetPosTerminalActivitySphere()
+        {
+            return Json(XBService.GetPosTerminalActivitySphere(), JsonRequestBehavior.AllowGet);
+        }
+        //Davit Pos
+        public ActionResult NewPosTerminalOrder(XBS.NewPosLocationOrder newPosLocationModel)
+        {
+            newPosLocationModel.Quality = xbs.OrderQuality.Draft;
+            XBS.ActionResult result = XBService.SaveAndApproveNewPosLocationOrder(newPosLocationModel);
+
+            return Json(result);
+        }
+
     }
 }

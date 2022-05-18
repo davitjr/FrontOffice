@@ -136,37 +136,15 @@
                     <usersetnumber setnumber="nonCreditLineCardReplaceOrder.servingSetNumber" formname="nonCreditLineCardReplaceOrderForm"></usersetnumber>
                 </div>
             </div>
-
-            <div class="sub_inner form-group">
-                <label class="tab_title col-sm-6 " for="cardReportReceivingType">Քաղվածքի ստացման եղանակ</label>
-                <div class="col-sm-6 row" data-ng-init="GetCardReportReceivingTypes()">
-                    <div class="multiple_columns col-sm-12 ">
-                        <loading-control scopevariable="cardReportReceivingTypes"></loading-control>
-                        <select ng-show="cardReportReceivingTypes"
-                                data-ng-model="nonCreditLineCardReplaceOrder.cardReportReceivingType" class="form-control" name="cardReportReceivingType" required
-                                data-ng-options="k as v for (k,v) in cardReportReceivingTypes">
-                            <option value="" hidden="hidden" style="margin-left:03px" required>Ընտրեք...</option>
-                        </select>
-                        <ng-messages ng-if="nonCreditLineCardReplaceOrderForm.$submitted || nonCreditLineCardReplaceOrderForm.cardReportReceivingType.$dirty"
-                                     for="nonCreditLineCardReplaceOrderForm.cardReportReceivingType.$error">
-                            <ng-message when="required" class="errors">
-                                Քաղվածքի սատցման եղանակը ընտրված չէ
-                            </ng-message>
-                        </ng-messages>
-                    </div>
-                </div>
-            </div>
-
             <div class="sub_inner form-group">
                 <label class="tab_title col-sm-6" for="reportReceivingEmail">Էլեկտրոնային փոստ</label>
                 <div class="col-sm-6 row" data-ng-init="GetCustomerEmails()">
                     <div class="multiple_columns col-sm-12 ">
                         <loading-control scopevariable="reportReceivingEmails"></loading-control>
                         <select ng-show="reportReceivingEmails"
-                                ng-required="nonCreditLineCardReplaceOrder.cardReportReceivingType==4"
                                 data-ng-model="nonCreditLineCardReplaceOrder.reportReceivingEmail" class="form-control" name="reportReceivingEmail"
-                                data-ng-options="v as v for v in reportReceivingEmails track by v" required>
-                            <option value="" hidden="hidden" style="margin-left:03px" required>Ընտրեք...</option>
+                                data-ng-options="v as v for v in reportReceivingEmails track by v">
+                            <option value="" hidden="hidden" style="margin-left:03px">Ընտրեք...</option>
                         </select>
                         <ng-messages class="col-sm-11" ng-if="nonCreditLineCardReplaceOrderForm.$submitted || nonCreditLineCardReplaceOrderForm.reportReceivingEmail.$dirty"
                                      for="nonCreditLineCardReplaceOrderForm.reportReceivingEmail.$error">

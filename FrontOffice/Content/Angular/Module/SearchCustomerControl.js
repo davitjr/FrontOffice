@@ -14,7 +14,15 @@
                 scope.totalRows = 0;
 
                 scope.selectCustomer = function () {
-                    scope.callback({ customer: scope.selectedCustomer });
+                    //if (scope.leasingSearchNumber == true
+                    //    && (scope.leasingCustomerNumber == undefined || scope.leasingCustomerNumber == null)
+                    //    && scope.selectedCustomer.customerNumber != null) {
+                    //    scope.getLeasingNumber();
+                    //}
+                    //else {
+                        scope.callback({ customer: scope.selectedCustomer });
+                    //}
+                    
                 };
 
                 scope.closeSearchCustomersModal = function () {
@@ -79,6 +87,17 @@
                     else {
                         $scope.leasingSearchNumber = false;
                     }
+                }
+
+                $scope.getLeasingNumber = function () {
+                    var Data = customerService.getLeasingNumber($scope.selectedCustomer.customerNumber);
+                    Data.then(function (result) {
+                        $scope.selectedCustomer.LeasingCustomerNumber = result.data;
+                        $scope.callback({ customer: $scope.selectedCustomer });
+                    }, function () {
+                        hideloading();
+                        alert('Error getLeasingNumber');
+                    });
                 }
 
                 $scope.getAttachmentDocumentList = function (customerNumber) {
@@ -354,7 +373,7 @@
                                 console.log("error");
                                 console.log(xhr);
                             }
-                        });
+                        });                       
                     }
 
 

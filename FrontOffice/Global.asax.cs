@@ -8,6 +8,7 @@ using System.Web.Routing;
 using NLog;
 using System.Web.Configuration;
 using NLog.Targets;
+using NLog.Config;
 
 namespace FrontOffice
 {
@@ -87,6 +88,10 @@ namespace FrontOffice
                 GlobalDiagnosticsContext.Set("ClientIp", "");
 
             string message = (ex.Message != null ? ex.Message : " ") + Environment.NewLine + " InnerException:" + (ex.InnerException != null ? ex.InnerException.Message : "");
+
+            string startupPath = AppDomain.CurrentDomain.BaseDirectory;
+            startupPath += @"NLog.config";
+            LogManager.Configuration = new XmlLoggingConfiguration(startupPath);
 
             var databaseTarget = (DatabaseTarget)LogManager.Configuration.FindTargetByName("database");
             databaseTarget.ConnectionString = WebConfigurationManager.ConnectionStrings["NLogDb"].ToString();

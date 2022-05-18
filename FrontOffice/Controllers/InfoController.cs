@@ -1153,5 +1153,43 @@ namespace FrontOffice.Controllers
             return Json(InfoService.GetDepositoryAccountOperators(), JsonRequestBehavior.AllowGet);
 
         }
+        public JsonResult GetTransactionTypes()
+        {
+            return Json(InfoService.GetTransactionTypes(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetOrderQualityTypes()
+        {
+            return Json(InfoService.GetOrderQualityTypes(), JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult GetSecuritiesTypes()
+        {
+            return Json(InfoService.GetSecuritiesTypes(), JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult GetTradingOrderTypes()
+        {
+            return Json(InfoService.GetTradingOrderTypes(), JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult GetTradingOrderExpirationTypes()
+        {
+            return Json(InfoService.GetTradingOrderExpirationTypes(), JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult GetLeasingReportTypes()
+        {
+            return Json(InfoService.GetLeasingReportTypes(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetLeasingCredentialClosingReasons()
+        {
+            return Json(InfoService.GetLeasingCredentialClosingReasons(), JsonRequestBehavior.AllowGet);
+        }
     }
 }

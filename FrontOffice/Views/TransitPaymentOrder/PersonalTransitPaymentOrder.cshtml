@@ -268,7 +268,7 @@
                     </div>
                 </div>
             </div>
-
+            <div><transactiontypes></transactiontypes></div>
             <orderdescription periodic="periodic"
                               operations="operations"
                               description="description"
@@ -301,7 +301,7 @@
 
                     </ng-messages>
                 </div>
-            </div>
+            </div>            
             <div class="form-group " ng-if=" order.Currency == 'AMD' && (order.TransitAccountType == '5' || order.TransitAccountType == '3') && feeType==0">
 
                 <label class="tab_title col-sm-5 " for="DescriptionForRejectFeeType">Չգանձման պատճառ  <span class="redStyle">*</span></label>
@@ -309,7 +309,7 @@
                     <div class="row">
                         @*<textarea rows="3" required style="text-align:left" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="order.DescriptionForRejectFeeType" id="DescriptionForRejectFeeType" name="DescriptionForRejectFeeType" class="form-control tab_title"></textarea>*@
                         <select data-ng-model="order.RejectFeeType" name="DescriptionForRejectFeeType" class="form-control"
-                                data-ng-options="k as v for (k,v) in rejectFeeTypes">
+                                data-ng-options="k as v for (k,v) in rejectFeeTypes" required>
                             <option value="" hidden="hidden" style="margin-left:25px">{{rejectFeeTypes[0]}}</option>
                         </select>
                     </div>
@@ -368,13 +368,8 @@
 
             <div ng-show="order.TransitAccountType==3 && isLeasingAccount==true">
                 <leasingdetails leasingdata="selectedLeasingLoanDetails" searchleasingcustomers="searchLeasingCustomers()"></leasingdetails>
-
             </div>
-
         </div>
-
-
-
 
     </div>
 </form>

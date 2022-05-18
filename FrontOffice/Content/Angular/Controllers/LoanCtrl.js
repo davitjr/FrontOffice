@@ -217,7 +217,7 @@
             } else {
                 $scope.tableColspanCount = 4;
             }
-
+            document.getElementById("changeDate").value = "";
         }, function () {
             alert('Error getLoanInceptiveGrafik');
         });
@@ -557,5 +557,57 @@
 
         }
     };
+
+    $scope.getLoanGrafikChangeDates = function () {
+        var Data = loanService.getLoanGrafikChangeDates($scope.selectedLoan.ProductId);
+        Data.then(function (reply) {
+            $scope.changeDates = reply.data;
+        }, function () {
+            alert('Error getLoanGrafikChangeDates');
+        });
+    };
+
+    $scope.getLoanGrafikBeforeChange = function () {
+        var Data = loanService.getLoanGrafikBeforeChange($scope.selectedLoan.ProductId, changeDate = document.querySelector('#changeDate').value);
+        Data.then(function (rep) {
+            $scope.loanGrafik = rep.data;
+            $scope.checkRescheduledAmount = false;
+            var inceptiveSum1 = 0;
+            var inceptiveSum2 = 0;
+            var inceptiveSum3 = 0;
+            var inceptiveSum4 = 0;
+            var inceptiveSum5 = 0;
+            for (var i = 0; i < rep.data.length; i++) {
+                if (rep.data[i].RescheduledAmount > 0 && $scope.checkRescheduledAmount == false) {
+                    $scope.checkRescheduledAmount = true;
+                }
+
+                inceptiveSum1 += rep.data[i].RateRepayment;
+                inceptiveSum2 += rep.data[i].CapitalRepayment;
+                inceptiveSum3 += rep.data[i].FeeRepayment;
+                inceptiveSum4 += rep.data[i].TotalRepayment;
+                inceptiveSum5 += rep.data[i].RescheduledAmount;
+                if (rep.data[i].FeeRepayment == 0) {
+                    rep.data[i].FeeRepayment = "";
+                }
+            }
+
+            $scope.inceptiveSum1 = inceptiveSum1;
+            $scope.inceptiveSum2 = inceptiveSum2;
+            $scope.inceptiveSum3 = inceptiveSum3;
+            $scope.inceptiveSum4 = inceptiveSum4;
+            $scope.inceptiveSum5 = inceptiveSum5;
+
+            if ($scope.checkRescheduledAmount) {
+                $scope.tableColspanCount = 5;
+            } else {
+                $scope.tableColspanCount = 4;
+            }
+
+        }, function () {
+            alert('Error getLoanGrafikBeforeChange');
+        });
+    };
+
 
 }]);

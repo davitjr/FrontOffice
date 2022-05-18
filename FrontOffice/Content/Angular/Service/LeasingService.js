@@ -103,5 +103,111 @@
         });
         return response;
     }
+        
+    this.getLeasings = function () {
+        var response = $http({
+            method: "post",
+            url: "/Leasing/GetLeasings"
+         
+        });
+        return response;
+    }
+
+    this.getLeasing = function (productId) {
+        var response = $http({
+            method: "post",
+            url: "/Leasing/GetLeasing",
+            params: {
+                productId: productId
+            }
+        });
+        return response;
+    };
+
+    this.getLeasingGrafikApplication = function (loanFullNumber, startDate) {
+        var response = $http({
+            method: "post",
+            url: "/Leasing/GetLeasingGrafikApplication",
+            params: {
+                loanFullNumber: loanFullNumber,
+                startDate: startDate
+            }
+        });
+        return response;
+    };
+
+    this.getLeasingGrafik = function (productId, firstReschedule) {
+        var response = $http({
+            method: "post",
+            url: "/Leasing/GetLeasingGrafik",
+            params: {
+                productId: productId,
+                firstReschedule: firstReschedule
+            }
+        });
+        return response;
+    };
+
+    this.getLeasingOverdueDetails = function (productId) {
+        return $http.get("/Leasing/GetLeasingOverdueDetails", {
+            params: {
+                productId: productId
+            }
+        });
+    };
+
+    this.getManagerCustomerNumber = function (customerNumber) {
+        var response = $http({
+            method: "post",
+            url: "/Leasing/GetManagerCustomerNumber",
+            params: {
+                customerNumber: customerNumber
+            }
+        });
+        return response;
+    };
+    
+
+    this.getLeasings = function () {
+        var response = $http({
+            method: "post",
+            url: "/Leasing/GetLeasings"
+
+        });
+        return response;
+    }
+    this.getLeasing = function (productId) {
+        var response = $http({
+            method: "post",
+            url: "/Leasing/GetLeasing",
+            params: {
+                productId: productId
+            }
+        });
+        return response;
+    };
+    this.getLeasingGrafikApplication = function (loanFullNumber, startDate) {
+        var response = $http({
+            method: "post",
+            url: "/Leasing/GetLeasingGrafikApplication",
+            params: {
+                loanFullNumber: loanFullNumber,
+                startDate: startDate
+            }
+        });
+        return response;
+    };
+    this.getLeasingGrafik = function (productId, firstReschedule) {
+        var response = $http({
+            method: "post",
+            url: "/Leasing/GetLeasingGrafik",
+            params: {
+                productId: productId,
+                firstReschedule: firstReschedule
+            }
+        });
+        return response;
+    };
+
 
 }]);

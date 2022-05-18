@@ -1,4 +1,4 @@
-﻿app.controller("RenewedCardAccountRegOrderCtrl", ['$scope', 'renewedCardAccountRegOrderService', 'customerService', 'infoService', 'dialogService', '$uibModal', '$http', '$filter', 'cardService', function ($scope, renewedCardAccountRegOrderService, customerService, infoService, dialogService, $uibModal, $http, $filter, cardService) {
+﻿app.controller("RenewedCardAccountRegOrderCtrl", ['$scope', '$confirm', 'renewedCardAccountRegOrderService', 'infoService', '$uibModal', '$http', '$filter', 'cardService', function ($scope, $confirm, renewedCardAccountRegOrderService, infoService, $uibModal, $http, $filter, cardService) {
 
     $scope.order = {};
     $scope.order.Card = {};
@@ -11,39 +11,63 @@
 
     $scope.saveRenewedCardAccountRegOrder = function () {
         $scope.renewedCardAccountRegOrder.Card = $scope.plasticCard;
-        $scope.renewedCardAccountRegOrder.RegistrationDate = $scope.operationDate;
-        $scope.renewedCardAccountRegOrder.CardAccount = $scope.card.CardAccount;
-        $scope.renewedCardAccountRegOrder.OverdraftAccount = $scope.card.OverdraftAccount;
+        if ($scope.card.CreditLine != null) {
+            $scope.renewedCardAccountRegOrder.CreditLineProductId = $scope.card.CreditLine.ProductId;
+        }
+        $scope.CheckCreditLineForRenewedCardAccountRegOrder($scope.renewedCardAccountRegOrder);
+    };
+
+    $scope.CheckCreditLineForRenewedCardAccountRegOrder = function (renewedCardAccountRegOrder) {
+        $scope.loading = true;
         if ($http.pendingRequests.length == 0) {
-            document.getElementById("renewedCardAccountRegOrderLoad").classList.remove("hidden");
-            var Data = renewedCardAccountRegOrderService.saveRenewedCardAccountRegOrder($scope.renewedCardAccountRegOrder);
-            Data.then(function (res) {
-                $scope.confirm = false;
-                if (validate($scope, res.data)) {
-                    document.getElementById("renewedCardAccountRegOrderLoad").classList.add("hidden");
-                    if ($scope.ResultCode) {
-                        if ($scope.ResultCode === 5) {
-                            ShowMessage('Հայտը պահպանված է, սակայն սխալի պատճառով կատարված չէ', 'error');
-                        } else { ShowMessage(res.data.Errors[0].Description, 'bp-information'); }
-                    }
-                    CloseBPDialog('renewedCardAccountRegOrder');
-                    $scope.path = '#Orders';
-                    refresh($scope.order.Type);
+            var Data = renewedCardAccountRegOrderService.checkCreditLineForRenewedCardAccountRegOrder(renewedCardAccountRegOrder);
+            Data.then(function (confData) {
+                if (confData.data.length) {
+                    $confirm({ title: '', text: confData.data + '\n' + '\n' })
+                        .then(function () { $scope.save() });
                 } else {
-                    document.getElementById("renewedCardAccountRegOrderLoad").classList.add("hidden");
-                    showMesageBoxDialog('Խնդրում ենք ուղղել սխալները և կրկին փորձել:', $scope, 'error');
+                    $scope.save();
                 }
-            }, function (err) {
-                $scope.confirm = false;
-                document.getElementById("renewedCardAccountRegOrderLoad").classList.add("hidden");
-                if (err.status != 420) {
-                    showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
-                }
-                alert('Error in save');
+                $scope.loading = false;
+            }, function () {
+                $scope.loading = false;
+                alert('Error CheckCardRenewOrder');
             });
         } else {
             return ShowMessage('Կատարվել է տվյալների թարմացում: Խնդրում ենք կրկին սեղմել <<Պահպանել>> կոճակը:', 'error');
         }
+    };
+
+    $scope.save = function () {
+        $scope.renewedCardAccountRegOrder.RegistrationDate = $scope.operationDate;
+        $scope.renewedCardAccountRegOrder.CardAccount = $scope.card.CardAccount;
+        $scope.renewedCardAccountRegOrder.OverdraftAccount = $scope.card.OverdraftAccount;
+        document.getElementById("renewedCardAccountRegOrderLoad").classList.remove("hidden");
+        var Data = renewedCardAccountRegOrderService.saveRenewedCardAccountRegOrder($scope.renewedCardAccountRegOrder);
+        Data.then(function (res) {
+            $scope.confirm = false;
+            if (validate($scope, res.data)) {
+                document.getElementById("renewedCardAccountRegOrderLoad").classList.add("hidden");
+                if ($scope.ResultCode) {
+                    if ($scope.ResultCode === 5) {
+                        ShowMessage('Հայտը պահպանված է, սակայն սխալի պատճառով կատարված չէ', 'error');
+                    } else { ShowMessage(res.data.Errors[0].Description, 'bp-information'); }
+                }
+                CloseBPDialog('renewedCardAccountRegOrder');
+                $scope.path = '#Orders';
+                refresh($scope.order.Type);
+            } else {
+                document.getElementById("renewedCardAccountRegOrderLoad").classList.add("hidden");
+                showMesageBoxDialog('Խնդրում ենք ուղղել սխալները և կրկին փորձել:', $scope, 'error');
+            }
+        }, function (err) {
+            $scope.confirm = false;
+            document.getElementById("renewedCardAccountRegOrderLoad").classList.add("hidden");
+            if (err.status != 420) {
+                showMesageBoxDialog('Տեղի ունեցավ սխալ', $scope, 'error');
+            }
+            alert('Error in save');
+        });
     };
 
     $scope.getCard = function (productId) {

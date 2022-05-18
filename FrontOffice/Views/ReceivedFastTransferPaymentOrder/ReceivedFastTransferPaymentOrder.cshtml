@@ -337,9 +337,11 @@
                 <div class="panel panel-success" style=" margin-bottom: 10px;" ng-if="NewOrEditFromCallCenter!=1">
                     <div class="panel-heading">Գործարքի նկարագրություն</div>
                     <div style="padding-right: 25px; padding-top: 5px;">
+                        <div ng-if="order.Type == 79"><transactiontypes></transactiontypes></div>
                         <orderdescription ordertype="order.Type" operations="operations"
                                           description="description" labeldescription="'Նկարագրություն'" formname="receivedFastTransferPaymentOrderForm"></orderdescription>
                     </div>
+                    <div ng-if="order.Type == 79"><additionaldescription></additionaldescription></div>
                 </div>
 
                 <div class="panel panel-success" style=" margin-bottom: 10px;" ng-if="NewOrEditFromCallCenter!=1">

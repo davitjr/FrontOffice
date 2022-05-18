@@ -282,7 +282,8 @@
                     </div>
                 </div>
                 <br />
-            </div>
+            </div>            
+            <div ng-if="order.Type==51 || order.Type==52 || order.Type == 1 || order.Type == 122 || order.Type == 84 || order.Type == 85 || order.Type==95 || order.Type == 133"><transactiontypes></transactiontypes></div>
             <div ng-if="!periodic" labels-required>
                 <div class="form-group">
                     <label class="tab_title col-sm-5 control-label" for="amount"> Գումար</label>
@@ -316,7 +317,7 @@
                     </div>
                 </div>
             </div>
-
+            <div ng-if="order.Type == 95"><additionaldescription></additionaldescription></div>
 
             <reasonforouttransfer reasonid="order.ReasonId"
                                   reasoniddescription="order.ReasonIdDescription"
@@ -405,7 +406,7 @@
                     <div class="row">
                         @*<textarea rows="3" required style="text-align:left" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="order.DescriptionForRejectFeeType" id="DescriptionForRejectFeeType" name="DescriptionForRejectFeeType" class="form-control tab_title"></textarea>*@
                         <select data-ng-model="order.RejectFeeType" name="DescriptionForRejectFeeType" class="form-control"
-                                data-ng-options="k as v for (k,v) in rejectFeeTypes">
+                                data-ng-options="k as v for (k,v) in rejectFeeTypes" required>
                             <option value="" hidden="hidden" style="margin-left:25px">{{rejectFeeTypes[0]}}</option>
                         </select>
                     </div>

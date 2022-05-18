@@ -1,0 +1,313 @@
+﻿@{ 
+    Layout = null;
+}
+
+<style>
+    b.normal {
+        font-size: 12px;
+        font-weight: bold
+    }
+</style>
+
+
+<div id="loadMain" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<div style="margin-left:15px;margin-top:5px" ng-controller="SecuritiesTradingCtrl" id="SecuritiesTrading" data-ng-init="GetSentSecuritiesTradingOrders();" class="container">
+
+    <form class="form">
+        <div class="col-sm-12" style="padding:0;margin-bottom:5px">
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Սկիզբ</label>
+                <div>
+                    <input type="date" ng-model="securitieTradingsFilter.StartDate" style="width: 155px;" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Վերջ</label>
+                <div>
+                    <input type="date" ng-model="securitieTradingsFilter.EndDate" style="width:155px" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Հայտի ունիկալ համար</label>
+                <div>
+                    <input type="text" ng-model="securitieTradingsFilter.Id" style="width:155px" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">ԱՄՏԾ</label>
+                <div>
+                    <input type="text" ng-model="securitieTradingsFilter.ISIN" style="width:155px" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Հաճախորդի համար</label>
+                <div class="input-group" style="display:block">
+                    <input type="text" ng-change="mod =  securitieTradingsFilter.CustomerNumber == ''" ng-model="securitieTradingsFilter.CustomerNumber" maxlength="12" class="form-control ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength" id="EmployerCustomerNumber" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" />
+                    <div class="input-group-btn" style="display:block;">
+                        <button type="button" class="btn btn-primary searchButton" ng-click="searchCustomers()" title="Հաճախորդի որոնում">
+                            <span class="glyphicon glyphicon-search greenStyle"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="col-sm-12" style="padding:0;margin-bottom:5px">
+
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Հանձն. համար</label>
+                <div>
+                    <input type="text" ng-model="securitieTradingsFilter.ReferenceNumber" style="width:155px" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Թողարկման սերիա</label>
+                <div>
+                    <input type="text" ng-model="securitieTradingsFilter.IssueSeria" style="width:155px" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Բորսայական կոդ</label>
+                <div>
+                    <input type="text" ng-model="securitieTradingsFilter.BrokerageCode" style="width:155px" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Հապավում</label>
+                <loading-control scopevariable="Ticker"></loading-control>
+                <div data-ng-init="GetStockMarketTickers()">
+                    <select ng-show="Ticker" data-ng-model="securitieTradingsFilter.Ticker" class="form-control"
+                            data-ng-options="k as v for (k,v) in Ticker" style="width: 155px">
+                        <option value="" selected="selected">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Հայտի կարգավիճակ</label>
+                <loading-control scopevariable="qualityTypes"></loading-control>
+                <div data-ng-init="GetOrderQualityTypes()">
+                    <select ng-show="qualityTypes" data-ng-model="securitieTradingsFilter.Quality" class="form-control"
+                            data-ng-options="k as v for (k,v) in qualityTypes" style="width: 155px">
+                        <option value="" selected="selected">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="col-sm-12" style="padding:0;margin-bottom:5px">
+
+
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Հայտի տեսակ</label>
+                <loading-control scopevariable="orderTypes"></loading-control>
+                <div data-ng-init="GetOrderTypes()">
+                    <select data-ng-model="securitieTradingsFilter.OrderType" class="form-control"
+                            data-ng-options="k as v for (k,v) in orderTypes" style="width: 155px">
+                        <option value="" selected="selected">Առք և Վաճառք</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Ժամ. պայման</label>
+                <loading-control scopevariable="orderTypes"></loading-control>
+                <div data-ng-init="GetTradingOrderExpirationTypes()">
+                    <select data-ng-model="securitieTradingsFilter.ExpirationType" class="form-control"
+                            data-ng-options="k as v for (k,v) in expirationType" style="width: 155px">
+                        <option value="" selected="selected">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Արժեթղթի տեսակ</label>
+                <loading-control scopevariable="sharesTypes"></loading-control>
+                <div data-ng-init="GetSharesTypes()">
+                    <select ng-show="sharesTypes" data-ng-model="securitieTradingsFilter.SecurityType" class="form-control"
+                            data-ng-options="k as v for (k,v) in sharesTypes" style="width: 155px">
+                        <option value="" selected="selected">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Արժույթ</label>
+                <loading-control scopevariable="Currencys"></loading-control>
+                <div data-ng-init="GetCurrencyTypes()">
+                    <select ng-show="Currencys" data-ng-model="securitieTradingsFilter.Currency" class="form-control"
+                            data-ng-options="k as v for (k,v) in Currencys" style="width: 155px">
+                        <option value="" selected="selected">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Պատվերի տեսակ</label>
+                <loading-control scopevariable="securitiesTradingOrderTypes"></loading-control>
+                <div data-ng-init="GetSecuritiesTradingOrderTypes()">
+                    <select ng-show="securitiesTradingOrderTypes" data-ng-model="securitieTradingsFilter.TradingOrderType" class="form-control"
+                            data-ng-options="k as v for (k,v) in securitiesTradingOrderTypes" style="width: 155px">
+                        <option value="" selected="selected">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+
+            <div ng-if="SecuritieTradingsList.length!=0" class="col-sm-2" style="display:inline-block">
+                <label class="tab_title">Դասակարգել</label>
+                <loading-control scopevariable="SortBy"></loading-control>
+                <div data-ng-init="GetSortTypes()">
+                    <select ng-show="SortBy" data-ng-model="securitieTradingsFilter.Sort" class="form-control"
+                            data-ng-options="k as v for (k,v) in SortBy" ng-change="GetSentSecuritiesTradingOrdersSort()" style="width: 155px">
+                        <option value="" selected="selected">-Ընտրեք-</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-2" style="display:inline-block;margin-top: 26px;">
+                <button type="button" class="btn-sm btn-primary" ng-click="GetSentSecuritiesTradingOrders()"><span class="glyphicon glyphicon-search"></span> Որոնել</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="product-container" style="width: 1150px; padding: 0; margin-bottom: 5px; margin-left: inherit">
+        <div class="header-title">
+            Բորսայական հայտեր
+            <div class="product-collapse tipB fa fa-chevron-down " data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+
+        <div class="product-collapsable-section">
+            <div class="product-content-table custom-scroll" id="SecuritieTradingsList" style="width:1150px;min-height:545px;margin-left:0px;margin-top: 0px;border-top-width: 0px;border-right-width: 0px;border-left-width: 0px;">
+                <div ng-if="SecuritieTradingsList==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="SecuritieTradingsList.length==0">
+                            <td colspan="3" style="text-align:center">Բորսայական հայտեր առկա չեն</td>
+                        </tr>
+                        <tr  ng-if="SecuritieTradingsList.length!=0">
+                            <th style="width:3%;  ">№</th>
+                            <th style="width:21%; ">Հաճախորդի տվյալներ</th>
+                            <th style="width:26%; ">Արժեթղթերի տվյալներ</th>
+                            <th style="width:26%; ">Հանձնարարականի տվյալներ</th>
+                            <th style="width:21%; ">Պատվերի տեսակ</th>
+                            <th style="width:3%; "></th>
+                        </tr>
+                        <tr  ng-if="SecuritieTradingsList.length!=0" ng-style="{'color': SecuritiesTradingDealing.Type == 261 ? '#9ACD32' : (SecuritiesTradingDealing.Type == 262 ? 'salmon' : 'gold')};" ng-repeat="SecuritiesTradingDealing in SecuritieTradingsList" ng-class="{'isk MKT':$index == selectedRow}" ng-click="setClickedRowDealing($index)">
+                            <td >
+                                <span style="text-align:center" class="tab_text"> </span> {{SecuritiesTradingDealing.Row}}
+                            </td>
+                            <td>
+                                <span  class="tab_text">Բորսայական կոդ` </span> <b class="normal">{{BrokerageCode}}</b>
+                                <br />
+                                <span class="tab_text">Հաճախորդի անվանում` <br /> </span> <b class="normal">{{SecuritiesTradingDealing.FullName}}</b>
+                                <br />
+                                <span  class="tab_text">Արժեթղթի հաշիվ` </span><b class="normal"> {{SecuritiesTradingDealing.DepositoryAccount.AccountNumber}}</b>
+</td>
+                            <td>
+                                <span  class="tab_text">Տեսակ` </span> <b class="normal">{{SecuritiesTradingDealing.SecurityTypeDescription}}</b>
+                                <br />
+                                <span  class="tab_text">Բորսայական հապավում` </span> <b class="normal">{{Ticker}}</b>
+                                <br />
+                                <span  class="tab_text">ԱՄՏԾ` </span> <b class="normal">{{SecuritiesTradingDealing.ISIN}}</b>
+                                <br />
+                                <span  class="tab_text">Արժույթ` </span> <b class="normal">{{SecuritiesTradingDealing.Currency}}</b>
+                                @*<br />
+        <span class="tab_text">Թողարկման սերիա` </span> {{SecuritiesTradingDealing.IssueSeria}}*@
+                            </td>
+                            <td>
+                                <span class="tab_text">Գործարքի տեսակ` </span> <b class="normal">{{SecuritiesTradingDealing.TypeDescription}}</b>
+                                <br />
+                                <span class="tab_text">Հայտի ամսաթիվ`  </span> <b class="normal">{{SecuritiesTradingDealing.ChangeDateString}}</b>
+                                <br />
+                                <span class="tab_text">Պատվերի տեսակ`  </span><b class="normal"> {{SecuritiesTradingDealing.TradingOrderTypeDescription}}</b>
+                                <br />
+                                <span ng-if="SecuritiesTradingDealing.TradingOrderType == 1" class="tab_text">Շուկայական գին`  </span> <b class="normal">{{SecuritiesTradingDealing.MarketPrice}}</b>
+                                <br />
+                                <span ng-if="SecuritiesTradingDealing.TradingOrderType == 2 || SecuritiesTradingDealing.TradingOrderType == 4" class="tab_text">Լիմիտ գին`  </span> <b class="normal">{{SecuritiesTradingDealing.LimitPrice}}</b>
+                                <br />
+                                <span ng-if="SecuritiesTradingDealing.TradingOrderType == 3 || SecuritiesTradingDealing.TradingOrderType == 4" class="tab_text">Ստոպ գին`  </span> <span> <b class="normal">{{SecuritiesTradingDealing.StopPrice}}</b></span>
+                                <br />
+                                <span class="tab_text">Ժամանակային պայման`  </span> <b class="normal">{{SecuritiesTradingDealing.ExpirationTypeDescription}}</b>
+                                <br />
+                                <span class="tab_text">Հանձնարարականի համար` </span> <b class="normal">{{SecuritiesTradingDealing.ReferenceNumber}}</b>
+                            </td>
+
+                            <td>
+                                <span class="tab_text">Հայտի կարգավիճակ` </span> <b class="normal">{{SecuritiesTradingDealing.QualityDescription}}</b>
+                                <br />
+                                <span class="tab_text">Քանակ`  </span> <span><b class="normal">{{SecuritiesTradingDealing.MarketTradedQuantity}} / {{SecuritiesTradingDealing.Quantity}}</b></span>
+                                <br />
+                                <span class="tab_text">Դեպոնացված գումար`  </span> <span><b class="normal">{{SecuritiesTradingDealing.Amount}}</b></span>
+                                <br />
+                                <span class="tab_text" ng-if="SecuritiesTradingDealing.IsDeposited">Դեպոնացված`  </span> <span ng-if="SecuritiesTradingDealing.IsDeposited"><b class="normal">Այո</b></span>
+                            </td>
+                            <td style="width:30px" class="click_toggle" context="context" id="contextMenu"><div id="contextMenu"></div> </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <ul id="context" class="dropdown-menu">
+                <li>
+                    <a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl"
+                       ng-click="params={type: SecuritiesTrading.Type, orderId:SecuritiesTrading.OrderId}; openWindow('/SecuritiesTrading/SecuritiesTradingOrderDetails','Մանրամասն դիտարկում','oneSecuritieTradingDetails')">Մանրամասն դիտարկում</a>
+                </li>
+                <li>
+                    <a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl"
+                       ng-click="params={orderId:SecuritiesTrading.OrderId}; openWindow('/SecuritiesMarketTradingOrder/SecuritiesMarketTradingOrderDetailsList','Գործարքներ','oneSecuritieTradingDetailsList')">Գործարքներ</a>
+                </li>
+                <li>
+                    <a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl"
+                       ng-click="params={securitiesTrading: SecuritiesTrading};
+                       openWindow('/SecuritiesMarketTradingOrder/SecuritiesMarketTradingOrder','Գործարքի մուտքագրում','oneSecuritiesMarketTradingOrder')">Գործարքի մուտքագրում</a>
+                </li>
+                <li>
+                    <a style="color: black;text-decoration:none!important ;" class="my_button" ng-controller="PopUpCtrl"
+                       @*ng-if="checkAccessToDepositedSecuritiesTranding==1 && !SecuritiesTradingDealing.IsDeposited &&  SecuritiesTradingDealing.Type != 265"*@ ng-click="UpdateSecuritiesTradingOrderDeposited(SecuritiesTrading.OrderId)">Դեպոնացնել</a>
+                </li>
+
+            </ul>
+            <div ng-if="ShowRows != 0" uib-pagination style="margin-left:40%;margin-top:5px;"
+                 ng-model="securitieTradingsFilter.Row"
+                 items-per-page="numPerPage"
+                 total-items="totalRows"
+                 max-size="maxSize"
+                 boundary-links="true"
+                 previous-text="‹"
+                 next-text="›"
+                 first-text="«"
+                 last-text="»"
+                 ng-click="GetSecuritiesTradingsPagination()">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    (function ($) {
+        $(window).on('load', function () {
+
+            $("#SecuritieTradingsList").mCustomScrollbar({
+                theme: "rounded-dark",
+                scrollButtons: {
+                    scrollAmount: 200,
+                    enable: true
+                },
+                mouseWheel: {
+                    scrollAmount: 200
+                }
+            });
+
+        });
+    })(jQuery);
+</script>
+
+

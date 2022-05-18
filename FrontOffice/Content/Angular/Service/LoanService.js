@@ -333,5 +333,28 @@
         return response;
     };
 
+    this.getLoanGrafikChangeDates = function (ProductId) {
+        var response = $http({
+            method: "post",
+            url: "/Loan/GetLoanGrafikChangeDates",
+            params: {
+                productId: ProductId,
+            }
 
+        });
+        return response;
+    };
+
+    this.getLoanGrafikBeforeChange = function (ProductId, changeDate) {
+        var response = $http({
+            method: "post",
+            url: "/Loan/getLoanGrafikBeforeChange",
+            params: {
+                productIdStr: ProductId,
+                changeDateStr: changeDate
+            }
+        });
+        return response;
+    };
+    
 }]);

@@ -1,0 +1,498 @@
+﻿@{
+    Layout = null;
+}
+
+
+<style>
+
+    #loan_details.bhoechie-tab-content {
+        background-color: #f2f2f2 !important
+    }
+</style>
+
+
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<div ng-controller="LeasingCtrl" data-ng-init="getLeasing(productId);" id="leasingdetails">
+    <div id="leasingdetails_menu" class="menu-bar dialog-menu light-green details-menu">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 ">
+                <span id="h-menu-item-4" onclick="return false;">
+                    <img id="h-menu-icon-4" class="h-menu-icon applicationButton">Լիզինգի գրաֆիկ
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-3.1" class="" ng-if="leasing.Quality!=10" ng-controller="PopUpCtrl" ng-click="openWindow('/Leasing/LeasingGrafik','Լիզինգի գրաֆիկ','leasinggrafik')" data-permission-selector="">
+                        <span>Դիտել</span>
+                    </li>
+                    <li id="v-menuItem-3.2" ng-if="leasing.Quality!=10" ng-click="getLeasingGrafikApplication()" data-permission-selector="">
+                        <span>Տպել</span>
+                    </li>
+                    <li id="v-menuItem-3.2" ng-controller="PopUpCtrl" ng-click="openWindow('/Leasing/LeasingGrafikFirst','Լիզինգի սկզբնական գրաֆիկ','leasinggrafik')" data-permission-selector="">
+                        <span>Սկզբնական</span>
+                    </li>
+                </ul>
+            </li>
+            <li class="root-menu-item-3 " ng-class="{'my_disable':disabelButton==true}" ng-if="isClosed!=true && leasing.Quality!=undefined" ng-controller="PopUpCtrl" ng-click="openWindow('/Leasing/LeasingPaymentOrder','Լիզինգի մարում','leasingPayment')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="cashInButton h-menu-icon">Լիզինգի մարում</span>
+            </li>
+
+            <li class="root-menu-item-3 " ng-class="{'my_disable':disabelButton==true}" ng-if="isClosed!=true && leasing.Quality!=undefined" ng-controller="PopUpCtrl" ng-click="openWindow('/Leasing/LeasingTransitPaymentOrder','Լիզինգի մարում (կանխիկ)','leasingTransitPayment')">
+                <span id="h-menu-item-3"><img id="h-menu-icon-3" class="cashInButton h-menu-icon">Լիզինգի մարում (կանխիկ)</span>
+            </li>
+
+            <li class="root-menu-item-4 " ng-if="loan.Quality!=10">
+                <span id="h-menu-item-4" onclick="return false;">
+                    <img id="h-menu-icon-4" class="h-menu-icon applicationButton">Այլ
+                    <img id="arrow-down" class="arrowButton">
+                </span>
+                <ul>
+                    <li id="v-menuItem-3.1" class="" ng-controller="PopUpCtrl" ng-click="params={productId:leasing.ProductId};openWindow('/Leasing/LeasingOverdueDetails','Ժ/անց պատմություն')" data-permission-selector="">
+                        <span>Ժ/անց պատմություն</span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <section class="panel panel-info" style="max-width:800px;margin-left:10px">
+        <header class="panel-heading">
+            <span class="panel-title" style="font-size: 14px;"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></span>
+        </header>
+        <div class="panel-body">            
+            <div class="product-detail-row">
+                <div class="product-detail-cell product-detail-lable redStyle" ng-if="leasing.InsuranceAmount==0">Հերթական մարում</div>
+                <div class="product-detail-cell product-detail-lable redStyle" ng-if="leasing.InsuranceAmount>0">Հերթական մարում և ապահովագրավճար</div>                
+                <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;" ng-if="finalAmount = (leaisng.PaymentsCount==1 ? leasing.LeasingPayment+leasing.InsuranceAmount+leasing.PrepaymentAmount+leasing.FeeAmount+leaisng.FinalFee+leasing.PenaltyRate:leasing.LeasingPayment+leasing.InsuranceAmount+leasing.PrepaymentAmount+leasing.FeeAmount+leasing.PenaltyRate)">{{finalAmount | number:2}} AMD</div>
+            </div>
+            
+            <div class="product-detail-row" ng-if="leasing.Quality==5">
+                <div class="product-detail-cell product-detail-lable redStyle" style="color:red">Ժամկետանց մաս</div>
+                <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;">{{ ::leasing.SumOverdueCapitalsString }} AMD</div>
+            </div>
+
+        </div>
+    </section>
+<div class="product-details bhoechie-tab-content" id="loan_details" style="min-width:800px;margin-left:10px;">
+
+    <div style="display:table-row-group; box-shadow: 0 0 3px 4px #d6d3d3; background-color: white;">
+        <div class="product-detail-row">
+            <span style="margin-left: 5px;font-weight: bold;color: #504e4a;font-size: 15px;">Հիմնական</span>
+            <div class="product-detail-cell product-detail-value">&nbsp;</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.CreditCode!=''">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Կոդ</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;">{{leasing.CreditCode}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Պայմանագրի համար</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.GeneralNumber}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Տեսակ</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.ProductType}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Մասնաճյուղ</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.FilialName}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Կարգավիճակ</div>
+            <div class="product-detail-cell product-detail-value" style="font-weight:bold;" ng-style="{ color: leasing.Quality==5 || leasing.Quality==11 ? 'red' : '' }">{{leasing.QualityDescription}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Պայմանագրային գումար</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.StartCapitalString}} {{leasing.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Մնացորդ</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.CurrentCapital |number:2}} {{leasing.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Currency!='AMD'">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Մնացորդ AMD</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.CurrentCapitalAMD |number:2}} AMD</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Quality==5">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Ժամկետանց մաս</div>
+            <div class="product-detail-cell product-detail-value redStyle">{{leasing.OverdueCapital |number:2}} AMD</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Սկիզբ</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.StartDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Վերջ</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.EndDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Վարկային հաշիվ</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.LoanFullNumber}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Currency!='AMD'">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Հաշվի մնացորդ</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.AccountBalance |number:2}} {{leasing.Currency}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Հաշվի մնացորդ</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.AccountBalanceAMD |number:2}} AMD</div>
+        </div>
+
+        @*<div class="product-detail-row" ng-if="leasing.Quality!=10 || leasing.Quality!=6 || leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Ապագա ժամանակաշրջանի տոկոսագումար</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.FuturePercent |number:2}} {{leasing.Currency}}</div>
+        </div>*@
+
+        <div class="product-detail-row" ng-if="leasing.Quality==6 || leasing.Quality==14">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Կանխավճար</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.AdvanceAmount |number:2}} {{leasing.Currency}}</div>
+        </div>
+    </div>
+    <br />
+    <div style="display:table-row-group; box-shadow: 0 0 3px 4px #d6d3d3; background-color: white;">
+        <div class="product-detail-row">
+            <span style="margin-left: 5px;font-weight: bold;color: #504e4a;font-size: 15px;">Տոկոսադրույք/Տոկոսագումարներ</span>
+            <div class="product-detail-cell product-detail-value">&nbsp;</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Տոկոսադրույք</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.InterestRate|number:2 }}%</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Փաստացի տոկոսադրույք(ծախսերով)</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.ActualInterestRate|number:2 }}%</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Սուբսիդավորման տոկոսադրույք</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.SubsidRate|number:2 }}%</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Տոկոսագումարի հաշվարկի օր</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.DateOfRateCalculation | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Quality!=10 && leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված) տոկոսագումար</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.AccumulatedPercent |number:2}} AMD</div>
+        </div>
+        
+        <div class="product-detail-row" ng-if="leasing.Quality!=10 && leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (վճարված) տոկոսագումար</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.AccumulatedPercentPaied |number:2}} AMD</div>
+        </div>
+        
+        <div class="product-detail-row" ng-if="leasing.Quality!=10 && leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված + վճարված) տոկոսագումար</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.AccumulatedPercent+leasing.AccumulatedPercentPaied |number:2}} AMD</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Quality==5">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Որից ժամկետանց տոկոս</div>
+            <div class="product-detail-cell product-detail-value redStyle">{{leasing.OverduePercent |number:2}} AMD</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Quality!=10 && leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված) տուգանային տոկոս</div>
+            <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;">{{loan.PenaltyRateString}} AMD</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Quality!=10 && leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;Որից՝</div>
+            <div class="product-detail-cell product-detail-value redStyle">&nbsp;</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Quality!=10 && leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված) տուժանք</div>
+            <div class="product-detail-cell product-detail-value redStyle" style="font-weight:bold;">{{leasing.PenaltyRate |number:2}} AMD</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Quality!=10 && leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (վճարված) տուժանք</div>
+            <div class="product-detail-cell product-detail-value redStyle">{{leasing.PenaltyRatePaied |number:2}} AMD</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Quality!=10 && leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Կուտակված (չվճարված + վճարված) տուժանք</div>
+            <div class="product-detail-cell product-detail-value redStyle">{{(leasing.PenaltyRate+leasing.PenaltyRatePaied) |number:2}} AMD</div>
+        </div>
+
+    </div>
+    <br />
+    <div style="display:table-row-group; box-shadow: 0 0 3px 4px #d6d3d3; background-color: white;">
+        <div class="product-detail-row">
+            <span style="margin-left: 5px;font-weight: bold;color: #504e4a;font-size: 15px;">Այլ վճարներ</span>
+            <div class="product-detail-cell product-detail-value">&nbsp;</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Ապահովագրավճար</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.InsuranceAmount|number:2 }} AMD</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Ապահովագրավճարի ձևակերպման օր</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.InsuranceCalculationDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Ապահովագրավճարի վճարման օր</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.InsurancePaymentDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Միջնորդավճար</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.FeeAmount|number:2 }} AMD</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Միջնորդավճարի վճարման օր</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.FeePaymentDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Այլ վճար</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.OtherPaymentAmount|number:2 }} AMD</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Այլ վճարի վճարման օր</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.OtherPaymentDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Նախավարձ</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.PrepaymentAmount|number:2 }} AMD</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Նախավարձի վճարման օր</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.PrepaymentPaymentDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Վերջնավճար</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.FinalFee|number:2 }} AMD</div>
+        </div>
+
+    </div>
+    <br />
+    <div style="display:table-row-group; box-shadow: 0 0 3px 4px #d6d3d3; background-color: white;">
+        <div class="product-detail-row">
+            <span style="margin-left: 5px;font-weight: bold;color: #504e4a;font-size: 15px;">Լրացուցիչ</span>
+            <div class="product-detail-cell product-detail-value">&nbsp;</div>
+        </div>
+
+
+        <div class="product-detail-row" ng-if="leasing.Quality!=10 && leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Վերջին վճարման օր</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.DateOfLastPayment | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="product-detail-row">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;Գրաֆիկով նախատեսված`</div>
+            <div class="product-detail-cell product-detail-value">&nbsp;</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Quality!=10 && leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;հերթական վճարման օր</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.NextRepaymentDateString}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Quality!=10 && leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;հերթական վճարման գումար</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.LeasingPayment | number:2}} AMD</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Quality!=10 && leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ժամկետանցի օր</div>
+            <div class="product-detail-cell product-detail-value">{{leasing.OverdueLoanDate | mydate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="product-detail-row" ng-if="leasing.Quality!=10 && leasing.Quality!=6 && leasing.Quality!=14">
+            <div class="product-detail-cell product-detail-lable redStyle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ժամկետանց օրեր</div>
+            <div class="product-detail-cell product-detail-value redStyle">{{leasing.OverdueDays}}</div>
+        </div>
+        
+    </div>
+    <br />
+
+</div>
+    @*<div ng-if="loan && isCreditHereAndNow" ng-init="loadLoanTabScript()"></div>*@
+    @*<div class="bhoechie-tab-container" style="max-height:80%;" id="loanDetailsContainer">
+        <div class="bhoechie-tab-menu" style="display:inline-block; vertical-align: top;">
+            <div class="list-group">
+                <div class="list-group-item text-center active">Պարտք</div>
+                <div class="list-group-item text-center"><span>Լրացուցիչ տվյալներ</span></div>
+                <div class="list-group-item text-center"><span>Կցված փաստաթղթեր</span></div>
+                <div class="list-group-item text-center"><span>Միջ/վճար և այլ մուծ.</span></div>
+                <div class="list-group-item text-center">Գրավ</div>
+                <div class="list-group-item text-center" ng-show="GoodsDeatilsShow"><span>Ապրանքի տվյալներ</span></div>
+                <div class="list-group-item text-center"><span>Գլխավոր պայմանագիր</span></div>
+                <div class="list-group-item text-center" ng-show="loan.HasClaim==true"><span>Դատական գործընթաց</span></div>
+                <div class="list-group-item text-center" ng-show="loan.LoanType==14 || loan.LoanType==15 || loan.LoanType==49"><span>Ապահովա գրություն</span></div>
+                <div class="list-group-item text-center">Քաղվածք</div>
+                <div class="list-group-item text-center">Դասակարգում</div>
+                <div class="list-group-item text-center"><span>Մոնիթորինգի եզրակացություն</span></div>
+                <div class="list-group-item text-center" ng-show="$root.SessionProperties.AdvancedOptions['isMonitoringDepartment']=='1'"><span>Վարկի մարում քարտից</span></div>
+
+            </div>
+        </div>
+        <div class="bhoechie-tab" style="width: calc(100% - 140px); display: inline-block;">
+            <div class="bhoechie-tab-content active">
+
+                <loandebts loan="loan"></loandebts>
+
+            </div>
+            <div class="bhoechie-tab-content ">
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Տուժանքի օրական տոկոս</div>
+                    <div class="product-detail-cell product-detail-value">{{loan.DailyPenaltyInterestRate*100}}%</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Տարեկան սուբսիդավորվող տոկոսադրույք</div>
+                    <div class="product-detail-cell product-detail-value">{{loan.SubsidiaInterestRate*100}}%</div>
+                </div>
+                <div class="product-detail-row" ng-if="loan.CheckAdvancedRepaymentRate==true">
+                    <div class="product-detail-cell product-detail-lable">Վաղաժամկետ մարման վճար</div>
+                    <div class="product-detail-cell product-detail-value">{{loan.AdvancedRepaymentRate*100}}%</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Փոփոխվող</div>
+                    <div class="product-detail-cell product-detail-value">{{loan.ChangeRate==0?'Ոչ':'Այո'}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">1-ին փուլի գումար</div>
+                    <div class="product-detail-cell product-detail-value">{{loan.FirstStartCapital}}</div>
+                </div>
+                <div class="product-detail-row" ng-if="loan.DateOfBeginningSecondPeriod!=null">
+                    <div class="product-detail-cell product-detail-lable">2-րդ փուլի սկիզբ</div>
+                    <div class="product-detail-cell product-detail-value">{{loan.DateOfBeginningSecondPeriod | mydate | date: 'dd/MM/yyyy'}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ֆոնդ</div>
+                    <div class="product-detail-cell product-detail-value">{{loan.FondDescription}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ծրագիր</div>
+                    <div class="product-detail-cell product-detail-value">{{loan.LoanProgramDescription}}</div>
+                </div>
+                <div class="product-detail-row">
+                    <div class="product-detail-cell product-detail-lable">Ակցիա</div>
+                    <div class="product-detail-cell product-detail-value">{{loan.SaleDescription}}</div>
+                </div>
+                <div ng-if="loan.ProductId" ng-controller="LoanProductDataChangeOrderCtrl" ng-init="existsLoanProductDataChange(loan.ProductId)">
+                    <div id="loanDataChangeForLoanEarlyMature" ng-if="($root.SessionProperties.IsManager == true || $root.SessionProperties.AdvancedOptions['isOnlineAccChief']=='1' || isExistLoanEarlyMature==true) && ((loan.Quality==0 || loan.Quality==1) && (loan.LoanType==1 || loan.LoanType==3 || loan.LoanType==10 || loan.LoanType==11))" class="product-detail-row" ng-controller="LoanProductDataChangeOrderCtrl">
+                        <div class="product-detail-cell product-detail-lable">Վաղաժամկետ մարման վճար</div>
+                        <span style="margin-left: 100px">հերթական վճարման (մայր գումար+տոկոս) կրկնապատիկը գերազանցելու դեպքում<input type="checkbox" ng-disabled="isExistLoanEarlyMature" ng-model="isExistLoanEarlyMature" ng-click="saveLoanProductDataChangeOrder(loan.ProductId,1,'1')"></span>
+                    </div>
+                </div>
+
+                <div class="product-detail-row" ng-if="($root.SessionProperties.AdvancedOptions['isOnlineAccChief']=='1'
+                     || $root.SessionProperties.AdvancedOptions['isOnlineAcc']=='1') && (loan.LoanType==14 || loan.LoanType==15) && loan.AdvancedRepaymentRate != 0">
+                    <button style="float: right !important" ng-controller="PopUpCtrl"
+                            id="resetLoanEarlyRepaymentFeeButton"
+                            name="resetLoanEarlyRepaymentFeeButton"
+                            ng-click="params={loanProductId:productId, recovery:false};
+                            openWindow('/Loan/ResetEarlyRepaymentFee','Վաղաժամկետ մարման վճարի զրոյացում','resetEarlyRepaymentFee')"
+                            data-original-title="Վաղաժամկետ մարման վճարի զրոյացում" class="ng-scope">
+                        Վաղաժամկետ մարման վճարի զրոյացում
+                    </button>
+                </div>
+
+                <div class="product-detail-row" ng-if="($root.SessionProperties.AdvancedOptions['isOnlineAccChief']=='1'
+                     || $root.SessionProperties.AdvancedOptions['isOnlineAcc']=='1') && (loan.LoanType==14 || loan.LoanType==15) && loan.AdvancedRepaymentRate == 0 && showRecovery == true">
+                    <button style="float: right !important" ng-controller="PopUpCtrl"
+                            id="resetLoanEarlyRepaymentFeeButton"
+                            name="resetLoanEarlyRepaymentFeeButton"
+                            ng-click="params={loanProductId:productId, recovery:true};
+                            openWindow('/Loan/ResetEarlyRepaymentFee','Վաղաժամկետ մարման վճարի վերականգնում','resetEarlyRepaymentFee')"
+                            data-original-title="Վաղաժամկետ մարման վճարի վերականգնում" class="ng-scope">
+                        Վաղաժամկետ մարման վճարի վերականգնում
+                    </button>
+                </div>
+
+            </div>
+            <div class="bhoechie-tab-content ">
+                <attachmentdocument productid="loan.ProductId"></attachmentdocument>
+            </div>
+            <div class="bhoechie-tab-content ">
+                <productotherfees productid="productId"></productotherfees>
+            </div>
+            <div class="bhoechie-tab-content ">
+                <provisions productid="productId"></provisions>
+            </div>
+            <div class="bhoechie-tab-content ">
+                <goodsdetails ng-if="loan.ProductId && GoodsDeatilsShow" productid="productId"></goodsdetails>
+            </div>
+
+            <div class="bhoechie-tab-content ">
+                <loanmaincontract productid="productId" type="1"></loanmaincontract>
+            </div>
+            <div class="bhoechie-tab-content " ng-show="loan.HasClaim==true">
+                <loanjudgment ng-if="loan.HasClaim==true" loan="loan"></loanjudgment>
+            </div>
+            <div class="bhoechie-tab-content " ng-show="loan.LoanType==14 || loan.LoanType==15 || loan.LoanType==49">
+                <insurances></insurances>
+            </div>
+            <div class="bhoechie-tab-content ">
+                <loanstatement accountnumber="loan.LoanAccount.AccountNumber" productid="loan.ProductId" loantype="loan.LoanType"></loanstatement>
+            </div>
+            <div class="bhoechie-tab-content ">
+                <loanproductclassifications products="[productId]"></loanproductclassifications>
+            </div>
+            <div class="bhoechie-tab-content ">
+                <loanmonitoring ng-if="loan" loan="loan"></loanmonitoring>
+            </div>
+            <div class="bhoechie-tab-content ">
+                <loanrepaymentfromcard ng-if="loan" appid="loan.ProductId"></loanrepaymentfromcard>
+            </div>
+
+        </div>
+    </div>*@
+</div>
+
+<script type="text/javascript">
+
+    $("#loandetails div.bhoechie-tab-menu>div.list-group>div").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('#loandetails div.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#loandetails div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("#loandetails div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+
+
+    $("#loanDetailsContainer").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+
+</script>
+

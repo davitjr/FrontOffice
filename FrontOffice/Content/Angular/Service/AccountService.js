@@ -186,6 +186,19 @@
         return response;
     };
 
+    this.printAccountTransactions = function (accountNumber, dateFrom, dateTo) {
+        var response = $http({
+            method: "post",
+            url: "/Account/PrintAccountTransactions",
+            params: {
+                accountNumber: accountNumber,
+                dateFrom: dateFrom,
+                dateTo: dateTo
+            }
+        });
+        return response;
+    };
+
 
 
     this.printMemorial = function (accountNumber, dateFrom, dateTo, correct_mo){

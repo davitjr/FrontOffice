@@ -161,6 +161,11 @@
             else
                 $scope.order.Description = $scope.description;
 
+            if ($scope.additional != "" && $scope.order.TransactionTypeByAML !== undefined) {
+                $scope.order.TransactionTypeByAML.AdditionalDescription = $scope.additional;
+            }
+
+
             if ($scope.order.ConvertationTypeNum == 3) {
                 $scope.order.ConvertationCrossRate = $scope.order.Rate;
             }
@@ -1059,13 +1064,13 @@
                         if ($scope.order.ReceiverAccount.Currency != "AMD") {
                             //Արտարժույթի առք ու վաճառք
                             $scope.description = $scope.operations[17];
-                            $scope.additional = $scope.order.DebitAccount.Currency + "/" + $scope.order.ReceiverAccount.Currency + $scope.strForTransfer;
+                            $scope.description += " " + $scope.order.DebitAccount.Currency + "/" + $scope.order.ReceiverAccount.Currency + $scope.strForTransfer;
                         }
 
                         else {
                             //Արտարժույթի առք (Բանկի տեսանկյունից)                          
                             $scope.description = $scope.operations[16];
-                            $scope.additional = $scope.order.DebitAccount.Currency + $scope.strForTransfer;
+                            $scope.description += " " + $scope.order.DebitAccount.Currency + $scope.strForTransfer;
 
                         }
                     }
@@ -1073,14 +1078,14 @@
                         if ($scope.order.ReceiverAccount.Currency != "AMD") {
                             //Արտարժույթի վաճառք (Բանկի տեսանկյունից)
                             $scope.description = $scope.operations[17];
-                            $scope.additional = $scope.order.ReceiverAccount.Currency + $scope.strForTransfer;
+                            $scope.description += " " + $scope.order.ReceiverAccount.Currency + $scope.strForTransfer;
                         }
                     }
                     if (!$scope.$root.SessionProperties.IsNonCustomerService && $scope.transfer == undefined) {
                         if ($scope.customer.OrganisationName == null)
-                            $scope.additional = $scope.additional + " " + $scope.order.OPPerson.PersonName + " " + $scope.order.OPPerson.PersonLastName + (!$scope.order.OPPerson.CustomerNumber ? "" : "(" + $scope.order.OPPerson.CustomerNumber.toString() + ") ");
+                            $scope.description += " " + $scope.order.OPPerson.PersonName + " " + $scope.order.OPPerson.PersonLastName + (!$scope.order.OPPerson.CustomerNumber ? "" : "(" + $scope.order.OPPerson.CustomerNumber.toString() + ") ");
                         else
-                            $scope.additional = $scope.additional + " " + (!$scope.customer.CustomerNumber ? "" : $scope.order.ForThirdPerson == true ? " " : "(" + $scope.customer.CustomerNumber.toString() + ") ");
+                            $scope.description += " " + (!$scope.customer.CustomerNumber ? "" : $scope.order.ForThirdPerson == true ? " " : "(" + $scope.customer.CustomerNumber.toString() + ") ");
                     }
                 }, function () {
                     alert('Error');
@@ -1511,6 +1516,10 @@
             }
             else
                 $scope.order.Description = $scope.description;
+
+            if ($scope.additional != "" && $scope.order.TransactionTypeByAML !== undefined) {
+                $scope.order.TransactionTypeByAML.AdditionalDescription = $scope.additional;
+            }
 
             if ($scope.order.ConvertationTypeNum == 3) {
                 $scope.order.ConvertationCrossRate = $scope.order.Rate;

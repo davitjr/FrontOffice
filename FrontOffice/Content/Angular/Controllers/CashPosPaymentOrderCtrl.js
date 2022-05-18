@@ -28,6 +28,12 @@
             else
                 $scope.order.Description = $scope.description;
 
+            if ($scope.additional != "" && $scope.order.TransactionTypeByAML !== undefined) {
+                $scope.order.TransactionTypeByAML.AdditionalDescription = $scope.additional;
+            } else if ($scope.additional == "" && $scope.order.TransactionTypeByAML !== undefined) {
+                $scope.order.TransactionTypeByAML.AdditionalDescription = "";
+            }
+
             var Data = cashPosPaymentOrderService.saveCashPosPaymentOrder($scope.order);
 
             Data.then(function (ch) {

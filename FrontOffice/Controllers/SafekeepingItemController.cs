@@ -7,9 +7,12 @@ using System.Web.Mvc;
 using xbs = FrontOffice.XBS;
 using FrontOffice.ACBAServiceReference;
 using FrontOffice.Models;
+using System.Web.SessionState;
 
 namespace FrontOffice.Controllers
 {
+    [SessionExpireFilter]
+    [SessionState(SessionStateBehavior.ReadOnly)]
     public class SafekeepingItemController : Controller
     {
         [OutputCache(CacheProfile = "AppViewCache")]

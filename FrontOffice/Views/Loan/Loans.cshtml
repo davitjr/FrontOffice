@@ -58,6 +58,7 @@
                 <tbody>
                     <tr ng-repeat="loan in loans | filter: { Currency: currency!=undefined?currency:'' }" ng-if="filter==1 && loans.length!=0" ng-class="{'selected':$index==selectedRow}" ng-click="setClickedRow($index,loan)" ng-dblclick="selectedLoanIsAccessible && openLoanDetails();" style="cursor: pointer;">
                         <td class="col-sm-3">
+                            <span ng-if="loan.LoanType = 5 && (loan.Source == 1 || loan.Source == 5)">«Տրամադրված է ACBA Digital համակարգի միջոցով»</span>
                             {{ ::loan.LoanTypeDescription }}<span ng-if="loan.LoanType==38">({{ ::loan.ContractNumber}})</span>
                             <span ng-if="loan.CreditCode!=''" style="color:brown;"><br />Կոդ՝ {{ ::loan.CreditCode}}</span>
                             <br /> Պայմ. գումար`{{ ::(loan.Is_24_7?loan.ContractAmountString:loan.StartCapitalString)}} {{ ::loan.Currency }}

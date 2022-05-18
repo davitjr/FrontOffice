@@ -1,4 +1,4 @@
-﻿app.controller('OrderCtrl', ['$scope', 'orderService', 'utilityPaymentService', '$location', 'dialogService', '$confirm', '$uibModal', 'customerService', 'casherService', 'arcaCardsTransactionOrderService', 'remittanceCancellationOrderService', 'fastTransferPaymentOrderService', 'remittanceAmendmentOrderService', 'plasticCardService', 'creditLineService', 'ReportingApiService', function ($scope, orderService, utilityPaymentService, $location, dialogService, $confirm, $uibModal, customerService, casherService, arcaCardsTransactionOrderService, remittanceCancellationOrderService, fastTransferPaymentOrderService, remittanceAmendmentOrderService, plasticCardService, creditLineService, ReportingApiService) {
+﻿app.controller('OrderCtrl', ['$scope', 'orderService', 'utilityPaymentService', '$location', 'dialogService', '$confirm', '$uibModal', 'customerService', 'casherService', 'arcaCardsTransactionOrderService', 'remittanceCancellationOrderService', 'fastTransferPaymentOrderService', 'remittanceAmendmentOrderService', 'plasticCardService', 'creditLineService', 'ReportingApiService', 'cardlessCashoutCancellationOrderCtrlService', function ($scope, orderService, utilityPaymentService, $location, dialogService, $confirm, $uibModal, customerService, casherService, arcaCardsTransactionOrderService, remittanceCancellationOrderService, fastTransferPaymentOrderService, remittanceAmendmentOrderService, plasticCardService, creditLineService, ReportingApiService, cardlessCashoutCancellationOrderCtrlService) {
 
     $scope.OrderType = '0';
     $scope.OrderQualityType = '0';
@@ -798,9 +798,10 @@
                 break;
             case 232: //Քարտի լրացուցիչ տվյալների հայտ
                 var temp = '/CardAdditionalDataOrder/CardAdditionalDataOrderDetails';
-                var cont = 'CardAdditionalDataOrderՑտռլ';
+                var cont = 'CardAdditionalDataOrderCtrl';
                 var id = 'CardAdditionalDataOrderDetails';
                 var title = title;
+                break
             case 233://Քարտի չվերաթողարկում
                 var temp = '/CardNotRenewOrder/CardNotRenewOrderDetails';
                 var id = 'CardNotRenewOrderDetails';
@@ -840,6 +841,16 @@
             case 250: //Visa Alias  հայտ
                 var temp = '/Card/VisaAliasOrderDetails';
                 var id = 'VisaAliasOrderDetails';
+                var title = title;
+                break;
+            case 257:
+                var temp = '/CardlessCashoutCancellationOrder/CardlessCashoutCancellationOrderDetails';
+                var id = 'CardlessCashoutCancellationOrderDetails';
+                var title = title;
+                break;
+            case 268:  /*Davit Pos */
+                var temp = '/PosLocation/NewPosApplicationOrderDetails';
+                var id = 'NewPosApplicationOrderDetails';
                 var title = title;
                 break;
             default:
@@ -1365,6 +1376,18 @@
                     });
                 }, function () {
                     alert('Error GetCreditLineOrderReport');
+                });
+                break;
+            case "238":
+                fileName = 'CardlessCashoutCancellationOrder';
+                Data = cardlessCashoutCancellationOrderCtrlService.GetCardlessCashoutCancellationOrderReport($scope.searchParams);
+                Data.then(function (response) {
+                    var requestObj = { Parameters: response.data, ReportName: 169, ReportExportFormat: 2 }
+                    ReportingApiService.getReport(requestObj, function (result) {
+                        ShowExcelReport(result, fileName);
+                    });
+                }, function () {
+                    alert('Error GetCardlessCashoutCancellationOrderReport');
                 });
                 break;
         }

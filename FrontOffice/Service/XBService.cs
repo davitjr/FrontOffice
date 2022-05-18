@@ -8,6 +8,7 @@ using FrontOffice.Models;
 using xbs = FrontOffice.XBS;
 using System.Net.Sockets;
 using System.Web.Script.Serialization;
+using System.Threading.Tasks;
 
 namespace FrontOffice.Service
 {
@@ -90,6 +91,7 @@ namespace FrontOffice.Service
             return currentAccounts;
         }
 
+
         public static List<MembershipRewardsBonusHistory> GetCardMembershipRewardsBonusHistory(string cardNumber, DateTime startDate, DateTime endDate)
         {
             List<MembershipRewardsBonusHistory> mrBonusHistory = new List<MembershipRewardsBonusHistory>();
@@ -108,7 +110,7 @@ namespace FrontOffice.Service
                 client.DeleteDepoAccounts(customerNumber);
             }
            );
-            
+
         }
 
         public static List<Card> GetCards(ProductQualityFilter filter)
@@ -6110,8 +6112,8 @@ namespace FrontOffice.Service
         {
             ActionResult result = new ActionResult();
             XBService.Use(client =>
-            {       
-                order.Type = OrderType.BondRegistrationOrder;                
+            {
+                order.Type = OrderType.BondRegistrationOrder;
                 order.RegistrationDate = order.RegistrationDate.Date;
 
                 result = client.SaveAndApproveBondOrder(order);
@@ -9399,7 +9401,7 @@ namespace FrontOffice.Service
             return cardReOpenReason;
         }
 
- 
+
         public static bool IsCardOpen(string cardNumber)
         {
             bool isCardOpen = true;
@@ -9636,5 +9638,415 @@ namespace FrontOffice.Service
 
             return cardHolderAndCardType;
         }
+
+        public static ActionResult SaveAndApproveCardlessCashoutCancellationOrder(CardlessCashoutCancellationOrder order)
+        {
+            ActionResult result = new ActionResult();
+            XBService.Use(client =>
+            {
+                result = client.SaveAndApproveCardlessCashoutCancellationOrder(order);
+            });
+            return result;
+        }
+
+        public static CardlessCashoutOrder GetCardlessCashoutOrder(uint orderid)
+        {
+            CardlessCashoutOrder cardlessCashoutOrder = new CardlessCashoutOrder();
+
+            XBService.Use(client =>
+            {
+                cardlessCashoutOrder = client.GetCardLessCashOutOrder(orderid);
+            });
+            return cardlessCashoutOrder;
+        }
+
+        public static string CheckCreditLineForRenewedCardAccountRegOrder(RenewedCardAccountRegOrder order)
+        {
+            string message = "";
+            Use(client =>
+            {
+                message = client.CheckCreditLineForRenewedCardAccountRegOrder(order);
+            });
+            return message;
+        }
+        public static List<FrontOffice.XBS.KeyValuePairOfstringstring> GetLoanGrafikChangeDates(string productId)
+        {
+            List<FrontOffice.XBS.KeyValuePairOfstringstring> Dates = new List<FrontOffice.XBS.KeyValuePairOfstringstring>();
+            XBService.Use(client =>
+            {
+                Dates = client.GetLoanGrafikChangeDates(productId);
+            });
+
+            return Dates;
+        }
+
+        public static List<LoanRepaymentGrafik> GetLoanGrafikBeforeChange(string productId, string changeDateStr)
+        {
+            List<LoanRepaymentGrafik> grafik = null;
+            DateTime changeDate = new DateTime();
+            if (changeDateStr != "" && changeDateStr != null)
+            {
+                changeDate = new DateTime(Convert.ToInt32(changeDateStr.Substring(13, 4)),
+                                           Convert.ToInt32(changeDateStr.Substring(10, 2)),
+                                           Convert.ToInt32(changeDateStr.Substring(7, 2)));
+                XBService.Use(client =>
+                {
+                    grafik = client.GetLoanGrafikBeforeChange(productId, changeDate);
+                });
+            }
+            if (grafik != null)
+            {
+                foreach (LoanRepaymentGrafik item in grafik)
+                {
+                    if (item.RescheduledAmount > 0)
+                    {
+                        if (item.FeeRepayment - item.RescheduledAmount > 0)
+                            item.FeeRepayment = item.FeeRepayment - item.RescheduledAmount;
+                    }
+                }
+            }
+            return grafik;
+        }
+
+        public static List<string> CheckPlasticCardRemovalOrder(PlasticCardRemovalOrder order)
+        {
+            List<string> messages = new List<string>();
+            Use(client =>
+            {
+                messages = client.CheckPlasticCardRemovalOrder(order);
+            });
+            return messages;
+        }
+
+        public static List<Borrower> GetLoanBorrowers(ulong productId)
+        {
+            var borrowers = new List<Borrower>();
+            Use(client =>
+            {
+                borrowers = client.GetLoanBorrowers(productId);
+            });
+            return borrowers;
+        }
+
+        internal static ActionResult SaveTaxRefundAgreementDetails(ulong customerNumber, ulong productId, byte agreementExistence, int setNumber)
+        {
+            ActionResult result = new ActionResult();
+            XBService.Use(client =>
+            {
+                result = client.SaveTaxRefundAgreementDetails(customerNumber, productId, agreementExistence, setNumber);
+            });
+            return result;
+        }
+
+        internal static List<ChangeDetails> GetTaxRefundAgreementHistory(int agreementId)
+        {
+            var history = new List<ChangeDetails>();
+            Use(client =>
+            {
+                history = client.GetTaxRefundAgreementHistory(agreementId);
+            });
+            return history;
+        }
+
+        public static List<SentSecuritiesTradingOrder> GetSentSecuritiesTradingOrders(SecuritiesTradingFilter filter)
+        {
+            ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
+            string cacheKey = "Info_SecuritiesTradings" + customerNumber.ToString();
+            string cacheKeyCount = "Info_SecuritiesCount" + customerNumber.ToString();
+
+            Dictionary<int, List<SentSecuritiesTradingOrder>> searchResults = new Dictionary<int, List<SentSecuritiesTradingOrder>>();
+            List<SentSecuritiesTradingOrder> securitiesTrading;
+            int totalRowCount;
+
+            if (!filter.FromCach)
+            {
+                XBService.Use(client =>
+                {
+                    searchResults = client.GetSentSecuritiesTradingOrders(filter);
+                });
+
+                securitiesTrading = searchResults.FirstOrDefault(x => x.Key >= 0).Value.ToList();
+                totalRowCount = searchResults.First(x => x.Key >= 0).Key;
+                CacheHelper.Add(securitiesTrading, cacheKey);
+                CacheHelper.Add(totalRowCount, cacheKeyCount);
+            }
+            else
+            {
+                securitiesTrading = CacheHelper.Get<List<SentSecuritiesTradingOrder>>(cacheKey);
+
+                switch (filter.Sort)
+                {
+                    case SortBy.NotDefined:
+                        break;
+                    case SortBy.AmountMinToMax:
+                        securitiesTrading = securitiesTrading.OrderBy(a => a.Amount ).ToList();
+                        break;
+                    case SortBy.AmountMaxToMin:
+                        securitiesTrading = securitiesTrading.OrderByDescending(a => a.Amount).ToList();
+                        break;
+                    case SortBy.DateMinToMax:
+                        securitiesTrading = securitiesTrading.OrderBy(a => a.RegistrationDate).ToList();
+                        break;
+                    case SortBy.DateMaxToMin:
+                        securitiesTrading = securitiesTrading.OrderByDescending(a => a.RegistrationDate).ToList();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
+            return securitiesTrading;
+        }
+
+        public static string GetSecuritiesTradingLenght()
+        {
+            ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
+            string cacheKeyCount = "Info_SecuritiesCount" + customerNumber.ToString();
+            return CacheHelper.Get<int>(cacheKeyCount).ToString();
+        }
+
+
+        internal static ActionResult SaveAndApproveSecuritiesMarketTradingOrder(SecuritiesMarketTradingOrder order)
+        {
+            var result = new ActionResult();
+            Use(client =>
+            {
+                result = client.SaveAndApproveSecuritiesMarketTradingOrder(order);
+            });
+            return result;
+        }
+
+        internal static SecuritiesTradingOrder GetSecuritiesTradingOrderById(long orderId)
+        {
+            var result = new SecuritiesTradingOrder();
+            Use(client =>
+            {
+                result = client.GetSecuritiesTradingOrderById(orderId);
+            });
+            return result;
+        }
+
+        internal static List<SecuritiesMarketTradingOrder> GetSecuritiesMarketTradingOrder(long orderId)
+        {
+            var result = new List<SecuritiesMarketTradingOrder>();
+            Use(client =>
+            {
+                result = client.GetSecuritiesMarketTradingOrder(orderId);
+            });
+            return result;
+        }
+
+        internal static SecuritiesTradingOrderCancellationOrder GetSecuritiesTradingOrderCancellationOrder(long id)
+        {
+            var result = new SecuritiesTradingOrderCancellationOrder();
+            Use(client =>
+            {
+                result = client.GetSecuritiesTradingOrderCancellationOrder(id);
+            });
+            return result;
+        }
+
+
+        internal static ActionResult ConfirmSecuritiesTradingOrderCancellationOrder(SecuritiesTradingOrderCancellationOrder order)
+        {
+            var result = new ActionResult();
+            Use(client =>
+            {
+                result = client.ConfirmSecuritiesTradingOrderCancellationOrder(order);
+            });
+            return result;
+        }
+
+
+        internal static ActionResult ConfirmSecuritiesTradingOrder(SecuritiesTradingOrder order)
+        {
+            var result = new ActionResult();
+            Use(client =>
+            {
+                result = client.ConfirmSecuritiesTradingOrder(order);
+            });
+            return result;
+        }
+
+        internal static ActionResult RejectSecuritiesTradingOrderCancellationOrder(SecuritiesTradingOrderCancellationOrder order)
+        {
+            var result = new ActionResult();
+            Use(client =>
+            {
+                result = client.RejectSecuritiesTradingOrderCancellationOrder(order);
+            });
+            return result;
+        }
+
+
+        internal static ActionResult RejectSecuritiesTradingOrder(SecuritiesTradingOrder order)
+        {
+            var result = new ActionResult();
+            Use(client =>
+            {
+                result = client.RejectSecuritiesTradingOrder(order);
+            });
+            return result;
+        }
+
+        public static List<CustomerLeasingLoans> GetLeasings()
+        {
+            List<CustomerLeasingLoans> leasings = new List<CustomerLeasingLoans>();
+            XBService.Use(client =>
+            {
+                leasings = client.GetLeasings();
+            });           
+
+            return leasings;
+        }
+
+        public static CustomerLeasingLoans GetLeasing(ulong productId)
+        {
+            CustomerLeasingLoans leasing = new CustomerLeasingLoans();
+            XBService.Use(client =>
+            {
+                leasing = client.GetLeasing(productId);
+            });
+
+            return leasing;
+        }
+
+        public static List<LeasingLoanRepayments> GetLeasingGrafik(ulong productId, byte firstReschedule = 0)
+        {            
+            List<LeasingLoanRepayments> repayments = new List<LeasingLoanRepayments>();
+            XBService.Use(client =>
+            {
+                repayments = client.GetLeasingRepayments(productId, firstReschedule);
+            });
+
+            return repayments;
+        }
+
+        public static List<LeasingOverdueDetail> GetLeasingOverdueDetails(ulong productId)
+        {
+            List<LeasingOverdueDetail> leasingOverdueDetails = new List<LeasingOverdueDetail>();
+            XBService.Use(client =>
+            {
+                leasingOverdueDetails = client.GetLeasingOverdueDetails(productId);
+            });
+
+            return leasingOverdueDetails;
+        }
+
+        public static ulong GetManagerCustomerNumber(ulong customerNumber)
+        {
+            ulong managerCustomerNumber = 0;            
+            XBService.Use(client =>
+            {
+                managerCustomerNumber = client.GetManagerCustomerNumber(customerNumber);
+            });
+
+            return managerCustomerNumber;
+        }        
+
+        public static ActionResult SaveAndEditLeasingCredential(LeasingCredential credential)
+        {
+            ActionResult result = new ActionResult();
+            XBService.Use(client =>
+            {
+                result = client.SaveAndEditLeasingCredential(credential);
+            });
+
+            return result;
+        }
+
+        public static List<LeasingCredential> GetLeasingCredentials(int customerNumber, ProductQualityFilter filter)
+        {
+            List<LeasingCredential> result = new List<LeasingCredential>();
+            XBService.Use(client =>
+            {
+                result = client.GetLeasingCredentials(customerNumber, filter);
+            });
+
+            return result;
+        }
+
+        public static ActionResult SaveRemovedLeasingCredential(int credentialId)
+        {
+            ActionResult result = new ActionResult();
+            XBService.Use(client =>
+            {
+                result = client.SaveRemovedLeasingCredential(credentialId);
+            });
+
+            return result;
+        }
+
+        public static ActionResult SaveClosedLeasingCredential(LeasingCredential credential)
+        {
+            ActionResult result = new ActionResult();
+            XBService.Use(client =>
+            {
+                result = client.SaveClosedLeasingCredential(credential);
+            });
+
+            return result;
+        }
+        internal static ActionResult SaveAndApproveBrokerContractOrder(BrokerContractOrder order)
+        {
+            ActionResult result = new ActionResult();
+            XBService.Use(client =>
+            {
+                result = client.SaveAndApproveBrokerContractOrder(order);
+            });
+            return result;
+        }
+
+        internal static BrokerContract GetBrokerContractProduct(ulong customerNumber)
+        {
+            BrokerContract brokerContract = new BrokerContract();
+            Use(client =>
+            {
+                brokerContract = client.GetBrokerContractProduct(customerNumber);
+            });
+            return brokerContract;
+        }
+        public static void UpdateSecuritiesTradingOrderDeposited(ulong docId)
+        {
+            XBService.Use(client =>
+            {
+                client.UpdateSecuritiesTradingOrderDeposited(docId);
+            });
+        }
+
+        public static ActionResult SaveAndApproveNewPosLocationOrder(XBS.NewPosLocationOrder newPosLocationOrder)
+        {
+            ActionResult result = new ActionResult();
+
+            XBService.Use(client =>
+            {
+                result = client.SaveAndApproveNewPosLocationOrder(newPosLocationOrder);
+            });
+            return result;
+        }
+
+        public static XBS.NewPosLocationOrder NewPosApplicationOrderDetails(long orderId)
+        {
+            XBS.NewPosLocationOrder result = new XBS.NewPosLocationOrder();
+
+            XBService.Use(client =>
+            {
+                result = client.NewPosApplicationOrderDetails(orderId);
+            });
+            return result;
+        }
+
+        public static List<string> GetPosTerminalActivitySphere()
+        {
+            List<string> ActivitySphere = new List<string>();
+
+            XBService.Use(client =>
+            {
+                ActivitySphere = client.GetPosTerminalActivitySphere();
+            });
+            return ActivitySphere;
+        }
+
     }
 }

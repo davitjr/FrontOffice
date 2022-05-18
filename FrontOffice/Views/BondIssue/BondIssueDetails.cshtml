@@ -12,7 +12,7 @@
 <div ng-controller="BondIssueCtrl" data-ng-init="getBondIssue(ProductId)" id="BondIssueDetails">
     <div id="BondIssueDetails_menu" class="menu-bar dialog-menu light-green">
         <ul id="menu" class="dialog-menu">
-            <li class="root-menu-item-4 " ng-click="approveBondIssue(ProductId);" 
+            <li class="root-menu-item-4 " ng-click="approveBondIssue(ProductId);"
                 ng-if="bondIssue.Quality==1 && hideButton!=true && (bondIssue.ShareType == 1 || (bondIssue.ShareType == 2 && bondIssue.SetNumber != $root.SessionProperties.UserId))">
                 <span id="h-menu-item-4"><i id="h-menu-icon-4" class="submitButton h-menu-icon"></i></span>
                 <span>Հաստատել</span>
@@ -23,8 +23,11 @@
             <li ng-if="(bondIssue.Quality==1 || (bondIssue.Quality!=1 && bondIssue.IssuerType == 3)) && hideButton!=true && bondIssue.ShareType == 2" class="root-menu-item-4 " ng-controller="PopUpCtrl" ng-click="params={actionType: 2, bondIssueId: ProductId};openWindow('/BondIssue/StockIssueSave','Բաժնետոմսի թողարկման խմբագրում','newstockissue')">
                 <span id="h-menu-item-2"><img id="h-menu-icon-2" class="editButton h-menu-icon">Խմբագրել</span>
             </li>
-            <li ng-if="bondIssue.Quality == 11 && bondIssue.IssuerType == 3 && hideButton!=true && bondIssue.ShareType == 2" class="root-menu-item-4">
-                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="distributeButton h-menu-icon">Տեղաբաշխել</span>
+            <li ng-click="prepareForPlacement()" ng-if="bondIssue.Quality == 11 && bondIssue.IssuerType == 3 && hideButton!=true && bondIssue.ShareType == 2 && ($root.SessionProperties.AdvancedOptions['isDealingDepartment']=='1' || $root.SessionProperties.AdvancedOptions['isDealingBackOfficeDepartment']=='1')" class="root-menu-item-4">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="prepareForDistributeButton h-menu-icon">Նախապատրաստել Տեղաբաշխման</span>
+            </li>
+            <li ng-click="placeStocks();" ng-if="bondIssue.Quality == 11 && bondIssue.IssuerType == 3 && hideButton!=true && bondIssue.ShareType == 2 && ($root.SessionProperties.AdvancedOptions['isDealingDepartment']=='1' || $root.SessionProperties.AdvancedOptions['isDealingBackOfficeDepartment']=='1')" class="root-menu-item-4">
+                <span id="h-menu-item-2"><img id="h-menu-icon-2" class="distributeButton h-menu-icon">Տեղաբաշխում</span>
             </li>
             <li class="root-menu-item-4 " ng-click="deleteBondIssue(ProductId);" ng-if="bondIssue.Quality==1 && hideButton!=true ">
                 <span id="h-menu-item-4"><i class="glyphicon glyphicon-remove-circle" style="font-size:21px;" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title=""></i></span>

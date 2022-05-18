@@ -375,15 +375,15 @@
     }
 
     //Ավանդի տեսակները
-    $scope.GetDepositStatmentDeliveryTypes = function () {
-        var Data = infoService.GetStatementDeliveryTypes();
-        Data.then(function (acc) {
-            $scope.depositStatmentDeliveryTypes = acc.data;
-        }, function () {
-            alert('DepositTypes Error');
-        });
+    //$scope.GetDepositStatmentDeliveryTypes = function () {
+    //    var Data = infoService.GetStatementDeliveryTypes();
+    //    Data.then(function (acc) {
+    //        $scope.depositStatmentDeliveryTypes = acc.data;
+    //    }, function () {
+    //        alert('DepositTypes Error');
+    //    });
 
-    };
+    //};
 
     $scope.getCustomerType = function () {
         var Data = customerService.getCustomerType();

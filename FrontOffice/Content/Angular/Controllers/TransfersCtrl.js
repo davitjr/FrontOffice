@@ -32,9 +32,18 @@
         Status: "2",
         IsHBTransfer: "0",
         TransferGroup: $rootScope.FromReceived != undefined ? "3" : "0",
-        TransferType: '0'
+        TransferType: '0',
+        TransferSource: "0"
+
         //Filial: "22000",
     };
+
+    $scope.getTransferSource = function () {
+        $scope.transferSource = [
+            { id: '0', name: 'Բոլորը' },
+            { id: '1', name: 'Պետ.տուրք.' }
+        ];
+    }
 
 
     $scope.getUserFilial = function () {
@@ -973,6 +982,43 @@
                         });
                 });
         };
+    };
+    //պետ տուրք
+    $scope.paymentOrderWithStateDutiesMark = function () {
+        debugger;
+        showloading();
+        var Data = transfersService.paymentOrderWithStateDutiesMark($scope.selectedTransferId);
+        Data.then(function (response) {
+            var result = angular.fromJson(response.data.result);
+            var requestObj = { Parameters: result, ReportName: 162, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+            hideloading();
+        }, function () {
+            alert('Error paymentOrderWithoutStateDutiesMark');
+        });
+
+    };
+
+    $scope.paymentOrderWithoutStateDutiesMark = function () {
+        debugger;
+        showloading();
+
+        var Data = transfersService.paymentOrderWithoutStateDutiesMark($scope.selectedTransferId);
+        Data.then(function (response) {
+
+            var result = angular.fromJson(response.data.result);
+
+            var requestObj = { Parameters: result, ReportName: 162, ReportExportFormat: 1 }
+            ReportingApiService.getReport(requestObj, function (result) {
+                ShowPDFReport(result);
+            });
+            hideloading();
+        }, function () {
+            alert('Error paymentOrderWithoutStateDutiesMark');
+        });
+
     };
 
 }]);

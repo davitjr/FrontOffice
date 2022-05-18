@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.SessionState;
 using FrontOffice.Models;
+using System.Threading.Tasks;
 
 namespace FrontOffice.Controllers
 {
@@ -71,7 +72,7 @@ namespace FrontOffice.Controllers
                 List<xbs.BondIssue> bondIssuesNew = new List<XBS.BondIssue>();
                 foreach (xbs.BondIssue bondIssue in bondIssues)
                 {
-                    if(bondIssue.NonDistributedBondsCount >= 0 && bondIssue.ReplacementDate <= DateTime.Now && bondIssue.ReplacementEndDate >= DateTime.Now)
+                    if(bondIssue.NonDistributedBondsCount >= 0 && bondIssue.ReplacementDate <= DateTime.Now && bondIssue.ReplacementEndDate.Date >= DateTime.Now.Date)
                     {
                         bondIssuesNew.Add(bondIssue);
                     }                
@@ -155,6 +156,16 @@ namespace FrontOffice.Controllers
         public JsonResult GetUnitPrice(int bondIssueId)
         {
             return Json(XBService.GetUnitPrice(bondIssueId), JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<JsonResult> PostPrepareForPlacement(int bondIssueId)
+        {
+            return Json(await DepositaryService.PlacementRegistrationInDepository(bondIssueId), JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<JsonResult> PostPlaceStocks(int bondIssueId)
+        {
+            return Json(await DepositaryService.PlacementAuthorizationAndApplyInDepository(bondIssueId), JsonRequestBehavior.AllowGet);
         }
 
     }

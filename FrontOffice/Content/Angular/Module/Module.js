@@ -279,6 +279,11 @@ app.config(['$stateProvider', function ($stateProvider) {
                     }
                 ]
             })
+        .state('newBrokerContract',
+            {
+                url: "/newBrokerContract",
+                templateUrl: 'BrokerContractOrder/BrokerContractOrder'
+            })
         .state('terminatedepositdetails',
             {
                 url: "/terminatedepositdetails",
@@ -1529,6 +1534,17 @@ app.config(['$stateProvider', function ($stateProvider) {
                     }
                 ]
             })
+        .state('securitiesTrading',
+            {
+                url: '/securitiesTrading',
+                templateUrl: '/SecuritiesTrading/Index',
+                controller: [
+                    '$scope', '$stateParams', function ($scope, $stateParams) {
+                        // get the id
+                        $scope.$root.SessionProperties.IsNonCustomerService = false;
+                    }
+                ]
+            })
         .state('depositaryAccount',
             {
                 url: '/depositaryAccount',
@@ -1621,6 +1637,14 @@ app.config(['$stateProvider', function ($stateProvider) {
                     label: 'Պրոդուկտներ >> Ի պահ ընդունված գրավներ (ոսկի)' // angular-breadcrumb's configuration
                 }
             })
+        .state('brokerContract',
+            {
+                url: '/brokerContract ',
+                templateUrl: '/BrokerContract/BrokerContract',
+                ncyBreadcrumb: {
+                    label: 'Պրոդուկտներ >> Բրոկերային պայմանագիր' // angular-breadcrumb's configuration
+                }
+            })
         .state('safekeepingItemDetails',
             {
                 url: '/SafekeepingItemDetails ',
@@ -1674,7 +1698,61 @@ app.config(['$stateProvider', function ($stateProvider) {
 
                     }
                 ]
-            });
+            })
+        .state('leasingMainDetails',
+            {
+                url: "/leasingMainDetails",
+                params: {
+                    productId: null
+                },
+                templateUrl: '/Leasing/LeasingMainDetails',
+                ncyBreadcrumb: {
+                    label: 'Պրոդուկտներ >> Լիզինգներ  >>Լիզինգի տվյալներ' // angular-breadcrumb's configuration
+                },
+                controller: [
+                    '$scope', '$stateParams', function ($scope, $stateParams) {
+                        // get the id
+                       
+                    $scope.productId = $stateParams.productId;
+                            //$scope.loan = $stateParams.closedLoan;
+                    sessionStorage.setItem('leasing', $stateParams.productId);
+                            /*sessionStorage.setItem('closedloan', JSON.stringify($stateParams.closedLoan));*/
+                       
+                    }
+                ]
+            })
+        .state('leasingAllProducts',
+            {
+                url: '/leasingAllProducts',
+                templateUrl: '/LeasingProducts/Index',
+                ncyBreadcrumb: {
+                    label: 'Պրոդուկտներ >> Բոլոր պրոդուկտները' // angular-breadcrumb's configuration
+                }
+            })
+        .state('leasingOutPutReports',
+            {
+                url: '/leasingOutPutReports',
+                templateUrl: '/LeasingOutPutReports/Reports',
+                ncyBreadcrumb: {
+                    label: 'Պրոդուկտներ >> Ելքային ձևեր' // angular-breadcrumb's configuration
+                }
+            })
+        .state('leasingCredentials',
+            {
+                url: '/leasingCredentials',
+                templateUrl: '/LeasingCredential/Credentials',
+                ncyBreadcrumb: {
+                    label: 'Պրոդուկտներ >> Լիազորագրեր' // angular-breadcrumb's configuration
+                }
+            })
+        .state('leasingCredentialDetails',
+            {
+                url: '/leasingCredentialDetails',
+                templateUrl: '/LeasingCredential/CredentialDetails',
+                ncyBreadcrumb: {
+                    label: 'Պրոդուկտներ >> Լիազորագրեր' // angular-breadcrumb's configuration
+                }
+            })
     //.state('FTPRate',
     //{
     //    url: '/FTPRate',

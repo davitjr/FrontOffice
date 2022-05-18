@@ -47,5 +47,9 @@ namespace FrontOffice.Controllers
             return Json(XBService.GetCustomerPlasticCards());
         }
 
+        public JsonResult CheckPlasticCardRemovalOrder(xbs.PlasticCardRemovalOrder order)
+        {
+            return Json(XBService.CheckPlasticCardRemovalOrder(order), JsonRequestBehavior.AllowGet);
+        }
     }
 }

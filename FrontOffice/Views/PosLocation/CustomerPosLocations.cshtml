@@ -15,6 +15,14 @@
         <a href="/#customerposlocations" style="color:black;">Վճարային քարտերի սպասարկում</a>
         <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
     </div>
+
+    @*Davit Pos*@
+    <div ng-controller="PopUpCtrl" ng-click="openWindow('PosLocation/NewPosApplication','Ստեղծում','NewPosApplication')" class="ng-scope">
+        <i class="add-new-product tipB" data-original-title="Նոր տերմինալ"></i>
+    </div>
+    @*Davit Pos*@
+
+
     <div class="product-collapsable-section">
         <div class="product-container-header">
             <div class="include-closed-products">
@@ -42,7 +50,7 @@
                         </td>
                     </tr>
                     <tr ng-if="filter!=1"><td style="color:red; border-width:3px" colspan="2">Փակված սպասարկման կետեր </td></tr>
-                    <tr  ng-if="closingCustomerPosLocations.length!=0" ng-repeat="posLoc in ::closingCustomerPosLocations" ng-class="{'selected':$index == selectedLocationRow}" ng-click="setClickedLocationRow($index,posLoc);" ng-dblclick="openPosLocationDetails();" style="cursor: pointer;">
+                    <tr ng-if="closingCustomerPosLocations.length!=0" ng-repeat="posLoc in ::closingCustomerPosLocations" ng-class="{'selected':$index == selectedLocationRow}" ng-click="setClickedLocationRow($index,posLoc);" ng-dblclick="openPosLocationDetails();" style="cursor: pointer;">
                         <td class="col-md-4">
                             <span class="tab_text">Անվանում` </span> {{ ::posLoc.Description }}
                             <br /> <span class="tab_text">Հասցե` </span> <span class="tab_title">{{ ::posLoc.Address }}</span>

@@ -13,6 +13,346 @@ namespace FrontOffice.XBSInfo {
     using System;
     
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="KeyValuePairOfshortstring", Namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic")]
+    [System.SerializableAttribute()]
+    public partial struct KeyValuePairOfshortstring : System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private short keyField;
+        
+        private string valueField;
+        
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public short key {
+            get {
+                return this.keyField;
+            }
+            set {
+                if ((this.keyField.Equals(value) != true)) {
+                    this.keyField = value;
+                    this.RaisePropertyChanged("key");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string value {
+            get {
+                return this.valueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.valueField, value) != true)) {
+                    this.valueField = value;
+                    this.RaisePropertyChanged("value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BrokerContractSurvey", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
+    [System.SerializableAttribute()]
+    public partial class BrokerContractSurvey : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> BookValueOfPreviousYearOfAssetsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> EducationsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> FinancialExperiencesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> FinancialSituationsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> InvestmentPurposesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> LastYearCapitalsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> LastYearSalesTurnoversField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> OcupationsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> RiskLeaningsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> StockExperiencDurationsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> StockKnowledgesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> StockToolsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> BookValueOfPreviousYearOfAssets {
+            get {
+                return this.BookValueOfPreviousYearOfAssetsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BookValueOfPreviousYearOfAssetsField, value) != true)) {
+                    this.BookValueOfPreviousYearOfAssetsField = value;
+                    this.RaisePropertyChanged("BookValueOfPreviousYearOfAssets");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> Educations {
+            get {
+                return this.EducationsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EducationsField, value) != true)) {
+                    this.EducationsField = value;
+                    this.RaisePropertyChanged("Educations");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> FinancialExperiences {
+            get {
+                return this.FinancialExperiencesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FinancialExperiencesField, value) != true)) {
+                    this.FinancialExperiencesField = value;
+                    this.RaisePropertyChanged("FinancialExperiences");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> FinancialSituations {
+            get {
+                return this.FinancialSituationsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FinancialSituationsField, value) != true)) {
+                    this.FinancialSituationsField = value;
+                    this.RaisePropertyChanged("FinancialSituations");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> InvestmentPurposes {
+            get {
+                return this.InvestmentPurposesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InvestmentPurposesField, value) != true)) {
+                    this.InvestmentPurposesField = value;
+                    this.RaisePropertyChanged("InvestmentPurposes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> LastYearCapitals {
+            get {
+                return this.LastYearCapitalsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastYearCapitalsField, value) != true)) {
+                    this.LastYearCapitalsField = value;
+                    this.RaisePropertyChanged("LastYearCapitals");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> LastYearSalesTurnovers {
+            get {
+                return this.LastYearSalesTurnoversField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastYearSalesTurnoversField, value) != true)) {
+                    this.LastYearSalesTurnoversField = value;
+                    this.RaisePropertyChanged("LastYearSalesTurnovers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> Ocupations {
+            get {
+                return this.OcupationsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OcupationsField, value) != true)) {
+                    this.OcupationsField = value;
+                    this.RaisePropertyChanged("Ocupations");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> RiskLeanings {
+            get {
+                return this.RiskLeaningsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RiskLeaningsField, value) != true)) {
+                    this.RiskLeaningsField = value;
+                    this.RaisePropertyChanged("RiskLeanings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> StockExperiencDurations {
+            get {
+                return this.StockExperiencDurationsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StockExperiencDurationsField, value) != true)) {
+                    this.StockExperiencDurationsField = value;
+                    this.RaisePropertyChanged("StockExperiencDurations");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> StockKnowledges {
+            get {
+                return this.StockKnowledgesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StockKnowledgesField, value) != true)) {
+                    this.StockKnowledgesField = value;
+                    this.RaisePropertyChanged("StockKnowledges");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.BrokerContractSelection> StockTools {
+            get {
+                return this.StockToolsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StockToolsField, value) != true)) {
+                    this.StockToolsField = value;
+                    this.RaisePropertyChanged("StockTools");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BrokerContractSelection", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
+    [System.SerializableAttribute()]
+    public partial class BrokerContractSelection : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Languages", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
     public enum Languages : byte {
@@ -716,64 +1056,6 @@ namespace FrontOffice.XBSInfo {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="KeyValuePairOfshortstring", Namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic")]
-    [System.SerializableAttribute()]
-    public partial struct KeyValuePairOfshortstring : System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private short keyField;
-        
-        private string valueField;
-        
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public short key {
-            get {
-                return this.keyField;
-            }
-            set {
-                if ((this.keyField.Equals(value) != true)) {
-                    this.keyField = value;
-                    this.RaisePropertyChanged("key");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public string value {
-            get {
-                return this.valueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.valueField, value) != true)) {
-                    this.valueField = value;
-                    this.RaisePropertyChanged("value");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SourceType", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
     public enum SourceType : short {
@@ -822,6 +1104,9 @@ namespace FrontOffice.XBSInfo {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         LinkPayment = 15,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        AcbaMat = 16,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1621,6 +1906,224 @@ namespace FrontOffice.XBSInfo {
                 if ((this.m_Item2Field.Equals(value) != true)) {
                     this.m_Item2Field = value;
                     this.RaisePropertyChanged("m_Item2");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TransactionTypeByAML", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
+    [System.SerializableAttribute()]
+    public partial class TransactionTypeByAML : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AdditionalDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> TransactionTypeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AdditionalDescription {
+            get {
+                return this.AdditionalDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AdditionalDescriptionField, value) != true)) {
+                    this.AdditionalDescriptionField = value;
+                    this.RaisePropertyChanged("AdditionalDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> TransactionType {
+            get {
+                return this.TransactionTypeField;
+            }
+            set {
+                if ((this.TransactionTypeField.Equals(value) != true)) {
+                    this.TransactionTypeField = value;
+                    this.RaisePropertyChanged("TransactionType");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CardDesign", Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking")]
+    [System.SerializableAttribute()]
+    public partial class CardDesign : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ImageIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ImageNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ImageURLField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ThemeBannerURLField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ThemeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ThemeNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ThumbNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ThumbURLField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ImageId {
+            get {
+                return this.ImageIdField;
+            }
+            set {
+                if ((this.ImageIdField.Equals(value) != true)) {
+                    this.ImageIdField = value;
+                    this.RaisePropertyChanged("ImageId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ImageName {
+            get {
+                return this.ImageNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImageNameField, value) != true)) {
+                    this.ImageNameField = value;
+                    this.RaisePropertyChanged("ImageName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ImageURL {
+            get {
+                return this.ImageURLField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImageURLField, value) != true)) {
+                    this.ImageURLField = value;
+                    this.RaisePropertyChanged("ImageURL");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ThemeBannerURL {
+            get {
+                return this.ThemeBannerURLField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ThemeBannerURLField, value) != true)) {
+                    this.ThemeBannerURLField = value;
+                    this.RaisePropertyChanged("ThemeBannerURL");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ThemeId {
+            get {
+                return this.ThemeIdField;
+            }
+            set {
+                if ((this.ThemeIdField.Equals(value) != true)) {
+                    this.ThemeIdField = value;
+                    this.RaisePropertyChanged("ThemeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ThemeName {
+            get {
+                return this.ThemeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ThemeNameField, value) != true)) {
+                    this.ThemeNameField = value;
+                    this.RaisePropertyChanged("ThemeName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ThumbName {
+            get {
+                return this.ThumbNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ThumbNameField, value) != true)) {
+                    this.ThumbNameField = value;
+                    this.RaisePropertyChanged("ThumbName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ThumbURL {
+            get {
+                return this.ThumbURLField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ThumbURLField, value) != true)) {
+                    this.ThumbURLField = value;
+                    this.RaisePropertyChanged("ThumbURL");
                 }
             }
         }
@@ -3122,6 +3625,9 @@ namespace FrontOffice.XBSInfo {
         ThirdPersonAccountRightsTransfer = 251,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
+        LeasingPaymentOrder = 252,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
         MRDataChangeOrder = 253,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
@@ -3132,6 +3638,36 @@ namespace FrontOffice.XBSInfo {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         DepositaryAccountOpeningOrder = 256,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CardlessCashoutCancellationOrder = 257,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ConsumeLoanSettlementOrder = 258,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        VehicleInsuranceOrder = 259,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        AcbamatOrder = 260,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SecuritiesBuyOrder = 261,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SecuritiesSellOrder = 262,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        BrokerContractOrder = 263,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SecuritiesMarketTradingOrder = 264,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SecuritiesTradingOrderCancellationOrder = 265,
+
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NewPosTerminalInsertOrder = 268,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -3320,6 +3856,66 @@ namespace FrontOffice.XBSInfo {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="XBSInfo.IXBInfoService")]
     public interface IXBInfoService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetBannerVersion", ReplyAction="http://tempuri.org/IXBInfoService/GetBannerVersionResponse")]
+        int GetBannerVersion();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetBannerVersion", ReplyAction="http://tempuri.org/IXBInfoService/GetBannerVersionResponse")]
+        System.Threading.Tasks.Task<int> GetBannerVersionAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetSecuritiesTypes", ReplyAction="http://tempuri.org/IXBInfoService/GetSecuritiesTypesResponse")]
+        System.Collections.Generic.List<FrontOffice.XBSInfo.KeyValuePairOfshortstring> GetSecuritiesTypes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetSecuritiesTypes", ReplyAction="http://tempuri.org/IXBInfoService/GetSecuritiesTypesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.KeyValuePairOfshortstring>> GetSecuritiesTypesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetTradingOrderTypes", ReplyAction="http://tempuri.org/IXBInfoService/GetTradingOrderTypesResponse")]
+        System.Collections.Generic.List<FrontOffice.XBSInfo.KeyValuePairOfshortstring> GetTradingOrderTypes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetTradingOrderTypes", ReplyAction="http://tempuri.org/IXBInfoService/GetTradingOrderTypesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.KeyValuePairOfshortstring>> GetTradingOrderTypesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GenerateBrokerContractNumber", ReplyAction="http://tempuri.org/IXBInfoService/GenerateBrokerContractNumberResponse")]
+        string GenerateBrokerContractNumber();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GenerateBrokerContractNumber", ReplyAction="http://tempuri.org/IXBInfoService/GenerateBrokerContractNumberResponse")]
+        System.Threading.Tasks.Task<string> GenerateBrokerContractNumberAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetBrokerContractSurvey", ReplyAction="http://tempuri.org/IXBInfoService/GetBrokerContractSurveyResponse")]
+        FrontOffice.XBSInfo.BrokerContractSurvey GetBrokerContractSurvey();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetBrokerContractSurvey", ReplyAction="http://tempuri.org/IXBInfoService/GetBrokerContractSurveyResponse")]
+        System.Threading.Tasks.Task<FrontOffice.XBSInfo.BrokerContractSurvey> GetBrokerContractSurveyAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/HasBrokerContract", ReplyAction="http://tempuri.org/IXBInfoService/HasBrokerContractResponse")]
+        bool HasBrokerContract();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/HasBrokerContract", ReplyAction="http://tempuri.org/IXBInfoService/HasBrokerContractResponse")]
+        System.Threading.Tasks.Task<bool> HasBrokerContractAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetTradingOrderExpirationTypes", ReplyAction="http://tempuri.org/IXBInfoService/GetTradingOrderExpirationTypesResponse")]
+        System.Collections.Generic.List<FrontOffice.XBSInfo.KeyValuePairOfshortstring> GetTradingOrderExpirationTypes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetTradingOrderExpirationTypes", ReplyAction="http://tempuri.org/IXBInfoService/GetTradingOrderExpirationTypesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.KeyValuePairOfshortstring>> GetTradingOrderExpirationTypesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetLinkedCardWarnings", ReplyAction="http://tempuri.org/IXBInfoService/GetLinkedCardWarningsResponse")]
+        System.Collections.Generic.List<string> GetLinkedCardWarnings(string cardNumber, bool renewWithCardNewType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetLinkedCardWarnings", ReplyAction="http://tempuri.org/IXBInfoService/GetLinkedCardWarningsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetLinkedCardWarningsAsync(string cardNumber, bool renewWithCardNewType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetLeasingReportTypes", ReplyAction="http://tempuri.org/IXBInfoService/GetLeasingReportTypesResponse")]
+        System.Collections.Generic.Dictionary<string, string> GetLeasingReportTypes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetLeasingReportTypes", ReplyAction="http://tempuri.org/IXBInfoService/GetLeasingReportTypesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetLeasingReportTypesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetLeasingCredentialClosingReasons", ReplyAction="http://tempuri.org/IXBInfoService/GetLeasingCredentialClosingReasonsResponse")]
+        System.Collections.Generic.Dictionary<string, string> GetLeasingCredentialClosingReasons();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetLeasingCredentialClosingReasons", ReplyAction="http://tempuri.org/IXBInfoService/GetLeasingCredentialClosingReasonsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetLeasingCredentialClosingReasonsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCurrenciesForReceivedFastTransfer", ReplyAction="http://tempuri.org/IXBInfoService/GetCurrenciesForReceivedFastTransferResponse")]
         System.Collections.Generic.Dictionary<string, string> GetCurrenciesForReceivedFastTransfer();
@@ -3786,10 +4382,10 @@ namespace FrontOffice.XBSInfo {
         System.Threading.Tasks.Task<bool> IsCardOpenAsync(string cardNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetJointDepositAvailableCurrencies", ReplyAction="http://tempuri.org/IXBInfoService/GetJointDepositAvailableCurrenciesResponse")]
-        System.Collections.Generic.Dictionary<string, string> GetJointDepositAvailableCurrencies(ulong customerNumber);
+        System.Collections.Generic.Dictionary<string, string> GetJointDepositAvailableCurrencies(ulong customerNumber, ulong thirdPersonCustomerNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetJointDepositAvailableCurrencies", ReplyAction="http://tempuri.org/IXBInfoService/GetJointDepositAvailableCurrenciesResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetJointDepositAvailableCurrenciesAsync(ulong customerNumber);
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetJointDepositAvailableCurrenciesAsync(ulong customerNumber, ulong thirdPersonCustomerNumber);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCommissionNonCollectionReasons", ReplyAction="http://tempuri.org/IXBInfoService/GetCommissionNonCollectionReasonsResponse")]
         System.Collections.Generic.Dictionary<string, string> GetCommissionNonCollectionReasons();
@@ -3808,6 +4404,36 @@ namespace FrontOffice.XBSInfo {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetDepositoryAccountOperators", ReplyAction="http://tempuri.org/IXBInfoService/GetDepositoryAccountOperatorsResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetDepositoryAccountOperatorsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetTransactionTypes", ReplyAction="http://tempuri.org/IXBInfoService/GetTransactionTypesResponse")]
+        System.Collections.Generic.Dictionary<string, string> GetTransactionTypes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetTransactionTypes", ReplyAction="http://tempuri.org/IXBInfoService/GetTransactionTypesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetTransactionTypesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetTransactionTypeByAML", ReplyAction="http://tempuri.org/IXBInfoService/GetTransactionTypeByAMLResponse")]
+        FrontOffice.XBSInfo.TransactionTypeByAML GetTransactionTypeByAML(long doc_ID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetTransactionTypeByAML", ReplyAction="http://tempuri.org/IXBInfoService/GetTransactionTypeByAMLResponse")]
+        System.Threading.Tasks.Task<FrontOffice.XBSInfo.TransactionTypeByAML> GetTransactionTypeByAMLAsync(long doc_ID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCardDesignThemes", ReplyAction="http://tempuri.org/IXBInfoService/GetCardDesignThemesResponse")]
+        System.Collections.Generic.List<FrontOffice.XBSInfo.CardDesign> GetCardDesignThemes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCardDesignThemes", ReplyAction="http://tempuri.org/IXBInfoService/GetCardDesignThemesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.CardDesign>> GetCardDesignThemesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCardDesignImagesByThemeId", ReplyAction="http://tempuri.org/IXBInfoService/GetCardDesignImagesByThemeIdResponse")]
+        System.Collections.Generic.List<FrontOffice.XBSInfo.CardDesign> GetCardDesignImagesByThemeId(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCardDesignImagesByThemeId", ReplyAction="http://tempuri.org/IXBInfoService/GetCardDesignImagesByThemeIdResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.CardDesign>> GetCardDesignImagesByThemeIdAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCardDesignImageByDesignId", ReplyAction="http://tempuri.org/IXBInfoService/GetCardDesignImageByDesignIdResponse")]
+        string GetCardDesignImageByDesignId(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetCardDesignImageByDesignId", ReplyAction="http://tempuri.org/IXBInfoService/GetCardDesignImageByDesignIdResponse")]
+        System.Threading.Tasks.Task<string> GetCardDesignImageByDesignIdAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IXBInfoService/GetInsuranceTypes", ReplyAction="http://tempuri.org/IXBInfoService/GetInsuranceTypesResponse")]
         System.Collections.Generic.Dictionary<string, string> GetInsuranceTypes();
@@ -4867,6 +5493,86 @@ namespace FrontOffice.XBSInfo {
                 base(binding, remoteAddress) {
         }
         
+        public int GetBannerVersion() {
+            return base.Channel.GetBannerVersion();
+        }
+        
+        public System.Threading.Tasks.Task<int> GetBannerVersionAsync() {
+            return base.Channel.GetBannerVersionAsync();
+        }
+        
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.KeyValuePairOfshortstring> GetSecuritiesTypes() {
+            return base.Channel.GetSecuritiesTypes();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.KeyValuePairOfshortstring>> GetSecuritiesTypesAsync() {
+            return base.Channel.GetSecuritiesTypesAsync();
+        }
+        
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.KeyValuePairOfshortstring> GetTradingOrderTypes() {
+            return base.Channel.GetTradingOrderTypes();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.KeyValuePairOfshortstring>> GetTradingOrderTypesAsync() {
+            return base.Channel.GetTradingOrderTypesAsync();
+        }
+        
+        public string GenerateBrokerContractNumber() {
+            return base.Channel.GenerateBrokerContractNumber();
+        }
+        
+        public System.Threading.Tasks.Task<string> GenerateBrokerContractNumberAsync() {
+            return base.Channel.GenerateBrokerContractNumberAsync();
+        }
+        
+        public FrontOffice.XBSInfo.BrokerContractSurvey GetBrokerContractSurvey() {
+            return base.Channel.GetBrokerContractSurvey();
+        }
+        
+        public System.Threading.Tasks.Task<FrontOffice.XBSInfo.BrokerContractSurvey> GetBrokerContractSurveyAsync() {
+            return base.Channel.GetBrokerContractSurveyAsync();
+        }
+        
+        public bool HasBrokerContract() {
+            return base.Channel.HasBrokerContract();
+        }
+        
+        public System.Threading.Tasks.Task<bool> HasBrokerContractAsync() {
+            return base.Channel.HasBrokerContractAsync();
+        }
+        
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.KeyValuePairOfshortstring> GetTradingOrderExpirationTypes() {
+            return base.Channel.GetTradingOrderExpirationTypes();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.KeyValuePairOfshortstring>> GetTradingOrderExpirationTypesAsync() {
+            return base.Channel.GetTradingOrderExpirationTypesAsync();
+        }
+        
+        public System.Collections.Generic.List<string> GetLinkedCardWarnings(string cardNumber, bool renewWithCardNewType) {
+            return base.Channel.GetLinkedCardWarnings(cardNumber, renewWithCardNewType);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetLinkedCardWarningsAsync(string cardNumber, bool renewWithCardNewType) {
+            return base.Channel.GetLinkedCardWarningsAsync(cardNumber, renewWithCardNewType);
+        }
+        
+        public System.Collections.Generic.Dictionary<string, string> GetLeasingReportTypes() {
+            return base.Channel.GetLeasingReportTypes();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetLeasingReportTypesAsync() {
+            return base.Channel.GetLeasingReportTypesAsync();
+        }
+        
+        public System.Collections.Generic.Dictionary<string, string> GetLeasingCredentialClosingReasons() {
+            return base.Channel.GetLeasingCredentialClosingReasons();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetLeasingCredentialClosingReasonsAsync() {
+            return base.Channel.GetLeasingCredentialClosingReasonsAsync();
+        }
+        
         public System.Collections.Generic.Dictionary<string, string> GetCurrenciesForReceivedFastTransfer() {
             return base.Channel.GetCurrenciesForReceivedFastTransfer();
         }
@@ -5475,12 +6181,12 @@ namespace FrontOffice.XBSInfo {
             return base.Channel.IsCardOpenAsync(cardNumber);
         }
         
-        public System.Collections.Generic.Dictionary<string, string> GetJointDepositAvailableCurrencies(ulong customerNumber) {
-            return base.Channel.GetJointDepositAvailableCurrencies(customerNumber);
+        public System.Collections.Generic.Dictionary<string, string> GetJointDepositAvailableCurrencies(ulong customerNumber, ulong thirdPersonCustomerNumber) {
+            return base.Channel.GetJointDepositAvailableCurrencies(customerNumber, thirdPersonCustomerNumber);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetJointDepositAvailableCurrenciesAsync(ulong customerNumber) {
-            return base.Channel.GetJointDepositAvailableCurrenciesAsync(customerNumber);
+        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetJointDepositAvailableCurrenciesAsync(ulong customerNumber, ulong thirdPersonCustomerNumber) {
+            return base.Channel.GetJointDepositAvailableCurrenciesAsync(customerNumber, thirdPersonCustomerNumber);
         }
         
         public System.Collections.Generic.Dictionary<string, string> GetCommissionNonCollectionReasons() {
@@ -5505,6 +6211,46 @@ namespace FrontOffice.XBSInfo {
         
         public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetDepositoryAccountOperatorsAsync() {
             return base.Channel.GetDepositoryAccountOperatorsAsync();
+        }
+        
+        public System.Collections.Generic.Dictionary<string, string> GetTransactionTypes() {
+            return base.Channel.GetTransactionTypes();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetTransactionTypesAsync() {
+            return base.Channel.GetTransactionTypesAsync();
+        }
+        
+        public FrontOffice.XBSInfo.TransactionTypeByAML GetTransactionTypeByAML(long doc_ID) {
+            return base.Channel.GetTransactionTypeByAML(doc_ID);
+        }
+        
+        public System.Threading.Tasks.Task<FrontOffice.XBSInfo.TransactionTypeByAML> GetTransactionTypeByAMLAsync(long doc_ID) {
+            return base.Channel.GetTransactionTypeByAMLAsync(doc_ID);
+        }
+        
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.CardDesign> GetCardDesignThemes() {
+            return base.Channel.GetCardDesignThemes();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.CardDesign>> GetCardDesignThemesAsync() {
+            return base.Channel.GetCardDesignThemesAsync();
+        }
+        
+        public System.Collections.Generic.List<FrontOffice.XBSInfo.CardDesign> GetCardDesignImagesByThemeId(int id) {
+            return base.Channel.GetCardDesignImagesByThemeId(id);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<FrontOffice.XBSInfo.CardDesign>> GetCardDesignImagesByThemeIdAsync(int id) {
+            return base.Channel.GetCardDesignImagesByThemeIdAsync(id);
+        }
+        
+        public string GetCardDesignImageByDesignId(int id) {
+            return base.Channel.GetCardDesignImageByDesignId(id);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetCardDesignImageByDesignIdAsync(int id) {
+            return base.Channel.GetCardDesignImageByDesignIdAsync(id);
         }
         
         public System.Collections.Generic.Dictionary<string, string> GetInsuranceTypes() {

@@ -1,0 +1,124 @@
+﻿
+
+
+<style>
+    table tr td {
+        font-size:13px;
+    }
+    table{
+        padding-top:5px;
+    }
+    #customerData {
+         border-bottom:1px solid white ;/*color:white; font-size:12pt;*/ max-width:257px; padding-left:27px; padding-top:5px; /*font-family: 'Arian AMU';*/ background-color:#FFFFFF
+    }
+
+    #customerUpdate {
+        width:auto;font-size:13px;line-height: 1.1;padding-top:0; padding:5px;color:red;font-family:cursive;font-weight:bold;font-style:italic;
+    }
+    #IsBirthdayToday {
+        color:green;font-family:cursive;font-weight:bold;font-style:italic;font-size:13px
+    }
+
+    #customerPhoto
+    {
+        height:50px;align-items:center; width:50px;
+    }
+
+    #customerBirthDay{
+        width:auto; padding:0;
+    }
+
+</style>
+<div ng-controller="CustomerCtrl" data-ng-init="getCustomer(customernumber)" >
+    <div class="row" style="margin-right:0" ng-show="showfulldata == true" id="customerData">
+        <div class="row" style="margin-right:0">
+            <div class="panel-group">
+                <div class="panel panel-default" style="background-color:#eeeeee">
+                    <div id="customerUpdate" ng-show="customer.UpdateExpired==1" class="col-sm-1" ng-bind="'Տվյալները չեն թարմացվել 1 տարվա ընթացքում'">   </div>
+
+                    <input id="customerType" type="hidden" value="{{customer.CustomerType}}" />
+
+                    <table style="border:none;background-color:transparent">
+                        <tr style="border:none;">
+                            <td class="col-sm-3" style="border:none;">
+                                <img src="~/Content/Images/user_placeholder.png" id="customerPhoto">
+                            </td>
+                            <td style="border:none;">
+                                <div ng-show="customer.CustomerType==6" ng-bind="customer.FirstName + ' ' + customer.LastName + ' ' + customer.MiddleName"></div>
+                                <div ng-show="customer.CustomerType==6" ng-bind="customer.FirstNameEng + ' ' + customer.LastNameEng"></div> 
+                                <div ng-show="customer.CustomerType!=6" ng-bind="customer.OrganisationName"></div>
+                                <div class="text-inverse text-left">Համար` {{customer.CustomerNumber}}</div>
+                                <div class="text-inverse text-left">Մասնաճյուղ` {{customer.FilialCode}}</div>
+                            </td>
+                        </tr>
+                        <tr style="border:none;">
+                            <td colspan="2" style="border:none;">
+                                <div ng-if="customer.BirthDate!=null" class="text-inverse text-left">Ծննդյան ա/թ`  {{customer.BirthDate}}</div>
+                                <div ng-if="customer.DocumentNumber!=null" class="text-inverse text-left">Փաստաթուղթ` {{customer.DocumentNumber + ' ,' + customer.DocumentGivenBy + ',' + customer.DocumentGivenDate}}</div>
+                                <div ng-if="customer.DocumentNumber!=null && customer.PassportNumber!=null && customer.DocumentNumber!=customer.PassportNumber" class="text-inverse text-left">Անձնագիր` {{customer.PassportNumber + ',' + customer.PassportGivenBy + ',' + customer.PassportGivenDate  }}</div>
+                                <div ng-if="customer.TaxCode!=null" class="text-inverse text-left">ՀՎՀՀ` {{customer.TaxCode}}</div>
+                                <div class="text-inverse text-left">{{customer.Address}}</div>
+                                <div ng-repeat="phone in customer.PhoneList">
+                                    <div class="text-inverse text-left">
+                                        <div class="text-inverse text-left">{{::phone.phone.countryCode}}{{::phone.phone.areaCode}}{{::phone.phone.phoneNumber}}</div>
+                                    </div>
+                                </div>
+                                <div ng-repeat="email in customer.EmailList">
+                                    <div class="text-inverse text-left">
+                                        <a href="mailto:{{::email}}"><span class="glyphicon glyphicon-envelope"></span> {{::email}}</a>
+                                    </div>
+                                </div>
+
+                                <div ng-if="customer.DefaultDocumentID!=null" class=" text-inverse text-left">
+                                    <a ng-controller="PopUpCtrl" ng-click="!slides && getAttachmentDocumentList(customer.CustomerNumber);params = { slides: slides, customerNumber: customer.CustomerNumber };openWindow('/ImageSlider/ImageSlider','Ստորագրության նմուշ','imageslider')"><span class="glyphicon glyphicon-list-alt"></span> Ստորագրության նմուշ</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-show="customer.IsBirthdayToday==1">
+                            <td colspan="2" id="IsBirthdayToday">
+                                <div class="col-sm-1 glyphicon glyphicon-gift" style="padding:0"></div>
+                                <div class="col-sm-1" id="customerBirthDay" ng-bind="'Այսoր հաճախորդի ծննդյան օրն է '">   </div>
+                            </td>
+                        </tr>
+                        <tr ng-show="customer.VipType != null " style="height:20px;">
+                            <td colspan="2" id="VipType">
+                                <div class="glyphicon glyphicon-star" style="padding:0; font-size:12pt;font-weight:bold;color:#B59649;">{{customer.VipType}}</div>
+
+                            </td>
+                        </tr>
+                        <tr ng-show="customer.RiskQuality != null " style="height:20px;">
+                            <td colspan="2" id="RiskQuality">
+                                <div style="padding:0;font-weight:bold;color:#FF4949; font-size:75px; margin-top:-70px;margin-bottom:-15px;">.</div>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $("#btnRedirect").click(function (e) {
+                    e.preventDefault();
+                    $.ajax({ type: "POST", data: {}, dataType: "json", url: "Login/Redirect" })
+                        .then(function (data) {
+                            window.location = data.redirectUrl + "?redirectTarget=" + data.redirectTarget + "&customerNumber=" + data.customerNumber + "&customerType=" + $("#customerType").attr("value") + "&authorizedUserSessionToken=" + data.authorizedUserSessionToken;
+                        }, function (error) {
+                            console.log(error);
+                        });
+                });
+            });
+        </script>
+    </div>
+    <div  ng-show="showfulldata == false ">
+        <div class="row additionalInfoLabel" ng-show="customer.CustomerType==6">
+            Հաճախորդ` <b>{{customer.FirstName  + ' ' + customer.LastName + ' ' + customer.MiddleName}}</b>
+        </div>
+        <div ng-if="customer.BirthDate!=null" class="row additionalInfoLabel">Ծննդյան ա/թ` <b>{{customer.BirthDate}}</b></div>
+        <div class="row additionalInfoLabel" ng-show="customer.CustomerType!=6" ng-bind="customer.OrganisationName">
+            Հաճախորդ` <b>{{customer.OrganisationName}}</b>
+        </div>
+        <div class="row additionalInfoLabel">Համար` <b>{{customer.CustomerNumber}}</b></div>
+    </div>
+</div>
+

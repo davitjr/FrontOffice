@@ -550,6 +550,20 @@
                                 Ի պահ  ընդունված  գրավներ (ոսկի)
                             </a>
                         </li>
+
+                        <li>
+                            <a onclick="SlideApplicationAreas();" ui-sref="leasingAllProducts">
+                                <i class="fa fa-money"></i>
+                                Լիզինգ
+                            </a>
+                        </li>
+
+                        <li>
+                            <a onclick="SlideApplicationAreas();" ui-sref="brokerContract">
+                                <i class="fa fa-money"></i>
+                                Բրոկերային պայմանագիր
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div id="exchangeOperationsDiv" class="content full-screen-nav-content">
@@ -971,6 +985,9 @@
                                 </li>
                                 <li data-permission-selector="">
                                     <a href="" id="h-menu-item-7" ng-click="getCustomerAllProducts(0)" ng-controller="PrintDocumentsCtrl">Տպել պրոդուկտները (Փակված)</a>
+                                </li>
+                                <li data-permission-selector="">
+                                    <a id="h-menu-item-7" ui-sref="leasingAllProducts">Լիզինգ</a>
                                 </li>
 
                             </ul>

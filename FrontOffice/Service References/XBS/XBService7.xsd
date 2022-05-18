@@ -1,108 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System.Collections.Generic" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ExternalBanking.PreferredAccounts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ExternalBanking.PreferredAccounts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking" />
   <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:complexType name="ArrayOfKeyValuePairOfunsignedLongstring">
+  <xs:complexType name="PreferredAccountOrder">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/ExternalBanking" base="q1:Order">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AccountNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+          <xs:element minOccurs="0" name="PreferredAccountServiceType" nillable="true" type="tns:PreferredAccountServiceTypes" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PreferredAccountOrder" nillable="true" type="tns:PreferredAccountOrder" />
+  <xs:simpleType name="PreferredAccountServiceTypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PhoneNumberOrEmail">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="VisaAlias">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Sberbank">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PreferredAccountServiceTypes" nillable="true" type="tns:PreferredAccountServiceTypes" />
+  <xs:complexType name="PreferredAccount">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValuePairOfunsignedLongstring" type="tns:KeyValuePairOfunsignedLongstring" />
+      <xs:element minOccurs="0" name="AccountNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfKeyValuePairOfunsignedLongstring" nillable="true" type="tns:ArrayOfKeyValuePairOfunsignedLongstring" />
-  <xs:complexType name="KeyValuePairOfunsignedLongstring">
-    <xs:annotation>
-      <xs:appinfo>
-        <GenericType Name="KeyValuePairOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="unsignedLong" Namespace="http://www.w3.org/2001/XMLSchema" />
-          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
-        </GenericType>
-        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="key" type="xs:unsignedLong" />
-      <xs:element name="value" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="KeyValuePairOfunsignedLongstring" nillable="true" type="tns:KeyValuePairOfunsignedLongstring" />
-  <xs:complexType name="ArrayOfKeyValuePairOfstringstring">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValuePairOfstringstring" type="tns:KeyValuePairOfstringstring" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValuePairOfstringstring" nillable="true" type="tns:ArrayOfKeyValuePairOfstringstring" />
-  <xs:complexType name="KeyValuePairOfstringstring">
-    <xs:annotation>
-      <xs:appinfo>
-        <GenericType Name="KeyValuePairOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
-          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
-        </GenericType>
-        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="key" nillable="true" type="xs:string" />
-      <xs:element name="value" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="KeyValuePairOfstringstring" nillable="true" type="tns:KeyValuePairOfstringstring" />
-  <xs:complexType name="ArrayOfKeyValuePairOfintdouble">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValuePairOfintdouble" type="tns:KeyValuePairOfintdouble" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValuePairOfintdouble" nillable="true" type="tns:ArrayOfKeyValuePairOfintdouble" />
-  <xs:complexType name="KeyValuePairOfintdouble">
-    <xs:annotation>
-      <xs:appinfo>
-        <GenericType Name="KeyValuePairOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="int" Namespace="http://www.w3.org/2001/XMLSchema" />
-          <GenericParameter Name="double" Namespace="http://www.w3.org/2001/XMLSchema" />
-        </GenericType>
-        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="key" type="xs:int" />
-      <xs:element name="value" type="xs:double" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="KeyValuePairOfintdouble" nillable="true" type="tns:KeyValuePairOfintdouble" />
-  <xs:complexType name="ArrayOfKeyValuePairOfunsignedLongdouble">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValuePairOfunsignedLongdouble" type="tns:KeyValuePairOfunsignedLongdouble" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfKeyValuePairOfunsignedLongdouble" nillable="true" type="tns:ArrayOfKeyValuePairOfunsignedLongdouble" />
-  <xs:complexType name="KeyValuePairOfunsignedLongdouble">
-    <xs:annotation>
-      <xs:appinfo>
-        <GenericType Name="KeyValuePairOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="unsignedLong" Namespace="http://www.w3.org/2001/XMLSchema" />
-          <GenericParameter Name="double" Namespace="http://www.w3.org/2001/XMLSchema" />
-        </GenericType>
-        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="key" type="xs:unsignedLong" />
-      <xs:element name="value" type="xs:double" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="KeyValuePairOfunsignedLongdouble" nillable="true" type="tns:KeyValuePairOfunsignedLongdouble" />
-  <xs:complexType name="KeyValuePairOfstringdouble">
-    <xs:annotation>
-      <xs:appinfo>
-        <GenericType Name="KeyValuePairOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
-          <GenericParameter Name="double" Namespace="http://www.w3.org/2001/XMLSchema" />
-        </GenericType>
-        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="key" nillable="true" type="xs:string" />
-      <xs:element name="value" type="xs:double" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="KeyValuePairOfstringdouble" nillable="true" type="tns:KeyValuePairOfstringdouble" />
+  <xs:element name="PreferredAccount" nillable="true" type="tns:PreferredAccount" />
 </xs:schema>

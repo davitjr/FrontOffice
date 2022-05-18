@@ -402,6 +402,7 @@
                 <div class="panel-heading"> Վճարման մանրամասներ</div>
                 <div class="panel-body" style="padding-bottom: 5px; padding-top: 5px;padding-right: 15px;">
                     <div class="form-group " style="padding-right: 10px;margin-bottom:0">
+                        <div ng-if="order.Type == 102 || order.Type == 76" style="padding-left: 4px;"><transactiontypes></transactiontypes></div>
                         <label class="tab_title col-sm-5" for="DescriptionForPayment">Վճարման մանրամասներ</label>
                         <div class="col-sm-6">
                             <div class="row">
@@ -416,6 +417,7 @@
                                 </ng-messages>
                             </div>
                         </div>
+                        <div ng-if="order.Type == 102 || order.Type == 76" style="padding-left: 4px;"><additionaldescription></additionaldescription></div>
                     </div>
                 </div>
             </div>
@@ -426,6 +428,7 @@
                 <div style="padding-right: 25px; padding-top: 5px;">
                     <orderdescription ordertype="order.Type" operations="operations"
                                       description="description" labeldescription="'Նկարագրություն'" formname="fastTransferPaymentOrderForm"></orderdescription>
+                    <div ng-if="order.Type == 102"><additionaldescription></additionaldescription></div>
                 </div>
             </div>
             <div class="panel panel-success" style=" margin-bottom: 10px;">

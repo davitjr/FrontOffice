@@ -1,0 +1,75 @@
+﻿
+<style>
+    .redBold {
+        font-weight: bold;
+        color: red;
+    }
+
+    .blueBold {
+        font-weight: bold;
+        color: blue;
+    }
+</style>
+
+<script type="text/javascript">
+    $("#brokerContractContent").mCustomScrollbar({
+        theme: "rounded-dark",
+        scrollButtons: {
+            scrollAmount: 200,
+            enable: true
+        },
+        mouseWheel: {
+            scrollAmount: 200
+        }
+    });
+</script>
+<div ng-controller="BrokerContractOrderCtrl">   
+    <div class="product-container" id="brokerContract" data-ng-init="getBrokerContractProduct();" ng-show="hideBlank !='true' || brokerContractProduct.ContractNumber != null">
+
+        <div class="header-title">
+            <a ui-sref="brokerContract" style="color:black;">
+                Բրոկերային պայմանագիր
+            </a>
+            <div class="product-collapse tipB fa fa-chevron-down" data-original-title="Թաքցնել" onclick="CollapseProductContainer(this)"></div>
+        </div>
+        <div class="product-collapsable-section">
+            <div class="product-container-header">
+                <div>
+                    &nbsp;&nbsp;&nbsp;
+                    <div ng-if="brokerContractProduct.ContractNumber == null" class="add-new-product" context="contextNewBrokerContract" id="contextMenu"><div id="contextMenu"></div></div>
+                   
+                    <button type="button" class="btn btn-default" style="height:30px" title="Բրոկերային պայմանագրերի տպում" ng-click="printStockBrokerContract(brokerContractProduct.ContractNumber, brokerContractProduct.ContractDate, false);printBrokerContractQuestionnaire(brokerContractProduct.ContractNumber);" ng-show="brokerContractProduct.ContractNumber != null"><span class="glyphicon glyphicon-print" style="top:-4px !important"></span></button>
+
+                    <ul id="contextNewBrokerContract" class="dropdown-menu">
+                        <li><a href="" style="color: black;text-decoration:none!important ;" ng-controller="PopUpCtrl" ng-click="openWindow('/BrokerContract/BrokerContractOrder','Նոր բրոքերային պայմանագրի կնքում','newBrokerContract')">Նոր բրոքերային պայմանագրի կնքում</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="product-content-table custom-scroll" id="brokerContractContent" ng-class="{'product-content-table-full_height' : hideBlank!='true' }">
+                <div ng-if="depoAccounts ==undefined">
+                    <loading></loading>
+                </div>
+                <table class="table table-condensed table-hover" style="background-color:white; margin-top:0px !important;">
+                    <tbody>
+                        <tr ng-if="brokerContractProduct.ContractNumber != null" ng-click="setClickedRow($index)" ng-class="{'selected':$index == selectedRow}"
+                            style="cursor: pointer;">
+                            <td class="col-sm-3" id="brokerContractRow">
+                                <span class="tab_text">Պայմանագրի կնքման ամսաթիվ` </span> {{ ::brokerContractProduct.ContractDate | mydate | date: 'dd/MM/yyyy'}}
+                                <br /> <span class="tab_text">Պայմանագրի համար` </span> {{ brokerContractProduct.ContractNumber }}
+                            </td>
+                        </tr>
+                        <tr ng-if="brokerContractProduct == undefined || brokerContractProduct.ContractNumber == null">
+                            <td colspan="3" style="text-align:center">Առկա չէ Բրոքերային ծառայությունների մատուցման պայմանագիր</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("[data-toggle=tooltip]").tooltip({
+        placement: $(this).data("placement") || 'bottom'
+    });
+</script>
+

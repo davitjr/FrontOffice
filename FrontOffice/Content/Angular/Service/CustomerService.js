@@ -300,5 +300,16 @@
         return response;
     };
 
+    this.getLeasingNumber = function (customerNumber) {
+        var response = $http({
+            method: "post",
+            url: "/Customer/GetLeasingNumber",
+            params: {
+                customerNumber: customerNumber
+            }
+        });
+        return response;
+    };
+
 
 }]);

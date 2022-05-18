@@ -50,6 +50,7 @@ namespace FrontOffice
 
             bool resultFlag = false;
 
+            xbs.User user = (XBS.User)HttpContext.Current.Session[guid + "_User"];
 
             string authUserSessionTokenId = "", authCustomerSessionId = "";
             XBS.UserAccessForCustomer userAccessForCustomer = new XBS.UserAccessForCustomer();
@@ -66,7 +67,7 @@ namespace FrontOffice
             if (authUserSessionTokenId != "" && authCustomerSessionId != "" && userAccessForCustomer.IsCustomerAccessible || ((SessionProperties)System.Web.HttpContext.Current.Session[guid + "_SessionProperties"]).SourceType == 6)
                 resultFlag = true;
 
-            if (!resultFlag)
+            if (!resultFlag && user.filialCode != 60400)
             {
                 var urlHelper = new UrlHelper(context.RequestContext);
 

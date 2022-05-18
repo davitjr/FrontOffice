@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html>
+<html ng-app="FrontOffice" ng-strict-di>
+<head>
+
+    <title>ACBA Bank</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/Content/Angular/mainangular")
+    <script src="~/Scripts/angular-ui-router.min.js"></script>
+    <script src="~/Scripts/angular-modal-service.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Scripts/chosen_v1.0.0/chosen.min.css" rel="stylesheet" />
+    <script src="~/Scripts/chosen_v1.0.0/chosen.jquery.js"></script>
+    <link rel="image-src" src="~/Scripts/chosen_v1.0.0/chosen-sprite.png" />
+    <script src="~/Scripts/angular-chosen-master/angular-chosen-master/chosen.js"></script>
+    <script src="~/Scripts/angular-messages.min.js"></script>
+    <script src="~/Content/style.css"></script>
+    <script src="~/Scripts/jquery.nicescroll.min.js"></script>
+    <script src="~/Scripts/jquery.carouFredSel-6.2.1-packed.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/angular-breadcrumb.min.js"></script>
+    <script src="~/Scripts/numeral/numeral.min.js"></script>
+    <script src="~/Scripts/jquery-dialogextend 2.0.4.js"></script>
+    <script src="~/Scripts/angular-animate.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <script src="~/Scripts/fcsaNumber.js"></script>
+    <!-- concatenated flow.js + ng-flow libraries -->
+    <script src="~/Scripts/ng-flow-2.6.1/ng-flow-standalone.min.js"></script>
+
+    <link href="~/Content/newTheme/css/expandDiv.css" rel="stylesheet" />
+    <!-- Icons -->
+    <link href="~/Content/newTheme/css/font-awesome.css" rel="stylesheet">
+    <link href="~/Content/newTheme/css/icons.css" rel="stylesheet">
+    <link href="~/Content/newTheme/css/animate.css" rel="stylesheet">
+    <link href="~/Content/newTheme/css/style.css" rel="stylesheet">
+
+    <link href="~/Content/newTheme/css/jquery.mCustomScrollbar.css" rel="stylesheet">
+    <!-- Plugins stylesheets (all plugin custom css) -->
+    <link href="~/Content/newTheme/css/plugins.css" rel="stylesheet">
+    <!-- Main stylesheets (template main css file) -->
+    <link href="~/Content/newTheme/css/main.css" rel="stylesheet">
+
+    <link href="~/Content/newTheme/css/menu-style.css" rel="stylesheet">
+
+    <!--Notification -->
+    <link href="~/Content/newTheme/css/notes.css" rel="stylesheet">
+    <!-- Windows8 touch icon ( http://www.buildmypinnedsite.com/ )-->
+    <meta name="msapplication-TileColor" content="#3399cc">
+
+    @Styles.Render("~/Content/themes/base/css")
+
+    <script src="~/Content/newTheme/js/notes.js"></script>
+
+    <script src="~/Content/newTheme/js/jquery.mousewheel.min.js"></script>
+    <script src="~/Content/newTheme/js/jquery.mCustomScrollbar.js"></script>
+
+    <script src="~/Content/newTheme/js/script.js"></script>
+    <!-- Handle responsive view functions -->
+    <script src="~/Content/newTheme/js/jRespond.min.js"></script>
+    <!-- Custom scroll for sidebars,tables and etc. -->
+
+    <script src="~/Content/newTheme/plugins/core/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/newTheme/plugins/core/slimscroll/jquery.slimscroll.horizontal.min.js"></script>
+
+    <script src="~/Content/newTheme/js/libs/date.js"></script>
+
+    <script src="~/Scripts/xlsx/xlsx.core.min.js"></script>
+    <script src="~/Scripts/xlsx/xlsx.full.min.js"></script>
+
+    <script src="~/Scripts/document-schema-definition/financIal-planning-definition.js"></script>
+    <script src="~/Scripts/document-schema-definition/financIal-planning-table.js"></script>
+
+
+    <script type="text/javascript">
+
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+        }
+
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+
+        $(document).mouseup(function (e) {
+            var container = $("#applicationMainMenu");
+            if (!container.is(e.target) // if the target of the click isn't the container...
+                && container.has(e.target).length === 0) // ... nor a descendant of the container
+            {
+                container.hide('slide', { direction: "up" }, 500);
+                document.querySelector(".overlay").classList.add("display-none");
+            }
+        });
+
+    </script>
+
+    <style type="text/css">
+        .jqstooltip {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            visibility: hidden;
+            background: rgb(0, 0, 0) transparent;
+            background-color: rgba(0,0,0,0.6);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+            color: white;
+            font: 10px arial, san serif;
+            text-align: left;
+            white-space: nowrap;
+            padding: 5px;
+            border: 1px solid white;
+            z-index: 10000;
+        }
+
+        .jqsfield {
+            color: white;
+            font: 10px arial, san serif;
+            text-align: left;
+        }
+    </style>
+</head>
+<body class=" fixed-header fixed-left-sidebar fixed-right-sidebar pace-done">
+    <sessionproperties id="sessionpropertie"></sessionproperties>
+    <div id="Loader" class="overlayLoading hidden">
+        <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+    </div>
+    <div id="header" class="page-navbar header-fixed">
+        <!-- .no-collapse -->
+        <div id="navbar-no-collapse" class="navbar-no-collapse">
+            <!-- top left nav -->
+            <ul class="nav navbar-nav">
+                <li ng-if="$root.OpenMode != 1 && $root.OpenMode != 6 && $root.OpenMode != 8 && $root.OpenMode != 9 && $root.OpenMode != 15" class="navbar-item-right-border" onclick="SlideApplicationAreas()">
+                    <a id="applicationAreaWrapper tipB" data-original-title="Հիմնական մենյու">
+                        <i class="fa fa-bars"></i>
+                        <span class="sr-only">Հիմնական մենյու</span>
+                    </a>
+                </li>
+                <li>
+                    <img class="logo" src="~/Content/newTheme/Images/logo-white.png">
+                    <span class="menubar-title">ACBA BANKING SOFTWARE</span>
+                </li>
+                <li style="margin-left:20px;background-color:white;visibility:hidden" id="forTest">
+                    <span class="menubar-title" style="color:red">Ուշադրություն տեստային տարբերակ &nbsp;</span>
+                </li>
+            </ul>
+            <!-- / top left nav -->
+            <!-- top right nav -->
+            <ul class="nav navbar-nav navbar-right">
+                <li id="EndCustomerServiceSession">
+                    <a class="navbar-item-left-border end-service tipB" style="padding: 13px 12px !important;" data-original-title="Վերադառնալ" ng-controller="LoginCtrl" ng-click="exitToLeasingCustomer()" id="exitToCustomer">
+                        <i class="fa fa-power-off"></i>
+                    </a>
+
+
+                </li>
+                <li>
+                    <a id="nav-logout-item" class="tipB user-icon" style="background-image: url({{$root.userPicture!=undefined?$root.userPicture:'/Content/newTheme/Images/bluemanmxxl.png'}});background-size:cover" title="" data-original-title="Դուրս գալ համակարգից" onclick="ShowLogoutContainer()">
+                    </a>
+                </li>
+            </ul>
+            <!-- / top right nav -->
+        </div>
+        <!-- / collapse -->
+    </div>
+
+    <div id="wrapper" style="height:calc(100% - 50px);">
+        <div class="content-container" style="width:100%; height: 100%;margin-top:50px;float:left;">
+           
+            <div class="page-content-wrapper global-content" style="height: calc(100% - 75px);">
+                <div class="page-body" ui-view="">
+
+                    @RenderBody()
+                </div>
+            </div>
+            <div class="invisible-minimized-items-container">
+
+            </div>
+
+            <div class="minimized-dialog-container">
+                <div class="overflow-button fa fa-ellipsis-h" onclick="ShowHiddenDialogs()"></div>
+            </div>
+            <div class="footer" style="height:40px; padding-top:5px">
+                <hr>
+                <div style="display:inline-block; max-width: calc(100% - 220px);padding-bottom: 10px; padding-left:8px;">
+                    <p class="pull-left">
+                        <div>
+                            <div class="text-truncate" style="margin-right:10px;"><text>©</text>2016 | «ԱԿԲԱ ԲԱՆԿ» ԲԲԸ | Բոլոր իրավունքները պաշտպանված են:</div>
+                        </div>
+                    </p>
+                </div>
+                <div style="display:inline-block; float:right; min-width: 220px; padding-left:5px; padding-right:8px;">
+                    <p class="pull-right">
+                        <img id="footer-logo" src="~/Content/newTheme/Images/acba-logo.png" />
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div id="LogoutContainer" hidden ng-controller="CasherCtrl" ng-init="getUserDescription();getCasherDepartment();getCurrentUserPicture()">
+        <div class="top-container">
+            <div class="logo-container">
+                <div class="picture-container">
+                    <img class="big-man" ng-src="{{::userPicture}}" />
+                </div>
+            </div>
+            <div class="user-data">
+                <div style="padding-bottom: 8px;">
+                    <div class="details" style=" font-weight:bold;">{{::userDescription}}</div>
+                    <div class="details" style=" font-weight:bold;"></div>
+                </div>
+                <div style="padding-bottom: 8px;">
+                    <div class="details">{{::casherDepartment.value}}</div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="button-container">
+            <div class="logout-button"> <a id="exit" onclick="">Դուրս գալ</a></div>
+
+            <script>
+                $("#exit").click(function (e) {
+                    e.preventDefault();
+                    $.ajax({ type: "POST", data: {}, dataType: "json", url: "../Login/LogOut" })
+                        .then(function (data) {
+                            window.location = data.redirectUrl;
+
+                        });
+                });
+
+                window.alert = function () { };
+            </script>
+
+        </div>
+    </div>
+
+
+    <script>
+        (function ($) {
+            $(window).on('load', function () {
+
+                $(".page-content-wrapper").mCustomScrollbar({
+                    theme: "rounded-dark",
+                    scrollButtons: {
+                        scrollAmount: 200,
+                        enable: true
+                    },
+                    mouseWheel: {
+                        scrollAmount: 200
+                    }
+                });
+
+            });
+        })(jQuery);
+    </script>
+    <script type="text/javascript">
+        (function () {
+
+            // Show window
+            function showContent(elem) {
+                hideContent();
+                var divId = "#" + elem.attr('id') + "Div";
+                $(divId).addClass('expanded');
+                elem.addClass('cover');
+            }
+            // Reset all
+            function hideContent() {
+                $('#subItems .content').removeClass('expanded');
+                $('.menu li').removeClass('cover');
+            }
+
+            // When a li is clicked, show its content window and position it above all
+            $('.menu li').click(function () {
+                showContent($(this));
+            });
+            // When tabbing, show its content window using ENTER key
+            $('.menu li').keypress(function (e) {
+                if (e.keyCode == 13) {
+                    showContent($(this));
+                }
+            });
+        })();
+    </script>
+
+    <script type="text/javascript">
+        //------------- Bootstrap tooltips -------------//
+        $("[data-toggle=tooltip]").tooltip({ container: 'body' });
+        $(".tip").tooltip({ placement: 'top', container: 'body' });
+        $(".tipR").tooltip({ placement: 'right', container: 'body' });
+        $(".tipB").tooltip({ placement: 'bottom', container: 'body' });
+        $(".tipL").tooltip({ placement: 'left', container: 'body' });
+        //------------- Bootstrap popovers -------------//
+        $("[data-toggle=popover]").popover();
+    </script>
+
+
+</body>
+</html>

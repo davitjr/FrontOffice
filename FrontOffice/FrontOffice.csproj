@@ -186,6 +186,8 @@
     <Compile Include="CacheHelper.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ControllerExtensionMethods.cs" />
+    <Compile Include="Controllers\BrokerContractController.cs" />
+    <Compile Include="Controllers\CardlessCashoutCancellationOrderController.cs" />
     <Compile Include="Controllers\AccountClosingOrderController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountDataChangeOrderController.cs" />
@@ -233,6 +235,7 @@
     <Compile Include="Controllers\ClaimController.cs" />
     <Compile Include="Controllers\ClassifiedLoanActionOrderController.cs" />
     <Compile Include="Controllers\ClassifiedLoanController.cs" />
+    <Compile Include="Controllers\LeasingCredentialController .cs" />
     <Compile Include="Controllers\CredentialController.cs" />
     <Compile Include="Controllers\CredentialOrderController.cs" />
     <Compile Include="Controllers\CreditCommitmentForgivenessController.cs" />
@@ -242,6 +245,7 @@
     <Compile Include="Controllers\CriminalsController.cs" />
     <Compile Include="Controllers\CurrencyExchangeOrderController.cs" />
     <Compile Include="Controllers\CustomerArrestsInfoController.cs" />
+    <Compile Include="Controllers\LeasingCustomerController.cs" />
     <Compile Include="Controllers\CustomersNotesController.cs" />
     <Compile Include="Controllers\DAHKController.cs" />
     <Compile Include="Controllers\DemandDepositRateChangeOrderController.cs" />
@@ -263,7 +267,13 @@
     <Compile Include="Controllers\HomeBankingDocumentsController.cs" />
     <Compile Include="Controllers\InterestMarginOrderController.cs" />
     <Compile Include="Controllers\LeasingCustomerClassificationController.cs" />
+    <Compile Include="Controllers\LeasingOutPutReportsController.cs" />
+    <Compile Include="Controllers\LeasingProductsController.cs" />
     <Compile Include="Controllers\LeasingStatementSessionController.cs" />
+    <Compile Include="Controllers\SecuritiesMarketTradingOrderController.cs" />
+    <Compile Include="Controllers\SecuritiesTradingController.cs" />
+    <Compile Include="Controllers\SecuritiesTradingOrderCancellationOrderController.cs" />
+    <Compile Include="Controllers\TaxRefundController.cs" />
     <Compile Include="Controllers\LoanDelayOrderController.cs" />
     <Compile Include="Controllers\LoanInterestRateConcessionController.cs" />
     <Compile Include="Controllers\MRDataChangeOrderController.cs" />
@@ -351,6 +361,7 @@
     <Compile Include="Controllers\ServicePaymentNoteOrderController.cs" />
     <Compile Include="Controllers\ServicePaymentOrderController.cs" />
     <Compile Include="Controllers\SMSMessagingController.cs" />
+    <Compile Include="Controllers\STAKResponseConfirmController.cs" />
     <Compile Include="Controllers\StatmentByEmailOrderController.cs" />
     <Compile Include="Controllers\SwiftCopyOrderController.cs" />
     <Compile Include="Controllers\NonCustomerServiceController.cs" />
@@ -374,6 +385,7 @@
     <Compile Include="Controllers\VisaAliasOrderController.cs" />
     <Compile Include="Controllers\XBUserGroupController.cs" />
     <Compile Include="CustomBinders\PlanningIndicatorDetailsBinder.cs" />
+    <Compile Include="Filters\LayoutInjecter.cs" />
     <Compile Include="Filters\LoggingFilterAttribute.cs" />
     <Compile Include="Filters\PermissionsFilterAttribute.cs" />
     <Compile Include="Filters\ReportAccessFilter.cs" />
@@ -416,6 +428,7 @@
     <Compile Include="Models\CreditLine.cs" />
     <Compile Include="Models\CreditLineRepayment.cs" />
     <Compile Include="Models\CustomerInfosForArrests.cs" />
+    <Compile Include="Models\CustomerLeasingLoans.cs" />
     <Compile Include="Models\CustomerMainDataViewModel.cs" />
     <Compile Include="Models\CustomerViewModel.cs" />
     <Compile Include="Models\Deposit.cs">
@@ -450,7 +463,10 @@
     <Compile Include="Models\HBUserLog.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JointCustomerModel.cs" />
+    <Compile Include="Models\LeasingGrafik.cs" />
     <Compile Include="Models\LeasingLoan.cs" />
+    <Compile Include="Models\LeasingLoanDetails.cs" />
+    <Compile Include="Models\LeasingOverdueDetail.cs" />
     <Compile Include="Models\LinkedCustomer.cs" />
     <Compile Include="Models\LoanEquipment.cs" />
     <Compile Include="Models\LoanGrafik.cs">
@@ -487,7 +503,11 @@
     <Compile Include="Models\ReceivedBankMailTransfer.cs" />
     <Compile Include="Models\ReestrTransferAdditionalDetails.cs" />
     <Compile Include="Models\SearchEmployeeWork.cs" />
+    <Compile Include="Models\SecuritiesMarketTradingOrder.cs" />
+    <Compile Include="Models\SecuritiesTradingFilter.cs" />
+    <Compile Include="Models\SentSecuritiesTradingOrder.cs" />
     <Compile Include="Models\SessionProperties.cs" />
+    <Compile Include="Models\TaxRefundRequestParameters.cs" />
     <Compile Include="Models\TestLogin.cs" />
     <Compile Include="Models\Transfer.cs" />
     <Compile Include="Models\TransferByCall.cs" />
@@ -523,6 +543,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Service References\EmployeeWorksManagementService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\eSignServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -563,10 +588,12 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Service\ACBAOperationService.cs" />
+    <Compile Include="Service\AMXService.cs" />
     <Compile Include="Service\CardStatementService.cs" />
     <Compile Include="Service\ContractService.cs" />
     <Compile Include="Service\DepositaryService.cs" />
     <Compile Include="Service\EmployeeWorksManagementService.cs" />
+    <Compile Include="Service\eSignService.cs" />
     <Compile Include="Service\FinancialPlanningService.cs" />
     <Compile Include="Service\InfoService.cs" />
     <Compile Include="Service\LADigitalContractService.cs" />
@@ -574,6 +601,7 @@
     <Compile Include="Service\ProxyManager.cs" />
     <Compile Include="Service\ReportService.cs" />
     <Compile Include="Service\SMSMessagingService.cs" />
+    <Compile Include="Service\TaxRefundService.cs" />
     <Compile Include="Service\VisaAliasService.cs" />
     <Compile Include="Service\XBManagementService.cs" />
     <Compile Include="Service\XBService.cs">
@@ -587,6 +615,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Angular\Controllers\SecuritiesTradingOrderCancellationOrderCtrl.js" />
+    <Content Include="Content\Angular\Controllers\SecuritiesMarketTradingOrderCtrl.js" />
+    <Content Include="Content\Angular\Controllers\SecuritiesTradingCtrl.js" />
+    <Content Include="Content\Angular\Controllers\CardlessCashoutCancellationOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\CardLessCashOutOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\AccountClosingOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\AccountDataChangeOrderCtrl.js" />
@@ -632,6 +664,7 @@
     <Content Include="Content\Angular\Controllers\ClassifiedLoanActionOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\ClassifiedLoanActionOrdersCtrl.js" />
     <Content Include="Content\Angular\Controllers\ClassifiedLoanCtrl.js" />
+    <Content Include="Content\Angular\Controllers\LeasingCredentialCtrl.js" />
     <Content Include="Content\Angular\Controllers\CreditCommitmentForgivenessOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\CreditHereAndNowActivationOrdersCtrl.js" />
     <Content Include="Content\Angular\Controllers\CreditHereAndNowCtrl.js" />
@@ -645,6 +678,7 @@
     <Content Include="Content\Angular\Controllers\DepositCaseStoppingPenaltyCalculationOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\DepositCasePenaltyMatureOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\DepositDataChangeOrderCtrl.js" />
+    <Content Include="Content\Angular\Controllers\BrokerContractOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\EmployeePersonalPageCtrl.js" />
     <Content Include="Content\Angular\Controllers\EmployeeWorksCtrl.js" />
     <Content Include="Content\Angular\Controllers\FinancialPlanningCtrl.js" />
@@ -693,6 +727,7 @@
     <Content Include="Content\Angular\Controllers\InterestMarginChangeOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\LeasingCtrl.js" />
     <Content Include="Content\Angular\Controllers\LeasingCustomerClassificationCtrl.js" />
+    <Content Include="Content\Angular\Controllers\LeasingOutPutReportsCtrl.js" />
     <Content Include="Content\Angular\Controllers\LeasingStatementSessionCtrl.js" />
     <Content Include="Content\Angular\Controllers\LoanDelayOrderCtrl.js" />
     <Content Include="Content\Angular\Controllers\LoanEquipmentsCtrl.js" />
@@ -792,6 +827,10 @@
     <Content Include="Content\Angular\Module\SearchRemittanceControl.js" />
     <Content Include="Content\Angular\Module\SearchSwiftCodeControl.js" />
     <Content Include="Content\Angular\Module\SearchTransferBankMail.js" />
+    <Content Include="Content\Angular\Service\SecuritiesTradingOrderCancellationOrderService.js" />
+    <Content Include="Content\Angular\Service\SecuritiesMarketTradingOrderService.js" />
+    <Content Include="Content\Angular\Service\SecuritiesTradingService.js" />
+    <Content Include="Content\Angular\Service\CardlessCashoutCancellationOrderService.js" />
     <Content Include="Content\Angular\Service\CardlessCashoutOrderService.js" />
     <Content Include="Content\Angular\Service\ArcaCardsTransactionOrderService.js" />
     <Content Include="Content\Angular\Service\BondAmountChargeOrderService.js" />
@@ -819,6 +858,7 @@
     <Content Include="Content\Angular\Service\CashierTransactionsService.js" />
     <Content Include="Content\Angular\Service\ChangeBranchOrderService.js" />
     <Content Include="Content\Angular\Service\ClassifiedLoanService.js" />
+    <Content Include="Content\Angular\Service\LeasingCredentialService.js" />
     <Content Include="Content\Angular\Service\CreditCommitmentForgivenessOrderService.js" />
     <Content Include="Content\Angular\Service\CreditHereAndNowService.js" />
     <Content Include="Content\Angular\Service\CreditLineCardReplaceService.js" />
@@ -827,6 +867,7 @@
     <Content Include="Content\Angular\Service\CustomersNotesService.js" />
     <Content Include="Content\Angular\Service\DemandDepositRateChangeOrderService.js" />
     <Content Include="Content\Angular\Service\DepositaryAccountOrderService.js" />
+    <Content Include="Content\Angular\Service\BrokerContractService.js" />
     <Content Include="Content\Angular\Service\DepositaryAccountService.js" />
     <Content Include="Content\Angular\Service\DepositCasePenaltyMatureOrderService.js" />
     <Content Include="Content\Angular\Service\DepositDataChangeOrderService.js" />
@@ -846,6 +887,7 @@
     <Content Include="Content\Angular\Service\HBTokenActivationOrderService.js" />
     <Content Include="Content\Angular\Service\InterestMarginService.js" />
     <Content Include="Content\Angular\Service\LeasingCustomerClassificationService.js" />
+    <Content Include="Content\Angular\Service\LeasingOutPutReportsService.js" />
     <Content Include="Content\Angular\Service\LeasingService.js" />
     <Content Include="Content\Angular\Service\LeasingStatementSessionService.js" />
     <Content Include="Content\Angular\Service\LoanDelayOrderService.js" />
@@ -871,6 +913,7 @@
     <Content Include="Content\Angular\Service\ReportingApiService.js" />
     <Content Include="Content\Angular\Service\SafekeepingItemService.js" />
     <Content Include="Content\Angular\Service\SwiftMessagesService.js" />
+    <Content Include="Content\Angular\Service\TaxRefundService.js" />
     <Content Include="Content\Angular\Service\TokensDistributionService.js" />
     <Content Include="Content\Angular\Service\HBTokenService.js" />
     <Content Include="Content\Angular\Service\HBUserService.js" />
@@ -881,7 +924,6 @@
     <Content Include="Content\Angular\Service\LoanProductClassificationService.js" />
     <Content Include="Content\Angular\Service\OutPutReportsService.js" />
     <Content Include="Content\Angular\Service\PhoneBankingContractService.js" />
-    <Content Include="Content\Angular\Service\PosLocationService.js" />
     <Content Include="Content\Angular\Service\CriminalsService.js" />
     <Content Include="Content\Angular\Service\DAHKService.js" />
     <Content Include="Content\Angular\Service\DepositCaseOrderService.js" />
@@ -944,6 +986,7 @@
     <Content Include="Content\Images\People-Connection.png" />
     <Content Include="Content\Images\percentage.png" />
     <Content Include="Content\Images\png.png" />
+    <Content Include="Content\Images\prepare.png" />
     <Content Include="Content\Images\refresh-icon.png" />
     <Content Include="Content\Images\reject.png" />
     <Content Include="Content\Images\reply.png" />
@@ -1053,6 +1096,7 @@
     <Content Include="Content\newTheme\Images\phone-banking0.png" />
     <Content Include="Content\newTheme\Images\pos-icons.png" />
     <Content Include="Content\newTheme\Images\posIcon.png" />
+    <Content Include="Content\newTheme\Images\prepare.png" />
     <Content Include="Content\newTheme\Images\reports.png" />
     <Content Include="Content\newTheme\Images\request-icon.png" />
     <Content Include="Content\newTheme\Images\section-point-collapse-icon.png" />
@@ -2698,9 +2742,29 @@
     <Content Include="Service References\EmployeeWorksManagementService\FrontOffice.EmployeeWorksManagementService.SearchEmployeeWork.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <None Include="Service References\eSignServiceReference\eSignService.wsdl" />
+    <None Include="Service References\eSignServiceReference\eSignService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\eSignServiceReference\eSignService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\eSignServiceReference\eSignService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\eSignServiceReference\eSignService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\FinancialPlanningService\FinancialPlanningService.disco" />
     <None Include="Service References\FinancialPlanningService\configuration91.svcinfo" />
     <None Include="Service References\FinancialPlanningService\configuration.svcinfo" />
+    <None Include="Service References\eSignServiceReference\eSignService.disco" />
+    <None Include="Service References\eSignServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\eSignServiceReference\configuration.svcinfo" />
+    <None Include="Service References\eSignServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Service References\FinancialPlanningService\FrontOffice.FinancialPlanningService.ActionResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -2846,6 +2910,13 @@
     <None Include="Service References\XBManagement\XBManagementService8.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\XBSInfo\XBInfoService.disco" />
+    <None Include="Service References\XBSInfo\configuration91.svcinfo" />
+    <None Include="Service References\XBSInfo\configuration.svcinfo" />
+    <None Include="Service References\XBSInfo\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <None Include="Service References\XBManagement\XBManagementService.disco" />
     <None Include="Service References\XBManagement\configuration91.svcinfo" />
     <None Include="Service References\XBManagement\configuration.svcinfo" />
@@ -2858,6 +2929,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\XBSInfo\XBInfoService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBSInfo\XBInfoService2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\XBSInfo\XBInfoService3.xsd">
@@ -2877,92 +2951,6 @@
     </None>
     <None Include="Service References\XBSInfo\XBInfoService8.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ACBALibrary.ContactsChangingRiskDetails1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ACBALibrary.CustomerIdentificationAlgorithm.Models1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ACBALibrary1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\AcbaOnlineSecurityService.Helpers1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ACBAOperationService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\Arrays3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ARUSInfrastructure1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\CBDataService.PoliceViolations1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\CBDataService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBanking.CTPayment11.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBanking.PreferredAccounts1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBanking.QrTransfers1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBanking.UtilityPaymentsManagment1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBanking.XBManagement1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBanking1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBankingSecurityLibrary.PersonalAccountSecurity1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBankingSecurityLibrary.TokenOperations1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBankingSecurityLibrary1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\ExternalBankingService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\InformationSecurityLibrary1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\SAPCRM1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\service1.wsdl" />
-    <None Include="Service References\XBS\service3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\service7.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\service8.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\System.Collections.Generic1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\System1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService.disco" />
-    <None Include="Service References\XBS\configuration91.svcinfo" />
-    <None Include="Service References\XBS\configuration.svcinfo" />
-    <None Include="Service References\XBS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Service References\XBSInfo\XBInfoService3.xsd">
       <SubType>Designer</SubType>
@@ -2985,9 +2973,6 @@
     <None Include="Service References\XBSInfo\XBInfoService9.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\XBS\configuration91.svcinfo" />
-    <None Include="Service References\XBS\configuration.svcinfo" />
-    <None Include="Service References\XBS\Reference.svcmap" />
     <None Include="Service References\XBSInfo\XBInfoService.disco" />
     <None Include="Service References\XBSInfo\configuration91.svcinfo" />
     <None Include="Service References\XBSInfo\configuration.svcinfo" />
@@ -3108,7 +3093,6 @@
     <Content Include="Views\Error\MsgOK.cshtml" />
     <Content Include="Views\Error\MsgBoxAccess.cshtml" />
     <Content Include="Views\CustomerDataOrder\CustomerDataOrderDetails.cshtml" />
-    <Content Include="Views\PlasticCardOrder\PlasticCardOrder.cshtml" />
     <Content Include="Views\TransferByCall\_ViewStart.cshtml" />
     <Content Include="Views\Guarantee\Guarantees.cshtml" />
     <Content Include="Views\Guarantee\GuaranteeDetails.cshtml" />
@@ -3132,7 +3116,6 @@
     <Content Include="Views\Error\MsgOK.cshtml" />
     <Content Include="Views\Error\MsgBoxAccess.cshtml" />
     <Content Include="Views\CustomerDataOrder\CustomerDataOrderDetails.cshtml" />
-    <Content Include="Views\PlasticCardOrder\PlasticCardOrder.cshtml" />
     <Content Include="Views\TransferByCall\_ViewStart.cshtml" />
     <Content Include="Views\Guarantee\Guarantees.cshtml" />
     <Content Include="Views\Guarantee\GuaranteeDetails.cshtml" />
@@ -3836,6 +3819,80 @@
     <Content Include="Views\DepositaryAccountOrder\DepositaryNewAccountOrder.cshtml" />
     <Content Include="Views\BondOrder\StockOrder.cshtml" />
     <Content Include="Views\BondIssue\StockIssueSave.cshtml" />
+    <Content Include="Views\SafekeepingItem\SafekeepingItemDetails.cshtml" />
+    <Content Include="Views\SafekeepingItem\SafekeepingItems.cshtml" />
+    <Content Include="Views\CardRenewOrder\CardRenewOrder.cshtml" />
+    <Content Include="Views\CardRenewOrder\CardRenewOrderDetails.cshtml" />
+    <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrder.cshtml" />
+    <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrderDetails.cshtml" />
+    <Content Include="Views\Card\VisaAliasDataChange.cshtml" />
+    <Content Include="Views\Card\VisaAliasOrderDetails.cshtml" />
+    <Content Include="Views\Card\VisaAlias.cshtml" />
+    <Content Include="Views\Loan\LoanRepaymentFromCard.cshtml" />
+    <Content Include="Views\Loan\LoanRepaymentFromCardDataChange.cshtml" />
+    <Content Include="Views\Shared\_LayoutNew_Leasing.cshtml" />
+    <Content Include="Views\Login\LeasingAllProductsSharePoint.cshtml" />
+    <Content Include="Views\Shared\LeasingAllProducts.cshtml" />
+    <Content Include="Views\LeasingCustomer\Customer.cshtml" />
+    <Content Include="Views\LeasingCustomer\CustomerDebts.cshtml" />
+    <Content Include="Views\LeasingCustomer\CustomerDetails.cshtml" />
+    <Content Include="Views\LeasingCustomer\CustomerLinkedPersons.cshtml" />
+    <Content Include="Views\LeasingCustomer\CustomerNew.cshtml" />
+    <Content Include="Views\LeasingCustomer\CustomerPendingRequests.cshtml" />
+    <Content Include="Views\LeasingCustomer\CutomerVIewList.cshtml" />
+    <Content Include="Views\LeasingCustomer\HasACBAOnline.cshtml" />
+    <Content Include="Views\LeasingCustomer\ServicePaymentDetails.cshtml" />
+    <Content Include="Views\LeasingCustomer\ServicePaymentOrder.cshtml" />
+    <Content Include="Views\Leasing\LeasingGrafik.cshtml" />
+    <Content Include="Views\Leasing\LeasingGrafikFirst.cshtml" />
+    <Content Include="Views\Leasing\LeasingMainDetails.cshtml" />
+    <Content Include="Views\Leasing\Leasings.cshtml" />
+    <Content Include="Views\LeasingOutPutReports\Reports.cshtml" />
+    <Content Include="Views\LeasingOutPutReports\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout_Operations_Leasing.cshtml" />
+    <Content Include="Views\Card\VirtualCardCTFInfo.cshtml" />
+    <Content Include="Views\CardlessCashoutCancellationOrder\CardlessCashoutCancellationOrderDetails.cshtml" />
+    <Content Include="Views\Leasing\Leasings.cshtml" />
+    <Content Include="Views\Leasing\LeasingMainDetails.cshtml" />
+    <Content Include="Views\Leasing\LeasingGrafik.cshtml" />
+    <Content Include="Views\Leasing\LeasingGrafikFirst.cshtml" />
+    <Content Include="Views\Leasing\LeasingPaymentOrder.cshtml" />
+    <Content Include="Views\Leasing\LeasingOverdueDetails.cshtml" />
+    <Content Include="Views\Leasing\LeasingTransitPaymentOrder.cshtml" />
+    <Content Include="Views\LeasingCredential\CredentialDetails.cshtml" />
+    <Content Include="Views\LeasingCredential\Credentials.cshtml" />
+    <Content Include="Views\LeasingCredential\CredentialTermination.cshtml" />
+    <Content Include="Views\LeasingCredential\AddNewCredential.cshtml" />
+    <Content Include="Views\SafekeepingItem\SafekeepingItemDetails.cshtml" />
+    <Content Include="Views\SafekeepingItem\SafekeepingItems.cshtml" />
+    <Content Include="Views\CardRenewOrder\CardRenewOrder.cshtml" />
+    <Content Include="Views\CardRenewOrder\CardRenewOrderDetails.cshtml" />
+    <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrder.cshtml" />
+    <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrderDetails.cshtml" />
+    <Content Include="Views\Card\VisaAliasDataChange.cshtml" />
+    <Content Include="Views\Card\VisaAliasOrderDetails.cshtml" />
+    <Content Include="Views\Card\VisaAlias.cshtml" />
+    <Content Include="Views\Loan\LoanRepaymentFromCard.cshtml" />
+    <Content Include="Views\Loan\LoanRepaymentFromCardDataChange.cshtml" />
+    <Content Include="Views\Card\VirtualCardCTFInfo.cshtml" />
+    <Content Include="Views\CardlessCashoutCancellationOrder\CardlessCashoutCancellationOrderDetails.cshtml" />
+    <Content Include="Views\PlasticCardOrder\PlasticCardOrder.cshtml" />
+    <Content Include="Views\Loan\TaxRefundAgreements.cshtml" />
+    <Content Include="Views\Loan\TaxRefundAgreementHistory.cshtml" />
+    <Content Include="Views\SecuritiesTrading\SecuritiesTrading.cshtml" />
+    <Content Include="Views\SecuritiesTrading\_ViewStart.cshtml" />
+    <Content Include="Views\SecuritiesMarketTradingOrder\SecuritiesMarketTradingOrder.cshtml" />
+    <Content Include="Views\SecuritiesMarketTradingOrder\_ViewStart.cshtml" />
+    <Content Include="Views\SecuritiesTrading\SecuritiesTradingOrderDetails.cshtml" />
+    <Content Include="Views\SecuritiesMarketTradingOrder\SecuritiesMarketTradingOrderDetailsList.cshtml" />
+    <Content Include="Views\SecuritiesTradingOrderCancellationOrder\SecuritiesTradingOrderCancellationOrderDetails.cshtml" />
+    <Content Include="Views\SecuritiesTrading\RejectSecuritiesTradingOrderCancellationOrder.cshtml" />
+    <Content Include="Views\SecuritiesTrading\RejectSecuritiesTradingOrder.cshtml" />
+    <Content Include="Views\BrokerContract\BrokerContract.cshtml" />
+    <Content Include="Views\BrokerContract\BrokerContractOrder.cshtml" />
+    <Content Include="Views\PosLocation\PrintPosDocuments.cshtml" />
+    <Content Include="Views\PosLocation\SendPosDocuments.cshtml" />
+    <Content Include="Views\PosLocation\NewPosApplication.cshtml" />
     <None Include="Service References\XBS\XBService.wsdl" />
     <None Include="Service References\XBS\XBService.xsd">
       <SubType>Designer</SubType>
@@ -3891,7 +3948,13 @@
     <None Include="Service References\XBS\XBService24.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\XBS\XBService241.xsd">
+    <None Include="Service References\XBS\XBService25.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService26.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\XBS\XBService27.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\XBS\XBService3.xsd">
@@ -3915,23 +3978,8 @@
     <None Include="Service References\XBS\XBService9.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\SafekeepingItem\SafekeepingItemDetails.cshtml" />
-    <Content Include="Views\SafekeepingItem\SafekeepingItems.cshtml" />
-    <Content Include="Views\CardRenewOrder\CardRenewOrder.cshtml" />
-    <Content Include="Views\CardRenewOrder\CardRenewOrderDetails.cshtml" />
-    <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrder.cshtml" />
-    <Content Include="Views\RenewedCardAccountRegOrder\RenewedCardAccountRegOrderDetails.cshtml" />
-    <None Include="Service References\XBS\XBService90.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\XBS\XBService91.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Views\Card\VisaAliasDataChange.cshtml" />
-    <Content Include="Views\Card\VisaAliasOrderDetails.cshtml" />
-    <Content Include="Views\Card\VisaAlias.cshtml" />
-    <Content Include="Views\Loan\LoanRepaymentFromCard.cshtml" />
-    <Content Include="Views\Loan\LoanRepaymentFromCardDataChange.cshtml" />
+    <Content Include="Views\PosLocation\NewPosApplicationOrderDetails.cshtml" />
+    <Content Include="Views\PosLocation\NewPosTerminalApplication.cshtml" />
     <None Include="Web References\ReportingRS1001\ReportExecution2005.wsdl" />
     <None Include="Web.SQL2016Profile.config">
       <SubType>Designer</SubType>
@@ -3943,6 +3991,7 @@
     <Folder Include="Scripts\angular-chosen-master\angular-chosen-master\src\" />
     <Folder Include="Views\BudgetPaymentOrder\" />
     <Folder Include="Views\ChequeBookOrder\" />
+    <Folder Include="Views\LeasingProducts\" />
     <Folder Include="Views\PhoneBankingActivationOrder\" />
     <Folder Include="Views\PhoneBanking\" />
     <Folder Include="Views\SearchCards\" />
@@ -3962,13 +4011,13 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ACBAServiceReference\" />
-    <WCFMetadataStorage Include="Service References\ACBAServiceReference\" />
     <WCFMetadataStorage Include="Service References\CardStatementService\" />
     <WCFMetadataStorage Include="Service References\CardStatementService\" />
     <WCFMetadataStorage Include="Service References\ContractServiceReference\" />
     <WCFMetadataStorage Include="Service References\ContractServiceReference\" />
     <WCFMetadataStorage Include="Service References\EmployeeWorksManagementService\" />
     <WCFMetadataStorage Include="Service References\EmployeeWorksManagementService\" />
+    <WCFMetadataStorage Include="Service References\eSignServiceReference\" />
     <WCFMetadataStorage Include="Service References\FinancialPlanningService\" />
     <WCFMetadataStorage Include="Service References\FinancialPlanningService\" />
     <WCFMetadataStorage Include="Service References\LADigitalContractService\" />
@@ -4009,7 +4058,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55912</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

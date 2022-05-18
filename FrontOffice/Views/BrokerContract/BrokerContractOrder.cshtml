@@ -1,0 +1,451 @@
+﻿@{
+    Layout = null;
+}
+<style>
+
+    .form-control {
+        color: #6d6d6d;
+    }
+
+    .d-flex-align-center {
+        display: flex;
+        align-items: center;
+    }
+
+    .pl-0 {
+        padding-left: 0;
+    }
+
+    .pr-0 {
+        padding-right: 0;
+    }
+</style>
+<div id="brokerContractLoad" class="overlay hidden">
+    <img class="loader-image non-selectable" src="../../Content/Images/invisible.png" />
+</div>
+<form ng-controller="BrokerContractOrderCtrl" data-ng-init="getBrokerContractSurvey();" style="min-width:650px;" id="BrokerContractOrderForm" name="BrokerContractOrderForm" role="form" novalidate class="form-horizontal" prevent-enter-submit labels-required>
+    <div id="newBrokerContract_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+            <li class="root-menu-item-4 " ng-click="BrokerContractOrderForm.$setSubmitted();BrokerContractOrderForm.$valid && saveBrokerContractOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('newBrokerContract')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+        <div style="max-width:700px">
+            <errors></errors>
+        </div>
+        <div style="max-width:700px;margin-left:50px">
+            <a style="color:red">
+                {{alert}}
+            </a>
+        </div>
+
+        <div class="col-sm-11">
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="Education"> Կրթություն</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <loading-control scopevariable="brokerContractSurvey.Educations"></loading-control>
+                        <select ng-model="order.EducationId"
+                                name="Education" id="Education" class="form-control" required>
+                            <option value="">Ընտրեք ...</option>
+                            <option class="select_options_style" ng-repeat='item in brokerContractSurvey.Educations' style="margin-left:25px" value='{{ item.Id }}'>{{ item.Description }}</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.Education.$dirty"
+                                     for="BrokerContractOrderForm.Education.$error">
+                            <ng-message when="required" class="errors">
+                                Կրթությունը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="Profession"> Մասնագիտություն</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="input-group col-sm-12">
+                            <input type="text" class="tab_title form-control" maxlength="150" id="Profession" name="Profession" ng-model="order.Profession" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.Profession.$dirty"
+                                     for="BrokerContractOrderForm.Profession.$error">
+                            <ng-message when="required" class="errors">
+                                Մասնագիտությունը լրացված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="ActivitySphere"> Գործունեության ոլորտ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <loading-control scopevariable="brokerContractSurvey.Ocupations"></loading-control>
+                        <select ng-model="order.ActivitySphereId"
+                                name="ActivitySphere" id="ActivitySphere" class="form-control" required>
+                            <option value="">Ընտրեք ...</option>
+                            <option class="select_options_style" ng-repeat='item in brokerContractSurvey.Ocupations' style="margin-left:25px" value='{{ item.Id }}'>{{ item.Description }}</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.ActivitySphere.$dirty"
+                                     for="BrokerContractOrderForm.ActivitySphere.$error">
+                            <ng-message when="required" class="errors">
+                                Գործունեության ոլորտը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="StockKnowledge"> Արժեթղթերի շուկայի գիտելիքների մակարդակ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <loading-control scopevariable="brokerContractSurvey.StockKnowledges"></loading-control>
+                        <select ng-model="order.StockKnowledgeId"
+                                name="StockKnowledge" id="StockKnowledge" class="form-control" required>
+                            <option value="">Ընտրեք ...</option>
+                            <option class="select_options_style" ng-repeat='item in brokerContractSurvey.StockKnowledges' style="margin-left:25px" value='{{ item.Id }}'>{{ item.Description }}</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.StockKnowledge.$dirty"
+                                     for="BrokerContractOrderForm.StockKnowledge.$error">
+                            <ng-message when="required" class="errors">
+                                Արժեթղթերի շուկայի գիտելիքների մակարդակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="RiskLeaning"> Ռիսկի Ձեր հակվածությունը</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <loading-control scopevariable="brokerContractSurvey.RiskLeanings"></loading-control>
+                        <select ng-model="order.RiskLeaningId"
+                                name="RiskLeaning" id="RiskLeaning" class="form-control" required>
+                            <option value="">Ընտրեք ...</option>
+                            <option class="select_options_style" ng-repeat='item in brokerContractSurvey.RiskLeanings' style="margin-left:25px" value='{{ item.Id }}'>{{ item.Description }}</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.RiskLeaning.$dirty"
+                                     for="BrokerContractOrderForm.RiskLeaning.$error">
+                            <ng-message when="required" class="errors">
+                                Ռիսկի Ձեր հակվածությունը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="FinancialExperience"> Ֆինանսական ոլորտում աշխատանքային փորձ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <loading-control scopevariable="brokerContractSurvey.FinancialExperiences"></loading-control>
+                        <select ng-model="order.FinancialExperienceId"
+                                name="FinancialExperience" id="FinancialExperience" class="form-control" required>
+                            <option value="">Ընտրեք ...</option>
+                            <option class="select_options_style" ng-repeat='item in brokerContractSurvey.FinancialExperiences' style="margin-left:25px" value='{{ item.Id }}'>{{ item.Description }}</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.FinancialExperience.$dirty"
+                                     for="BrokerContractOrderForm.FinancialExperience.$error">
+                            <ng-message when="required" class="errors">
+                                Ֆինանսական ոլորտում աշխատանքային փորձը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center" ng-if="order.FinancialExperienceId == 1">
+                <label class="tab_title col-sm-5" for="FinancialExperienceDuration"></label>
+
+                <div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <input type="number" min="1" step="any" class="tab_title form-control" id="FinancialExperienceDuration" name="FinancialExperienceDuration" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="order.FinancialExperienceDuration" required>
+                        </div>
+                        <div class="col-sm-5">
+                            <select ng-model="order.FinancialExperienceDurationType"
+                                    name="FinancialExperienceDurationType" id="FinancialExperienceDurationType" class="form-control" required>
+                                <option value="">Ընտրեք ...</option>
+                                <option value="Տարի">Տարի</option>
+                                <option value="Ամիս">Ամիս</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.FinancialExperienceDuration.$dirty"
+                                         for="BrokerContractOrderForm.FinancialExperienceDuration.$error">
+                                <ng-message when="required" class="errors">
+                                    Ֆինանսական ոլորտում աշխատանքային փորձը լրացված չէ
+                                </ng-message>
+                                <ng-message when="min" class="errors">
+                                    Ֆինանսական ոլորտում աշխատանքային փորձը պետք է մեծ լինի 0-ից
+                                </ng-message>
+                            </ng-messages>
+                            <br>
+                            <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.FinancialExperienceDurationType.$dirty"
+                                         for="BrokerContractOrderForm.FinancialExperienceDurationType.$error">
+                                <ng-message when="required" class="errors">
+                                    Ֆինանսական ոլորտում աշխատանքային փորձը ընտրված չէ
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="StockToolIds"> Առնչվել եմ հետևյալ գործիքներ հետ</label>
+                <div class="col-sm-4 pl-0">
+                    <div class="row">
+                        <loading-control scopevariable="brokerContractSurvey.StockTools"></loading-control>
+                        <div class="input-group col-sm-12" ng-repeat="item in brokerContractSurvey.StockTools">
+                            <label class="tab_title col-md-10" style="font-family:'Arial Armenian'">{{ item.Description }}</label>
+                            <input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="isChecked" ng-click="checkStockTools(item.Id, isChecked)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center" ng-if="order.StockToolIds.length > 0">
+                <label class="tab_title col-sm-5" for="StockToolsExpDuration"> Երբ եք առընչվել</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <loading-control scopevariable="brokerContractSurvey.StockExperiencDurations"></loading-control>
+                        <select ng-model="order.StockToolsExpDurationId"
+                                name="StockToolsExpDuration" id="StockToolsExpDuration" class="form-control" required>
+                            <option value="">Ընտրեք ...</option>
+                            <option class="select_options_style" ng-repeat='item in brokerContractSurvey.StockExperiencDurations' style="margin-left:25px" value='{{ item.Id }}'>{{ item.Description }}</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.StockToolsExpDuration.$dirty"
+                                     for="BrokerContractOrderForm.StockToolsExpDuration.$error">
+                            <ng-message when="required" class="errors">
+                                Երբ եք առընչվել տեսակն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="LastYearStockOrderCount"> Նախորդ տարվա արժեթղթային գործարքներ</label>
+                <div class="col-sm-5">
+                    <div class="row">
+                        <div class="input-group col-sm-12">
+                            <input type="number" min="1" step="any" class="tab_title form-control" id="LastYearStockOrderCount" name="LastYearStockOrderCount" ng-model="order.LastYearStockOrderCount" required>
+                            <span class="input-group-addon" id="basic-addon2" style="width: 0;"> AMD </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.LastYearStockOrderCount.$dirty"
+                                     for="BrokerContractOrderForm.LastYearStockOrderCount.$error">
+                            <ng-message when="required" class="errors">
+                                Նախորդ տարվա արժեթղթային գործարքները լրացված չէ
+                            </ng-message>
+                            <ng-message when="min" class="errors">
+                                Նախորդ տարվա արժեթղթային գործարքը պետք է մեծ լինի 0-ից
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="OneOrderAvg"> 1 գործարքի միջին ծավալ</label>
+                <div class="col-sm-5">
+                    <div class="row">
+                        <div class="input-group col-sm-12">
+                            <input type="number" min="1" step="any" class="tab_title form-control" id="OneOrderAvg" name="OneOrderAvg" ng-model="order.OneOrderAvg" required>
+                            <span class="input-group-addon" id="basic-addon2" style="width: 0;"> AMD </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.OneOrderAvg.$dirty"
+                                     for="BrokerContractOrderForm.OneOrderAvg.$error">
+                            <ng-message when="required" class="errors">
+                                1 գործարքի միջին ծավալը լրացված չէ
+                            </ng-message>
+                            <ng-message when="min" class="errors">
+                                1 գործարքի միջին ծավալը պետք է մեծ լինի 0-ից
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="StockPortfolio"> Ձեր արժեթղթերի փաթեթի մեծությունը</label>
+                <div class="col-sm-5">
+                    <div class="row">
+                        <div class="input-group col-sm-12">
+                            <input type="number" min="1" step="any" class="tab_title form-control" id="StockPortfolio" name="StockPortfolio" ng-model="order.StockPortfolio" required>
+                            <span class="input-group-addon" id="basic-addon2" style="width: 0;"> AMD </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.StockPortfolio.$dirty"
+                                     for="BrokerContractOrderForm.StockPortfolio.$error">
+                            <ng-message when="required" class="errors">
+                                Ձեր արժեթղթերի փաթեթի մեծությունը լրացված չէ
+                            </ng-message>
+                            <ng-message when="min" class="errors">
+                                Ձեր արժեթղթերի փաթեթի մեծությունը պետք է մեծ լինի 0-ից
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="FinancialSituation"> Ձեր ֆինանսական վիճակը</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <loading-control scopevariable="brokerContractSurvey.FinancialSituations"></loading-control>
+                        <select ng-model="order.FinancialSituationId"
+                                name="FinancialSituation" id="FinancialSituation" class="form-control" required>
+                            <option value="">Ընտրեք ...</option>
+                            <option class="select_options_style" ng-repeat='item in brokerContractSurvey.FinancialSituations' style="margin-left:25px" value='{{ item.Id }}'>{{ item.Description }}</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.FinancialSituation.$dirty"
+                                     for="BrokerContractOrderForm.FinancialSituation.$error">
+                            <ng-message when="required" class="errors">
+                                Ձեր ֆինանսական վիճակը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="LastYearProfit"> Նախորդող տարվա Ձեր եկամուտը</label>
+                <div class="col-sm-5">
+                    <div class="row">
+                        <div class="input-group col-sm-12">
+                            <input type="number" min="1" step="any" class="tab_title form-control" id="LastYearProfit" name="LastYearProfit" ng-model="order.LastYearProfit" required>
+                            <span class="input-group-addon" id="basic-addon2" style="width: 0;"> AMD </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.LastYearProfit.$dirty"
+                                     for="BrokerContractOrderForm.LastYearProfit.$error">
+                            <ng-message when="required" class="errors">
+                                Նախորդող տարվա Ձեր եկամուտը լրացված չէ
+                            </ng-message>
+                            <ng-message when="min" class="errors">
+                                Նախորդող տարվա Ձեր եկամուտը պետք է մեծ լինի 0-ից
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center">
+                <label class="tab_title col-sm-5" for="InvestmentPurposes"> Ձեր ներդրումային նպատակները</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <loading-control scopevariable="brokerContractSurvey.InvestmentPurposes"></loading-control>
+                        <select ng-model="order.InvestmentPurposeId"
+                                name="InvestmentPurposes" id="InvestmentPurposes" class="form-control" required>
+                            <option value="">Ընտրեք ...</option>
+                            <option class="select_options_style" ng-repeat='item in brokerContractSurvey.InvestmentPurposes' style="margin-left:25px" value='{{ item.Id }}'>{{ item.Description }}</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.InvestmentPurposes.$dirty"
+                                     for="BrokerContractOrderForm.InvestmentPurposes.$error">
+                            <ng-message when="required" class="errors">
+                                Ձեր ներդրումային նպատակները ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center" ng-if="$root.SessionProperties.CustomerType!=6">
+                <label class="tab_title col-sm-5" for="BookValueOfPreviousYearOfAssets"> Ակտիվների նախորդող տարվա հաշվեկշռային արժեք</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <loading-control scopevariable="brokerContractSurvey.BookValueOfPreviousYearOfAssets"></loading-control>
+                        <select ng-model="order.BookValueOfPreviousYearOfAssetId"
+                                name="BookValueOfPreviousYearOfAssets" id="BookValueOfPreviousYearOfAssets" class="form-control" required>
+                            <option value="">Ընտրեք ...</option>
+                            <option class="select_options_style" ng-repeat='item in brokerContractSurvey.BookValueOfPreviousYearOfAssets' style="margin-left:25px" value='{{ item.Id }}'>{{ item.Description }}</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.BookValueOfPreviousYearOfAssets.$dirty"
+                                     for="BrokerContractOrderForm.BookValueOfPreviousYearOfAssets.$error">
+                            <ng-message when="required" class="errors">
+                                Ակտիվների նախորդող տարվա հաշվեկշռային արժեքն ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center" ng-if="$root.SessionProperties.CustomerType!=6">
+                <label class="tab_title col-sm-5" for="LastYearSalesTurnovers"> Նախորդ տարվա իրացման շրջանառություն</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <loading-control scopevariable="brokerContractSurvey.LastYearSalesTurnovers"></loading-control>
+                        <select ng-model="order.LastYearSalesTurnoverId"
+                                name="LastYearSalesTurnovers" id="LastYearSalesTurnovers" class="form-control" required>
+                            <option value="">Ընտրեք ...</option>
+                            <option class="select_options_style" ng-repeat='item in brokerContractSurvey.LastYearSalesTurnovers' style="margin-left:25px" value='{{ item.Id }}'>{{ item.Description }}</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.LastYearSalesTurnovers.$dirty"
+                                     for="BrokerContractOrderForm.LastYearSalesTurnovers.$error">
+                            <ng-message when="required" class="errors">
+                                Նախորդ տարվա իրացման շրջանառությունը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-flex-align-center" ng-if="$root.SessionProperties.CustomerType!=6">
+                <label class="tab_title col-sm-5" for="LastYearCapitals"> Նախորդ տարվա ընդհանուր կապիտալ</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <loading-control scopevariable="brokerContractSurvey.LastYearCapitals"></loading-control>
+                        <select ng-model="order.LastYearCapitalId"
+                                name="LastYearCapitals" id="LastYearCapitals" class="form-control" required>
+                            <option value="">Ընտրեք ...</option>
+                            <option class="select_options_style" ng-repeat='item in brokerContractSurvey.LastYearCapitals' style="margin-left:25px" value='{{ item.Id }}'>{{ item.Description }}</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <ng-messages ng-if="BrokerContractOrderForm.$submitted || BrokerContractOrderForm.LastYearCapitals.$dirty"
+                                     for="BrokerContractOrderForm.LastYearCapitals.$error">
+                            <ng-message when="required" class="errors">
+                                Նախորդ տարվա ընդհանուր կապիտալը ընտրված չէ
+                            </ng-message>
+                        </ng-messages>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+

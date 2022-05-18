@@ -376,6 +376,20 @@
                             <input type="text" ng-model="filter.UETR" class="form-control" style="margin-left:1.80rem;" />
                         </div>
                     </div>
+                    <div class="col-sm-3">
+                        <div class="product-detail-cell product-detail-lable">
+                            Փոխանցման աղբյուր
+                        </div>
+                        <div data-ng-init="getTransferSource()">
+                            <loading-control scopevariable="transferSource"></loading-control>
+                            <select data-ng-model="filter.TransferSource" name="" id="" class="form-control">
+                                <option ng-repeat="k in ::transferSource" value="{{k.id}}">{{k.name}}</option>>
+                                <option value="0" ng-if="filter.TransferSource=='0'" hidden="hidden" style="margin-left:25px">Բոլորը</option>
+                            </select>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -453,6 +467,8 @@
         </div>
     </div>
     <ul id="contextOrders" class="dropdown-menu">
+        <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-controller="TransfersCtrl" class="my_button" ng-if="filter.TransferSource ==1" ng-click="paymentOrderWithStateDutiesMark()">Պետ.տուրքի հանձնարարականի տպում նշումով</a></li>
+        <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-controller="TransfersCtrl" class="my_button" ng-if="filter.TransferSource ==1" ng-click="paymentOrderWithoutStateDutiesMark()">Պետ.տուրքի հանձնարարականի տպում առանց նշումի</a></li>
         <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-controller="TransfersCtrl" class="my_button" ng-if="ShowTransfer" ng-click="showModalOrder()">Դիտարկում</a></li>
         <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-controller="TransfersCtrl" class="my_button" ng-if="selectedTransfer.SendOrReceived==1 || (selectedTransfer.TransferGroup==3 && selectedTransfer.TransferSystem ==1 ) || (selectedTransfer.SendOrReceived == 0 && selectedTransfer.TransferSystem == 23)" ng-click="printTransfer()">Տպել</a></li>
         <li><a style="color: #4a8a2b;text-decoration:none!important ;" ng-controller="TransfersCtrl" class="my_button" ng-if="selectedTransfer!=null && selectedTransfer!=undefined &&  selectedTransfer.DocflowConfirmationId!=0" ng-click="showApproveTransfer()">Հաստատել</a></li>

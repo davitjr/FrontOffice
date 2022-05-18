@@ -979,5 +979,15 @@ namespace FrontOffice.Service
             RenderReport("/ACBAReports/Hypotec_Statment", parameters, exportFormat, "LoanStatement");
         }
 
+        public static void PaymentOrderWithStateDutiesMark(Dictionary<string, string> parameters)
+        {
+            RenderReport("/ACBAReports/PaymentOrderWithStateDutiesMark", parameters, ExportFormat.PDF, "PaymentOrderWithStateDutiesMark");
+        }
+        public static void PaymentOrderWithoutStateDutiesMark(Dictionary<string, string> parameters)
+        {
+            RenderReport("/ACBAReports/PaymentOrderWithStateDutiesMark", parameters, ExportFormat.PDF, "PaymentOrderWithStateDutiesMark");
+        }
+
+
     }
 }

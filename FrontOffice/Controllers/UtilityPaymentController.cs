@@ -235,6 +235,24 @@ namespace FrontOffice.Controllers
             parameters = XBService.GetCommunalReportParameters((short)paymentOrder.CommunalType, (short)paymentOrder.AbonentType, paymentOrder.Code, paymentOrder.Branch);
 
             paymentOrder.Description = Utility.ConvertUnicodeToAnsi(paymentOrder.Description);
+
+            if (paymentOrder.TransactionTypeByAML == null)
+            {
+                var transactionTypeByAML = InfoService.GetTransactionTypeByAML(paymentOrder.OrderId);
+
+                if (transactionTypeByAML != null)
+                {
+                    paymentOrder.TransactionTypeByAML = new xbs.TransactionTypeByAML() { AdditionalDescription = transactionTypeByAML.AdditionalDescription };
+                }
+            }
+
+            if (paymentOrder.CommunalType != xbs.CommunalTypes.ENA && paymentOrder.CommunalType != xbs.CommunalTypes.Gas
+                && paymentOrder.CommunalType != xbs.CommunalTypes.YerWater && paymentOrder.CommunalType != xbs.CommunalTypes.ArmWater
+                && paymentOrder.TransactionTypeByAML != null && !String.IsNullOrEmpty(paymentOrder.TransactionTypeByAML.AdditionalDescription))
+            {
+                paymentOrder.Description += ", " + Utility.ConvertUnicodeToAnsi(paymentOrder.TransactionTypeByAML.AdditionalDescription);
+            }
+
             customerDescription = Utility.ConvertUnicodeToAnsi(customerDescription);
 
             if (paymentOrder.CommunalType == xbs.CommunalTypes.ENA)
@@ -285,10 +303,16 @@ namespace FrontOffice.Controllers
         public Dictionary<string, string> PrintEnaReport(xbs.UtilityPaymentOrder paymentOrder, List<KeyValuePair<string, string>> parameters, xbs.User user, ulong customerNumber, string customerDescription, bool isCopy)
         {
             byte operationType = 0;
+            string PaymentAdditionalDescription = "";
             if (paymentOrder.Type == xbs.OrderType.CashCommunalPayment)
             {
                 operationType = 1;
             }
+            if (paymentOrder.TransactionTypeByAML != null && !String.IsNullOrEmpty(paymentOrder.TransactionTypeByAML.AdditionalDescription))
+            {
+                PaymentAdditionalDescription = ", " + paymentOrder.TransactionTypeByAML.AdditionalDescription;
+            }
+
             Dictionary<string, string> reportParameters = new Dictionary<string, string>();
             reportParameters.Add(key: "FilialCode", value: user.filialCode.ToString());
             reportParameters.Add(key: "OrderNum", value: paymentOrder.OrderNumber);
@@ -299,6 +323,7 @@ namespace FrontOffice.Controllers
             reportParameters.Add(key: "AmountPaid", value: paymentOrder.Amount.ToString());
             reportParameters.Add(key: "PayerName", value: customerDescription);
             reportParameters.Add(key: "PaymentDescription", value: paymentOrder.Description);
+            reportParameters.Add(key: "PaymentAdditionalDescription", value: PaymentAdditionalDescription);
             reportParameters.Add(key: "PaymentDate", value: paymentOrder.OperationDate.Value.ToString("dd/MMM/yyyy"));
             reportParameters.Add(key: "RePrint", value: isCopy ? "1" : "0");
             reportParameters.Add(key: "Cash", value: operationType.ToString());
@@ -412,6 +437,11 @@ namespace FrontOffice.Controllers
             {
                 operationType = 1;
             }
+            string PaymentAdditionalDescription = "";
+            if (paymentOrder.TransactionTypeByAML != null && !String.IsNullOrEmpty(paymentOrder.TransactionTypeByAML.AdditionalDescription))
+            {
+                PaymentAdditionalDescription = ", " + paymentOrder.TransactionTypeByAML.AdditionalDescription;
+            }
             Dictionary<string, string> reportParameters = new Dictionary<string, string>();
             reportParameters.Add(key: "FilialCode", value: user.filialCode.ToString());
             reportParameters.Add(key: "UniqueNumber", value: "0");
@@ -429,6 +459,7 @@ namespace FrontOffice.Controllers
             reportParameters.Add(key: "TransactionNumber", value: "0");
             reportParameters.Add(key: "OrderNumber", value: paymentOrder.OrderNumber);
             reportParameters.Add(key: (paymentOrder.CommunalType == xbs.CommunalTypes.YerWater) ? "ErJurBranch" : "ArmWaterBranch", value: paymentOrder.Branch.ToString());
+            reportParameters.Add(key: "AdditionalDescription", value: PaymentAdditionalDescription);
 
             if (paymentOrder.CommunalType == xbs.CommunalTypes.YerWater)
             {
@@ -475,10 +506,16 @@ namespace FrontOffice.Controllers
         public Dictionary<string, string> PrintGasReport(xbs.UtilityPaymentOrder paymentOrder, List<KeyValuePair<string, string>> parameters, xbs.User user, string customerDescription, bool isCopy)
         {
             byte operationType = 0;
+            string PaymentAdditionalDescription = "";
             if (paymentOrder.Type == xbs.OrderType.CashCommunalPayment)
             {
                 operationType = 1;
             }
+            if (paymentOrder.TransactionTypeByAML != null && !String.IsNullOrEmpty(paymentOrder.TransactionTypeByAML.AdditionalDescription))
+            {
+                PaymentAdditionalDescription = ", " + paymentOrder.TransactionTypeByAML.AdditionalDescription;
+            }
+
             Dictionary<string, string> reportParameters = new Dictionary<string, string>();
 
             if (paymentOrder.AbonentType == 1)
@@ -497,6 +534,7 @@ namespace FrontOffice.Controllers
             reportParameters.Add(key: "AmountCurrency", value: "AMD");
             reportParameters.Add(key: "PayerName", value: customerDescription);
             reportParameters.Add(key: "PaymentDescription", value: paymentOrder.Description);
+            reportParameters.Add(key: "PaymentAdditionalDescription", value: PaymentAdditionalDescription);
             reportParameters.Add(key: "PaymentDate", value: paymentOrder.OperationDate.Value.ToString("dd/MMM/yyyy"));
             reportParameters.Add(key: "RePrint", value: isCopy ? "1" : "0");
             reportParameters.Add(key: "Cash", value: operationType.ToString());
@@ -821,6 +859,24 @@ namespace FrontOffice.Controllers
 
 
             string customerDescription = "";
+            string description = "";
+
+            if (order.TransactionTypeByAML == null)
+            {
+                var transactionTypeByAML = InfoService.GetTransactionTypeByAML(order.OrderId);
+
+                if (transactionTypeByAML != null)
+                {
+                    order.TransactionTypeByAML = new xbs.TransactionTypeByAML() { AdditionalDescription = transactionTypeByAML.AdditionalDescription };
+                }
+            }
+
+
+            if (order.TransactionTypeByAML != null && !String.IsNullOrEmpty(order.TransactionTypeByAML.AdditionalDescription))
+            {
+                description += Utility.ConvertUnicodeToAnsi(order.TransactionTypeByAML.AdditionalDescription);
+            }
+
             CustomerMainDataViewModel customer = new CustomerMainDataViewModel();
 
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
@@ -849,7 +905,7 @@ namespace FrontOffice.Controllers
             foreach (xbs.COWaterReestrDetails item in order.COWaterReestrDetails)
             {
                 reestrString = reestrString + item.OrderNumber + "&" + order.OperationDate.Value.ToString("dd/MMM/yy") + "&" + customerDescription +
-                    "&" + order.Branch + "&" + item.WaterPayment.ToString() + "&" + item.MembershipFee.ToString() + "&" + item.AbonentNumber + "&" + order.AbonentFilialCode.ToString() + "#";
+                    "&" + order.Branch + "&" + item.WaterPayment.ToString() + "&" + item.MembershipFee.ToString() + "&" + item.AbonentNumber + "&" + order.AbonentFilialCode.ToString() + "&" + description + "#";
             }
 
             reportParameters.Add(key: "reestrString", value: reestrString);
@@ -862,7 +918,22 @@ namespace FrontOffice.Controllers
         {
 
             string customerDescription = "";
+            string description = "";
             CustomerMainDataViewModel customer = new CustomerMainDataViewModel();
+            if (order.TransactionTypeByAML == null)
+            {
+                var transactionTypeByAML = InfoService.GetTransactionTypeByAML(order.OrderId);
+
+                if (transactionTypeByAML != null)
+                {
+                    order.TransactionTypeByAML = new xbs.TransactionTypeByAML() { AdditionalDescription = transactionTypeByAML.AdditionalDescription };
+                }
+            }
+
+            if (order.TransactionTypeByAML != null && !String.IsNullOrEmpty(order.TransactionTypeByAML.AdditionalDescription))
+            {
+                description += Utility.ConvertUnicodeToAnsi(order.TransactionTypeByAML.AdditionalDescription);
+            }
 
             ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
             if (customerNumber != 0)
@@ -907,7 +978,7 @@ namespace FrontOffice.Controllers
             foreach (xbs.COWaterReestrDetails item in order.COWaterReestrDetails)
             {
                 reestrString = reestrString + item.OrderNumber + "&" + order.OperationDate.Value.ToString("dd/MMM/yy") + "&" + customerDescription +
-                    "&" + order.Branch + "&" + item.WaterPayment.ToString() + "&" + item.MembershipFee.ToString() + "&" + item.AbonentNumber + "&" + order.AbonentFilialCode.ToString() + "#";
+                    "&" + order.Branch + "&" + item.WaterPayment.ToString() + "&" + item.MembershipFee.ToString() + "&" + item.AbonentNumber + "&" + order.AbonentFilialCode.ToString() + "&" + description + "#";
             }
 
             reportParameters.Add(key: "reestrString", value: reestrString);

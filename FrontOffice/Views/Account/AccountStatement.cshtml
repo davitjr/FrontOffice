@@ -46,6 +46,8 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li ng-if="withoutstatement!=true"><a href="" ng-click="dateFrom<=dateTo && getAccountStatement(accountnumber)">Դիտել</a></li>
+                    <li ng-if="!productappid && !istransitaccount && canPrintCBStatements == 1"><a href="" ng-click="dateFrom<=dateTo && printAccountTransactions(accountnumber,'pdf')">Տպել ՀՀ ԿԲ քաղվածք PDF</a></li>
+                    <li ng-if="!productappid && !istransitaccount && canPrintCBStatements == 1"><a href="" ng-click="dateFrom<=dateTo && printAccountTransactions(accountnumber,'xls')">Տպել ՀՀ ԿԲ քաղվածք Excel</a></li>
                     <li ng-if="!productappid && !istransitaccount"><a href="" ng-click="dateFrom<=dateTo && printStatementNew(accountnumber,1,'pdf')">Տպել PDF(հայերեն)</a></li>
                     <li ng-if="!productappid && !istransitaccount"><a href="" ng-click="dateFrom<=dateTo && printStatementNew(accountnumber,2,'pdf')">Տպել PDF(անգլերեն)</a></li>
                     <li ng-if="!productappid && !istransitaccount"><a href="" ng-click="dateFrom<=dateTo && printStatementNew(accountnumber,3,'pdf')">Տպել PDF(ֆրանսերեն)</a></li>
@@ -59,7 +61,7 @@
                     <li><a href="" ng-click="dateFrom<=dateTo && printStatement(accountnumber,2,'xls')">Տպել Excel(անգլերեն) <span ng-if="!istransitaccount">հին տարբերակ</span></a></li>
                     <li><a href="" ng-click="dateFrom<=dateTo && printStatement(accountnumber,3,'xls')">Տպել Excel(ֆրանսերեն) <span ng-if="!istransitaccount">հին տարբերակ</span></a></li>
 
-                 </ul>
+                </ul>
 
             </div>
             <div class="col-md-3" ng-if="productappid">

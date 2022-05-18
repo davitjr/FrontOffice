@@ -199,31 +199,13 @@
                     </ng-messages>
                 </div>
             </div>
-            <div class="sub_inner form-group">
-                <label class="tab_title col-sm-4" for="cardReportReceivingType">Քաղվածքի ստացման եղանակ</label>
-                <div class="col-sm-7" data-ng-init="GetCardReportReceivingTypes()">
-                    <loading-control scopevariable="cardReportReceivingTypes"></loading-control>
-                    <select ng-show="cardReportReceivingTypes"
-                            data-ng-model="plasticCardOrder.cardReportReceivingType" class="form-control" name="cardReportReceivingType"
-                            data-ng-options="k as v for (k,v) in cardReportReceivingTypes" required>
-                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
-                    </select>
-                    <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.cardReportReceivingType.$dirty"
-                                 for="plasticCardOrderForm.cardReportReceivingType.$error">
-                        <ng-message when="required" class="errors">
-                            Քաղվածքի սատցման եղանակը ընտրված չէ
-                        </ng-message>
-                    </ng-messages>
-                </div>
-            </div>
             <div class="sub_inner form-group" ng-if="$root.SessionProperties.CustomerType==6">
                 <label class="tab_title col-sm-4" for="reportReceivingEmail">Էլեկտրոնային փոստ</label>
                 <div class="col-sm-7" data-ng-init="GetCustomerEmails()">
                     <loading-control scopevariable="reportReceivingEmails"></loading-control>
                     <select ng-show="reportReceivingEmails"
-                            ng-required="plasticCardOrder.cardReportReceivingType==4"
                             data-ng-model="plasticCardOrder.reportReceivingEmail" class="form-control" name="reportReceivingEmail"
-                            data-ng-options="v as v for v in reportReceivingEmails track by v" required></select>
+                            data-ng-options="v as v for v in reportReceivingEmails track by v"></select>
                     <ng-messages class="col-sm-11" ng-if="plasticCardOrderForm.$submitted || plasticCardOrderForm.reportReceivingEmail.$dirty"
                                  for="plasticCardOrderForm.reportReceivingEmail.$error">
                         <ng-message when="required" class="errors">

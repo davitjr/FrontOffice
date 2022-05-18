@@ -1,3 +1,23 @@
 ﻿@{
-    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+    string cLayout = null;
+    if (HttpContext.Current.Request.UrlReferrer != null)
+    {
+        var url = HttpContext.Current.Request.UrlReferrer.LocalPath.ToString();
+
+
+        if (url == "/Login/LeasingAllProducts")
+        {
+            cLayout = "~/Views/Shared/_LayoutNew_Leasing.cshtml";
+        }
+        else
+        {
+            cLayout = "~/Views/Shared/_LayoutNew.cshtml";
+        }
+    }
+    else
+    {
+        cLayout = "~/Views/Shared/_LayoutNew.cshtml";
+    }
+
+    Layout = cLayout;
 }

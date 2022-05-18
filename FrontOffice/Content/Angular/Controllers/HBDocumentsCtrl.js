@@ -1050,7 +1050,7 @@
             showMesageBoxDialog('Ընտրեք տողը', $scope, 'error');
             return;
         }
-        if (document.TransactionQuality != 2 && document.TransactionQuality != 3) {
+        if (document.TransactionQuality != 2 && document.TransactionQuality != 3 && document.TransactionQuality != 20) {
             var text = "";
             for (var i = 0; i < $scope.qualityTypes.length; i++) {
                 if (document.TransactionQuality == $scope.qualityTypes[i].ID) {

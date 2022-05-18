@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OperationService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="OperationService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsp:Policy wsu:Id="IACBAOperationService_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -205,20 +205,20 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/InformationSecurityLibrary" />
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/SAPCRM" />
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAccountSecurity" />
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary" />
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.CustomerIdentificationAlgorithm.Models" />
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails" />
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/System" />
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd11" namespace="http://schemas.datacontract.org/2004/07/ACBAOperationService" />
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd12" namespace="http://schemas.datacontract.org/2004/07/CBDataService" />
-      <xsd:import schemaLocation="http://webc021:85/OperationService.svc?xsd=xsd13" namespace="http://schemas.datacontract.org/2004/07/CBDataService.PoliceViolations" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/InformationSecurityLibrary" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/SAPCRM" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAccountSecurity" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.CustomerIdentificationAlgorithm.Models" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary.ContactsChangingRiskDetails" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd11" namespace="http://schemas.datacontract.org/2004/07/ACBAOperationService" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd12" namespace="http://schemas.datacontract.org/2004/07/CBDataService" />
+      <xsd:import schemaLocation="http://localhost/ACBAOperationService/OperationService.svc?xsd=xsd13" namespace="http://schemas.datacontract.org/2004/07/CBDataService.PoliceViolations" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IACBAOperationService_AutorizeUser_InputMessage">
@@ -766,6 +766,12 @@
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_GetCustomerBirthDate_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCustomerBirthDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IACBAOperationService_GetCustomerNumberFromLeasing_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerNumberFromLeasing" />
+  </wsdl:message>
+  <wsdl:message name="IACBAOperationService_GetCustomerNumberFromLeasing_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerNumberFromLeasingResponse" />
   </wsdl:message>
   <wsdl:message name="IACBAOperationService_InsertCustomer_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertCustomer" />
@@ -3330,6 +3336,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDate" message="tns:IACBAOperationService_GetCustomerBirthDate_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDateResponse" message="tns:IACBAOperationService_GetCustomerBirthDate_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetCustomerNumberFromLeasing">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasing" message="tns:IACBAOperationService_GetCustomerNumberFromLeasing_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasingResponse" message="tns:IACBAOperationService_GetCustomerNumberFromLeasing_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="InsertCustomer">
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/InsertCustomer" message="tns:IACBAOperationService_InsertCustomer_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/InsertCustomerResponse" message="tns:IACBAOperationService_InsertCustomer_OutputMessage" />
@@ -4975,6 +4985,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDate" message="tns:IACBAOperationService_GetCustomerBirthDate_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerBirthDateResponse" message="tns:IACBAOperationService_GetCustomerBirthDate_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetCustomerNumberFromLeasing">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasing" message="tns:IACBAOperationService_GetCustomerNumberFromLeasing_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasingResponse" message="tns:IACBAOperationService_GetCustomerNumberFromLeasing_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="InsertCustomer">
       <wsdl:input wsaw:Action="http://tempuri.org/ICustomerOperations/InsertCustomer" message="tns:IACBAOperationService_InsertCustomer_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICustomerOperations/InsertCustomerResponse" message="tns:IACBAOperationService_InsertCustomer_OutputMessage" />
@@ -6400,6 +6414,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetCustomerBirthDate">
       <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/GetCustomerBirthDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerNumberFromLeasing">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasing" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -10133,6 +10156,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetCustomerNumberFromLeasing">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/GetCustomerNumberFromLeasing" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="InsertCustomer">
       <soap12:operation soapAction="http://tempuri.org/ICustomerOperations/InsertCustomer" style="document" />
       <wsdl:input>
@@ -11573,65 +11605,65 @@
   </wsdl:binding>
   <wsdl:service name="OperationService">
     <wsdl:port name="IACBAOperationService" binding="tns:IACBAOperationService">
-      <soap12:address location="net.tcp://web1021.acbaca.local:8080/OperationService.svc/AcbaOperation" />
+      <soap12:address location="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/AcbaOperation" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://web1021.acbaca.local:8080/OperationService.svc/AcbaOperation</wsa10:Address>
+        <wsa10:Address>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/AcbaOperation</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="IClassFactory" binding="tns:IClassFactory">
-      <soap12:address location="net.tcp://web1021.acbaca.local:8080/OperationService.svc/ClassFactory" />
+      <soap12:address location="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/ClassFactory" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://web1021.acbaca.local:8080/OperationService.svc/ClassFactory</wsa10:Address>
+        <wsa10:Address>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/ClassFactory</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>acbaaccess_test@acbaca.local</Upn>
+          <Upn>Remi.Safary@acbaca.local</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="IInfoService" binding="tns:IInfoService">
-      <soap12:address location="net.tcp://web1021.acbaca.local:8080/OperationService.svc/InfoService" />
+      <soap12:address location="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/InfoService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://web1021.acbaca.local:8080/OperationService.svc/InfoService</wsa10:Address>
+        <wsa10:Address>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/InfoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>acbaaccess_test@acbaca.local</Upn>
+          <Upn>Remi.Safary@acbaca.local</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="ICustomerOperations" binding="tns:ICustomerOperations">
-      <soap12:address location="net.tcp://web1021.acbaca.local:8080/OperationService.svc/CustomerOperations" />
+      <soap12:address location="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/CustomerOperations" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://web1021.acbaca.local:8080/OperationService.svc/CustomerOperations</wsa10:Address>
+        <wsa10:Address>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/CustomerOperations</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>acbaaccess_test@acbaca.local</Upn>
+          <Upn>Remi.Safary@acbaca.local</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="ILoginOperations" binding="tns:ILoginOperations">
-      <soap12:address location="net.tcp://web1021.acbaca.local:8080/OperationService.svc/LoginOperations" />
+      <soap12:address location="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/LoginOperations" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://web1021.acbaca.local:8080/OperationService.svc/LoginOperations</wsa10:Address>
+        <wsa10:Address>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/LoginOperations</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>acbaaccess_test@acbaca.local</Upn>
+          <Upn>Remi.Safary@acbaca.local</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="IDataService" binding="tns:IDataService">
-      <soap12:address location="net.tcp://web1021.acbaca.local:8080/OperationService.svc/DataService" />
+      <soap12:address location="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/DataService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://web1021.acbaca.local:8080/OperationService.svc/DataService</wsa10:Address>
+        <wsa10:Address>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/DataService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>acbaaccess_test@acbaca.local</Upn>
+          <Upn>Remi.Safary@acbaca.local</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="IExternalOperations" binding="tns:IExternalOperations">
-      <soap12:address location="net.tcp://web1021.acbaca.local:8080/OperationService.svc/ExternalOperations" />
+      <soap12:address location="net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/ExternalOperations" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://web1021.acbaca.local:8080/OperationService.svc/ExternalOperations</wsa10:Address>
+        <wsa10:Address>net.tcp://lt0004572.acbaca.local/ACBAOperationService/OperationService.svc/ExternalOperations</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>acbaaccess_test@acbaca.local</Upn>
+          <Upn>Remi.Safary@acbaca.local</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

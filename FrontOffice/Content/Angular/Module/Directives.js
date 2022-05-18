@@ -229,6 +229,10 @@ app.directive("sessionproperties", function () {
                     $rootScope.SessionProperties['IsCalledFromHB'] = res.IsCalledFromHB;
                     $rootScope.SessionProperties['IsCalledForHBConfirm'] = res.IsCalledForHBConfirm;
                     $rootScope.SessionProperties['IsTestVersion'] = res.IsTestVersion;
+                    if (res.LeasingOperDay != null) {
+                        $rootScope.SessionProperties['LeasingOperDay'] = new Date(parseInt(res.LeasingOperDay.substr(6)));
+                        $rootScope.SessionProperties['LeasingNumber'] = res.LeasingNumber;
+                    }
                     //Վերդարձնում է հաճախորդի տեսակը
                     if (!res.IsNonCustomerService) {
                         $.ajax({
@@ -1045,6 +1049,17 @@ app.directive('loans', function () {
     return {
         restrict: 'EA',
         templateUrl: '/Loan/Loans',
+        link: function (scope, elem, attr, ctrl) {
+            var hideBlank = attr.hideBlank;
+            scope.hideBlank = hideBlank;
+        }
+    };
+});
+
+app.directive('leasings', function () {
+    return {
+        restrict: 'EA',
+        templateUrl: '/Leasing/Leasings',
         link: function (scope, elem, attr, ctrl) {
             var hideBlank = attr.hideBlank;
             scope.hideBlank = hideBlank;
@@ -3355,6 +3370,17 @@ app.directive('depositaryaccount', function () {
     };
 });
 
+app.directive('brokercontract', function () {
+    return {
+        restrict: 'EA',
+        templateUrl: '/BrokerContract/Brokercontract',
+        link: function (scope, elem, attr, ctrl) {
+            var hideBlank = attr.hideBlank;
+            scope.hideblank = hideBlank;
+        }
+    };
+});
+
 app.directive('virtualcards', function () {
 	return {
 		restrict: 'EA',
@@ -3631,6 +3657,14 @@ app.directive('arusfasttransferorder', function () {
     };
 });
 
+app.directive('cardlesscashoutcancellationorder', function () {
+    return {
+        restrict: 'E',
+        templateUrl: '/CardlessCashoutCancellationOrder/CardlessCashoutCancellationOrder',
+        controller: 'CardlessCashoutCancellationOrderCtrl'
+    };
+});
+
 app.directive('pensionPaymentOrder', function () {
     return {
         restrict: 'EA',
@@ -3680,3 +3714,115 @@ app.directive('visaalias', function () {
         templateUrl: '/Card/VisaAlias',
     };
 });
+
+app.directive('transactiontypes', function () {
+    return {
+        restrict: 'EA',
+        template: `<div class="sub_inner form-group" ng-init="getTransactionTypes()">
+                   <label id="transactionType" class="tab_title col-sm-5" for="TransactionType" ng-style="(nonauthorizedcustomer =='true' && ordertype === 60 && { width:'200px'}) ||
+                                                                                                           ((ordertype === 60 && {width:'366px'}) || (ordertype === 15 && {width:'203px'})
+                                                                                                                || (order.Type === 76 && {'padding-left':'25px'}) || (order.Type === 102 && {'padding-left':'25px'}))">Գործարքի տեսակ</label>
+                    <div class="col-sm-5" style="padding-left: 0px;">
+                        <loading-control scopevariable="transactionTypes"></loading-control>
+                        <select ng-show="transactionTypes"
+                            ng-model="order.TransactionTypeByAML.TransactionType" class="form-control" name="TransactionType"
+                            ng-options="k as v for (k,v) in transactionTypes">
+                        <option value="" hidden="hidden" style="margin-left:25px">Ընտրեք...</option>
+                    </select>
+                    </div>
+                </div>
+                `,
+        controller: ['$scope', 'infoService', function ($scope, infoService) {
+            $scope.getTransactionTypes = function () {
+                var Data = infoService.getTransactionTypes();
+                Data.then(function (acc) {
+                    $scope.transactionTypes = acc.data
+                }, function (acc) {
+                    alert('Error getTransactionTypes');
+                });
+            }
+
+        }]
+    };
+});
+
+app.directive('additionaldescription', function () {
+    return {
+        restrict: 'EA',
+        template: `<div class="form-group">
+                    <label class="tab_title col-sm-5 control-label" for="description" ng-style="(order.Type === 79 && {width:'217px'}) || (order.Type === 76 && {'padding-left':'25px'}) || (order.Type === 102 && {'padding-left':'25px'})">Լրացուցիչ նկարագրություն</label>
+                    <div class="col-sm-6 ">
+                        <div class="row">
+                            <textarea style="text-align:left" onkeypress="return isArmenianUnicode(event.keyCode)" onpaste="return CheckPasteText(event)" ng-model="order.TransactionTypeByAML.AdditionalDescription" name="additional" class="form-control tab_title"></textarea>
+                        </div>
+                    </div>
+                </div> `,
+        controller: ['$scope', function ($scope) { }]
+    };
+});
+
+app.directive('taxrefundagreementdetails', function () {
+    return {
+        restrict: 'EA',
+        scope: {
+            productid: '='
+        },
+        templateUrl: '/Loan/TaxRefundAgreements',
+        controller: ['$scope', '$element', 'taxRefundService', function ($scope, $element, taxRefundService) {
+
+            $scope.getLoanBorrowers = function () {
+                var Data = taxRefundService.getLoanBorrowers($scope.productid);
+                Data.then(function (list) {
+                    $scope.borrowers = list.data;
+                }, function () {
+                    alert('Error getLoanBorrowers');
+                });
+            };
+        }
+        ]
+    };
+});
+
+app.directive('leasingallproductsdirective', function () {
+
+    return {
+        restrict: 'EA',
+        template: '<div class="container" ng-controller="LoginCtrl" ng-init="leasingLogIn()"></div>'
+    }
+});
+
+
+
+app.directive('leasingcustomerinfo', ['$http', '$compile', function ($http, $compile) {
+
+    return {
+        restrict: 'E',
+        scope: {
+            customernumber: '=',
+            showfulldata: '=?',
+            viewmod: '=?'//Եթե բացակայում է սովորական,եթե 1 tabl-օվ
+        },
+        link: function (scope, element, attrs) {
+
+            if (scope.showfulldata === undefined) {
+                scope.showfulldata = true;
+            }
+
+            scope.$watch('customernumber', function () {
+
+                var templateURL = '/LeasingCustomer/CustomerInfoDirective';
+
+                if (scope.viewmod != undefined) {
+                    templateURL = '/LeasingCustomer/CutomerVIewList';
+                }
+
+                $http.get(templateURL).then(function (result) {
+                    element.html(result.data);
+                    $compile(element.contents())(scope);
+                });
+
+            });
+        }
+    };        
+
+}]);

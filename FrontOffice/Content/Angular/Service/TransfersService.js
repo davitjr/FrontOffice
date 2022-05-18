@@ -212,4 +212,34 @@
         return response;
     };
 
+    this.paymentOrderWithStateDutiesMark = function (transferID) {
+        var response = $http({
+            method: "post",
+            url: "/Transfers/PaymentOrderWithStateDutiesMark",
+            data: JSON.stringify(transferID),
+            dataType: "json",
+            params: {
+                transferID: transferID
+            }
+
+        });
+        return response;
+    };
+
+    this.paymentOrderWithoutStateDutiesMark = function (transferID) {
+        debugger;
+        var response = $http({
+            method: "post",
+            url: "/Transfers/PaymentOrderWithoutStateDutiesMark",
+            data: JSON.stringify(transferID),
+            dataType: "json",
+            params: {
+                transferID: transferID
+            }
+
+        });
+        return response;
+    };
+
+
 }]);

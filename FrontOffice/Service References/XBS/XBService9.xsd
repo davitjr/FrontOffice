@@ -1,106 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAccountSecurity" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary.PersonalAccountSecurity" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd18" namespace="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary" />
   <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/ExternalBanking" />
-  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ACBALibrary" />
-  <xs:complexType name="ValueTupleOflongdateTime">
+  <xs:import schemaLocation="http://localhost/ExternalBankingService/XBService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="PersonalAccountUser">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/ExternalBankingSecurityLibrary" base="q1:ExternalUser">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PasswordChangeDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Quality" type="tns:PersonalAccountEnumerations.Quality" />
+          <xs:element minOccurs="0" name="Source" type="tns:PersonalAccountEnumerations.Source" />
+          <xs:element minOccurs="0" name="Status" type="tns:PersonalAccountEnumerations.Status" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PersonalAccountUser" nillable="true" type="tns:PersonalAccountUser" />
+  <xs:simpleType name="PersonalAccountEnumerations.Quality">
     <xs:annotation>
       <xs:appinfo>
-        <GenericType Name="ValueTupleOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="long" Namespace="http://www.w3.org/2001/XMLSchema" />
-          <GenericParameter Name="dateTime" Namespace="http://www.w3.org/2001/XMLSchema" />
-        </GenericType>
-        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element name="Item1" type="xs:long" />
-      <xs:element name="Item2" type="xs:dateTime" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ValueTupleOflongdateTime" nillable="true" type="tns:ValueTupleOflongdateTime" />
-  <xs:complexType name="ValueTupleOfbooleanCardlessCashoutOrder_PA1vKgxZ">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Confirmed" />
+      <xs:enumeration value="NotConfirmed" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PersonalAccountEnumerations.Quality" nillable="true" type="tns:PersonalAccountEnumerations.Quality" />
+  <xs:simpleType name="PersonalAccountEnumerations.Source">
     <xs:annotation>
       <xs:appinfo>
-        <GenericType Name="ValueTupleOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="boolean" Namespace="http://www.w3.org/2001/XMLSchema" />
-          <GenericParameter Name="CardlessCashoutOrder" Namespace="http://schemas.datacontract.org/2004/07/ExternalBanking" />
-        </GenericType>
-        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element name="Item1" type="xs:boolean" />
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ExternalBanking" name="Item2" nillable="true" type="q1:CardlessCashoutOrder" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ValueTupleOfbooleanCardlessCashoutOrder_PA1vKgxZ" nillable="true" type="tns:ValueTupleOfbooleanCardlessCashoutOrder_PA1vKgxZ" />
-  <xs:complexType name="TupleOfintstring">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Website" />
+      <xs:enumeration value="CRM" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PersonalAccountEnumerations.Source" nillable="true" type="tns:PersonalAccountEnumerations.Source" />
+  <xs:simpleType name="PersonalAccountEnumerations.Status">
     <xs:annotation>
       <xs:appinfo>
-        <GenericType Name="TupleOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="int" Namespace="http://www.w3.org/2001/XMLSchema" />
-          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
-        </GenericType>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element name="m_Item1" type="xs:int" />
-      <xs:element name="m_Item2" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="TupleOfintstring" nillable="true" type="tns:TupleOfintstring" />
-  <xs:complexType name="TupleOfstringstring">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="On" />
+      <xs:enumeration value="Off" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PersonalAccountEnumerations.Status" nillable="true" type="tns:PersonalAccountEnumerations.Status" />
+  <xs:simpleType name="PersonalAccountEnumerations.GetPersonalAccountOption">
     <xs:annotation>
       <xs:appinfo>
-        <GenericType Name="TupleOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
-          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
-        </GenericType>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ByCustomerNumber">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ByUserName">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PersonalAccountEnumerations.GetPersonalAccountOption" nillable="true" type="tns:PersonalAccountEnumerations.GetPersonalAccountOption" />
+  <xs:complexType name="PSActionResult">
     <xs:sequence>
-      <xs:element name="m_Item1" nillable="true" type="xs:string" />
-      <xs:element name="m_Item2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ActionResultCode" type="tns:PersonalAccountEnumerations.ResultCode" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Descriptions" nillable="true" type="q2:ArrayOfstring" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="TupleOfstringstring" nillable="true" type="tns:TupleOfstringstring" />
-  <xs:complexType name="TupleOfintArrayOfRACitizenDTpyQ4eh">
-    <xs:sequence>
-      <xs:element name="m_Item1" type="xs:int" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ACBALibrary" name="m_Item2" nillable="true" type="q2:ArrayOfRACitizen" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="TupleOfintArrayOfRACitizenDTpyQ4eh" nillable="true" type="tns:TupleOfintArrayOfRACitizenDTpyQ4eh" />
-  <xs:complexType name="Version">
-    <xs:sequence>
-      <xs:element name="_Build" type="xs:int" />
-      <xs:element name="_Major" type="xs:int" />
-      <xs:element name="_Minor" type="xs:int" />
-      <xs:element name="_Revision" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Version" nillable="true" type="tns:Version" />
-  <xs:complexType name="TupleOfshortshort">
-    <xs:sequence>
-      <xs:element name="m_Item1" type="xs:short" />
-      <xs:element name="m_Item2" type="xs:short" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="TupleOfshortshort" nillable="true" type="tns:TupleOfshortshort" />
-  <xs:complexType name="TupleOfbooleanstring">
+  <xs:element name="PSActionResult" nillable="true" type="tns:PSActionResult" />
+  <xs:simpleType name="PersonalAccountEnumerations.ResultCode">
     <xs:annotation>
       <xs:appinfo>
-        <GenericType Name="TupleOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="boolean" Namespace="http://www.w3.org/2001/XMLSchema" />
-          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
-        </GenericType>
+        <ActualType Name="short" Namespace="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
       </xs:appinfo>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element name="m_Item1" type="xs:boolean" />
-      <xs:element name="m_Item2" nillable="true" type="xs:string" />
-    </xs:sequence>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Normal" />
+      <xs:enumeration value="Failed" />
+      <xs:enumeration value="ChangePassword" />
+      <xs:enumeration value="ValidationFailed" />
+      <xs:enumeration value="NotFound" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PersonalAccountEnumerations.ResultCode" nillable="true" type="tns:PersonalAccountEnumerations.ResultCode" />
+  <xs:complexType name="ContentResultOfstring">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PSActionResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Content" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
-  <xs:element name="TupleOfbooleanstring" nillable="true" type="tns:TupleOfbooleanstring" />
+  <xs:element name="ContentResultOfstring" nillable="true" type="tns:ContentResultOfstring" />
+  <xs:complexType name="ContentResultOfPersonalAccountUserE4WxUX8p">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PSActionResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Content" nillable="true" type="tns:PersonalAccountUser" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ContentResultOfPersonalAccountUserE4WxUX8p" nillable="true" type="tns:ContentResultOfPersonalAccountUserE4WxUX8p" />
 </xs:schema>

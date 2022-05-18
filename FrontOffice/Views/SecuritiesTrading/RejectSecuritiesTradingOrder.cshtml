@@ -1,0 +1,49 @@
+﻿@{
+    Layout = null;
+}
+
+<form ng-controller="SecuritiesTradingCtrl" name="RejectOrderForm" id="RejectOrderForm" style="min-width:952px;" role="form" ng-init="InitConfirmOrRejectSecuritiesTradingOrder(orderId)" novalidate class="form-horizontal" labels-required>
+    <div id="newMature_menu" class="menu-bar dialog-menu light-green">
+        <ul id="menu" class="dialog-menu">
+
+            <li class="root-menu-item-4 " ng-click="RejectOrderForm.$setSubmitted(); RejectOrderForm.$valid &&  RejectSecuritiesTradingOrder();">
+                <span id="h-menu-item-4"><img id="h-menu-icon-4" class="submitButton h-menu-icon">Պահպանել</span>
+            </li>
+            <li class="root-menu-item-5 " onclick="CloseBPDialog('oneRejectSecuritiesTradingOrder')">
+                <span id="h-menu-item-5"><img id="h-menu-icon-5" class="h-menu-icon cancelButton">Հրաժարվել</span>
+            </li>
+        </ul>
+
+        <div id="right-menu" style="display:none;">
+        </div>
+    </div>
+    <div>
+
+        <div class="col-sm-12">
+            <div class="panel-body" style="padding-bottom: 10px; padding-top: 10px;">
+                <div style="max-width:630px">
+                    <errors></errors>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="tab_title col-sm-5 control-label " for="Description">Մերժման պատճառ</label>
+                    <div class="col-sm-6 row">
+                        <input type="text" class="tab_title form-control" id="Description" name="Description" data-ng-model="SecuritiesOrderDetails.RejectReasonDescription" style="text-align:left; margin-left:50px; width:35%" required  />
+
+                        <div class="row" style="margin-left:213px;">
+                            <ng-messages ng-if="RejectOrderForm.$submitted || RejectOrderForm.Description.$dirty"
+                                         for="RejectOrderForm.Description.$error">
+                                <ng-message when="required" class="errors">
+                                    Մերժման պատճառ դաշտը լրացված չէ։
+                                </ng-message>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</form>

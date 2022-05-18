@@ -11,6 +11,13 @@ namespace FrontOffice.Controllers
 {
     public class LeasingController : Controller
     {
+
+        [OutputCache(CacheProfile = "AppViewCache")]
+        // GET: Leasings 
+        public ActionResult Leasings()
+        {
+            return PartialView("Leasings");
+        }
         public JsonResult GetLeasingCustomers(string searchParams)
         {
             xbs.SearchLeasingCustomer searchLeasingCustomer = JsonConvert.DeserializeObject<xbs.SearchLeasingCustomer>(searchParams);
@@ -69,6 +76,74 @@ namespace FrontOffice.Controllers
         public JsonResult GetPartlyMatureAmount(string contractNumber)
         {
             return Json(XBService.GetPartlyMatureAmount(contractNumber), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetLeasings()
+        {            
+            return Json(XBService.GetLeasings(), JsonRequestBehavior.AllowGet);            
+        }
+
+        public JsonResult GetLeasing(ulong productId)
+        {
+            return Json(XBService.GetLeasing(productId), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult LeasingMainDetails()
+        {
+            return PartialView("LeasingMainDetails");
+        }
+
+        public JsonResult GetLeasingGrafikApplication(string loanFullNumber, DateTime startDate)
+        {
+            ulong customerNumber = XBService.GetAuthorizedCustomerNumber();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add(key: "customerNumber", value: customerNumber.ToString());
+            parameters.Add(key: "loanFullNumber", value: loanFullNumber);
+            parameters.Add(key: "dateOfBeginning", value: startDate.Date.ToString("dd/MMM/yy"));
+            parameters.Add(key: "calculationStartDate", value: XBService.GetCurrentOperDay().Date.ToString("dd/MMM/yy"));
+            parameters.Add(key: "Language_id", value: "0");
+
+            return Json(parameters, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetLeasingGrafik(ulong productId, byte firstReschedule = 0)
+        {
+            return Json(XBService.GetLeasingGrafik(productId, firstReschedule), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LeasingGrafik()
+        {
+            return PartialView("LeasingGrafik");
+        }
+
+        public ActionResult LeasingGrafikFirst()
+        {
+            return PartialView("LeasingGrafikFirst");
+        }
+
+        public ActionResult LeasingOverdueDetails()
+        {
+            return PartialView("LeasingOverdueDetails");
+        }
+
+        public JsonResult GetLeasingOverdueDetails(ulong productId)
+        {
+            return Json(XBService.GetLeasingOverdueDetails(productId), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LeasingPaymentOrder()
+        {
+            return PartialView("LeasingPaymentOrder");
+        }
+
+        public ActionResult LeasingTransitPaymentOrder()
+        {
+            return PartialView("LeasingTransitPaymentOrder");
+        }
+
+        public JsonResult GetManagerCustomerNumber(ulong customerNumber)
+        {
+            return Json(XBService.GetManagerCustomerNumber(customerNumber), JsonRequestBehavior.AllowGet);
         }
     }
 }
